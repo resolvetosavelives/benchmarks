@@ -1,14 +1,16 @@
-FROM ubuntu:19.04
-MAINTAINER savanni@cloudcity.io
+FROM ruby:2.5
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
-RUN apt-get update
-RUN apt-get install curl nodejs
-RUN curl -sSL https://get.rvm.io | bash -s stable --rails
+RUN mkdir /tmp/railsinit
+COPY Gemfile /tmp/railsinit
+RUN touch /tmp/railsinit/
+RUN cd /tmp/railsinit && bundle install
 
 COPY entrypoint.sh /usr/bin
 RUN chmod +x /usr/bin/entrypoint.sh
 
+ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
-ENTRYPOINT ["entrypoint.sh"]
