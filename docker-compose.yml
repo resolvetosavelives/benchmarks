@@ -1,21 +1,29 @@
 version: "3.7"
 services:
-  # web:
-  #   build: dockers/webapp-dev
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - .:/src
-  #   working_dir: /src
-  #   command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+  web:
+    build:
+      context: .
+      dockerfile: dockers/webapp-dev/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/src
+    working_dir: /src
+    command: bash -c "rm -f tmp/pids/server.pid && bundle install && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    depends_on:
+      - db
   dev:
-    build: dockers/webapp-dev
+    build:
+      context: .
+      dockerfile: dockers/webapp-dev/Dockerfile
     volumes:
       - .:/src
     working_dir: /src
     entrypoint: /bin/bash
     ports:
       - "3000:3000"
+    depends_on:
+      - db
   db:
     image: postgres:latest
     volumes:
