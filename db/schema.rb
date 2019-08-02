@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_08_02_143351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assessments", force: :cascade do |t|
+    t.string "country"
+    t.string "assessment_type"
+    t.jsonb "scores"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country", "assessment_type"], name: "index_assessments_on_country_and_assessment_type", unique: true
+  end
 
 end
