@@ -66,3 +66,4 @@ gem 'rake'
 gem 'rubyXL'
 
 gem 'bootstrap', '~> 4.3.1'
+gem 'jquery-rails'
