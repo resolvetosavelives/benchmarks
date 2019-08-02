@@ -2,10 +2,10 @@
 
 one:
   country: Afghanistan
-  assessment_type: 'JEE1'
+  assessment_type: 'jee_v1'
   scores:  [{ 'indicator_id': 'p11', 'score': 1 }, { 'indicator_id': 'p12', 'score': 4 }]
 
 two:
   country: Albania
-  assessment_type: 'JEE2'
+  assessment_type: 'jee_v2'
   scores: [{ 'indicator_id': 'p11', 'score': 2 }, { 'indicator_id': 'p12', 'score': 3 }]
