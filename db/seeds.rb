@@ -3,7 +3,7 @@
 require 'rubyXL'
 require 'json'
 
-workbook = RubyXL::Parser.parse('./JEE_scores_all-countries.xlsx')
+workbook = RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
 
 jee_1_0_sheet = workbook['Sheet4 (JEE 1.0 Indicators)']
 jee_2_0_sheet = workbook['Sheet5 (JEE 2.0 Indicators)']
