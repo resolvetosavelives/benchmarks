@@ -14,31 +14,26 @@
                 </thead>
 
                 <tbody>
-                <tr>
-                    <th class="border-right" scope="row" rowspan="2"> National Legislation </th>
-                    <td> P.1.1 Legislation, laws </td>
-                    <td> <input type="text"> </td>
-                    <td> <input type="text"> </td>
-                </tr>
+                <% @assessments['jee_v1']['order'].each do |technical_area| %>
+                    <tr>
+                        <th class="border-right"
+                            scope="row"
+                            rowspan="<%= @assessments['jee_v1']['sections'][technical_area]['indicators'].count %>">
+                            <%= technical_area %>
+                        </th>
+                        <td> <%= @assessments['jee_v1']['sections'][technical_area]['indicators'][0]['label'] %> </td>
+                        <td> <input type="text"> </td>
+                        <td> <input type="text"> </td>
+                    </tr>
 
-                <tr>
-                    <td> P.1.2 The State can... </td>
-                    <td> <input type="text"> </td>
-                    <td> <input type="text"> </td>
-                </tr>
-
-                <tr>
-                    <th class="border-right" scope="row" rowspan="3"> IHR </th>
-                    <td> P.2.1 Legislation, laws </td>
-                    <td> <input type="text"> </td>
-                    <td> <input type="text"> </td>
-                </tr>
-
-                <tr>
-                    <td> P.2.2 Legislation, laws </td>
-                    <td> <input type="text"> </td>
-                    <td> <input type="text"> </td>
-                </tr>
+                    <% @assessments['jee_v1']['sections'][technical_area]['indicators'].drop(1).each do |indicator| %>
+                    <tr>
+                        <td> <%= indicator['label'] %> </td>
+                        <td> <input type="text"> </td>
+                        <td> <input type="text"> </td>
+                    </tr>
+                    <% end %>
+                <% end %>
                 </tbody>
             </table>
         </div>

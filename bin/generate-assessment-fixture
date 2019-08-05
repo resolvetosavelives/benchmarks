@@ -6,18 +6,30 @@ require 'json'
 workbook = RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
 rows = workbook['Sheet5 (JEE Indicator Labels)']
 
-labels =
-  rows.drop(1).reduce([]) do |acc, row|
+assessments =
+  rows.drop(1).reduce({}) do |acc, row|
     cells = row.cells
-    acc.push(
-      {
-        assessment: "jee_#{cells[0].value}",
-        indicator: cells[1].value,
-        technical_area: cells[2].value,
-        label: cells[3].value
+
+    assessment = "jee_#{cells[0].value}"
+    indicator = cells[1].value
+    technical_area = cells[2].value
+    label = cells[3].value
+
+    unless acc[assessment]
+      acc[assessment] = { label: assessment, order: [], sections: {} }
+    end
+
+    unless acc[assessment][:sections][technical_area]
+      acc[assessment][:order].push(technical_area)
+      acc[assessment][:sections][technical_area] = {
+        assessment: assessment, technical_area: technical_area, indicators: []
       }
+    end
+    acc[assessment][:sections][technical_area][:indicators].push(
+      { indicator: indicator, label: label }
     )
+
     acc
   end
 
-puts labels.to_json
+puts assessments.to_json
