@@ -13,6 +13,7 @@ labels =
       {
         assessment: "jee_#{cells[0].value}",
         indicator: cells[1].value,
+        technical_area: cells[2].value,
         label: cells[3].value
       }
     )
