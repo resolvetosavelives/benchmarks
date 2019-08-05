@@ -1,0 +1,136 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ */
+
+$colors: (
+  "black": #2d2d35,
+  "red": #e93939,
+  "yellow": #ffca1e,
+  "green": #4fb754,
+  "dark-slate": #50506b,
+  "medium-slate": #888799,
+  "light-slate": #dae0e9,
+  "light-gray": #f2f2f2,
+) !default;
+
+@import "bootstrap";
+@import url('https://fonts.googleapis.com/css?family=Crimson Text');
+@import url('https://fonts.googleapis.com/css?family=Pathway Gothic One');
+@import url('https://fonts.googleapis.com/css?family=Karla');
+
+.text-dark-slate {
+  color: color("dark-slate");
+}
+
+.fg-white {
+  color: color("white");
+}
+
+.fg-black {
+  color: color("black");
+}
+
+.border-black {
+  border: 1px solid color("black");
+}
+
+.bg-black {
+  background-color: color("black");
+}
+
+.bg-dark-slate {
+  background-color: color("dark-slate");
+}
+
+.bg-green {
+  background-color: color("green");
+}
+
+.navbar {
+  height: 110px;
+  padding: 27px 35px 27px 35px;
+
+  .navbar-brand {
+    font-family: Pathway Gothic One;
+    font-size: 58px;
+    line-height: 54px;
+  }
+
+  .navbar-nav {
+    width: 738px;
+    justify-content: space-between;
+    align-items: center;
+
+    .nav-item {
+        font-size: 16px;
+        line-height: 19px;
+        letter-spacing: 0.1em;
+    }
+  }
+}
+
+.login-button {
+  width: 244px;
+  font-size: 26px;
+  line-height: 30px;
+  letter-spacing: 0.1em;
+}
+
+.get-started-button {
+  width: 221px;
+  font-size: 26px;
+  line-height: 30px;
+  letter-spacing: 0.1em;
+  margin-top: 50px;
+}
+
+.landing {
+    .left-panel {
+        padding-top: 100px;
+    }
+
+    .landing-heading {
+        font-size: 64px;
+    }
+}
+
+body {
+  font-family: Karla;
+}
+
+p {
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-family: Crimson Text;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 38px;
+}
+
+h3 {
+  font-size: 29px;
+  line-height: 35px;
+}
+
+h4 {
+  font-size: 22px;
+  line-height: 28px;
+}
