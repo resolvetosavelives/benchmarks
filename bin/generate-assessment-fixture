@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+require 'rubyXL'
+require 'json'
+
+workbook = RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+rows = workbook['Sheet5 (JEE Indicator Labels)']
+
+labels =
+  rows.drop(1).reduce([]) do |acc, row|
+    cells = row.cells
+    acc.push(
+      {
+        assessment: "jee_#{cells[0].value}",
+        indicator: cells[1].value,
+        label: cells[3].value
+      }
+    )
+    acc
+  end
+
+puts labels.to_json
