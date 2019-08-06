@@ -9,17 +9,67 @@ Benchmarks_workbook =
 JEE_scores_workbook =
   RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
 
-def generate_assessment_fixture
+def generate_data_dictionary_fixture
+  rows = Data_Dictionary_workbook[0]
+
+  dictionary =
+    rows.drop(1).reduce({ section: nil, data: {} }) do |acc, row|
+      raise 'abort! abort!' unless acc
+      cells = row.cells
+
+      if cells[0] && cells[0].value
+        if cells[0].value == 'JEE 1.0 capacity'
+          acc[:section] = 'jee1_ta'
+        elsif cells[0].value == 'JEE 1.0 indicator'
+          acc[:section] = 'jee1_ind'
+        elsif cells[0].value == 'JEE 2.0 capacity'
+          acc[:section] = 'jee2_ta'
+        elsif cells[0].value == 'JEE 2.0 indicator'
+          acc[:section] = 'jee2_ind'
+        elsif cells[0].value == 'SPAR 2018 capacity'
+          acc[:section] = 'spar_2018_ta'
+        elsif cells[0].value == 'SPAR 2018 indicator'
+          acc[:section] = 'spar_2018_ind'
+        else
+          acc[:section] = nil
+        end
+      end
+
+      next acc if acc[:section] == nil
+      if cells[4] == nil || cells[4].value == nil || cells[4].value == ''
+        next acc
+      end
+
+      key = "#{acc[:section]}_#{cells[4].value.downcase}"
+      acc[:data][key] = cells[5].value
+
+      acc
+    end
+
+  File.open('./app/fixtures/data_dictionary.json', 'w') do |f|
+    f.write(dictionary[:data].to_json)
+  end
+
+  dictionary[:data]
+end
+
+def generate_assessment_fixture(data_dictionary)
   rows = JEE_scores_workbook['Sheet5 (JEE Indicator Labels)']
 
   assessments =
     rows.drop(1).reduce({}) do |acc, row|
       cells = row.cells
 
-      assessment = "jee_#{cells[0].value}"
-      indicator = cells[1].value
-      technical_area_id = cells[2].value
-      label = cells[3].value
+      assessment = "jee#{cells[0].value[1]}"
+      indicator_id = "#{assessment}_ind_#{cells[1].value}"
+      technical_area_id = "#{assessment}_ta_#{cells[2].value}"
+
+      unless data_dictionary[indicator_id]
+        raise "unrecognized indicator #{indicator_id}"
+      end
+      unless data_dictionary[technical_area_id]
+        raise "unrecognized technical area #{technical_area_id}"
+      end
 
       unless acc[assessment]
         acc[assessment] = {
@@ -36,7 +86,7 @@ def generate_assessment_fixture
         }
       end
       acc[assessment][:technical_areas][technical_area_id][:indicators].push(
-        { indicator_id: indicator, label: label }
+        indicator_id
       )
 
       acc
@@ -45,12 +95,6 @@ def generate_assessment_fixture
   File.open('./app/fixtures/assessments.json', 'w') do |f|
     f.write(assessments.to_json)
   end
-end
-
-def generate_data_dictionary_fixture
-  rows = Data_Dictionary_workbook[0]
-
-  dictionary = rows.reduce({}) { |acc, row| }
 end
 
 def generate_benchmarks_fixture
@@ -81,6 +125,6 @@ def generate_benchmarks_fixture
   end
 end
 
-generate_data_dictionary_fixture
-generate_assessment_fixture
+data_dictionary = generate_data_dictionary_fixture
+generate_assessment_fixture(data_dictionary)
 generate_benchmarks_fixture
