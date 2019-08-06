@@ -4,7 +4,8 @@
     <div class="col-1"></div>
     <div class="col-10 page">
         <div class="sheet">
-            <table class="table">
+            <div class="row">
+            <table class="table border-bottom">
                 <thead>
                 <tr class="jee-table-header">
                     <th scope="col"> Technical Areas </th>
@@ -38,6 +39,12 @@
                 <% end %>
                 </tbody>
             </table>
+        </div>
+
+            <div class="row">
+                <div class="col-10"></div>
+                <div class="col-2"><%= render 'application/button', content: 'Next' %></div>
+            </div>
         </div>
     </div>
     <div class="col-1"></div>
