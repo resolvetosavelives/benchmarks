@@ -24,19 +24,15 @@
                             <%= @data_dictionary[technical_area_id] %>
                         </th>
                         <td> <%= @data_dictionary[technical_area['indicators'][0]] %> </td>
-                        <td> <% indicator_id = technical_area['indicators'][0].split('_')[2] %>
-                        <%= @scores.find { | i | i['indicator_id'] == indicator_id }['score'] %>
-                        </td>
-                        <td> <input type="text"> </td>
+                        <td> <%= render 'application/input', name: technical_area['indicators'][0], value: @scores[technical_area['indicators'][0]] %> </td>
+                        <td> <%= render 'application/input', name: technical_area['indicators'][0], value: @scores[technical_area['indicators'][0]]+1 %> </td>
                     </tr>
 
                     <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
                         <td> <%= @data_dictionary[indicator] %> </td>
-                        <td> <% indicator_id = indicator.split('_')[2] %>
-                        <%= @scores.find { | i | i['indicator_id'] == indicator_id }['score'] %>
-                        </td>
-                        <td> <input type="text"> </td>
+                        <td> <%= render 'application/input', name: indicator, value: @scores[indicator] %> </td>
+                        <td> <%= render 'application/input', name: indicator, value: @scores[indicator]+1 %> </td>
                     </tr>
                     <% end %>
                 <% end %>
