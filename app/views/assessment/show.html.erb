@@ -25,14 +25,14 @@
                         </th>
                         <td> <%= @data_dictionary[technical_area['indicators'][0]] %> </td>
                         <td> <%= render 'application/input', name: technical_area['indicators'][0], value: @scores[technical_area['indicators'][0]] %> </td>
-                        <td> <%= render 'application/input', name: technical_area['indicators'][0], value: @scores[technical_area['indicators'][0]]+1 %> </td>
+                        <td> <%= render 'application/input', name: "#{technical_area['indicators'][0]}_goal", value: [@scores[technical_area['indicators'][0]]+1, 5].min() %> </td>
                     </tr>
 
                     <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
                         <td> <%= @data_dictionary[indicator] %> </td>
                         <td> <%= render 'application/input', name: indicator, value: @scores[indicator] %> </td>
-                        <td> <%= render 'application/input', name: indicator, value: @scores[indicator]+1 %> </td>
+                        <td> <%= render 'application/input', name: "#{indicator}_goal", value: [@scores[indicator]+1, 5].min() %> </td>
                     </tr>
                     <% end %>
                 <% end %>
