@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require 'rubyXL'
+require 'json'
+
+workbook = RubyXL::Parser.parse("./db/seed-data/BenchmarksDatabase_2Aug2019.xlsx")
+rows = workbook[0]
+
+output = {}
+
+rows.drop(1).each do |row|
+  cells = row.cells
+
+  if cells[1] && cells[1].value && cells[1].value != ""
+    jee1_id = cells[1].value.to_s() + cells[2].value.to_s()
+  end
+
+  if cells[3] && cells[3].value && cells[3].value != ""
+    jee2_id = cells[3].value.to_s() + cells[4].value.to_s()
+  end
+
+  if cells[5] && cells[5].value && cells[5].value != ""
+    spar_id = cells[5].value.to_s() + cells[6].value.to_s()
+  end
+
+  if cells[7] && cells[7].value && cells[7].value != ""
+      bench_id = cells[7].value.to_s() + "." + cells[8].value.to_s()
+  end
+
+  if bench_id && jee1_id
+    puts "jee_v1 #{jee1_id} -> #{bench_id}"
+  end
+
+  if bench_id && jee2_id
+    puts "jee_v2 #{jee2_id} -> #{bench_id}"
+  end
+
+  if bench_id && spar_id
+    puts "spar #{spar_id} -> #{bench_id}"
+  end
+end
+
+puts output.to_json

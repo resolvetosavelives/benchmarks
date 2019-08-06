@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
-#
+
 require 'rubyXL'
 require 'json'
 
-workbook = RubyXL::Parser.parse("../JEE Benchmarks and Activities.xlsx") 
+workbook = RubyXL::Parser.parse("./db/seed-data/JEE Benchmarks and Activities.xlsx")
 rows = workbook[0]
 
 output = {}

@@ -103,6 +103,18 @@ $colors: (
     }
 }
 
+.page {
+    background-color: color("light-gray");
+    padding: 50px;
+}
+
+.sheet {
+    border: 1px solid color("medium-slate");
+    background-color: color("white");
+    border-radius: 5px;
+    padding: 2em;
+}
+
 body {
   font-family: Karla;
 }
@@ -133,4 +145,8 @@ h3 {
 h4 {
   font-size: 22px;
   line-height: 28px;
+}
+
+th {
+    font-family: Karla Regular;
 }

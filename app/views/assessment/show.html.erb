@@ -1,0 +1,44 @@
+<div class="row">
+
+    <div class="col-1"></div>
+    <div class="col-10 page">
+        <div class="sheet">
+            <table class="table">
+                <thead>
+                <tr class="jee-table-header">
+                    <th scope="col"> Technical Areas </th>
+                    <th scope="col"> Indicators </th>
+                    <th scope="col"> Score </th>
+                    <th scope="col"> Goal </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <% @assessments['jee_v1']['technical_area_order'].each do |technical_area_id| %>
+                    <% technical_area = @assessments['jee_v1']['technical_areas'][technical_area_id] %>
+                    <tr>
+                        <th class="border-right"
+                            scope="row"
+                            rowspan="<%= technical_area['indicators'].count %>">
+                            <%= technical_area_id %>
+                        </th>
+                        <td> <%= technical_area['indicators'][0]['label'] %> </td>
+                        <td> <input type="text"> </td>
+                        <td> <input type="text"> </td>
+                    </tr>
+
+                    <% technical_area['indicators'].drop(1).each do |indicator| %>
+                    <tr>
+                        <td> <%= indicator['label'] %> </td>
+                        <td> <input type="text"> </td>
+                        <td> <input type="text"> </td>
+                    </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-1"></div>
+
+</div>
