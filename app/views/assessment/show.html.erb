@@ -1,5 +1,6 @@
 <div class="row">
 
+<% if @scores %>
     <div class="col-1"></div>
     <div class="col-10 page">
         <div class="sheet">
@@ -23,14 +24,18 @@
                             <%= @data_dictionary[technical_area_id] %>
                         </th>
                         <td> <%= @data_dictionary[technical_area['indicators'][0]] %> </td>
-                        <td> <input type="text"> </td>
+                        <td> <% indicator_id = technical_area['indicators'][0].split('_')[2] %>
+                        <%= @scores.find { | i | i['indicator_id'] == indicator_id }['score'] %>
+                        </td>
                         <td> <input type="text"> </td>
                     </tr>
 
                     <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
                         <td> <%= @data_dictionary[indicator] %> </td>
-                        <td> <input type="text"> </td>
+                        <td> <% indicator_id = indicator.split('_')[2] %>
+                        <%= @scores.find { | i | i['indicator_id'] == indicator_id }['score'] %>
+                        </td>
                         <td> <input type="text"> </td>
                     </tr>
                     <% end %>
@@ -40,5 +45,10 @@
         </div>
     </div>
     <div class="col-1"></div>
+<% else %>
+    <div class="col">
+    <div>No assessment available</div>
+    </div>
+<% end %>
 
 </div>
