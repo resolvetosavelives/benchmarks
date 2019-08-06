@@ -8,6 +8,8 @@ Benchmarks_workbook =
   RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
 JEE_scores_workbook =
   RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+Crosswalk_workbook =
+  RubyXL::Parser.parse('./db/seed-data/BenchmarksDatabase_2Aug2019.xlsx')
 
 def generate_data_dictionary_fixture
   rows = Data_Dictionary_workbook[0]
@@ -123,6 +125,38 @@ def generate_benchmarks_fixture
   File.open('./app/fixtures/benchmarks_and_activities.json', 'w') do |f|
     f.write(output.to_json)
   end
+end
+
+# TODO: incomplete. We will finish this when we actually need to convert from
+# score to benchmark activity.
+def generate_crosswalk_fixture
+  rows.drop(1).each do |row|
+    cells = row.cells
+
+    if cells[1] && cells[1].value && cells[1].value != ''
+      jee1_id = cells[1].value.to_s + cells[2].value.to_s
+    end
+
+    if cells[3] && cells[3].value && cells[3].value != ''
+      jee2_id = cells[3].value.to_s + cells[4].value.to_s
+    end
+
+    if cells[5] && cells[5].value && cells[5].value != ''
+      spar_id = cells[5].value.to_s + cells[6].value.to_s
+    end
+
+    if cells[7] && cells[7].value && cells[7].value != ''
+      bench_id = cells[7].value.to_s + '.' + cells[8].value.to_s
+    end
+
+    puts "jee_v1 #{jee1_id} -> #{bench_id}" if bench_id && jee1_id
+
+    puts "jee_v2 #{jee2_id} -> #{bench_id}" if bench_id && jee2_id
+
+    puts "spar #{spar_id} -> #{bench_id}" if bench_id && spar_id
+  end
+
+  puts output.to_json
 end
 
 data_dictionary = generate_data_dictionary_fixture
