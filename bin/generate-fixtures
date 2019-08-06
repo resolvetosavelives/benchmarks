@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby
+
+require 'rubyXL'
+require 'json'
+
+Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
+Benchmarks_workbook =
+  RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
+JEE_scores_workbook =
+  RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+
+def generate_assessment_fixture
+  rows = JEE_scores_workbook['Sheet5 (JEE Indicator Labels)']
+
+  assessments =
+    rows.drop(1).reduce({}) do |acc, row|
+      cells = row.cells
+
+      assessment = "jee_#{cells[0].value}"
+      indicator = cells[1].value
+      technical_area_id = cells[2].value
+      label = cells[3].value
+
+      unless acc[assessment]
+        acc[assessment] = {
+          label: assessment, technical_area_order: [], technical_areas: {}
+        }
+      end
+
+      unless acc[assessment][:technical_areas][technical_area_id]
+        acc[assessment][:technical_area_order].push(technical_area_id)
+        acc[assessment][:technical_areas][technical_area_id] = {
+          assessment: assessment,
+          technical_area_id: technical_area_id,
+          indicators: []
+        }
+      end
+      acc[assessment][:technical_areas][technical_area_id][:indicators].push(
+        { indicator_id: indicator, label: label }
+      )
+
+      acc
+    end
+
+  File.open('./app/fixtures/assessments.json', 'w') do |f|
+    f.write(assessments.to_json)
+  end
+end
+
+def generate_data_dictionary_fixture
+  rows = Data_Dictionary_workbook[0]
+
+  dictionary = rows.reduce({}) { |acc, row| }
+end
+
+def generate_benchmarks_fixture
+  rows = Benchmarks_workbook[0]
+
+  output = {}
+
+  rows.drop(1).each do |row|
+    cells = row.cells
+    id = cells[0].value
+    unless output[id]
+      output[id] = {
+        id: id,
+        benchmark: cells[1].value,
+        objective: cells[2].value,
+        capacity: {}
+      }
+    end
+    capacity_id = cells[3].value.match(/\d/)[0]
+    unless output[id][:capacity][capacity_id]
+      output[id][:capacity][capacity_id] = []
+    end
+    output[id][:capacity][capacity_id].push(cells[4].value)
+  end
+
+  File.open('./app/fixtures/benchmarks_and_activities.json', 'w') do |f|
+    f.write(output.to_json)
+  end
+end
+
+generate_data_dictionary_fixture
+generate_assessment_fixture
+generate_benchmarks_fixture
