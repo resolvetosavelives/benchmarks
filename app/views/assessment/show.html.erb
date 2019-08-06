@@ -14,19 +14,20 @@
                 </thead>
 
                 <tbody>
-                <% @assessments['jee_v1']['order'].each do |technical_area| %>
+                <% @assessments['jee_v1']['technical_area_order'].each do |technical_area_id| %>
+                    <% technical_area = @assessments['jee_v1']['technical_areas'][technical_area_id] %>
                     <tr>
                         <th class="border-right"
                             scope="row"
-                            rowspan="<%= @assessments['jee_v1']['sections'][technical_area]['indicators'].count %>">
-                            <%= technical_area %>
+                            rowspan="<%= technical_area['indicators'].count %>">
+                            <%= technical_area_id %>
                         </th>
-                        <td> <%= @assessments['jee_v1']['sections'][technical_area]['indicators'][0]['label'] %> </td>
+                        <td> <%= technical_area['indicators'][0]['label'] %> </td>
                         <td> <input type="text"> </td>
                         <td> <input type="text"> </td>
                     </tr>
 
-                    <% @assessments['jee_v1']['sections'][technical_area]['indicators'].drop(1).each do |indicator| %>
+                    <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
                         <td> <%= indicator['label'] %> </td>
                         <td> <input type="text"> </td>
