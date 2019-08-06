@@ -2,25 +2,36 @@
   <div class="col-1"></div>
   <div class="col-10 page">
     <div class="sheet">
-      <h3><%= @plan.name %></h3>
-      <% @plan.activities.each do |benchmark_id, capacities| %>
-        <table class="table">
-          <thead>
-            <tr>
-              <th><h3><%= benchmark_id %></h3></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% capacities.each do |capacity| %>
-              <tr>
-                <td><%= capacity %></td>
-                <td>X</td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      <% end %>
+      <div class="row"><div class="col"><h3><%= @plan.name %></h3></div></div>
+      <div class="row">
+        <div class="col">
+          <% @plan.activities.each do |benchmark_id, capacities| %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th><h3><%= benchmark_id %></h3></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% capacities.each do |capacity| %>
+                  <tr>
+                    <td><%= capacity %></td>
+                    <td>X</td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
+        </div>
+      </div>
     </div>
+      <div class="row">
+        <div class="col">
+          <%=link_to "Back", controller: "assessment", action: "show", country: @plan.country, assessment: @plan.assessment %>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <button class="btn">Save</button>
+        </div>
   </div>
 </div>
