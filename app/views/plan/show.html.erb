@@ -5,7 +5,7 @@
       <div class="row"><div class="col"><h3><%= @plan.name %></h3></div></div>
       <div class="row">
         <div class="col">
-          <% @plan.activities.each do |benchmark_id, capacities| %>
+          <% @plan.capacity_map.each do |benchmark_id, capacities| %>
             <table class="table">
               <thead>
                 <tr>
