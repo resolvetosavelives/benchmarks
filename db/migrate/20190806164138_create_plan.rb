@@ -4,7 +4,7 @@ class CreatePlan < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :country
       t.string :assessment
-      t.jsonb :capacity_map
+      t.jsonb :activity_map
       t.timestamps
     end
   end

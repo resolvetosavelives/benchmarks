@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_08_06_164138) do
     t.string "name"
     t.string "country"
     t.string "assessment"
-    t.jsonb "capacity_map"
+    t.jsonb "activity_map"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
