@@ -12,21 +12,25 @@ assessments =
 
     assessment = "jee_#{cells[0].value}"
     indicator = cells[1].value
-    technical_area = cells[2].value
+    technical_area_id = cells[2].value
     label = cells[3].value
 
     unless acc[assessment]
-      acc[assessment] = { label: assessment, order: [], sections: {} }
-    end
-
-    unless acc[assessment][:sections][technical_area]
-      acc[assessment][:order].push(technical_area)
-      acc[assessment][:sections][technical_area] = {
-        assessment: assessment, technical_area: technical_area, indicators: []
+      acc[assessment] = {
+        label: assessment, technical_area_order: [], technical_areas: {}
       }
     end
-    acc[assessment][:sections][technical_area][:indicators].push(
-      { indicator: indicator, label: label }
+
+    unless acc[assessment][:technical_areas][technical_area_id]
+      acc[assessment][:technical_area_order].push(technical_area_id)
+      acc[assessment][:technical_areas][technical_area_id] = {
+        assessment: assessment,
+        technical_area_id: technical_area_id,
+        indicators: []
+      }
+    end
+    acc[assessment][:technical_areas][technical_area_id][:indicators].push(
+      { indicator_id: indicator, label: label }
     )
 
     acc
