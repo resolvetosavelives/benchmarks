@@ -3,7 +3,7 @@ class AssessmentController < ApplicationController
     @country = params[:country]
     @assessment = params[:assessment]
 
-    file = File.open 'app/fixtures/assessments.json'
-    @assessments = JSON.load file
+    @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
+    @assessments = JSON.load File.open './app/fixtures/assessments.json'
   end
 end
