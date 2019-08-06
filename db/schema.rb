@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 2019_08_06_164138) do
 
   create_table "plans", force: :cascade do |t|
     t.string "name"
+    t.string "country"
+    t.string "assessment"
     t.jsonb "capacity_map"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
