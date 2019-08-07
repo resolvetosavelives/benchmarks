@@ -74,7 +74,7 @@ class CrosswalkSpreadsheet
       #   end
       # end
       if row_[:bench_cap] && row_[:bench_ind]
-        bench_id = "#{row_[:bench_cap][1..-1]}.#{row_[:bench_ind]}"
+        bench_id = "#{row_[:bench_cap][1..-1].strip}.#{row_[:bench_ind]}"
       end
 
       dict_append_value acc, jee1_id, bench_id if jee1_id && bench_id
@@ -210,7 +210,7 @@ def generate_benchmarks_fixture
     unless output[id][:capacity][capacity_id]
       output[id][:capacity][capacity_id] = []
     end
-    output[id][:capacity][capacity_id].push(cells[4].value)
+    output[id][:capacity][capacity_id].push(cells[4].value.gsub("\n", ' '))
   end
 
   File.open('./app/fixtures/benchmarks_and_activities.json', 'w') do |f|
