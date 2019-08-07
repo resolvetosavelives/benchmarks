@@ -29,3 +29,4 @@
 # Ignore .nix files that Savanni uses for project management
 *.nix
 
+.DS_Store
