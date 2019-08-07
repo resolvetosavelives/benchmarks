@@ -1,37 +1,40 @@
 <div class="row">
   <div class="col-1"></div>
-  <div class="col-10 page">
-    <div class="sheet">
-      <div class="row"><div class="col"><h3><%= @plan.name %></h3></div></div>
-      <div class="row">
-        <div class="col" data-controller="plan">
-          <% @plan.activity_map.each do |benchmark_id, activities| %>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th><h3><%= benchmark_id %></h3></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <% activities.each do |activity| %>
-                  <tr>
-                    <td data-target="plan.activity"><%= activity %></td>
-                    <td><button data-action="plan#deleteActivity" data-activity=<%= activity %>>X</button></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-          <% end %>
-        </div>
+  <div class="col-10 page" data-controller="plan">
+    <%= form_for @plan do |f| %>
+      <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: { target: "plan.activityMap"} %>
+      <div class="sheet">
+          <div class="row"><div class="col"><h3><%= f.text_field :name %></h3></div></div>
+          <div class="row">
+            <div class="col">
+              <% @plan.activity_map.each do |benchmark_id, activities| %>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th><h3><%= benchmark_id %></h3></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% activities.each do |activity| %>
+                      <tr>
+                        <td><%= activity %></td>
+                        <td><button type="button" data-action="plan#deleteActivity" data-benchmark-id=<%= benchmark_id %> data-activity=<%= activity %>>X</button></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </div>
+          </div>
       </div>
-    </div>
       <div class="row">
         <div class="col">
           <%=link_to "Back", controller: "assessment", action: "show", country: @plan.country, assessment: @plan.assessment %>
         </div>
         <div class="col d-flex justify-content-end">
-          <button class="btn">Save</button>
+          <%= f.submit "Save" %>
         </div>
-  </div>
+      </div>
+    <% end %>
 </div>
