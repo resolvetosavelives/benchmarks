@@ -4,6 +4,7 @@
     <div class="col-1"></div>
     <div class="col-10 page">
         <div class="sheet">
+            <%= form_tag({country: @country, assessment: @assessment_type }, action: "post") do %>
             <div class="row">
             <table class="table border-bottom">
                 <thead>
@@ -45,6 +46,7 @@
                 <div class="col-10"></div>
                 <div class="col-2"><%= render 'application/button', content: 'Next' %></div>
             </div>
+        <% end %>
         </div>
     </div>
     <div class="col-1"></div>
