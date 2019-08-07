@@ -11,6 +11,85 @@ JEE_scores_workbook =
 Crosswalk_workbook =
   RubyXL::Parser.parse('./data/BenchmarksDatabase_2Aug2019.xlsx')
 
+class CrosswalkSpreadsheet
+  def initialize
+    @workbook = RubyXL::Parser.parse('./data/BenchmarksDatabase_2Aug2019.xlsx')
+  end
+
+  def parse_crosswalk_row(row)
+    cells = row.cells
+
+    {
+      jee2_cap: load_cell(cells[1]),
+      jee2_ind: load_cell(cells[2]),
+      jee1_cap: load_cell(cells[3]),
+      jee1_ind: load_cell(cells[4]),
+      spar_cap: load_cell(cells[5]),
+      spar_ind: load_cell(cells[6]),
+      bench_cap: load_cell(cells[7]),
+      bench_ind: load_cell(cells[8]),
+      bench_text: load_cell(cells[9])
+    }
+
+    # {
+    #   jee1_cap: load_cell(cells[1]),
+    #   jee1_ind: load_cell(cells[2]),
+    #   jee2_cap: load_cell(cells[3]),
+    #   jee2_ind: load_cell(cells[4]),
+    #   spar_cap: load_cell(cells[5]),
+    #   spar_ind: load_cell(cells[6]),
+    #   bench_cap: load_cell(cells[7]),
+    #   bench_ind: load_cell(cells[8]),
+    #   bench_obj: load_cell(cells[9]),
+    #   bench_lvl: load_cell(cells[10]),
+    #   bench_act: load_cell(cells[11]),
+    #   bench_text: load_cell(cells[12]),
+    #   bench_act_type: load_cell(cells[13])
+    # }
+  end
+
+  def crosswalk(data_dictionary)
+    rows = @workbook['Key']
+    rows.drop(1).reduce({}) do |acc, row|
+      raise 'acc failed to propogate' unless acc
+
+      row_ = parse_crosswalk_row row
+
+      if row_[:jee1_cap] && row_[:jee1_ind]
+        jee1_id = "jee1_ind_#{row_[:jee1_cap].downcase}#{row_[:jee1_ind]}"
+        unless data_dictionary[jee1_id]
+          raise "#{jee1_id} is not in the data dictionary (row #{row})"
+        end
+      end
+      if row_[:jee2_cap] && row_[:jee2_ind]
+        jee2_id = "jee2_ind_#{row_[:jee2_cap].downcase}#{row_[:jee2_ind]}"
+        unless data_dictionary[jee2_id]
+          raise "#{jee2_id} is not in the data dictionary (row #{row})"
+        end
+      end
+      # if row_[:spar_cap] && row_[:spar_ind]
+      #   spar_id = "spar_2018_ind_#{row_[:spar_cap].downcase}#{row_[:spar_ind]}"
+      #   unless data_dictionary[spar_id]
+      #     raise "#{spar_id} is not in the data dictionary"
+      #   end
+      # end
+      if row_[:bench_cap] && row_[:bench_ind]
+        bench_id = "#{row_[:bench_cap][1..-1]}.#{row_[:bench_ind]}"
+      end
+
+      dict_append_value acc, jee1_id, bench_id if jee1_id && bench_id
+
+      dict_append_value acc, jee2_id, bench_id if jee2_id && bench_id
+
+      # dict_append_value acc, spar_id, bench_id if spar_id && bench_id
+
+      acc
+    end
+  end
+
+  def activity_types; end
+end
+
 def dict_append_value(dict, key, value)
   dict[key] = [] unless dict[key]
   dict[key].push(value) unless dict[key].include?(value)
@@ -21,26 +100,6 @@ def dict_insert_without_replace(dict, key, value)
     raise "At #{key}, attempted to replace #{dict[key]} with #{value}"
   end
   dict[key] = value
-end
-
-def parse_crosswalk_row(row)
-  cells = row.cells
-
-  {
-    jee1_cap: load_cell(cells[1]),
-    jee1_ind: load_cell(cells[2]),
-    jee2_cap: load_cell(cells[3]),
-    jee2_ind: load_cell(cells[4]),
-    spar_cap: load_cell(cells[5]),
-    spar_ind: load_cell(cells[6]),
-    bench_cap: load_cell(cells[7]),
-    bench_ind: load_cell(cells[8]),
-    bench_obj: load_cell(cells[9]),
-    bench_lvl: load_cell(cells[10]),
-    bench_act: load_cell(cells[11]),
-    bench_text: load_cell(cells[12]),
-    bench_act_type: load_cell(cells[13])
-  }
 end
 
 def generate_data_dictionary_fixture
@@ -164,38 +223,8 @@ def load_cell(cell)
   nil
 end
 
-def generate_crosswalk_fixture
-  rows = Crosswalk_workbook[0]
-
-  mappings =
-    rows.drop(1).reduce({}) do |acc, row|
-      raise 'acc failed to propogate' unless acc
-
-      row_ = parse_crosswalk_row row
-
-      if row_[:bench_obj] != row_[:bench_ind]
-        raise "indicator and objective to dot match: #{row.index_in_collection}"
-      end
-
-      if row_[:jee1_cap] && row_[:jee1_ind]
-        jee1_id = "jee1_ind_#{row_[:jee1_cap]}#{row_[:jee1_ind]}"
-      end
-      if row_[:jee2_cap] && row_[:jee2_ind]
-        jee2_id = "jee2_ind_#{row_[:jee2_cap]}#{row_[:jee2_ind]}"
-      end
-      if row_[:spar_cap] && row_[:spar_ind]
-        spar_id = "spar_ind_#{row_[:spar_cap]}#{row_[:spar_ind]}"
-      end
-      bench_id = "#{row_[:bench_cap]}.#{row_[:bench_ind]}"
-
-      dict_append_value acc, jee1_id, bench_id if jee1_id && bench_id
-
-      dict_append_value acc, jee2_id, bench_id if jee2_id && bench_id
-
-      dict_append_value acc, spar_id, bench_id if spar_id && bench_id
-
-      acc
-    end
+def generate_crosswalk_fixture(data_dictionary)
+  mappings = CrosswalkSpreadsheet.new.crosswalk(data_dictionary)
 
   File.open('./app/fixtures/crosswalk.json', 'w') do |f|
     f.write(mappings.to_json)
@@ -205,4 +234,4 @@ end
 data_dictionary = generate_data_dictionary_fixture
 generate_assessment_fixture(data_dictionary)
 generate_benchmarks_fixture
-generate_crosswalk_fixture
+generate_crosswalk_fixture(data_dictionary)
