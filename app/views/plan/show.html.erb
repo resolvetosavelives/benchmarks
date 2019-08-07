@@ -19,7 +19,7 @@
                     <% activities.each do |activity| %>
                       <tr>
                         <td><%= activity %></td>
-                        <td><button type="button" data-action="plan#deleteActivity" data-benchmark-id=<%= benchmark_id %> data-activity=<%= activity %>>X</button></td>
+                        <td><button type="button" data-action="plan#deleteActivity" data-benchmark-id="<%= benchmark_id %>" data-activity="<%= activity %>">X</button></td>
                       </tr>
                     <% end %>
                   </tbody>
