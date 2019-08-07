@@ -4,8 +4,8 @@
     <div class="sheet">
       <div class="row"><div class="col"><h3><%= @plan.name %></h3></div></div>
       <div class="row">
-        <div class="col">
-          <% @plan.activity_map.each do |benchmark_id, capacities| %>
+        <div class="col" data-controller="plan">
+          <% @plan.activity_map.each do |benchmark_id, activities| %>
             <table class="table">
               <thead>
                 <tr>
@@ -14,10 +14,10 @@
                 </tr>
               </thead>
               <tbody>
-                <% capacities.each do |capacity| %>
+                <% activities.each do |activity| %>
                   <tr>
-                    <td><%= capacity %></td>
-                    <td>X</td>
+                    <td data-target="plan.activity"><%= activity %></td>
+                    <td><button data-action="plan#deleteActivity" data-activity=<%= activity %>>X</button></td>
                   </tr>
                 <% end %>
               </tbody>
