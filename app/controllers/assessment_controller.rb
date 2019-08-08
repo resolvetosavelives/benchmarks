@@ -17,6 +17,11 @@ class AssessmentController < ApplicationController
 
     @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
     @assessments = JSON.load File.open './app/fixtures/assessments.json'
+
+    @goals =
+      GoalForm.new country: @country,
+                   assessment_type: @assessment_type,
+                   scores: @scores
   end
 
   def post
@@ -45,7 +50,7 @@ class AssessmentController < ApplicationController
         score = params[key].to_i
         goal = params["#{key}_goal"].to_i
 
-        # raise "key #{key} not found in crosswalk" unless crosswalk[key]
+        puts "key #{key} not found in crosswalk" unless crosswalk[key]
         next acc unless crosswalk[key]
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|

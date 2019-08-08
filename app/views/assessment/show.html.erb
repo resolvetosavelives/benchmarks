@@ -4,7 +4,9 @@
     <div class="col-1"></div>
     <div class="col-10 page">
         <div class="sheet">
-            <%= form_tag({country: @country, assessment: @assessment_type }, action: "post") do %>
+        <%= form_for @goal, url: "/assessments/" do |f| %>
+            <%= f.hidden_field :country %>
+            <%= f.hidden_field :assessment_type %>
             <div class="row">
             <table class="table border-bottom">
                 <thead>
@@ -19,22 +21,23 @@
                 <tbody>
                 <% @assessments['jee1']['technical_area_order'].each do |technical_area_id| %>
                     <% technical_area = @assessments['jee1']['technical_areas'][technical_area_id] %>
+                    <% indicator = technical_area['indicators'][0] %>
                     <tr>
                         <th class="border-right"
                             scope="row"
                             rowspan="<%= technical_area['indicators'].count %>">
                             <%= @data_dictionary[technical_area_id] %>
                         </th>
-                        <td> <%= @data_dictionary[technical_area['indicators'][0]] %> </td>
-                        <td> <%= render 'application/input', name: technical_area['indicators'][0], value: @scores[technical_area['indicators'][0]] %> </td>
-                        <td> <%= render 'application/input', name: "#{technical_area['indicators'][0]}_goal", value: [@scores[technical_area['indicators'][0]]+1, 5].min() %> </td>
+                        <td> <%= @data_dictionary[indicator] %> </td>
+                        <td> <%= f.number_field(indicator) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
                     </tr>
 
                     <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
                         <td> <%= @data_dictionary[indicator] %> </td>
-                        <td> <%= render 'application/input', name: indicator, value: @scores[indicator] %> </td>
-                        <td> <%= render 'application/input', name: "#{indicator}_goal", value: [@scores[indicator]+1, 5].min() %> </td>
+                        <td> <%= f.number_field(indicator, @scores[indicator], in: 1..5) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal", [@scores[indicator]+1, 5].min(), in: 1..5) %> </td>
                     </tr>
                     <% end %>
                 <% end %>
@@ -45,6 +48,7 @@
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2"><%= render 'application/button', content: 'Next' %></div>
+                <div class="col-2">f.submit</div>
             </div>
         <% end %>
         </div>
