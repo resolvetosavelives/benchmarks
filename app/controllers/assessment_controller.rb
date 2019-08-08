@@ -65,7 +65,7 @@ class AssessmentController < ApplicationController
 
     goal_params = params.fetch(:goal_form)
     @result =
-      goal_params.keys.reduce([]) do |acc, key|
+      goal_params.keys.reduce({}) do |acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
                key.start_with?('spar_')
           next acc
@@ -85,9 +85,17 @@ class AssessmentController < ApplicationController
               acc.concat(activities)
               acc
             end
-          acc.push({ benchmark_id: id, activities: activities })
+          acc[id] = activities
         end
         acc
       end
+
+    plan =
+      Plan.create name: "#{@country} draft plan",
+                  country: @country,
+                  assessment: @assessment_type,
+                  activity_map: @result
+
+    redirect_to plan
   end
 end
