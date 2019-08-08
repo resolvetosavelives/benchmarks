@@ -25,8 +25,7 @@ class GoalForm
         score = params[key].to_i
         goal = params["#{key}_goal"].to_i
 
-        puts "key #{key} not found in crosswalk" unless crosswalk[key]
-        next acc unless crosswalk[key]
+        raise "key #{key} not found in crosswalk" unless crosswalk[key]
 
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|
