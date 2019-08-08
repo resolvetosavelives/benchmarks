@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-10 page">
+    <%= form_for @plan, remote: true, data: { controller: "plan" } do |f| %>
+      <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: { target: "plan.activityMap"} %>
+      <div class="sheet">
+          <div class="row"><div class="col"><h3><%= f.text_field :name %></h3></div></div>
+          <div class="row">
+            <div class="col">
+              <% @plan.activity_map.each do |benchmark_id, activities| %>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th><h3><%= benchmark_id %></h3></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% activities.each do |activity| %>
+                      <tr>
+                        <td><%= activity %></td>
+                        <td><button type="button" data-action="plan#deleteActivity" data-benchmark-id="<%= benchmark_id %>" data-activity="<%= activity %>">X</button></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% end %>
+            </div>
+          </div>
+          <div>
+            <%= button_tag "Add Activity", type: :button, data: { action: "plan#showNewActivity" } %>
+            <%= text_field_tag :new_activity, nil, class: "d-none", data: { target: "plan.newActivity", action: "keypress->plan#addNewActivity" } %>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <%=link_to "Back", controller: "assessment", action: "show", country: @plan.country, assessment: @plan.assessment %>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <%= f.submit "Save", data: { target: "plan.submit"} %>
+        </div>
+      </div>
+    <% end %>
+</div>
