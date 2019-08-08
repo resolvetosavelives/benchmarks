@@ -25,7 +25,7 @@ jee_1_0_sheet.drop(1).each do |row|
       end
 
     assessment =
-      Assessment.find_or_create_by(country: country, assessment_type: 'jee_v1')
+      Assessment.find_or_create_by(country: country, assessment_type: 'jee1')
     assessment.update(scores: scores_with_headers)
   end
 end
@@ -47,7 +47,7 @@ jee_2_0_sheet.drop(1).each do |row|
       end
 
     assessment =
-      Assessment.find_or_create_by(country: country, assessment_type: 'jee_v2')
+      Assessment.find_or_create_by(country: country, assessment_type: 'jee2')
     assessment.update(scores: scores_with_headers)
   end
 end

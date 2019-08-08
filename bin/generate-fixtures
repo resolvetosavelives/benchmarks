@@ -8,8 +8,73 @@ Benchmarks_workbook =
   RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
 JEE_scores_workbook =
   RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
-Crosswalk_workbook =
-  RubyXL::Parser.parse('./db/seed-data/BenchmarksDatabase_2Aug2019.xlsx')
+
+class CrosswalkSpreadsheet
+  def initialize
+    @workbook = RubyXL::Parser.parse('./data/BenchmarksDatabase_7Aug2019.xlsx')
+  end
+
+  def parse_crosswalk_row(row)
+    cells = row.cells
+
+    {
+      jee2_cap: load_cell(cells[1]),
+      jee2_ind: load_cell(cells[2]),
+      jee1_cap: load_cell(cells[3]),
+      jee1_ind: load_cell(cells[4]),
+      spar_cap: load_cell(cells[5]),
+      spar_ind: load_cell(cells[6]),
+      bench_cap: load_cell(cells[7]),
+      bench_ind: load_cell(cells[8]),
+      bench_text: load_cell(cells[9])
+    }
+  end
+
+  def crosswalk(data_dictionary)
+    rows = @workbook['Key']
+    rows.drop(1).reduce({}) do |acc, row|
+      raise 'acc failed to propogate' unless acc
+
+      row_ = parse_crosswalk_row row
+
+      if row_[:jee1_cap] && row_[:jee1_ind]
+        jee1_id = "jee1_ind_#{row_[:jee1_cap].downcase}#{row_[:jee1_ind]}"
+        unless data_dictionary[jee1_id]
+          raise "#{jee1_id} is not in the data dictionary (row #{row})"
+        end
+      end
+      if row_[:jee2_cap] && row_[:jee2_ind]
+        jee2_id = "jee2_ind_#{row_[:jee2_cap].downcase}#{row_[:jee2_ind]}"
+        unless data_dictionary[jee2_id]
+          raise "#{jee2_id} is not in the data dictionary (row #{row})"
+        end
+      end
+      if row_[:bench_cap] && row_[:bench_ind]
+        bench_id = "#{row_[:bench_cap][1..-1].strip}.#{row_[:bench_ind]}"
+      end
+
+      dict_append_value acc, jee1_id, bench_id if jee1_id && bench_id
+
+      dict_append_value acc, jee2_id, bench_id if jee2_id && bench_id
+
+      acc
+    end
+  end
+
+  def activity_types; end
+end
+
+def dict_append_value(dict, key, value)
+  dict[key] = [] unless dict[key]
+  dict[key].push(value) unless dict[key].include?(value)
+end
+
+def dict_insert_without_replace(dict, key, value)
+  if dict[key] && dict[key] != value
+    raise "At #{key}, attempted to replace #{dict[key]} with #{value}"
+  end
+  dict[key] = value
+end
 
 def generate_data_dictionary_fixture
   rows = Data_Dictionary_workbook[0]
@@ -119,7 +184,7 @@ def generate_benchmarks_fixture
     unless output[id][:capacity][capacity_id]
       output[id][:capacity][capacity_id] = []
     end
-    output[id][:capacity][capacity_id].push(cells[4].value)
+    output[id][:capacity][capacity_id].push(cells[4].value.gsub("\n", ' '))
   end
 
   File.open('./app/fixtures/benchmarks_and_activities.json', 'w') do |f|
@@ -127,38 +192,20 @@ def generate_benchmarks_fixture
   end
 end
 
-# TODO: incomplete. We will finish this when we actually need to convert from
-# score to benchmark activity.
-def generate_crosswalk_fixture
-  rows.drop(1).each do |row|
-    cells = row.cells
+def load_cell(cell)
+  return cell.value if cell && cell.value && cell.value != ''
+  nil
+end
 
-    if cells[1] && cells[1].value && cells[1].value != ''
-      jee1_id = cells[1].value.to_s + cells[2].value.to_s
-    end
+def generate_crosswalk_fixture(data_dictionary)
+  mappings = CrosswalkSpreadsheet.new.crosswalk(data_dictionary)
 
-    if cells[3] && cells[3].value && cells[3].value != ''
-      jee2_id = cells[3].value.to_s + cells[4].value.to_s
-    end
-
-    if cells[5] && cells[5].value && cells[5].value != ''
-      spar_id = cells[5].value.to_s + cells[6].value.to_s
-    end
-
-    if cells[7] && cells[7].value && cells[7].value != ''
-      bench_id = cells[7].value.to_s + '.' + cells[8].value.to_s
-    end
-
-    puts "jee_v1 #{jee1_id} -> #{bench_id}" if bench_id && jee1_id
-
-    puts "jee_v2 #{jee2_id} -> #{bench_id}" if bench_id && jee2_id
-
-    puts "spar #{spar_id} -> #{bench_id}" if bench_id && spar_id
+  File.open('./app/fixtures/crosswalk.json', 'w') do |f|
+    f.write(mappings.to_json)
   end
-
-  puts output.to_json
 end
 
 data_dictionary = generate_data_dictionary_fixture
 generate_assessment_fixture(data_dictionary)
 generate_benchmarks_fixture
+generate_crosswalk_fixture(data_dictionary)

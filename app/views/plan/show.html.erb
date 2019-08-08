@@ -34,7 +34,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <%=link_to "Back", controller: "assessment", action: "show", country: @plan.country, assessment: @plan.assessment %>
+          <%=link_to "Back", controller: "goals", action: "show", country: @plan.country, assessment_type: @plan.assessment_type %>
         </div>
         <div class="col d-flex justify-content-end">
           <%= f.submit "Save", data: { target: "plan.submit"} %>

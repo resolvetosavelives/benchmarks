@@ -1,0 +1,62 @@
+<div class="row">
+
+<% if @goals %>
+    <div class="col-1"></div>
+    <div class="col-10 page">
+        <div class="sheet">
+        <%= form_for @goals, url: "/goals/" do |f| %>
+            <%= f.hidden_field :country %>
+            <%= f.hidden_field :assessment_type %>
+            <div class="row">
+            <table class="table border-bottom">
+                <thead>
+                <tr class="jee-table-header">
+                    <th scope="col"> Technical Areas </th>
+                    <th scope="col"> Indicators </th>
+                    <th scope="col"> Score </th>
+                    <th scope="col"> Goal </th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
+                    <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
+                    <% indicator = technical_area['indicators'][0] %>
+                    <tr>
+                        <th class="border-right"
+                            scope="row"
+                            rowspan="<%= technical_area['indicators'].count %>">
+                            <%= @data_dictionary[technical_area_id] %>
+                        </th>
+                        <td> <%= @data_dictionary[indicator] %> </td>
+                        <td> <%= f.number_field(indicator) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
+                    </tr>
+
+                    <% technical_area['indicators'].drop(1).each do |indicator| %>
+                    <tr>
+                        <td> <%= @data_dictionary[indicator] %> </td>
+                        <td> <%= f.number_field(indicator, in: 1..5) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
+                    </tr>
+                    <% end %>
+                <% end %>
+                </tbody>
+            </table>
+        </div>
+
+            <div class="row">
+                <div class="col-10"></div>
+                <div class="col-2"><%= f.submit "Next" %></div>
+            </div>
+        <% end %>
+        </div>
+    </div>
+    <div class="col-1"></div>
+<% else %>
+    <div class="col">
+    <div>No assessment available</div>
+    </div>
+<% end %>
+
+</div>
