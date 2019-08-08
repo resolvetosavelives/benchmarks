@@ -4,7 +4,7 @@
     <div class="col-1"></div>
     <div class="col-10 page">
         <div class="sheet">
-        <%= form_for @goal, url: "/assessments/" do |f| %>
+        <%= form_for @goals, url: "/assessments/" do |f| %>
             <%= f.hidden_field :country %>
             <%= f.hidden_field :assessment_type %>
             <div class="row">
@@ -36,8 +36,8 @@
                     <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
                         <td> <%= @data_dictionary[indicator] %> </td>
-                        <td> <%= f.number_field(indicator, @scores[indicator], in: 1..5) %> </td>
-                        <td> <%= f.number_field("#{indicator}_goal", [@scores[indicator]+1, 5].min(), in: 1..5) %> </td>
+                        <td> <%= f.number_field(indicator, in: 1..5) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
                     </tr>
                     <% end %>
                 <% end %>

@@ -1,4 +1,5 @@
 class GoalForm
+  include ActiveModel::Model
   attr_accessor :country, :assessment_type
 
   def initialize(args)
@@ -6,11 +7,10 @@ class GoalForm
     @assessment_type = args.fetch(:assessment_type)
 
     scores = args.fetch(:scores)
-    self.class.attr_accessor(*(scores.map { |score| score['indicator_id'] }))
+    self.class.attr_accessor(*(scores.keys))
+    self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))
 
-    scores.each { |score| send "#{score['indicator_id']}=", score['score'] }
-    scores.each do |score|
-      send "#{score['indicator_id']}_goal=", [score['score'] + 1, 5].min
-    end
+    scores.each { |key, value| send "#{key}=", value }
+    scores.each { |key, value| send "#{key}_goal=", [value + 1, 5].min }
   end
 end
