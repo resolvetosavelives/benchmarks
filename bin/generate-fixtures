@@ -1,0 +1,164 @@
+#!/usr/bin/env ruby
+
+require 'rubyXL'
+require 'json'
+
+Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
+Benchmarks_workbook =
+  RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
+JEE_scores_workbook =
+  RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+Crosswalk_workbook =
+  RubyXL::Parser.parse('./db/seed-data/BenchmarksDatabase_2Aug2019.xlsx')
+
+def generate_data_dictionary_fixture
+  rows = Data_Dictionary_workbook[0]
+
+  dictionary =
+    rows.drop(1).reduce({ section: nil, data: {} }) do |acc, row|
+      raise 'abort! abort!' unless acc
+      cells = row.cells
+
+      if cells[0] && cells[0].value
+        if cells[0].value == 'JEE 1.0 capacity'
+          acc[:section] = 'jee1_ta'
+        elsif cells[0].value == 'JEE 1.0 indicator'
+          acc[:section] = 'jee1_ind'
+        elsif cells[0].value == 'JEE 2.0 capacity'
+          acc[:section] = 'jee2_ta'
+        elsif cells[0].value == 'JEE 2.0 indicator'
+          acc[:section] = 'jee2_ind'
+        elsif cells[0].value == 'SPAR 2018 capacity'
+          acc[:section] = 'spar_2018_ta'
+        elsif cells[0].value == 'SPAR 2018 indicator'
+          acc[:section] = 'spar_2018_ind'
+        else
+          acc[:section] = nil
+        end
+      end
+
+      next acc if acc[:section] == nil
+      if cells[4] == nil || cells[4].value == nil || cells[4].value == ''
+        next acc
+      end
+
+      key = "#{acc[:section]}_#{cells[4].value.downcase}"
+      acc[:data][key] = cells[5].value
+
+      acc
+    end
+
+  File.open('./app/fixtures/data_dictionary.json', 'w') do |f|
+    f.write(dictionary[:data].to_json)
+  end
+
+  dictionary[:data]
+end
+
+def generate_assessment_fixture(data_dictionary)
+  rows = JEE_scores_workbook['Sheet5 (JEE Indicator Labels)']
+
+  assessments =
+    rows.drop(1).reduce({}) do |acc, row|
+      cells = row.cells
+
+      assessment = "jee#{cells[0].value[1]}"
+      indicator_id = "#{assessment}_ind_#{cells[1].value}"
+      technical_area_id = "#{assessment}_ta_#{cells[2].value}"
+
+      unless data_dictionary[indicator_id]
+        raise "unrecognized indicator #{indicator_id}"
+      end
+      unless data_dictionary[technical_area_id]
+        raise "unrecognized technical area #{technical_area_id}"
+      end
+
+      unless acc[assessment]
+        acc[assessment] = {
+          label: assessment, technical_area_order: [], technical_areas: {}
+        }
+      end
+
+      unless acc[assessment][:technical_areas][technical_area_id]
+        acc[assessment][:technical_area_order].push(technical_area_id)
+        acc[assessment][:technical_areas][technical_area_id] = {
+          assessment: assessment,
+          technical_area_id: technical_area_id,
+          indicators: []
+        }
+      end
+      acc[assessment][:technical_areas][technical_area_id][:indicators].push(
+        indicator_id
+      )
+
+      acc
+    end
+
+  File.open('./app/fixtures/assessments.json', 'w') do |f|
+    f.write(assessments.to_json)
+  end
+end
+
+def generate_benchmarks_fixture
+  rows = Benchmarks_workbook[0]
+
+  output = {}
+
+  rows.drop(1).each do |row|
+    cells = row.cells
+    id = cells[0].value
+    unless output[id]
+      output[id] = {
+        id: id,
+        benchmark: cells[1].value,
+        objective: cells[2].value,
+        capacity: {}
+      }
+    end
+    capacity_id = cells[3].value.match(/\d/)[0]
+    unless output[id][:capacity][capacity_id]
+      output[id][:capacity][capacity_id] = []
+    end
+    output[id][:capacity][capacity_id].push(cells[4].value)
+  end
+
+  File.open('./app/fixtures/benchmarks_and_activities.json', 'w') do |f|
+    f.write(output.to_json)
+  end
+end
+
+# TODO: incomplete. We will finish this when we actually need to convert from
+# score to benchmark activity.
+def generate_crosswalk_fixture
+  rows.drop(1).each do |row|
+    cells = row.cells
+
+    if cells[1] && cells[1].value && cells[1].value != ''
+      jee1_id = cells[1].value.to_s + cells[2].value.to_s
+    end
+
+    if cells[3] && cells[3].value && cells[3].value != ''
+      jee2_id = cells[3].value.to_s + cells[4].value.to_s
+    end
+
+    if cells[5] && cells[5].value && cells[5].value != ''
+      spar_id = cells[5].value.to_s + cells[6].value.to_s
+    end
+
+    if cells[7] && cells[7].value && cells[7].value != ''
+      bench_id = cells[7].value.to_s + '.' + cells[8].value.to_s
+    end
+
+    puts "jee_v1 #{jee1_id} -> #{bench_id}" if bench_id && jee1_id
+
+    puts "jee_v2 #{jee2_id} -> #{bench_id}" if bench_id && jee2_id
+
+    puts "spar #{spar_id} -> #{bench_id}" if bench_id && spar_id
+  end
+
+  puts output.to_json
+end
+
+data_dictionary = generate_data_dictionary_fixture
+generate_assessment_fixture(data_dictionary)
+generate_benchmarks_fixture
