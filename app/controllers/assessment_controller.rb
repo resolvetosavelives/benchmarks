@@ -63,18 +63,20 @@ class AssessmentController < ApplicationController
     # jee1_ind_p11
     # jee1_ind_p11_goal
 
+    goal_params = params.fetch(:goal_form)
     @result =
-      params.fetch(:goal_form).keys.reduce([]) do |acc, key|
+      goal_params.keys.reduce([]) do |acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
                key.start_with?('spar_')
           next acc
         end
         next acc if key.end_with?('_goal')
-        score = params[key].to_i
-        goal = params["#{key}_goal"].to_i
+        score = goal_params[key].to_i
+        goal = goal_params["#{key}_goal"].to_i
 
         puts "key #{key} not found in crosswalk" unless crosswalk[key]
         next acc unless crosswalk[key]
+
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|
           activities =

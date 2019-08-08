@@ -19,8 +19,8 @@
                 </thead>
 
                 <tbody>
-                <% @assessments['jee1']['technical_area_order'].each do |technical_area_id| %>
-                    <% technical_area = @assessments['jee1']['technical_areas'][technical_area_id] %>
+                <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
+                    <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
                     <% indicator = technical_area['indicators'][0] %>
                     <tr>
                         <th class="border-right"
@@ -47,8 +47,7 @@
 
             <div class="row">
                 <div class="col-10"></div>
-                <div class="col-2"><%= render 'application/button', content: 'Next' %></div>
-                <div class="col-2">f.submit</div>
+                <div class="col-2"><%= f.submit "Next" %></div>
             </div>
         <% end %>
         </div>
