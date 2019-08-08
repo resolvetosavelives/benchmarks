@@ -1,10 +1,10 @@
 <div class="row">
 
-<% if @scores %>
+<% if @goals %>
     <div class="col-1"></div>
     <div class="col-10 page">
         <div class="sheet">
-        <%= form_for @goals, url: "/assessments/" do |f| %>
+        <%= form_for @goals, url: "/goals/" do |f| %>
             <%= f.hidden_field :country %>
             <%= f.hidden_field :assessment_type %>
             <div class="row">
