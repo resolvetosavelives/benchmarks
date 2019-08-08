@@ -16,12 +16,12 @@ class GoalForm
 
   def self.create_draft_plan!(params, crosswalk, benchmarks_and_activities)
     result =
-      params.keys.reduce({}) do |acc, key|
+      params.keys.reduce({}) do |benchmark_acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
                key.start_with?('spar_')
-          next acc
+          next benchmark_acc
         end
-        next acc if key.end_with?('_goal')
+        next benchmark_acc if key.end_with?('_goal')
         score = params[key].to_i
         goal = params["#{key}_goal"].to_i
 
@@ -30,14 +30,15 @@ class GoalForm
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|
           activities =
-            (score + 1..goal).reduce([]) do |acc, level|
+            (score + 1..goal).reduce([]) do |activity_acc, level|
               activities = benchmarks_and_activities[id]['capacity'][level.to_s]
-              acc.concat(activities)
-              acc
+              activity_acc.concat(activities)
+              activity_acc
             end
-          acc[id] = activities
+          benchmark_acc[id] = [] unless benchmark_acc[id]
+          benchmark_acc[id].concat(activities)
         end
-        acc
+        benchmark_acc
       end
 
     Plan.create! name: "#{params.fetch(:country)} draft plan",
