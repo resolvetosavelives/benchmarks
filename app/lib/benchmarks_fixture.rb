@@ -14,7 +14,7 @@ class BenchmarksFixture
       if args[:goal] && ((args[:goal] < 2) || (5 < args[:goal]))
         raise OutOfBounds.new args[:goal]
       end
-      if args[:score] && ((args[:score] < 2) || (5 < args[:score]))
+      if args[:score] && ((args[:score] < 1) || (5 < args[:score]))
         raise OutOfBounds.new args[:score]
       end
       raise InvalidParameter unless args[:score] <= args[:goal]
