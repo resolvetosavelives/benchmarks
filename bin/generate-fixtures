@@ -8,12 +8,10 @@ Benchmarks_workbook =
   RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
 JEE_scores_workbook =
   RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
-Crosswalk_workbook =
-  RubyXL::Parser.parse('./data/BenchmarksDatabase_2Aug2019.xlsx')
 
 class CrosswalkSpreadsheet
   def initialize
-    @workbook = RubyXL::Parser.parse('./data/BenchmarksDatabase_2Aug2019.xlsx')
+    @workbook = RubyXL::Parser.parse('./data/BenchmarksDatabase_7Aug2019.xlsx')
   end
 
   def parse_crosswalk_row(row)
