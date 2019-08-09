@@ -1,35 +1,30 @@
-class InvalidParameter < Exception; end
-class OutOfBounds < Exception; end
-
 class BenchmarksFixture
   def initialize
     @fixture =
       JSON.load File.open './app/fixtures/benchmarks_and_activities.json'
   end
 
-  def activities(benchmark_id, args)
-    raise "Unknown benchmark: #{benchmark_id}" unless @fixture[benchmark_id]
+  def goal_activities(benchmark_id, score, goal)
+    raise ArgumentError unless @fixture[benchmark_id]
 
-    if args[:score] && args[:goal]
-      if args[:goal] && ((args[:goal] < 2) || (5 < args[:goal]))
-        raise OutOfBounds.new args[:goal]
-      end
-      if args[:score] && ((args[:score] < 1) || (5 < args[:score]))
-        raise OutOfBounds.new args[:score]
-      end
-      raise InvalidParameter unless args[:score] <= args[:goal]
-
-      return (args[:score] + 1..args[:goal]).reduce([]) do |acc, level|
-        acc.concat @fixture[benchmark_id]['capacity'][level.to_s]
-        acc
-      end
-    elsif args[:level]
-      if args[:level] && ((args[:level] < 2) || (5 < args[:level]))
-        raise OutOfBounds.new args[:level]
-      end
-      return @fixture[benchmark_id]['capacity'][args[:level].to_s]
+    unless goal.between?(2, 5)
+      raise RangeError.new 'goal is not between 2 and 5'
     end
+    unless score.between?(1, 5)
+      raise RangeError.new 'score is not between 2 and 5'
+    end
+    raise ArgumentError.new 'score is > goal' unless score <= goal
 
-    raise InvalidParameter
+    return (score + 1..goal).reduce([]) do |acc, level|
+      acc.concat @fixture[benchmark_id]['capacity'][level.to_s]
+      acc
+    end
+  end
+
+  def capacity_activities(benchmark_id, level)
+    unless level.between?(2, 5)
+      raise RangeError.new 'level is not between 2 and 5'
+    end
+    return @fixture[benchmark_id]['capacity'][level.to_s]
   end
 end

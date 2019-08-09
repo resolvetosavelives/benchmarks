@@ -1,10 +1,12 @@
 require 'test_helper'
 
 class GoalFormTest < ActiveSupport::TestCase
-  test 'a simple draft plan' do
-    crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
-    benchmarks = BenchmarksFixture.new
+  def setup
+    @crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
+    @benchmarks = BenchmarksFixture.new
+  end
 
+  test 'a simple draft plan' do
     plan =
       GoalForm.create_draft_plan! (
                                     {
@@ -14,20 +16,17 @@ class GoalFormTest < ActiveSupport::TestCase
                                       'jee1_ind_p11_goal' => 3
                                     }.with_indifferent_access
                                   ),
-                                  crosswalk,
-                                  benchmarks
+                                  @crosswalk,
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map],
-                 { '1.1' => benchmarks.activities('1.1', score: 1, goal: 3) }
+                 { '1.1' => @benchmarks.goal_activities('1.1', 1, 3) }
   end
 
   test 'it gets no activities if the score is already a 5' do
-    crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
-    benchmarks = BenchmarksFixture.new
-
     plan =
       GoalForm.create_draft_plan! (
                                     {
@@ -37,8 +36,8 @@ class GoalFormTest < ActiveSupport::TestCase
                                       'jee1_ind_p11_goal' => 5
                                     }.with_indifferent_access
                                   ),
-                                  crosswalk,
-                                  benchmarks
+                                  @crosswalk,
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -47,9 +46,6 @@ class GoalFormTest < ActiveSupport::TestCase
   end
 
   test 'it gets all of the activities in a range with multiple mappings' do
-    crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
-    benchmarks = BenchmarksFixture.new
-
     plan =
       GoalForm.create_draft_plan! (
                                     {
@@ -61,20 +57,17 @@ class GoalFormTest < ActiveSupport::TestCase
                                       'jee1_ind_p12_goal' => 5
                                     }.with_indifferent_access
                                   ),
-                                  crosswalk,
-                                  benchmarks
+                                  @crosswalk,
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map],
-                 { '1.1' => benchmarks.activities('1.1', score: 1, goal: 5) }
+                 { '1.1' => @benchmarks.goal_activities('1.1', 1, 5) }
   end
 
   test 'it gets all of the activities in a range with a gap between multiple mappings' do
-    crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
-    benchmarks = BenchmarksFixture.new
-
     plan =
       GoalForm.create_draft_plan! (
                                     {
@@ -86,13 +79,13 @@ class GoalFormTest < ActiveSupport::TestCase
                                       'jee1_ind_p12_goal' => 4
                                     }.with_indifferent_access
                                   ),
-                                  crosswalk,
-                                  benchmarks
+                                  @crosswalk,
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map],
-                 { '1.1' => benchmarks.activities('1.1', score: 1, goal: 4) }
+                 { '1.1' => @benchmarks.goal_activities('1.1', 1, 4) }
   end
 end

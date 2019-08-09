@@ -42,8 +42,7 @@ class GoalForm
 
     benchmark_activities =
       benchmark_goals.each.reduce({}) do |acc, (key, value)|
-        acc[key] =
-          benchmarks.activities(key, score: value.score, goal: value.goal)
+        acc[key] = benchmarks.goal_activities(key, value.score, value.goal)
         acc
       end
 

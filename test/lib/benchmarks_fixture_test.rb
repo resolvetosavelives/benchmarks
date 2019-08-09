@@ -4,7 +4,7 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
   test 'reports activities for the requested level' do
     benchmarks = BenchmarksFixture.new
 
-    activities = benchmarks.activities('1.1', level: 2)
+    activities = benchmarks.capacity_activities('1.1', 2)
     assert_equal activities.length, 6
     assert_equal activities[0],
                  'Identify and convene key stakeholders related to the review, formulation and implementation of legislation and policies.'
@@ -13,7 +13,7 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
   test 'calculates activities for a score/goal range' do
     benchmarks = BenchmarksFixture.new
 
-    activities = benchmarks.activities('1.1', score: 2, goal: 4)
+    activities = benchmarks.goal_activities('1.1', 2, 4)
     assert_equal activities.length, 8
     assert_equal activities[0],
                  'Conduct an orientation with relevant stakeholders regarding adjustment in the legislation, laws, regulations, policy and administrative requirements.'
@@ -23,24 +23,12 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
 
   test 'raises an exception if a parameter is out of range' do
     benchmarks = BenchmarksFixture.new
-    assert_raises(OutOfBounds) { || benchmarks.activities '1.1', level: 0 }
-    assert_raises(OutOfBounds) { || benchmarks.activities '1.1', level: 6 }
-    assert_raises(InvalidParameter) { || benchmarks.activities '1.1', goal: 0 }
-    assert_raises(InvalidParameter) { || benchmarks.activities '1.1', score: 0 }
-    assert_raises(OutOfBounds) do ||
-      benchmarks.activities '1.1', score: 6, goal: 5
-    end
-    assert_raises(OutOfBounds) do ||
-      benchmarks.activities '1.1', score: 0, goal: 5
-    end
-    assert_raises(OutOfBounds) do ||
-      benchmarks.activities '1.1', score: 1, goal: 0
-    end
-    assert_raises(OutOfBounds) do ||
-      benchmarks.activities '1.1', score: 1, goal: 6
-    end
-    assert_raises(InvalidParameter) do ||
-      benchmarks.activities '1.1', score: 5, goal: 3
-    end
+    assert_raises(RangeError) { benchmarks.capacity_activities '1.1', 0 }
+    assert_raises(RangeError) { benchmarks.capacity_activities '1.1', 6 }
+    assert_raises(RangeError) { benchmarks.goal_activities '1.1', 6, 5 }
+    assert_raises(RangeError) { benchmarks.goal_activities '1.1', 0, 5 }
+    assert_raises(RangeError) { benchmarks.goal_activities '1.1', 1, 0 }
+    assert_raises(RangeError) { benchmarks.goal_activities '1.1', 1, 6 }
+    assert_raises(ArgumentError) { benchmarks.goal_activities '1.1', 5, 3 }
   end
 end
