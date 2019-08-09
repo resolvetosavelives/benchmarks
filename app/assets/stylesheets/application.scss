@@ -13,13 +13,13 @@
 
 $colors: (
   "black": #2d2d35,
+  "blue": #2c8dc9,
+  "dark-blue": #20313b,
+  "gray": rgba(45, 45, 53, 0.25),
+  "green": #46b754,
+  "orange": #d86422,
   "red": #e93939,
   "yellow": #ffca1e,
-  "green": #4fb754,
-  "dark-slate": #50506b,
-  "medium-slate": #888799,
-  "light-slate": #dae0e9,
-  "light-gray": #f2f2f2,
 ) !default;
 
 $theme-colors: $colors;
@@ -29,6 +29,8 @@ $theme-colors: $colors;
 @import url('https://fonts.googleapis.com/css?family=Pathway Gothic One');
 @import url('https://fonts.googleapis.com/css?family=Karla');
 
+
+/*
 .text-dark-slate {
   color: color("dark-slate");
 }
@@ -56,9 +58,9 @@ $theme-colors: $colors;
 .bg-green {
   background-color: color("green");
 }
+*/
 
-.navbar {
-  height: 110px;
+.navbar { height: 110px;
   padding: 27px 35px 27px 35px;
 
   .navbar-brand {
@@ -87,11 +89,18 @@ $theme-colors: $colors;
   letter-spacing: 0.1em;
 }
 
+/*
 .rtsl-button {
   font-size: 26px;
   line-height: 30px;
   letter-spacing: 0.1em;
   margin-top: 50px;
+}
+*/
+
+.btn {
+  color: color("white");
+  background-color: color("orange");
 }
 
 .landing {
