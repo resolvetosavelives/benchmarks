@@ -29,12 +29,9 @@ class GoalsController < ApplicationController
 
   def create
     crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
-    benchmarks_and_activities =
-      JSON.load File.open './app/fixtures/benchmarks_and_activities.json'
+    benchmarks = BenchmarksFixture.new
 
     goal_params = params.fetch(:goal_form)
-    redirect_to GoalForm.create_draft_plan! goal_params,
-                                            crosswalk,
-                                            benchmarks_and_activities
+    redirect_to GoalForm.create_draft_plan! goal_params, crosswalk, benchmarks
   end
 end
