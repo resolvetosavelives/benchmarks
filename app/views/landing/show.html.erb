@@ -20,16 +20,16 @@
 
             <p> Use this tool to get help with creating a draft plan, explore best practices in the reference library, or browse the benchmarks. </p>
 
-            <%= form_tag('/country_select', data: { controller: "country_selection" }) do %>
+            <%= form_tag('/country_select', data: { controller: "country-selection" }) do %>
               <div class="input-group">
-                <%= select_tag "country", options_from_collection_for_select(@countries, 'name', 'name'), class: "custom-select", data: { target: "country_selection.selectedCountry" } %>
+                <%= select_tag "country", options_from_collection_for_select(@countries, 'name', 'name'), class: "custom-select", data: { target: "country-selection.selectedCountry" } %>
                 <div class="input-group-append">
-                  <%= button_tag "Get Started", type: :button, data: { action: "country_selection#select" }, class: "btn text-white bg-green" %>
+                  <%= button_tag "Get Started", type: :button, data: { action: "country-selection#select" }, class: "btn text-white bg-green" %>
                 </div>
               </div>
 
-              <%= select_tag "assessment_type", options_from_collection_for_select([], 'assessment_type', 'assessment_type'), data: { target: "country_selection.assessmentTypes" } %>
-              <%= hidden_field_tag "countries_and_assessments", value: @selectables.to_json, data: { target: "country_selection.selectables" } %>
+              <%= select_tag "assessment_type", options_from_collection_for_select([], 'assessment_type', 'assessment_type'), data: { target: "country-selection.assessmentTypes" } %>
+              <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data: { target: "country-selection.selectables" } %>
             <% end %>
         </div>
         <div class="col">
