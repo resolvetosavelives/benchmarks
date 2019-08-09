@@ -5,14 +5,18 @@ export default class extends Controller {
 
   select(e) {
     const countryName = this.selectedCountryTarget.value;
-    const assessmentTypes = this.selectables[countryName]
+    const assessmentTypes = this.selectables[countryName];
     while (this.assessmentTypesTarget.firstChild) {
-      this.assessmentTypesTarget.removeChild(this.assessmentTypesTarget.firstChild)
+      this.assessmentTypesTarget.removeChild(
+        this.assessmentTypesTarget.firstChild
+      );
     }
-    assessmentTypes.forEach(type => this.assessmentTypesTarget.add(new Option(type)))
+    assessmentTypes.forEach(type =>
+      this.assessmentTypesTarget.add(new Option(type))
+    );
   }
 
   get selectables() {
-    return JSON.parse(this.selectablesTarget.value)
+    return JSON.parse(this.selectablesTarget.value);
   }
 }

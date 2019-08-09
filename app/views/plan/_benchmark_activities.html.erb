@@ -1,0 +1,17 @@
+<div class="row bg-light-gray p-1">
+  <div class="col">
+    <b>Benchmark <%= benchmark_id %>:</b> <%=
+    benchmarks.benchmark_text(benchmark_id) %>
+  </div>
+</div>
+
+<% activities.each do |activity| %>
+<div class="row border p-2">
+  <div class="col-11">
+    <%= activity %>
+  </div>
+  <div class="col-1">
+    <img src="/delete-button.svg" />
+  </div>
+</div>
+<% end %>
