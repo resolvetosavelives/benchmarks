@@ -6,8 +6,12 @@ require 'json'
 Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
 Benchmarks_workbook =
   RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
-JEE_scores_workbook =
-  RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+# JEE_scores_workbook =
+#   RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+# SPAR_scores_workbook =
+#   RubyXL::Parser.parse('./db/seed-data/SPAR_2018_2019Jul29.xlsx')
+Assessment_structures_workbook =
+  RubyXL::Parser.parse('./data/Assessment-Structures.xlsx')
 
 class CrosswalkSpreadsheet
   def initialize
@@ -120,47 +124,86 @@ def generate_data_dictionary_fixture
   dictionary[:data]
 end
 
-def generate_assessment_fixture(data_dictionary)
-  rows = JEE_scores_workbook['Sheet5 (JEE Indicator Labels)']
+def process_assessment_structure(data_dictionary, rows, assessment)
+  puts rows[0].cells.reduce('') { |acc, cell|
+         acc = "#{acc} | #{cell.value}"
+         acc
+       }
+  puts rows[1].cells.reduce('') { |acc, cell|
+         acc = "#{acc} | #{cell.value}"
+         acc
+       }
+  puts ''
 
-  assessments =
-    rows.drop(1).reduce({}) do |acc, row|
-      cells = row.cells
+  rows.drop(1).reduce({}) do |acc, row|
+    cells = row.cells
 
-      assessment = "jee#{cells[0].value[1]}"
-      indicator_id = "#{assessment}_ind_#{cells[1].value}"
-      technical_area_id = "#{assessment}_ta_#{cells[2].value}"
+    puts cells
 
-      unless data_dictionary[indicator_id]
-        raise "unrecognized indicator #{indicator_id}"
-      end
-      unless data_dictionary[technical_area_id]
-        raise "unrecognized technical area #{technical_area_id}"
-      end
+    technical_area_id = "#{assessment}_ta_#{cells[0].value}"
+    indicator_id = "#{assessment}_ind_#{cells[1].value}"
 
-      unless acc[assessment]
-        acc[assessment] = {
-          label: assessment, technical_area_order: [], technical_areas: {}
-        }
-      end
+    puts "#{indicator_id} #{technical_area_id}"
 
-      unless acc[assessment][:technical_areas][technical_area_id]
-        acc[assessment][:technical_area_order].push(technical_area_id)
-        acc[assessment][:technical_areas][technical_area_id] = {
-          assessment: assessment,
-          technical_area_id: technical_area_id,
-          indicators: []
-        }
-      end
-      acc[assessment][:technical_areas][technical_area_id][:indicators].push(
-        indicator_id
-      )
-
-      acc
+    unless data_dictionary[indicator_id]
+      raise "unrecognized indicator #{indicator_id}"
+    end
+    unless data_dictionary[technical_area_id]
+      raise "unrecognized technical area #{technical_area_id}"
     end
 
+    unless acc[assessment]
+      acc[assessment] = {
+        label: assessment, technical_area_order: [], technical_areas: {}
+      }
+    end
+
+    unless acc[assessment][:technical_areas][technical_area_id]
+      acc[assessment][:technical_area_order].push(technical_area_id)
+      acc[assessment][:technical_areas][technical_area_id] = {
+        assessment: assessment,
+        technical_area_id: technical_area_id,
+        indicators: []
+      }
+    end
+    acc[assessment][:technical_areas][technical_area_id][:indicators].push(
+      indicator_id
+    )
+
+    acc
+  end
+end
+
+def generate_assessment_fixture(data_dictionary)
+  puts Assessment_structures_workbook.sheets.each { |sheet| puts sheet.name }
+
+  spar_structure =
+    process_assessment_structure(
+      data_dictionary,
+      Assessment_structures_workbook['SPAR 2018'],
+      'spar_2018'
+    )
+
+  jee1_structure =
+    process_assessment_structure(
+      data_dictionary,
+      Assessment_structures_workbook['JEE 1'],
+      'jee1'
+    )
+
+  jee2_structure =
+    process_assessment_structure(
+      data_dictionary,
+      Assessment_structures_workbook['JEE 2'],
+      'jee2'
+    )
+
+  assessment_structures =
+    spar_structure.merge(jee1_structure).merge(jee2_structure)
+  #assessment_structures = jee1_structure.merge(jee2_structure)
+
   File.open('./app/fixtures/assessments.json', 'w') do |f|
-    f.write(assessments.to_json)
+    f.write(assessment_structures.to_json)
   end
 end
 
