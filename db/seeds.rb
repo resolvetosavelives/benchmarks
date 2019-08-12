@@ -34,7 +34,7 @@ def seed_jee(worksheet, assessment_type)
 end
 
 def seed_spar(worksheet, assessment_type)
-  columns = worksheet[0].cells.drop(2).map(&:value)
+  columns = worksheet[0].cells.drop(2).map { |c| c.value.downcase }
   worksheet.drop(1).each do |row|
     cells = row.cells
     country = cells[1].value
