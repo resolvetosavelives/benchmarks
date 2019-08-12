@@ -4,6 +4,10 @@ class BenchmarksFixture
       JSON.load File.open './app/fixtures/benchmarks_and_activities.json'
   end
 
+  def benchmark_text(benchmark_id)
+    @fixture[benchmark_id]['benchmark']
+  end
+
   def goal_activities(benchmark_id, score, goal)
     raise ArgumentError unless @fixture[benchmark_id]
 
@@ -15,10 +19,12 @@ class BenchmarksFixture
     end
     raise ArgumentError.new 'score is > goal' unless score <= goal
 
-    return (score + 1..goal).reduce([]) do |acc, level|
-      acc.concat @fixture[benchmark_id]['capacity'][level.to_s]
-      acc
-    end
+    return(
+      (score + 1..goal).reduce([]) do |acc, level|
+        acc.concat @fixture[benchmark_id]['capacity'][level.to_s]
+        acc
+      end
+    )
   end
 
   def capacity_activities(benchmark_id, level)

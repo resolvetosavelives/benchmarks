@@ -1,20 +1,24 @@
-<div class="row">
-
 <% if @goals %>
-    <div class="col-1"></div>
-    <div class="col-10 page">
-        <div class="sheet">
-        <%= form_for @goals, url: "/goals/" do |f| %>
-            <%= f.hidden_field :country %>
-            <%= f.hidden_field :assessment_type %>
-            <div class="row">
+    <%= form_for @goals, url: "/goals/" do |f| %>
+        <%= f.hidden_field :country %>
+        <%= f.hidden_field :assessment_type %>
+        <div class="row">
+            <div class="col-7">
+            <h1 class="alt-header"> <%= @goals.assessment_type %> Scores </h1>
+
+            <p> The scores are pre-populated from our JEE database. The goal is pre-populated by one step up. You can manually change the score or goal to your liking. </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
             <table class="table border-bottom">
                 <thead>
                 <tr class="jee-table-header">
-                    <th scope="col"> Technical Areas </th>
-                    <th scope="col"> Indicators </th>
-                    <th scope="col"> Score </th>
-                    <th scope="col"> Goal </th>
+                    <th scope="col" class="col-3"> Technical Areas </th>
+                    <th scope="col" class="col-7"> Indicators </th>
+                    <th scope="col" class="col-1"> Score </th>
+                    <th scope="col" class="col-1"> Goal </th>
                 </tr>
                 </thead>
 
@@ -33,30 +37,27 @@
                         <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
                     </tr>
 
-                    <% technical_area['indicators'].drop(1).each do |indicator| %>
+                    <% technical_area['indicators'].drop(1).each do |indicator_| %>
                     <tr>
-                        <td> <%= @data_dictionary[indicator] %> </td>
-                        <td> <%= f.number_field(indicator, in: 1..5) %> </td>
-                        <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
+                        <td> <%= @data_dictionary[indicator_] %> </td>
+                        <td> <%= f.number_field(indicator_, in: 1..5) %> </td>
+                        <td> <%= f.number_field("#{indicator_}_goal", in: 1..5) %> </td>
                     </tr>
                     <% end %>
                 <% end %>
                 </tbody>
             </table>
+            </div>
         </div>
 
             <div class="row">
                 <div class="col-10"></div>
-                <div class="col-2"><%= f.submit "Next" %></div>
+                <div class="col-2"><%= f.submit "Next", class: "btn" %></div>
             </div>
-        <% end %>
         </div>
-    </div>
-    <div class="col-1"></div>
+    <% end %>
 <% else %>
     <div class="col">
     <div>No assessment available</div>
     </div>
 <% end %>
-
-</div>

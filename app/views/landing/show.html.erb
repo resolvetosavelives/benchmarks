@@ -1,28 +1,44 @@
-<nav class="navbar navbar-expand-lg fg-white bg-black justify-content-between">
+<nav class="navbar navbar-expand-lg text-white bg-blue justify-content-between">
     <a class="navbar-brand">Benchmarks Logo</a>
 
     <div>
         <ul class="navbar-nav">
         <li class="nav-item">WHO BENCHMARKS</li>
         <li class="nav-item">REFERENCE LIBRARY</li>
-        <li class="nav-item"><button class="btn login-button bg-green fg-white rounded-pill">Login</button></li>
+        <li class="nav-item">LOG IN</li>
         </ul>
     </div>
 </nav>
 </div>
 
 <div class="landing container">
-    <div class="row">
-        <div class="col left-panel">
-            <h1 class="landing-heading my-4"> A good heading... </h1>
+  <div class="row">
+    <div class="col left-panel">
+      <h1 class="landing-heading my-4"> A good heading... </h1>
 
-            <p> World Health Organization (WHO) and its partners have developed a tool with a list of benchmarks and corresponding actions that can be applied to increase the performance of countries in emergency preparedness through the development and implementation of a National Action Plan for Health Security (NAPHS). </p>
+      <p> World Health Organization (WHO) and its partners have developed a tool with a list of benchmarks and corresponding actions that can be applied to increase the performance of countries in emergency preparedness through the development and implementation of a National Action Plan for Health Security (NAPHS). </p>
 
-            <p> Use this tool to get help with creating a draft plan, explore best practices in the reference library, or browse the benchmarks. </p>
+      <p> Use this tool to get help with creating a draft plan, explore best practices in the reference library, or browse the benchmarks. </p>
 
-            <button class="btn get-started-button border-black fg-black rounded-pill">Get Started</button>
+      <%= form_tag('/country_select', data: { controller: "country-selection" }) do %>
+        <div class="input-group">
+          <%= select_tag "country", options_from_collection_for_select(@countries, 'name', 'name'), class: "custom-select", data: { target: "country-selection.selectedCountry" } %>
+          <div class="input-group-append">
+            <%= button_tag "Get Started", type: :button, data: { action: "country-selection#select" }, class: "btn text-white bg-green" %>
+          </div>
         </div>
-        <div class="col">
+        <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data: { target: "country-selection.selectables" } %>
+
+        <div class="input-group">
+          <%= select_tag "assessment_type", options_from_collection_for_select([], 'assessment_type', 'assessment_type'), class: "custom-select", data: { target: "country-selection.assessmentTypes" } %>
+          <div class="input-group-append">
+            <%= button_tag "Next", type: :submit, class: "btn text-white bg-orange" %>
+          </div>
         </div>
+      <% end %>
     </div>
+
+    <div class="col">
+    </div>
+  </div>
 </div>

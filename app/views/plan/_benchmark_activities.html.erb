@@ -1,0 +1,30 @@
+<div class="row bg-light-gray p-1">
+  <div class="col">
+    <b>Benchmark <%= benchmark_id %>:</b> <%=
+    benchmarks.benchmark_text(benchmark_id) %>
+  </div>
+</div>
+
+<% activities.each do |activity| %>
+<div class="row border p-2">
+  <div class="col-11">
+    <%= activity %>
+  </div>
+  <div class="col-1">
+    <button
+      type="button"
+      data-action="plan#deleteActivity"
+      data-benchmark-id="<%= benchmark_id %>"
+      data-activity="<%= activity %>"
+    >
+      <img src="/delete-button.svg" />
+    </button>
+  </div>
+</div>
+<% end %>
+
+<div class="row border p-2">
+  <%= text_field_tag :new_activity, nil, class: "", placeholder: "+ Add
+  Activity", data: { target: "plan.newActivity", action:
+  "keypress->plan#addNewActivity", "benchmark-id": benchmark_id } %>
+</div>
