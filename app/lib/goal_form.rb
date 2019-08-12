@@ -10,8 +10,8 @@ class GoalForm
     self.class.attr_accessor(*(scores.keys))
     self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))
 
-    scores.each { |key, value| send "#{key}=", value }
-    scores.each { |key, value| send "#{key}_goal=", [value + 1, 5].min }
+    scores.each { |key, value| send "#{key}=", value.score }
+    scores.each { |key, value| send "#{key}_goal=", (value + 1).score }
   end
 
   def self.create_draft_plan!(params, crosswalk, benchmarks)

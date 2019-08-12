@@ -12,7 +12,12 @@ class GoalsController < ApplicationController
       scores =
         scores.reduce({}) do |acc, score|
           key = "#{assessment_type}_ind_#{score['indicator_id']}"
-          acc[key] = score['score']
+          if assessment_type == 'spar_2018'
+            acc[key] = SparScore.new score['score']
+          else
+            acc[key] = JeeScore.new score['score']
+          end
+
           acc
         end
 
