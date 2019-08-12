@@ -22,7 +22,9 @@ $colors: (
   "light-gray": #f2f2f2,
 ) !default;
 
-@import "bootstrap";
+$theme-colors: $colors;
+
+@import "bootstrap/scss/bootstrap";
 @import url('https://fonts.googleapis.com/css?family=Crimson Text');
 @import url('https://fonts.googleapis.com/css?family=Pathway Gothic One');
 @import url('https://fonts.googleapis.com/css?family=Karla');
