@@ -20,7 +20,7 @@
 
       <p> Use this tool to get help with creating a draft plan, explore best practices in the reference library, or browse the benchmarks. </p>
 
-      <%= form_tag('/goals', method: :get, data: { controller: "country-selection" }) do %>
+      <%= form_tag('/country_select', data: { controller: "country-selection" }) do %>
         <div class="input-group">
           <%= select_tag "country", options_from_collection_for_select(@countries, 'name', 'name'), class: "custom-select", data: { target: "country-selection.selectedCountry" } %>
           <div class="input-group-append">
