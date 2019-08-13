@@ -34,14 +34,14 @@
                         </th>
                         <td> <%= @data_dictionary[indicator] %> </td>
                         <td> <%= f.number_field(indicator) %> </td>
-                        <td> <%= f.number_field("#{indicator}_goal", in: 1..5) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal") %> </td>
                     </tr>
 
                     <% technical_area['indicators'].drop(1).each do |indicator_| %>
                     <tr>
                         <td> <%= @data_dictionary[indicator_] %> </td>
-                        <td> <%= f.number_field(indicator_, in: 1..5) %> </td>
-                        <td> <%= f.number_field("#{indicator_}_goal", in: 1..5) %> </td>
+                        <td> <%= f.number_field(indicator_) %> </td>
+                        <td> <%= f.number_field("#{indicator_}_goal") %> </td>
                     </tr>
                     <% end %>
                 <% end %>

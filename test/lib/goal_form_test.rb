@@ -17,13 +17,21 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks
+                                  @benchmarks,
+                                  JeeScale
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map],
-                 { '1.1' => @benchmarks.goal_activities('1.1', 1, 3) }
+                 {
+                   '1.1' =>
+                     @benchmarks.goal_activities(
+                       '1.1',
+                       (Score.new 1),
+                       (Score.new 3)
+                     )
+                 }
   end
 
   test 'it gets no activities if the score is already a 5' do
@@ -37,7 +45,8 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks
+                                  @benchmarks,
+                                  JeeScale
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -58,13 +67,21 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks
+                                  @benchmarks,
+                                  JeeScale
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map],
-                 { '1.1' => @benchmarks.goal_activities('1.1', 1, 5) }
+                 {
+                   '1.1' =>
+                     @benchmarks.goal_activities(
+                       '1.1',
+                       (Score.new 1),
+                       (Score.new 5)
+                     )
+                 }
   end
 
   test 'it gets all of the activities in a range with a gap between multiple mappings' do
@@ -80,12 +97,76 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks
+                                  @benchmarks,
+                                  JeeScale
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map],
-                 { '1.1' => @benchmarks.goal_activities('1.1', 1, 4) }
+                 {
+                   '1.1' =>
+                     @benchmarks.goal_activities(
+                       '1.1',
+                       (Score.new 1),
+                       (Score.new 4)
+                     )
+                 }
+  end
+
+  test 'it gets proper results from a SPAR score' do
+    plan =
+      GoalForm.create_draft_plan! (
+                                    {
+                                      'country' => 'Australia',
+                                      'assessment_type' => 'spar_2018',
+                                      'spar_2018_ind_c11' => 20,
+                                      'spar_2018_ind_c11_goal' => 40
+                                    }.with_indifferent_access
+                                  ),
+                                  @crosswalk,
+                                  @benchmarks,
+                                  SparScale
+
+    assert_equal plan[:name], 'Australia draft plan'
+    assert_equal plan[:country], 'Australia'
+    assert_equal plan[:assessment_type], 'spar_2018'
+    assert_equal plan[:activity_map],
+                 {
+                   '1.1' =>
+                     @benchmarks.goal_activities(
+                       '1.1',
+                       (Score.new 1),
+                       (Score.new 2)
+                     )
+                 }
+  end
+
+  test 'it gets proper results with a starting SPAR score of 0' do
+    plan =
+      GoalForm.create_draft_plan! (
+                                    {
+                                      'country' => 'Australia',
+                                      'assessment_type' => 'spar_2018',
+                                      'spar_2018_ind_c11' => 0,
+                                      'spar_2018_ind_c11_goal' => 40
+                                    }.with_indifferent_access
+                                  ),
+                                  @crosswalk,
+                                  @benchmarks,
+                                  SparScale
+
+    assert_equal plan[:name], 'Australia draft plan'
+    assert_equal plan[:country], 'Australia'
+    assert_equal plan[:assessment_type], 'spar_2018'
+    assert_equal plan[:activity_map],
+                 {
+                   '1.1' =>
+                     @benchmarks.goal_activities(
+                       '1.1',
+                       (Score.new 1),
+                       (Score.new 2)
+                     )
+                 }
   end
 end

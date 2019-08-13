@@ -1,3 +1,7 @@
+def create_goal(score)
+  Score.new ([[score.value + 1, 5].min, 2].max)
+end
+
 class GoalForm
   include ActiveModel::Model
   attr_accessor :country, :assessment_type
@@ -10,11 +14,14 @@ class GoalForm
     self.class.attr_accessor(*(scores.keys))
     self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))
 
-    scores.each { |key, value| send "#{key}=", value.score }
-    scores.each { |key, value| send "#{key}_goal=", (value + 1).score }
+    scale = args.fetch(:scale)
+    scores.each { |key, score| send "#{key}=", (scale.new score: score).value }
+    scores.each do |key, score|
+      send "#{key}_goal=", (scale.new score: (create_goal score)).value
+    end
   end
 
-  def self.create_draft_plan!(params, crosswalk, benchmarks)
+  def self.create_draft_plan!(params, crosswalk, benchmarks, scale)
     benchmark_goals =
       params.keys.reduce({}) do |benchmark_acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
@@ -23,26 +30,29 @@ class GoalForm
         end
         next benchmark_acc if key.end_with?('_goal')
 
-        score_goal =
-          ScoreGoal.new score: params[key].to_i,
-                        goal: params["#{key}_goal"].to_i
-
         raise "key #{key} not found in crosswalk" unless crosswalk[key]
+        next benchmark_acc if crosswalk[key] == %w[N/A]
+
+        score_and_goal =
+          ScoreGoal.new score: ((scale.new value: params[key].to_i).score),
+                        goal:
+                          ((scale.new value: params["#{key}_goal"].to_i).score)
 
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|
           if benchmark_acc[id]
-            benchmark_acc[id] = benchmark_acc[id].merge(score_goal)
+            benchmark_acc[id] = benchmark_acc[id].merge(score_and_goal)
           else
-            benchmark_acc[id] = score_goal
+            benchmark_acc[id] = score_and_goal
           end
         end
         benchmark_acc
       end
 
     benchmark_activities =
-      benchmark_goals.each.reduce({}) do |acc, (key, value)|
-        acc[key] = benchmarks.goal_activities(key, value.score, value.goal)
+      benchmark_goals.each.reduce({}) do |acc, (key, pairing)|
+        pairing.score = Score.new 1 if pairing.score.value == 0
+        acc[key] = benchmarks.goal_activities(key, pairing.score, pairing.goal)
         acc
       end
 
