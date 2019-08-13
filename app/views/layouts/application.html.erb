@@ -10,7 +10,8 @@
   </head>
 
   <body>
-    <div class="container-fluid">
+    <div class="container-fluid p-0">
+    <%= render "layouts/header" %>
     <%= yield %>
     </div>
     <% if controller_name == "landing" %>
