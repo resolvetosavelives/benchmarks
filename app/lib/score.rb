@@ -1,7 +1,7 @@
 class Score
   def initialize(val)
-    raise RangeError unless 1 <= val && val <= 5
     @value = val
+    raise RangeError unless 0 <= @value && @value <= 5
   end
 
   def value
@@ -9,7 +9,7 @@ class Score
   end
 
   def value=(val)
-    raise RangeError unless 1 <= val && val <= 5
+    raise RangeError unless 0 <= val && val <= 5
     @value = val
   end
 
@@ -17,7 +17,17 @@ class Score
     @value == rside.value
   end
 
-  def +(num)
-    return self.class.new [@value + num, 5].min
+  def <=>(rside)
+    if @value < rside.value
+      return -1
+    elsif @value > rside.value
+      return 1
+    else
+      return 0
+    end
+  end
+
+  def <=(rside)
+    (self <=> rside) < 1
   end
 end
