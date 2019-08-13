@@ -13,5 +13,8 @@
     <div class="container-fluid">
     <%= yield %>
     </div>
+    <% if controller_name == "landing" %>
+      <%= render "layouts/landing_page_footer" %>
+    <% end %>
   </body>
 </html>

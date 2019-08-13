@@ -26,9 +26,39 @@ $colors: (
 $theme-colors: $colors;
 
 @import "bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css?family=Crimson Text');
-@import url('https://fonts.googleapis.com/css?family=Pathway Gothic One');
-@import url('https://fonts.googleapis.com/css?family=Karla');
+@import url('https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin');
+@import url('https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin');
+@import url('https://fonts.googleapis.com/css?family=Karla&subset=latin');
+
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+footer {
+  margin-top: auto;
+  color: white;
+  font-family: Crimson Text;
+  font-size: 22px;
+  line-height: 28px;
+
+  .heading {
+    display: inline-block;
+    padding-bottom: 1rem;
+    border-bottom: solid 1px white;
+  }
+
+  .copyright {
+    font-family: Karla;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
 
 .navbar { height: 110px;
   padding: 27px 35px 27px 35px;
