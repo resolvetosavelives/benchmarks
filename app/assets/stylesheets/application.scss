@@ -38,6 +38,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  font-family: Karla;
 }
 
 footer {
@@ -58,6 +59,38 @@ footer {
     font-size: 14px;
     line-height: 16px;
   }
+}
+
+p {
+  font-size: 16px;
+}
+
+h1, h2, h3, h4 {
+  font-family: Crimson Text;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 38px;
+}
+
+h3 {
+  font-size: 29px;
+  line-height: 35px;
+}
+
+h4 {
+  font-size: 22px;
+  line-height: 28px;
+}
+
+th {
+    font-family: Karla Regular;
 }
 
 .navbar { height: 110px;
@@ -106,40 +139,4 @@ footer {
 
 .alt-header {
     font-family: Pathway Gothic One;
-}
-
-body {
-  font-family: Karla;
-}
-
-p {
-  font-size: 16px;
-}
-
-h1, h2, h3, h4 {
-  font-family: Crimson Text;
-}
-
-h1 {
-  font-size: 40px;
-  line-height: 1.3;
-}
-
-h2 {
-  font-size: 40px;
-  line-height: 38px;
-}
-
-h3 {
-  font-size: 29px;
-  line-height: 35px;
-}
-
-h4 {
-  font-size: 22px;
-  line-height: 28px;
-}
-
-th {
-    font-family: Karla Regular;
 }
