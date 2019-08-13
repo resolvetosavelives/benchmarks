@@ -1,0 +1,57 @@
+<footer class="pt-4">
+  <div class="bg-dark-blue pt-4">
+    <div class="row p-0 m-0">
+      <div class="col ml-5">
+        <div class="row">
+          <div class="col">
+            <%= content_tag :span, "About", class: "heading" %>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <div class="col">
+            <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <%= content_tag :span, "Resources", class: "heading" %>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <div class="col">
+            <ul class="list-unstyled p-0">
+              <li><%= link_to "PreventEpidemics.org", "https://preventepidemics.org", class: "text-white", target: "_blank" %></li>
+              <li><%= link_to "JEE", "https://www.who.int/ihr/procedures/joint-external-evaluations/en/", class: "text-white", target: "_blank" %></li>
+              <li><%= link_to "e-SPAR", "https://extranet.who.int/sph/", class: "text-white", target: "_blank" %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <%= content_tag :span, "Contact", class: "heading" %>
+          </div>
+        </div>
+        <div class="row pt-4">
+          <div class="col">
+            <ul class="list-unstyled p-0">
+              <li>Report an Error</li>
+              <li>Privacy Policy</li>
+              <li>Terms of Service</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row pt-5">
+      <div class="col text-center">
+        <%= link_to image_tag(image_path("prevent-epidemics-logo.svg")), "https://preventepidemics.org", target: "_blank", class: "pr-4" %>
+        <%= link_to image_tag(image_path("rtsl-logo.svg")), "https://www.resolvetosavelives.org", target: "_blank" %>
+        <%= content_tag :p, "(c) #{Date.today.year}. World Health Organization. All rights reserved.", class: "py-3 copyright" %>
+      </div>
+    </div>
+  </div>
+</footer>
