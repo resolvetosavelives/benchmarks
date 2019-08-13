@@ -6,12 +6,12 @@ require 'json'
 Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
 Benchmarks_workbook =
   RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
-JEE_scores_workbook =
-  RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
+Assessment_structures_workbook =
+  RubyXL::Parser.parse('./data/Assessment-Structures.xlsx')
 
 class CrosswalkSpreadsheet
   def initialize
-    @workbook = RubyXL::Parser.parse('./data/BenchmarksDatabase_7Aug2019.xlsx')
+    @workbook = RubyXL::Parser.parse('./data/BenchmarksDatabase_10Aug2019.xlsx')
   end
 
   def parse_crosswalk_row(row)
@@ -43,19 +43,32 @@ class CrosswalkSpreadsheet
           raise "#{jee1_id} is not in the data dictionary (row #{row})"
         end
       end
+
       if row_[:jee2_cap] && row_[:jee2_ind]
         jee2_id = "jee2_ind_#{row_[:jee2_cap].downcase}#{row_[:jee2_ind]}"
         unless data_dictionary[jee2_id]
           raise "#{jee2_id} is not in the data dictionary (row #{row})"
         end
       end
+
+      if row_[:spar_cap] && row_[:spar_ind]
+        spar_id = "spar_2018_ind_#{row_[:spar_cap].downcase}#{row_[:spar_ind]}"
+        unless data_dictionary[spar_id]
+          raise "#{spar_id} is not in the data dictionary (row #{row})"
+        end
+      end
+
       if row_[:bench_cap] && row_[:bench_ind]
         bench_id = "#{row_[:bench_cap][1..-1].strip}.#{row_[:bench_ind]}"
+      elsif row_[:bench_cap] == 'N/A'
+        bench_id = 'N/A'
       end
 
       dict_append_value acc, jee1_id, bench_id if jee1_id && bench_id
 
       dict_append_value acc, jee2_id, bench_id if jee2_id && bench_id
+
+      dict_append_value acc, spar_id, bench_id if spar_id && bench_id
 
       acc
     end
@@ -120,47 +133,70 @@ def generate_data_dictionary_fixture
   dictionary[:data]
 end
 
-def generate_assessment_fixture(data_dictionary)
-  rows = JEE_scores_workbook['Sheet5 (JEE Indicator Labels)']
+def process_assessment_structure(data_dictionary, rows, assessment)
+  rows.drop(1).reduce({}) do |acc, row|
+    cells = row.cells
 
-  assessments =
-    rows.drop(1).reduce({}) do |acc, row|
-      cells = row.cells
+    technical_area_id = "#{assessment}_ta_#{cells[0].value}"
+    indicator_id = "#{assessment}_ind_#{cells[1].value}"
 
-      assessment = "jee#{cells[0].value[1]}"
-      indicator_id = "#{assessment}_ind_#{cells[1].value}"
-      technical_area_id = "#{assessment}_ta_#{cells[2].value}"
-
-      unless data_dictionary[indicator_id]
-        raise "unrecognized indicator #{indicator_id}"
-      end
-      unless data_dictionary[technical_area_id]
-        raise "unrecognized technical area #{technical_area_id}"
-      end
-
-      unless acc[assessment]
-        acc[assessment] = {
-          label: assessment, technical_area_order: [], technical_areas: {}
-        }
-      end
-
-      unless acc[assessment][:technical_areas][technical_area_id]
-        acc[assessment][:technical_area_order].push(technical_area_id)
-        acc[assessment][:technical_areas][technical_area_id] = {
-          assessment: assessment,
-          technical_area_id: technical_area_id,
-          indicators: []
-        }
-      end
-      acc[assessment][:technical_areas][technical_area_id][:indicators].push(
-        indicator_id
-      )
-
-      acc
+    unless data_dictionary[indicator_id]
+      raise "unrecognized indicator #{indicator_id}"
+    end
+    unless data_dictionary[technical_area_id]
+      raise "unrecognized technical area #{technical_area_id}"
     end
 
+    unless acc[assessment]
+      acc[assessment] = {
+        label: assessment, technical_area_order: [], technical_areas: {}
+      }
+    end
+
+    unless acc[assessment][:technical_areas][technical_area_id]
+      acc[assessment][:technical_area_order].push(technical_area_id)
+      acc[assessment][:technical_areas][technical_area_id] = {
+        assessment: assessment,
+        technical_area_id: technical_area_id,
+        indicators: []
+      }
+    end
+    acc[assessment][:technical_areas][technical_area_id][:indicators].push(
+      indicator_id
+    )
+
+    acc
+  end
+end
+
+def generate_assessment_fixture(data_dictionary)
+  spar_structure =
+    process_assessment_structure(
+      data_dictionary,
+      Assessment_structures_workbook['SPAR 2018'],
+      'spar_2018'
+    )
+
+  jee1_structure =
+    process_assessment_structure(
+      data_dictionary,
+      Assessment_structures_workbook['JEE 1'],
+      'jee1'
+    )
+
+  jee2_structure =
+    process_assessment_structure(
+      data_dictionary,
+      Assessment_structures_workbook['JEE 2'],
+      'jee2'
+    )
+
+  assessment_structures =
+    spar_structure.merge(jee1_structure).merge(jee2_structure)
+  #assessment_structures = jee1_structure.merge(jee2_structure)
+
   File.open('./app/fixtures/assessments.json', 'w') do |f|
-    f.write(assessments.to_json)
+    f.write(assessment_structures.to_json)
   end
 end
 
@@ -193,7 +229,8 @@ def generate_benchmarks_fixture
 end
 
 def load_cell(cell)
-  return cell.value if cell && cell.value && cell.value != ''
+  return cell.value if cell && cell.value && cell.value.class == Integer
+  return cell.value.strip if cell && cell.value && cell.value.class == String
   nil
 end
 

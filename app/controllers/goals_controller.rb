@@ -12,9 +12,15 @@ class GoalsController < ApplicationController
       scores =
         scores.reduce({}) do |acc, score|
           key = "#{assessment_type}_ind_#{score['indicator_id']}"
-          acc[key] = score['score']
+          acc[key] = Score.new score['score']
           acc
         end
+
+      if assessment_type == 'spar_2018'
+        scale = SparScale
+      else
+        scale = JeeScale
+      end
 
       @data_dictionary =
         JSON.load File.open './app/fixtures/data_dictionary.json'
@@ -23,7 +29,8 @@ class GoalsController < ApplicationController
       @goals =
         GoalForm.new country: country,
                      assessment_type: assessment_type,
-                     scores: scores
+                     scores: scores,
+                     scale: scale
     end
   end
 
@@ -32,6 +39,16 @@ class GoalsController < ApplicationController
     benchmarks = BenchmarksFixture.new
 
     goal_params = params.fetch(:goal_form)
-    redirect_to GoalForm.create_draft_plan! goal_params, crosswalk, benchmarks
+    assessment_type = goal_params.fetch(:assessment_type)
+    if assessment_type == 'spar_2018'
+      scale = SparScale
+    else
+      scale = JeeScale
+    end
+
+    redirect_to GoalForm.create_draft_plan! goal_params,
+                                            crosswalk,
+                                            benchmarks,
+                                            scale
   end
 end
