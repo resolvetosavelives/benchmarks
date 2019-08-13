@@ -25,8 +25,8 @@
                 <tbody>
                 <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
                     <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
-                    <% indicator = technical_area['indicators'][0] %>
                     <tr>
+                        <% indicator = technical_area['indicators'][0] %>
                         <th class="border-right"
                             scope="row"
                             rowspan="<%= technical_area['indicators'].count %>">
@@ -37,11 +37,11 @@
                         <td> <%= f.number_field("#{indicator}_goal") %> </td>
                     </tr>
 
-                    <% technical_area['indicators'].drop(1).each do |indicator_| %>
+                    <% technical_area['indicators'].drop(1).each do |indicator| %>
                     <tr>
-                        <td> <%= @data_dictionary[indicator_] %> </td>
-                        <td> <%= f.number_field(indicator_) %> </td>
-                        <td> <%= f.number_field("#{indicator_}_goal") %> </td>
+                        <td> <%= @data_dictionary[indicator] %> </td>
+                        <td> <%= f.number_field(indicator) %> </td>
+                        <td> <%= f.number_field("#{indicator}_goal") %> </td>
                     </tr>
                     <% end %>
                 <% end %>

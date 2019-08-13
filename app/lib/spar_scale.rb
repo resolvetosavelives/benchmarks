@@ -16,7 +16,7 @@ class SparScale
     @score.value * 20
   end
 
-  def value=
-    @score.value / 20
+  def value=(val)
+    @score.value = val / 20
   end
 end

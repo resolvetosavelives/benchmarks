@@ -16,7 +16,7 @@ class JeeScale
     @score.value
   end
 
-  def value=
-    @score.value
+  def value=(val)
+    @score.value = val
   end
 end

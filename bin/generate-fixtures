@@ -6,10 +6,6 @@ require 'json'
 Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
 Benchmarks_workbook =
   RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
-# JEE_scores_workbook =
-#   RubyXL::Parser.parse('./db/seed-data/JEE_scores_all-countries.xlsx')
-# SPAR_scores_workbook =
-#   RubyXL::Parser.parse('./db/seed-data/SPAR_2018_2019Jul29.xlsx')
 Assessment_structures_workbook =
   RubyXL::Parser.parse('./data/Assessment-Structures.xlsx')
 

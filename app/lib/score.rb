@@ -1,7 +1,7 @@
 class Score
   def initialize(val)
     @value = val
-    raise RangeError unless 0 <= @value && @value <= 5
+    raise RangeError unless @value.between?(0, 5)
   end
 
   def value
@@ -9,7 +9,7 @@ class Score
   end
 
   def value=(val)
-    raise RangeError unless 0 <= val && val <= 5
+    raise RangeError unless @value.between?(0, 5)
     @value = val
   end
 
