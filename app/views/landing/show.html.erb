@@ -40,7 +40,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-          <h1 class="modal-title">Let's get started on <span id="country-name-header" data-target="country-selection.selectedCountryName"> </h1>
+          <h1 class="modal-title display-header mx-4">Let's get started on <span id="country-name-header" data-target="country-selection.selectedCountryName"> </h1>
         <button
           type="button"
           class="close"
@@ -50,7 +50,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body mx-4">
         <p>
           Our plans are comprised of activities based off of the gap between the
           capacity score and step up score.
@@ -71,14 +71,16 @@
         <%= form_tag '/country_select' do %>
             <%= hidden_field_tag "country", nil,
                 data: { target: "country-selection.selectedCountryModal" } %>
-        <div class="input-group">
+        <div class="input-group mb-2">
           <%= select_tag "assessment_type",
           options_from_collection_for_select([], 'assessment_type',
           'assessment_type'), class: "custom-select", data: { target:
           "country-selection.assessmentTypes" } %>
         </div>
-        <%= button_tag "Next", type: :submit, class: "btn btn-primary" %>
+        <%= button_tag "Next", type: :submit, class: "btn btn-primary w-100" %>
         <% end %>
+              </div>
+          </div>
       </div>
     </div>
   </div>

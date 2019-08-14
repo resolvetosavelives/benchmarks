@@ -127,6 +127,10 @@ th {
   background-color: color("orange");
 }
 
+.modal-header {
+  border-bottom: none;
+}
+
 .landing {
     .left-panel {
         padding-top: 100px;
@@ -135,6 +139,10 @@ th {
     .landing-heading {
         font-size: 64px;
     }
+}
+
+.display-header {
+    font-family: Pathway Gothic One;
 }
 
 .alt-header {
