@@ -5,6 +5,7 @@ export default class extends Controller {
     "assessmentTypes",
     "selectedCountry",
     "selectables",
+    "selectedCountryName",
     "selectedCountryModal"
   ]
 
@@ -19,6 +20,7 @@ export default class extends Controller {
       this.assessmentTypesTarget.add(new Option(type))
     )
 
+    this.selectedCountryNameTarget.textContent = countryName
     this.selectedCountryModalTarget.value = countryName
 
     $("#assessment-selection-modal").modal()
