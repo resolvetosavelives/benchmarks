@@ -163,11 +163,10 @@ th {
     width: 70px;
 }
 
-.main-content {
-  padding-left: 107px;
-  padding-right: 107px;
-}
-
 .next-button {
   width: 180px;
+}
+
+.table-fixed {
+  table-layout: fixed;
 }
