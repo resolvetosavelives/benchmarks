@@ -8,11 +8,15 @@ jee_workbook =
 spar_workbook = RubyXL::Parser.parse('./db/seed-data/SPAR_2018_2019Jul29.xlsx')
 
 def seed_jee(worksheet, assessment_type)
-  columns = worksheet[0].cells.drop(3).map(&:value)
+  columns =
+    worksheet[0].cells.drop(3).map do |cell|
+      next cell.value[3..-1].strip if cell.value.starts_with?('v2_')
+      cell.value.strip
+    end
   worksheet.drop(1).each do |row|
     cells = row.cells
-    country = cells[0].value
-    status = cells[2].value
+    country = cells[0].value.strip
+    status = cells[2].value.strip
 
     if status == 'Completed' &&
        (cells[4] && cells[4].value && cells[4].value != '')
@@ -34,10 +38,10 @@ def seed_jee(worksheet, assessment_type)
 end
 
 def seed_spar(worksheet, assessment_type)
-  columns = worksheet[0].cells.drop(2).map { |c| c.value.downcase }
+  columns = worksheet[0].cells.drop(2).map { |c| c.value.downcase.strip }
   worksheet.drop(1).each do |row|
     cells = row.cells
-    country = cells[1].value
+    country = cells[1].value.strip
     if cells[3] && cells[3].value && cells[3].value != ''
       scores_with_headers =
         cells[2..-15].map do |cell|
