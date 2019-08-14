@@ -26,6 +26,7 @@ $colors: (
 $theme-colors: $colors;
 
 @import "bootstrap/scss/bootstrap";
+@import "./scores_widget";
 @import url('https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin');
 @import url('https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin');
 @import url('https://fonts.googleapis.com/css?family=Karla&subset=latin');
@@ -93,7 +94,8 @@ th {
     font-family: Karla Regular;
 }
 
-.navbar { height: 110px;
+.navbar {
+  height: 110px;
   padding: 27px 35px 27px 35px;
 
   .navbar-brand {

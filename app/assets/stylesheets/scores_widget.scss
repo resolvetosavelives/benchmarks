@@ -1,0 +1,61 @@
+.widget-container {
+  height: 156px;
+  width: 560px;
+  padding-top: 15px;
+  strong {
+    font-family: Karla;
+    font-size: 17px;
+  }
+
+  .scores-levels {
+    li {
+      width: 28px;
+      height: 28px;
+      text-align: center;
+      line-height: 28px;
+      border-radius: 14px;
+      margin: 0 41px;
+      display: inline-block;
+      color: white;
+      position: relative;
+      font-size: 12px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 13px;
+        left: -86px;
+        width: 86px;
+        height: 1px;
+        background: color("gray");
+      }
+
+      &:first-child {
+        &::before {
+          display: none;
+        }
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .scores-legend {
+    li {
+      font-size: 12px;
+      vertical-align: top;
+      width: 68px;
+      text-align: center;
+      margin-left: 41px;
+      margin-right: 0;
+      display: inline-block;
+      position: relative;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

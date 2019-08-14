@@ -2,11 +2,14 @@
     <%= form_for @goals, url: "/goals/" do |f| %>
         <%= f.hidden_field :country %>
         <%= f.hidden_field :assessment_type %>
-        <div class="row">
-            <div class="col-7">
+        <div class="row py-4">
+            <div class="col-6">
             <h1 class="alt-header"> <%= @goals.assessment_type %> Scores </h1>
 
             <p> The scores are pre-populated from our JEE database. The goal is pre-populated by one step up. You can manually change the score or goal to your liking. </p>
+            </div>
+            <div class="col-6">
+              <%= render "capacities_widget" %>
             </div>
         </div>
 
@@ -58,6 +61,6 @@
     <% end %>
 <% else %>
     <div class="col">
-    <div>No assessment available</div>
+      <div>No assessment available</div>
     </div>
 <% end %>
