@@ -1,76 +1,74 @@
 <% if @goals %>
   <%= form_for @goals, url: "/goals/" do |f| %>
-    <div class="container-fluid">
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
-      <div class="row py-4">
-        <div class="col-6">
-          <h1 class="alt-header"><%= @goals.assessment_type %> Scores</h1>
+    <div class="row py-4">
+      <div class="col-6">
+        <h1 class="alt-header"><%= @goals.assessment_type %> Scores</h1>
 
-          <p>
-            The scores are pre-populated from our JEE database. The goal is
-            pre-populated by one step up. You can manually change the score or goal to
-            your liking.
-          </p>
-        </div>
-        <div class="col-6 d-flex justify-content-end">
-        <%= render "capacities_widget" %>
-        </div>
+        <p>
+          The scores are pre-populated from our JEE database. The goal is
+          pre-populated by one step up. You can manually change the score or goal to
+          your liking.
+        </p>
       </div>
+      <div class="col-6 d-flex justify-content-end">
+      <%= render "capacities_widget" %>
+      </div>
+    </div>
 
-      <div class="row">
-        <div class="col">
-          <table class="table border-bottom w-100" style="table-layout: fixed">
-            <colgroup>
-              <col width="220px" />
-              <col />
-              <col width="90px" />
-              <col width="90px" />
-            </colgroup>
-            <thead>
-              <tr class="jee-table-header">
-                <th>Technical Areas</th>
-                <th>Indicators</th>
-                <th>Score</th>
-                <th>Goal</th>
+    <div class="row">
+      <div class="col">
+        <table class="table border-bottom w-100" style="table-layout: fixed">
+          <colgroup>
+            <col width="220px" />
+            <col />
+            <col width="90px" />
+            <col width="90px" />
+          </colgroup>
+          <thead>
+            <tr class="jee-table-header">
+              <th>Technical Areas</th>
+              <th>Indicators</th>
+              <th>Score</th>
+              <th>Goal</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
+              <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
+              <tr>
+                <% indicator = technical_area['indicators'][0] %>
+                <th
+                  class="border-right"
+                  scope="row"
+                  rowspan="<%= technical_area['indicators'].count %>"
+                >
+                  <%= @data_dictionary[technical_area_id] %>
+                </th>
+                <td class="border-right"><%= @data_dictionary[indicator] %></td>
+                <td><%= f.number_field(indicator, class: "w-70px") %></td>
+                <td>
+                  <%= f.number_field("#{indicator}_goal", class: "w-70px") %>
+                </td>
               </tr>
-            </thead>
 
-            <tbody>
-              <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
-                <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
+              <% technical_area['indicators'].drop(1).each do |indicator| %>
                 <tr>
-                  <% indicator = technical_area['indicators'][0] %>
-                  <th
-                    class="border-right"
-                    scope="row"
-                    rowspan="<%= technical_area['indicators'].count %>"
-                  >
-                    <%= @data_dictionary[technical_area_id] %>
-                  </th>
                   <td class="border-right"><%= @data_dictionary[indicator] %></td>
                   <td><%= f.number_field(indicator, class: "w-70px") %></td>
-                  <td>
-                    <%= f.number_field("#{indicator}_goal", class: "w-70px") %>
-                  </td>
+                  <td><%= f.number_field("#{indicator}_goal", class: "w-70px") %></td>
                 </tr>
-
-                <% technical_area['indicators'].drop(1).each do |indicator| %>
-                  <tr>
-                    <td class="border-right"><%= @data_dictionary[indicator] %></td>
-                    <td><%= f.number_field(indicator, class: "w-70px") %></td>
-                    <td><%= f.number_field("#{indicator}_goal", class: "w-70px") %></td>
-                  </tr>
-                <% end %>
               <% end %>
-            </tbody>
-          </table>
-        </div>
+            <% end %>
+          </tbody>
+        </table>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="col d-flex justify-content-end">
-          <%= f.submit "Next", class: "btn btn-primary next-button" %>
-        </div>
+    <div class="row">
+      <div class="col d-flex justify-content-end">
+        <%= f.submit "Next", class: "btn btn-primary next-button" %>
       </div>
     </div>
   <% end %>
