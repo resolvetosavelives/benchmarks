@@ -4,7 +4,7 @@ const SPAR_SCORES = [0, 20, 40, 60, 80, 100]
 const JEE_SCORES = [0, 1, 2, 3, 4, 5]
 
 export default class extends Controller {
-  static targets = ["form"]
+  static targets = ["form", "submitButton"]
 
   validate(e){
     const { currentTarget: field } = e
@@ -33,6 +33,12 @@ export default class extends Controller {
     }
 
     field.parentElement.classList.add("was-validated")
+
+    if (this.formTarget.checkValidity() === false) {
+      this.submitButtonTarget.setAttribute("disabled", "disabled")
+    } else {
+      this.submitButtonTarget.removeAttribute("disabled")
+    }
   }
 
   submit(e) {
