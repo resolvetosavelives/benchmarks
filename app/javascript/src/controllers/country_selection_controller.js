@@ -1,7 +1,12 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-  static targets = ["assessmentTypes", "selectedCountry", "selectables"]
+  static targets = [
+    "assessmentTypes",
+    "selectedCountry",
+    "selectables",
+    "selectedCountryModal"
+  ]
 
   select(e) {
     const countryName = this.selectedCountryTarget.value
@@ -14,7 +19,7 @@ export default class extends Controller {
       this.assessmentTypesTarget.add(new Option(type))
     )
 
-    $("#assessment-selection-modal #country").val(countryName)
+    this.selectedCountryModalTarget.value = countryName
 
     $("#assessment-selection-modal").modal()
   }
