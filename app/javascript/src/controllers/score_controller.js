@@ -21,7 +21,6 @@ export default class extends Controller {
 
     if (isGoal) {
       const score_field = document.getElementById(field.id.replace("_goal", ""))
-      console.log("score_field", score_field)
       if (Number(score_field.value) > Number(field.value)) {
         field.setCustomValidity("invalid")
       }
