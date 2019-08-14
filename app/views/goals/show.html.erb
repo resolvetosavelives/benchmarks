@@ -1,5 +1,5 @@
 <% if @goals %>
-  <%= form_for @goals, url: "/goals/" do |f| %>
+  <%= form_for @goals, url: "/goals/", html: {novalidate: true, class: "needs-validation", data: { controller: "score", action: "submit->score#submit", target: "score.form", type: @goals.assessment_type }} do |f| %>
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
     <div class="row py-4">
       <div class="col-6">
@@ -47,17 +47,15 @@
                   <%= @data_dictionary[technical_area_id] %>
                 </th>
                 <td class="border-right"><%= @data_dictionary[indicator] %></td>
-                <td><%= f.number_field(indicator, class: "w-70px") %></td>
-                <td>
-                  <%= f.number_field("#{indicator}_goal", class: "w-70px") %>
-                </td>
+                <td><%= render "validated_field", field_name: indicator, f: f %></td>
+                <td><%= render "validated_field", field_name: "#{indicator}_goal", f: f %></td>
               </tr>
 
               <% technical_area['indicators'].drop(1).each do |indicator| %>
                 <tr>
                   <td class="border-right"><%= @data_dictionary[indicator] %></td>
-                  <td><%= f.number_field(indicator, class: "w-70px") %></td>
-                  <td><%= f.number_field("#{indicator}_goal", class: "w-70px") %></td>
+                  <td><%= render "validated_field", field_name: indicator, f: f %></td>
+                  <td><%= render "validated_field", field_name: "#{indicator}_goal", f: f %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -65,7 +63,6 @@
         </table>
       </div>
     </div>
-
     <div class="row">
       <div class="col d-flex justify-content-end">
         <%= f.submit "Next", class: "btn btn-primary next-button" %>
