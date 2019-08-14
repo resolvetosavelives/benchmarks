@@ -21,6 +21,15 @@ $colors: (
   "red": #e93939,
   "yellow": #ffca1e,
   "light-gray": #f2f2f2,
+
+  "primary": #d86422,
+  "secondary": rgba(45, 45, 53, 0.5),
+  "success": #d6b754,
+  "danger": #e93939,
+  "warning": #ffca1e,
+  "info": #2c8dc9,
+  "light": #f8f9fa,
+  "dark": #343a40,
 ) !default;
 
 $theme-colors: $colors;
@@ -63,6 +72,10 @@ footer {
 
 p {
   font-size: 16px;
+}
+
+a {
+  color: color("primary");
 }
 
 h1, h2, h3, h4 {
@@ -120,11 +133,6 @@ th {
   font-size: 26px;
   line-height: 30px;
   letter-spacing: 0.1em;
-}
-
-.btn {
-  color: color("white");
-  background-color: color("orange");
 }
 
 .modal-header {
