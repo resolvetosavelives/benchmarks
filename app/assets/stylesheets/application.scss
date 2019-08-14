@@ -108,7 +108,7 @@ th {
 }
 
 .navbar {
-  height: 110px;
+  min-height: 110px;
   padding: 27px 35px 27px 35px;
 
   .navbar-brand {
@@ -157,4 +157,16 @@ th {
 
 .alt-header {
     font-family: Pathway Gothic One;
+}
+
+.w-70px {
+    width: 70px;
+}
+
+.next-button {
+  width: 180px;
+}
+
+.table-fixed {
+  table-layout: fixed;
 }
