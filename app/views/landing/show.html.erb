@@ -1,31 +1,84 @@
+<div data-controller="country-selection">
+<%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data: { target: "country-selection.selectables" } %>
 <div class="landing container">
   <div class="row">
     <div class="col left-panel">
-      <h1 class="landing-heading my-4"> A good heading... </h1>
+      <h1 class="landing-heading my-4">A good heading...</h1>
 
-      <p> World Health Organization (WHO) and its partners have developed a tool with a list of benchmarks and corresponding actions that can be applied to increase the performance of countries in emergency preparedness through the development and implementation of a National Action Plan for Health Security (NAPHS). </p>
+      <p>
+        World Health Organization (WHO) and its partners have developed a tool
+        with a list of benchmarks and corresponding actions that can be applied
+        to increase the performance of countries in emergency preparedness
+        through the development and implementation of a National Action Plan for
+        Health Security (NAPHS).
+      </p>
 
-      <p> Use this tool to get help with creating a draft plan, explore best practices in the reference library, or browse the benchmarks. </p>
+      <p>
+        Use this tool to get help with creating a draft plan, explore best
+        practices in the reference library, or browse the benchmarks.
+      </p>
 
-      <%= form_tag('/country_select', data: { controller: "country-selection" }) do %>
-        <div class="input-group">
-          <%= select_tag "country", options_from_collection_for_select(@countries, 'name', 'name'), class: "custom-select", data: { target: "country-selection.selectedCountry" } %>
-          <div class="input-group-append">
-            <%= button_tag "Get Started", type: :button, data: { action: "country-selection#select" }, class: "btn text-white bg-green" %>
-          </div>
+      <%= form_tag '/country_select' do %>
+      <div class="input-group">
+        <%= select_tag "country", options_from_collection_for_select(@countries,
+        'name', 'name'), class: "custom-select", data: { target:
+        "country-selection.selectedCountry" } %>
+        <div class="input-group-append">
+          <%= button_tag "Get Started", type: :button, data: { action:
+          "country-selection#select" }, class: "btn text-white bg-green" %>
         </div>
-        <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data: { target: "country-selection.selectables" } %>
-
-        <div class="input-group">
-          <%= select_tag "assessment_type", options_from_collection_for_select([], 'assessment_type', 'assessment_type'), class: "custom-select", data: { target: "country-selection.assessmentTypes" } %>
-          <div class="input-group-append">
-            <%= button_tag "Next", type: :submit, class: "btn text-white bg-orange" %>
-          </div>
-        </div>
+      </div>
       <% end %>
     </div>
 
-    <div class="col">
+    <div class="col"></div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="assessment-selection-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Let's get started on CountryName.</h1>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Our plans are comprised of activities based off of the gap between the
+          capacity score and step up score.
+        </p>
+
+        <p>
+          You can create a plan from the Joint External Evaluation (JEE) or
+          State Party Self-Assessment Annual Reporting (SPAR) scores.
+        </p>
+
+        <p>
+          If the country hasn’t done either assessment, you can create a plan
+          from technical areas.
+        </p>
+
+        <p><b>Where would you like to start?</b></p>
+
+        <%= form_tag '/country_select' do %>
+        <%= hidden_field_tag "country" %>
+        <div class="input-group">
+          <%= select_tag "assessment_type",
+          options_from_collection_for_select([], 'assessment_type',
+          'assessment_type'), class: "custom-select", data: { target:
+          "country-selection.assessmentTypes" } %>
+        </div>
+        <%= button_tag "Next", type: :submit, class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
   </div>
+</div>
 </div>
