@@ -12,7 +12,9 @@
   <body>
     <%= render "layouts/header" %>
     <div class="container-fluid">
-    <%= yield %>
+      <div class="main-content">
+        <%= yield %>
+      </div>
     </div>
     <% if controller_name == "landing" %>
       <%= render "layouts/landing_page_footer" %>
