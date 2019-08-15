@@ -1,28 +1,6 @@
 <div class="row">
-  <div class="col">
-    <%= form_for @plan, remote: true, data: { controller: "plan" } do |f| %>
-    <!-- -->
-    <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
-    target: "plan.activityMap"} %>
-    <div class="row bg-light-gray p-4">
-      <div class="col d-flex justify-content-end">
-        <%= f.submit "Save Plan", data: { target: "plan.submit"}, class: "btn"
-        %>
-      </div>
-    </div>
-
-    <div class="row m-4">
-      <div class="col-9">
-        <h1 class="alt-header"><%= f.text_field :name %></h1>
-        <p>
-          [SPACE FOR INSTRUCTION TEXT?] Placeholder -- Lorem ipsum dolor sit
-          amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco laboris nisi ut aliquip.
-        </p>
-      </div>
-    </div>
-
+  <div class="col plan-container" data-controller="plan">
+    <%= render "plan_form" %>
     <div class="row m-4">
       <div class="col">
         <% @plan.activity_map.each do |benchmark_id, activities| %>
@@ -34,5 +12,4 @@
       </div>
     </div>
   </div>
-  <% end %>
 </div>

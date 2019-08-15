@@ -21,9 +21,11 @@ import "stylesheets/application.scss"
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 import Turbolinks from "turbolinks"
-import {} from "jquery-ujs"
+import Rails from "jquery-ujs"
+import $ from "jquery"
 
 Turbolinks.start()
+window.$ = $
 
 const application = Application.start()
 const context = require.context("../src/controllers", true, /\.js$/)

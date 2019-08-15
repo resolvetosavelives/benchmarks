@@ -33,8 +33,8 @@ export default class extends Controller {
           currentTarget.value
         ]
       })
+      $.rails.fire($(currentTarget.closest("form")), "submit")
       e.target.value = ""
-      this.submitTarget.click()
       e.preventDefault()
     }
   }

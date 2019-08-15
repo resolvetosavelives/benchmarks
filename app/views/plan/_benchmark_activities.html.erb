@@ -5,26 +5,10 @@
   </div>
 </div>
 
-<% activities.each do |activity| %>
-<div class="row border p-2">
-  <div class="col-11">
-    <%= activity %>
-  </div>
-  <div class="col-1">
-    <button
-      type="button"
-      data-action="plan#deleteActivity"
-      data-benchmark-id="<%= benchmark_id %>"
-      data-activity="<%= activity %>"
-    >
-      <img src="/delete-button.svg" />
-    </button>
-  </div>
-</div>
-<% end %>
+<%= content_tag :div, id: benchmark_id.parameterize do %> 
+  <% activities.each do |activity| %> 
+    <%= render "activity", benchmark_id: benchmark_id, activity: activity %> 
+  <% end %> 
+<% end %> 
 
-<div class="row border p-2">
-  <%= text_field_tag :new_activity, nil, class: "", placeholder: "+ Add
-  Activity", data: { target: "plan.newActivity", action:
-  "keypress->plan#addNewActivity", "benchmark-id": benchmark_id } %>
-</div>
+<%= render "activity_form", benchmark_id: benchmark_id %>
