@@ -1,0 +1,7 @@
+<div class="form-group">
+  <%= f.number_field field_name, data: { action: "change->score#validate", goal: field_name.match?("goal")  }, class: "form-control w-70px", required: true %>
+  <div class="invalid-feedback">
+    Must be a valid capacity score
+  </div>
+</div>
+
