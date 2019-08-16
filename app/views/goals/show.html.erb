@@ -1,4 +1,20 @@
 <% if @goals %>
+  <div class="row bg-light-gray p-4 full-width" data-controller="country-selection">
+    <div class="col-5 offset-1">
+      <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
+        { target: "country-selection.selectables" } %>
+      <%= form_tag '/country_select' do %>
+        <div class="form-group">
+          <%= select_tag "country",
+          options_from_collection_for_select(@countries, 'name', 'name', @country), class:
+          "custom-select", data: { target: "country-selection.selectedCountry", action: "change->country-selection#select" }, autocomplete: "off"
+          %>
+        </div>
+      <% end %>
+    </div>
+
+      <%= render "shared/country_selection_modal" %>
+  </div>
   <%= form_for @goals, url: "/goals/", html: {novalidate: true, class: "needs-validation", data: { controller: "score", action: "submit->score#submit", target: "score.form", type: @goals.assessment_type }} do |f| %>
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
     <div class="row py-4">

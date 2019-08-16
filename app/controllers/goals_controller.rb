@@ -1,10 +1,10 @@
 class GoalsController < ApplicationController
   def show
-    country = params[:country]
+    @country = params[:country]
     assessment_type = params[:assessment_type]
 
     assessment =
-      Assessment.find_by(country: country, assessment_type: assessment_type)
+      Assessment.find_by(country: @country, assessment_type: assessment_type)
 
     if assessment
       scores = assessment.scores
@@ -27,10 +27,12 @@ class GoalsController < ApplicationController
       @assessments = JSON.load File.open './app/fixtures/assessments.json'
 
       @goals =
-        GoalForm.new country: country,
+        GoalForm.new country: @country,
                      assessment_type: assessment_type,
                      scores: scores,
                      scale: scale
+
+      @countries, @selectables = helpers.set_country_selection_options
     end
   end
 
