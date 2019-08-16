@@ -1,10 +1,17 @@
+class CountryName
+  attr_reader :name
+  def initialize(name)
+    @name = name
+  end
+end
+
 class GoalsController < ApplicationController
   def show
-    country = params[:country]
+    @country = params[:country]
     assessment_type = params[:assessment_type]
 
     assessment =
-      Assessment.find_by(country: country, assessment_type: assessment_type)
+      Assessment.find_by(country: @country, assessment_type: assessment_type)
 
     if assessment
       scores = assessment.scores
@@ -27,10 +34,21 @@ class GoalsController < ApplicationController
       @assessments = JSON.load File.open './app/fixtures/assessments.json'
 
       @goals =
-        GoalForm.new country: country,
+        GoalForm.new country: @country,
                      assessment_type: assessment_type,
                      scores: scores,
                      scale: scale
+
+      assessments = Assessment.all
+      @selectables =
+        assessments.reduce({}) do |acc, a|
+          acc[a[:country]] = [] unless acc[a[:country]]
+          acc[a[:country]].push(a[:assessment_type])
+          acc
+        end
+
+      @countries = @selectables.keys.sort.map { |c| CountryName.new(c) }
+
     end
   end
 
