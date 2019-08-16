@@ -1,10 +1,3 @@
-class CountryName
-  attr_reader :name
-  def initialize(name)
-    @name = name
-  end
-end
-
 class GoalsController < ApplicationController
   def show
     @country = params[:country]
@@ -39,16 +32,7 @@ class GoalsController < ApplicationController
                      scores: scores,
                      scale: scale
 
-      assessments = Assessment.all
-      @selectables =
-        assessments.reduce({}) do |acc, a|
-          acc[a[:country]] = [] unless acc[a[:country]]
-          acc[a[:country]].push(a[:assessment_type])
-          acc
-        end
-
-      @countries = @selectables.keys.sort.map { |c| CountryName.new(c) }
-
+      @countries, @selectables = helpers.set_country_selection_options
     end
   end
 
