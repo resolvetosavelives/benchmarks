@@ -1,37 +1,58 @@
 <div class="row">
-    <div class="col">
-        <h1> Welcome </h1>
+    <div class="col pl-0 py-4">
+        <h1 class="alt-header">WELCOME</h1>
     </div>
 </div>
 
 <div class="row">
-    <table>
+    <table class="table table-fixed">
         <colgroup>
             <col width="364px" />
-            <col width="488px" />
-            <col>
-            <col>
-            <col>
+            <col />
+            <col width="180px" />
+            <col width="100px" />
+            <col width="130px" />
         </colgroup>
 
         <thead>
             <tr>
-                <th> Saved Plans </th>
+                <th class="pl-0"> Saved Plans </th>
                 <th> Last Revised </th>
+                <th> </th>
+                <th> </th>
+                <th> </th>
             </tr>
         </thead>
 
         <tbody>
             <% @plans.each do |plan| %>
                 <tr class="plan-entry">
-                    <td> <%= plan[:name] %> </td>
-                    <td> <%= plan[:updated_at] %> </td>
-                    <td> Download XLS </td>
-                    <td> Print </td>
-                    <td> Analysis </td>
+                    <td class="py-4"> <%= link_to plan[:name], plan %></a> </td>
+                    <td class="py-4"> <%= plan[:updated_at].strftime "%B %d, %Y" %> </td>
+                    <td class="py-4 text-secondary">
+                        <%= render 'shared/icon',
+                            image_name: "ico-download",
+                            text: "Download XLS" %>
+                    </td>
+                    <td class="py-4 text-secondary">
+                        <%= render 'shared/icon',
+                            image_name: "ico-print",
+                            text: "Print" %>
+                    </td>
+                    <td class="py-4 text-secondary">
+                        <%= render 'shared/icon',
+                            image_name: "ico-analyze",
+                            text: "Analyze" %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>
 
     </table>
+</div>
+
+<div class="row">
+    <div class="col pl-0 py-4">
+        <h1 class="alt-header">WHAT NOW?</h1>
+    </div>
 </div>
