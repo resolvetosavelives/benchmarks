@@ -1,6 +1,7 @@
 .widget-container {
   height: 156px;
   width: 560px;
+  min-width: 560px;
   padding-top: 15px;
   strong {
     font-family: Karla;
@@ -21,7 +22,7 @@
       font-size: 12px;
 
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 13px;
         left: -86px;
