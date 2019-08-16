@@ -14,7 +14,7 @@ class PlanController < ApplicationController
       name: plan_params.fetch(:name),
       activity_map: JSON.parse(plan_params.fetch(:activity_map))
     )
-    redirect_to plan
+    redirect_to action: 'index'
   end
 
   private
