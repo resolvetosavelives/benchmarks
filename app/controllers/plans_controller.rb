@@ -1,4 +1,4 @@
-class PlanController < ApplicationController
+class PlansController < ApplicationController
   def show
     @benchmarks = BenchmarksFixture.new
     @plan = Plan.find_by_id!(params.fetch(:id))
