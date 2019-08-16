@@ -1,0 +1,5 @@
+ <div class="row border p-2">
+   <div class="col">
+     <%= text_field_tag :new_activity, nil, class: "", placeholder: "+ Add Activity", data: { target: "plan.newActivity", action: "keypress->plan#addNewActivity", "benchmark-id": benchmark_id } %>
+   </div>
+ </div>

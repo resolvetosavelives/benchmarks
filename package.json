@@ -6,8 +6,10 @@
     "@stimulus/webpack-helpers": "^1.1.1",
     "bootstrap": "4.3.1",
     "jquery": "^3.4.1",
+    "jquery-ujs": "^1.2.2",
     "popper.js": "^1.15.0",
-    "stimulus": "^1.1.1"
+    "stimulus": "^1.1.1",
+    "turbolinks": "^5.2.0"
   },
   "prettier": {
     "semi": false
