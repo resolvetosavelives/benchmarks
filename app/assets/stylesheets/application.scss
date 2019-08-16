@@ -21,7 +21,6 @@ $colors: (
   "red": #e93939,
   "yellow": #ffca1e,
   "light-gray": #f2f2f2,
-
   "primary": #d86422,
   "secondary": rgba(45, 45, 53, 0.5),
   "success": #d6b754,
@@ -29,16 +28,16 @@ $colors: (
   "warning": #ffca1e,
   "info": #2c8dc9,
   "light": #f8f9fa,
-  "dark": #343a40,
+  "dark": #343a40
 ) !default;
 
 $theme-colors: $colors;
 
 @import "bootstrap/scss/bootstrap";
 @import "./scores_widget";
-@import url('https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin');
-@import url('https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin');
-@import url('https://fonts.googleapis.com/css?family=Karla&subset=latin');
+@import url("https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin");
+@import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
+@import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
 
 html {
   height: 100%;
@@ -79,7 +78,10 @@ a {
   color: color("primary");
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: Crimson Text;
 }
 
@@ -104,7 +106,7 @@ h4 {
 }
 
 th {
-    font-family: Karla Regular;
+  font-family: Karla Regular;
 }
 
 .navbar {
@@ -123,9 +125,9 @@ th {
     align-items: center;
 
     .nav-item {
-        font-size: 16px;
-        line-height: 19px;
-        letter-spacing: 0.1em;
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: 0.1em;
     }
   }
 }
@@ -142,25 +144,25 @@ th {
 }
 
 .landing {
-    .left-panel {
-        padding-top: 100px;
-    }
+  .left-panel {
+    padding-top: 100px;
+  }
 
-    .landing-heading {
-        font-size: 64px;
-    }
+  .landing-heading {
+    font-size: 64px;
+  }
 }
 
 .display-header {
-    font-family: Pathway Gothic One;
+  font-family: Pathway Gothic One;
 }
 
 .alt-header {
-    font-family: Pathway Gothic One;
+  font-family: Pathway Gothic One;
 }
 
 .w-70px {
-    width: 70px;
+  width: 70px;
 }
 
 .next-button {
@@ -169,4 +171,9 @@ th {
 
 .table-fixed {
   table-layout: fixed;
+}
+
+.full-width {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
