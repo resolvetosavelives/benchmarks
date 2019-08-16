@@ -4,6 +4,10 @@ class PlanController < ApplicationController
     @plan = Plan.find_by_id!(params.fetch(:id))
   end
 
+  def index
+    @plans = Plan.all
+  end
+
   def update
     plan = Plan.find_by_id!(params.fetch(:id))
     plan.update!(
