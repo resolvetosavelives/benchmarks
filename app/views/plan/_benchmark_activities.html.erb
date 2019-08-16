@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<%= content_tag :div, id: benchmark_id.parameterize do %> 
+<%= content_tag :div, id: "benchmark_container_#{benchmark_id.parameterize}" do %> 
   <% activities.each do |activity| %> 
     <%= render "activity", benchmark_id: benchmark_id, activity: activity %> 
   <% end %> 

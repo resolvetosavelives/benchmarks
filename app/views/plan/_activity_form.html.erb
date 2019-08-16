@@ -1,8 +1,5 @@
-<%= form_tag "/activity", remote: true, authenticity_token: true  do %>
-  <div class="row border p-2">
-    <div class="col">
-      <%= hidden_field_tag :benchmark_id, benchmark_id %> 
-      <%= text_field_tag :new_activity, nil, class: "", placeholder: "+ Add Activity", data: { target: "plan.newActivity", action: "keypress->plan#addNewActivity", "benchmark-id": benchmark_id } %>
-    </div>
-  </div>
-<% end %>
+ <div class="row border p-2">
+   <div class="col">
+     <%= text_field_tag :new_activity, nil, class: "", placeholder: "+ Add Activity", data: { target: "plan.newActivity", action: "keypress->plan#addNewActivity", "benchmark-id": benchmark_id } %>
+   </div>
+ </div>
