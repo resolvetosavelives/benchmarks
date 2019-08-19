@@ -1,0 +1,29 @@
+<div class="row align-items-center">
+  <div class="col">
+    <h1>Log in</h1>
+  </div>
+  <div class="col d-flex justify-content-end">
+    <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+  </div>
+</div>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="row pt-4">
+    <div class="form-group col">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email" %>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+    <div class="form-group col">
+      <%= f.password_field :password, autocomplete: "current-password", class: "form-control", required: true, placeholder: "Password" %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col">
+      <%= f.submit "LOG IN", class: "w-100 btn btn-orange" %>
+    </div>
+  </div>
+<% end %>

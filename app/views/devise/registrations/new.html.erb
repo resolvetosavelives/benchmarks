@@ -1,34 +1,45 @@
-<h2>Sign up</h2>
+<div class="row align-items-center">
+  <div class="col">
+    <h1>Create an account</h1>
+  </div>
+</div>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="row pt-4">
+    <div class="form-group col">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div class="row pt-3">
+    <div class="form-group col">
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", required: true, placeholder: "Password (#{@minimum_password_length} characters minimum)" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div class="row pt-3">
+    <div class="form-group col">
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", required: true, placeholder: "Password confirmation" %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :role %><br />
-    <%= f.select :role, ["Country Planner", "Technical Advisor", "Donor", "Other"].map {|r| [r, r] } %>
+  <div class="row pt-3">
+    <div class="form-group col">
+      <%= f.select :role, ["Country Planner", "Technical Advisor", "Donor", "Other"].map {|r| [r, r] }, {include_blank: "Select your role"}, {class: "form-control custom-select"} %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="row">
+    <div class="col">
+      <%= f.submit "SIGN UP", class: "w-100 btn btn-orange" %>
+    </div>
+  </div>
+
+  <div class="row pt-4">
+    <div class="col">
+      <p>By creating an account, you agree to the Terms of Service</p>
+    </div>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
