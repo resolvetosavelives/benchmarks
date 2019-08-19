@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Resolve To Save Lives -- Benchmarks</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_pack_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <div class="container-fluid h-100 <%= controller_name == "sessions" ? "bg-blue" : "bg-dark-blue" %> devise">
+      <div class="row h-100 align-items-center justify-content-center">
+        <div class="col-6">
+          <% if notice %>
+            <div class="alert alert-primary">
+              <%= notice %>
+            </div>
+          <% end %>
+          <% if alert %>
+            <div class="alert alert-warning">
+              <%= alert %>
+            </div>
+          <% end %>
+          <div class="row mb-4">
+            <div class="col px-5">
+              <%= image_tag("who-logo.svg") %>
+            </div>
+          </div>
+          <div class="row bg-white rounded">
+            <div class="col px-5 pt-4 pb-5">
+              <%= yield %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col px-5 pt-4 text-white">
+              <% if controller_name == "sessions" %>
+                <p class="mb-1">Don't have an account?</p>
+                <%= link_to "Create an account", new_registration_path(resource_name), class: "text-white" %>
+              <% elsif controller_name == "registrations" %>
+                <p class="mb-1">Already have an account?</p>
+                <%= link_to "Log in", new_user_session_path, class: "text-white" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
