@@ -13,6 +13,16 @@
     <%= render "layouts/header" %>
     <div class="container-fluid">
       <div class="offset-1 col-10">
+        <% if notice %>
+          <div class="alert alert-primary">
+            <%= notice %>
+          </div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-warning">
+            <%= alert %>
+          </div>
+        <% end %>
         <%= yield %>
       </div>
     </div>
