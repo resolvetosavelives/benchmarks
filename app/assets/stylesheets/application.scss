@@ -107,9 +107,9 @@ h4 {
 }
 
 thead {
-    font-family: Karla;
-    font-size: 24px;
-    line-height: 54px;
+  font-family: Karla;
+  font-size: 24px;
+  line-height: 54px;
 }
 
 th {
@@ -117,9 +117,9 @@ th {
 }
 
 td {
-    font-family: Karla;
-    font-size: 17px;
-    line-height: 24px;
+  font-family: Karla;
+  font-size: 17px;
+  line-height: 24px;
 }
 
 .navbar {
@@ -193,4 +193,12 @@ td {
 .full-width {
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+}
+
+.was-validated .form-control:invalid,
+.was-validated .form-control:valid,
+.form-control.is-invalid,
+.form-control.is-valid {
+  background: none;
+  padding-right: 0.75rem;
 }
