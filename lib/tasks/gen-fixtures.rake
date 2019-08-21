@@ -73,28 +73,27 @@ task gen_fixtures: %i[environment] do
 
   class CrosswalkSpreadsheet
     def initialize
-      @workbook =
-        RubyXL::Parser.parse('./data/BenchmarksDatabase_10Aug2019.xlsx')
+      @workbook = RubyXL::Parser.parse('./data/RTSL Fixtures.xlsx')
     end
 
     def parse_crosswalk_row(row)
       cells = row.cells
 
       {
-        jee2_cap: load_cell(cells[1]),
-        jee2_ind: load_cell(cells[2]),
-        jee1_cap: load_cell(cells[3]),
-        jee1_ind: load_cell(cells[4]),
-        spar_cap: load_cell(cells[5]),
-        spar_ind: load_cell(cells[6]),
-        bench_cap: load_cell(cells[7]),
-        bench_ind: load_cell(cells[8]),
-        bench_text: load_cell(cells[9])
+        jee2_cap: load_identifier_cell(cells[0]),
+        jee2_ind: load_identifier_cell(cells[1]),
+        jee1_cap: load_identifier_cell(cells[2]),
+        jee1_ind: load_identifier_cell(cells[3]),
+        spar_cap: load_identifier_cell(cells[4]),
+        spar_ind: load_identifier_cell(cells[5]),
+        bench_cap: load_identifier_cell(cells[6]),
+        bench_ind: load_identifier_cell(cells[7]),
+        bench_text: load_identifier_cell(cells[8])
       }
     end
 
     def crosswalk(data_dictionary)
-      rows = @workbook['Key']
+      rows = @workbook['Crosswalk']
       rows.drop(1).reduce({}) do |acc, row|
         raise 'acc failed to propogate' unless acc
 
@@ -277,8 +276,6 @@ task gen_fixtures: %i[environment] do
   end
 
   Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
-  Benchmarks_workbook =
-    RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
   Assessment_structures_workbook =
     RubyXL::Parser.parse('./data/Assessment-Structures.xlsx')
 
@@ -292,6 +289,12 @@ end
 
 def load_cell(cell)
   return cell.value if cell && cell.value && cell.value.class == Integer
+  return cell.value.strip if cell && cell.value && cell.value.class == String
+  nil
+end
+
+def load_identifier_cell(cell)
+  return cell.value.to_s if cell && cell.value && cell.value.class == Integer
   return cell.value.strip if cell && cell.value && cell.value.class == String
   nil
 end
