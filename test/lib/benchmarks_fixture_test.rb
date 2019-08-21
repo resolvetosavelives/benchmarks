@@ -45,4 +45,16 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
       benchmarks.goal_activities '1.1', (Score.new 5), (Score.new 3)
     end
   end
+
+  test 'returns the correct capacity text for a given id' do
+    assert false
+  end
+
+  test 'returns the correct indicator text for a given id' do
+    assert false
+  end
+
+  test 'returns the correct objective text for a given id' do
+    assert false
+  end
 end

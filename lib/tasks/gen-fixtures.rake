@@ -88,7 +88,7 @@ task gen_fixtures: %i[environment] do
         spar_ind: load_identifier_cell(cells[5]),
         bench_cap: load_identifier_cell(cells[6]),
         bench_ind: load_identifier_cell(cells[7]),
-        bench_text: load_identifier_cell(cells[8])
+        bench_text: load_cell(cells[8])
       }
     end
 
