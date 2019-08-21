@@ -26,7 +26,7 @@ task gen_fixtures: %i[environment] do
 
         next acc if acc[:section] == nil
         acc[:data][acc[:section]][:indicators][indicator_id.to_s] = {
-          text: indicator_text,
+          indicator: indicator_text,
           objective: objective_text,
           activities: { "2": [], "3": [], "4": [], "5": [] }
         }

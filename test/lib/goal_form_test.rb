@@ -27,7 +27,8 @@ class GoalFormTest < ActiveSupport::TestCase
                  {
                    '1.1' =>
                      @benchmarks.goal_activities(
-                       '1.1',
+                       '1',
+                       '1',
                        (Score.new 1),
                        (Score.new 3)
                      )
@@ -77,7 +78,8 @@ class GoalFormTest < ActiveSupport::TestCase
                  {
                    '1.1' =>
                      @benchmarks.goal_activities(
-                       '1.1',
+                       '1',
+                       '1',
                        (Score.new 1),
                        (Score.new 5)
                      )
@@ -107,7 +109,8 @@ class GoalFormTest < ActiveSupport::TestCase
                  {
                    '1.1' =>
                      @benchmarks.goal_activities(
-                       '1.1',
+                       '1',
+                       '1',
                        (Score.new 1),
                        (Score.new 4)
                      )
@@ -135,7 +138,8 @@ class GoalFormTest < ActiveSupport::TestCase
                  {
                    '1.1' =>
                      @benchmarks.goal_activities(
-                       '1.1',
+                       '1',
+                       '1',
                        (Score.new 1),
                        (Score.new 2)
                      )
@@ -163,7 +167,8 @@ class GoalFormTest < ActiveSupport::TestCase
                  {
                    '1.1' =>
                      @benchmarks.goal_activities(
-                       '1.1',
+                       '1',
+                       '1',
                        (Score.new 1),
                        (Score.new 2)
                      )
