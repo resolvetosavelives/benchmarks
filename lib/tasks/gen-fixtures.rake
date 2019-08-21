@@ -71,9 +71,223 @@ task gen_fixtures: %i[environment] do
     end
   end
 
-  workbook = RubyXL::Parser.parse './data/RTSL Fixtures.xlsx'
+  class CrosswalkSpreadsheet
+    def initialize
+      @workbook =
+        RubyXL::Parser.parse('./data/BenchmarksDatabase_10Aug2019.xlsx')
+    end
 
-  generate_benchmark_fixture(workbook)
+    def parse_crosswalk_row(row)
+      cells = row.cells
+
+      {
+        jee2_cap: load_cell(cells[1]),
+        jee2_ind: load_cell(cells[2]),
+        jee1_cap: load_cell(cells[3]),
+        jee1_ind: load_cell(cells[4]),
+        spar_cap: load_cell(cells[5]),
+        spar_ind: load_cell(cells[6]),
+        bench_cap: load_cell(cells[7]),
+        bench_ind: load_cell(cells[8]),
+        bench_text: load_cell(cells[9])
+      }
+    end
+
+    def crosswalk(data_dictionary)
+      rows = @workbook['Key']
+      rows.drop(1).reduce({}) do |acc, row|
+        raise 'acc failed to propogate' unless acc
+
+        row_ = parse_crosswalk_row row
+
+        if row_[:jee1_cap] && row_[:jee1_ind]
+          jee1_id = "jee1_ind_#{row_[:jee1_cap].downcase}#{row_[:jee1_ind]}"
+          unless data_dictionary[jee1_id]
+            raise "#{jee1_id} is not in the data dictionary (row #{row})"
+          end
+        end
+
+        if row_[:jee2_cap] && row_[:jee2_ind]
+          jee2_id = "jee2_ind_#{row_[:jee2_cap].downcase}#{row_[:jee2_ind]}"
+          unless data_dictionary[jee2_id]
+            raise "#{jee2_id} is not in the data dictionary (row #{row})"
+          end
+        end
+
+        if row_[:spar_cap] && row_[:spar_ind]
+          spar_id =
+            "spar_2018_ind_#{row_[:spar_cap].downcase}#{row_[:spar_ind]}"
+          unless data_dictionary[spar_id]
+            raise "#{spar_id} is not in the data dictionary (row #{row})"
+          end
+        end
+
+        if row_[:bench_cap] && row_[:bench_ind]
+          bench_id = "#{row_[:bench_cap][1..-1].strip}.#{row_[:bench_ind]}"
+        elsif row_[:bench_cap] == 'N/A'
+          bench_id = 'N/A'
+        end
+
+        dict_append_value acc, jee1_id, bench_id if jee1_id && bench_id
+
+        dict_append_value acc, jee2_id, bench_id if jee2_id && bench_id
+
+        dict_append_value acc, spar_id, bench_id if spar_id && bench_id
+
+        acc
+      end
+    end
+
+    def activity_types; end
+  end
+
+  def dict_append_value(dict, key, value)
+    dict[key] = [] unless dict[key]
+    dict[key].push(value) unless dict[key].include?(value)
+  end
+
+  def dict_insert_without_replace(dict, key, value)
+    if dict[key] && dict[key] != value
+      raise "At #{key}, attempted to replace #{dict[key]} with #{value}"
+    end
+    dict[key] = value
+  end
+
+  def generate_data_dictionary_fixture
+    rows = Data_Dictionary_workbook[0]
+
+    dictionary =
+      rows.drop(1).reduce({ section: nil, data: {} }) do |acc, row|
+        raise 'abort! abort!' unless acc
+        cells = row.cells
+
+        if cells[0] && cells[0].value
+          if cells[0].value == 'JEE 1.0 capacity'
+            acc[:section] = 'jee1_ta'
+          elsif cells[0].value == 'JEE 1.0 indicator'
+            acc[:section] = 'jee1_ind'
+          elsif cells[0].value == 'JEE 2.0 capacity'
+            acc[:section] = 'jee2_ta'
+          elsif cells[0].value == 'JEE 2.0 indicator'
+            acc[:section] = 'jee2_ind'
+          elsif cells[0].value == 'SPAR 2018 capacity'
+            acc[:section] = 'spar_2018_ta'
+          elsif cells[0].value == 'SPAR 2018 indicator'
+            acc[:section] = 'spar_2018_ind'
+          elsif cells[0].value == 'SPAR 2018 indicator'
+            acc[:section] = 'spar_2018_ind'
+          elsif cells[0].value == 'Benchmark capacity'
+            acc[:section] = 'bench_ta'
+          else
+            acc[:section] = nil
+          end
+        end
+
+        next acc if acc[:section] == nil
+        if cells[4] == nil || cells[4].value == nil || cells[4].value == ''
+          next acc
+        end
+
+        key = "#{acc[:section]}_#{cells[4].value.downcase}"
+        acc[:data][key] = cells[5].value
+
+        acc
+      end
+
+    File.open('./app/fixtures/data_dictionary.json', 'w') do |f|
+      f.write(dictionary[:data].to_json)
+    end
+
+    dictionary[:data]
+  end
+
+  def process_assessment_structure(data_dictionary, rows, assessment)
+    rows.drop(1).reduce({}) do |acc, row|
+      cells = row.cells
+
+      technical_area_id = "#{assessment}_ta_#{cells[0].value}"
+      indicator_id = "#{assessment}_ind_#{cells[1].value}"
+
+      unless data_dictionary[indicator_id]
+        raise "unrecognized indicator #{indicator_id}"
+      end
+      unless data_dictionary[technical_area_id]
+        raise "unrecognized technical area #{technical_area_id}"
+      end
+
+      unless acc[assessment]
+        acc[assessment] = {
+          label: assessment, technical_area_order: [], technical_areas: {}
+        }
+      end
+
+      unless acc[assessment][:technical_areas][technical_area_id]
+        acc[assessment][:technical_area_order].push(technical_area_id)
+        acc[assessment][:technical_areas][technical_area_id] = {
+          assessment: assessment,
+          technical_area_id: technical_area_id,
+          indicators: []
+        }
+      end
+      acc[assessment][:technical_areas][technical_area_id][:indicators].push(
+        indicator_id
+      )
+
+      acc
+    end
+  end
+
+  def generate_assessment_fixture(data_dictionary)
+    spar_structure =
+      process_assessment_structure(
+        data_dictionary,
+        Assessment_structures_workbook['SPAR 2018'],
+        'spar_2018'
+      )
+
+    jee1_structure =
+      process_assessment_structure(
+        data_dictionary,
+        Assessment_structures_workbook['JEE 1'],
+        'jee1'
+      )
+
+    jee2_structure =
+      process_assessment_structure(
+        data_dictionary,
+        Assessment_structures_workbook['JEE 2'],
+        'jee2'
+      )
+
+    assessment_structures =
+      spar_structure.merge(jee1_structure).merge(jee2_structure)
+    #assessment_structures = jee1_structure.merge(jee2_structure)
+
+    File.open('./app/fixtures/assessments.json', 'w') do |f|
+      f.write(assessment_structures.to_json)
+    end
+  end
+
+  def generate_crosswalk_fixture(data_dictionary)
+    mappings = CrosswalkSpreadsheet.new.crosswalk(data_dictionary)
+
+    File.open('./app/fixtures/crosswalk.json', 'w') do |f|
+      f.write(mappings.to_json)
+    end
+  end
+
+  Data_Dictionary_workbook = RubyXL::Parser.parse('./data/Data Dictionary.xlsx')
+  Benchmarks_workbook =
+    RubyXL::Parser.parse('./data/JEE Benchmarks and Activities.xlsx')
+  Assessment_structures_workbook =
+    RubyXL::Parser.parse('./data/Assessment-Structures.xlsx')
+
+  Unified_workbook = RubyXL::Parser.parse './data/RTSL Fixtures.xlsx'
+
+  data_dictionary = generate_data_dictionary_fixture
+  generate_assessment_fixture(data_dictionary)
+  generate_crosswalk_fixture(data_dictionary)
+  generate_benchmark_fixture(Unified_workbook)
 end
 
 def load_cell(cell)
