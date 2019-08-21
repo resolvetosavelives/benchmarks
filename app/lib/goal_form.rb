@@ -51,13 +51,8 @@ class GoalForm
 
     benchmark_activities =
       benchmark_goals.each.reduce({}) do |acc, (key, pairing)|
-        capacity_id, indicator_id = key.split '.'
         pairing.score = Score.new 1 if pairing.score.value == 0
-        acc[key] =
-          benchmarks.goal_activities capacity_id,
-                                     indicator_id,
-                                     pairing.score,
-                                     pairing.goal
+        acc[key] = benchmarks.goal_activities key, pairing.score, pairing.goal
         acc
       end
 

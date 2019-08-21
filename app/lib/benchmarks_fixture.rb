@@ -7,15 +7,18 @@ class BenchmarksFixture
     @fixture[capacity_id]['name']
   end
 
-  def indicator_text(capacity_id, indicator_id)
+  def indicator_text(id)
+    capacity_id, indicator_id = id.split('.')
     @fixture[capacity_id]['indicators'][indicator_id]['benchmark']
   end
 
-  def objective_text(capacity_id, indicator_id)
+  def objective_text(id)
+    capacity_id, indicator_id = id.split('.')
     @fixture[capacity_id]['indicators'][indicator_id]['objective']
   end
 
-  def goal_activities(capacity_id, indicator_id, score, goal)
+  def goal_activities(id, score, goal)
+    capacity_id, indicator_id = id.split('.')
     unless @fixture[capacity_id]['indicators'][indicator_id]
       raise ArgumentError.new "invalid benchmark: #{capacity_id} #{
                                 indicator_id
@@ -42,7 +45,8 @@ class BenchmarksFixture
     )
   end
 
-  def level_activities(capacity_id, indicator_id, level)
+  def level_activities(id, level)
+    capacity_id, indicator_id = id.split('.')
     unless level.value.between?(2, 5)
       raise RangeError.new 'level is not between 2 and 5'
     end

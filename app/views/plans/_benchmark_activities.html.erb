@@ -1,8 +1,7 @@
 <div class="row bg-light-gray p-1">
   <div class="col">
-    <% capacity_id, indicator_id = benchmark_id.split('.') %>
     <b>Benchmark <%= benchmark_id %>:</b> <%=
-    benchmarks.indicator_text(capacity_id, indicator_id) %>
+    benchmarks.indicator_text(benchmark_id) %>
   </div>
 </div>
 
