@@ -35,9 +35,10 @@
                             text: "Download XLS" %>
                     </td>
                     <td class="py-4 text-secondary">
-                        <%= render 'shared/icon',
-                            image_name: "ico-print.svg",
-                            text: "Print" %>
+                        <%= link_to (render 'shared/icon',
+                                            image_name: "ico-print.svg",
+                                            text: "Print"),
+                                    worksheet_url(:id => plan.id) %>
                     </td>
                     <td class="py-4 text-secondary">
                         <%= render 'shared/icon',

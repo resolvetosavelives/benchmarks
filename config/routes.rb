@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get '/goals(/:country)(/:assessment_type)', to: 'goals#show'
   post '/goals', to: 'goals#create'
   resources :plans, only: %i[show index update]
+  resources :worksheets, only: %i[show]
 end
