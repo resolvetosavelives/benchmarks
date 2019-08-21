@@ -4,16 +4,16 @@ require 'rubyXL/convenience_methods'
 
 desc 'Generate a print worksheet from a plan'
 task print: %i[environment] do
-  benchmarks =
-    JSON.load File.open './app/fixtures/benchmarks_and_activities.json'
+  benchmarks = BenchmarksFixture.new
   data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
 
   def create_row(worksheet, idx, activity)
-    worksheet.add_cell(idx, 1, activity)
+    cell = worksheet.add_cell(idx, 1, activity['text'])
+    cell.change_text_wrap true
   end
 
   def populate_worksheet(benchmarks, worksheet, indicators)
-    idx = 1
+    idx = 2
     indicators.keys.sort.each do |indicator_key|
       activities = indicators.fetch(indicator_key)
 
@@ -21,9 +21,10 @@ task print: %i[environment] do
         cell =
           worksheet.add_cell idx,
                              0,
-                             benchmarks.fetch(indicator_key)['objective']
+                             "#{indicator_key}: #{
+                               benchmarks.objective_text(indicator_key)
+                             }"
         cell.change_text_wrap true
-        cell.change_border :top, 'thick'
       end
 
       activities.each do |activity|
@@ -33,7 +34,36 @@ task print: %i[environment] do
     end
   end
 
-  plan = Plan.find 15
+  def populate_worksheet_header(
+    worksheet, worksheet_name, assessment_name, score
+  )
+    cell = worksheet.add_cell(0, 0, worksheet_name)
+    cell.change_font_bold(true)
+    worksheet.add_cell(1, 0, 'Benchmark Objective')
+    worksheet.add_cell(
+      1,
+      1,
+      "Activities required for #{assessment_name} Score #{score}"
+    )
+    worksheet.add_cell(1, 2, 'Detailed Activity Description')
+    worksheet.add_cell(1, 3, 'Implementation Level')
+    worksheet.add_cell(1, 4, 'Responsible for Implementation')
+    worksheet.add_cell(1, 5, 'Priority')
+    worksheet.add_cell(1, 6, 'Budget')
+
+    worksheet.change_row_fill(1, 'd1d1d1')
+    worksheet.change_row_bold(1, true)
+
+    worksheet.change_column_width(0, 40)
+    worksheet.change_column_width(1, 40)
+    worksheet.change_column_width(2, 40)
+    worksheet.change_column_width(3, 25)
+    worksheet.change_column_width(4, 30)
+    worksheet.change_column_width(5, 20)
+    worksheet.change_column_width(6, 15)
+  end
+
+  plan = Plan.find 41
   wb = RubyXL::Workbook.new
 
   (1..18).each do |idx|
@@ -45,7 +75,11 @@ task print: %i[environment] do
     end
 
     worksheet = wb[worksheet_name]
-    worksheet.change_column_width(0, 40)
+
+    populate_worksheet_header worksheet,
+                              worksheet_name,
+                              plan.assessment_type,
+                              '--'
 
     populate_worksheet benchmarks,
                        worksheet,
