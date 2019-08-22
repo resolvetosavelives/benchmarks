@@ -21,6 +21,7 @@ def generate_worksheet(plan)
 
   def populate_worksheet(benchmarks, worksheet, indicators)
     idx = 2
+    worksheet.change_column_vertical_alignment(0, 'top')
     indicators.keys.sort.each do |indicator_key|
       activities = indicators.fetch(indicator_key)
 
@@ -32,12 +33,14 @@ def generate_worksheet(plan)
                                benchmarks.objective_text(indicator_key)
                              }"
         cell.change_text_wrap true
+        worksheet.merge_cells idx, 0, idx + activities.length - 1, 0
       end
 
       activities.each do |activity|
         create_row worksheet, idx, activity
         idx = idx + 1
       end
+      idx = idx + 1
     end
   end
 

@@ -38,7 +38,9 @@
                         <%= link_to (render 'shared/icon',
                                             image_name: "ico-print.svg",
                                             text: "Print"),
-                                    worksheet_url(:id => plan.id) %>
+                                    worksheet_url(:id => plan.id),
+                                    class: "text-dark",
+                                    data: { turbolinks: false } %>
                     </td>
                     <td class="py-4 text-secondary">
                         <%= render 'shared/icon',
