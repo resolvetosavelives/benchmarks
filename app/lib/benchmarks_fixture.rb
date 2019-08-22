@@ -4,25 +4,41 @@ class BenchmarksFixture
   end
 
   def capacity_text(capacity_id)
+    unless @fixture[capacity_id]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+    end
     @fixture[capacity_id]['name']
   end
 
   def indicator_text(id)
     capacity_id, indicator_id = id.split('.')
-    @fixture[capacity_id]['indicators'][indicator_id]['benchmark']
+    unless @fixture[capacity_id]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+    end
+    unless @fixture[capacity_id]['indicators'][indicator_id]
+      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    end
+    @fixture[capacity_id]['indicators'][indicator_id]['indicator']
   end
 
   def objective_text(id)
     capacity_id, indicator_id = id.split('.')
+    unless @fixture[capacity_id]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+    end
+    unless @fixture[capacity_id]['indicators'][indicator_id]
+      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    end
     @fixture[capacity_id]['indicators'][indicator_id]['objective']
   end
 
   def goal_activities(id, score, goal)
     capacity_id, indicator_id = id.split('.')
+    unless @fixture[capacity_id]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+    end
     unless @fixture[capacity_id]['indicators'][indicator_id]
-      raise ArgumentError.new "invalid benchmark: #{capacity_id} #{
-                                indicator_id
-                              }"
+      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
     end
 
     unless goal.value.between?(2, 5)
@@ -47,6 +63,12 @@ class BenchmarksFixture
 
   def level_activities(id, level)
     capacity_id, indicator_id = id.split('.')
+    unless @fixture[capacity_id]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+    end
+    unless @fixture[capacity_id]['indicators'][indicator_id]
+      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    end
     unless level.value.between?(2, 5)
       raise RangeError.new 'level is not between 2 and 5'
     end

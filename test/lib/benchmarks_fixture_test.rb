@@ -47,14 +47,25 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
   end
 
   test 'returns the correct capacity text for a given id' do
-    assert false
+    benchmarks = BenchmarksFixture.new
+    assert_raises(ArgumentError) { benchmarks.capacity_text '19' }
+
+    assert_equal 'Chemical Events', (benchmarks.capacity_text '17')
   end
 
   test 'returns the correct indicator text for a given id' do
-    assert false
+    benchmarks = BenchmarksFixture.new
+    assert_raises(ArgumentError) { benchmarks.indicator_text '19.1' }
+    assert_raises(ArgumentError) { benchmarks.indicator_text '17.2' }
+    assert_equal 'Mechanisms are in place for surveillance, alert and response to chemical events or emergencies',
+                 (benchmarks.indicator_text '17.1')
   end
 
   test 'returns the correct objective text for a given id' do
-    assert false
+    benchmarks = BenchmarksFixture.new
+    assert_raises(ArgumentError) { benchmarks.objective_text '19.1' }
+    assert_raises(ArgumentError) { benchmarks.objective_text '17.2' }
+    assert_equal 'Establish policies, legislation, plans and capacities for surveillance, alert and response to chemical events or emergencies',
+                 (benchmarks.objective_text '17.1')
   end
 end
