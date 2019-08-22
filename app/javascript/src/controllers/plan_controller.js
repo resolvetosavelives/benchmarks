@@ -48,7 +48,7 @@ export default class extends Controller {
     const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
 
     const newActivityList = this.activityMap[benchmarkId].filter(
-      a => a !== activityToDelete
+      a => a.text !== activityToDelete
     )
     this.activityMapTarget.value = JSON.stringify({
       ...this.activityMap,
@@ -69,7 +69,7 @@ export default class extends Controller {
         ...this.activityMap,
         [benchmarkId]: [
           ...(this.activityMap[benchmarkId] || []),
-          currentTarget.value
+          { text: currentTarget.value }
         ]
       })
       renderActivity(benchmarkId, currentTarget.value)

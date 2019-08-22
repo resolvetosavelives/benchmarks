@@ -1,14 +1,14 @@
 <div class="row bg-light-gray p-1">
   <div class="col">
     <b>Benchmark <%= benchmark_id %>:</b> <%=
-    benchmarks.benchmark_text(benchmark_id) %>
+    benchmarks.indicator_text(benchmark_id) %>
   </div>
 </div>
 
-<%= content_tag :div, id: "benchmark_container_#{benchmark_id.parameterize}" do %> 
-  <% activities.each do |activity| %> 
-    <%= render "activity", benchmark_id: benchmark_id, activity: activity %> 
-  <% end %> 
-<% end %> 
+<%= content_tag :div, id: "benchmark_container_#{benchmark_id.parameterize}" do %>
+  <% activities.each do |activity| %>
+    <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
+  <% end %>
+<% end %>
 
 <%= render "activity_form", benchmark_id: benchmark_id %>
