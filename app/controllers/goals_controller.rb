@@ -48,9 +48,12 @@ class GoalsController < ApplicationController
       scale = JeeScale
     end
 
-    redirect_to GoalForm.create_draft_plan! goal_params,
-                                            crosswalk,
-                                            benchmarks,
-                                            scale
+    plan = GoalForm.create_draft_plan! goal_params,
+                                       crosswalk,
+                                       benchmarks,
+                                       scale,
+                                       current_user
+    session[:plan_id] = plan.id unless current_user
+    redirect_to plan
   end
 end

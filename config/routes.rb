@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sesssions: 'users/sessions' }
+  devise_for :users, controllers: { sessions: 'users/sessions' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'landing#show'
   post '/country_select', to: 'country_select#create'

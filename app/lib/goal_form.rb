@@ -21,7 +21,7 @@ class GoalForm
     end
   end
 
-  def self.create_draft_plan!(params, crosswalk, benchmarks, scale)
+  def self.create_draft_plan!(params, crosswalk, benchmarks, scale, current_user)
     benchmark_goals =
       params.keys.reduce({}) do |benchmark_acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
@@ -59,6 +59,7 @@ class GoalForm
     Plan.create! name: "#{params.fetch(:country)} draft plan",
                  country: params.fetch(:country),
                  assessment_type: params.fetch(:assessment_type),
-                 activity_map: benchmark_activities
+                 activity_map: benchmark_activities,
+                 user_id: current_user && current_user.id
   end
 end

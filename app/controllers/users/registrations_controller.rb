@@ -1,5 +1,5 @@
-class Users::SessionsController < Devise::SessionsController
-  # POST /resource/sign_in
+class Users::RegistrationsController < Devise::RegistrationsController
+  # POST /resource
   def create
     super do |user|
       user.plans << Plan.find(session[:plan_id]) if session[:plan_id]
