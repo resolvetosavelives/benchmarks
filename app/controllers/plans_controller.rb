@@ -14,7 +14,11 @@ class PlansController < ApplicationController
       name: plan_params.fetch(:name),
       activity_map: JSON.parse(plan_params.fetch(:activity_map))
     )
-    redirect_to action: 'index'
+    if current_user
+      redirect_to action: 'index'
+    else
+      redirect_to new_user_session_path
+    end
   end
 
   private
