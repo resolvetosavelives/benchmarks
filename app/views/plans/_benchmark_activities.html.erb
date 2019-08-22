@@ -11,4 +11,4 @@
   <% end %>
 <% end %>
 
-<%= render "activity_form", benchmark_id: benchmark_id %>
+<%= render "activity_form", benchmark_id: benchmark_id, activities: benchmarks.activity_texts(benchmark_id) %>

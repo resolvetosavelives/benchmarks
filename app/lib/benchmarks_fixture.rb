@@ -78,4 +78,9 @@ class BenchmarksFixture
       ]
     )
   end
+
+  def activity_texts(id)
+    capacity_id, indicator_id = id.split('.')
+    @fixture.dig(capacity_id, 'indicators', indicator_id, 'activities').values.flatten.map { |a| a['text'] }
+  end
 end

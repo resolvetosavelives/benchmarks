@@ -5,8 +5,8 @@
       <div class="col">
         <% @plan.activity_map.each do |benchmark_id, activities| %>
         <!-- -->
-        <%= render 'benchmark_activities', benchmark_id: benchmark_id,
-        activities: activities, benchmarks: @benchmarks %>
+          <%= render 'benchmark_activities', benchmark_id: benchmark_id,
+            activities: activities, benchmarks: @benchmarks %>
         <!-- -->
         <% end %>
       </div>
