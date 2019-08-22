@@ -289,12 +289,16 @@ end
 
 def load_cell(cell)
   return cell.value if cell && cell.value && cell.value.class == Integer
-  return cell.value.strip if cell && cell.value && cell.value.class == String
+  if cell && cell.value && cell.value.class == String
+    return cell.value.strip.gsub("\n", ' ').gsub('  ', ' ')
+  end
   nil
 end
 
 def load_identifier_cell(cell)
   return cell.value.to_s if cell && cell.value && cell.value.class == Integer
-  return cell.value.strip if cell && cell.value && cell.value.class == String
+  if cell && cell.value && cell.value.class == String
+    return cell.value.strip.gsub("\n", ' ').gsub('  ', ' ')
+  end
   nil
 end
