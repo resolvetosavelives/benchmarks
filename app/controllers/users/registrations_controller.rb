@@ -6,4 +6,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       session[:plan_id] = nil
     end
   end
+
+  protected
+
+  def after_sign_up_path_for(resource)
+    stored_location_for(resource) || plans_path
+  end
 end

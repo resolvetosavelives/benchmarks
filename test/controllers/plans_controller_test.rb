@@ -75,6 +75,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   test "logged out user can update a plan with id == session[:plan_id]" do
     create_draft_plan_stub do |plan_id|
       put plan_path(plan_id), params: { plan: { name: "different", activity_map: "[]" }}
+      follow_redirect!
       assert_redirected_to new_user_session_path
       assert_equal Plan.find_by_name("different").id, plan_id
     end
