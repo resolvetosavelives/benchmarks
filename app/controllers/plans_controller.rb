@@ -26,17 +26,17 @@ class PlansController < ApplicationController
 
   private
 
+  def alert_and_redirect
+    flash[:alert] = "You are not allowed to access this plan"
+    redirect_to root_path
+  end
+
   def check_ownership
+    plan_id = params.fetch(:id).to_i
     if current_user
-      if current_user.plan_ids.exclude?(params.fetch(:id).to_i)
-        flash[:alert] = "You are not allowed to access this plan"
-        redirect_to root_path
-      end
+      alert_and_redirect if current_user.plan_ids.exclude?(plan_id)
     else
-      unless params.fetch(:id).to_i == session[:plan_id]
-        flash[:alert] = "You are not allowed to access this plan"
-        redirect_to root_path
-      end
+      alert_and_redirect unless plan_id == session[:plan_id]
     end
   end
 

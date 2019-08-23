@@ -3,6 +3,7 @@ require "minitest/autorun"
 def create_draft_plan_stub
   plan = Plan.create(name: "test plan", activity_map: [])
   GoalForm.stub :create_draft_plan!, plan do
+    post goals_url, params: {goal_form: { assessment_type: "jee1"}}
     yield plan.id
   end
 end
@@ -17,7 +18,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
   test "redirects logged out user with mismatched session[:plan_id]" do
     create_draft_plan_stub do |plan_id|
-      post goals_url, params: {goal_form: { assessment_type: "jee1"}}
       get plan_path("another plan")
       assert_response :redirect
     end
@@ -25,7 +25,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
   test "logged out user can access a plan matching session[:plan_id]" do
     create_draft_plan_stub do |plan_id|
-      post goals_url, params: {goal_form: { assessment_type: "jee1"}}
       get plan_path(plan_id)
       assert_response :ok
     end
@@ -68,7 +67,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
   test "logged out user can't update a plan with id != session[:plan_id]" do
     create_draft_plan_stub do |plan_id|
-      post goals_url, params: {goal_form: { assessment_type: "jee1"}}
       put plan_path("another plan"), params: { plan: { name: "different" }}
       assert_redirected_to root_path
     end
@@ -76,7 +74,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
   test "logged out user can update a plan with id == session[:plan_id]" do
     create_draft_plan_stub do |plan_id|
-      post goals_url, params: {goal_form: { assessment_type: "jee1"}}
       put plan_path(plan_id), params: { plan: { name: "different", activity_map: "[]" }}
       assert_redirected_to new_user_session_path
       assert_equal Plan.find_by_name("different").id, plan_id
