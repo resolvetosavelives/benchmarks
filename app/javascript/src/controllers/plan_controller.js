@@ -1,46 +1,18 @@
 import { Controller } from "stimulus"
 
-const createElement = (name, classNames, attributes = {}) => {
-  const element = document.createElement(name)
-
-  if (classNames.length) {
-    classNames.split(" ").forEach(className => element.classList.add(className))
-  }
-
-  Object.keys(attributes).forEach(name =>
-    element.setAttribute(name, attributes[name])
-  )
-  return element
-}
-
-const renderActivity = (benchmarkId, activityText) => {
-  const container = createElement("div", "row border p-2")
-
-  const activityTextContainer = createElement("div", "col-11")
-  const activityTextNode = document.createTextNode(activityText)
-  activityTextContainer.appendChild(activityTextNode)
-
-  const deleteButtonContainer = createElement("div", "col-1")
-  const deleteButton = createElement("button", "", {
-    "data-action": "plan#deleteActivity",
-    "data-benchmark-id": benchmarkId,
-    "data-activity": activityText
-  })
-  const deleteImage = createElement("img", "", { src: "/delete-button.svg" })
-  deleteButton.appendChild(deleteImage)
-  deleteButtonContainer.appendChild(deleteButton)
-
-  container.appendChild(activityTextContainer)
-  container.appendChild(deleteButtonContainer)
-
-  const benchmarksContainer = document.querySelector(
-    `#benchmark_container_${benchmarkId.replace(".", "-")}`
-  )
-  benchmarksContainer.appendChild(container)
-}
+import renderActivity from "../renderActivity"
 
 export default class extends Controller {
   static targets = ["activityMap", "newActivity", "submit"]
+
+  connect() {
+    this.newActivityTargets.forEach(t => {
+      $(t).autocomplete({
+        source: this.autocompletions(t.getAttribute("data-benchmark-id")),
+        open: () => $("ul.ui-menu").width($(t).innerWidth() + 5)
+      })
+    })
+  }
 
   deleteActivity(e) {
     const { currentTarget } = e
@@ -55,6 +27,9 @@ export default class extends Controller {
       [benchmarkId]: newActivityList
     })
     currentTarget.closest(".row").classList.add("d-none")
+    $(this.newActivity(benchmarkId)).autocomplete({
+      source: this.autocompletions(benchmarkId)
+    })
   }
 
   showNewActivity() {
@@ -73,9 +48,34 @@ export default class extends Controller {
         ]
       })
       renderActivity(benchmarkId, currentTarget.value)
+      $(currentTarget).autocomplete({
+        source: this.autocompletions(benchmarkId)
+      })
       e.target.value = ""
       e.preventDefault()
     }
+  }
+
+  autocompletions(benchmarkId) {
+    return this.activities(benchmarkId).filter(
+      a => this.currentActivities(benchmarkId).includes(a) === false
+    )
+  }
+
+  currentActivities(benchmarkId) {
+    return this.activityMap[benchmarkId].map(a => a.text)
+  }
+
+  activities(benchmarkId) {
+    return JSON.parse(
+      this.newActivity(benchmarkId).getAttribute("data-activities")
+    )
+  }
+
+  newActivity(benchmarkId) {
+    return this.newActivityTargets.find(
+      t => t.getAttribute("data-benchmark-id") === benchmarkId
+    )
   }
 
   get activityMap() {
