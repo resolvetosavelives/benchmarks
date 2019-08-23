@@ -4,6 +4,12 @@ class BenchmarksFixture
     @fixture = JSON.load File.open './app/fixtures/benchmarks.json'
   end
 
+  def capacities
+    @fixture.keys.map(&:to_i).sort.map do |k|
+      ({ id: k.to_s, name: @fixture[k.to_s]['name'] })
+    end
+  end
+
   def capacity_text(capacity_id)
     unless @fixture[capacity_id]
       raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
