@@ -9,9 +9,11 @@ class SpreadsheetCell
     if text
       @cell = worksheet.add_cell(x, y, text)
       @cell.change_text_wrap true
+      @cell.change_vertical_alignment 'top'
     elsif formula
       @cell = worksheet.add_cell(x, y, '', formula)
       @cell.change_text_wrap true
+      @cell.change_vertical_alignment 'top'
     else
       @cell = worksheet[x][y]
       @cell = worksheet.add_cell(x, y) unless @cell
@@ -60,13 +62,17 @@ class SpreadsheetCell
     self
   end
 
-  def with_border(yes)
-    if yes
-      @cell.change_border(:top, 'thin')
-      @cell.change_border(:bottom, 'thin')
-      @cell.change_border(:left, 'thin')
-      @cell.change_border(:right, 'thin')
+  def with_border(*args)
+    if args.include? :all
+      borders = %i[top bottom left right]
+    else
+      borders = args
     end
+
+    %i[top bottom left right].each do |border|
+      @cell.change_border(border, 'thin') if borders.include? border
+    end
+    self
   end
 end
 
