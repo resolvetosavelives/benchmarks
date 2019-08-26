@@ -94,15 +94,8 @@ def sheet_header(worksheet, capacity_name)
     .with_font_color('ffffff')
     .with_alignment(nil, 'center')
 
-  SpreadsheetCell.new(worksheet, 3, 0, text: 'Asset recommendations:')
-    .with_fill_color('dae3f3')
-  SpreadsheetCell.new(
-    worksheet,
-    3,
-    1,
-    text: 'User to enter list of recommendations in one cell'
-  )
-    .with_fill_color('dae3f3')
+  SpreadsheetCell.new(worksheet, 3, 0, text: '').with_fill_color('dae3f3')
+  SpreadsheetCell.new(worksheet, 3, 1, text: '').with_fill_color('dae3f3')
   SpreadsheetCell.new(worksheet, 4, 0, text: 'TECHNICAL AREA').with_alignment(
     nil,
     'center'
@@ -303,7 +296,7 @@ def sheet_header(worksheet, capacity_name)
   worksheet.merge_cells 0, 0, 0, 25
   worksheet.merge_cells 1, 0, 1, 25
   worksheet.merge_cells 2, 0, 2, 25
-  worksheet.merge_cells 3, 1, 3, 25
+  worksheet.merge_cells 3, 0, 3, 25
   worksheet.merge_cells 4, 1, 4, 12
   worksheet.merge_cells 4, 13, 4, 17
   worksheet.merge_cells 4, 18, 4, 23
