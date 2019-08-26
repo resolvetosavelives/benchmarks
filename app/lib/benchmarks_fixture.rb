@@ -105,7 +105,9 @@ class BenchmarksFixture
   end
 
   def type_code_text(group, code)
-    @fixtures.dig('type_codes', group, code)
+    raise ArgumentError unless @fixture.dig('type_codes', group)
+    raise ArgumentError unless @fixture.dig('type_codes', group, code)
+    @fixture.dig('type_codes', group, code)
   end
 
   def capacity_names
