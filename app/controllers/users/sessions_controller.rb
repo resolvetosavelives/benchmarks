@@ -6,4 +6,10 @@ class Users::SessionsController < Devise::SessionsController
       session[:plan_id] = nil
     end
   end
+
+  protected
+
+  def after_sign_in_path_for(user)
+    stored_location_for(user) || plans_path
+  end
 end
