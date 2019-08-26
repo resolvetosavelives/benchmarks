@@ -33,6 +33,9 @@ class GoalsController < ApplicationController
                      scale: scale
 
       @countries, @selectables = helpers.set_country_selection_options
+      @technical_areas = @data_dictionary.select do |indicator_id|
+        indicator_id.in? @assessments[@goals.assessment_type]['technical_areas'].keys
+      end
     end
   end
 

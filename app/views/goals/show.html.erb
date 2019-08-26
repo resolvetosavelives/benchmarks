@@ -13,7 +13,13 @@
       <% end %>
     </div>
 
-      <%= render "shared/country_selection_modal" %>
+    <div class="col-5">
+      <div class="form-group" data-controller="filter">
+        <%= select_tag "technical_areas", options_for_select(@technical_areas.map {|k, v| [v, k] }), class: "form-control custom-select", multiple: true, data: { action: "filter#do", target: "filter.select", options: @technical_areas.keys.to_json }, autocomplete: "off" %>
+      </div>
+    </div>
+
+    <%= render "shared/country_selection_modal" %>
   </div>
   <%= form_for @goals, url: "/goals/", html: {novalidate: true, class: "needs-validation", data: { controller: "score", action: "submit->score#submit", target: "score.form", type: @goals.assessment_type }} do |f| %>
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
@@ -53,7 +59,7 @@
           <tbody>
             <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
               <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
-              <tr>
+              <tr class="technical_area_<%= technical_area_id %>" >
                 <% indicator = technical_area['indicators'][0] %>
                 <th
                   class="border-right"
@@ -68,7 +74,7 @@
               </tr>
 
               <% technical_area['indicators'].drop(1).each do |indicator| %>
-                <tr>
+                <tr class="technical_area_<%= technical_area_id %>">
                   <td class="border-right"><%= @data_dictionary[indicator] %></td>
                   <td><%= render "validated_field", field_name: indicator, f: f %></td>
                   <td><%= render "validated_field", field_name: "#{indicator}_goal", f: f %></td>
