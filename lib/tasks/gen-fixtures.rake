@@ -5,6 +5,7 @@ task gen_fixtures: %i[environment] do
   def generate_benchmark_fixture(workbook)
     benchmark_sheet = workbook['Benchmark Capacities']
     activity_sheet = workbook['Activities']
+    type_codes_sheet = workbook['Type Codes']
 
     benchmarks =
       benchmark_sheet.drop(1).reduce({ section: nil, data: {} }) do |acc, row|
@@ -66,8 +67,21 @@ task gen_fixtures: %i[environment] do
         acc
       end
 
+    type_codes =
+      type_codes_sheet.drop(1).reduce({}) do |acc, row|
+        cells = row.cells
+        type_group = load_cell(cells[0]).to_s
+        code = load_cell(cells[1]).to_s
+        text = load_cell(cells[2]).to_s
+
+        acc[type_group] = {} unless acc[type_group]
+        acc[type_group][code] = text
+
+        acc
+      end
+
     File.open('./app/fixtures/benchmarks.json', 'w') do |f|
-      f.write(benchmarks.to_json)
+      f.write({ benchmarks: benchmarks, type_codes: type_codes }.to_json)
     end
   end
 
