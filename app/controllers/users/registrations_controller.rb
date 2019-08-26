@@ -9,7 +9,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   protected
 
-  def after_sign_up_path_for(resource)
-    stored_location_for(resource) || plans_path
+  def after_sign_up_path_for(user)
+    stored_location_for(user) || plans_path
   end
 end
