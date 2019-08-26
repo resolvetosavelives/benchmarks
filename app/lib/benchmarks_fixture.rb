@@ -1,4 +1,5 @@
 class BenchmarksFixture
+  attr_reader :fixture
   def initialize
     @fixture = JSON.load File.open './app/fixtures/benchmarks.json'
   end
@@ -82,5 +83,9 @@ class BenchmarksFixture
   def activity_texts(id)
     capacity_id, indicator_id = id.split('.')
     @fixture.dig(capacity_id, 'indicators', indicator_id, 'activities').values.flatten.map { |a| a['text'] }.uniq
+  end
+
+  def capacity_names
+    @fixture.map { |k, v| v['name'] }
   end
 end
