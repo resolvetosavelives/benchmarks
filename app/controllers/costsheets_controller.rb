@@ -43,25 +43,25 @@ def populate_contents(benchmarks, worksheet, indicators)
     if activities.length > 0
       cell =
         worksheet.add_cell idx,
-                           1,
+                           0,
                            "#{indicator_key}: #{
                              benchmarks.indicator_text indicator_key
                            }"
       cell.change_text_wrap true
-      worksheet.merge_cells idx, 1, idx + activities.length - 1, 1
+      worksheet.merge_cells idx, 0, idx + activities.length - 1, 0
 
       cell =
         worksheet.add_cell idx,
-                           2,
+                           1,
                            "#{indicator_key}: #{
                              benchmarks.objective_text indicator_key
                            }"
       cell.change_text_wrap true
-      worksheet.merge_cells idx, 2, idx + activities.length - 1, 2
+      worksheet.merge_cells idx, 1, idx + activities.length - 1, 1
     end
 
     activities.each do |activity|
-      worksheet.add_cell(idx, 3, activity['text'])
+      worksheet.add_cell(idx, 2, activity['text'])
       idx = idx + 1
     end
     idx = idx + 1
