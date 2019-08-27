@@ -5,8 +5,8 @@ class BenchmarksFixture
   end
 
   def capacities
-    @fixture.keys.map(&:to_i).sort.map do |k|
-      ({ id: k.to_s, name: @fixture[k.to_s]['name'] })
+    @fixture['benchmarks'].keys.map(&:to_i).sort.map do |k|
+      ({ id: k.to_s, name: @fixture['benchmarks'][k.to_s]['name'] })
     end
   end
 
@@ -108,9 +108,5 @@ class BenchmarksFixture
     raise ArgumentError unless @fixture.dig('type_codes', group)
     raise ArgumentError unless @fixture.dig('type_codes', group, code)
     @fixture.dig('type_codes', group, code)
-  end
-
-  def capacity_names
-    @fixture.map { |k, v| v['name'] }
   end
 end
