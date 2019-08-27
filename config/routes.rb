@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   post '/goals', to: 'goals#create'
   resources :plans, only: %i[show index update]
   resources :worksheets, only: %i[show]
+  resources :costsheets, only: %i[show]
 end

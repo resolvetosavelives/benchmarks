@@ -30,15 +30,18 @@
                     <td class="py-4"> <%= link_to plan.name, plan %></a> </td>
                     <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
                     <td class="py-4 text-secondary">
-                        <%= render 'shared/icon',
-                            image_name: "ico-download.svg",
-                            text: "Download XLS" %>
+                        <%= link_to (render 'shared/icon',
+                                            image_name: "ico-download.svg",
+                                            text: "Download XLS"),
+                                    costsheet_path(plan.id),
+                                    class: "text-dark",
+                                    data: { turbolinks: false } %>
                     </td>
                     <td class="py-4 text-secondary">
                         <%= link_to (render 'shared/icon',
                                             image_name: "ico-print.svg",
                                             text: "Print"),
-                                    worksheet_url(:id => plan.id),
+                                    worksheet_path(plan.id),
                                     class: "text-dark",
                                     data: { turbolinks: false } %>
                     </td>
