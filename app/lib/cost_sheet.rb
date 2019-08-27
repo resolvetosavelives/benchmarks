@@ -4,10 +4,16 @@ class CostSheet
     @plan = plan
     @workbook = RubyXL::Workbook.new
 
-    _generate
+    generate
   end
 
-  def _generate
+  def to_s
+    @workbook.stream.string
+  end
+
+  private
+
+  def generate
     benchmarks = BenchmarksFixture.new
     benchmarks.capacities.each do |capacity|
       if capacity[:id] == '1'
@@ -27,10 +33,6 @@ class CostSheet
                           }
                         )
     end
-  end
-
-  def to_s
-    @workbook.stream.string
   end
 end
 
