@@ -4,4 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
   has_many :plans
+
+  protected
+
+  def confirmation_required?
+    Rails.env.production?
+  end
 end
