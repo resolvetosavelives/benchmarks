@@ -18,8 +18,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  #TODO: Update once we have the correct from address
-  config.mailer_sender = 'rtsl@example.com'
+  config.mailer_sender = 'no-reply@resolvetosavelives.org'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
