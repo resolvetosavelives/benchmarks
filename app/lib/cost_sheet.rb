@@ -1,4 +1,5 @@
 class CostSheet
+  attr_reader :workbook
   def initialize(plan)
     @plan = plan
     @workbook = RubyXL::Workbook.new

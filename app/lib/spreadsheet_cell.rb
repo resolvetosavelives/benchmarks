@@ -1,22 +1,22 @@
 require 'rubyXL/convenience_methods'
 
 class SpreadsheetCell
-  def initialize(worksheet, x, y, params)
+  def initialize(worksheet, row, col, params)
     text = params[:text]
     formula = params[:formula]
     raise ArgumentError if text && formula
 
     if text
-      @cell = worksheet.add_cell(x, y, text)
+      @cell = worksheet.add_cell(row, col, text)
       @cell.change_text_wrap true
       @cell.change_vertical_alignment 'top'
     elsif formula
-      @cell = worksheet.add_cell(x, y, '', formula)
+      @cell = worksheet.add_cell(row, col, '', formula)
       @cell.change_text_wrap true
       @cell.change_vertical_alignment 'top'
     else
-      @cell = worksheet[x][y]
-      @cell = worksheet.add_cell(x, y) unless @cell
+      @cell = worksheet[row][col]
+      @cell = worksheet.add_cell(row, col) unless @cell
     end
   end
 
@@ -26,6 +26,10 @@ class SpreadsheetCell
 
   def formula
     @cell.formula
+  end
+
+  def address
+    [@cell.row, @cell.index_in_collection]
   end
 
   def with_text(text)
