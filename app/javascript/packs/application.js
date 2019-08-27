@@ -16,6 +16,7 @@
 
 import "bootstrap"
 import "stylesheets/application.scss"
+import "bootstrap-multiselect/dist/css/bootstrap-multiselect"
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"

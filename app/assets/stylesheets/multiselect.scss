@@ -1,0 +1,17 @@
+.dropdown-toggle {
+  &::after {
+    display: none;
+  }
+}
+
+.multiselect-container {
+  &.dropdown-menu {
+    width: 100%;
+    a {
+      color: color("black");
+      label {
+        padding-left: 8px;
+      }
+    }
+  }
+}
