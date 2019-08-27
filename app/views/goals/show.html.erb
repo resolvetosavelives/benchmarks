@@ -14,8 +14,13 @@
     </div>
 
     <div class="col-5">
-      <div class="form-group" data-controller="filter">
-        <%= select_tag "technical_areas", options_for_select(@technical_areas.map {|k, v| [v, k] }), class: "form-control custom-select", multiple: true, data: { action: "filter#do", target: "filter.select", options: @technical_areas.keys.to_json }, autocomplete: "off" %>
+      <div data-controller="filter">
+        <%= select_tag "technical_areas", 
+          options_for_select(@technical_areas.map {|k, v| [v, k] }), 
+          class: "form-control custom-select text-left", 
+          multiple: "multiple", 
+          data: { target: "filter.select", options: @technical_areas.keys.to_json }, 
+          autocomplete: "off" %>
       </div>
     </div>
 
