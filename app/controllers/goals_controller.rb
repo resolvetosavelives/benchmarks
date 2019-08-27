@@ -33,8 +33,8 @@ class GoalsController < ApplicationController
                      scale: scale
 
       @countries, @selectables = helpers.set_country_selection_options
-      @technical_areas = @data_dictionary.select do |indicator_id|
-        indicator_id.in? @assessments[@goals.assessment_type]['technical_areas'].keys
+      @technical_areas = @assessments[@goals.assessment_type]["technical_area_order"].map do |indicator_id|
+        [@data_dictionary[indicator_id], indicator_id]
       end
     end
   end

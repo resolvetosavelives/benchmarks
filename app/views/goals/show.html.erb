@@ -18,10 +18,10 @@
       <div data-controller="filter">
         <strong><%= label_tag "Filter by Capacity Area:" %></strong>
         <%= select_tag "technical_areas", 
-          options_for_select(@technical_areas.map {|k, v| [v, k] }), 
+          options_for_select(@technical_areas),
           class: "form-control custom-select text-left", 
           multiple: "multiple", 
-          data: { target: "filter.select", options: @technical_areas.keys.to_json }, 
+          data: { target: "filter.select", options: @technical_areas.map(&:last).to_json },
           autocomplete: "off" %>
       </div>
     </div>
