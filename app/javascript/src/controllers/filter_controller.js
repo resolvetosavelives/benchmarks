@@ -9,7 +9,8 @@ export default class extends Controller {
       buttonWidth: "100%",
       maxHeight: 200,
       inheritClass: true,
-      onChange: filter(this)
+      onChange: filter(this),
+      nonSelectedText: "Select Capacity Area(s)"
     })
   }
 

@@ -5,6 +5,7 @@
         { target: "country-selection.selectables" } %>
       <%= form_tag '/country_select' do %>
         <div class="form-group">
+          <strong><%= label_tag "Select country" %></strong>
           <%= select_tag "country",
           options_from_collection_for_select(@countries, 'name', 'name', @country), class:
           "custom-select", data: { target: "country-selection.selectedCountry", action: "change->country-selection#select" }, autocomplete: "off"
@@ -15,6 +16,7 @@
 
     <div class="col-5">
       <div data-controller="filter">
+        <strong><%= label_tag "Filter by Capacity Area:" %></strong>
         <%= select_tag "technical_areas", 
           options_for_select(@technical_areas.map {|k, v| [v, k] }), 
           class: "form-control custom-select text-left", 
