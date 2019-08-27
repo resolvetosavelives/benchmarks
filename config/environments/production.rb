@@ -62,7 +62,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   # TODO: put this into an environment variable eventually
-  config.action_mailer.default_url_options = { host: 'rtsl-benchmarks.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'benchmarks.org' }
 
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
