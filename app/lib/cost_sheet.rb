@@ -16,9 +16,10 @@ class CostSheet
       end
 
       worksheet = @workbook[capacity[:name]]
-      sheet_header worksheet, capacity[:name]
+      idx = sheet_header worksheet, capacity[:name]
       populate_contents benchmarks,
                         worksheet,
+                        idx,
                         (
                           @plan.activity_map.filter { |k, _|
                             k.starts_with? "#{capacity[:id]}."
@@ -32,9 +33,7 @@ class CostSheet
   end
 end
 
-def populate_contents(benchmarks, worksheet, indicators)
-  idx = 6
-
+def populate_contents(benchmarks, worksheet, idx, indicators)
   indicators.keys.sort.each do |indicator_key|
     activities = indicators.fetch(indicator_key)
 
@@ -63,6 +62,9 @@ def populate_contents(benchmarks, worksheet, indicators)
     end
     idx = idx + 1
   end
+
+  # Return the next empty row, even though there are probably no functions following this one.
+  return idx
 end
 
 def sheet_header(worksheet, capacity_name)
@@ -331,4 +333,7 @@ def sheet_header(worksheet, capacity_name)
   worksheet.change_column_width 23, 20
   worksheet.change_column_width 24, 20
   worksheet.change_column_width 25, 20
+
+  # Return the first empty row so that following functions know where to continue
+  return 6
 end
