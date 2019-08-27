@@ -1,0 +1,23 @@
+<p><strong><u>Account Created</u></strong><p>
+
+<p>Hi,</p>
+
+<p>You have successfully created a Benchmarks Tool account.</p>
+
+<p>Thank you for signing up!</p>
+
+<p>For security purposes, we need you to verify your email address before you continue on our platform.</p>
+
+<p><%= link_to 'Verify my email', confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p>Or copy and paste this link into your browser <%= confirmation_url(@resource, confirmation_token: @token) %></p>
+
+<p><%= mail_to "sla@resolvetosavelives.org", "Need help?" %></p>
+
+<p>---</p>
+
+<p>
+  © 2019 World Health Organization. All rights reserved.
+  <br>
+  Terms of Service | Privacy Policy
+</p>
