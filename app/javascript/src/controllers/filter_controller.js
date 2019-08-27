@@ -28,15 +28,23 @@ const filter = controller => () => {
     controller.selectTarget.getAttribute("data-options")
   )
 
-  allOptions.forEach(id => {
-    if (selectedOptions.includes(id)) {
-      controller.technicalAreaRows(id).forEach(r => {
-        r.hidden = true
-      })
-    } else {
+  if (selectedOptions.length) {
+    allOptions.forEach(id => {
+      if (selectedOptions.includes(id)) {
+        controller.technicalAreaRows(id).forEach(r => {
+          r.hidden = false
+        })
+      } else {
+        controller.technicalAreaRows(id).forEach(r => {
+          r.hidden = true
+        })
+      }
+    })
+  } else {
+    allOptions.forEach(id => {
       controller.technicalAreaRows(id).forEach(r => {
         r.hidden = false
       })
-    }
-  })
+    })
+  }
 }
