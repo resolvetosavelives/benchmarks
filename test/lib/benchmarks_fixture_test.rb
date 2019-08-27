@@ -68,4 +68,11 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
     assert_equal 'Establish policies, legislation, plans and capacities for surveillance, alert and response to chemical events or emergencies',
                  (benchmarks.objective_text '17.1')
   end
+
+  test 'returns the text of a type code' do
+    benchmarks = BenchmarksFixture.new
+    assert_raises(ArgumentError) { benchmarks.type_code_text '4', '1' }
+    assert_raises(ArgumentError) { benchmarks.type_code_text '1', '100' }
+    assert_equal 'SimEx and AAR', (benchmarks.type_code_text '1', '11')
+  end
 end

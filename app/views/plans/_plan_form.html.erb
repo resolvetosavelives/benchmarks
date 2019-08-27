@@ -7,7 +7,7 @@
     <div class="col-4">
       <div class="form-group">
         <strong><%= label_tag "Jump to:" %></strong>
-        <%= select_tag "capacity_area", options_from_collection_for_select(@benchmarks.capacity_names, :parameterize, :itself) , class: "custom-select", data: { controller: "scroll", action: "scroll#scroll" }, include_blank: "Select Technical Area" %>
+        <%= select_tag "capacity_area", options_from_collection_for_select((@benchmarks.capacities.map {|b| b[:name]}), :parameterize, :itself) , class: "custom-select", data: { controller: "scroll", action: "scroll#scroll" }, include_blank: "Select Technical Area" %>
       </div>
     </div>
     <div class="col-2 d-flex">
