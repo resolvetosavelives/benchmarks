@@ -15,7 +15,9 @@
     </div>
 
     <div class="col-5">
-      <div data-controller="filter">
+      <div data-controller="filter" 
+           data-filter-placeholder="Select Capacity Area(s)" 
+           data-filter-class-prefix="technical-area">
         <strong><%= label_tag "Filter by Capacity Area:" %></strong>
         <%= select_tag "technical_areas", 
           options_for_select(@technical_areas),
@@ -66,7 +68,7 @@
           <tbody>
             <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
               <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
-              <tr class="technical_area_<%= technical_area_id %>" >
+              <tr class="technical-area-<%= technical_area_id %>" >
                 <% indicator = technical_area['indicators'][0] %>
                 <th
                   class="border-right"
@@ -81,7 +83,7 @@
               </tr>
 
               <% technical_area['indicators'].drop(1).each do |indicator| %>
-                <tr class="technical_area_<%= technical_area_id %>">
+                <tr class="technical-area-<%= technical_area_id %>">
                   <td class="border-right"><%= @data_dictionary[indicator] %></td>
                   <td><%= render "validated_field", field_name: indicator, f: f %></td>
                   <td><%= render "validated_field", field_name: "#{indicator}_goal", f: f %></td>

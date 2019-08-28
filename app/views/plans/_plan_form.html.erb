@@ -3,11 +3,28 @@
   <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
   target: "plan.activityMap"}, autocomplete: "off" %>
   <div class="row bg-light-gray p-4 full-width">
-    <div class="offset-1 col-4"></div>
+    <div class="offset-1 col-4" 
+         data-controller="filter"
+         data-filter-placeholder="Select Activity Type(s)"
+         data-filter-class-prefix="type-code">
+      <strong><%= label_tag "Show only:" %></strong>
+      <%= select_tag "activity_type",
+        options_from_collection_for_select(@benchmarks.type_code_1s.values, :parameterize, :itself),
+        class: "form-control custom-select text-left",
+        multiple: "multiple",
+        data: { target: "filter.select", 
+                options: @benchmarks.type_code_1s.values.map(&:parameterize).to_json, 
+                action: "filter#test" },
+        autocomplete: "off" %>
+    </div>
     <div class="col-4">
       <div class="form-group">
         <strong><%= label_tag "Jump to:" %></strong>
-        <%= select_tag "capacity_area", options_from_collection_for_select((@benchmarks.capacities.map {|b| b[:name]}), :parameterize, :itself) , class: "custom-select", data: { controller: "scroll", action: "scroll#scroll" }, include_blank: "Select Technical Area" %>
+        <%= select_tag "capacity_area",
+          options_from_collection_for_select(@capacity_areas, :parameterize, :itself),
+          class: "custom-select",
+          data: { controller: "scroll", action: "scroll#scroll" },
+          include_blank: "Select Capacity Area" %>
       </div>
     </div>
     <div class="col-2 d-flex">

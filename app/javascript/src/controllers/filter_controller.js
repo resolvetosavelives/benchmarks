@@ -10,12 +10,14 @@ export default class extends Controller {
       maxHeight: 200,
       inheritClass: true,
       onChange: filter(this),
-      nonSelectedText: "Select Capacity Area(s)"
+      nonSelectedText: this.data.get("placeholder")
     })
   }
 
   technicalAreaRows(id) {
-    return Array.from(document.getElementsByClassName(`technical_area_${id}`))
+    return Array.from(
+      document.getElementsByClassName(`${this.data.get("class-prefix")}-${id}`)
+    )
   }
 }
 

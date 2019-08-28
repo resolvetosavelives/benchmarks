@@ -1,4 +1,4 @@
-<div class="row border p-2">
+<div class="row border p-2 type-code-<%= (@benchmarks.type_code_1s[activity["type_code_1"].to_s] || "unknown").parameterize %>">
   <div class="col-11">
     <%= activity["text"] %>
   </div>
