@@ -40,7 +40,7 @@ export default class extends Controller {
   addNewActivity(e) {
     const { currentTarget } = e
     const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && currentTarget.value.length) {
       this.activityMapTarget.value = JSON.stringify({
         ...this.activityMap,
         [benchmarkId]: [
