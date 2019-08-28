@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 import renderActivity from "../renderActivity"
 
 export default class extends Controller {
-  static targets = ["activityMap", "newActivity", "submit"]
+  static targets = ["activityMap", "newActivity", "submit", "name", "form"]
 
   connect() {
     this.newActivityTargets.forEach(t => {
@@ -30,6 +30,7 @@ export default class extends Controller {
     $(this.newActivity(benchmarkId)).autocomplete({
       source: this.autocompletions(benchmarkId)
     })
+    this.validateActivityMap()
   }
 
   showNewActivity() {
@@ -53,6 +54,7 @@ export default class extends Controller {
       })
       e.target.value = ""
       e.preventDefault()
+      this.validateActivityMap()
     }
   }
 
@@ -76,6 +78,31 @@ export default class extends Controller {
     return this.newActivityTargets.find(
       t => t.getAttribute("data-benchmark-id") === benchmarkId
     )
+  }
+
+  validateName() {
+    if (this.formTarget.checkValidity() === false) {
+      this.submitTarget.setAttribute("disabled", "disabled")
+    } else {
+      this.submitTarget.removeAttribute("disabled")
+    }
+    this.formTarget.classList.add("was-validated")
+  }
+
+  validateActivityMap() {
+    if (
+      Object.keys(this.activityMap).every(
+        key => this.activityMap[key].length === 0
+      )
+    ) {
+      this.submitTarget.setAttribute("disabled", "disabled")
+    } else {
+      this.submitTarget.removeAttribute("disabled")
+    }
+  }
+
+  get name() {
+    return this.nameTarget.value
   }
 
   get activityMap() {

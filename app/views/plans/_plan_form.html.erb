@@ -1,45 +1,55 @@
-<%= form_with model: @plan do |f| %>
-<!-- -->
-  <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
-  target: "plan.activityMap"}, autocomplete: "off" %>
-  <div class="row bg-light-gray p-4 full-width">
-    <div class="offset-1 col-4" 
-         data-controller="filter"
-         data-filter-placeholder="Select Activity Type(s)"
-         data-filter-class-prefix="type-code">
-      <strong><%= label_tag "Show only:" %></strong>
-      <%= select_tag "activity_type",
-        options_from_collection_for_select(@type_code_texts, :parameterize, :itself),
-        class: "form-control custom-select text-left",
-        multiple: "multiple",
-        data: { target: "filter.select", 
-                options: @type_code_texts.map(&:parameterize).to_json },
-        autocomplete: "off" %>
-    </div>
-    <div class="col-4">
-      <div class="form-group">
-        <strong><%= label_tag "Jump to:" %></strong>
-        <%= select_tag "capacity_area",
-          options_from_collection_for_select(@capacity_areas, :parameterize, :itself),
-          class: "custom-select",
-          data: { controller: "scroll", action: "scroll#scroll" },
-          include_blank: "Select Capacity Area" %>
-      </div>
-    </div>
-    <div class="col-2 d-flex">
-      <%= f.submit "Save Plan", data: { target: "plan.submit"}, class: "btn btn-orange w-100 h-50 align-self-center" %>
-    </div>
-  </div>
+ <div class="row bg-light-gray p-4 full-width">
+   <div class="offset-1 col-4" 
+        data-controller="filter"
+        data-filter-placeholder="Select Activity Type(s)"
+        data-filter-class-prefix="type-code">
+     <strong><%= label_tag "Show only:" %></strong>
+     <%= select_tag "activity_type",
+       options_from_collection_for_select(@type_code_texts, :parameterize, :itself),
+       class: "form-control custom-select text-left",
+       multiple: "multiple",
+       data: { target: "filter.select", 
+               options: @type_code_texts.map(&:parameterize).to_json },
+       autocomplete: "off" %>
+   </div>
+   <div class="col-4">
+     <div class="form-group">
+       <strong><%= label_tag "Jump to:" %></strong>
+       <%= select_tag "capacity_area",
+         options_from_collection_for_select(@capacity_areas, :parameterize, :itself),
+         class: "custom-select",
+         data: { controller: "scroll", action: "scroll#scroll" },
+         include_blank: "Select Capacity Area" %>
+     </div>
+   </div>
+   <div class="col-2">
+     <%= form_with model: @plan, class: "needs-validation w-100 h-100 d-flex", novalidate: true, data: { target: "plan.form" } do |f| %>
+       <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
+         target: "plan.activityMap"}, autocomplete: "off" %>
+       <%= f.submit "Save Plan", data: { target: "plan.submit"}, class: "btn btn-orange w-100 h-50 align-self-center" %>
+       </div>
+     </div>
 
-  <div class="row m-4">
-    <div class="col-9">
-      <h1 class="alt-header"><%= f.text_field :name %></h1>
-      <p>
-        [SPACE FOR INSTRUCTION TEXT?] Placeholder -- Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-        ullamco laboris nisi ut aliquip.
-      </p>
-    </div>
-  </div>
-<% end %>
+     <div class="row m-4">
+       <div class="col-9">
+         <div class="row">
+           <div class="col-5 pl-0">
+             <div class="form-group alt-header">
+               <%= f.text_field :name, data: { target: "plan.name", action: "change->plan#validateName" }, class: "form-control", required: true %>
+               <div class="invalid-feedback">
+                 Cannot be empty
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="row">
+           <p>
+             [SPACE FOR INSTRUCTION TEXT?] Placeholder -- Lorem ipsum dolor sit amet,
+             consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+             dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+             ullamco laboris nisi ut aliquip.
+           </p>
+         </div>
+       </div>
+   <% end %>
+ </div>
