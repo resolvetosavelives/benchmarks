@@ -9,12 +9,11 @@
          data-filter-class-prefix="type-code">
       <strong><%= label_tag "Show only:" %></strong>
       <%= select_tag "activity_type",
-        options_from_collection_for_select(@benchmarks.type_code_1s.values, :parameterize, :itself),
+        options_from_collection_for_select(@type_code_texts, :parameterize, :itself),
         class: "form-control custom-select text-left",
         multiple: "multiple",
         data: { target: "filter.select", 
-                options: @benchmarks.type_code_1s.values.map(&:parameterize).to_json, 
-                action: "filter#test" },
+                options: @type_code_texts.map(&:parameterize).to_json },
         autocomplete: "off" %>
     </div>
     <div class="col-4">
