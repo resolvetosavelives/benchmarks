@@ -42,7 +42,7 @@
 
         <p><b>Where would you like to start?</b></p>
 
-        <%= form_tag '/country_select' do %> <%= hidden_field_tag "country",
+        <%= form_tag '/country_select', id: "assessment-select-menu" do %> <%= hidden_field_tag "country",
         nil, data: { target: "country-selection.selectedCountryModal" } %>
         <div class="input-group mb-2">
           <%= select_tag "assessment_type",
