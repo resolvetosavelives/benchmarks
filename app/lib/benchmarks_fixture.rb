@@ -109,4 +109,8 @@ class BenchmarksFixture
     raise ArgumentError unless @fixture.dig('type_codes', group, code)
     @fixture.dig('type_codes', group, code)
   end
+
+  def type_code_1s
+    @fixture.dig('type_codes', '1')
+  end
 end

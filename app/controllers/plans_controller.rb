@@ -5,6 +5,8 @@ class PlansController < ApplicationController
   def show
     @benchmarks = BenchmarksFixture.new
     @plan = Plan.find_by_id!(params.fetch(:id))
+    @capacity_areas = @benchmarks.capacities.map { |c| c[:name] }
+    @type_code_texts = @benchmarks.type_code_1s.values
   end
 
   def index
