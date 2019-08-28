@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 import renderActivity from "../renderActivity"
 
 export default class extends Controller {
-  static targets = ["activityMap", "newActivity", "submit", "name", "form"]
+  static targets = ["activityMap", "newActivity", "submit", "form"]
 
   connect() {
     this.newActivityTargets.forEach(t => {
@@ -103,10 +103,6 @@ export default class extends Controller {
 
   submit() {
     this.formTarget.submit()
-  }
-
-  get name() {
-    return this.nameTarget.value
   }
 
   get activityMap() {
