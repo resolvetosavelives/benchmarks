@@ -1,11 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  country: Afghanistan
-  assessment_type: 'jee_v1'
-  scores:  [{ 'indicator_id': 'p11', 'score': 1 }, { 'indicator_id': 'p12', 'score': 4 }]
+assessment1:
+  country: Australia
+  assessment_type: "jee1"
+  scores: [{"score":5,"indicator_id":"p11"},{"score":5,"indicator_id":"p12"},{"score":5,"indicator_id":"p21"},{"score":4,"indicator_id":"p31"},{"score":4,"indicator_id":"p32"},{"score":5,"indicator_id":"p33"},{"score":4,"indicator_id":"p34"},{"score":5,"indicator_id":"p41"},{"score":5,"indicator_id":"p42"},{"score":5,"indicator_id":"p43"},{"score":5,"indicator_id":"p51"},{"score":5,"indicator_id":"p61"},{"score":4,"indicator_id":"p62"},{"score":5,"indicator_id":"p71"},{"score":5,"indicator_id":"p72"},{"score":5,"indicator_id":"d11"},{"score":5,"indicator_id":"d12"},{"score":5,"indicator_id":"d13"},{"score":5,"indicator_id":"d14"},{"score":5,"indicator_id":"d21"},{"score":3,"indicator_id":"d22"},{"score":5,"indicator_id":"d23"},{"score":5,"indicator_id":"d24"},{"score":5,"indicator_id":"d31"},{"score":4,"indicator_id":"d32"},{"score":5,"indicator_id":"d41"},{"score":5,"indicator_id":"d42"},{"score":4,"indicator_id":"d43"},{"score":5,"indicator_id":"r11"},{"score":3,"indicator_id":"r12"},{"score":4,"indicator_id":"r21"},{"score":4,"indicator_id":"r22"},{"score":5,"indicator_id":"r23"},{"score":5,"indicator_id":"r24"},{"score":4,"indicator_id":"r31"},{"score":4,"indicator_id":"r41"},{"score":5,"indicator_id":"r42"},{"score":5,"indicator_id":"r51"},{"score":5,"indicator_id":"r52"},{"score":4,"indicator_id":"r53"},{"score":3,"indicator_id":"r54"},{"score":4,"indicator_id":"r55"},{"score":5,"indicator_id":"poe1"},{"score":5,"indicator_id":"poe2"},{"score":5,"indicator_id":"ce1"},{"score":5,"indicator_id":"ce2"},{"score":4,"indicator_id":"re1"},{"score":4,"indicator_id":"re2"}]
 
-two:
-  country: Albania
-  assessment_type: 'jee_v2'
-  scores: [{ 'indicator_id': 'p11', 'score': 2 }, { 'indicator_id': 'p12', 'score': 3 }]
+assessment2:
+  country: Armenia
+  assessment_type: "jee1"
+  scores: [{"score":5,"indicator_id":"p11"},{"score":5,"indicator_id":"p12"},{"score":5,"indicator_id":"p21"},{"score":3,"indicator_id":"p31"},{"score":3,"indicator_id":"p32"},{"score":4,"indicator_id":"p33"},{"score":4,"indicator_id":"p34"},{"score":5,"indicator_id":"p41"},{"score":5,"indicator_id":"p42"},{"score":5,"indicator_id":"p43"},{"score":5,"indicator_id":"p51"},{"score":4,"indicator_id":"p61"},{"score":4,"indicator_id":"p62"},{"score":5,"indicator_id":"p71"},{"score":5,"indicator_id":"p72"},{"score":4,"indicator_id":"d11"},{"score":4,"indicator_id":"d12"},{"score":4,"indicator_id":"d13"},{"score":4,"indicator_id":"d14"},{"score":4,"indicator_id":"d21"},{"score":3,"indicator_id":"d22"},{"score":5,"indicator_id":"d23"},{"score":4,"indicator_id":"d24"},{"score":3,"indicator_id":"d31"},{"score":3,"indicator_id":"d32"},{"score":5,"indicator_id":"d41"},{"score":5,"indicator_id":"d42"},{"score":5,"indicator_id":"d43"},{"score":5,"indicator_id":"r11"},{"score":5,"indicator_id":"r12"},{"score":5,"indicator_id":"r21"},{"score":5,"indicator_id":"r22"},{"score":5,"indicator_id":"r23"},{"score":5,"indicator_id":"r24"},{"score":5,"indicator_id":"r31"},{"score":5,"indicator_id":"r41"},{"score":5,"indicator_id":"r42"},{"score":4,"indicator_id":"r51"},{"score":5,"indicator_id":"r52"},{"score":5,"indicator_id":"r53"},{"score":4,"indicator_id":"r54"},{"score":5,"indicator_id":"r55"},{"score":3,"indicator_id":"poe1"},{"score":4,"indicator_id":"poe2"},{"score":4,"indicator_id":"ce1"},{"score":4,"indicator_id":"ce2"},{"score":5,"indicator_id":"re1"},{"score":5,"indicator_id":"re2"}]
+
+assessment3:
+  country: Armenia
+  assessment_type: "spar_2018"
+  scores: [{"score":5,"indicator_id":"c11"},{"score":4,"indicator_id":"c12"},{"score":3,"indicator_id":"c13"},{"score":5,"indicator_id":"c21"},{"score":5,"indicator_id":"c22"},{"score":5,"indicator_id":"c31"},{"score":2,"indicator_id":"c41"},{"score":3,"indicator_id":"c51"},{"score":3,"indicator_id":"c52"},{"score":4,"indicator_id":"c53"},{"score":5,"indicator_id":"c61"},{"score":4,"indicator_id":"c62"},{"score":5,"indicator_id":"c71"},{"score":3,"indicator_id":"c81"},{"score":4,"indicator_id":"c82"},{"score":4,"indicator_id":"c83"},{"score":3,"indicator_id":"c91"},{"score":3,"indicator_id":"c92"},{"score":5,"indicator_id":"c93"},{"score":5,"indicator_id":"c101"},{"score":4,"indicator_id":"c111"},{"score":4,"indicator_id":"c112"},{"score":4,"indicator_id":"c121"},{"score":5,"indicator_id":"c131"}]
