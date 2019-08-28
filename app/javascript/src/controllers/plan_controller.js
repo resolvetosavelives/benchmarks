@@ -101,6 +101,10 @@ export default class extends Controller {
     }
   }
 
+  submit() {
+    this.formTarget.submit()
+  }
+
   get name() {
     return this.nameTarget.value
   }
