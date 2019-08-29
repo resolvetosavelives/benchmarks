@@ -130,15 +130,15 @@ end
 def populate_worksheet(
   worksheet, idx, assessment_type, goal, objective, activity
 )
+  goal_score = goal && goal['value'] ? "score #{goal['value']}" : ''
+
   SpreadsheetCell.new worksheet, idx, 0, text: 'Benchmark Objective:'
   SpreadsheetCell.new worksheet, idx, 2, text: objective
   SpreadsheetCell.new worksheet,
                       idx + 6,
                       0,
                       text:
-                        "Activity required for #{assessment_type} score #{
-                          goal['value']
-                        }"
+                        "Activity required for #{assessment_type} #{goal_score}"
   SpreadsheetCell.new worksheet, idx + 7, 0, text: activity['text']
   SpreadsheetCell.new worksheet,
                       idx + 11,
