@@ -15,9 +15,7 @@ class GoalForm
     self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))
 
     scores.each { |key, score| send "#{key}=", score.value }
-    scores.each do |key, score|
-      send "#{key}_goal=", create_goal(score).value
-    end
+    scores.each { |key, score| send "#{key}_goal=", create_goal(score).value }
   end
 
   def self.create_draft_plan!(params, crosswalk, benchmarks, current_user = nil)
@@ -33,7 +31,8 @@ class GoalForm
         next benchmark_acc if crosswalk[key] == %w[N/A]
 
         score_and_goal =
-          ScoreGoal.new score: Score.new(params[key].to_i), goal: Score.new(params["#{key}_goal"].to_i)
+          ScoreGoal.new score: Score.new(params[key].to_i),
+                        goal: Score.new(params["#{key}_goal"].to_i)
 
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|
@@ -53,10 +52,17 @@ class GoalForm
         acc
       end
 
+    goals =
+      benchmark_goals.each.reduce({}) do |acc, (key, pairing)|
+        acc[key] = pairing.goal
+        acc
+      end
+
     Plan.create! name: "#{params.fetch(:country)} draft plan",
                  country: params.fetch(:country),
                  assessment_type: params.fetch(:assessment_type),
                  activity_map: benchmark_activities,
-                 user_id: current_user && current_user.id
+                 user_id: current_user && current_user.id,
+                 goals: goals
   end
 end

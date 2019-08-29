@@ -31,6 +31,8 @@ class Worksheet
           idx =
             populate_worksheet worksheet,
                                idx,
+                               @plan.assessment_type,
+                               @plan.goals ? @plan.goals[indicator_id] : {},
                                (benchmarks.objective_text indicator_id),
                                activity
         end
@@ -125,13 +127,18 @@ def bordered_merge_cells(worksheet, row, col, width, height)
   worksheet.merge_cells row, col, row + height - 1, col + width - 1
 end
 
-def populate_worksheet(worksheet, idx, objective, activity)
+def populate_worksheet(
+  worksheet, idx, assessment_type, goal, objective, activity
+)
   SpreadsheetCell.new worksheet, idx, 0, text: 'Benchmark Objective:'
   SpreadsheetCell.new worksheet, idx, 2, text: objective
   SpreadsheetCell.new worksheet,
                       idx + 6,
                       0,
-                      text: 'Activity required for -- score --'
+                      text:
+                        "Activity required for #{assessment_type} score #{
+                          goal['value']
+                        }"
   SpreadsheetCell.new worksheet, idx + 7, 0, text: activity['text']
   SpreadsheetCell.new worksheet,
                       idx + 11,
