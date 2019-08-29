@@ -40,24 +40,6 @@ export default class extends Controller {
     this.openModal()
   }
 
-  /*
-  select(e) {
-    const countryName = this.selectedCountryTarget.value
-    const assessmentTypes = this.selectables[countryName]
-    this.assessmentTypesTarget.childNodes.forEach(n =>
-      this.assessmentTypesTarget.removeChild(n)
-    )
-    assessmentTypes.forEach(type =>
-      this.assessmentTypesTarget.add(new Option(type))
-    )
-
-    this.selectedCountryNameTarget.textContent = countryName
-    this.selectedCountryModalTarget.value = countryName
-
-    $("#assessment-selection-modal").modal()
-  }
-  */
-
   get selectables() {
     return JSON.parse(this.selectablesTarget.value)
   }
