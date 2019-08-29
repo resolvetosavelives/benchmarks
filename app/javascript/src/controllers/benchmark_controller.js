@@ -25,6 +25,10 @@ export default class extends Controller {
     delete activityMap[benchmarkId]
     this.activityMapTarget.value = JSON.stringify(activityMap)
     this.selfTarget.hidden = true
+    const siblings = $(this.selfTarget).siblings(".benchmark-container:visible")
+    if (siblings.length === 0) {
+      this.selfTarget.parentElement.hidden = true
+    }
   }
 
   get activityMapTarget() {

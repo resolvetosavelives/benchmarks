@@ -4,7 +4,7 @@
       <b>Benchmark <%= benchmark_id %>:</b> <%=
       benchmarks.indicator_text(benchmark_id) %>
     </div>
-    <div class="col-1">
+    <div class="col-1 d-flex">
       <button
         class="close confirm-delete"
         type="button"
@@ -13,13 +13,14 @@
       >
         <img src="/delete-button.svg" />
       </button>
+      <br>
       <button class="close delete"
               type="button"
               data-action="benchmark#delete "
               data-benchmark-id="<%= benchmark_id %>"
               data-target="benchmark.delete"
       >
-        Are you sure?
+        Really delete?
       </button>
     </div>
   </div>
