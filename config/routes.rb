@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   post '/country_select', to: 'country_select#create'
   get '/goals(/:country)(/:assessment_type)', to: 'goals#show'
   post '/goals', to: 'goals#create'
-  resources :plans, only: %i[show index update]
+  resources :plans, only: %i[show index update destroy]
   resources :worksheets, only: %i[show]
   resources :costsheets, only: %i[show]
 end

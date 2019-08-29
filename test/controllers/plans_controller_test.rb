@@ -101,4 +101,23 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     get plans_path
     assert_select ".plan-entry", 0
   end
+
+  test "user deletes their plan" do
+    user = User.create!(email: 'test@example.com', password: "123455", role: "Donor")
+    plan = Plan.create!(name: "owned plan", activity_map: [])
+    user.plans << plan
+
+    sign_in user
+    delete plan_path(plan.id)
+    assert_equal 0, user.reload.plans.length
+  end
+
+  test "user deletes someone else's plan" do
+    user = User.create!(email: 'test@example.com', password: "123455", role: "Donor")
+    plan = Plan.create!(name: "a plan", activity_map: [])
+
+    sign_in user
+    delete plan_path(plan.id)
+    assert_equal 1, Plan.count
+  end
 end

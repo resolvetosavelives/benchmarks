@@ -22,6 +22,13 @@ class PlansController < ApplicationController
     redirect_to plans_path
   end
 
+  def destroy
+    plan = Plan.find_by_id!(params.fetch(:id))
+    plan.destroy
+    flash[:alert] = "Deleted #{plan.name}"
+    redirect_to plans_path
+  end
+
   private
 
   def alert_and_redirect
