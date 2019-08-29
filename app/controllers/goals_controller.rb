@@ -23,8 +23,7 @@ class GoalsController < ApplicationController
       @goals =
         GoalForm.new country: @country,
                      assessment_type: assessment_type,
-                     scores: scores,
-                     scale: JeeScale
+                     scores: scores
 
       @countries, @selectables = helpers.set_country_selection_options
       @technical_areas = @assessments[@goals.assessment_type]["technical_area_order"].map do |indicator_id|
@@ -42,7 +41,6 @@ class GoalsController < ApplicationController
     plan = GoalForm.create_draft_plan! goal_params,
                                        crosswalk,
                                        benchmarks,
-                                       JeeScale,
                                        current_user
     session[:plan_id] = plan.id unless current_user
     redirect_to plan

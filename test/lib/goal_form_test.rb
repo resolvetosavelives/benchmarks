@@ -17,8 +17,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -45,8 +44,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -67,8 +65,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -97,8 +94,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -125,8 +121,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -153,8 +148,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
