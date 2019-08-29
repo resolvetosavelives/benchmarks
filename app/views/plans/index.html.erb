@@ -1,6 +1,6 @@
-<div data-controller="joint-country-select">
+<div data-controller="assessment-selection">
   <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
-  { target: "joint-country-select.selectables" } %>
+  { target: "assessment-selection.selectables" } %>
   <div class="row">
       <div class="col pl-0 py-4">
           <h1 class="alt-header">WELCOME</h1>
@@ -9,7 +9,7 @@
         <%= button_tag "CREATE PLAN",
           type: :button,
           class: "btn btn-primary w-100",
-          data: { action: 'joint-country-select#openModal' }
+          data: { action: 'assessment-selection#openModal' }
         %>
       </div>
   </div>
@@ -70,5 +70,5 @@
       </div>
   </div>
 
-  <%= render "country_selection_modal" %>
+  <%= render "shared/joint_assessment_selection_modal" %>
 </div>

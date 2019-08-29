@@ -8,11 +8,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title display-header mx-4">
-          Let's get started on
-          <span
-            id="country-name-header"
-            data-target="country-selection.selectedCountryName"
-          />
+          LET'S GET STARTED!
         </h1>
         <button
           type="button"
@@ -40,20 +36,24 @@
           from technical areas.
         </p>
 
-        <p><b>Where would you like to start?</b></p>
-
-        <%= form_tag '/country_select', id: "assessment-select-menu" do %> <%= hidden_field_tag "country",
-        nil, data: { target: "country-selection.selectedCountryModal" } %>
-        <div class="input-group mb-2">
-          <%= select_tag "assessment_type",
-          options_from_collection_for_select([], 'assessment_type',
-          'assessment_type'), class: "custom-select", data: { target:
-          "country-selection.assessmentTypes" } %>
-        </div>
-        <%= button_tag "Next", type: :submit, class: "btn btn-orange w-100"
-        %> <% end %>
+        <%= form_tag '/country_select', id: "assessment-select-menu" do %>
+          <%= hidden_field_tag "country", nil, data: { target: "assessment-selection.selectedCountryName" } %>
+          <div class="input-group">
+            <%= select_tag "country",
+              options_from_collection_for_select(@countries, 'name', 'name'),
+              class: "custom-select",
+              data: { target: "assessment-selection.selectedCountry",
+                      action: "assessment-selection#selectCountry" }
+            %>
+          <div class="input-group mb-2">
+            <%= select_tag "assessment_type",
+              options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
+              class: "custom-select",
+              data: { target: "assessment-selection.assessmentTypes" } %>
+          </div>
+          <%= button_tag "Next", type: :submit, class: "btn btn-primary w-100" %>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
-

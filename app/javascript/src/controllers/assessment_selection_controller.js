@@ -1,0 +1,64 @@
+import { Controller } from "stimulus"
+
+export default class extends Controller {
+  static targets = [
+    "assessmentTypes",
+    "selectedCountry",
+    "selectables",
+    "selectedCountryName",
+    "selectedCountryModal"
+  ]
+
+  connect() {
+    this.selectedCountryTarget.value = Object.keys(this.selectables)[0]
+    this.selectCountry()
+  }
+
+  openModal(e) {
+    $("#assessment-selection-modal").modal()
+  }
+
+  selectCountry(e) {
+    const countryName = this.selectedCountryTarget.value
+    const assessmentTypes = this.selectables[countryName]
+    this.assessmentTypesTarget.childNodes.forEach(n =>
+      this.assessmentTypesTarget.removeChild(n)
+    )
+    assessmentTypes.forEach(type =>
+      this.assessmentTypesTarget.add(new Option(type))
+    )
+
+    if (this.hasSelectedCountryNameTarget)
+      this.selectedCountryNameTarget.textContent = countryName
+
+    if (this.hasSelectedCountryModalTarget)
+      this.selectedCountryModalTarget.value = countryName
+  }
+
+  selectCountryAndOpen(e) {
+    this.selectCountry(e)
+    this.openModal()
+  }
+
+  /*
+  select(e) {
+    const countryName = this.selectedCountryTarget.value
+    const assessmentTypes = this.selectables[countryName]
+    this.assessmentTypesTarget.childNodes.forEach(n =>
+      this.assessmentTypesTarget.removeChild(n)
+    )
+    assessmentTypes.forEach(type =>
+      this.assessmentTypesTarget.add(new Option(type))
+    )
+
+    this.selectedCountryNameTarget.textContent = countryName
+    this.selectedCountryModalTarget.value = countryName
+
+    $("#assessment-selection-modal").modal()
+  }
+  */
+
+  get selectables() {
+    return JSON.parse(this.selectablesTarget.value)
+  }
+}
