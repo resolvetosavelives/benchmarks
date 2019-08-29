@@ -31,6 +31,7 @@ class GoalFormTest < ActiveSupport::TestCase
                        (Score.new 3)
                      )
                  }
+    assert_equal 3, plan[:goals]['1.1']['value']
   end
 
   test 'it gets no activities if the score is already a 5' do
@@ -50,6 +51,7 @@ class GoalFormTest < ActiveSupport::TestCase
     assert_equal plan[:country], 'Australia'
     assert_equal plan[:assessment_type], 'jee1'
     assert_equal plan[:activity_map], { '1.1' => [] }
+    assert_equal 5, plan[:goals]['1.1']['value']
   end
 
   test 'it gets all of the activities in a range with multiple mappings' do
@@ -79,6 +81,7 @@ class GoalFormTest < ActiveSupport::TestCase
                        (Score.new 5)
                      )
                  }
+    assert_equal 5, plan[:goals]['1.1']['value']
   end
 
   test 'it gets all of the activities in a range with a gap between multiple mappings' do
@@ -108,6 +111,7 @@ class GoalFormTest < ActiveSupport::TestCase
                        (Score.new 4)
                      )
                  }
+    assert_equal 4, plan[:goals]['1.1']['value']
   end
 
   test 'it gets proper results from a SPAR score' do
@@ -135,6 +139,7 @@ class GoalFormTest < ActiveSupport::TestCase
                        (Score.new 2)
                      )
                  }
+    assert_equal 2, plan[:goals]['1.1']['value']
   end
 
   test 'it gets proper results with a starting SPAR score of 0' do
@@ -162,5 +167,6 @@ class GoalFormTest < ActiveSupport::TestCase
                        (Score.new 2)
                      )
                  }
+    assert_equal 2, plan[:goals]['1.1']['value']
   end
 end
