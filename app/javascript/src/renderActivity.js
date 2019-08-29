@@ -32,7 +32,7 @@ const renderActivity = (benchmarkId, activityText) => {
   container.appendChild(deleteButtonContainer)
 
   const benchmarksContainer = document.querySelector(
-    `#benchmark_container_${benchmarkId.replace(".", "-")}`
+    `#activity_container_${benchmarkId.replace(".", "-")}`
   )
   benchmarksContainer.appendChild(container)
 }

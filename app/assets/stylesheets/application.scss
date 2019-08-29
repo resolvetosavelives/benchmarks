@@ -212,13 +212,29 @@ td {
   padding-right: 0.75rem;
 }
 
-.activity {
+<<<<<<< head .activity {
   .delete {
     display: none;
   }
 
   &:hover {
     background: color("light");
+    .delete {
+      display: inherit;
+    }
+  }
+}
+
+.benchmark-container {
+  .delete {
+    font-size: 15px;
+  }
+  .confirm-delete,
+  .delete {
+    display: none;
+  }
+  &:hover {
+    .confirm-delete,
     .delete {
       display: inherit;
     }

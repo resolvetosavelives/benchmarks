@@ -17,6 +17,15 @@ export default class extends Controller {
     }
   }
 
+  showConfirm() {}
+
+  deleteBenchmark(e) {
+    const { currentTarget } = e
+    const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
+    const { [benchmarkId]: _, ...newActivityMap } = this.activityMap
+    this.activityMapTarget.value = newActivityMap
+  }
+
   deleteActivity(e) {
     const { currentTarget } = e
     const activityToDelete = currentTarget.getAttribute("data-activity")
