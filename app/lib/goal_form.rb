@@ -14,14 +14,13 @@ class GoalForm
     self.class.attr_accessor(*(scores.keys))
     self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))
 
-    scale = args.fetch(:scale)
-    scores.each { |key, score| send "#{key}=", (scale.new score: score).value }
+    scores.each { |key, score| send "#{key}=", score.value }
     scores.each do |key, score|
-      send "#{key}_goal=", (scale.new score: (create_goal score)).value
+      send "#{key}_goal=", create_goal(score).value
     end
   end
 
-  def self.create_draft_plan!(params, crosswalk, benchmarks, scale, current_user = nil)
+  def self.create_draft_plan!(params, crosswalk, benchmarks, current_user = nil)
     benchmark_goals =
       params.keys.reduce({}) do |benchmark_acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
@@ -34,9 +33,7 @@ class GoalForm
         next benchmark_acc if crosswalk[key] == %w[N/A]
 
         score_and_goal =
-          ScoreGoal.new score: ((scale.new value: params[key].to_i).score),
-                        goal:
-                          ((scale.new value: params["#{key}_goal"].to_i).score)
+          ScoreGoal.new score: Score.new(params[key].to_i), goal: Score.new(params["#{key}_goal"].to_i)
 
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|

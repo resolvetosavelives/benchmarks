@@ -17,8 +17,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -45,8 +44,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -67,8 +65,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -97,8 +94,7 @@ class GoalFormTest < ActiveSupport::TestCase
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  JeeScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -120,13 +116,12 @@ class GoalFormTest < ActiveSupport::TestCase
                                     {
                                       'country' => 'Australia',
                                       'assessment_type' => 'spar_2018',
-                                      'spar_2018_ind_c11' => 20,
-                                      'spar_2018_ind_c11_goal' => 40
+                                      'spar_2018_ind_c11' => 1,
+                                      'spar_2018_ind_c11_goal' => 2
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  SparScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'
@@ -149,12 +144,11 @@ class GoalFormTest < ActiveSupport::TestCase
                                       'country' => 'Australia',
                                       'assessment_type' => 'spar_2018',
                                       'spar_2018_ind_c11' => 0,
-                                      'spar_2018_ind_c11_goal' => 40
+                                      'spar_2018_ind_c11_goal' => 2
                                     }.with_indifferent_access
                                   ),
                                   @crosswalk,
-                                  @benchmarks,
-                                  SparScale
+                                  @benchmarks
 
     assert_equal plan[:name], 'Australia draft plan'
     assert_equal plan[:country], 'Australia'

@@ -21,8 +21,8 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?(
              'Financing mechanism and funds for timely response to public health emergencies'
            )
-    assert_equal '60', find('#goal_form_spar_2018_ind_c13').value
-    assert_equal '80', find('#goal_form_spar_2018_ind_c13_goal').value
+    assert_equal '3', find('#goal_form_spar_2018_ind_c13').value
+    assert_equal '4', find('#goal_form_spar_2018_ind_c13_goal').value
 
     find('#new_goal_form input[type=submit]').trigger(:click)
 

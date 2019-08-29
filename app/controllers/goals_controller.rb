@@ -16,12 +16,6 @@ class GoalsController < ApplicationController
           acc
         end
 
-      if assessment_type == 'spar_2018'
-        scale = SparScale
-      else
-        scale = JeeScale
-      end
-
       @data_dictionary =
         JSON.load File.open './app/fixtures/data_dictionary.json'
       @assessments = JSON.load File.open './app/fixtures/assessments.json'
@@ -29,8 +23,7 @@ class GoalsController < ApplicationController
       @goals =
         GoalForm.new country: @country,
                      assessment_type: assessment_type,
-                     scores: scores,
-                     scale: scale
+                     scores: scores
 
       @countries, @selectables = helpers.set_country_selection_options
       @technical_areas = @assessments[@goals.assessment_type]["technical_area_order"].map do |indicator_id|
@@ -44,17 +37,10 @@ class GoalsController < ApplicationController
     benchmarks = BenchmarksFixture.new
 
     goal_params = params.fetch(:goal_form)
-    assessment_type = goal_params.fetch(:assessment_type)
-    if assessment_type == 'spar_2018'
-      scale = SparScale
-    else
-      scale = JeeScale
-    end
 
     plan = GoalForm.create_draft_plan! goal_params,
                                        crosswalk,
                                        benchmarks,
-                                       scale,
                                        current_user
     session[:plan_id] = plan.id unless current_user
     redirect_to plan
