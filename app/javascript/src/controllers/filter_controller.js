@@ -5,13 +5,19 @@ export default class extends Controller {
   static targets = ["select"]
 
   connect() {
-    $(this.selectTarget).multiselect({
-      buttonWidth: "100%",
-      maxHeight: 200,
-      inheritClass: true,
-      onChange: filter(this),
-      nonSelectedText: this.data.get("placeholder")
-    })
+    if (
+      $(this.selectTarget)
+        .siblings()
+        .find(".multiselect").length === 0
+    ) {
+      $(this.selectTarget).multiselect({
+        buttonWidth: "100%",
+        maxHeight: 200,
+        inheritClass: true,
+        onChange: filter(this),
+        nonSelectedText: this.data.get("placeholder")
+      })
+    }
   }
 
   technicalAreaRows(id) {
