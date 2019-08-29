@@ -14,9 +14,9 @@ class GoalForm
     self.class.attr_accessor(*(scores.keys))
     self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))
 
-    scores.each { |key, score| send "#{key}=", (JeeScale.new score: score).value }
+    scores.each { |key, score| send "#{key}=", score.value }
     scores.each do |key, score|
-      send "#{key}_goal=", (JeeScale.new score: (create_goal score)).value
+      send "#{key}_goal=", create_goal(score).value
     end
   end
 
@@ -33,9 +33,7 @@ class GoalForm
         next benchmark_acc if crosswalk[key] == %w[N/A]
 
         score_and_goal =
-          ScoreGoal.new score: JeeScale.new(value: params[key].to_i).score,
-                        goal:
-                          JeeScale.new(value: params["#{key}_goal"].to_i).score
+          ScoreGoal.new score: Score.new(params[key].to_i), goal: Score.new(params["#{key}_goal"].to_i)
 
         benchmark_ids = crosswalk[key]
         benchmark_ids.each do |id|
