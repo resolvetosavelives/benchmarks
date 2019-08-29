@@ -212,7 +212,7 @@ td {
   padding-right: 0.75rem;
 }
 
-<<<<<<< head .activity {
+.activity {
   .delete {
     display: none;
   }
@@ -226,18 +226,20 @@ td {
 }
 
 .benchmark-container {
-  .delete {
-    font-size: 15px;
-    text-align: inherit;
-  }
-  .confirm-delete,
-  .delete {
-    display: none;
-  }
-  &:hover {
+  .header {
+    .delete {
+      font-size: 15px;
+      text-align: right;
+    }
     .confirm-delete,
     .delete {
-      display: inherit;
+      display: none;
+    }
+    &:hover {
+      .confirm-delete,
+      .delete {
+        display: inherit;
+      }
     }
   }
 }
