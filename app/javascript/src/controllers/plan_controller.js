@@ -3,7 +3,7 @@ import { Controller } from "stimulus"
 import renderActivity from "../renderActivity"
 
 export default class extends Controller {
-  static targets = ["activityMap", "newActivity", "submit"]
+  static targets = ["activityMap", "newActivity", "submit", "form"]
 
   connect() {
     this.newActivityTargets.forEach(t => {
@@ -30,6 +30,7 @@ export default class extends Controller {
     $(this.newActivity(benchmarkId)).autocomplete({
       source: this.autocompletions(benchmarkId)
     })
+    this.validateActivityMap()
   }
 
   showNewActivity() {
@@ -39,7 +40,7 @@ export default class extends Controller {
   addNewActivity(e) {
     const { currentTarget } = e
     const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 && currentTarget.value.length) {
       this.activityMapTarget.value = JSON.stringify({
         ...this.activityMap,
         [benchmarkId]: [
@@ -53,6 +54,7 @@ export default class extends Controller {
       })
       e.target.value = ""
       e.preventDefault()
+      this.validateActivityMap()
     }
   }
 
@@ -76,6 +78,31 @@ export default class extends Controller {
     return this.newActivityTargets.find(
       t => t.getAttribute("data-benchmark-id") === benchmarkId
     )
+  }
+
+  validateName() {
+    if (this.formTarget.checkValidity() === false) {
+      this.submitTarget.setAttribute("disabled", "disabled")
+    } else {
+      this.submitTarget.removeAttribute("disabled")
+    }
+    this.formTarget.classList.add("was-validated")
+  }
+
+  validateActivityMap() {
+    if (
+      Object.keys(this.activityMap).every(
+        key => this.activityMap[key].length === 0
+      )
+    ) {
+      this.submitTarget.setAttribute("disabled", "disabled")
+    } else {
+      this.submitTarget.removeAttribute("disabled")
+    }
+  }
+
+  submit() {
+    this.formTarget.submit()
   }
 
   get activityMap() {

@@ -35,7 +35,7 @@ class AppsTest < ApplicationSystemTestCase
     find('#plan_name').fill_in with: 'Updated Draft Plan'
     find('input[type=submit]').trigger(:click)
 
-    assert_current_path('/plans')
+    assert_current_path('/users/sign_in')
     find('#user_email').fill_in with: 'savanni@cloudcity.io'
     find('#user_password').fill_in with: '6hU$no8IlS8*'
     find('#new_user input[type=submit]').trigger(:click)
