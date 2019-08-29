@@ -1,21 +1,19 @@
 import { Controller } from "stimulus"
 
-const SPAR_SCORES = [0, 20, 40, 60, 80, 100]
-const JEE_SCORES = [0, 1, 2, 3, 4, 5]
+const SCORES = [0, 1, 2, 3, 4, 5]
 
 export default class extends Controller {
   static targets = ["form", "submitButton"]
 
-  validate(e){
+  validate(e) {
     const { currentTarget: field } = e
     const assessmentType = this.formTarget.getAttribute("data-type")
-    const scores = assessmentType.match(/spar/) ? SPAR_SCORES : JEE_SCORES
     const isGoal = field.getAttribute("data-goal") === "true"
     field.setCustomValidity("")
 
     if (field.value.length === 0) {
       field.setCustomValidity("invalid")
-    } else if (!scores.includes(Number(field.value))) {
+    } else if (!SCORES.includes(Number(field.value))) {
       field.setCustomValidity("invalid")
     }
 
@@ -43,9 +41,9 @@ export default class extends Controller {
   submit(e) {
     const { currentTarget: form } = e
     if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+      event.preventDefault()
+      event.stopPropagation()
     }
-    form.classList.add('was-validated');
+    form.classList.add("was-validated")
   }
 }
