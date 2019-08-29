@@ -1,9 +1,10 @@
-<div class="row border p-2 type-code-<%= (@benchmarks.type_code_1s[activity["type_code_1"].to_s] || "unknown").parameterize %>">
+<div class="row border activity p-2 type-code-<%= (@benchmarks.type_code_1s[activity["type_code_1"].to_s] || "unknown").parameterize %>">
   <div class="col-11">
     <%= activity["text"] %>
   </div>
   <div class="col-1">
     <button
+      class="delete close"
       type="button"
       data-action="plan#deleteActivity"
       data-benchmark-id="<%= benchmark_id %>"

@@ -206,3 +206,16 @@ td {
   background: none;
   padding-right: 0.75rem;
 }
+
+.activity {
+  .delete {
+    display: none;
+  }
+
+  &:hover {
+    background: color("light");
+    .delete {
+      display: inherit;
+    }
+  }
+}
