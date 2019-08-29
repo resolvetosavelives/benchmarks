@@ -12,6 +12,9 @@ export default class extends Controller {
         open: () => $("ul.ui-menu").width($(t).innerWidth() + 5)
       })
     })
+    if (document.referrer.match("goals")) {
+      $("#draft-plan-review-modal").modal("show")
+    }
   }
 
   deleteActivity(e) {
