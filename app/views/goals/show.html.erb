@@ -30,7 +30,13 @@
 
     <%= render "shared/assessment_selection_modal" %>
   </div>
-  <%= form_for @goals, url: "/goals/", html: {novalidate: true, class: "needs-validation", data: { controller: "score", action: "submit->score#submit", target: "score.form", type: @goals.assessment_type }} do |f| %>
+  <%= form_for @goals, url: "/goals/", 
+    html: {novalidate: true, 
+           class: "needs-validation", 
+           data: { controller: "score", 
+                   action: "submit->score#submit", 
+                   target: "score.form", 
+                   type: @goals.assessment_type }} do |f| %>
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
     <div class="row py-4">
       <div class="col-6">

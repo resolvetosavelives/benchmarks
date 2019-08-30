@@ -31,4 +31,13 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
       assert_nil session[:plan_id]
     end
   end
+
+  test "viewing a goal form" do
+    get "/goals/Australia/jee1"
+    assert_response :ok
+    assert_select 'form[data-controller="score"][data-action="submit->score#submit"][data-target="score.form"]', 1
+    # there are a total of 96 score and goal fields for this assessment
+    assert_select 'input[data-action="change->score#validate"]', 96
+    assert_select 'input[type="submit"][data-target="score.submitButton"]', 1
+  end
 end

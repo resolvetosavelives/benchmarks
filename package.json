@@ -16,7 +16,26 @@
   "prettier": {
     "semi": false
   },
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
+    "babel-jest": "^24.9.0",
+    "babel-preset-es2015": "^6.24.1",
+    "jest": "^24.9.0",
+    "mutationobserver-shim": "^0.3.3",
     "webpack-dev-server": "^3.7.2"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test/javascript/setup.js"
+    ],
+    "roots": [
+      "test/javascript"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "app/javascript/src/controllers"
+    ]
   }
 }
