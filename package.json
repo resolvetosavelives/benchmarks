@@ -30,7 +30,7 @@
     "roots": [
       "test/javascript"
     ],
-    "module_directories": [
+    "moduleDirectories": [
       "node_modules",
       "app/javascript/src/controllers"
     ]
