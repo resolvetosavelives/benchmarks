@@ -1,34 +1,34 @@
 <% if @goals %>
-  <div class="row bg-light-gray p-4 full-width sticky" data-controller="country-selection">
+  <div class="row bg-light-gray p-4 full-width sticky" data-controller="assessment-selection">
     <div class="col-5 offset-1">
       <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
-        { target: "country-selection.selectables" } %>
+        { target: "assessment-selection.selectables" } %>
       <%= form_tag '/country_select' do %>
         <div class="form-group">
           <strong><%= label_tag "Select country" %></strong>
           <%= select_tag "country",
           options_from_collection_for_select(@countries, 'name', 'name', @country), class:
-          "custom-select", data: { target: "country-selection.selectedCountry", action: "change->country-selection#select" }, autocomplete: "off"
+          "custom-select", data: { target: "assessment-selection.selectedCountry", action: "change->assessment-selection#selectCountryAndOpen" }, autocomplete: "off"
           %>
         </div>
       <% end %>
     </div>
 
     <div class="col-5">
-      <div data-controller="filter" 
-           data-filter-placeholder="Select Capacity Area(s)" 
+      <div data-controller="filter"
+           data-filter-placeholder="Select Capacity Area(s)"
            data-filter-class-prefix="technical-area">
         <strong><%= label_tag "Filter by Capacity Area:" %></strong>
-        <%= select_tag "technical_areas", 
+        <%= select_tag "technical_areas",
           options_for_select(@technical_areas),
-          class: "form-control custom-select text-left", 
-          multiple: "multiple", 
+          class: "form-control custom-select text-left",
+          multiple: "multiple",
           data: { target: "filter.select", options: @technical_areas.map(&:last).to_json },
           autocomplete: "off" %>
       </div>
     </div>
 
-    <%= render "shared/country_selection_modal" %>
+    <%= render "shared/assessment_selection_modal" %>
   </div>
   <%= form_for @goals, url: "/goals/", html: {novalidate: true, class: "needs-validation", data: { controller: "score", action: "submit->score#submit", target: "score.form", type: @goals.assessment_type }} do |f| %>
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>

@@ -9,7 +9,16 @@ export default class extends Controller {
     "selectedCountryModal"
   ]
 
-  select(e) {
+  connect() {
+    this.selectedCountryTarget.value = Object.keys(this.selectables)[0]
+    this.selectCountry()
+  }
+
+  openModal(e) {
+    $("#assessment-selection-modal").modal()
+  }
+
+  selectCountry(e) {
     const countryName = this.selectedCountryTarget.value
     const assessmentTypes = this.selectables[countryName]
     this.assessmentTypesTarget.childNodes.forEach(n =>
@@ -19,10 +28,16 @@ export default class extends Controller {
       this.assessmentTypesTarget.add(new Option(type))
     )
 
-    this.selectedCountryNameTarget.textContent = countryName
-    this.selectedCountryModalTarget.value = countryName
+    if (this.hasSelectedCountryNameTarget)
+      this.selectedCountryNameTarget.textContent = countryName
 
-    $("#assessment-selection-modal").modal()
+    if (this.hasSelectedCountryModalTarget)
+      this.selectedCountryModalTarget.value = countryName
+  }
+
+  selectCountryAndOpen(e) {
+    this.selectCountry(e)
+    this.openModal()
   }
 
   get selectables() {

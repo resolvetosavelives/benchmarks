@@ -1,0 +1,60 @@
+<div
+    class="modal"
+    tabindex="-1"
+    role="dialog"
+    id="assessment-selection-modal"
+  >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title display-header mx-4">
+          LET'S GET STARTED!
+        </h1>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body mx-4">
+        <p>
+          Our plans are comprised of activities based off of the gap between
+          the capacity score and step up score.
+        </p>
+
+        <p>
+          You can create a plan from the Joint External Evaluation (JEE) or
+          State Party Self-Assessment Annual Reporting (SPAR) scores.
+        </p>
+
+        <p>
+          If the country hasn’t done either assessment, you can create a plan
+          from technical areas.
+        </p>
+
+        <%= form_tag '/country_select', id: "assessment-select-menu" do %>
+          <%= hidden_field_tag "country", nil, data: { target: "assessment-selection.selectedCountryName" } %>
+          <div class="input-group">
+            <%= select_tag "country",
+              options_from_collection_for_select(@countries, 'name', 'name'),
+              class: "custom-select",
+              data: { target: "assessment-selection.selectedCountry",
+                      action: "assessment-selection#selectCountry" }
+            %>
+          </div>
+          <div class="input-group mb-2">
+            <%= select_tag "assessment_type",
+              options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
+              class: "custom-select",
+              data: { target: "assessment-selection.assessmentTypes" } %>
+          </div>
+          <%= button_tag "Next", type: :submit, class: "btn btn-primary w-100" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
