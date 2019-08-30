@@ -25,7 +25,7 @@ export default class extends Controller {
       this.assessmentTypesTarget.removeChild(n)
     )
     assessmentTypes.forEach(type =>
-      this.assessmentTypesTarget.add(new Option(type))
+      this.assessmentTypesTarget.add(new Option(type.text, type.type))
     )
 
     if (this.hasSelectedCountryNameTarget)

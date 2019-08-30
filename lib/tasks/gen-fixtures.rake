@@ -214,7 +214,9 @@ task gen_fixtures: %i[environment] do
     dictionary[:data]
   end
 
-  def process_assessment_structure(data_dictionary, rows, assessment)
+  def process_assessment_structure(
+    data_dictionary, rows, assessment, presentation_name
+  )
     rows.drop(1).reduce({}) do |acc, row|
       cells = row.cells
 
@@ -230,7 +232,9 @@ task gen_fixtures: %i[environment] do
 
       unless acc[assessment]
         acc[assessment] = {
-          label: assessment, technical_area_order: [], technical_areas: {}
+          label: presentation_name,
+          technical_area_order: [],
+          technical_areas: {}
         }
       end
 
@@ -255,21 +259,24 @@ task gen_fixtures: %i[environment] do
       process_assessment_structure(
         data_dictionary,
         Assessment_structures_workbook['SPAR 2018'],
-        'spar_2018'
+        'spar_2018',
+        'SPAR 2018'
       )
 
     jee1_structure =
       process_assessment_structure(
         data_dictionary,
         Assessment_structures_workbook['JEE 1'],
-        'jee1'
+        'jee1',
+        'JEE 1.0'
       )
 
     jee2_structure =
       process_assessment_structure(
         data_dictionary,
         Assessment_structures_workbook['JEE 2'],
-        'jee2'
+        'jee2',
+        'JEE 2.0'
       )
 
     assessment_structures =
