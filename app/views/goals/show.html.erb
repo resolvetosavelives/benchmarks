@@ -34,7 +34,7 @@
     <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
     <div class="row py-4">
       <div class="col-6">
-        <h1 class="alt-header"><%= @goals.assessment_type %> Scores</h1>
+        <h1 class="alt-header"><%= @assessments[@goals.assessment_type]["label"] %> Scores</h1>
 
         <p>
           The scores are pre-populated from our JEE database. The goal is

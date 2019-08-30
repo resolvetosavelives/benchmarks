@@ -16,6 +16,8 @@ class Worksheet
 
   def generate
     benchmarks = BenchmarksFixture.new
+    assessment_structures =
+      JSON.load File.open './app/fixtures/assessments.json'
 
     create_instructions_sheet @workbook[0]
 
@@ -31,7 +33,9 @@ class Worksheet
           idx =
             populate_worksheet worksheet,
                                idx,
-                               @plan.assessment_type,
+                               assessment_structures[@plan.assessment_type][
+                                 'label'
+                               ],
                                @plan.goals ? @plan.goals[indicator_id] : {},
                                (benchmarks.objective_text indicator_id),
                                activity
@@ -128,7 +132,7 @@ def bordered_merge_cells(worksheet, row, col, width, height)
 end
 
 def populate_worksheet(
-  worksheet, idx, assessment_type, goal, objective, activity
+  worksheet, idx, assessment_label, goal, objective, activity
 )
   goal_score = goal && goal['value'] ? "score #{goal['value']}" : ''
 
@@ -138,7 +142,9 @@ def populate_worksheet(
                       idx + 6,
                       0,
                       text:
-                        "Activity required for #{assessment_type} #{goal_score}"
+                        "Activity required for #{assessment_label} #{
+                          goal_score
+                        }"
   SpreadsheetCell.new worksheet, idx + 7, 0, text: activity['text']
   SpreadsheetCell.new worksheet,
                       idx + 11,
