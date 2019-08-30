@@ -46,9 +46,7 @@
                                     data: { turbolinks: false } %>
                     </td>
                     <td class="py-4 text-secondary">
-                        <%= render 'shared/icon',
-                            image_name: "ico-analyze.svg",
-                            text: "Analyze" %>
+                      <%= link_to "Delete", plan_path(plan.id), method: :delete %>
                     </td>
                 </tr>
             <% end %>
