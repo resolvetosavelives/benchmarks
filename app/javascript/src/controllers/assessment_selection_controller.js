@@ -21,9 +21,10 @@ export default class extends Controller {
   selectCountry(e) {
     const countryName = this.selectedCountryTarget.value
     const assessmentTypes = this.selectables[countryName]
-    this.assessmentTypesTarget.childNodes.forEach(n =>
-      this.assessmentTypesTarget.removeChild(n)
-    )
+    while (this.assessmentTypesTarget.firstChild)
+      this.assessmentTypesTarget.removeChild(
+        this.assessmentTypesTarget.firstChild
+      )
     assessmentTypes.forEach(type =>
       this.assessmentTypesTarget.add(new Option(type.text, type.type))
     )
