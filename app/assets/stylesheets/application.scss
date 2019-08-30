@@ -224,3 +224,22 @@ td {
     }
   }
 }
+
+.benchmark-container {
+  .header {
+    .delete {
+      font-size: 15px;
+      text-align: right;
+    }
+    .confirm-delete,
+    .delete {
+      display: none;
+    }
+    &:hover {
+      .confirm-delete,
+      .delete {
+        display: inherit;
+      }
+    }
+  }
+}

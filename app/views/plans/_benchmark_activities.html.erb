@@ -1,14 +1,35 @@
-<div class="row bg-light-gray p-1">
-  <div class="col">
-    <b>Benchmark <%= benchmark_id %>:</b> <%=
-    benchmarks.indicator_text(benchmark_id) %>
+<div data-controller="benchmark" data-target="benchmark.self" class="benchmark-container">
+  <div class="row bg-light-gray p-1 header">
+    <div class="col-11">
+      <b>Benchmark <%= benchmark_id %>:</b> <%=
+      benchmarks.indicator_text(benchmark_id) %>
+    </div>
+    <div class="col-1 d-flex justify-content-end" data-action="mouseleave->benchmark#reset">
+      <button
+        class="close confirm-delete"
+        type="button"
+        data-action="benchmark#confirm"
+        data-target="benchmark.confirm"
+      >
+        <img src="/delete-button.svg" />
+      </button>
+      <br>
+      <button class="close delete"
+              type="button"
+              data-action="benchmark#delete"
+              data-benchmark-id="<%= benchmark_id %>"
+              data-target="benchmark.delete"
+      >
+        Really delete?
+      </button>
+    </div>
   </div>
-</div>
 
-<%= content_tag :div, id: "benchmark_container_#{benchmark_id.parameterize}" do %>
-  <% activities.each do |activity| %>
-    <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
+  <%= content_tag :div, id: "activity_container_#{benchmark_id.parameterize}" do %>
+    <% activities.each do |activity| %>
+      <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
+    <% end %>
   <% end %>
-<% end %>
 
-<%= render "activity_form", benchmark_id: benchmark_id, activities: benchmarks.activity_texts(benchmark_id) %>
+  <%= render "activity_form", benchmark_id: benchmark_id, activities: benchmarks.activity_texts(benchmark_id) %>
+</div>
