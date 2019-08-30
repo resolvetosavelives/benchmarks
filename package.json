@@ -16,6 +16,9 @@
   "prettier": {
     "semi": false
   },
+  "scripts": {
+    "test": "jest"
+  },
   "devDependencies": {
     "babel-jest": "^24.9.0",
     "babel-preset-es2015": "^6.24.1",
