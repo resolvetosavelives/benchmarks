@@ -1,0 +1,33 @@
+<div class="row align-items-center">
+  <div class="col">
+    <h1>Reset Password</h1>
+  </div>
+</div>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put}) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= f.hidden_field :reset_password_token %>
+  <div class="row pt-4">
+    <div class="form-group col">
+      <span>What would you like your new password to be?</span>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+    <div class="form-group col">
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control", required: true, placeholder: "Password" %>
+    </div>
+  </div>
+
+  <div class="row pt-3">
+    <div class="form-group col">
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control", required: true, placeholder: "Password" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <%= f.submit "SAVE", class: "w-100 btn btn-orange" %>
+    </div>
+  </div>
+<% end %>
