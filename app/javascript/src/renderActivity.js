@@ -12,14 +12,14 @@ const createElement = (name, classNames, attributes = {}) => {
 }
 
 const renderActivity = (benchmarkId, activityText) => {
-  const container = createElement("div", "row border p-2")
+  const container = createElement("div", "row border p-2 activity")
 
   const activityTextContainer = createElement("div", "col-11")
   const activityTextNode = document.createTextNode(activityText)
   activityTextContainer.appendChild(activityTextNode)
 
   const deleteButtonContainer = createElement("div", "col-1")
-  const deleteButton = createElement("button", "", {
+  const deleteButton = createElement("button", "close delete", {
     "data-action": "plan#deleteActivity",
     "data-benchmark-id": benchmarkId,
     "data-activity": activityText
