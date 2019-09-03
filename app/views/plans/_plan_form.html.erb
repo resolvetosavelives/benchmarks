@@ -1,5 +1,5 @@
- <div class="row bg-light-gray p-4 full-width sticky">
-   <div class="offset-1 col-4" 
+ <div class="row bg-light-gray p-4 full-width stick-to-top">
+   <div class="offset-1 col-4"
         data-controller="filter"
         data-filter-placeholder="Select Activity Type(s)"
         data-filter-class-prefix="type-code">
@@ -8,7 +8,7 @@
        options_from_collection_for_select(@type_code_texts, :parameterize, :itself),
        class: "form-control custom-select text-left",
        multiple: "multiple",
-       data: { target: "filter.select", 
+       data: { target: "filter.select",
                options: @type_code_texts.map(&:parameterize).to_json },
        autocomplete: "off" %>
    </div>

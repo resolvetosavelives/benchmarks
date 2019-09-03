@@ -194,14 +194,15 @@ td {
   table-layout: fixed;
 }
 
+.stick-to-top {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+}
+
 .full-width {
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
-  &.sticky {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
 }
 
 .was-validated .form-control:invalid,

@@ -1,51 +1,57 @@
 <% if @goals %>
-  <div class="row bg-light-gray p-4 full-width sticky" data-controller="assessment-selection">
+<div data-controller="assessment-selection">
+  <div class="row bg-light-gray p-4 full-width stick-to-top">
     <div class="col-5 offset-1">
-      <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
-        { target: "assessment-selection.selectables" } %>
+      <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data: { target: "assessment-selection.selectables" } %>
       <%= form_tag '/country_select' do %>
-        <div class="form-group">
-          <strong><%= label_tag "Select country" %></strong>
-          <%= select_tag "country",
-          options_from_collection_for_select(@countries, 'name', 'name', @country), class:
-          "custom-select", data: { target: "assessment-selection.selectedCountry", action: "change->assessment-selection#selectCountryAndOpen" }, autocomplete: "off"
-          %>
-        </div>
+      <div class="form-group">
+        <strong><%= label_tag "Select country" %></strong>
+        <%= select_tag "country",
+          options_from_collection_for_select(@countries, 'name', 'name', @country),
+          class: "custom-select",
+          data: { target: "assessment-selection.selectedCountry",
+                  action: "change->assessment-selection#selectCountryAndOpen" },
+          autocomplete: "off" %>
+      </div>
       <% end %>
     </div>
 
     <div class="col-5">
-      <div data-controller="filter"
-           data-filter-placeholder="Select Capacity Area(s)"
-           data-filter-class-prefix="technical-area">
+      <div
+        data-controller="filter"
+        data-filter-placeholder="Select Capacity Area(s)"
+        data-filter-class-prefix="technical-area"
+      >
         <strong><%= label_tag "Filter by Capacity Area:" %></strong>
         <%= select_tag "technical_areas",
           options_for_select(@technical_areas),
           class: "form-control custom-select text-left",
           multiple: "multiple",
-          data: { target: "filter.select", options: @technical_areas.map(&:last).to_json },
+          data: { target: "filter.select",
+                  options: @technical_areas.map(&:last).to_json },
           autocomplete: "off" %>
       </div>
     </div>
-
-    <%= render "shared/assessment_selection_modal" %>
   </div>
-  <%= form_for @goals, url: "/goals/", 
-    html: {novalidate: true, 
-           class: "needs-validation", 
-           data: { controller: "score", 
-                   action: "submit->score#submit", 
-                   target: "score.form", 
+  <%= form_for @goals, url: "/goals/",
+    html: {novalidate: true,
+           class: "needs-validation",
+           data: { controller: "score",
+                   action: "submit->score#submit",
+                   target: "score.form",
                    type: @goals.assessment_type }} do |f| %>
-    <%= f.hidden_field :country %> <%= f.hidden_field :assessment_type %>
+    <%= f.hidden_field :country %>
+    <%= f.hidden_field :assessment_type %>
     <div class="row py-4">
       <div class="col-6">
-        <h1 class="alt-header"><%= @assessments[@goals.assessment_type]["label"] %> Scores</h1>
+        <h1 class="alt-header">
+          <%= @assessments[@goals.assessment_type]["label"] %> Scores
+        </h1>
 
         <p>
           The scores are pre-populated from our JEE database. The goal is
-          pre-populated by one step up. You can manually change the score or goal to
-          your liking.
+          pre-populated by one step up. You can manually change the score or goal
+          to your liking.
         </p>
       </div>
       <div class="col-lg-6 col-md-12 d-flex justify-content-end">
@@ -74,7 +80,7 @@
           <tbody>
             <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
               <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
-              <tr class="technical-area-<%= technical_area_id %>" >
+              <tr class="technical-area-<%= technical_area_id %>">
                 <% indicator = technical_area['indicators'][0] %>
                 <th
                   class="border-right"
@@ -84,15 +90,25 @@
                   <%= @data_dictionary[technical_area_id] %>
                 </th>
                 <td class="border-right"><%= @data_dictionary[indicator] %></td>
-                <td><%= render "validated_field", field_name: indicator, f: f %></td>
-                <td><%= render "validated_field", field_name: "#{indicator}_goal", f: f %></td>
+                <td>
+                  <%= render "validated_field", field_name: indicator, f: f %>
+                </td>
+                <td>
+                  <%= render "validated_field", field_name: "#{indicator}_goal", f:
+                  f %>
+                </td>
               </tr>
 
               <% technical_area['indicators'].drop(1).each do |indicator| %>
                 <tr class="technical-area-<%= technical_area_id %>">
                   <td class="border-right"><%= @data_dictionary[indicator] %></td>
-                  <td><%= render "validated_field", field_name: indicator, f: f %></td>
-                  <td><%= render "validated_field", field_name: "#{indicator}_goal", f: f %></td>
+                  <td>
+                    <%= render "validated_field", field_name: indicator, f: f %>
+                  </td>
+                  <td>
+                    <%= render "validated_field", field_name: "#{indicator}_goal", f:
+                    f %>
+                  </td>
                 </tr>
               <% end %>
             <% end %>
@@ -102,12 +118,15 @@
     </div>
     <div class="row">
       <div class="col d-flex justify-content-end">
-        <%= f.submit "Next", class: "btn btn-primary next-button", data: { target: "score.submitButton"} %>
+        <%= f.submit "Next", class: "btn btn-primary next-button", data: { target:
+        "score.submitButton"} %>
       </div>
     </div>
   <% end %>
+  <%= render "shared/assessment_selection_modal" %>
+</div>
 <% else %>
-  <div class="col">
-    <div>No assessment available</div>
-  </div>
+<div class="col">
+  <div>No assessment available</div>
+</div>
 <% end %>
