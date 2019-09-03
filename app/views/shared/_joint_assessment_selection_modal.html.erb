@@ -31,11 +31,6 @@
           State Party Self-Assessment Annual Reporting (SPAR) scores.
         </p>
 
-        <p>
-          If the country hasn’t done either assessment, you can create a plan
-          from technical areas.
-        </p>
-
         <%= form_tag '/country_select', id: "assessment-select-menu" do %>
           <%= hidden_field_tag "country", nil, data: { target: "assessment-selection.selectedCountryName" } %>
           <div class="input-group">
