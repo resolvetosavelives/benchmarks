@@ -61,7 +61,9 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.default_url_options = { host: ENV['BENCHMARKS_HOST'] }
+  config.action_mailer.default_url_options = {
+    protocol: 'https', host: ENV['BENCHMARKS_HOST']
+  }
 
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
