@@ -22,7 +22,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'rake'
 
@@ -33,10 +33,11 @@ gem 'jquery-rails'
 gem 'webpacker', '~> 4.x'
 gem 'devise'
 gem 'sentry-raven'
+gem 'rack-attack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -53,4 +54,3 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'cuprite'
 end
-
