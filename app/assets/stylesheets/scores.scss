@@ -1,0 +1,16 @@
+.table-scores {
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background: color("light");
+      }
+      th {
+        background: #e2e6ea;
+        border-top: 1px solid rgba(45, 45, 53, 0.25);
+      }
+      td {
+        border-top: 1px solid rgba(45, 45, 53, 0.25);
+      }
+    }
+  }
+}
