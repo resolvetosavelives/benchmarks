@@ -29,9 +29,10 @@
             %>
             <div class="input-group-append">
               <%= button_tag "Get Started",
+                id: "btn-get-started",
                 type: :button,
-                data: { action: "assessment-selection#openModal" },
-                class: "btn text-white bg-green" %>
+                data: { action: "assessment-selection#openModalValidated" },
+                class: "btn text-white bg-secondary" %>
             </div>
           </div>
         <% end %>

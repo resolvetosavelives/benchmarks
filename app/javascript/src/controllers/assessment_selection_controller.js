@@ -18,6 +18,18 @@ export default class extends Controller {
     $("#assessment-selection-modal").modal()
   }
 
+  openModalValidated(e) {
+    if (this.validateCountry()) this.openModal(e)
+  }
+
+  validateCountry() {
+    return this.selectedCountryTarget.value !== "-- Select One --"
+  }
+
+  //validateForm() {
+  //return this.selectedCountryTarget.value !== "-- Select One --"
+  //}
+
   selectCountry(e) {
     const countryName = this.selectedCountryTarget.value
     const assessmentTypes = this.selectables[countryName]
@@ -34,6 +46,15 @@ export default class extends Controller {
 
     if (this.hasSelectedCountryModalTarget)
       this.selectedCountryModalTarget.value = countryName
+
+    if (this.validateCountry())
+      $("#btn-get-started")
+        .removeClass("bg-secondary")
+        .addClass("bg-green")
+    else
+      $("#btn-get-started")
+        .removeClass("bg-green")
+        .addClass("bg-secondary")
   }
 
   selectCountryAndOpen(e) {
