@@ -26,13 +26,21 @@ export default class extends Controller {
     return this.selectedCountryTarget.value !== "-- Select One --"
   }
 
-  //validateForm() {
-  //return this.selectedCountryTarget.value !== "-- Select One --"
-  //}
+  validateAssessment() {
+    return (
+      this.assessmentTypesTarget.selectedOptions[0].value !== "-- Select One --"
+    )
+  }
+
+  validateAndEnableNext(e) {
+    $("#btn-next").prop('disabled', !(this.validateCountry() && this.validateAssessment()))
+  }
 
   selectCountry(e) {
     const countryName = this.selectedCountryTarget.value
-    const assessmentTypes = this.selectables[countryName]
+    const assessmentTypes = [
+      { type: "-- Select One --", text: "-- Select One --" }
+    ].concat(this.selectables[countryName])
     while (this.assessmentTypesTarget.firstChild)
       this.assessmentTypesTarget.removeChild(
         this.assessmentTypesTarget.firstChild
@@ -47,14 +55,7 @@ export default class extends Controller {
     if (this.hasSelectedCountryModalTarget)
       this.selectedCountryModalTarget.value = countryName
 
-    if (this.validateCountry())
-      $("#btn-get-started")
-        .removeClass("bg-secondary")
-        .addClass("bg-green")
-    else
-      $("#btn-get-started")
-        .removeClass("bg-green")
-        .addClass("bg-secondary")
+    $("#btn-get-started").prop("disabled", !this.validateCountry())
   }
 
   selectCountryAndOpen(e) {
