@@ -50,7 +50,12 @@
                       action: "assessment-selection#validateAndEnableNext" }
             %>
           </div>
-        <%= button_tag "Next", id: 'btn-next', type: :submit, class: "btn btn-primary w-100", disabled: true %> <% end %>
+          <%= button_tag "Next",
+              type: :submit,
+              class: "btn btn-primary w-100",
+              disabled: true,
+              data: { target: "assessment-selection.submitForm" } %>
+      <% end %>
       </div>
     </div>
   </div>

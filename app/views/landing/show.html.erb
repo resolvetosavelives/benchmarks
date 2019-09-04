@@ -25,14 +25,17 @@
               options_from_collection_for_select(@countries, 'name', 'name'),
               class: "custom-select",
               data: { target: "assessment-selection.selectedCountry",
-                      action: "assessment-selection#selectCountry" }
+                      action: "assessment-selection#selectCountry
+                               assessment-selection#validateAndEnableGetStarted"
+                    }
             %>
             <div class="input-group-append">
               <%= button_tag "Get Started",
-                id: "btn-get-started",
                 type: :button,
-                data: { action: "assessment-selection#openModalValidated" },
-                class: "btn text-white bg-green", disabled: true %>
+                data: { target: "assessment-selection.getStartedButton",
+                        action: "assessment-selection#openModalValidated" },
+                class: "btn text-white bg-green",
+                disabled: true %>
             </div>
           </div>
         <% end %>

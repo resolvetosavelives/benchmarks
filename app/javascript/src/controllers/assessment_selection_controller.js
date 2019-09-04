@@ -3,10 +3,12 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = [
     "assessmentTypes",
+    "getStartedButton",
     "selectedCountry",
     "selectables",
     "selectedCountryName",
-    "selectedCountryModal"
+    "selectedCountryModal",
+    "submitForm"
   ]
 
   connect() {
@@ -19,21 +21,27 @@ export default class extends Controller {
   }
 
   openModalValidated(e) {
-    if (this.validateCountry()) this.openModal(e)
+    if (this.isCountryValid()) this.openModal(e)
   }
 
-  validateCountry() {
+  isCountryValid() {
     return this.selectedCountryTarget.value !== "-- Select One --"
   }
 
-  validateAssessment() {
+  isAssessmentTypeValid() {
     return (
       this.assessmentTypesTarget.selectedOptions[0].value !== "-- Select One --"
     )
   }
 
+  validateAndEnableGetStarted(e) {
+    this.getStartedButtonTarget.disabled = !this.isCountryValid()
+  }
+
   validateAndEnableNext(e) {
-    $("#btn-next").prop('disabled', !(this.validateCountry() && this.validateAssessment()))
+    this.submitFormTarget.disabled = !(
+      this.isCountryValid() && this.isAssessmentTypeValid()
+    )
   }
 
   selectCountry(e) {
@@ -54,8 +62,6 @@ export default class extends Controller {
 
     if (this.hasSelectedCountryModalTarget)
       this.selectedCountryModalTarget.value = countryName
-
-    $("#btn-get-started").prop("disabled", !this.validateCountry())
   }
 
   selectCountryAndOpen(e) {
