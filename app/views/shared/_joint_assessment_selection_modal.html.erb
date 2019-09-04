@@ -38,16 +38,23 @@
               options_from_collection_for_select(@countries, 'name', 'name'),
               class: "custom-select",
               data: { target: "assessment-selection.selectedCountry",
-                      action: "assessment-selection#selectCountry" }
+                      action: "assessment-selection#selectCountry
+                               assessment-selection#validateAndEnableNext"
+                    }
             %>
           </div>
           <div class="input-group mb-2">
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",
-              data: { target: "assessment-selection.assessmentTypes" } %>
+              data: { target: "assessment-selection.assessmentTypes",
+                      action: "assessment-selection#validateAndEnableNext" } %>
           </div>
-          <%= button_tag "Next", type: :submit, class: "btn btn-primary w-100" %>
+          <%= button_tag "Next",
+            type: :submit,
+            class: "btn btn-primary w-100",
+            disabled: true,
+            data: { target: "assessment-selection.submitForm" } %>
         <% end %>
       </div>
     </div>

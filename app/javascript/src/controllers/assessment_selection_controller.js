@@ -3,10 +3,12 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = [
     "assessmentTypes",
+    "getStartedButton",
     "selectedCountry",
     "selectables",
     "selectedCountryName",
-    "selectedCountryModal"
+    "selectedCountryModal",
+    "submitForm"
   ]
 
   connect() {
@@ -18,9 +20,35 @@ export default class extends Controller {
     $("#assessment-selection-modal").modal()
   }
 
+  openModalValidated(e) {
+    if (this.isCountryValid()) this.openModal(e)
+  }
+
+  isCountryValid() {
+    return this.selectedCountryTarget.value !== "-- Select One --"
+  }
+
+  isAssessmentTypeValid() {
+    return (
+      this.assessmentTypesTarget.selectedOptions[0].value !== "-- Select One --"
+    )
+  }
+
+  validateAndEnableGetStarted(e) {
+    this.getStartedButtonTarget.disabled = !this.isCountryValid()
+  }
+
+  validateAndEnableNext(e) {
+    this.submitFormTarget.disabled = !(
+      this.isCountryValid() && this.isAssessmentTypeValid()
+    )
+  }
+
   selectCountry(e) {
     const countryName = this.selectedCountryTarget.value
-    const assessmentTypes = this.selectables[countryName]
+    const assessmentTypes = [
+      { type: "-- Select One --", text: "-- Select One --" }
+    ].concat(this.selectables[countryName])
     while (this.assessmentTypesTarget.firstChild)
       this.assessmentTypesTarget.removeChild(
         this.assessmentTypesTarget.firstChild

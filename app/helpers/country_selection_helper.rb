@@ -10,7 +10,9 @@ module CountrySelectionHelper
     assessment_structure = JSON.load File.open './app/fixtures/assessments.json'
     assessments = Assessment.pluck(:country, :assessment_type)
     selectables =
-      assessments.reduce({}) do |acc, (country, assessment_type)|
+      assessments.reduce(
+        { '-- Select One --' => [] }
+      ) do |acc, (country, assessment_type)|
         acc[country] = [] unless acc[country]
         acc[country].push(
           {

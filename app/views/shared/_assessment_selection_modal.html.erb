@@ -46,10 +46,16 @@
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",
-              data: { target: "assessment-selection.assessmentTypes" }
+              data: { target: "assessment-selection.assessmentTypes",
+                      action: "assessment-selection#validateAndEnableNext" }
             %>
           </div>
-        <%= button_tag "Next", type: :submit, class: "btn btn-primary w-100" %> <% end %>
+          <%= button_tag "Next",
+              type: :submit,
+              class: "btn btn-primary w-100",
+              disabled: true,
+              data: { target: "assessment-selection.submitForm" } %>
+      <% end %>
       </div>
     </div>
   </div>
