@@ -256,3 +256,14 @@ td {
 .custom-select {
   border-radius: 10px;
 }
+
+input[type="number"] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  -moz-appearance: textfield;
+  text-align: center;
+}
