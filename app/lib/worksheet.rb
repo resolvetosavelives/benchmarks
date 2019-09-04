@@ -175,7 +175,7 @@ def populate_worksheet(
 
   worksheet.merge_cells idx, 0, idx, 1
   worksheet.merge_cells idx, 2, idx + 3, 7
-  worksheet.merge_cells idx + 6, 0, idx + 6, 2
+  worksheet.merge_cells idx + 6, 0, idx + 6, 3
   worksheet.merge_cells idx + 7, 0, idx + 9, 7
   worksheet.merge_cells idx + 11, 0, idx + 11, 2
   worksheet.merge_cells idx + 12, 0, idx + 26, 7
