@@ -5,15 +5,15 @@
     <div class="row m-4">
       <div class="col">
         <% @plan.activity_map.capacities.each_with_index do | capacity_id, i | %>
-        <% capacity_name = @benchmarks.capacity_text(capacity_id) %>
+          <% capacity_name = @benchmarks.capacity_text(capacity_id) %>
           <div class="capacity-container">
             <h2 id="<%= capacity_name.parameterize %>"><%= i + 1 %>. <%= capacity_name %></h2>
             <% @plan.activity_map.capacity_benchmarks(capacity_id).each do |benchmark_id | %>
-            <!-- -->
+              <!-- -->
               <% activities = @plan.activity_map.benchmark_activities(benchmark_id) %>
               <%= render 'benchmark_activities', benchmark_id: benchmark_id,
                 activities: activities, benchmarks: @benchmarks %>
-            <!-- -->
+              <!-- -->
             <% end %>
           </div>
         <% end %>
