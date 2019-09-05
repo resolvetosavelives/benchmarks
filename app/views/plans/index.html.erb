@@ -15,6 +15,7 @@
   </div>
 
   <div class="row">
+    <% if @plans.length > 0 %>
       <table class="table table-fixed">
           <colgroup>
               <col width="364px" />
@@ -60,6 +61,11 @@
               <% end %>
           </tbody>
       </table>
+    <% else %>
+      <div class="col p-5 border text-center">
+        You haven't started any plans yet
+      </div>
+    <% end %>
   </div>
 
   <div class="row">
