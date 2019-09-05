@@ -6,10 +6,15 @@ export default class extends Controller {
   static targets = ["activityMap", "newActivity", "submit", "form"]
 
   connect() {
-    this.newActivityTargets.forEach(t => {
+    this.newActivityTargets.forEach((t, i) => {
       $(t).autocomplete({
         source: this.autocompletions(t.getAttribute("data-benchmark-id")),
-        open: () => $("ul.ui-menu").width($(t).innerWidth() + 5)
+        open: e => {
+          const menu = $("ul.ui-menu")[i]
+          $(menu).width($(t.closest(".activity-form")).innerWidth() + 7)
+          const { top, left } = $(menu).offset()
+          $(menu).offset({ top: top + 8, left: left - 23 })
+        }
       })
     })
     if (document.referrer.match("goals")) {
