@@ -13,4 +13,19 @@
       }
     }
   }
+
+  .form-control {
+    &.color-score-0,
+    &.color-score-1 {
+      border-color: color("red");
+    }
+    &.color-score-2,
+    &.color-score-3 {
+      border-color: color("yellow");
+    }
+    &.color-score-4,
+    &.color-score-5 {
+      border-color: color("green");
+    }
+  }
 }

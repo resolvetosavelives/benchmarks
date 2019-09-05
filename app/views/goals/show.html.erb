@@ -35,6 +35,7 @@
   </div>
   <%= form_for @goals, url: "/goals/",
     html: {novalidate: true,
+           autocomplete: "off",
            class: "needs-validation",
            data: { controller: "score",
                    action: "submit->score#submit",

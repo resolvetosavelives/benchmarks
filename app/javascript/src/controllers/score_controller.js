@@ -36,6 +36,13 @@ export default class extends Controller {
     } else {
       this.submitButtonTarget.removeAttribute("disabled")
     }
+
+    if (field.checkValidity()) {
+      field.classList.remove(
+        ...Array.from(field.classList).filter(c => c.match("color-score"))
+      )
+      field.classList.add(`color-score-${field.value}`)
+    }
   }
 
   submit(e) {
