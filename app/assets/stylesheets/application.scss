@@ -40,6 +40,7 @@ $theme-colors: $colors;
 @import "./scores";
 @import "./plan";
 @import "./country_select";
+@import "./privacy";
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
@@ -72,6 +73,10 @@ footer {
     font-family: Karla;
     font-size: 14px;
     line-height: 16px;
+  }
+
+  a {
+    color: color("white");
   }
 }
 
