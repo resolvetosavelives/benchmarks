@@ -1,9 +1,9 @@
 class BenchmarkId
-  attr_reader :capacity_id, :indicator_id
+  attr_reader :capacity, :indicator
 
-  def initialize(capacity_id, indicator_id)
-    @capacity_id = capacity_id
-    @indicator_id = indicator_id
+  def initialize(capacity, indicator)
+    @capacity = capacity
+    @indicator = indicator
   end
 
   def self.from_s(val)
@@ -14,18 +14,18 @@ class BenchmarkId
   end
 
   def to_s
-    "#{@capacity_id}.#{@indicator_id}"
+    "#{@capacity}.#{@indicator}"
   end
 
   def ==(other)
-    @capacity_id == other.capacity_id && @indicator_id == other.indicator_id
+    @capacity == other.capacity && @indicator == other.indicator
   end
 
   def <=>(other)
-    if @capacity_id == other.capacity_id
-      @indicator_id <=> other.indicator_id
+    if @capacity == other.capacity
+      @indicator <=> other.indicator
     else
-      @capacity_id <=> other.capacity_id
+      @capacity <=> other.capacity
     end
   end
 end

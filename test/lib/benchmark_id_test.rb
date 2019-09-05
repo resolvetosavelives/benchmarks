@@ -3,13 +3,13 @@ require 'test_helper'
 class BenchmarkIdTest < ActiveSupport::TestCase
   test 'verify that a benchmark id can be created from string' do
     id1 = BenchmarkId.from_s '1.15'
-    assert_equal 1, id1.capacity_id
-    assert_equal 15, id1.indicator_id
+    assert_equal 1, id1.capacity
+    assert_equal 15, id1.indicator
     assert_equal '1.15', id1.to_s
 
     id2 = BenchmarkId.from_s '10.01'
-    assert_equal 10, id2.capacity_id
-    assert_equal 1, id2.indicator_id
+    assert_equal 10, id2.capacity
+    assert_equal 1, id2.indicator
     assert_equal '10.1', id2.to_s
   end
 

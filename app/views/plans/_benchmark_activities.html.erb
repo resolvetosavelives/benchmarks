@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <%= content_tag :div, id: "activity_container_#{benchmark_id.parameterize}" do %>
+  <%= content_tag :div, id: "activity_container_#{benchmark_id.to_s.parameterize}" do %>
     <% activities.each do |activity| %>
       <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
     <% end %>

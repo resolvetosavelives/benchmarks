@@ -61,17 +61,27 @@ class PlanTest < ActiveSupport::TestCase
                  plan.activity_map.benchmarks
   end
 
-  test 'that I can get a list of indicators given a capacity' do
+  test 'that I can get a list of benchmark ids within a given capacity' do
     plan = demo_plan
-    assert_equal [(BenchmarkId.from_s '3.3')], (plan.activity_map.indicators 3)
+    assert_equal [(BenchmarkId.from_s '3.3')],
+                 (plan.activity_map.capacity_benchmarks 3)
     assert_equal [(BenchmarkId.from_s '2.1'), (BenchmarkId.from_s '2.2')],
-                 (plan.activity_map.indicators 2)
+                 (plan.activity_map.capacity_benchmarks 2)
+  end
+
+  test 'that I can get an indexed map of activities from a capacity id' do
+    plan = demo_plan
+    assert_equal %w[2.1 2.2], (plan.activity_map.capacity_activities 2).keys
   end
 
   test 'that I can get a list of capacities from a BenchmarkId' do
     plan = demo_plan
     assert_equal 3,
-                 (plan.activity_map.activities (BenchmarkId.from_s '2.1'))
+                 (
+                   plan.activity_map.benchmark_activities (
+                                                            BenchmarkId.from_s '2.1'
+                                                          )
+                 )
                    .length
   end
 end

@@ -11,6 +11,7 @@ class BenchmarksFixture
   end
 
   def capacity_text(capacity_id)
+    capacity_id = String(capacity_id)
     unless @fixture['benchmarks'][capacity_id]
       raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
     end
@@ -18,7 +19,9 @@ class BenchmarksFixture
   end
 
   def indicator_text(id)
-    capacity_id, indicator_id = id.split('.')
+    id_ = id.class == String ? (BenchmarkId.from_s id) : id
+    capacity_id = String(id_.capacity)
+    indicator_id = String(id_.indicator)
     unless @fixture['benchmarks'][capacity_id]
       raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
     end
@@ -29,7 +32,9 @@ class BenchmarksFixture
   end
 
   def objective_text(id)
-    capacity_id, indicator_id = id.split('.')
+    id_ = id.class == String ? (BenchmarkId.from_s id) : id
+    capacity_id = String(id_.capacity)
+    indicator_id = String(id_.indicator)
     unless @fixture['benchmarks'][capacity_id]
       raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
     end
@@ -40,7 +45,9 @@ class BenchmarksFixture
   end
 
   def goal_activities(id, score, goal)
-    capacity_id, indicator_id = id.split('.')
+    id_ = id.class == String ? (BenchmarkId.from_s id) : id
+    capacity_id = String(id_.capacity)
+    indicator_id = String(id_.indicator)
     unless @fixture['benchmarks'][capacity_id]
       raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
     end
@@ -71,7 +78,9 @@ class BenchmarksFixture
   end
 
   def level_activities(id, level)
-    capacity_id, indicator_id = id.split('.')
+    id_ = id.class == String ? (BenchmarkId.from_s id) : id
+    capacity_id = String(id_.capacity)
+    indicator_id = String(id_.indicator)
     unless @fixture['benchmarks'][capacity_id]
       raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
     end
@@ -91,7 +100,9 @@ class BenchmarksFixture
   end
 
   def activity_texts(id)
-    capacity_id, indicator_id = id.split('.')
+    id_ = id.class == String ? (BenchmarkId.from_s id) : id
+    capacity_id = String(id_.capacity)
+    indicator_id = String(id_.indicator)
     @fixture.dig(
       'benchmarks',
       capacity_id,

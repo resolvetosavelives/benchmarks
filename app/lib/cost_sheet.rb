@@ -27,11 +27,7 @@ class CostSheet
       populate_contents benchmarks,
                         worksheet,
                         idx,
-                        (
-                          @plan.activity_map.filter { |k, _|
-                            k.starts_with? "#{capacity[:id]}."
-                          }
-                        )
+                        (@plan.activity_map.capacity_activities capacity[:id])
     end
   end
 end
