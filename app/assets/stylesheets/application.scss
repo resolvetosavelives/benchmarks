@@ -129,6 +129,13 @@ td {
   border-radius: 10px;
 }
 
+.btn {
+  &:not(.multiselect) {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
 .navbar {
   min-height: 110px;
   padding: 27px 35px 27px 35px;
@@ -302,4 +309,16 @@ input[type="number"] {
 
   -moz-appearance: textfield;
   text-align: center;
+}
+
+#country-select-menu {
+  #country {
+    height: 64px;
+  }
+  .input-group-append {
+    button {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+  }
 }
