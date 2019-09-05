@@ -225,19 +225,6 @@ td {
   padding-right: 0.75rem;
 }
 
-.activity {
-  .delete {
-    display: none;
-  }
-
-  &:hover {
-    background: color("light");
-    .delete {
-      display: inherit;
-    }
-  }
-}
-
 .benchmark-container {
   .header {
     .delete {
@@ -256,8 +243,22 @@ td {
     }
   }
 
+  .row {
+    border: 1px solid color("light-gray");
+  }
+  .activity {
+    .delete {
+      display: none;
+    }
+
+    &:hover {
+      border: 1px solid color("primary");
+      .delete {
+        display: inherit;
+      }
+    }
+  }
   .activity-form {
-    border: 1px solid #dee2e6;
     padding: 0.5rem;
     padding-left: 0;
     border-left: 8px solid rgba(216, 100, 34, 0.5);
