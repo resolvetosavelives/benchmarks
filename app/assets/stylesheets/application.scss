@@ -255,6 +255,16 @@ td {
       }
     }
   }
+
+  .activity-form {
+    border: 1px solid #dee2e6;
+    padding: 0.5rem;
+    padding-left: 0;
+    border-left: 8px solid rgba(216, 100, 34, 0.5);
+    input {
+      border: none;
+    }
+  }
 }
 
 .capacity-container {
