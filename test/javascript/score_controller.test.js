@@ -1,5 +1,8 @@
 import { Application, Controller } from "stimulus"
 import ScoreController from "score_controller"
+import $ from "jquery"
+jest.mock("jquery")
+$.mockImplementation(() => ({ tooltip: jest.fn() }))
 
 const changeValue = (element, value, eventType) => {
   const event = new Event(eventType)

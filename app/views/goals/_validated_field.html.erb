@@ -1,7 +1,11 @@
 <div class="form-group">
-  <%= f.number_field field_name, data: { action: "change->score#validate", goal: field_name.match?("goal")  }, class: "form-control w-70px color-score-#{@goals.send(field_name)}", required: true %>
-  <div class="invalid-feedback">
-    Must be a valid capacity score
-  </div>
+  <%= f.number_field field_name, 
+    data: { action: "change->score#validate", 
+            goal: field_name.match?("goal"),
+            toggle: "tooltip",
+            placement: "top",
+          }, 
+    class: "form-control w-70px color-score-#{@goals.send(field_name)}", 
+    required: true %>
 </div>
 

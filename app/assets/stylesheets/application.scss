@@ -213,11 +213,15 @@ td {
   margin-right: calc(50% - 50vw);
 }
 
-.was-validated .form-control:invalid,
 .was-validated .form-control:valid,
-.form-control.is-invalid,
 .form-control.is-valid {
-  background: none;
+  background: white;
+  padding-right: 0.75rem;
+}
+
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  background: rgba(233, 57, 57, 0.1);
   padding-right: 0.75rem;
 }
 

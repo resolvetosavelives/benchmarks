@@ -1,9 +1,17 @@
 import { Controller } from "stimulus"
+import $ from "jquery"
 
 const SCORES = [0, 1, 2, 3, 4, 5]
 
 export default class extends Controller {
   static targets = ["form", "submitButton"]
+
+  connect() {
+    $('[data-toggle="tooltip"]').tooltip({
+      trigger: "manual",
+      container: "#new_goal_form"
+    })
+  }
 
   validate(e) {
     const { currentTarget: field } = e
@@ -13,19 +21,30 @@ export default class extends Controller {
 
     if (field.value.length === 0) {
       field.setCustomValidity("invalid")
+      field.setAttribute("data-original-title", "The value cannot be empty")
     } else if (!SCORES.includes(Number(field.value))) {
       field.setCustomValidity("invalid")
-    }
-
-    if (isGoal) {
+      field.setAttribute(
+        "data-original-title",
+        "The value must be within range"
+      )
+    } else if (isGoal) {
       const score_field = document.getElementById(field.id.replace("_goal", ""))
       if (Number(score_field.value) > Number(field.value)) {
         field.setCustomValidity("invalid")
+        field.setAttribute(
+          "data-original-title",
+          "The goal must be higher than the capacity score"
+        )
       }
     } else {
       const goal_field = document.getElementById(field.id + "_goal")
       if (Number(goal_field.value) < Number(field.value)) {
         field.setCustomValidity("invalid")
+        field.setAttribute(
+          "data-original-title",
+          "The capacity score must be lower than the goal"
+        )
       }
     }
 
@@ -42,6 +61,9 @@ export default class extends Controller {
         ...Array.from(field.classList).filter(c => c.match("color-score"))
       )
       field.classList.add(`color-score-${field.value}`)
+      $(field).tooltip("hide")
+    } else {
+      $(field).tooltip("show")
     }
   }
 

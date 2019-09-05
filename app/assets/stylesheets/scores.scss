@@ -15,6 +15,7 @@
   }
 
   .form-control {
+    background: white;
     &.color-score-0,
     &.color-score-1 {
       border-color: color("red");
@@ -27,5 +28,14 @@
     &.color-score-5 {
       border-color: color("green");
     }
+  }
+}
+
+#new_goal_form {
+  .tooltip-inner {
+    background: color("red");
+  }
+  .arrow::before {
+    border-top-color: color("red");
   }
 }
