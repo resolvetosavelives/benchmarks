@@ -284,6 +284,15 @@ td {
   border-radius: 10px;
 }
 
+.plan-entry {
+  a {
+    color: color("black");
+    &:hover {
+      color: color("primary");
+    }
+  }
+}
+
 input[type="number"] {
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
