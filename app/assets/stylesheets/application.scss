@@ -38,6 +38,8 @@ $theme-colors: $colors;
 @import "./multiselect";
 @import "./devise";
 @import "./scores";
+@import "./plan";
+@import "./country_select";
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
@@ -232,72 +234,8 @@ td {
   padding-right: 0.75rem;
 }
 
-.benchmark-container {
-  .header {
-    .delete {
-      font-size: 15px;
-      text-align: right;
-    }
-    .confirm-delete,
-    .delete {
-      display: none;
-    }
-    &:hover {
-      .confirm-delete,
-      .delete {
-        display: inherit;
-      }
-    }
-  }
-
-  .row {
-    border: 1px solid color("light-gray");
-    margin: 0;
-  }
-  .activity {
-    .delete {
-      display: none;
-    }
-
-    &:hover {
-      border: 1px solid color("primary");
-      .delete {
-        display: inherit;
-      }
-    }
-  }
-  .activity-form {
-    padding: 0.5rem;
-    padding-left: 0;
-    border-left: 8px solid rgba(216, 100, 34, 0.5);
-    input {
-      border: none;
-    }
-  }
-}
-
-.capacity-container {
-  h2 {
-    font-family: Karla;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 24px;
-    text-transform: uppercase;
-  }
-}
-
 .custom-select {
   border-radius: 10px;
-}
-
-.plan-entry {
-  a {
-    color: color("black");
-    &:hover {
-      color: color("primary");
-    }
-  }
 }
 
 input[type="number"] {
@@ -309,16 +247,4 @@ input[type="number"] {
 
   -moz-appearance: textfield;
   text-align: center;
-}
-
-#country-select-menu {
-  #country {
-    height: 64px;
-  }
-  .input-group-append {
-    button {
-      padding-left: 50px;
-      padding-right: 50px;
-    }
-  }
 }
