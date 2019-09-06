@@ -33,7 +33,7 @@
 
         <%= form_tag '/country_select', id: "assessment-select-menu" do %>
           <%= hidden_field_tag "country", nil, data: { target: "assessment-selection.selectedCountryName" } %>
-          <div class="input-group">
+          <div class="input-group mb-4">
             <%= select_tag "country",
               options_from_collection_for_select(@countries, 'name', 'name'),
               class: "custom-select",
