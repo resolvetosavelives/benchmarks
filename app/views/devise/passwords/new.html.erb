@@ -2,9 +2,6 @@
   <div class="col">
     <h1>Forgot Password</h1>
   </div>
-  <div class="col d-flex justify-content-end">
-    <%= link_to "Log In", new_session_path(resource_name) %>
-  </div>
 </div>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
@@ -13,13 +10,13 @@
       <span>Enter your email address and we'll send you a link to reset your password</span>
     </div>
   </div>
-  <div class="row pt-3">
+  <div class="row pt-4">
     <div class="form-group col">
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email" %>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row pt-4">
     <div class="col">
       <%= f.submit "SUBMIT", class: "w-100 btn btn-orange" %>
     </div>

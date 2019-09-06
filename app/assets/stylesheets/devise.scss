@@ -22,6 +22,10 @@
   }
 
   .form-container {
-    width: 708px;
+    border-radius: 10px;
+    width: 464px;
+    input {
+      height: 60px;
+    }
   }
 }
