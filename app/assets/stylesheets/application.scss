@@ -140,6 +140,7 @@ td {
   &:not(.multiselect) {
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    height: 60px;
   }
 }
 
@@ -251,6 +252,7 @@ td {
 
 .custom-select {
   border-radius: 10px;
+  height: 60px;
 }
 
 input[type="number"] {
