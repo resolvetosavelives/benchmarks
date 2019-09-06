@@ -26,18 +26,19 @@ class Worksheet
 
       idx = 0
 
-      (@plan.activity_map.filter { |k, _| k.starts_with? "#{capacity[:id]}." })
-        .keys
-        .each do |indicator_id|
-        @plan.activity_map[indicator_id].each do |activity|
+      (@plan.activity_map.capacity_benchmarks capacity[:id])
+        .each do |benchmark_id|
+        (@plan.activity_map.benchmark_activities benchmark_id)
+          .each do |activity|
+          goal = @plan.goals ? @plan.goals[benchmark_id.to_s] : {}
           idx =
             populate_worksheet worksheet,
                                idx,
                                assessment_structures[@plan.assessment_type][
                                  'label'
                                ],
-                               @plan.goals ? @plan.goals[indicator_id] : {},
-                               (benchmarks.objective_text indicator_id),
+                               goal,
+                               (benchmarks.objective_text benchmark_id),
                                activity
         end
       end

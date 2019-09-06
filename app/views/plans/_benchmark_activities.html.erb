@@ -1,7 +1,7 @@
 <div data-controller="benchmark" data-target="benchmark.self" class="benchmark-container pb-3">
   <div class="row bg-light-gray p-1 header">
     <div class="col-11">
-      <b>Benchmark <%= benchmark_id %>:</b> <%=
+      <b>Benchmark <%= benchmark_id.to_s %>:</b> <%=
       benchmarks.indicator_text(benchmark_id) %>
     </div>
     <div class="col-1 d-flex justify-content-end" data-action="mouseleave->benchmark#reset">
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <%= content_tag :div, id: "activity_container_#{benchmark_id.parameterize}" do %>
+  <%= content_tag :div, id: "activity_container_#{benchmark_id.to_s.parameterize}" do %>
     <% activities.each do |activity| %>
       <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
     <% end %>
