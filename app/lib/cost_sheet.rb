@@ -33,16 +33,17 @@ class CostSheet
 end
 
 def populate_contents(benchmarks, worksheet, idx, indicators)
-  indicators.keys.sort.each do |indicator_key|
-    activities = indicators.fetch(indicator_key)
+  indicators.keys.sort.each do |key|
+    benchmark_id = BenchmarkId.from_s key
+    activities = indicators.fetch(benchmark_id.to_s)
 
     if activities.length > 0
       SpreadsheetCell.new worksheet,
                           idx,
                           0,
                           text:
-                            "#{indicator_key}: #{
-                              benchmarks.indicator_text indicator_key
+                            "#{benchmark_id.to_s}: #{
+                              benchmarks.indicator_text benchmark_id
                             }"
 
       worksheet.merge_cells idx, 0, idx + activities.length - 1, 0
@@ -50,7 +51,7 @@ def populate_contents(benchmarks, worksheet, idx, indicators)
       SpreadsheetCell.new worksheet,
                           idx,
                           1,
-                          text: "#{benchmarks.objective_text indicator_key}"
+                          text: "#{benchmarks.objective_text benchmark_id}"
 
       worksheet.merge_cells idx, 1, idx + activities.length - 1, 1
     end

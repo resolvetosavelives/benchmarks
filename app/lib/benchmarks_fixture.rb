@@ -11,48 +11,53 @@ class BenchmarksFixture
   end
 
   def capacity_text(capacity_id)
-    capacity_id = String(capacity_id)
-    unless @fixture['benchmarks'][capacity_id]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+    capacity_id_str = String(capacity_id)
+    unless @fixture['benchmarks'][capacity_id_str]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id_str}")
     end
-    @fixture['benchmarks'][capacity_id]['name']
+    @fixture['benchmarks'][capacity_id_str]['name']
   end
 
-  def indicator_text(id)
-    id_ = id.class == String ? (BenchmarkId.from_s id) : id
-    capacity_id = String(id_.capacity)
-    indicator_id = String(id_.indicator)
-    unless @fixture['benchmarks'][capacity_id]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+  def indicator_text(benchmark_id)
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
     end
-    unless @fixture['benchmarks'][capacity_id]['indicators'][indicator_id]
-      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+           benchmark_id.indicator_s
+         ]
+      raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
     end
-    @fixture['benchmarks'][capacity_id]['indicators'][indicator_id]['indicator']
+    @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+      benchmark_id.indicator_s
+    ][
+      'indicator'
+    ]
   end
 
-  def objective_text(id)
-    id_ = id.class == String ? (BenchmarkId.from_s id) : id
-    capacity_id = String(id_.capacity)
-    indicator_id = String(id_.indicator)
-    unless @fixture['benchmarks'][capacity_id]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+  def objective_text(benchmark_id)
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
     end
-    unless @fixture['benchmarks'][capacity_id]['indicators'][indicator_id]
-      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+           benchmark_id.indicator_s
+         ]
+      raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
     end
-    @fixture['benchmarks'][capacity_id]['indicators'][indicator_id]['objective']
+    @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+      benchmark_id.indicator_s
+    ][
+      'objective'
+    ]
   end
 
-  def goal_activities(id, score, goal)
-    id_ = id.class == String ? (BenchmarkId.from_s id) : id
-    capacity_id = String(id_.capacity)
-    indicator_id = String(id_.indicator)
-    unless @fixture['benchmarks'][capacity_id]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+  def goal_activities(benchmark_id, score, goal)
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
     end
-    unless @fixture['benchmarks'][capacity_id]['indicators'][indicator_id]
-      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+           benchmark_id.indicator_s
+         ]
+      raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
     end
 
     unless goal.value.between?(2, 5)
@@ -65,8 +70,10 @@ class BenchmarksFixture
 
     return(
       (score.value + 1..goal.value).reduce([]) do |acc, level|
-        acc.concat @fixture['benchmarks'][capacity_id]['indicators'][
-                     indicator_id
+        acc.concat @fixture['benchmarks'][benchmark_id.capacity_s][
+                     'indicators'
+                   ][
+                     benchmark_id.indicator_s
                    ][
                      'activities'
                    ][
@@ -77,21 +84,22 @@ class BenchmarksFixture
     )
   end
 
-  def level_activities(id, level)
-    id_ = id.class == String ? (BenchmarkId.from_s id) : id
-    capacity_id = String(id_.capacity)
-    indicator_id = String(id_.indicator)
-    unless @fixture['benchmarks'][capacity_id]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id}")
+  def level_activities(benchmark_id, level)
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
     end
-    unless @fixture['benchmarks'][capacity_id]['indicators'][indicator_id]
-      raise (ArgumentError.new "Invalid indicator: #{indicator_id}")
+    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+           benchmark_id.indicator_s
+         ]
+      raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
     end
     unless level.value.between?(2, 5)
       raise RangeError.new 'level is not between 2 and 5'
     end
     return(
-      @fixture['benchmarks'][capacity_id]['indicators'][indicator_id][
+      @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+        benchmark_id.indicator_s
+      ][
         'activities'
       ][
         level.value.to_s
@@ -99,15 +107,12 @@ class BenchmarksFixture
     )
   end
 
-  def activity_texts(id)
-    id_ = id.class == String ? (BenchmarkId.from_s id) : id
-    capacity_id = String(id_.capacity)
-    indicator_id = String(id_.indicator)
+  def activity_texts(benchmark_id)
     @fixture.dig(
       'benchmarks',
-      capacity_id,
+      benchmark_id.capacity_s,
       'indicators',
-      indicator_id,
+      benchmark_id.indicator_s,
       'activities'
     )
       .values
