@@ -26,16 +26,15 @@
 
       <div class="modal-body mx-4">
         <p>
-          Our plans are comprised of activities based off of the gap between
-          the capacity score and step up score.
+          This tool will help you create Draft 0.1 of your NAPHS plan by utilizing your country assessment data (JEE or SPAR) and suggested actions from the Benchmarks.
         </p>
-
         <p>
-          You can create a plan from the Joint External Evaluation (JEE) or
-          State Party Self-Assessment Annual Reporting (SPAR) scores.
+          When you finish, you’ll have a draft plan that can act as a jumping off point for further refinement, leading to accelerated progress for implementation and stepping up.
         </p>
-
-        <p><b>Where would you like to start?</b></p>
+        <p>
+          The plans are comprised of actions based on the gap between the existing assessment score and your goal score.
+        </p>
+        <p><strong>Choose the most recent and accurate assessment.</strong></p>
 
         <%= form_tag '/country_select', id: "assessment-select-menu" do %>
           <%= hidden_field_tag "country",
