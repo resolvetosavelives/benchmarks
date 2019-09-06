@@ -1,3 +1,4 @@
+# Pair together a score and a goal.
 class ScoreGoal
   attr_accessor :score, :goal
 

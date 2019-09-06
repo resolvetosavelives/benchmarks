@@ -1,3 +1,4 @@
+# Generates a costing tool spreadsheet from a plan
 class CostSheet
   attr_reader :workbook
   def initialize(plan)

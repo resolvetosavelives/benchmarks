@@ -1,3 +1,4 @@
+# Generates a draft plan spreadsheet from a plan
 class Worksheet
   attr_reader :workbook
 
