@@ -186,8 +186,18 @@ td {
     padding-top: 100px;
   }
 
-  .landing-heading {
-    font-size: 64px;
+  h1 {
+    font-size: 54px;
+    line-height: 64px;
+  }
+
+  h2 {
+    font-family: Karla;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    text-transform: uppercase;
   }
 }
 
