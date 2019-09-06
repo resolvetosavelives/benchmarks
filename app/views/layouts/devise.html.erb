@@ -11,8 +11,8 @@
 
   <body>
     <div class="container-fluid h-100 <%= controller_name == "registrations" ? "bg-dark-blue" : "bg-blue" %> devise">
-      <div class="row h-100 align-items-center justify-content-center">
-        <div class="col-6">
+      <div class="d-flex h-100 justify-content-center">
+        <div>
           <% if notice %>
             <div class="alert alert-primary">
               <%= notice %>
