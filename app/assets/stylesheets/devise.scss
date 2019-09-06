@@ -1,6 +1,7 @@
 .devise {
   font-size: 17px;
   line-height: 20px;
+  overflow-y: auto;
 
   h1 {
     font-family: Pathway Gothic One;
@@ -21,6 +22,10 @@
   }
 
   .form-container {
-    width: 708px;
+    border-radius: 10px;
+    width: 464px;
+    input {
+      height: 60px;
+    }
   }
 }
