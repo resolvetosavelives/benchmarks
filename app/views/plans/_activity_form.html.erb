@@ -1,5 +1,5 @@
 <div class="row activity-form">
   <div class="col">
-    <%= text_field_tag :new_activity, nil, class: "w-100", placeholder: "+ Add Activity", data: { target: "plan.newActivity", action: "keypress->plan#addNewActivity", "benchmark-id": benchmark_id, "activities": activities.to_json } %>
+    <%= text_field_tag :new_activity, nil, class: "w-100", placeholder: "+ Add Activity", data: { target: "plan.newActivity", action: "keypress->plan#addNewActivity", "benchmark-id": benchmark_id.to_s, "activities": activities.to_json } %>
   </div>
 </div>
