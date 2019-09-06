@@ -49,11 +49,7 @@
           <%= @assessments[@goals.assessment_type]["label"] %> Scores
         </h1>
 
-        <p>
-          The scores are pre-populated from our JEE database. The goal is
-          pre-populated by one step up. You can manually change the score or goal
-          to your liking.
-        </p>
+        <%= render "instructions" %>
       </div>
       <div class="col-lg-6 col-md-12 d-flex justify-content-end">
         <%= image_tag("scores-widget.svg") %>

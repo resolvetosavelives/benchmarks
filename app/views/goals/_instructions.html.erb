@@ -1,0 +1,13 @@
+<p>
+  <span>
+    <% if @goals.assessment_type.match("jee") %>
+      The Joint External Evaluation (JEE) scores are pre-populated from WHO published <%= link_to "reports", "https://www.who.int/ihr/procedures/mission-reports/en/", target: "_blank" %>.
+    <% else %>
+      The SPAR scores are pre-populated from WHO published <%= link_to "data", "https://extranet.who.int/e-spar", target: "_blank" %>.
+    <% end %>
+  </span>
+  The goals are pre-populated by one step up. 
+  We suggest one step up for strong short term planning, however, you can change the goal based on the priorities and resources of your country. 
+</p>
+  
+<p>*You can change the score if it is outdated, as measured by a formal assessment process.</p>
