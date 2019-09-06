@@ -12,12 +12,12 @@ class AppsTest < ApplicationSystemTestCase
     visit root_url
     select 'Armenia', from: 'country'
     find('button').trigger(:click)
-    assert page.has_content?("Let's get started on Armenia")
+    assert page.has_content?("LET'S GET STARTED ON ARMENIA")
     select 'SPAR 2018', from: 'assessment_type'
     find('#assessment-select-menu button').trigger(:click)
     assert_current_path(%r{goals\/Armenia\/spar_2018})
 
-    assert page.has_content?('SPAR 2018 Scores')
+    assert page.has_content?('SPAR 2018 SCORES')
     assert page.has_content?(
              'Financing mechanism and funds for timely response to public health emergencies'
            )

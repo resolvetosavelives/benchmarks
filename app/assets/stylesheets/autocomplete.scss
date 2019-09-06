@@ -9,6 +9,7 @@ ul.ui-autocomplete {
     .ui-state-active,
     &:hover {
       background: #2c8dc9;
+      color: color("white");
     }
 
     .ui-menu-item-wrapper {

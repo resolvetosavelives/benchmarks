@@ -5,8 +5,8 @@
     <div class="row m-4">
       <div class="col">
         <% @plan.activity_map.group_by { |b_id, activities| @benchmarks.capacity_text(b_id.split('.')[0]) }.each_with_index do |(capacity_name, activity_map), i| %>
-          <div class="capacity-container">
-            <h1 id="<%= capacity_name.parameterize %>"><%= i + 1 %>. <%= capacity_name %></h1>
+          <div class="capacity-container pb-4">
+            <h2 id="<%= capacity_name.parameterize %>"><%= i + 1 %>. <%= capacity_name %></h2>
             <% activity_map.each do |benchmark_id, activities| %>
             <!-- -->
               <%= render 'benchmark_activities', benchmark_id: benchmark_id,

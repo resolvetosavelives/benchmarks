@@ -15,6 +15,7 @@
   </div>
 
   <div class="row">
+    <% if @plans.length > 0 %>
       <table class="table table-fixed">
           <colgroup>
               <col width="364px" />
@@ -44,7 +45,6 @@
                                               image_name: "ico-download.svg",
                                               text: "Download XLS"),
                                       costsheet_path(plan.id),
-                                      class: "text-dark",
                                       data: { turbolinks: false } %>
                       </td>
                       <td class="py-4 text-secondary">
@@ -52,7 +52,6 @@
                                               image_name: "ico-print.svg",
                                               text: "Print"),
                                       worksheet_path(plan.id),
-                                      class: "text-dark",
                                       data: { turbolinks: false } %>
                       </td>
                       <td class="py-4 text-secondary">
@@ -62,6 +61,11 @@
               <% end %>
           </tbody>
       </table>
+    <% else %>
+      <div class="col p-5 border text-center">
+        You haven't started any plans yet
+      </div>
+    <% end %>
   </div>
 
   <div class="row">

@@ -1,0 +1,63 @@
+.benchmark-container {
+  .header {
+    .delete {
+      font-size: 15px;
+      text-align: right;
+    }
+    .confirm-delete,
+    .delete {
+      display: none;
+    }
+    &:hover {
+      .confirm-delete,
+      .delete {
+        display: inherit;
+      }
+    }
+  }
+
+  .row {
+    border: 1px solid color("light-gray");
+    margin: 0;
+  }
+  .activity {
+    .delete {
+      display: none;
+    }
+
+    &:hover {
+      border: 1px solid color("primary");
+      .delete {
+        display: inherit;
+      }
+    }
+  }
+  .activity-form {
+    padding: 0.5rem;
+    padding-left: 0;
+    border-left: 8px solid rgba(216, 100, 34, 0.5);
+    input {
+      border: none;
+    }
+  }
+}
+
+.capacity-container {
+  h2 {
+    font-family: Karla;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+}
+
+.plan-entry {
+  a {
+    color: color("black");
+    &:hover {
+      color: color("primary");
+    }
+  }
+}

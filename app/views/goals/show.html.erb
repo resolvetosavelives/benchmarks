@@ -35,6 +35,7 @@
   </div>
   <%= form_for @goals, url: "/goals/",
     html: {novalidate: true,
+           autocomplete: "off",
            class: "needs-validation",
            data: { controller: "score",
                    action: "submit->score#submit",
@@ -61,7 +62,7 @@
 
     <div class="row">
       <div class="col">
-        <table class="table table-fixed border-bottom w-100">
+        <table class="table table-fixed table-scores border-bottom w-100">
           <colgroup>
             <col width="220px" />
             <col />

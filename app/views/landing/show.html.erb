@@ -19,7 +19,7 @@
           practices in the reference library, or browse the benchmarks.
         </p>
 
-        <%= form_tag '/country_select', id: "country-select-menu" do %>
+        <%= form_tag '/country_select', id: "landing-country-select-menu" do %>
           <div class="input-group">
             <%= select_tag "country",
               options_from_collection_for_select(@countries, 'name', 'name'),

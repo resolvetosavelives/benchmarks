@@ -37,6 +37,9 @@ $theme-colors: $colors;
 @import "./autocomplete";
 @import "./multiselect";
 @import "./devise";
+@import "./scores";
+@import "./plan";
+@import "./country_select";
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
@@ -123,6 +126,18 @@ td {
   line-height: 24px;
 }
 
+.btn,
+.form-control {
+  border-radius: 10px;
+}
+
+.btn {
+  &:not(.multiselect) {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+}
+
 .navbar {
   min-height: 110px;
   padding: 27px 35px 27px 35px;
@@ -173,10 +188,12 @@ td {
 
 .display-header {
   font-family: Pathway Gothic One;
+  text-transform: uppercase;
 }
 
 .alt-header {
   font-family: Pathway Gothic One;
+  text-transform: uppercase;
   input {
     font-size: 40px;
   }
@@ -205,42 +222,29 @@ td {
   margin-right: calc(50% - 50vw);
 }
 
-.was-validated .form-control:invalid,
 .was-validated .form-control:valid,
-.form-control.is-invalid,
 .form-control.is-valid {
-  background: none;
+  background: white;
   padding-right: 0.75rem;
 }
 
-.activity {
-  .delete {
-    display: none;
-  }
-
-  &:hover {
-    background: color("light");
-    .delete {
-      display: inherit;
-    }
-  }
+.was-validated .form-control:invalid,
+.form-control.is-invalid {
+  background: rgba(233, 57, 57, 0.1);
+  padding-right: 0.75rem;
 }
 
-.benchmark-container {
-  .header {
-    .delete {
-      font-size: 15px;
-      text-align: right;
-    }
-    .confirm-delete,
-    .delete {
-      display: none;
-    }
-    &:hover {
-      .confirm-delete,
-      .delete {
-        display: inherit;
-      }
-    }
+.custom-select {
+  border-radius: 10px;
+}
+
+input[type="number"] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
+
+  -moz-appearance: textfield;
+  text-align: center;
 }
