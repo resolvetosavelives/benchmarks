@@ -29,4 +29,8 @@ class ActivityMap
   def benchmark_activities(benchmark_id)
     @m[benchmark_id.to_s]
   end
+
+  def to_json
+    @m.to_json
+  end
 end
