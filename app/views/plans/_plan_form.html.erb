@@ -31,7 +31,7 @@
        <div class="col-9">
          <div class="row">
            <div class="col-5 pl-0">
-             <%= form_with model: @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |f| %>
+             <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |f| %>
                <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
                  target: "plan.activityMap"}, autocomplete: "off" %>
                <div class="form-group alt-header">
