@@ -1,6 +1,6 @@
 <% if @goals %>
 <div data-controller="assessment-selection">
-  <div class="row bg-light-gray p-4 full-width stick-to-top">
+  <div class="row bg-dark-blue p-4 full-width stick-to-top text-white">
     <div class="col-5 offset-1">
       <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data: { target: "assessment-selection.selectables" } %>
       <%= form_tag '/country_select' do %>
