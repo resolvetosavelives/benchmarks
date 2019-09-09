@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import $ from "jquery"
 
 import renderActivity from "../renderActivity"
 
