@@ -42,10 +42,6 @@ export default class extends Controller {
     this.validateActivityMap()
   }
 
-  showNewActivity() {
-    this.newActivityTarget.classList.remove("d-none")
-  }
-
   addNewActivity(e) {
     const { currentTarget } = e
     const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
