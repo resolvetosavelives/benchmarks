@@ -47,6 +47,20 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
+  test "plan/show.html.erb wires up plan controller correctly" do
+    plan = Plan.create(name: 'a plan', activity_map: {"1.1" => [{"text": "Activity 1"}, {"text": "Activity 2"}]})
+    user = User.new(email: 'test@example.com')
+    user.plans << plan
+    sign_in user
+    get plan_path(plan.id)
+    assert_select '.plan-container[data-controller="plan"]', 1
+    assert_select 'form[data-target="plan.form"]', 1
+    assert_select 'input[data-target="plan.name"][data-action="change->plan#validateName"]', 1
+    assert_select 'input[data-target="plan.activityMap"]', 1
+    assert_select 'input[data-target="plan.newActivity"][data-action="keypress->plan#addNewActivity"][data-benchmark-id="1.1"]', 1
+    assert_select 'button[data-action="plan#deleteActivity"][data-benchmark-id="1.1"]', 2
+  end
+
   test 'logged in user can update their plan' do
     plan = Plan.create(name: 'a draft plan', activity_map: {})
     user = User.new(email: 'test@example.com')
