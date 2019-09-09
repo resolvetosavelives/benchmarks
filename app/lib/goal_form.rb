@@ -19,7 +19,7 @@ class GoalForm
   end
 
   def self.create_draft_plan!(params, crosswalk, benchmarks, current_user = nil)
-    benchmark_goals =
+    score_goals =
       params.keys.reduce({}) do |benchmark_acc, key|
         unless key.start_with?('jee1_') || key.start_with?('jee2_') ||
                key.start_with?('spar_')
@@ -46,7 +46,7 @@ class GoalForm
       end
 
     benchmark_activities =
-      benchmark_goals.each.reduce({}) do |acc, (key, pairing)|
+      score_goals.each.reduce({}) do |acc, (key, pairing)|
         benchmark_id = BenchmarkId.from_s(key)
         pairing.score = Score.new 1 if pairing.score.value == 0
         acc[key] =
@@ -55,16 +55,24 @@ class GoalForm
       end
 
     goals =
-      benchmark_goals.each.reduce({}) do |acc, (key, pairing)|
+      score_goals.each.reduce({}) do |acc, (key, pairing)|
         acc[key] = pairing.goal
         acc
       end
+
+    scores =
+      score_goals.each.reduce({}) do |acc, (key, pairing)|
+        acc[key] = pairing.score
+        acc
+      end
+
 
     Plan.create! name: "#{params.fetch(:country)} draft plan",
                  country: params.fetch(:country),
                  assessment_type: params.fetch(:assessment_type),
                  activity_map: benchmark_activities,
                  user_id: current_user && current_user.id,
-                 goals: goals
+                 goals: goals,
+                 scores: scores
   end
 end
