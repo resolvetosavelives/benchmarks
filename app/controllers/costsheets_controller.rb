@@ -1,5 +1,7 @@
 require 'rubyXL/convenience_methods'
 
+# This controller generates the costing spreadsheet. There is nothing
+# particularly interesting about it.
 class CostsheetsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_ownership

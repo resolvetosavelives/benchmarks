@@ -1,3 +1,14 @@
+# Handle the plans model and the worksheet.
+#
+# Plans are typically created from the GoalsController, but are displayed,
+# edited, deleted, etc. from here. This is unusual for a REST app, but plans
+# are not really created from a plan sheet itself, but from the concept of a
+# set of Goals.
+#
+# Otherwise, updates, deletes, and shows work as expected.
+#
+# The Index operation (GET /plans/) displays the list of plans owned by the
+# user, which is a different template.
 class PlansController < ApplicationController
   before_action :authenticate_user!, only: %i[index]
   before_action :check_ownership, except: %i[index]

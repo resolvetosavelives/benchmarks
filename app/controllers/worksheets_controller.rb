@@ -1,5 +1,7 @@
 require 'rubyXL/convenience_methods'
 
+# This controller generates the printable worksheet. There is nothing
+# particularly interesting about it.
 class WorksheetsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_ownership
