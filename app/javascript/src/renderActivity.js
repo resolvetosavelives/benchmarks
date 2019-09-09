@@ -1,3 +1,8 @@
+/* Helper Javascript function to render an activity.
+ *
+ * There is nothing unusual here, just a lot of boilerplate code for building
+ * HTML elements with neither template nor framework.
+ */
 const createElement = (name, classNames, attributes = {}) => {
   const element = document.createElement(name)
 
