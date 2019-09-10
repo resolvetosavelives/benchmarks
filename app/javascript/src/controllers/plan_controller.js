@@ -27,9 +27,9 @@ export default class extends Controller {
                 this._renderItemData(ul, item)
             )
             ul.append(
-              "<li class='ui-autocomplete-category'>" +
-                "-- Suggested Activities From Benchmarks --" +
-                "</li>"
+              `<li class='ui-autocomplete-category'>
+                 -- Suggested Activities From Benchmarks --
+               </li>`
             )
             items.forEach(
               item =>
