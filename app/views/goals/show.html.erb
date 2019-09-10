@@ -52,7 +52,7 @@
         <%= render "instructions" %>
       </div>
       <div class="col-lg-6 col-md-12 d-flex justify-content-end">
-        <%= image_tag("scores-widget.svg") %>
+        <%= image_tag("scores-widget.svg", class: "w-100 scores-widget") %>
       </div>
     </div>
 
@@ -64,7 +64,7 @@
         <%= button_tag "Get to Green!",
           type: "button",
           class: "btn text-white bg-green",
-          data: { action: "click->score#getToGreen" } =%>
+          data: { action: "click->score#getToGreen" } %>
       </div>
     </div>
 
