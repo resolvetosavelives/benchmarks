@@ -47,12 +47,22 @@
 
 .capacity-container {
   h2 {
+    left: 0px;
+    top: 0px;
     font-family: Karla;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
     line-height: 24px;
     text-transform: uppercase;
+
+    /* http://darktef.github.io/posts/2017-03-offset-html-anchors-for-fixed-header-with-css */
+    &::before {
+      content:"";
+      display:block;
+      margin-top:-155px;
+      height:155px;
+    }
   }
 }
 
