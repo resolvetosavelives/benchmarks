@@ -2,7 +2,9 @@ import { Application, Controller } from "stimulus"
 import PlanController from "plan_controller"
 import $ from "jquery"
 jest.mock("jquery")
-$.mockImplementation(() => ({ autocomplete: jest.fn() }))
+$.mockImplementation(() => ({
+  autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() })
+}))
 
 import { changeValue, keypress } from "./utilities"
 

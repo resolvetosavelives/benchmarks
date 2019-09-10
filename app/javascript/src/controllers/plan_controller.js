@@ -15,8 +15,40 @@ export default class extends Controller {
           $(menu).width($(t.closest(".activity-form")).innerWidth() + 7)
           const { top, left } = $(menu).offset()
           $(menu).offset({ top: top + 8, left: left - 23 })
+        },
+        create: function() {
+          // AFAIK, this is the only supported way to customize the content of
+          // the jQuery autocomplete widget
+          // Reference: https://jqueryui.com/autocomplete/#categories
+          $(this).data("ui-autocomplete")._renderMenu = function(ul, items) {
+            const inRangeActivities = JSON.parse(
+              t.getAttribute("data-in-range-activities")
+            ).map(a => a.text)
+            items.forEach(
+              item =>
+                inRangeActivities.includes(item.value) &&
+                this._renderItemData(ul, item)
+            )
+            ul.append(
+              `<li class='ui-autocomplete-category'>
+                 -- Suggested Activities From Benchmarks --
+               </li>`
+            )
+            items.forEach(
+              item =>
+                !inRangeActivities.includes(item.value) &&
+                this._renderItemData(ul, item)
+            )
+          }
         }
       })
+      // This ensures that the separator item introduced above is not
+      // considered as an "item" of the menu. This blocks the user from
+      // selecting the seprator item as a valid option.
+      // Reference: https://api.jqueryui.com/menu/#option-items
+      $(t)
+        .autocomplete("widget")
+        .menu("option", "items", "> :not(.ui-autocomplete-category)")
     })
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
@@ -42,10 +74,6 @@ export default class extends Controller {
     this.validateActivityMap()
   }
 
-  showNewActivity() {
-    this.newActivityTarget.classList.remove("d-none")
-  }
-
   addNewActivity(e) {
     const { currentTarget } = e
     const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
@@ -68,7 +96,7 @@ export default class extends Controller {
   }
 
   autocompletions(benchmarkId) {
-    return this.activities(benchmarkId).filter(
+    return this.allActivities(benchmarkId).filter(
       a => this.currentActivities(benchmarkId).includes(a) === false
     )
   }
@@ -77,7 +105,7 @@ export default class extends Controller {
     return this.activityMap[benchmarkId].map(a => a.text)
   }
 
-  activities(benchmarkId) {
+  allActivities(benchmarkId) {
     return JSON.parse(
       this.newActivity(benchmarkId).getAttribute("data-activities")
     )
