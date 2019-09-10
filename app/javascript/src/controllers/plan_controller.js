@@ -17,6 +17,9 @@ export default class extends Controller {
           $(menu).offset({ top: top + 8, left: left - 23 })
         },
         create: function() {
+          // AFAIK, this is the only supported way to customize the content of
+          // the jQuery autocomplete widget
+          // Reference: https://jqueryui.com/autocomplete/#categories
           $(this).data("ui-autocomplete")._renderMenu = function(ul, items) {
             const inRangeActivities = JSON.parse(
               t.getAttribute("data-in-range-activities")
@@ -39,6 +42,10 @@ export default class extends Controller {
           }
         }
       })
+      // This ensures that the separator item introduced above is not
+      // considered as an "item" of the menu. This blocks the user from
+      // selecting the seprator item as a valid option.
+      // Reference: https://api.jqueryui.com/menu/#option-items
       $(t)
         .autocomplete("widget")
         .menu("option", "items", "> :not(.ui-autocomplete-category)")
