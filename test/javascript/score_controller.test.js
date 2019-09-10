@@ -83,4 +83,43 @@ describe("ScoreController", () => {
       expect(submitButton.disabled).toEqual(false)
     })
   })
+
+  describe("#go-to-green", () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+      <div data-controller="score">
+        <button type="button" data-action="click->score#getToGreen" id="gtg" />
+        <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
+        <input id="score1" type="number" data-action="change->score#validate" value="1" class="color-score-1" />
+        <input id="score1_goal" type="number" data-goal="true" data-action="change->score#validate" data-goal="true" value="2" class="color-score-2" />
+        <input id="score2" type="number" data-action="change->score#validate" value="1" class="color-score-1" />
+        <input id="score2_goal" type="number" data-goal="true" data-action="change->score#validate" data-goal="true" value="2" class="color-score-2" />
+        <input id="score3" type="number" data-action="change->score#validate" value="4" class="color-score-4" />
+        <input id="score3_goal" type="number" data-goal="true" data-action="change->score#validate" data-goal="true" value="5" class="color-score-5" />
+        <input id="submit" type="submit" data-target="score.submitButton" />
+      </div>
+      `
+      const application = Application.start()
+      application.register("score", ScoreController)
+    })
+
+    it("sets the value to 4 and sets the correct color", () => {
+      const gtgButton = document.getElementById("gtg")
+      gtgButton.click()
+
+      expect(document.getElementById("score1").value).toEqual("1")
+      expect(document.getElementById("score1_goal").value).toEqual("4")
+      expect(document.getElementById("score1_goal").className).toEqual(
+        "color-score-4"
+      )
+      expect(document.getElementById("score2_goal").value).toEqual("4")
+      expect(document.getElementById("score2_goal").className).toEqual(
+        "color-score-4"
+      )
+      expect(document.getElementById("score3_goal").value).toEqual("5")
+      expect(document.getElementById("score3_goal").className).toEqual(
+        "color-score-5"
+      )
+    })
+  })
 })

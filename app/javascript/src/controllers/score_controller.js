@@ -92,14 +92,25 @@ export default class extends Controller {
     }
 
     if (field.checkValidity()) {
-      field.classList.remove(
-        ...Array.from(field.classList).filter(c => c.match("color-score"))
-      )
-      field.classList.add(`color-score-${field.value}`)
+      this.setFieldColor(field)
       $(field).tooltip("hide")
     } else {
       $(field).tooltip("show")
     }
+  }
+
+  getToGreen(e) {
+    document.querySelectorAll("[data-goal=true]").forEach(field => {
+      if (field.value < 4) field.value = 4
+      this.setFieldColor(field)
+    })
+  }
+
+  setFieldColor(field) {
+    field.classList.remove(
+      ...Array.from(field.classList).filter(c => c.match("color-score"))
+    )
+    field.classList.add(`color-score-${field.value}`)
   }
 
   /* Do a final check on the validity of the form. Prevent the submission
