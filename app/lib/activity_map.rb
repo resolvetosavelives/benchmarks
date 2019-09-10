@@ -13,7 +13,7 @@ class ActivityMap
   # Return a list of Technical Capacity ids for those benchmarks that are
   # present in the draft plan.
   def capacities
-    benchmarks.map(&:capacity)
+    benchmarks.map(&:capacity).uniq
   end
 
   # Return a list of BenchmarkIds corresponding to the specified Technical
@@ -37,7 +37,7 @@ class ActivityMap
 
   # Return a list of all activities in the specified BenchmarkId.
   def benchmark_activities(benchmark_id)
-    @m[benchmark_id.to_s]
+    @m[benchmark_id.to_s] ? @m[benchmark_id.to_s] : []
   end
 
   def to_json

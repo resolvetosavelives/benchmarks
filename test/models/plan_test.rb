@@ -51,6 +51,11 @@ def demo_plan
 end
 
 class PlanTest < ActiveSupport::TestCase
+  test 'that I get a sorted list of capacities' do
+    plan = demo_plan
+    assert_equal [2, 3], plan.activity_map.capacities
+  end
+
   test 'that I can get a sorted list of benchmark ids in the plan' do
     plan = demo_plan
     assert_equal [
