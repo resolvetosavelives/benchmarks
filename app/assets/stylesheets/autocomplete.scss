@@ -19,7 +19,11 @@ ul.ui-autocomplete {
 
     &.ui-autocomplete-category {
       padding-left: 12px;
+      font-family: Karla;
+      font-style: italic;
       font-weight: bold;
+      font-size: 17px;
+      line-height: 24px;
       text-transform: uppercase;
     }
   }
