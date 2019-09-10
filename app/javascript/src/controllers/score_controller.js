@@ -8,12 +8,15 @@ const SCORES = [0, 1, 2, 3, 4, 5]
  * are set to allowed values, and verifies that the score never exceeds the
  * goal.
  *
- * A goals page can be of arbitrary length and has an arbitrary set of fields
- * involved, so we cannot use the normal Stimulus targets as much as we
- * normally would. Instead, the validation functions search the DOM to find the
- * pair of the element that has just been edited.  Technically, we could
- * perhaps avoid this by keeping a dictionary of the scores and goals as an
- * instance field of this class.
+ * We used DOM searches instead of stimulus targets to jump between scores and
+ * goals. There's no inherent reason we can't use stimulus targets instead. In
+ * the context of a validation event, we care about the event's target (score
+ * or goal input) and its corresponding pair input. Since the controller spans
+ * the entire form, it was simpler to find the pair directly with
+ * currentTarget's id and getElementById than traverse a list of goal or score
+ * targets. Another reasonable strategy would be to instantiate one controller
+ * per pair, and have scoreTarget and goalTarget, but this would require us to
+ * re-do the input fields interaction with the submit button.
  *
  * Targets:
  *   submitButton -- the button to submit the form. This controller will enable
