@@ -10,10 +10,10 @@ const SCORES = [0, 1, 2, 3, 4, 5]
  *
  * A goals page can be of arbitrary length and has an arbitrary set of fields
  * involved, so we cannot use the normal Stimulus targets as much as we
- * normally would. Instead, the validation functions do a lot of traversing the
- * DOM to find the relevant elements. Technically, we could perhaps avoid this
- * by keeping a dictionary of the scores and goals as an instance field of this
- * class.
+ * normally would. Instead, the validation functions search the DOM to find the
+ * pair of the element that has just been edited.  Technically, we could
+ * perhaps avoid this by keeping a dictionary of the scores and goals as an
+ * instance field of this class.
  *
  * Targets:
  *   submitButton -- the button to submit the form. This controller will enable
@@ -41,8 +41,9 @@ export default class extends Controller {
    * For a field to be valid, it must contain one of the allowed values, 0 - 5
    * (integers). Additionally, the score field but not exceed the goal field.
    *
-   * This function makes very heavy use of field IDs to map between the current
-   * target and its corresponding goal or score.
+   * This function is able to find the field paired to the one being edited
+   * through the naming scheme in which a goal field is named after its
+   * corresponding score field, with the term "_goal" appended.
    */
   validate(e) {
     const { currentTarget: field } = e

@@ -1,9 +1,9 @@
 import "bootstrap-multiselect"
 import { Controller } from "stimulus"
 
-/* This controller handles filtering the draft plan. While it is currently used
- * only for activity types, it is general enough to be used for other things,
- * too.
+/* This controller handles filtering the draft plan. It is fairly general and
+ * is used to filter the capacity areas in the goals page and the activity
+ * types in the draft plan page.
  *
  * Parameters:
  *   placeholder -- a placeholder option in the dropdown.

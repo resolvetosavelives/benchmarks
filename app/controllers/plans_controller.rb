@@ -8,7 +8,13 @@
 # Otherwise, updates, deletes, and shows work as expected.
 #
 # The Index operation (GET /plans/) displays the list of plans owned by the
-# user, which is a different template.
+# user, and populates dropdown menus for starting a new plan.
+#
+# An unauthenticated user may get to this stage. This user is still allowed to
+# edit the draft plan they have created, and the plan will be associated with
+# their browser session. They'll be prompted to log in when they try to save
+# the draft plan. After login (even if an account creation is involved), the
+# draft plan will be attached to their account.
 class PlansController < ApplicationController
   before_action :authenticate_user!, only: %i[index]
   before_action :check_ownership, except: %i[index]

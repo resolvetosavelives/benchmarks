@@ -3,7 +3,10 @@ import { Controller } from "stimulus"
 /* Controller that handles deleting an entire benchmark. This covers only the workflow of pressing and then confirming the delete button on a benchmark given how much data can be deleted at once.
  *
  * Targets:
- *   self -- ???
+ *   self -- this is the benchmark container itself. It is hidden when a
+ *   benchmark is deleted. Also, if during the delete process it is determined
+ *   that there are no visible siblings, the parent container (containing the
+ *   capacity area title) is also hidden.
  *
  *   confirm -- this target is for the initially visible delete button. When
  *   clicked, this button will be hidden and the "Really Delete" button will be

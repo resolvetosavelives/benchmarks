@@ -17,8 +17,6 @@ class GoalForm
     @country = args.fetch(:country)
     @assessment_type = args.fetch(:assessment_type)
 
-    puts "GoalForm scores: #{args.fetch(:scores)}"
-
     scores = args.fetch(:scores)
     self.class.attr_accessor(*(scores.keys))
     self.class.attr_accessor(*(scores.keys.map { |k| "#{k}_goal" }))

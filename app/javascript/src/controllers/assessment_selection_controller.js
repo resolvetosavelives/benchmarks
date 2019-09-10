@@ -1,5 +1,4 @@
 import { Controller } from "stimulus"
-w
 /* This controller handles all of the modal dialogue boxes involved with
  * assessment selection. The functions here support two different workflows
  * (and an envolving understanding of Stimulus).
