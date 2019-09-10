@@ -6,14 +6,21 @@ ul.ui-autocomplete {
   padding-left: 0;
 
   li {
+    padding-bottom: 5px;
     .ui-state-active,
-    &:hover {
+    &:not(.ui-autocomplete-category):hover {
       background: #2c8dc9;
       color: color("white");
     }
 
     .ui-menu-item-wrapper {
       padding-left: 12px;
+    }
+
+    &.ui-autocomplete-category {
+      padding-left: 12px;
+      font-weight: bold;
+      text-transform: uppercase;
     }
   }
 }
