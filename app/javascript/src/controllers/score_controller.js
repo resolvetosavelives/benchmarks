@@ -107,7 +107,6 @@ export default class extends Controller {
   }
 
   setFieldColor(field) {
-    let score = field.value
     field.classList.remove(
       ...Array.from(field.classList).filter(c => c.match("color-score"))
     )

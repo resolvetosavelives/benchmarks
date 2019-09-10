@@ -105,8 +105,7 @@ describe("ScoreController", () => {
 
     it("sets the value to 4 and sets the correct color", () => {
       const gtgButton = document.getElementById("gtg")
-      gtgButton.dispatchEvent(new Event("click"))
-      console.log("after event dispatching")
+      gtgButton.click()
 
       expect(document.getElementById("score1").value).toEqual("1")
       expect(document.getElementById("score1_goal").value).toEqual("4")
