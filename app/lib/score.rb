@@ -1,3 +1,4 @@
+# Representation of a Score, enforcing range values.
 class Score
   def initialize(val)
     @value = val

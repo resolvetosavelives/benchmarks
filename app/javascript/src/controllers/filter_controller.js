@@ -1,6 +1,28 @@
 import "bootstrap-multiselect"
 import { Controller } from "stimulus"
 
+/* This controller handles filtering the draft plan. It is fairly general and
+ * is used to filter the capacity areas in the goals page and the activity
+ * types in the draft plan page.
+ *
+ * Parameters:
+ *   placeholder -- a placeholder option in the dropdown.
+ *
+ *   class-prefix -- this designates a prefix for class names that are used to
+ *   tag elements that this controller may hide or delete. Setting this value
+ *   to "type-code" will make the controller process every element that has the
+ *   class "type-code-<some text>" in it. For instance,
+ *   type-code-monitoring-and-evaluation, type-code-training, and so forth.
+ *
+ * Targets:
+ *   select -- this is the selection dropdown, and is how the user selects
+ *   which types should be visible.
+ *
+ * The visible filtering process is done through normal DOM manipulations.
+ * Every element that has a class with the prefix "type-code-" will be subject
+ * to being hidden or made visible depending on which type codes have been
+ * enabled.
+ */
 export default class extends Controller {
   static targets = ["select"]
 

@@ -1,3 +1,6 @@
+# This is a convenience structure that makes it easier to create a
+# SpreadsheetCell in a declarative way.
+
 require 'rubyXL/convenience_methods'
 
 class SpreadsheetCell
