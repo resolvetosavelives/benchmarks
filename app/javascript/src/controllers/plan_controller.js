@@ -10,6 +10,7 @@ export default class extends Controller {
     this.newActivityTargets.forEach((t, i) => {
       $(t).autocomplete({
         source: this.autocompletions(t.getAttribute("data-benchmark-id")),
+        minLength: 0,
         open: e => {
           const menu = $("ul.ui-menu")[i]
           $(menu).width($(t.closest(".activity-form")).innerWidth() + 7)
