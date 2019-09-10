@@ -31,7 +31,8 @@
     <% end %>
   <% end %>
 
-  <% goal = Score.new(@plan.goals[benchmark_id.to_s]["value"]) %>
-  <% score = Score.new(@plan.scores[benchmark_id.to_s]["value"]) %>
-  <%= render "activity_form", benchmark_id: benchmark_id, in_range_activities: benchmarks.goal_activities(benchmark_id, score, goal), activities: benchmarks.activity_texts(benchmark_id) %>
+  <% goal = @plan.goals ? Score.new(@plan.goals[benchmark_id.to_s]["value"]) : nil %>
+  <% score = @plan.scores ? Score.new(@plan.scores[benchmark_id.to_s]["value"]) : nil %>
+  <% in_range_activities = (goal && score) ? benchmarks.goal_activities(benchmark_id, score, goal) : [] %>
+  <%= render "activity_form", benchmark_id: benchmark_id, in_range_activities: in_range_activities, activities: benchmarks.activity_texts(benchmark_id) %>
 </div>
