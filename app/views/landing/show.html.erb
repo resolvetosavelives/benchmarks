@@ -1,7 +1,7 @@
 <div data-controller="assessment-selection">
   <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
   { target: "assessment-selection.selectables" } %>
-  <div class="landing container">
+  <div class="landing">
     <div class="row mb-5">
       <div class="col left-panel">
         <h1 class="my-4">Step up to preparedness</h1>
@@ -38,7 +38,7 @@
         <% end %>
       </div>
 
-      <div class="col"></div>
+      <div class="col right-panel m-auto"><%= render "hero_image" %></div>
     </div>
   </div>
   <%= render "shared/assessment_selection_modal" %>

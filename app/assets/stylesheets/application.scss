@@ -184,8 +184,13 @@ td {
 }
 
 .landing {
-  .left-panel {
-    padding-top: 100px;
+  .left-panel,
+  .right-panel {
+    padding-top: 20px;
+  }
+
+  .right-panel {
+    max-width: 574px;
   }
 
   h1 {
