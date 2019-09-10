@@ -25,14 +25,22 @@
     </div>
   </div>
 
+  <% goal = @plan.goals ? Score.new(@plan.goals[benchmark_id.to_s]["value"]) : nil %>
+  <% score = @plan.scores ? Score.new(@plan.scores[benchmark_id.to_s]["value"]) : nil %>
+
   <%= content_tag :div, id: "activity_container_#{benchmark_id.to_s.parameterize}" do %>
+    <% if (goal == score) && activities.length.zero? %>
+      <div class="row p-3 no-activities">
+        <div class="col font-italic">
+          There is no capacity gap for activities. You should review the Benchmarks document to ensure you have completed the tasks up to this level.
+        </div>
+      </div>
+    <% end %>
     <% activities.each do |activity| %>
       <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
     <% end %>
   <% end %>
 
-  <% goal = @plan.goals ? Score.new(@plan.goals[benchmark_id.to_s]["value"]) : nil %>
-  <% score = @plan.scores ? Score.new(@plan.scores[benchmark_id.to_s]["value"]) : nil %>
   <% in_range_activities = (goal && score) ? benchmarks.goal_activities(benchmark_id, score, goal) : [] %>
   <%= render "activity_form", benchmark_id: benchmark_id, in_range_activities: in_range_activities, activities: benchmarks.activity_texts(benchmark_id) %>
 </div>
