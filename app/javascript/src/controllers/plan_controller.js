@@ -93,6 +93,13 @@ export default class extends Controller {
       e.target.value = ""
       e.preventDefault()
       this.validateActivityMap()
+
+      const noActivitiesNudge = currentTarget
+        .closest(".benchmark-container")
+        .querySelector(".no-activities")
+      if (noActivitiesNudge) {
+        noActivitiesNudge.hidden = true
+      }
     }
   }
 
