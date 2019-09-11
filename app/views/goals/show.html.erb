@@ -9,8 +9,10 @@
         <%= select_tag "country",
           options_from_collection_for_select(@countries, 'name', 'name', @country),
           class: "custom-select",
-          data: { target: "assessment-selection.selectedCountry",
-                  action: "change->assessment-selection#selectCountryAndOpen" },
+          data: { target: "assessment-selection.countrySelect",
+                  action: "change -> assessment-selection#selectCountry
+                           change->assessment-selection#next",
+                  next: "assessment-selection-modal" },
           autocomplete: "off" %>
       </div>
       <% end %>
