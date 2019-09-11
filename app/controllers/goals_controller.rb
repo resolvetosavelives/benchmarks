@@ -16,23 +16,22 @@ class GoalsController < ApplicationController
   def show
     @country = params[:country]
     assessment_type = params[:assessment_type]
+    capacities = params[:capacities]
 
     assessment =
       Assessment.find_by(country: @country, assessment_type: assessment_type)
 
-    if assessment
-      scores = assessment.scores
+    @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
+    @assessments = JSON.load File.open './app/fixtures/assessments.json'
 
+    if assessment
       scores =
-        scores.reduce({}) do |acc, score|
+        assessment.scores.reduce({}) do |acc, score|
           key = "#{assessment_type}_ind_#{score['indicator_id']}"
           acc[key] = Score.new score['score']
           acc
         end
 
-      @data_dictionary =
-        JSON.load File.open './app/fixtures/data_dictionary.json'
-      @assessments = JSON.load File.open './app/fixtures/assessments.json'
 
       @goals =
         GoalForm.new country: @country,
@@ -40,10 +39,27 @@ class GoalsController < ApplicationController
                      scores: scores
 
       @countries, @selectables = helpers.set_country_selection_options
+      @technical_area_ids = @assessments[@goals.assessment_type]['technical_area_order']
+      @technical_areas =
+        @technical_area_ids
+          .map { |indicator_id| [@data_dictionary[indicator_id], indicator_id] }
+    elsif capacities
+      @technical_area_ids = @data_dictionary.select { |k, v| v.in?(capacities) && k.match("spar") }.keys
+      indicator_ids = @technical_area_ids.flat_map do |technical_area_id|
+        @assessments["spar_2018"]["technical_areas"][technical_area_id]["indicators"]
+      end
+      scores = indicator_ids.reduce({}) do |acc, indicator_id|
+        acc[indicator_id] = Score.new(1)
+        acc
+      end
+
+      @goals = GoalForm.new country: @country, assessment_type: "spar_2018", scores: scores
+      @countries, @selectables = helpers.set_country_selection_options
       @technical_areas =
         @assessments[@goals.assessment_type]['technical_area_order']
           .map { |indicator_id| [@data_dictionary[indicator_id], indicator_id] }
     end
+
   end
 
   def create
