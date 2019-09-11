@@ -6,7 +6,7 @@ class CountrySelectController < ApplicationController
   def create
     country_name = params.fetch(:country)
     assessment_type = params.fetch(:assessment_type)
-    capacities = params[:capacities]
+    capacity_ids = params[:capacity_ids]
 
     redirect_to(
       {
@@ -14,7 +14,7 @@ class CountrySelectController < ApplicationController
         action: 'show',
         country: country_name,
         assessment_type: assessment_type,
-        capacities: capacities
+        capacity_ids: capacity_ids
       }
     )
   end
