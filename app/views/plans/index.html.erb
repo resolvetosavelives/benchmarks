@@ -1,9 +1,9 @@
 <div data-controller="assessment-selection">
   <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
   { target: "assessment-selection.selectables" } %>
-  <div class="row">
+  <div class="row plan-index-header">
       <div class="col pl-0 py-4">
-          <h1 class="alt-header">WELCOME</h1>
+          <h1>WELCOME</h1>
       </div>
       <div class="col-2 pl-0 py-4">
         <%= button_tag "CREATE PLAN",
