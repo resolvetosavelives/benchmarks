@@ -16,7 +16,7 @@ class GoalsController < ApplicationController
   def show
     @country = params[:country]
     assessment_type = params[:assessment_type]
-    capacities = params[:capacities]
+    capacity_ids = params[:capacity_ids]
 
     assessment =
       Assessment.find_by(country: @country, assessment_type: assessment_type)
@@ -43,8 +43,8 @@ class GoalsController < ApplicationController
       @technical_areas =
         @technical_area_ids
           .map { |indicator_id| [@data_dictionary[indicator_id], indicator_id] }
-    elsif capacities
-      @technical_area_ids = @data_dictionary.select { |k, v| v.in?(capacities) && k.match("spar") }.keys
+    elsif capacity_ids
+      @technical_area_ids = capacity_ids
       indicator_ids = @technical_area_ids.flat_map do |technical_area_id|
         @assessments["spar_2018"]["technical_areas"][technical_area_id]["indicators"]
       end
