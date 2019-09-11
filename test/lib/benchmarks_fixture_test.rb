@@ -1,6 +1,39 @@
 require 'test_helper'
 
 class BenchmarksFixtureTest < ActiveSupport::TestCase
+  test 'retrieves a complete list of capacities' do
+    benchmarks = BenchmarksFixture.new
+
+    assert_equal [
+                   1,
+                   2,
+                   3,
+                   4,
+                   5,
+                   6,
+                   7,
+                   8,
+                   9,
+                   10,
+                   11,
+                   12,
+                   13,
+                   14,
+                   15,
+                   16,
+                   17,
+                   18
+                 ],
+                 (benchmarks.capacities.map { |v| v[:id] })
+  end
+
+  test 'retrieves all of the benchmarks within a capacity' do
+    benchmarks = BenchmarksFixture.new
+
+    assert_equal %w[7.1 7.2 7.3 7.4],
+                 ((benchmarks.capacity_benchmarks 7).map { |v| v[:id].to_s })
+  end
+
   test 'reports activities for the requested level' do
     benchmarks = BenchmarksFixture.new
 

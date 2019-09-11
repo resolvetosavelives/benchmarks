@@ -12,7 +12,7 @@ class BenchmarksFixture
   # Get a sorted list of all of the capacity ids.
   def capacities
     @fixture['benchmarks'].keys.map(&:to_i).sort.map do |k|
-      ({ id: k.to_s, name: @fixture['benchmarks'][k.to_s]['name'] })
+      ({ id: k, name: @fixture['benchmarks'][k.to_s]['name'] })
     end
   end
 
@@ -25,6 +25,22 @@ class BenchmarksFixture
       raise (ArgumentError.new "Invalid capacity: #{capacity_id_str}")
     end
     @fixture['benchmarks'][capacity_id_str]['name']
+  end
+
+  def capacity_benchmarks(capacity_id)
+    capacity_id_str = String(capacity_id)
+    unless @fixture['benchmarks'][capacity_id_str]
+      raise (ArgumentError.new "Invalid capacity: #{capacity_id_str}")
+    end
+    indicators = @fixture['benchmarks'][capacity_id_str]['indicators']
+    indicators.keys.map(&:to_i).sort.map do |k|
+      k_str = String(k)
+      {
+        id: (BenchmarkId.new capacity_id, k),
+        indicator: indicators[k_str]['indicator'],
+        objective: indicators[k_str]['objective']
+      }
+    end
   end
 
   # Get the indicator text for a benchmark. The parameter must be a
