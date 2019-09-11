@@ -1,75 +1,68 @@
 <div data-controller="assessment-selection">
   <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
-  { target: "assessment-selection.selectables" } %>
+    { target: "assessment-selection.selectables" } %>
   <div class="row plan-index-header">
-      <div class="col pl-0 py-4">
-          <h1>WELCOME</h1>
-      </div>
-      <div class="col-2 pl-0 py-4">
-        <%= button_tag "CREATE PLAN",
-          type: :button,
-          class: "btn btn-primary w-100",
-          data: { action: 'assessment-selection#openModal' }
-        %>
-      </div>
+    <div class="col pl-0 py-4">
+      <h1>WELCOME</h1>
+    </div>
+    <div class="col-2 pl-0 py-4">
+      <%= button_tag "CREATE PLAN",
+        type: :button,
+        class: "btn btn-primary w-100",
+        data: { action: 'assessment-selection#openModal' }
+      %>
+    </div>
   </div>
 
   <div class="row">
     <% if @plans.length > 0 %>
       <table class="table table-fixed">
-          <colgroup>
-              <col width="364px" />
-              <col />
-              <col width="180px" />
-              <col width="100px" />
-              <col width="130px" />
-          </colgroup>
+        <colgroup>
+          <col width="364px" />
+          <col />
+          <col width="180px" />
+          <col width="100px" />
+          <col width="130px" />
+        </colgroup>
 
-          <thead>
-              <tr>
-                  <th class="pl-0"> Saved Plans </th>
-                  <th> Last Revised </th>
-                  <th> </th>
-                  <th> </th>
-                  <th> </th>
-              </tr>
-          </thead>
+        <thead>
+          <tr>
+            <th class="pl-0"> Saved Plans </th>
+            <th> Last Revised </th>
+            <th> </th>
+            <th> </th>
+            <th> </th>
+          </tr>
+        </thead>
 
-          <tbody>
-              <% @plans.each do |plan| %>
-                  <tr class="plan-entry">
-                      <td class="py-4"> <%= link_to plan.name, plan %></a> </td>
-                      <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
-                      <td class="py-4 text-secondary">
-                          <%= link_to (render 'shared/icon',
-                                              image_name: "ico-download.svg",
-                                              text: "Download XLS"),
-                                      costsheet_path(plan.id),
-                                      data: { turbolinks: false } %>
-                      </td>
-                      <td class="py-4 text-secondary">
-                          <%= link_to (render 'shared/icon',
-                                              image_name: "ico-print.svg",
-                                              text: "Print"),
-                                      worksheet_path(plan.id),
-                                      data: { turbolinks: false } %>
-                      </td>
-                      <td class="py-4 text-secondary">
-                        <%= link_to "Delete", plan_path(plan.id), method: :delete %>
-                      </td>
-                  </tr>
-              <% end %>
-          </tbody>
+        <tbody>
+          <% @plans.each do |plan| %>
+            <tr class="plan-entry">
+              <td class="py-4"> <%= link_to plan.name, plan %></a> </td>
+              <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
+              <td class="py-4 text-secondary">
+                <%= link_to (render 'shared/icon',
+                             image_name: "ico-download.svg",
+                             text: "Download XLS"),
+                             costsheet_path(plan.id),
+                             data: { turbolinks: false } %>
+              </td>
+              <td class="py-4 text-secondary">
+                <%= link_to (render 'shared/icon',
+                             image_name: "ico-print.svg",
+                             text: "Print"),
+                             worksheet_path(plan.id),
+                             data: { turbolinks: false } %>
+              </td>
+              <td class="py-4 text-secondary">
+                <%= link_to "Delete", plan_path(plan.id), method: :delete %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
-    <% else %>
-      <div class="col p-5 border text-center">
-        You haven't started any plans yet
-      </div>
-    <% end %>
-  </div>
-
-  <div class="row">
-      <div class="col pl-0 py-4">
+      <div class="row">
+        <div class="col pl-0 py-4">
           <h1 class="tips-header">You have your Draft 0.1 NAPHS plan. Now what?</h1>
           <div class="row bg-light-gray border border-gray p-4 mb-3">
             <div class="col-1 pr-0"><%= image_tag "pad.svg" %> </div>
@@ -83,8 +76,15 @@
             <div class="col-1 pr-0"><%= image_tag "book.svg" %></div>
             <div class="col-11 pl-0"><span>Ready to implement? Check out our Resource Library that has global best practices and case studies to help you plan and implement activities successfully.</span></div>
           </div>
+        </div>
       </div>
+    <% else %>
+      <div class="col p-5 border text-center">
+        You haven't started any plans yet
+      </div>
+    <% end %>
   </div>
+
 
   <%= render "shared/joint_assessment_selection_modal" %>
 </div>
