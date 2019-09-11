@@ -156,7 +156,9 @@ export default class extends Controller {
   /* Get the text of all of the current activities for a benchmark in the
    * activity map. */
   currentActivities(benchmarkId) {
-    return this.activityMap[benchmarkId].map(a => a.text)
+    return this.activityMap[benchmarkId]
+      ? this.activityMap[benchmarkId].map(a => a.text)
+      : []
   }
 
   /* This provides the list of all possible activities in for a benchmark.
