@@ -33,7 +33,7 @@
               <li> <span data-target="checkbox-list.selectAllState" data-action="click->checkbox-list#selectAll"></span> Select All </li>
               <% @assessments["spar_2018"]["technical_area_order"].each do |capacity_id| %>
                 <li> <%= check_box_tag "capacities[]",
-                        @data_dictionary[capacity_id].parameterize,
+                        @data_dictionary[capacity_id],
                         true,
                         data: { target: "checkbox-list.listItem",
                                 action: "change->checkbox-list#selectListItem" } %>

@@ -89,7 +89,7 @@
           </thead>
 
           <tbody>
-            <% @assessments[@goals.assessment_type]['technical_area_order'].each do |technical_area_id| %>
+            <% @technical_area_ids.each do |technical_area_id| %>
               <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
               <tr class="technical-area-<%= technical_area_id %>">
                 <% indicator = technical_area['indicators'][0] %>
