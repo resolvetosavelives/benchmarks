@@ -71,23 +71,7 @@ export default class extends Controller {
       } else {
         this.formTarget.submit()
       }
-    } else if (currentModal === "capacity-selection-modal") {
-      this.formTarget.submit()
     }
-
-    /*
-    if (this.stateTarget.value == "") {
-      $("#assessment-selection-modal").modal("show")
-      this.stateTarget.value = "assessment-selection"
-    } else if (this.stateTarget.value == "assessment-selection") {
-      $("#assessment-selection-modal").modal("hide")
-      $("#capacity-selection-modal").modal("show")
-      this.stateTarget.value = "capacity-selection"
-    } else if (this.stateTarget.value == "capacity-selection") {
-      $("#capacity-selection-modal").modal("hide")
-      this.stateTarget.value = ""
-    }
-    */
   }
 
   /* Open whatever assessment selection modal is on the page */
@@ -151,7 +135,8 @@ export default class extends Controller {
 
     if (this.hasCountryNameLabelTarget)
       this.countryNameLabelTarget.textContent = countryName
-    if (this.hasCountryNameTarget) this.countryNameTarget.value = countryName
+    if (this.hasCountryNameTarget)
+      this.countryNameTargets.forEach(target => (target.value = countryName))
   }
 
   /* Call this function when a country is selected on one of the pages that

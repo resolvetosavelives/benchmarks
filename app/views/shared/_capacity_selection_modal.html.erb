@@ -20,26 +20,24 @@
       </div>
 
       <div class="modal-body mx-4">
-        <%= form_tag '/country_select', id: "assessment-select-menu",
+        <%= form_tag '/country_select', id: "capacity-select-menu",
             data: { action: "assessment-selection.form" } do %>
           <%= hidden_field_tag "country",
             nil,
-            data: { target: "assessment-selection.selectedCountryModal" }
+            data: { target: "assessment-selection.countryName" }
           %>
+          <%= hidden_field_tag "assessment_type", "from-capacities" %>
           <div class="input-group mb-2">
-            <%= select_tag "assessment_type",
-              options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
-              class: "custom-select",
-              data: { target: "assessment-selection.assessmentTypes",
-                      action: "assessment-selection#validateAndEnableNext" }
-            %>
+            <ul class="list-unstyled">
+              <% @assessments["spar_2018"]["technical_area_order"].each do |capacity_id| %>
+                <li> <%= check_box_tag "capacities[]", @data_dictionary[capacity_id].parameterize %>
+                     <%= label_tag @data_dictionary[capacity_id].parameterize, @data_dictionary[capacity_id] %> </li>
+              <% end %>
+            </ul>
           </div>
-          <%= button_tag "Next",
-              type: :button,
+          <%= submit_tag "Next",
               class: "btn btn-primary w-100",
-              disabled: true,
-              data: { target: "assessment-selection.submitForm",
-                      action: "assessment-selection#next" } %>
+              data: { target: "assessment-selection.submitForm" } %>
       <% end %>
       </div>
     </div>
