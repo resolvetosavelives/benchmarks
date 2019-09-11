@@ -34,12 +34,11 @@
 
 
         <%= form_tag '/country_select', id: "assessment-select-menu" do %>
-          <%= hidden_field_tag "country", nil, data: { target: "assessment-selection.selectedCountryName" } %>
           <div class="input-group mb-4">
             <%= select_tag "country",
               options_from_collection_for_select(@countries, 'name', 'name'),
               class: "custom-select",
-              data: { target: "assessment-selection.selectedCountry",
+              data: { target: "assessment-selection.countrySelect",
                       action: "assessment-selection#selectCountry
                                assessment-selection#validateAndEnableNext"
                     }
@@ -49,7 +48,7 @@
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",
-              data: { target: "assessment-selection.assessmentTypes",
+              data: { target: "assessment-selection.assessmentTypeSelect",
                       action: "assessment-selection#validateAndEnableNext" } %>
           </div>
           <%= button_tag "Next",
