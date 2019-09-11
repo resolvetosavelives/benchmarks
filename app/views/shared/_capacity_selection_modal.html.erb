@@ -20,6 +20,7 @@
       </div>
 
       <div class="modal-body mx-4">
+        <p> Select the capacity area(s) you'd like to focus on </p>
         <%= form_tag '/country_select', id: "capacity-select-menu",
             data: { action: "assessment-selection.form" } do %>
           <%= hidden_field_tag "country",
@@ -28,9 +29,14 @@
           %>
           <%= hidden_field_tag "assessment_type", "from-capacities" %>
           <div class="input-group mb-2">
-            <ul class="list-unstyled">
+            <ul class="list-unstyled" data-controller="checkbox-list">
+              <li> <span data-target="checkbox-list.selectAllState" data-action="click->checkbox-list#selectAll"></span> Select All </li>
               <% @assessments["spar_2018"]["technical_area_order"].each do |capacity_id| %>
-                <li> <%= check_box_tag "capacities[]", @data_dictionary[capacity_id].parameterize %>
+                <li> <%= check_box_tag "capacities[]",
+                        @data_dictionary[capacity_id].parameterize,
+                        true,
+                        data: { target: "checkbox-list.listItem",
+                                action: "change->checkbox-list#selectListItem" } %>
                      <%= label_tag @data_dictionary[capacity_id].parameterize, @data_dictionary[capacity_id] %> </li>
               <% end %>
             </ul>
