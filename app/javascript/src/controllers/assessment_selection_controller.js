@@ -12,15 +12,15 @@ import { Controller } from "stimulus"
  *   getStartedButton -- the green "Get Started" button that appears on the
  *   front page. The controller toggles the button's enabled/disabled status.
  *
- *   selectedCountryName -- this simply carries the country name, which is
- *   currently used to populate the country name in the dialogue copy.
- *
- *   selectedCountryModal -- this also carries the country name, solely for
+ *   selectedCountryText -- this also carries the country name, solely for
  *   populating the country name in the dialogue copy. This is potentially a
  *   duplicate and should be evaluated for removal.
  *
  *   submitForm -- this is the button that allows the entire form to be
  *   submitted. The controller toggles the button's enabled/disabled status.
+ *
+ *   countryName -- this simply carries the country name, which is
+ *   currently used to populate the country name in the dialogue copy.
  *
  * Targets that provide page data to the controller:
  *
@@ -29,7 +29,7 @@ import { Controller } from "stimulus"
  *   when it renders the page.
  *
  * Targets that can do both:
- *   selectedCountry -- allows the controller to change the current selected
+ *   countries -- allows the controller to change the current selected
  *   country option (which is currently used for the default value), but also
  *   allows the controller to read which country the user has selected on the
  *   page.
@@ -41,22 +41,41 @@ import { Controller } from "stimulus"
  */
 export default class extends Controller {
   static targets = [
-    "assessmentTypes",
+    "form",
+    "state",
+    "countrySelect",
+    "assessmentTypeSelect",
     "getStartedButton",
-    "selectedCountry",
+    "countryName",
+    "countryNameLabel",
     "selectables",
-    "selectedCountryName",
-    "selectedCountryModal",
     "submitForm"
   ]
 
   connect() {
-    this.selectedCountryTarget.value = Object.keys(this.selectables)[0]
+    this.countrySelectTarget.value = Object.keys(this.selectables)[0]
     this.selectCountry()
   }
 
+  next(e) {
+    const currentModal = e.currentTarget.getAttribute("data-current")
+    const nextModal = e.currentTarget.getAttribute("data-next")
+
+    if (currentModal === null) {
+      $(`#${nextModal}`).modal("show")
+    } else if (currentModal === "assessment-selection-modal") {
+      $(`#${currentModal}`).modal("hide")
+
+      if (this.assessmentTypeSelectTarget.value === "from-capacities") {
+        $(`#${nextModal}`).modal("show")
+      } else {
+        this.formTarget.submit()
+      }
+    }
+  }
+
   /* Open whatever assessment selection modal is on the page */
-  openModal(e) {
+  openAssessmentModal(e) {
     $("#assessment-selection-modal").modal()
   }
 
@@ -69,14 +88,15 @@ export default class extends Controller {
   /* Verify that the current country selection is valid. All selections are
    * valid except for the placeholder. */
   isCountryValid() {
-    return this.selectedCountryTarget.value !== "-- Select One --"
+    return this.countrySelectTarget.value !== "-- Select One --"
   }
 
   /* Verify that the assessment type is valid. Since the assessment type gets
    * auto-populated, the only possible invalid selection is the placeholder. */
   isAssessmentTypeValid() {
     return (
-      this.assessmentTypesTarget.selectedOptions[0].value !== "-- Select One --"
+      this.assessmentTypeSelectTarget.selectedOptions[0].value !==
+      "-- Select One --"
     )
   }
 
@@ -99,23 +119,24 @@ export default class extends Controller {
   /* Populate the assessment selection pulldown whenever a country gets
    * selected. */
   selectCountry(e) {
-    const countryName = this.selectedCountryTarget.value
+    const countryName = this.countrySelectTarget.value
     const assessmentTypes = [
       { type: "-- Select One --", text: "-- Select One --" }
-    ].concat(this.selectables[countryName])
-    while (this.assessmentTypesTarget.firstChild)
-      this.assessmentTypesTarget.removeChild(
-        this.assessmentTypesTarget.firstChild
+    ]
+      .concat(this.selectables[countryName])
+      .concat([{ type: "from-capacities", text: "New From SPAR Capacities" }])
+    while (this.assessmentTypeSelectTarget.firstChild)
+      this.assessmentTypeSelectTarget.removeChild(
+        this.assessmentTypeSelectTarget.firstChild
       )
     assessmentTypes.forEach(type =>
-      this.assessmentTypesTarget.add(new Option(type.text, type.type))
+      this.assessmentTypeSelectTarget.add(new Option(type.text, type.type))
     )
 
-    if (this.hasSelectedCountryNameTarget)
-      this.selectedCountryNameTarget.textContent = countryName
-
-    if (this.hasSelectedCountryModalTarget)
-      this.selectedCountryModalTarget.value = countryName
+    if (this.hasCountryNameLabelTarget)
+      this.countryNameLabelTarget.textContent = countryName
+    if (this.hasCountryNameTarget)
+      this.countryNameTargets.forEach(target => (target.value = countryName))
   }
 
   /* Call this function when a country is selected on one of the pages that

@@ -22,13 +22,23 @@ class PlansController < ApplicationController
   def show
     @benchmarks = BenchmarksFixture.new
     @plan = Plan.find_by_id!(params.fetch(:id))
-    @capacity_areas = @benchmarks.capacities.map { |c| c[:name] }
     @type_code_texts = @benchmarks.type_code_1s.values
+
+    if @plan.assessment_type == 'from-capacities'
+      @capacity_areas =
+        @benchmarks.capacities.filter do |c|
+          (@plan.activity_map.capacity_activities c[:id]).length > 0
+        end.map { |c| c[:name] }
+    else
+      @capacity_areas = @benchmarks.capacities.map { |c| c[:name] }
+    end
   end
 
   def index
     @countries, @selectables = helpers.set_country_selection_options
     @plans = current_user.plans.order(updated_at: :desc)
+    @assessments = JSON.load File.open './app/fixtures/assessments.json'
+    @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
   end
 
   def update

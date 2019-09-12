@@ -33,13 +33,13 @@
         <p><strong>Choose the most recent and accurate assessment.</strong></p>
 
 
-        <%= form_tag '/country_select', id: "assessment-select-menu" do %>
-          <%= hidden_field_tag "country", nil, data: { target: "assessment-selection.selectedCountryName" } %>
+        <%= form_tag '/country_select', id: "assessment-select-menu",
+          data: { target: "assessment-selection.form" } do %>
           <div class="input-group mb-4">
             <%= select_tag "country",
               options_from_collection_for_select(@countries, 'name', 'name'),
               class: "custom-select",
-              data: { target: "assessment-selection.selectedCountry",
+              data: { target: "assessment-selection.countrySelect",
                       action: "assessment-selection#selectCountry
                                assessment-selection#validateAndEnableNext"
                     }
@@ -49,14 +49,17 @@
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",
-              data: { target: "assessment-selection.assessmentTypes",
+              data: { target: "assessment-selection.assessmentTypeSelect",
                       action: "assessment-selection#validateAndEnableNext" } %>
           </div>
           <%= button_tag "Next",
-            type: :submit,
+            type: :button,
             class: "btn btn-primary w-100",
             disabled: true,
-            data: { target: "assessment-selection.submitForm" } %>
+            data: { target: "assessment-selection.submitForm",
+                    action: "assessment-selection#next",
+                    current: "assessment-selection-modal",
+                    next: "capacity-selection-modal" } %>
         <% end %>
       </div>
     </div>

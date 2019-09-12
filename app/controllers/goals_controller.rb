@@ -16,33 +16,32 @@ class GoalsController < ApplicationController
   def show
     @country = params[:country]
     assessment_type = params[:assessment_type]
+    capacity_ids = params[:capacity_ids]
 
     assessment =
       Assessment.find_by(country: @country, assessment_type: assessment_type)
 
+    @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
+    @assessments = JSON.load File.open './app/fixtures/assessments.json'
+    @countries, @selectables = helpers.set_country_selection_options
+
     if assessment
-      scores = assessment.scores
-
-      scores =
-        scores.reduce({}) do |acc, score|
-          key = "#{assessment_type}_ind_#{score['indicator_id']}"
-          acc[key] = Score.new score['score']
-          acc
-        end
-
-      @data_dictionary =
-        JSON.load File.open './app/fixtures/data_dictionary.json'
-      @assessments = JSON.load File.open './app/fixtures/assessments.json'
-
       @goals =
         GoalForm.new country: @country,
                      assessment_type: assessment_type,
-                     scores: scores
+                     scores: scores_from_assessment(assessment, assessment_type)
 
-      @countries, @selectables = helpers.set_country_selection_options
-      @technical_areas =
-        @assessments[@goals.assessment_type]['technical_area_order']
-          .map { |indicator_id| [@data_dictionary[indicator_id], indicator_id] }
+      @technical_area_ids = @assessments[@goals.assessment_type]['technical_area_order']
+      @technical_areas = technical_areas(@technical_area_ids, @data_dictionary)
+      @label = @assessments[assessment_type]["label"]
+      @display_assessment_type = assessment_type
+    elsif capacity_ids
+      @technical_area_ids = capacity_ids
+      @goals = GoalForm.new country: @country,
+                            assessment_type: assessment_type,
+                            scores: scores_from_technical_area_ids(@technical_area_ids, @assessments)
+      @label = "Capacity Area"
+      @display_assessment_type = "spar_2018"
     end
   end
 
@@ -59,5 +58,29 @@ class GoalsController < ApplicationController
                                   current_user
     session[:plan_id] = plan.id unless current_user
     redirect_to plan
+  end
+
+  private
+
+  def scores_from_assessment(assessment, assessment_type)
+    assessment.scores.reduce({}) do |scores, score|
+      key = "#{assessment_type}_ind_#{score['indicator_id']}"
+      scores[key] = Score.new score['score']
+      scores
+    end
+  end
+
+  def scores_from_technical_area_ids(technical_area_ids, assessments)
+    indicator_ids = technical_area_ids.flat_map do |technical_area_id|
+      assessments["spar_2018"]["technical_areas"][technical_area_id]["indicators"]
+    end
+    indicator_ids.reduce({}) do |scores, indicator_id|
+      scores[indicator_id] = Score.new(1)
+      scores
+    end
+  end
+
+  def technical_areas(ids, data_dictionary)
+    ids.map { |indicator_id| [data_dictionary[indicator_id], indicator_id] }
   end
 end

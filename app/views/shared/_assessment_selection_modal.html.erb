@@ -11,7 +11,7 @@
           Let's get started on
           <span
             id="country-name-header"
-            data-target="assessment-selection.selectedCountryName"
+            data-target="assessment-selection.countryNameLabel"
           />
         </h1>
         <button
@@ -36,24 +36,28 @@
         </p>
         <p><strong>Choose the most recent and accurate assessment.</strong></p>
 
-        <%= form_tag '/country_select', id: "assessment-select-menu" do %>
+        <%= form_tag '/country_select', id: "assessment-select-menu",
+          data: { target: "assessment-selection.form" } do %>
           <%= hidden_field_tag "country",
             nil,
-            data: { target: "assessment-selection.selectedCountryModal" }
+            data: { target: "assessment-selection.countryName" }
           %>
           <div class="input-group mb-2">
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",
-              data: { target: "assessment-selection.assessmentTypes",
+              data: { target: "assessment-selection.assessmentTypeSelect",
                       action: "assessment-selection#validateAndEnableNext" }
             %>
           </div>
           <%= button_tag "Next",
-              type: :submit,
+              type: :button,
               class: "btn btn-primary w-100",
               disabled: true,
-              data: { target: "assessment-selection.submitForm" } %>
+              data: { target: "assessment-selection.submitForm",
+                      action: "assessment-selection#next",
+                      current: "assessment-selection-modal",
+                      next: "capacity-selection-modal" } %>
       <% end %>
       </div>
     </div>
