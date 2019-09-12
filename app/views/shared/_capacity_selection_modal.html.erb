@@ -32,12 +32,13 @@
             <ul class="list-unstyled" data-controller="checkbox-list">
               <li> <span data-target="checkbox-list.selectAllState" data-action="click->checkbox-list#selectAll"></span> Select All </li>
               <% @assessments["spar_2018"]["technical_area_order"].each do |capacity_id| %>
-                <li> <%= check_box_tag "capacities[]",
-                        @data_dictionary[capacity_id].parameterize,
+                <li> <%= check_box_tag "capacity_ids[#{capacity_id}]",
+                        capacity_id,
                         true,
+                        name: "capacity_ids[]",
                         data: { target: "checkbox-list.listItem",
                                 action: "change->checkbox-list#selectListItem" } %>
-                     <%= label_tag @data_dictionary[capacity_id].parameterize, @data_dictionary[capacity_id] %> </li>
+                     <%= label_tag @data_dictionary[capacity_id] %> </li>
               <% end %>
             </ul>
           </div>

@@ -40,4 +40,11 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
     assert_select 'input[data-action="change->score#validate"]', 96
     assert_select 'input[type="submit"][data-target="score.submitButton"]', 1
   end
+
+  test "viewing a goal form created from list of capacities" do
+    get "/goals/Australia/from-capacities?capacity_ids[]=spar_2018_ta_c5&capacity_ids[]=spar_2018_ta_c6"
+    # there are a total of 5 score and goal fields for this assessment
+    assert_select 'input[type="number"][data-goal="true"]', 5
+    assert_select 'input[type="number"][data-goal="false"]', 5
+  end
 end
