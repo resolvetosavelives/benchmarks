@@ -3,8 +3,11 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = ["listItem", "submitForm"]
 
+  connect() {
+    this.updateState()
+  }
+
   updateState() {
-    console.log("updateState")
     const selected = this.listItemTargets.filter(target => target.checked)
     this.submitFormTarget.disabled = selected.length === 0
   }
