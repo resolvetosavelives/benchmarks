@@ -124,6 +124,8 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     get plans_path
     assert_response :ok
     assert_select '.plan-entry', 1
+    assert_select "form#assessment-select-menu[data-target='assessment-selection.form']",
+                  1
 
     user.plans.first.destroy
     get plans_path
