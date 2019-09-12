@@ -5,16 +5,13 @@
     <div class="row m-4">
       <div class="col">
         <% @benchmarks.capacities.each do |capacity| %>
-          <div class="capacity-container">
-            <h2 id="<%= capacity[:name].parameterize %>"><%= capacity[:id] %>. <%= capacity[:name] %></h2>
-            <% (@benchmarks.capacity_benchmarks capacity[:id]).each do |benchmark| %>
-              <!-- -->
-              <% activities = @plan.activity_map.benchmark_activities(benchmark[:id]) %>
-              <%= render 'benchmark_activities', benchmark_id: benchmark[:id],
-                activities: activities, benchmarks: @benchmarks %>
-              <!-- -->
+          <% if @plan.assessment_type == "from-capacities" %>
+            <% if (@plan.activity_map.capacity_activities capacity[:id]).length > 0 %>
+              <%= render 'capacity', capacity: capacity %>
             <% end %>
-          </div>
+          <% else %>
+            <%= render 'capacity', capacity: capacity %>
+          <% end %>
         <% end %>
       </div>
     </div>
