@@ -33,12 +33,14 @@ class GoalsController < ApplicationController
 
       @technical_area_ids = @assessments[@goals.assessment_type]['technical_area_order']
       @technical_areas = technical_areas(@technical_area_ids, @data_dictionary)
+      @display_assessment_type = assessment_type
     elsif capacity_ids
       @technical_area_ids = capacity_ids
       @goals = GoalForm.new country: @country,
-                            assessment_type: "spar_2018",
+                            assessment_type: assessment_type,
                             scores: scores_from_technical_area_ids(@technical_area_ids, @assessments)
       @technical_areas = technical_areas(@technical_area_ids, @data_dictionary)
+      @display_assessment_type = "spar_2018"
     end
   end
 
