@@ -152,14 +152,6 @@ export default class extends Controller {
     this.openModal()
   }
 
-  submit(e) {
-    if (this.assessmentTypeSelectTarget.value == "from-capacities")
-      this.selected
-    else {
-      this.formTarget.submit()
-    }
-  }
-
   /* Special stimulus syntax. This retrieves the selectables target from the
    * page and processes it into an instance field in this Javascript
    * controller.

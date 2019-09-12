@@ -19,7 +19,7 @@
         </button>
       </div>
 
-      <div class="modal-body mx-4">
+      <div class="modal-body mx-4" data-controller="checkbox-list">
         <p> Select the capacity area(s) you'd like to focus on </p>
         <%= form_tag '/country_select', id: "capacity-select-menu",
             data: { action: "assessment-selection.form" } do %>
@@ -29,7 +29,7 @@
           %>
           <%= hidden_field_tag "assessment_type", "from-capacities" %>
           <div class="input-group mb-2">
-            <ul class="list-unstyled" data-controller="checkbox-list">
+            <ul class="list-unstyled">
               <li>
                 <a data-action="click->checkbox-list#selectAll" class="text-primary">Select All</a>
                 | <a data-action="click->checkbox-list#deselectAll" class="text-primary">Deselect All</a>
@@ -39,14 +39,15 @@
                         capacity_id,
                         true,
                         name: "capacity_ids[]",
-                        data: { target: "checkbox-list.listItem" } %>
+                        data: { target: "checkbox-list.listItem",
+                                action: "change->checkbox-list#updateState" } %>
                      <%= label_tag @data_dictionary[capacity_id] %> </li>
               <% end %>
             </ul>
           </div>
           <%= submit_tag "Next",
               class: "btn btn-primary w-100",
-              data: { target: "assessment-selection.submitForm" } %>
+              data: { target: "assessment-selection.submitForm checkbox-list.submitForm" } %>
       <% end %>
       </div>
     </div>

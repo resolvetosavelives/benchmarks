@@ -33,7 +33,8 @@
         <p><strong>Choose the most recent and accurate assessment.</strong></p>
 
 
-        <%= form_tag '/country_select', id: "assessment-select-menu" do %>
+        <%= form_tag '/country_select', id: "assessment-select-menu",
+          data: { target: "assessment-selection.form" } do %>
           <div class="input-group mb-4">
             <%= select_tag "country",
               options_from_collection_for_select(@countries, 'name', 'name'),
