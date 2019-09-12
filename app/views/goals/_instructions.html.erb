@@ -2,8 +2,10 @@
   <span>
     <% if @goals.assessment_type.match("jee") %>
       The Joint External Evaluation (JEE) scores are pre-populated from WHO published <%= link_to "reports", "https://www.who.int/ihr/procedures/mission-reports/en/", target: "_blank" %>.
-    <% else %>
+    <% elsif @goals.assessment_type.match("spar") %>
       The SPAR scores are pre-populated from WHO published <%= link_to "data", "https://extranet.who.int/e-spar", target: "_blank" %>.
+    <% else %>
+      The scores are pre-populated from WHO published <%= link_to "SPAR data", "https://extranet.who.int/e-spar", target: "_blank" %>.
     <% end %>
   </span>
   The goals are pre-populated by one step up. 
