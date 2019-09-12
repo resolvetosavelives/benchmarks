@@ -7,17 +7,14 @@ $.mockImplementation(() => ({
 }))
 
 describe("CheckboxListController", () => {
-  let selectAllButton, item1Button, item2Button, item3Button
+  let selectAllButton, deselectAllButton, item1Button, item2Button, item3Button
   beforeEach(() => {
     document.body.innerHTML = `
       <div data-controller="checkbox-list">
         <ul>
         <li>
-          <input id="select-all"
-            type="checkbox"
-            data-action="click->checkbox-list#selectAll"
-            data-target="checkbox-list.selectAllState" />
-          <label for="select-all">Select All</label>
+          <a id="select-all" data-action="click->checkbox-list#selectAll" class="text-primary">Select All</a>
+          | <a id="deselect-all" data-action="click->checkbox-list#deselectAll" class="text-primary">Deselect All</a>
         </li>
         <li>
           <input type="checkbox"
@@ -51,6 +48,7 @@ describe("CheckboxListController", () => {
     `
 
     selectAllButton = document.getElementById("select-all")
+    deselectAllButton = document.getElementById("deselect-all")
     item1Button = document.getElementById("item-1")
     item2Button = document.getElementById("item-2")
     item3Button = document.getElementById("item-3")
@@ -61,33 +59,15 @@ describe("CheckboxListController", () => {
 
   describe("select all", () => {
     it("selects and deselects everything", () => {
-      expect(selectAllButton.textContent).toEqual("⏹")
-
       selectAllButton.click()
-      expect(selectAllButton.textContent).toEqual("☑️")
       expect(item1Button.checked).toBe(true)
       expect(item2Button.checked).toBe(true)
       expect(item3Button.checked).toBe(true)
 
-      selectAllButton.click()
-      expect(selectAllButton.textContent).toEqual("⏹")
+      deselectAllButton.click()
       expect(item1Button.checked).toBe(false)
       expect(item2Button.checked).toBe(false)
       expect(item3Button.checked).toBe(false)
-    })
-
-    it("responds to a change in the selections", () => {
-      expect(selectAllButton.textContent).toEqual("⏹")
-      item1Button.click()
-      expect(selectAllButton.textContent).toEqual("—")
-    })
-
-    it("deselects everything when clicked while in the some items selected state", () => {
-      expect(selectAllButton.textContent).toEqual("⏹")
-      item1Button.click()
-      selectAllButton.click()
-      expect(selectAllButton.textContent).toEqual("⏹")
-      expect(item1Button.checked).toBe(false)
     })
   })
 })
