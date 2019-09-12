@@ -48,7 +48,7 @@
     <div class="row py-4">
       <div class="col-6">
         <h1 class="alt-header">
-          <%= @assessments[@goals.assessment_type]["label"] %> Scores
+          <%= @assessments[@display_assessment_type]["label"] %> Scores
         </h1>
 
         <%= render "instructions" %>
@@ -90,7 +90,7 @@
 
           <tbody>
             <% @technical_area_ids.each do |technical_area_id| %>
-              <% technical_area = @assessments[@goals.assessment_type]['technical_areas'][technical_area_id] %>
+              <% technical_area = @assessments[@display_assessment_type]['technical_areas'][technical_area_id] %>
               <tr class="technical-area-<%= technical_area_id %>">
                 <% indicator = technical_area['indicators'][0] %>
                 <th
