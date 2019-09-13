@@ -22,16 +22,20 @@
 
       <div class="modal-body mx-4">
         <p>
-          This tool will help you create Draft 0.1 of your NAPHS plan by utilizing your country assessment data (JEE or SPAR) and suggested actions from the Benchmarks.
+          This tool will help you create Draft 0.1 of your NAPHS plan by utilizing your country assessment data (JEE or SPAR) and suggested actions from the Benchmarks.   
         </p>
+
         <p>
           When you finish, you’ll have a draft plan that can act as a jumping off point for further refinement, leading to accelerated progress for implementation and stepping up.
         </p>
-        <p>
-          The plans are comprised of actions based on the gap between the existing assessment score and your goal score.
-        </p>
-        <p><strong>Choose the most recent and accurate assessment.</strong></p>
 
+        <p>
+          The plans are comprised of actions based on the gap between the existing assessment score and your goal score.  
+        </p>
+
+        <p>
+          <strong>Choose to create a plan by a recent assessment or by capacity areas:</strong>
+        </p>
 
         <%= form_tag '/country_select', id: "assessment-select-menu",
           data: { target: "assessment-selection.form" } do %>
