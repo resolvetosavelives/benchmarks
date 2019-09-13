@@ -23,24 +23,30 @@ class Worksheet
     create_instructions_sheet @workbook[0]
 
     benchmarks.capacities.each do |capacity|
-      worksheet = @workbook.add_worksheet capacity[:name]
+      if (@plan.activity_map.capacity_activities capacity[:id]).length > 0
+        worksheet = @workbook.add_worksheet capacity[:name]
 
-      idx = 0
+        idx = 0
 
-      (@plan.activity_map.capacity_benchmarks capacity[:id])
-        .each do |benchmark_id|
-        (@plan.activity_map.benchmark_activities benchmark_id)
-          .each do |activity|
-          goal = @plan.goals ? @plan.goals[benchmark_id.to_s] : {}
-          idx =
-            populate_worksheet worksheet,
-                               idx,
-                               assessment_structures[@plan.assessment_type][
-                                 'label'
-                               ],
-                               goal,
-                               (benchmarks.objective_text benchmark_id),
-                               activity
+        (@plan.activity_map.capacity_benchmarks capacity[:id])
+          .each do |benchmark_id|
+          (@plan.activity_map.benchmark_activities benchmark_id)
+            .each do |activity|
+            goal = @plan.goals ? @plan.goals[benchmark_id.to_s] : {}
+            assessment_label =
+              if @plan.assessment_type == 'from-capacities'
+                'SPAR 2018'
+              else
+                assessment_structures[@plan.assessment_type]['label']
+              end
+            idx =
+              populate_worksheet worksheet,
+                                 idx,
+                                 assessment_label,
+                                 goal,
+                                 (benchmarks.objective_text benchmark_id),
+                                 activity
+          end
         end
       end
     end

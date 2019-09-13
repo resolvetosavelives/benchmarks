@@ -17,7 +17,7 @@ class CostSheet
   def generate
     benchmarks = BenchmarksFixture.new
     benchmarks.capacities.each do |capacity|
-      if capacity[:id] == '1'
+      if capacity[:id] == 1
         @workbook.worksheets[0].sheet_name = capacity[:name]
       else
         @workbook.add_worksheet capacity[:name]
