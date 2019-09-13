@@ -41,7 +41,8 @@
                         name: "capacity_ids[]",
                         data: { target: "checkbox-list.listItem",
                                 action: "change->checkbox-list#updateState" } %>
-                     <%= label_tag @data_dictionary[capacity_id] %> </li>
+                     <%= label_tag @data_dictionary[capacity_id],
+                       @data_dictionary[capacity_id] %> </li>
               <% end %>
             </ul>
           </div>
