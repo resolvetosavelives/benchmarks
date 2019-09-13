@@ -23,7 +23,7 @@ class GoalsController < ApplicationController
 
     @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
     @assessments = JSON.load File.open './app/fixtures/assessments.json'
-    @countries, @selectables = helpers.set_country_selection_options
+    @countries, @selectables = helpers.set_country_selection_options(false)
 
     if assessment
       @goals =
@@ -31,17 +31,23 @@ class GoalsController < ApplicationController
                      assessment_type: assessment_type,
                      scores: scores_from_assessment(assessment, assessment_type)
 
-      @technical_area_ids = @assessments[@goals.assessment_type]['technical_area_order']
+      @technical_area_ids =
+        @assessments[@goals.assessment_type]['technical_area_order']
       @technical_areas = technical_areas(@technical_area_ids, @data_dictionary)
-      @label = @assessments[assessment_type]["label"]
+      @label = @assessments[assessment_type]['label']
       @display_assessment_type = assessment_type
     elsif capacity_ids
       @technical_area_ids = capacity_ids
-      @goals = GoalForm.new country: @country,
-                            assessment_type: assessment_type,
-                            scores: scores_from_technical_area_ids(@technical_area_ids, @assessments)
-      @label = "Capacity Area"
-      @display_assessment_type = "spar_2018"
+      @goals =
+        GoalForm.new country: @country,
+                     assessment_type: assessment_type,
+                     scores:
+                       scores_from_technical_area_ids(
+                         @technical_area_ids,
+                         @assessments
+                       )
+      @label = 'Capacity Area'
+      @display_assessment_type = 'spar_2018'
     end
   end
 
@@ -71,9 +77,12 @@ class GoalsController < ApplicationController
   end
 
   def scores_from_technical_area_ids(technical_area_ids, assessments)
-    indicator_ids = technical_area_ids.flat_map do |technical_area_id|
-      assessments["spar_2018"]["technical_areas"][technical_area_id]["indicators"]
-    end
+    indicator_ids =
+      technical_area_ids.flat_map do |technical_area_id|
+        assessments['spar_2018']['technical_areas'][technical_area_id][
+          'indicators'
+        ]
+      end
     indicator_ids.reduce({}) do |scores, indicator_id|
       scores[indicator_id] = Score.new(1)
       scores

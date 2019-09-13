@@ -3,7 +3,7 @@
 # assessment dropdown menus.
 class LandingController < ApplicationController
   def show
-    @countries, @selectables = helpers.set_country_selection_options
+    @countries, @selectables = helpers.set_country_selection_options(true)
     @assessments = JSON.load File.open './app/fixtures/assessments.json'
     @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
   end

@@ -35,7 +35,7 @@ class PlansController < ApplicationController
   end
 
   def index
-    @countries, @selectables = helpers.set_country_selection_options
+    @countries, @selectables = helpers.set_country_selection_options(true)
     @plans = current_user.plans.order(updated_at: :desc)
     @assessments = JSON.load File.open './app/fixtures/assessments.json'
     @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'

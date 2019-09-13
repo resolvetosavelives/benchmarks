@@ -34,7 +34,7 @@
         </p>
 
         <p>
-          <strong>Choose to create a plan by a recent assessment or by capacity areas:</strong>
+          <strong>Create a plan by a recent assessment or by capacity areas:</strong>
         </p>
 
         <%= form_tag '/country_select', id: "assessment-select-menu",
@@ -49,7 +49,7 @@
                     }
             %>
           </div>
-          <div class="input-group mb-2">
+          <div class="input-group mb-4">
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",

@@ -6,12 +6,12 @@ class CountryName
 end
 
 module CountrySelectionHelper
-  def set_country_selection_options
+  def set_country_selection_options(placeholder)
     assessment_structure = JSON.load File.open './app/fixtures/assessments.json'
     assessments = Assessment.pluck(:country, :assessment_type)
     selectables =
       assessments.reduce(
-        { '-- Select One --' => [] }
+        placeholder ? { '-- Select One --' => [] } : {}
       ) do |acc, (country, assessment_type)|
         acc[country] = [] unless acc[country]
         acc[country].push(
