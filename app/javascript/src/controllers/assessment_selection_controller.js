@@ -53,7 +53,6 @@ export default class extends Controller {
   ]
 
   connect() {
-    this.countrySelectTarget.value = Object.keys(this.selectables)[0]
     this.selectCountry()
   }
 
