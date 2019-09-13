@@ -37,7 +37,7 @@
               <% @assessments["spar_2018"]["technical_area_order"].each do |capacity_id| %>
                 <li> <%= check_box_tag "capacity_ids[#{capacity_id}]",
                         capacity_id,
-                        true,
+                        false,
                         name: "capacity_ids[]",
                         data: { target: "checkbox-list.listItem",
                                 action: "change->checkbox-list#updateState" } %>
