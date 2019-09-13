@@ -124,7 +124,7 @@ export default class extends Controller {
       { type: "-- Select One --", text: "-- Select One --" }
     ]
       .concat(this.selectables[countryName])
-      .concat([{ type: "from-capacities", text: "New From SPAR Capacities" }])
+      .concat([{ type: "from-capacities", text: "Plan by Capacity Areas" }])
     while (this.assessmentTypeSelectTarget.firstChild)
       this.assessmentTypeSelectTarget.removeChild(
         this.assessmentTypeSelectTarget.firstChild
