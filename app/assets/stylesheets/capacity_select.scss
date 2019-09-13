@@ -1,19 +1,19 @@
 #capacity-selection-modal {
-  font-size: 17px;
+  font-size: 16px;
+
+  #select-all-buttons {
+    margin-bottom: 10px;
+  }
 
   .modal-title {
-    font-size: 58px;
-    line-height: 67px;
+    font-size: 40px;
+    line-height: 49px;
   }
   .modal-dialog {
-    max-width: 708px;
+    max-width: 530px;
   }
 
   a:hover {
     text-decoration: underline;
-  }
-
-  li {
-    margin-bottom: 6px;
   }
 }
