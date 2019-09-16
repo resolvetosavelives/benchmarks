@@ -3,24 +3,47 @@ import { Controller } from "stimulus"
  * assessment selection. The functions here support two different workflows
  * (and an envolving understanding of Stimulus).
  *
- * One workflow shows an assessment-selection dialogue in response to a country
- * selection done on the main page. The other shows a dialogue in response to a
- * simple button press. Each of these has somewhat different validation
- * semantics that perhaps do not go together flawlessly yet.
+ * This is actually a multi-step modal with varying steps, more wizard-like
+ * than a modal. Current state must be stored in the Next button so that it can
+ * be submitted to this controller when the button is pressed. The button also
+ * dictates which state the modal is going into.
+ *
+ * In that light, known states are null, "assessment-selection-modal" and
+ * "from-capacities".
+ *
+ *   null -- no modal is currently open
+ *
+ *   assessment-selection-modal -- the assessment selection modal is open. This
+ *   could be either the version that already knows the country and shows only
+ *   the list of possible assessments (_assessment_selection_modal.html.erb),
+ *   or the version that shows both the country list and the assessment list
+ *   (_joint_assessment_selection_modal.html.erb).
+ *
+ *   from-capacities -- the modal for selecting the capacities for an
+ *   assessment is open (_capacity_selection_modal.html.erb).
+ *
+ *   If the current state is `assessment-selection-modal` and the
+ *   `assessmentTypeSelect` value is `from-capacities`, the transition to the
+ *   capacities dialogue will be honored. `assessmentTypeSelect` is anything
+ *   else, it will be assumed to be an actual assessment type, and the entire
+ *   form will be submitted, instead.
+ *
+ * The "next" button in a dialog needs to provide both the current state
+ * (`data-current` and the next state `data-next`).
  *
  * Targets that provide data to the page:
  *   getStartedButton -- the green "Get Started" button that appears on the
- *   front page. The controller toggles the button's enabled/disabled status.
+ *   landing page. The controller toggles the button's enabled/disabled status.
  *
- *   selectedCountryText -- this also carries the country name, solely for
- *   populating the country name in the dialogue copy. This is potentially a
- *   duplicate and should be evaluated for removal.
+ *   countryNameLabel -- this also carries the country name, solely for
+ *   populating the country name in the dialogue copy.
  *
- *   submitForm -- this is the button that allows the entire form to be
- *   submitted. The controller toggles the button's enabled/disabled status.
+ *   submitForm -- this is the button that either submits the form or
+ *   transitions to the next step of the dialog. The controller toggles the
+ *   button's enabled/disabled status.
  *
- *   countryName -- this simply carries the country name, which is
- *   currently used to populate the country name in the dialogue copy.
+ *   countryName -- this carries the country name for populating into hidden
+ *   fields.
  *
  * Targets that provide page data to the controller:
  *
@@ -28,13 +51,19 @@ import { Controller } from "stimulus"
  *   and their associated assessments. The server populates this in the page
  *   when it renders the page.
  *
- * Targets that can do both:
- *   countries -- allows the controller to change the current selected
- *   country option (which is currently used for the default value), but also
- *   allows the controller to read which country the user has selected on the
- *   page.
+ *   form -- the entire form itself. This must contain all of the fields to be
+ *   submitted, including hidden fields. The form generally does not get
+ *   submitted from the web page any more, but instead from the next function
+ *   of this controller.
  *
- *   assessmentTypes -- this is the assessment types dropdown, and this
+ * Targets that can do both:
+ *   countrySelect -- the country selection dropdown. The controller can use
+ *   this to change the currently selected country (but does not do so at this
+ *   time), and to read the currently selected country. This helps the
+ *   controller determine whether the form is valid, and what assessment types
+ *   need to be populated.
+ *
+ *   assessmentTypeSelect -- this is the assessment types dropdown, and this
  *   controller clears and repopulates it whenever the country selection
  *   changes. The controller also reads it when determining whether the entire
  *   form is valid.
@@ -42,7 +71,6 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   static targets = [
     "form",
-    "state",
     "countrySelect",
     "assessmentTypeSelect",
     "getStartedButton",
@@ -56,6 +84,14 @@ export default class extends Controller {
     this.selectCountry()
   }
 
+  /* Move to the next step of the state machine.
+   *
+   * Currently the pages tell the controller what the current state is and what
+   * the next state is. But, the controller makes some decisions based on other
+   * inputs and may deviate. It would probably be clearer to move all of the
+   * state transition logic into this function and the current state tracking
+   * into this controller.
+   */
   next(e) {
     const currentModal = e.currentTarget.getAttribute("data-current")
     const nextModal = e.currentTarget.getAttribute("data-next")
@@ -71,17 +107,6 @@ export default class extends Controller {
         this.formTarget.submit()
       }
     }
-  }
-
-  /* Open whatever assessment selection modal is on the page */
-  openAssessmentModal(e) {
-    $("#assessment-selection-modal").modal()
-  }
-
-  /* For the split dialogue, validate that country before opening the
-   * assessment selection modal. */
-  openModalValidated(e) {
-    if (this.isCountryValid()) this.openModal(e)
   }
 
   /* Verify that the current country selection is valid. All selections are
@@ -136,19 +161,6 @@ export default class extends Controller {
       this.countryNameLabelTarget.textContent = countryName
     if (this.hasCountryNameTarget)
       this.countryNameTargets.forEach(target => (target.value = countryName))
-  }
-
-  /* Call this function when a country is selected on one of the pages that
-   * displays the country selection and pops up the assessment selection modal
-   * in response to a country being selected.
-   *
-   * This could technically be replaced with an action field that targets
-   * `selectCountry` followed by `openModal`, and that would slightly simplify
-   * what is currently an unweildy API.
-   */
-  selectCountryAndOpen(e) {
-    this.selectCountry(e)
-    this.openModal()
   }
 
   /* Special stimulus syntax. This retrieves the selectables target from the
