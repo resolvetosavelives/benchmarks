@@ -99,6 +99,7 @@
                   class="border-right"
                   scope="row"
                   rowspan="<%= technical_area['indicators'].count %>"
+                  data-controller="score-and-goal"
                 >
                   <%= @data_dictionary[technical_area_id] %>
                 </th>
@@ -113,7 +114,8 @@
               </tr>
 
               <% technical_area['indicators'].drop(1).each do |indicator| %>
-                <tr class="technical-area-<%= technical_area_id %>">
+                <tr class="technical-area-<%= technical_area_id %>"
+                    data-controller="score-and-goal">
                   <td class="border-right"><%= @data_dictionary[indicator] %></td>
                   <td>
                     <%= render "validated_field", field_name: indicator, f: f %>
