@@ -93,13 +93,13 @@
           <tbody>
             <% @technical_area_ids.each do |technical_area_id| %>
               <% technical_area = @assessments[@display_assessment_type]['technical_areas'][technical_area_id] %>
-              <tr class="technical-area-<%= technical_area_id %>">
+              <tr class="technical-area-<%= technical_area_id %>"
+                  data-controller="score-and-goal">
                 <% indicator = technical_area['indicators'][0] %>
                 <th
                   class="border-right"
                   scope="row"
                   rowspan="<%= technical_area['indicators'].count %>"
-                  data-controller="score-and-goal"
                 >
                   <%= @data_dictionary[technical_area_id] %>
                 </th>
