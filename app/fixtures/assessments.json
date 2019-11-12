@@ -1,1 +1,501 @@
-{"spar_2018":{"label":"SPAR 2018","technical_area_order":["spar_2018_ta_c1","spar_2018_ta_c2","spar_2018_ta_c3","spar_2018_ta_c4","spar_2018_ta_c5","spar_2018_ta_c6","spar_2018_ta_c7","spar_2018_ta_c8","spar_2018_ta_c9","spar_2018_ta_c10","spar_2018_ta_c11","spar_2018_ta_c12","spar_2018_ta_c13"],"technical_areas":{"spar_2018_ta_c1":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c1","indicators":["spar_2018_ind_c11","spar_2018_ind_c12","spar_2018_ind_c13"]},"spar_2018_ta_c2":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c2","indicators":["spar_2018_ind_c21","spar_2018_ind_c22"]},"spar_2018_ta_c3":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c3","indicators":["spar_2018_ind_c31"]},"spar_2018_ta_c4":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c4","indicators":["spar_2018_ind_c41"]},"spar_2018_ta_c5":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c5","indicators":["spar_2018_ind_c51","spar_2018_ind_c52","spar_2018_ind_c53"]},"spar_2018_ta_c6":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c6","indicators":["spar_2018_ind_c61","spar_2018_ind_c62"]},"spar_2018_ta_c7":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c7","indicators":["spar_2018_ind_c71"]},"spar_2018_ta_c8":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c8","indicators":["spar_2018_ind_c81","spar_2018_ind_c82","spar_2018_ind_c83"]},"spar_2018_ta_c9":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c9","indicators":["spar_2018_ind_c91","spar_2018_ind_c92","spar_2018_ind_c93"]},"spar_2018_ta_c10":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c10","indicators":["spar_2018_ind_c101"]},"spar_2018_ta_c11":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c11","indicators":["spar_2018_ind_c111","spar_2018_ind_c112"]},"spar_2018_ta_c12":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c12","indicators":["spar_2018_ind_c121"]},"spar_2018_ta_c13":{"assessment":"spar_2018","technical_area_id":"spar_2018_ta_c13","indicators":["spar_2018_ind_c131"]}}},"jee1":{"label":"JEE 1.0","technical_area_order":["jee1_ta_p1","jee1_ta_p2","jee1_ta_p3","jee1_ta_p4","jee1_ta_p5","jee1_ta_p6","jee1_ta_p7","jee1_ta_d1","jee1_ta_d2","jee1_ta_d3","jee1_ta_d4","jee1_ta_r1","jee1_ta_r2","jee1_ta_r3","jee1_ta_r4","jee1_ta_r5","jee1_ta_poe","jee1_ta_ce","jee1_ta_re"],"technical_areas":{"jee1_ta_p1":{"assessment":"jee1","technical_area_id":"jee1_ta_p1","indicators":["jee1_ind_p11","jee1_ind_p12"]},"jee1_ta_p2":{"assessment":"jee1","technical_area_id":"jee1_ta_p2","indicators":["jee1_ind_p21"]},"jee1_ta_p3":{"assessment":"jee1","technical_area_id":"jee1_ta_p3","indicators":["jee1_ind_p31","jee1_ind_p32","jee1_ind_p33","jee1_ind_p34"]},"jee1_ta_p4":{"assessment":"jee1","technical_area_id":"jee1_ta_p4","indicators":["jee1_ind_p41","jee1_ind_p42","jee1_ind_p43"]},"jee1_ta_p5":{"assessment":"jee1","technical_area_id":"jee1_ta_p5","indicators":["jee1_ind_p51"]},"jee1_ta_p6":{"assessment":"jee1","technical_area_id":"jee1_ta_p6","indicators":["jee1_ind_p61","jee1_ind_p62"]},"jee1_ta_p7":{"assessment":"jee1","technical_area_id":"jee1_ta_p7","indicators":["jee1_ind_p71","jee1_ind_p72"]},"jee1_ta_d1":{"assessment":"jee1","technical_area_id":"jee1_ta_d1","indicators":["jee1_ind_d11","jee1_ind_d12","jee1_ind_d13","jee1_ind_d14"]},"jee1_ta_d2":{"assessment":"jee1","technical_area_id":"jee1_ta_d2","indicators":["jee1_ind_d21","jee1_ind_d22","jee1_ind_d23","jee1_ind_d24"]},"jee1_ta_d3":{"assessment":"jee1","technical_area_id":"jee1_ta_d3","indicators":["jee1_ind_d31","jee1_ind_d32"]},"jee1_ta_d4":{"assessment":"jee1","technical_area_id":"jee1_ta_d4","indicators":["jee1_ind_d41","jee1_ind_d42","jee1_ind_d43"]},"jee1_ta_r1":{"assessment":"jee1","technical_area_id":"jee1_ta_r1","indicators":["jee1_ind_r11","jee1_ind_r12"]},"jee1_ta_r2":{"assessment":"jee1","technical_area_id":"jee1_ta_r2","indicators":["jee1_ind_r21","jee1_ind_r22","jee1_ind_r23","jee1_ind_r24"]},"jee1_ta_r3":{"assessment":"jee1","technical_area_id":"jee1_ta_r3","indicators":["jee1_ind_r31"]},"jee1_ta_r4":{"assessment":"jee1","technical_area_id":"jee1_ta_r4","indicators":["jee1_ind_r41","jee1_ind_r42"]},"jee1_ta_r5":{"assessment":"jee1","technical_area_id":"jee1_ta_r5","indicators":["jee1_ind_r51","jee1_ind_r52","jee1_ind_r53","jee1_ind_r54","jee1_ind_r55"]},"jee1_ta_poe":{"assessment":"jee1","technical_area_id":"jee1_ta_poe","indicators":["jee1_ind_poe1","jee1_ind_poe2"]},"jee1_ta_ce":{"assessment":"jee1","technical_area_id":"jee1_ta_ce","indicators":["jee1_ind_ce1","jee1_ind_ce2"]},"jee1_ta_re":{"assessment":"jee1","technical_area_id":"jee1_ta_re","indicators":["jee1_ind_re1","jee1_ind_re2"]}}},"jee2":{"label":"JEE 2.0","technical_area_order":["jee2_ta_p1","jee2_ta_p2","jee2_ta_p3","jee2_ta_p4","jee2_ta_p5","jee2_ta_p6","jee2_ta_p7","jee2_ta_d1","jee2_ta_d2","jee2_ta_d3","jee2_ta_d4","jee2_ta_r1","jee2_ta_r2","jee2_ta_r3","jee2_ta_r4","jee2_ta_r5","jee2_ta_poe","jee2_ta_ce","jee2_ta_re"],"technical_areas":{"jee2_ta_p1":{"assessment":"jee2","technical_area_id":"jee2_ta_p1","indicators":["jee2_ind_p11","jee2_ind_p12","jee2_ind_p13"]},"jee2_ta_p2":{"assessment":"jee2","technical_area_id":"jee2_ta_p2","indicators":["jee2_ind_p21"]},"jee2_ta_p3":{"assessment":"jee2","technical_area_id":"jee2_ta_p3","indicators":["jee2_ind_p31","jee2_ind_p32","jee2_ind_p33","jee2_ind_p34"]},"jee2_ta_p4":{"assessment":"jee2","technical_area_id":"jee2_ta_p4","indicators":["jee2_ind_p41","jee2_ind_p42"]},"jee2_ta_p5":{"assessment":"jee2","technical_area_id":"jee2_ta_p5","indicators":["jee2_ind_p51","jee2_ind_p52"]},"jee2_ta_p6":{"assessment":"jee2","technical_area_id":"jee2_ta_p6","indicators":["jee2_ind_p61","jee2_ind_p62"]},"jee2_ta_p7":{"assessment":"jee2","technical_area_id":"jee2_ta_p7","indicators":["jee2_ind_p71","jee2_ind_p72"]},"jee2_ta_d1":{"assessment":"jee2","technical_area_id":"jee2_ta_d1","indicators":["jee2_ind_d11","jee2_ind_d12","jee2_ind_d13","jee2_ind_d14"]},"jee2_ta_d2":{"assessment":"jee2","technical_area_id":"jee2_ta_d2","indicators":["jee2_ind_d21","jee2_ind_d22","jee2_ind_d23"]},"jee2_ta_d3":{"assessment":"jee2","technical_area_id":"jee2_ta_d3","indicators":["jee2_ind_d31","jee2_ind_d32"]},"jee2_ta_d4":{"assessment":"jee2","technical_area_id":"jee2_ta_d4","indicators":["jee2_ind_d41","jee2_ind_d42","jee2_ind_d43","jee2_ind_d44"]},"jee2_ta_r1":{"assessment":"jee2","technical_area_id":"jee2_ta_r1","indicators":["jee2_ind_r11","jee2_ind_r12"]},"jee2_ta_r2":{"assessment":"jee2","technical_area_id":"jee2_ta_r2","indicators":["jee2_ind_r21","jee2_ind_r22","jee2_ind_r23"]},"jee2_ta_r3":{"assessment":"jee2","technical_area_id":"jee2_ta_r3","indicators":["jee2_ind_r31"]},"jee2_ta_r4":{"assessment":"jee2","technical_area_id":"jee2_ta_r4","indicators":["jee2_ind_r41","jee2_ind_r42","jee2_ind_r43"]},"jee2_ta_r5":{"assessment":"jee2","technical_area_id":"jee2_ta_r5","indicators":["jee2_ind_r51","jee2_ind_r52","jee2_ind_r53","jee2_ind_r54","jee2_ind_r55"]},"jee2_ta_poe":{"assessment":"jee2","technical_area_id":"jee2_ta_poe","indicators":["jee2_ind_poe1","jee2_ind_poe2"]},"jee2_ta_ce":{"assessment":"jee2","technical_area_id":"jee2_ta_ce","indicators":["jee2_ind_ce1","jee2_ind_ce2"]},"jee2_ta_re":{"assessment":"jee2","technical_area_id":"jee2_ta_re","indicators":["jee2_ind_re1","jee2_ind_re2"]}}}}
+{
+  "spar_2018": {
+    "label": "SPAR 2018",
+    "technical_area_order": [
+      "spar_2018_ta_c1",
+      "spar_2018_ta_c2",
+      "spar_2018_ta_c3",
+      "spar_2018_ta_c4",
+      "spar_2018_ta_c5",
+      "spar_2018_ta_c6",
+      "spar_2018_ta_c7",
+      "spar_2018_ta_c8",
+      "spar_2018_ta_c9",
+      "spar_2018_ta_c10",
+      "spar_2018_ta_c11",
+      "spar_2018_ta_c12",
+      "spar_2018_ta_c13"
+    ],
+    "technical_areas": {
+      "spar_2018_ta_c1": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c1",
+        "indicators": [
+          "spar_2018_ind_c11",
+          "spar_2018_ind_c12",
+          "spar_2018_ind_c13"
+        ]
+      },
+      "spar_2018_ta_c2": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c2",
+        "indicators": [
+          "spar_2018_ind_c21",
+          "spar_2018_ind_c22"
+        ]
+      },
+      "spar_2018_ta_c3": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c3",
+        "indicators": [
+          "spar_2018_ind_c31"
+        ]
+      },
+      "spar_2018_ta_c4": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c4",
+        "indicators": [
+          "spar_2018_ind_c41"
+        ]
+      },
+      "spar_2018_ta_c5": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c5",
+        "indicators": [
+          "spar_2018_ind_c51",
+          "spar_2018_ind_c52",
+          "spar_2018_ind_c53"
+        ]
+      },
+      "spar_2018_ta_c6": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c6",
+        "indicators": [
+          "spar_2018_ind_c61",
+          "spar_2018_ind_c62"
+        ]
+      },
+      "spar_2018_ta_c7": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c7",
+        "indicators": [
+          "spar_2018_ind_c71"
+        ]
+      },
+      "spar_2018_ta_c8": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c8",
+        "indicators": [
+          "spar_2018_ind_c81",
+          "spar_2018_ind_c82",
+          "spar_2018_ind_c83"
+        ]
+      },
+      "spar_2018_ta_c9": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c9",
+        "indicators": [
+          "spar_2018_ind_c91",
+          "spar_2018_ind_c92",
+          "spar_2018_ind_c93"
+        ]
+      },
+      "spar_2018_ta_c10": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c10",
+        "indicators": [
+          "spar_2018_ind_c101"
+        ]
+      },
+      "spar_2018_ta_c11": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c11",
+        "indicators": [
+          "spar_2018_ind_c111",
+          "spar_2018_ind_c112"
+        ]
+      },
+      "spar_2018_ta_c12": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c12",
+        "indicators": [
+          "spar_2018_ind_c121"
+        ]
+      },
+      "spar_2018_ta_c13": {
+        "assessment": "spar_2018",
+        "technical_area_id": "spar_2018_ta_c13",
+        "indicators": [
+          "spar_2018_ind_c131"
+        ]
+      }
+    }
+  },
+  "jee1": {
+    "label": "JEE 1.0",
+    "technical_area_order": [
+      "jee1_ta_p1",
+      "jee1_ta_p2",
+      "jee1_ta_p3",
+      "jee1_ta_p4",
+      "jee1_ta_p5",
+      "jee1_ta_p6",
+      "jee1_ta_p7",
+      "jee1_ta_d1",
+      "jee1_ta_d2",
+      "jee1_ta_d3",
+      "jee1_ta_d4",
+      "jee1_ta_r1",
+      "jee1_ta_r2",
+      "jee1_ta_r3",
+      "jee1_ta_r4",
+      "jee1_ta_r5",
+      "jee1_ta_poe",
+      "jee1_ta_ce",
+      "jee1_ta_re"
+    ],
+    "technical_areas": {
+      "jee1_ta_p1": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p1",
+        "indicators": [
+          "jee1_ind_p11",
+          "jee1_ind_p12"
+        ]
+      },
+      "jee1_ta_p2": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p2",
+        "indicators": [
+          "jee1_ind_p21"
+        ]
+      },
+      "jee1_ta_p3": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p3",
+        "indicators": [
+          "jee1_ind_p31",
+          "jee1_ind_p32",
+          "jee1_ind_p33",
+          "jee1_ind_p34"
+        ]
+      },
+      "jee1_ta_p4": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p4",
+        "indicators": [
+          "jee1_ind_p41",
+          "jee1_ind_p42",
+          "jee1_ind_p43"
+        ]
+      },
+      "jee1_ta_p5": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p5",
+        "indicators": [
+          "jee1_ind_p51"
+        ]
+      },
+      "jee1_ta_p6": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p6",
+        "indicators": [
+          "jee1_ind_p61",
+          "jee1_ind_p62"
+        ]
+      },
+      "jee1_ta_p7": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_p7",
+        "indicators": [
+          "jee1_ind_p71",
+          "jee1_ind_p72"
+        ]
+      },
+      "jee1_ta_d1": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_d1",
+        "indicators": [
+          "jee1_ind_d11",
+          "jee1_ind_d12",
+          "jee1_ind_d13",
+          "jee1_ind_d14"
+        ]
+      },
+      "jee1_ta_d2": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_d2",
+        "indicators": [
+          "jee1_ind_d21",
+          "jee1_ind_d22",
+          "jee1_ind_d23",
+          "jee1_ind_d24"
+        ]
+      },
+      "jee1_ta_d3": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_d3",
+        "indicators": [
+          "jee1_ind_d31",
+          "jee1_ind_d32"
+        ]
+      },
+      "jee1_ta_d4": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_d4",
+        "indicators": [
+          "jee1_ind_d41",
+          "jee1_ind_d42",
+          "jee1_ind_d43"
+        ]
+      },
+      "jee1_ta_r1": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_r1",
+        "indicators": [
+          "jee1_ind_r11",
+          "jee1_ind_r12"
+        ]
+      },
+      "jee1_ta_r2": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_r2",
+        "indicators": [
+          "jee1_ind_r21",
+          "jee1_ind_r22",
+          "jee1_ind_r23",
+          "jee1_ind_r24"
+        ]
+      },
+      "jee1_ta_r3": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_r3",
+        "indicators": [
+          "jee1_ind_r31"
+        ]
+      },
+      "jee1_ta_r4": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_r4",
+        "indicators": [
+          "jee1_ind_r41",
+          "jee1_ind_r42"
+        ]
+      },
+      "jee1_ta_r5": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_r5",
+        "indicators": [
+          "jee1_ind_r51",
+          "jee1_ind_r52",
+          "jee1_ind_r53",
+          "jee1_ind_r54",
+          "jee1_ind_r55"
+        ]
+      },
+      "jee1_ta_poe": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_poe",
+        "indicators": [
+          "jee1_ind_poe1",
+          "jee1_ind_poe2"
+        ]
+      },
+      "jee1_ta_ce": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_ce",
+        "indicators": [
+          "jee1_ind_ce1",
+          "jee1_ind_ce2"
+        ]
+      },
+      "jee1_ta_re": {
+        "assessment": "jee1",
+        "technical_area_id": "jee1_ta_re",
+        "indicators": [
+          "jee1_ind_re1",
+          "jee1_ind_re2"
+        ]
+      }
+    }
+  },
+  "jee2": {
+    "label": "JEE 2.0",
+    "technical_area_order": [
+      "jee2_ta_p1",
+      "jee2_ta_p2",
+      "jee2_ta_p3",
+      "jee2_ta_p4",
+      "jee2_ta_p5",
+      "jee2_ta_p6",
+      "jee2_ta_p7",
+      "jee2_ta_d1",
+      "jee2_ta_d2",
+      "jee2_ta_d3",
+      "jee2_ta_d4",
+      "jee2_ta_r1",
+      "jee2_ta_r2",
+      "jee2_ta_r3",
+      "jee2_ta_r4",
+      "jee2_ta_r5",
+      "jee2_ta_poe",
+      "jee2_ta_ce",
+      "jee2_ta_re"
+    ],
+    "technical_areas": {
+      "jee2_ta_p1": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p1",
+        "indicators": [
+          "jee2_ind_p11",
+          "jee2_ind_p12",
+          "jee2_ind_p13"
+        ]
+      },
+      "jee2_ta_p2": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p2",
+        "indicators": [
+          "jee2_ind_p21"
+        ]
+      },
+      "jee2_ta_p3": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p3",
+        "indicators": [
+          "jee2_ind_p31",
+          "jee2_ind_p32",
+          "jee2_ind_p33",
+          "jee2_ind_p34"
+        ]
+      },
+      "jee2_ta_p4": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p4",
+        "indicators": [
+          "jee2_ind_p41",
+          "jee2_ind_p42"
+        ]
+      },
+      "jee2_ta_p5": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p5",
+        "indicators": [
+          "jee2_ind_p51",
+          "jee2_ind_p52"
+        ]
+      },
+      "jee2_ta_p6": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p6",
+        "indicators": [
+          "jee2_ind_p61",
+          "jee2_ind_p62"
+        ]
+      },
+      "jee2_ta_p7": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_p7",
+        "indicators": [
+          "jee2_ind_p71",
+          "jee2_ind_p72"
+        ]
+      },
+      "jee2_ta_d1": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_d1",
+        "indicators": [
+          "jee2_ind_d11",
+          "jee2_ind_d12",
+          "jee2_ind_d13",
+          "jee2_ind_d14"
+        ]
+      },
+      "jee2_ta_d2": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_d2",
+        "indicators": [
+          "jee2_ind_d21",
+          "jee2_ind_d22",
+          "jee2_ind_d23"
+        ]
+      },
+      "jee2_ta_d3": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_d3",
+        "indicators": [
+          "jee2_ind_d31",
+          "jee2_ind_d32"
+        ]
+      },
+      "jee2_ta_d4": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_d4",
+        "indicators": [
+          "jee2_ind_d41",
+          "jee2_ind_d42",
+          "jee2_ind_d43",
+          "jee2_ind_d44"
+        ]
+      },
+      "jee2_ta_r1": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_r1",
+        "indicators": [
+          "jee2_ind_r11",
+          "jee2_ind_r12"
+        ]
+      },
+      "jee2_ta_r2": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_r2",
+        "indicators": [
+          "jee2_ind_r21",
+          "jee2_ind_r22",
+          "jee2_ind_r23"
+        ]
+      },
+      "jee2_ta_r3": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_r3",
+        "indicators": [
+          "jee2_ind_r31"
+        ]
+      },
+      "jee2_ta_r4": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_r4",
+        "indicators": [
+          "jee2_ind_r41",
+          "jee2_ind_r42",
+          "jee2_ind_r43"
+        ]
+      },
+      "jee2_ta_r5": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_r5",
+        "indicators": [
+          "jee2_ind_r51",
+          "jee2_ind_r52",
+          "jee2_ind_r53",
+          "jee2_ind_r54",
+          "jee2_ind_r55"
+        ]
+      },
+      "jee2_ta_poe": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_poe",
+        "indicators": [
+          "jee2_ind_poe1",
+          "jee2_ind_poe2"
+        ]
+      },
+      "jee2_ta_ce": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_ce",
+        "indicators": [
+          "jee2_ind_ce1",
+          "jee2_ind_ce2"
+        ]
+      },
+      "jee2_ta_re": {
+        "assessment": "jee2",
+        "technical_area_id": "jee2_ta_re",
+        "indicators": [
+          "jee2_ind_re1",
+          "jee2_ind_re2"
+        ]
+      }
+    }
+  }
+}
