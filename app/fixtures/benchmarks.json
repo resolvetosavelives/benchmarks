@@ -358,12 +358,6 @@
                 "type_code_3": null
               },
               {
-                "text": "Maintain and regularly update a contact directory including all the members of NFP and capacitate NFPs for 24 hours a day, seven days a week (24/7) accessibility.",
-                "type_code_1": 10,
-                "type_code_2": 3,
-                "type_code_3": null
-              },
-              {
                 "text": "Conduct training for NFPs.",
                 "type_code_1": 15,
                 "type_code_2": null,
@@ -379,12 +373,6 @@
                 "text": "Establish SOPs for communication among relevant sectors, including thresholds for reporting and response.",
                 "type_code_1": 10,
                 "type_code_2": 12,
-                "type_code_3": null
-              },
-              {
-                "text": "Develop action plans for multisectoral/multidisciplinary coordination and communication mechanisms in a variety of settings including during times of high risk, deliberate events and mass gathering events.",
-                "type_code_1": 10,
-                "type_code_2": 3,
                 "type_code_3": null
               },
               {
@@ -414,18 +402,6 @@
                 "type_code_3": null
               },
               {
-                "text": "Implement SOPs for communicating between the NFP and relevant sectors including those responsible for surveillance and reporting, points of entry, public health services, clinics and hospitals and other government departments/ministries and review performance regularly.",
-                "type_code_1": 10,
-                "type_code_2": 12,
-                "type_code_3": null
-              },
-              {
-                "text": "Establish SOPs for communication and coordination between the NFP and nongovernmental agencies, including media and civil society.",
-                "type_code_1": 10,
-                "type_code_2": 12,
-                "type_code_3": null
-              },
-              {
                 "text": "Establish SOPs for communication and coordination between the NFP and nongovernmental agencies, including media and civil society.",
                 "type_code_1": 10,
                 "type_code_2": 12,
@@ -435,18 +411,6 @@
                 "text": "Regularly test the mechanism for multisectoral collaboration and communication through actual experience and/or scenarios for high risk, deliberate or mass gathering events.",
                 "type_code_1": 7,
                 "type_code_2": 11,
-                "type_code_3": null
-              },
-              {
-                "text": "Regularly test the mechanism for multisectoral collaboration and communication through actual experience and/or scenarios for high risk, deliberate or mass gathering events.",
-                "type_code_1": 7,
-                "type_code_2": 11,
-                "type_code_3": null
-              },
-              {
-                "text": "Develop communication channels, such as website updates or newsletters, to apprise relevant sectors and partners on developments in the relation to IHR implementation.",
-                "type_code_1": 10,
-                "type_code_2": null,
                 "type_code_3": null
               },
               {
@@ -471,12 +435,6 @@
               },
               {
                 "text": "Review NFP mastery of information and best practices.",
-                "type_code_1": 11,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Routinely conduct after-action reviews or simulations and apply the lessons learnt relating to coordination and NFP role, prioritized for actions within national action plans.",
                 "type_code_1": 11,
                 "type_code_2": null,
                 "type_code_3": null
@@ -528,18 +486,6 @@
                 "type_code_3": null
               },
               {
-                "text": "Conduct a stakeholder analysis and establish a multisectoral coordination mechanism that meets regularly to discuss and promote IHR issues (develop a protocol, terms of reference and identify resources needed for the mechanism).",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Review existing national plans from relevant sectors and increase coordination and harmonization of resources and activities within the health system as well as across relevant sectors.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
                 "text": "Review existing national plans from relevant sectors and increase coordination and harmonization of resources and activities within the health system as well as across relevant sectors.",
                 "type_code_1": null,
                 "type_code_2": null,
@@ -547,12 +493,6 @@
               },
               {
                 "text": "Conduct an OIE performance of veterinary services (OIE PVS) evaluation (or other PVS assessments) or, if already done in the past two or three years, review the OIE PVS evaluation findings and their implementation status.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Document and disseminate evidence that the coordination mechanism is working to address zoonoses and other existing or new health events at the human–animal interface.",
                 "type_code_1": null,
                 "type_code_2": null,
                 "type_code_3": null
@@ -572,25 +512,7 @@
                 "type_code_3": null
               },
               {
-                "text": "Create/update the national action plan for improving health security and IHR capacity based on IHR monitoring and evaluation results.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
                 "text": "Update or review the coordination mechanism to address zoonoses and other existing or new health events at the human–animal interface.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Update or review the coordination mechanism to address zoonoses and other existing or new health events at the human–animal interface.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Document and disseminate evidence that the coordination mechanism for food safety among stakeholders from all relevant sectors is working as per the protocol.",
                 "type_code_1": null,
                 "type_code_2": null,
                 "type_code_3": null
@@ -610,19 +532,7 @@
                 "type_code_3": null
               },
               {
-                "text": "Conduct regular multisectoral coordination meetings and ensure that the outcomes of these meetings are disseminated to the external and internal audience, well documented and acted upon.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
                 "text": "Develop performance-based indicators and regularly measure outcomes related to NFPs and IHR compliance.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Document and disseminate evidence that the coordination mechanism for chemical safety among stakeholders from all relevant sectors is working as per the protocol.",
                 "type_code_1": null,
                 "type_code_2": null,
                 "type_code_3": null
@@ -637,12 +547,6 @@
             "5": [
               {
                 "text": "Provide sustained funding for the multisectoral coordination mechanism.",
-                "type_code_1": null,
-                "type_code_2": null,
-                "type_code_3": null
-              },
-              {
-                "text": "Document and disseminate evidence that the coordination mechanism for radiation emergencies among stakeholders from all relevant sectors and national radiation safety authorities is working as per the protocol.",
                 "type_code_1": null,
                 "type_code_2": null,
                 "type_code_3": null
