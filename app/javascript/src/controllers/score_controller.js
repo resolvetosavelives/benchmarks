@@ -1,20 +1,8 @@
 import { Controller } from "stimulus"
 import $ from "jquery"
 
-/* This controller continuously validates all of the score entries in the
- * assessment and goal setting page. It checks first that the score and goal
- * are set to allowed values, and verifies that the score never exceeds the
- * goal.
- *
- * We used DOM searches instead of stimulus targets to jump between scores and
- * goals. There's no inherent reason we can't use stimulus targets instead. In
- * the context of a validation event, we care about the event's target (score
- * or goal input) and its corresponding pair input. Since the controller spans
- * the entire form, it was simpler to find the pair directly with
- * currentTarget's id and getElementById than traverse a list of goal or score
- * targets. Another reasonable strategy would be to instantiate one controller
- * per pair, and have scoreTarget and goalTarget, but this would require us to
- * re-do the input fields interaction with the submit button.
+/* This controller checks its child controllers to determine its form validity
+ * and enables or disables its submit button accordingly.
  *
  * Targets:
  *   submitButton -- the button to submit the form. This controller will enable

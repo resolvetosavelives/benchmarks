@@ -1,85 +1,77 @@
 import { Application, Controller } from "stimulus"
 import ScoreController from "score_controller"
-import $ from "jquery"
-jest.mock("jquery")
-$.mockImplementation(() => ({ tooltip: jest.fn() }))
-
-const changeValue = (element, value, eventType) => {
-  const event = new Event(eventType)
-  element.value = value
-  element.dispatchEvent(event)
-}
 
 describe("ScoreController", () => {
-  describe("#validate", () => {
+
+  describe("#initialize", () => {
+    let application
+    let controller
+    beforeEach(() => {
+      document.body.innerHTML = `
+      <div data-controller="score">
+      </div>
+      `
+      application = Application.start()
+      application.register("score", ScoreController)
+    })
+
+    it("sets childControllers to an array", () => {
+      controller = application.controllers[0]
+      expect(controller.childControllers).toBeInstanceOf(Array)
+    })
+  })
+
+  describe("#updateFormStateFromChildren", () => {
+    let application
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
         <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
-        <input id="score1" type="number" data-action="change->score#validate"/>
-        <input id="score1_goal" type="number" data-action="change->score#validate" data-goal="true"/>
-        <input id="submit" type="submit" data-target="score.submitButton" />
+          <input id="submit" type="submit" data-target="score.submitButton" />
+        </form>
       </div>
       `
-
-      const application = Application.start()
+      application = Application.start()
       application.register("score", ScoreController)
     })
 
-    it("disables submit button for an out of range score", () => {
-      const score = document.getElementById("score1")
+    it("disables submit button when a child is invalid", () => {
       const submitButton = document.getElementById("submit")
+      expect(submitButton.disabled).toEqual(false) // initially enabled
 
+      const controller = application.controllers[0]
+      const childController1 = { isValid: () => { return true } }
+      const childController2 = { isValid: () => { return false } }
+      controller.childControllers = [childController1, childController2]
+
+      controller.updateFormStateFromChildren()
+      expect(submitButton.disabled).toEqual(true)
+    })
+
+    it("enables submit button when all children are valid", () => {
+      const submitButton = document.getElementById("submit")
+      expect(submitButton.disabled).toEqual(false) // initially enabled
+
+      const controller = application.controllers[0]
+      const child1 = { isValid: () => { return true } }
+      const child2 = { isValid: () => { return true } }
+      controller.childControllers = [child1, child2]
+
+      controller.updateFormStateFromChildren()
       expect(submitButton.disabled).toEqual(false)
-      changeValue(score, 10, "change")
-      expect(submitButton.disabled).toEqual(true)
-      expect(score.checkValidity()).toEqual(false)
     })
 
-    it("disables submit button for an out of range goal", () => {
-      const goal = document.getElementById("score1_goal")
+    it("re-enables submit button when all children are valid", () => {
       const submitButton = document.getElementById("submit")
+      submitButton.disabled = true
+      expect(submitButton.disabled).toEqual(true) // initially disabled
 
-      changeValue(goal, 10, "change")
-      expect(submitButton.disabled).toEqual(true)
-      expect(goal.checkValidity()).toEqual(false)
-    })
+      const controller = application.controllers[0]
+      const child1 = { isValid: () => { return true } }
+      const child2 = { isValid: () => { return true } }
+      controller.childControllers = [child1, child2]
 
-    it("disables submit button for an empty score", () => {
-      const score = document.getElementById("score1")
-      const submitButton = document.getElementById("submit")
-
-      changeValue(score, "", "change")
-      expect(submitButton.disabled).toEqual(true)
-      expect(score.checkValidity()).toEqual(false)
-    })
-
-    it("disables submit button for an empty goal", () => {
-      const goal = document.getElementById("score1_goal")
-      const submitButton = document.getElementById("submit")
-
-      changeValue(goal, "", "change")
-      expect(submitButton.disabled).toEqual(true)
-      expect(goal.checkValidity()).toEqual(false)
-    })
-
-    it("disables submit button if score is greater than goal", () => {
-      const score = document.getElementById("score1")
-      const goal = document.getElementById("score1_goal")
-      const submitButton = document.getElementById("submit")
-
-      changeValue(goal, 2, "change")
-      changeValue(score, 3, "change")
-      expect(submitButton.disabled).toEqual(true)
-    })
-
-    it("allows submit if goal is greater than score and within range", () => {
-      const score = document.getElementById("score1")
-      const goal = document.getElementById("score1_goal")
-      const submitButton = document.getElementById("submit")
-
-      changeValue(goal, 2, "change")
-      changeValue(score, 1, "change")
+      controller.updateFormStateFromChildren()
       expect(submitButton.disabled).toEqual(false)
     })
   })
@@ -90,12 +82,12 @@ describe("ScoreController", () => {
       <div data-controller="score">
         <button type="button" data-action="click->score#getToGreen" id="gtg" />
         <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
-        <input id="score1" type="number" data-action="change->score#validate" value="1" class="color-score-1" />
-        <input id="score1_goal" type="number" data-goal="true" data-action="change->score#validate" data-goal="true" value="2" class="color-score-2" />
-        <input id="score2" type="number" data-action="change->score#validate" value="1" class="color-score-1" />
-        <input id="score2_goal" type="number" data-goal="true" data-action="change->score#validate" data-goal="true" value="2" class="color-score-2" />
-        <input id="score3" type="number" data-action="change->score#validate" value="4" class="color-score-4" />
-        <input id="score3_goal" type="number" data-goal="true" data-action="change->score#validate" data-goal="true" value="5" class="color-score-5" />
+        <input id="score1"      type="number" value="1" class="color-score-1" />
+        <input id="score1_goal" type="number" value="2" class="color-score-2" data-goal="true" />
+        <input id="score2"      type="number" value="1" class="color-score-1" />
+        <input id="score2_goal" type="number" value="2" class="color-score-2" data-goal="true" />
+        <input id="score3"      type="number" value="4" class="color-score-4" />
+        <input id="score3_goal" type="number" value="5" class="color-score-5" data-goal="true" />
         <input id="submit" type="submit" data-target="score.submitButton" />
       </div>
       `
