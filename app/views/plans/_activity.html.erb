@@ -1,5 +1,10 @@
 <div class="row activity p-2 type-code-<%= (@benchmarks.type_code_1s[activity["type_code_1"].to_s] || "unknown").parameterize %>">
-  <div class="col-11">
+  <div class="col-1 goal-value-circle">
+    <span class="badge badge-pill badge-success badge-rounded-circle color-value-<%= goal.value %>">
+      <span><%= goal.value %></span>
+    </span>
+  </div>
+  <div class="col-10">
     <%= activity["text"] %>
   </div>
   <div class="col-1">
