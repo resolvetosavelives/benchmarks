@@ -37,7 +37,7 @@
       </div>
     <% end %>
     <% activities.each do |activity| %>
-      <%= render "activity", benchmark_id: benchmark_id, activity: activity %>
+      <%= render "activity", benchmark_id: benchmark_id, activity: activity, goal: goal %>
     <% end %>
   <% end %>
 
