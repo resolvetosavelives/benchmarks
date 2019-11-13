@@ -1,4 +1,4 @@
-require "test_helper"
+require File.expand_path('./test/test_helper')
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
