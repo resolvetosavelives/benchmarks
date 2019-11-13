@@ -2,6 +2,14 @@
 <div class="row">
   <div class="col plan-container" data-controller="plan">
     <%= render "plan_form" %>
+    <div class="activity-count-header row m-4 d-flex flex-row align-items-center">
+      <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
+        <span><%= @plan.all_activities.size %></span>
+      </div>
+      <div class="col-auto">
+        <p>Total Activities</p>
+      </div>
+    </div>
     <div class="row m-4">
       <div class="col">
         <% @benchmarks.capacities.each do |capacity| %>
