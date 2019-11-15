@@ -147,9 +147,10 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     user =
       User.create!(email: 'test@example.com', password: '123455', role: 'Donor')
     plan = Plan.create!(name: 'a plan', activity_map: {})
+    before_plan_count = Plan.count
 
     sign_in user
     delete plan_path(plan.id)
-    assert_equal 1, Plan.count
+    assert_equal before_plan_count, Plan.count
   end
 end

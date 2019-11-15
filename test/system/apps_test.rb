@@ -1,4 +1,4 @@
-require 'application_system_test_case'
+require File.expand_path('./test/application_system_test_case')
 require 'capybara/cuprite'
 require 'capybara/minitest/spec'
 
@@ -28,6 +28,8 @@ class AppsTest < ApplicationSystemTestCase
 
     assert_current_path(%r{plans\/\d+})
     assert_equal 'Armenia draft plan', find('#plan_name').value
+    assert page.has_content?('TOTAL ACTIVITIES')
+    assert_equal '103', find('.activity-count-circle span').text
 
     assert page.has_content?(
              'Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors.'

@@ -1,4 +1,6 @@
-require 'test_helper'
+require File.expand_path('./test/test_helper')
+require "minitest/spec"
+require "minitest/autorun"
 
 def demo_plan
   Plan.create! name: 'US Draft Plan',
@@ -50,43 +52,86 @@ def demo_plan
                user_id: nil
 end
 
-class PlanTest < ActiveSupport::TestCase
-  test 'that I get a sorted list of capacities' do
-    plan = demo_plan
-    assert_equal [2, 3], plan.activity_map.capacities
+describe Plan do
+  before do
+    @plan = demo_plan
   end
 
-  test 'that I can get a sorted list of benchmark ids in the plan' do
-    plan = demo_plan
-    assert_equal [
-                   (BenchmarkId.from_s '2.1'),
-                   (BenchmarkId.from_s '2.2'),
-                   (BenchmarkId.from_s '3.3')
-                 ],
-                 plan.activity_map.benchmarks
+  describe "#activity_map" do
+
+    describe "#capacities" do
+      it "returns a sorted list of capacities" do
+        assert_equal [2, 3], @plan.activity_map.capacities
+      end
+    end
+
+    describe "#benchmarks" do
+      it "returns a sorted list of benchmark ids in the plan" do
+        @plan.activity_map.benchmarks.must_equal(
+            [
+                (BenchmarkId.from_s '2.1'),
+                (BenchmarkId.from_s '2.2'),
+                (BenchmarkId.from_s '3.3')
+            ]
+        )
+      end
+    end
+
+    describe "#capacity_activities" do
+      it "returns an indexed map of activities from a capacity id" do
+        @plan.activity_map.capacity_activities(2).keys.must_equal %w[2.1 2.2]
+      end
+    end
+
+    describe "#benchmark_activities" do
+      it "returns a list of capacities from a BenchmarkId" do
+        @plan.activity_map.benchmark_activities(
+            BenchmarkId.from_s '2.1'
+        ).size.must_equal 3
+      end
+    end
+
+    describe "#capacity_benchmarks" do
+      it "returns a list of benchmark ids within a given capacity" do
+        @plan.activity_map.capacity_benchmarks(3)
+            .must_equal [(BenchmarkId.from_s '3.3')]
+        @plan.activity_map.capacity_benchmarks(2)
+            .must_equal [(BenchmarkId.from_s '2.1'), (BenchmarkId.from_s '2.2')]
+      end
+    end
+
   end
 
-  test 'that I can get a list of benchmark ids within a given capacity' do
-    plan = demo_plan
-    assert_equal [(BenchmarkId.from_s '3.3')],
-                 (plan.activity_map.capacity_benchmarks 3)
-    assert_equal [(BenchmarkId.from_s '2.1'), (BenchmarkId.from_s '2.2')],
-                 (plan.activity_map.capacity_benchmarks 2)
+  describe "#all_activities_for" do
+    before do
+      @plan_with_zero_activities = Plan.create!(
+          name: 'US Draft Plan',
+          country: 'United States',
+          assessment_type: 'jee2',
+          activity_map: {},
+          user_id: nil
+      )
+      @plan_with_five_activities = demo_plan
+    end
+
+    it "returns the expected activities" do
+      result = @plan_with_five_activities.all_activities
+
+      result.size.must_equal 5
+    end
+
+    it "returns empty when a plan has no activities" do
+      result = @plan_with_zero_activities.all_activities
+
+      result.size.must_equal 0
+    end
+
+    it "returns empty when a plan has no activity_map" do
+      plan = Plan.new
+      result = plan.all_activities
+
+      result.size.must_equal 0
+    end
   end
 
-  test 'that I can get an indexed map of activities from a capacity id' do
-    plan = demo_plan
-    assert_equal %w[2.1 2.2], (plan.activity_map.capacity_activities 2).keys
-  end
-
-  test 'that I can get a list of capacities from a BenchmarkId' do
-    plan = demo_plan
-    assert_equal 3,
-                 (
-                   plan.activity_map.benchmark_activities (
-                                                            BenchmarkId.from_s '2.1'
-                                                          )
-                 )
-                   .length
-  end
 end
