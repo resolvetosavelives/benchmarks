@@ -22,7 +22,18 @@
   .row {
     border: 1px solid color("light-gray");
     margin: 0;
+
+    .badge-rounded-circle {
+      height: 2.25em;
+      width: 2.25em;
+    }
+    .badge-rounded-circle span {
+      position: relative;
+      top: 0.4em;
+      color: white;
+    }
   }
+
   .activity {
     .delete {
       display: none;
@@ -34,19 +45,6 @@
         display: inherit;
       }
     }
-  }
-
-  .goal-value-circle {
-    margin-top: 0.5em;
-  }
-  .badge-rounded-circle {
-    height: 2.25em;
-    width: 2.25em;
-  }
-  .badge-rounded-circle span {
-    position: relative;
-    top: 0.4em;
-    color: white;
   }
 
   .color-value-0,
