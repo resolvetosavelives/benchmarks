@@ -220,10 +220,12 @@ td {
 }
 
 .alt-header {
-  font-family: Pathway Gothic One;
+  font-family: Karla;
   text-transform: uppercase;
   input {
-    font-size: 40px;
+    font-size: 30px;
+    line-height: 30px;
+    color: $dark;
   }
 }
 
