@@ -45,50 +45,6 @@ export default class extends Controller {
   static targets = ["activityMap", "newActivity", "submit", "form"]
 
   connect() {
-    this.newActivityTargets.forEach((t, i) => {
-      $(t).autocomplete({
-        source: this.autocompletions(t.getAttribute("data-benchmark-id")),
-        minLength: 0,
-        open: e => {
-          const menu = $("ul.ui-menu")[i]
-          $(menu).width($(t.closest(".activity-form")).innerWidth() + 7)
-          const { top, left } = $(menu).offset()
-          $(menu).offset({ top: top + 8, left: left - 23 })
-        },
-        create: function() {
-          // AFAIK, this is the only supported way to customize the content of
-          // the jQuery autocomplete widget
-          // Reference: https://jqueryui.com/autocomplete/#categories
-          $(this).data("ui-autocomplete")._renderMenu = function(ul, items) {
-            const inRangeActivities = JSON.parse(
-              t.getAttribute("data-in-range-activities")
-            ).map(a => a.text)
-            items.forEach(
-              item =>
-                inRangeActivities.includes(item.value) &&
-                this._renderItemData(ul, item)
-            )
-            ul.append(
-              `<li class='ui-autocomplete-category'>
-                 -- Suggested Activities From Benchmarks --
-               </li>`
-            )
-            items.forEach(
-              item =>
-                !inRangeActivities.includes(item.value) &&
-                this._renderItemData(ul, item)
-            )
-          }
-        }
-      })
-      // This ensures that the separator item introduced above is not
-      // considered as an "item" of the menu. This blocks the user from
-      // selecting the seprator item as a valid option.
-      // Reference: https://api.jqueryui.com/menu/#option-items
-      $(t)
-        .autocomplete("widget")
-        .menu("option", "items", "> :not(.ui-autocomplete-category)")
-    })
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
