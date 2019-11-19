@@ -6,10 +6,10 @@
     <!-- Plan Form: Edit Name, Save Plan -->
     <%= render "plan_form" %>
 
-    <div class="row justify-content-center">
+    <div class="row">
 
       <!-- Count of Total Activities -->
-      <div class="col-10 mt-5">
+      <div class="mt-5">
         <div class="row mx-0 activity-count-header align-items-center">
           <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
             <span><%= @plan.all_activities.size %></span>
@@ -21,7 +21,7 @@
       </div>
 
       <!-- List of Activities -->
-      <div class="col-10 mt-5">
+      <div class="mt-5">
         <% @benchmarks.capacities.each do |capacity| %>
           <% if @plan.assessment_type == "from-capacities" %>
             <% if (@plan.activity_map.capacity_activities capacity[:id]).length > 0 %>
