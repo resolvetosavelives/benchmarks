@@ -1,8 +1,8 @@
 <div class="row bg-dark-blue py-4 px-0 full-width stick-to-top text-white">
 
-    <div class="col-10 row px-0 justify-content-between align-items-center offset-1">
+    <div class="col-10 offset-1 row px-0 justify-content-between">
 
-      <div class="col-4 py-0" style="height: 60px;">
+      <div style="height: 60px;">
         <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |f| %>
           <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
               target: "plan.activityMap"}, autocomplete: "off" %>
@@ -15,7 +15,7 @@
         <% end %>
       </div>
 
-      <div class="col-2" style="min-width: 140px;">
+      <div style="min-width: 140px;">
         <%= submit_tag "Save Plan", data: { target: "plan.submit", action: "plan#submit"}, class: "btn btn-orange w-100 align-self-center" %>
       </div>
 
