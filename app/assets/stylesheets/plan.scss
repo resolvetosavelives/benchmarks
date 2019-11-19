@@ -1,3 +1,5 @@
+@import "chartist/dist/scss/chartist.scss";
+
 .benchmark-container {
   margin-bottom: 50px;
   .header {
@@ -130,5 +132,34 @@
     font-size: 24px;
     line-height: 28px;
     color: rgba(45, 45, 53, 0.5);
+  }
+}
+
+.card.plan {
+  overflow: hidden;
+
+  ul.nav-tabs {
+    background-color: rgba(0, 0, 0, 0.03);
+  }
+}
+
+#bar-chart {
+  .ct-vertical {
+    stroke: #C3C9D8;
+    stroke-dasharray: 0;
+    stroke-width: 0.7;
+  }
+
+  .ct-horizontal {
+    stroke: none;
+  }
+
+  .ct-series-a .ct-bar {
+    stroke: #0D4A59;
+    stroke-width: 24;
+  }
+
+  .ct-label {
+    font-size: .5em;
   }
 }

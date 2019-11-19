@@ -22,4 +22,15 @@ class Plan < ApplicationRecord
     activities
   end
 
+  def count_activities_by_capacity(benchmarks = BenchmarksFixture.new)
+    counts = []
+    benchmarks.capacities.each_with_index do |capacity, i|
+      counts[i] = 0 if counts[i].blank?
+      benchmarks.capacity_benchmarks(capacity[:id]).map do |benchmark|
+        counts[i] += self.activity_map.benchmark_activities(benchmark[:id]).size
+      end
+    end
+    counts
+  end
+
 end
