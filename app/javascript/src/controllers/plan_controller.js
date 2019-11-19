@@ -45,6 +45,7 @@ export default class extends Controller {
   static targets = ["activityMap", "newActivity", "submit", "form"]
 
   connect() {
+    this.initBarChart()
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
@@ -176,5 +177,27 @@ export default class extends Controller {
    */
   get activityMap() {
     return JSON.parse(this.activityMapTarget.value)
+  }
+
+  initBarChart() {
+    let data = {
+      labels: JSON.parse(this.data.get("chartLabels")),
+      series: [
+        JSON.parse(this.data.get("chartSeries"))
+      ]
+    };
+    let options = {
+      high: 40,
+      low: 0,
+      width: this.data.get("chartWidth"),
+      height: this.data.get("chartHeight"),
+      axisY: {
+        // show only even-numbered X-axis labels
+        labelInterpolationFnc: function (value, index) {
+          return index % 2 === 0 ? value : null;
+        }
+      },
+    };
+    new Chartist.Bar(this.data.get("chartSelector"), data, options);
   }
 }
