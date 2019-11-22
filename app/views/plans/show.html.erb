@@ -1,15 +1,24 @@
+<%
+  chart_labels = %w(P1 P2 P3 P4 P5 P6 P7 D1 D2 D3 D4 R1 R2 R3 R4 R5 POE CE RE)
+%>
+
 <%= render "plan_review_modal" %>
 
 <div class="row">
-  <div class="col plan-container" data-controller="plan">
+  <div class="col plan-container" data-controller="plan"
+       data-plan-chart-selector="#bar-chart"
+       data-plan-chart-labels="<%= chart_labels.to_json %>"
+       data-plan-chart-series="<%= @plan.count_activities_by_capacity %>"
+       data-plan-chart-width="730"
+       data-plan-chart-height="240"
+  >
 
-    <!-- Plan Form: Edit Name, Save Plan -->
+    <!-- Plan Form: Edit Name, Save Plan (its a DIV.row) -->
     <%= render "plan_form" %>
 
+    <!-- Count of Total Activities -->
     <div class="row">
-
-      <!-- Count of Total Activities -->
-      <div class="mt-5">
+      <div class="col mt-5">
         <div class="row mx-0 activity-count-header align-items-center">
           <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
             <span><%= @plan.all_activities.size %></span>
@@ -19,9 +28,39 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- List of Activities -->
-      <div class="mt-5">
+    <!-- Row for Bar Chart and Nudge -->
+    <div class="row">
+      <div class="col mt-5">
+        <!-- Card for Bar Chart and Nudge -->
+        <div class="card plan">
+          <ul class="nav nav-tabs pt-3">
+            <li class="nav-item px-2">
+              <a class="nav-link active" href="#">Technical Area</a>
+            </li>
+          </ul>
+          <div class="row">
+            <div class="col-auto d-flex flex-column justify-content-center align-items-center bar-chart-col">
+
+              <!-- Actual Bar Chart -->
+              <h6 class="my-3">Actions per technical area</h6>
+              <div id="bar-chart" class="ct-chart-bar"></div>
+
+            </div>
+
+            <div class="col">
+              <!-- RIGHT COL: nudge goes here -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- List of Activities -->
+    <div class="row">
+      <div class="col mt-5">
         <% @benchmarks.capacities.each do |capacity| %>
           <% if @plan.assessment_type == "from-capacities" %>
             <% if (@plan.activity_map.capacity_activities capacity[:id]).length > 0 %>
@@ -32,7 +71,6 @@
           <% end %>
         <% end %>
       </div>
-
     </div>
 
   </div>

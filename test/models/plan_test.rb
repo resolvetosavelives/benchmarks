@@ -134,4 +134,13 @@ describe Plan do
     end
   end
 
+  describe "#count_activities_by_capacity" do
+
+    it "returns the expected array of integers" do
+      @plan.count_activities_by_capacity.must_equal(
+          [0, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    end
+
+  end
+
 end
