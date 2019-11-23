@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import Chartist from "chartist"
 import $ from "jquery"
 
 import renderActivity from "../renderActivity"
@@ -180,8 +181,9 @@ export default class extends Controller {
   }
 
   initBarChart() {
+    this.chartLabels = JSON.parse(this.data.get("chartLabels"))
     let data = {
-      labels: JSON.parse(this.data.get("chartLabels")),
+      labels: this.chartLabels,
       series: [
         JSON.parse(this.data.get("chartSeries"))
       ]
@@ -198,6 +200,20 @@ export default class extends Controller {
         }
       },
     };
-    new Chartist.Bar(this.data.get("chartSelector"), data, options);
+    this.chart = new Chartist.Bar(this.data.get("chartSelector"), data, options);
+    this.chart.on('created', this.setBarChartEventListeners.bind(this))
+  }
+
+  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  setBarChartEventListeners() {
+    $("line.ct-bar").each((i, el) => {
+      let $el = $(el)
+      if (this.chartLabels[i]) {
+        $($el).on('click', () => {
+          $('.capacity-container').hide()
+          $('#capacity-' + this.chartLabels[i]).show()
+        })
+      }
+    })
   }
 }

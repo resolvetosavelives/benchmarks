@@ -61,13 +61,13 @@
     <!-- List of Activities -->
     <div class="row">
       <div class="col mt-5">
-        <% @benchmarks.capacities.each do |capacity| %>
+        <% @benchmarks.capacities.each_with_index do |capacity, i| %>
           <% if @plan.assessment_type == "from-capacities" %>
             <% if (@plan.activity_map.capacity_activities capacity[:id]).length > 0 %>
-              <%= render 'capacity', capacity: capacity %>
+              <%= render 'capacity', capacity: capacity, labels: chart_labels %>
             <% end %>
           <% else %>
-            <%= render 'capacity', capacity: capacity %>
+            <%= render 'capacity', capacity: capacity, chart_label: chart_labels[i] %>
           <% end %>
         <% end %>
       </div>
