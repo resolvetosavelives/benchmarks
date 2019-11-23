@@ -47,6 +47,7 @@ export default class extends Controller {
 
   connect() {
     this.initBarChart()
+    this.initActivityCountButton()
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
@@ -214,6 +215,12 @@ export default class extends Controller {
           $('#capacity-' + this.chartLabels[i]).show()
         })
       }
+    })
+  }
+
+  initActivityCountButton() {
+    $(".activity-count-circle").click(() => {
+      $(".capacity-container").show()
     })
   }
 }
