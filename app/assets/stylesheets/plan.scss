@@ -154,9 +154,13 @@
     stroke: none;
   }
 
-  .ct-series-a .ct-bar {
+  .ct-series .ct-bar {
     stroke: #0D4A59;
     stroke-width: 24;
+
+    &:hover {
+      stroke: #4D838F;
+    }
   }
 
   .ct-label {
