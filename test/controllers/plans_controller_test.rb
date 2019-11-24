@@ -1,3 +1,4 @@
+require File.expand_path('./test/test_helper')
 require 'minitest/autorun'
 
 def create_draft_plan_stub
@@ -16,6 +17,27 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
   end
 
+  test 'plan#show responds with success for assessment_type jee1' do
+    plan = create(:plan)
+    sign_in plan.user
+    get plan_path(plan.id)
+    assert_response :success
+  end
+
+  test 'plan#show responds with success for assessment_type spar_2018' do
+    plan = create(:plan)
+    sign_in plan.user
+    get plan_path(plan.id)
+    assert_response :success
+  end
+
+  test 'plan#show responds with success for assessment_type from-capacities' do
+    plan = create(:plan_from_capacities_with_one_activity)
+    sign_in plan.user
+    get plan_path(plan.id)
+    assert_response :success
+  end
+
   test 'redirects logged out user with mismatched session[:plan_id]' do
     create_draft_plan_stub do |plan_id|
       get plan_path('another plan')
@@ -31,34 +53,32 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'logged in user can see their plan' do
-    plan = Plan.create(name: 'a plan', activity_map: {})
-    user = User.new(email: 'test@example.com')
-    user.plans << plan
-    sign_in user
+    plan = create(:plan)
+    sign_in plan.user
     get plan_path(plan.id)
     assert_response :ok
     assert_select '.capacity-container', 18
   end
 
   test "logged in user can't see someone else's plan" do
-    plan = Plan.create(name: 'a plan', activity_map: {})
-    user = User.new(email: 'test@example.com')
-    sign_in user
+    plan = create(:plan)
+    other_user = User.new(email: 'test@example.com')
+    sign_in other_user
     get plan_path(plan.id)
     assert_response :redirect
   end
 
   test 'plan/show.html.erb wires up plan controller correctly' do
-    plan =
-      Plan.create(
-        name: 'a plan',
+    plan = create(
+        :plan,
         activity_map: {
-          '1.1' => [{ "text": 'Activity 1' }, { "text": 'Activity 2' }]
+            '1.1' => [
+                {"text": 'Activity 1'},
+                {"text": 'Activity 2'}
+            ]
         }
-      )
-    user = User.new(email: 'test@example.com')
-    user.plans << plan
-    sign_in user
+    )
+    sign_in plan.user
     get plan_path(plan.id)
     assert_select '.plan-container[data-controller="plan"]', 1
     assert_select 'form[data-target="plan.form"]', 1
@@ -72,19 +92,17 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'logged in user can update their plan' do
-    plan = Plan.create(name: 'a draft plan', activity_map: {})
-    user = User.new(email: 'test@example.com')
-    user.plans << plan
-    sign_in user
+    plan = create(:plan)
+    sign_in plan.user
     put plan_path(plan.id),
         params: { plan: { name: 'the plan', activity_map: '{}' } }
     assert_equal Plan.find_by_name('the plan').id, plan.id
   end
 
   test "logged in user can't update someone else's plan" do
-    plan = Plan.create(name: 'a draft plan', activity_map: {})
-    user = User.new(email: 'test@example.com')
-    sign_in user
+    plan = create(:plan)
+    other_user = create(:user)
+    sign_in other_user
     put plan_path(plan.id),
         params: { plan: { name: 'the plan', activity_map: '{}' } }
     assert_redirected_to root_path
@@ -133,23 +151,20 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'user deletes their plan' do
-    user =
-      User.create!(email: 'test@example.com', password: '123455', role: 'Donor')
-    plan = Plan.create!(name: 'owned plan', activity_map: {})
-    user.plans << plan
-
+    plan = create(:plan)
+    user = plan.user
     sign_in user
+
     delete plan_path(plan.id)
     assert_equal 0, user.reload.plans.length
   end
 
   test "user deletes someone else's plan" do
-    user =
-      User.create!(email: 'test@example.com', password: '123455', role: 'Donor')
-    plan = Plan.create!(name: 'a plan', activity_map: {})
+    plan = create(:plan)
+    other_user = create(:user)
     before_plan_count = Plan.count
+    sign_in other_user
 
-    sign_in user
     delete plan_path(plan.id)
     assert_equal before_plan_count, Plan.count
   end

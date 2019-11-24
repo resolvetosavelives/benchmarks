@@ -1,0 +1,1490 @@
+{
+  "1.1": [
+    {
+      "text": "Identify and convene key stakeholders related to the review, formulation and implementation of legislation and policies.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Assess current relevant legislation, laws, regulations, policy and administrative requirements for IHR implementation and identify gaps, including reporting, prevention and control.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop an implementation plan for the formulation/revision/adjustment and approval of prioritized legislation/regulations and policy (including regulatory or parliamentary process based on the country’s practices, as necessary).",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop advocacy materials and package to raise awareness of the requirements of adjustments to parliamentarians, government, oppositions and other relevant stakeholders.",
+      "type_code_1": 1,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop an orientation package to implement the legislation, laws, regulations, policy and administrative requirements.",
+      "type_code_1": 8,
+      "type_code_2": 14,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify legislative/policy champion(s) or broker(s) who can advocate for the law or policy to reach a successful end state.",
+      "type_code_1": 1,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "2.1": [
+    {
+      "text": "Implement SOPs for communicating and coordinating between NFPs and WHO and review performance regularly.",
+      "type_code_1": 10,
+      "type_code_2": 12,
+      "type_code_3": 7
+    },
+    {
+      "text": "Implement SOPs for communicating between the NFP and relevant sectors including those responsible for surveillance and reporting, points of entry, public health services, clinics and hospitals and other government departments/ministries and review performance regularly.",
+      "type_code_1": 10,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish SOPs for communication and coordination between the NFP and nongovernmental agencies, including media and civil society.",
+      "type_code_1": 10,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Regularly test the mechanism for multisectoral collaboration and communication through actual experience and/or scenarios for high risk, deliberate or mass gathering events.",
+      "type_code_1": 7,
+      "type_code_2": 11,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop communication channels, such as website updates or newsletters, to apprise relevant sectors and partners on developments in the relation to IHR implementation.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct formal evaluation of the role of NFPs and the coordination mechanism.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct regular refresher training for NFPs and orientation/training for new staff.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Review NFP mastery of information and best practices.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Routinely conduct after-action reviews or simulations and apply the lessons learnt relating to coordination and NFP role, prioritized for actions within national action plans.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "2.2": [
+    {
+      "text": "Create/update the national action plan for improving health security and IHR capacity based on IHR monitoring and evaluation results.",
+      "type_code_1": null,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Update or review the coordination mechanism to address zoonoses and other existing or new health events at the human–animal interface.",
+      "type_code_1": null,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Document and disseminate evidence that the coordination mechanism for food safety among stakeholders from all relevant sectors is working as per the protocol.",
+      "type_code_1": null,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "3.2": [
+    {
+      "text": "Define laboratory standards and capacity requirements that laboratories must meet to participate in national surveillance.",
+      "type_code_1": 13,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop steps to strengthen laboratory capacity to sustainably identify and perform identification and antibiotic susceptibility testing of common bacteria including M. tuberculosis.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish an external quality assessment programme for the national reference laboratory and ensure that the national reference laboratory can conduct confirmatory or additional testing.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Define national AMR surveillance objectives and develop a national AMR surveillance strategy.",
+      "type_code_1": 13,
+      "type_code_2": 8,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish SOPs, protocols and databases for surveillance data, a system for reporting to ministries of health and agriculture, and a mechanism to analyse data and report back to facilities and to WHO.",
+      "type_code_1": 12,
+      "type_code_2": 13,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a national surveillance protocol including: surveillance targets, laboratory standards, priority specimens, pathogens and drug– bug combinations, defined datasets, metrics, data production, analysis and reporting, quality management, monitoring and evaluation).",
+      "type_code_1": 12,
+      "type_code_2": 13,
+      "type_code_3": null
+    },
+    {
+      "text": "Designate functional AMR surveillance sites.",
+      "type_code_1": 4,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "3.3": [
+    {
+      "text": "Develop national IPC guidelines for human and animal health sectors (IPC in animal production).",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify and allocate adequate resources to support selected healthcare facilities/farms to implement IPC action plans, including IPC guidelines.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Use IPC assessment tools at national (IPCAT2) and facility (IPCAF) levels to identify precise areas requiring additional activities to improve or put in place additional IPC core components and to guide the development of a detailed improvement plan of action.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement the action plan, informed by assessment results and following the five-step cycle described in the practical manuals, according to the WHO requirements/action checklists for the priority core components identified.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Refer to the recommendations and requirements for IPC guidelines, and train adequate healthcare workers on issued guidelines.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Monitor IPC and WASH implementation in selected healthcare facilities using IPCAF, hand hygiene self-assessment framework, hand hygiene compliance observation tools WASH FIT tool.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "3.4": [
+    {
+      "text": "Develop/update and disseminate national stewardship and clinical/treatment guidelines that include the Essential Medicines List AWaRe (Access, Watch, Reserve) categorization for antibiotics promoting appropriate use of antimicrobials.",
+      "type_code_1": 10,
+      "type_code_2": 5,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement stewardship practices at designated healthcare facilities.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish SOPs, protocols and databases for monitoring antimicrobial use in humans and animals.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement antimicrobial stewardship programmes, including monitoring of antimicrobial use, education/communication, and other interventions to improve antibiotic use, at designated facilities.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop or review the national regulatory framework for appropriate use of antimicrobials in humans.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Approve and enact legislation and regulations on import, marketing authorization, production and use of antimicrobials.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "4.1": [
+    {
+      "text": "Establish animal–human interfaces and procedures to exchange surveillance information on zoonotic diseases among relevant sectors (and wider when needed), ideally through an electronic system.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish an interoperability platform or information sharing mechanism between the relevant sectors to initiate coordinated surveillance activities.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement the operational plan and allocate resources for the prevention and detection of priority zoonotic diseases of greatest national public health concern.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Train responsible staff for specific aspects of the surveillance and management of priority zoonotic diseases at national and subnational levels.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "4.2": [
+    {
+      "text": "Review and assess existing multisectoral policy, strategy, plan and/or mechanism for responding to priority zoonotic events.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop guidelines and SOPs for coordinated response to zoonotic events and more widely for the management of priority zoonotic diseases by all relevant sectors.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Designate a focal point from each sector (animal (domestic animals and wildlife), human and environmental health) for response coordination.",
+      "type_code_1": 4,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and disseminate training packages on these guidelines and SOPs.",
+      "type_code_1": 5,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Publish these policies/strategies and plan.",
+      "type_code_1": 5,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "5.1": [
+    {
+      "text": "Implement actions (described above) for both indicator- and event-based disease surveillance systems at national and intermediate levels (district, province, region or state).",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a laboratory protocol for the investigation of foodborne diseases and food contamination.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Train staff on these protocols with the provision of laboratory logistics in designated laboratories.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Ensure provision of resources for the investigation of foodborne disease or food contamination events at the national level. This should include investigations into hazards in foods linked to cases, outbreaks or events.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Test for foodborne diseases and/or contamination for the cases or events detected through indicator- or event-based disease surveillance to assign aetiology.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop or adopt the risk assessment protocol of acute foodborne events (chemical and microbiological).",
+      "type_code_1": 12,
+      "type_code_2": 2,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop an information-sharing protocol and mechanism that will apply to all relevant stakeholders involved in foodborne disease surveillance and food contamination monitoring.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "5.2": [
+    {
+      "text": "Establish communication channels among all relevant sectors including between the INFOSAN Emergency Contact Point and the IHR National Focal Point.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Designate INFOSAN Focal Points with responsibility for food safety at appropriate levels in other government agencies.",
+      "type_code_1": 4,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a coordination mechanism with SOPs linking all relevant sectors together with a defined set of roles and responsibilities.",
+      "type_code_1": 3,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and disseminate training packages on SOPs and guidelines for the response and management of food safety emergencies.",
+      "type_code_1": 5,
+      "type_code_2": 12,
+      "type_code_3": null
+    }
+  ],
+  "6.1": [
+    {
+      "text": "Develop and implement strategies to increase immunization coverage in all groups with <90% first-dose MCV coverage. Implement a national plan, finalized and approved by national and state/district/province authorities, to achieve 95% national level coverage by 2020.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop quality assurance standards and mechanisms for immunizations at designated health facilities.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct activities to ensure 90% first-dose measles coverage of the country’s 12-month-old population with at least one dose of MCV.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement a routine monitoring and evaluation system for health workers who perform immunization.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Promote immunizations and sensitize communities through routine messaging via traditional/social media, and engaging civil society organizations and religious leaders.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Evaluate and validate the AEFI reporting system.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "6.2": [
+    {
+      "text": "Secure sustainable funding for vaccine delivery systems, including for procurement and routine repair of cold chain equipment.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a cold chain for vaccine delivery to more than 80% of districts or more than 80% of the target population.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct a functional exercise (either a simulation or vaccine campaign) to test vaccine delivery systems in a mass campaign or public health emergency setting.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Routinely analyse the inventory system to monitor vaccine supply needs and forecast requirements, with anticipated procurement.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Assess vaccine delivery assessment in hard-to-reach areas, targeted based on existing coverage/registry/surveillance data, and use results to improve vaccine delivery to these areas.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a national strategic framework to prioritize resources and investments in immunization.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a functional national body to assess and recommend an evidence-based national vaccine policy.",
+      "type_code_1": 4,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "7.1": [
+    {
+      "text": "Develop and disseminate testing SOPs; procurement chains should conduct testing for at least 15 priority diseases.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct quality assurance for all core tests.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a strategic framework to prioritize national investments into laboratory system sustainability.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct monitoring and evaluation to document diagnostics, data quality and staff performance, and incorporate recommendations into the national laboratory strategic plan.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a national external quality assessment programme for public health laboratories.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "7.2": [
+    {
+      "text": "Review existing specimen referral and transportation networks for priority diseases, map existing laboratory capacity for priority diseases, and establish referral networks for each pathogen.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Convene human and animal health sectors and other stakeholders to assess referral mechanisms and linkages among various levels of health facilities, including international networks with guidance and tools for dissemination.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop SOPs (as part of disease outbreak investigation protocols) for specimen collection, management and transportation and share with all levels.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Train staff of courier company and health facility on appropriate management of specimens from suspected cases of priority diseases.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a service agreement with a courier company (public or private) for specimen transportation from at least 50% of health facilities in the public sector throughout all major subdivisions of the country.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a mechanism to ensure transportation of specimens from 50% of all health facilities to national laboratories.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Provide preposition outbreak investigation kits (sample collection and transportation kits) in at least 50% of health facilities.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "7.3": [
+    {
+      "text": "Develop and disseminate SOPs for tiered testing, including point-of-care/rapid diagnosis and specimen referral systems to the appropriate laboratory ideally within the framework of a national laboratory policy, for each priority disease.",
+      "type_code_1": 12,
+      "type_code_2": 5,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop in-service training plans for all staff that include task-based training, refresher training and mentoring in their appropriate technical and administrative areas.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Allocate resources (human and material) to conduct appropriate diagnostic testing at the subnational level in line with the national laboratory policy.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "7.4": [
+    {
+      "text": "Establish a national quality assessment programme for peripheral laboratories for diagnosis of diseases with epidemic potential.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop minimum standards for certification or licensing, as a part of the system for regulation of laboratories.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement a system of inspecting and licensing laboratories, including using local adaptations of international standards and norms and obtaining required funding and human resources.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop expertise by training selected laboratory staff in the inspection of laboratories based on the standards.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "8.1": [
+    {
+      "text": "Identify and document human and animal health facilities that store/maintain dangerous pathogens and toxins in the relevant sectors and health professionals responsible for them.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Review and develop or revise the national legislation/regulations for biosafety and biosecurity by the human health sector (or other appropriate authority).",
+      "type_code_1": 2,
+      "type_code_2": 8,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a mechanism for laboratory licensing in human and animal health sectors; ensure that biosafety and biosecurity requirements are included in general licensing requirements.",
+      "type_code_1": 3,
+      "type_code_2": 10,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct assessments of current biosafety and biosecurity practices, procedures and engineering controls at the national level.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop pathogen control measures, including standards for containment, operational handling and failure reporting systems.",
+      "type_code_1": 12,
+      "type_code_2": 8,
+      "type_code_3": null
+    }
+  ],
+  "8.2": [
+    {
+      "text": "Assess biosafety and biosecurity training needs and gaps in all relevant sectors.",
+      "type_code_1": 15,
+      "type_code_2": 2,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct an engagement meeting to develop biosafety and biosecurity training programmes that align academic curriculum with international best practices.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "9.1": [
+    {
+      "text": "Train more than 90% local health workers, volunteers or both on detection and reporting of cases, clusters, outbreaks or events, and document that health workers are trained.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement the immediate and weekly reporting mechanism in all health facilities (public and private) from all levels, and ensure that weekly reports are received.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Train surveillance staff at all levels on monitoring and evaluating events, and develop and implement a clear follow-up of the process at national, intermediate and local levels.",
+      "type_code_1": 15,
+      "type_code_2": 7,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a mechanism for cross-border surveillance by means of an agreed cross-border surveillance system at points of entry, or some other mechanism of regularly sharing data and information between neighbouring countries.",
+      "type_code_1": 13,
+      "type_code_2": 3,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct regular training on SOPs, guidelines, procedures and best practices at all levels, including at the local/health facility level, for surveillance staff.",
+      "type_code_1": 15,
+      "type_code_2": 12,
+      "type_code_3": null
+    }
+  ],
+  "9.2": [
+    {
+      "text": "Implement an electronic surveillance system at the national level for both indicator- and event-based surveillance.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop an electronic event management system at the national level.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Link electronic tools with the laboratory information management system at the national level.",
+      "type_code_1": 14,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and disseminate SOPs, procedures and guidelines at all levels.",
+      "type_code_1": 12,
+      "type_code_2": 5,
+      "type_code_3": null
+    },
+    {
+      "text": "Train 80% of national- and intermediate-level surveillance staff on application/software for surveillance.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "9.3": [
+    {
+      "text": "Conduct training on data analysis for surveillance staff at all levels.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Produce weekly epidemiological reports with analysed data on priority diseases and disseminate to all levels.",
+      "type_code_1": 13,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct a training assessment of the risk of unusual case reports and surveillance signals at all levels.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Produce analyses and disseminate epidemiologic interpretation of all major events at all levels.",
+      "type_code_1": 10,
+      "type_code_2": 5,
+      "type_code_3": null
+    },
+    {
+      "text": "Operationalize a mechanism for monitoring data quality and analysis at national and intermediate levels.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "10.1": [
+    {
+      "text": "Develop protocols, SOPs, and technical guidelines to ensure regular review and update of the multisectoral workforce strategy with final approval from other relevant sectors or other relevant government agencies.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop minimum standards for animal (domestic and wildlife), environmental and human health staffing levels.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Document a separate workforce strategy for human resources for the animal and environmental health sectors, if not already included as part of the public health workforce strategy.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Create appropriate job classification and job description for health workers at all levels of the relevant ministries, and clear career ladder.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a national case for investment in human resources for health as a vital component of the Sustainable Development Goals, Universal Health Coverage and universal access to healthcare (Global Strategy on HRH 2030 Obj3.59).",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct advocacy to implement the strategy to relevant stakeholders, including ministries of health, finance, planning and administration/civil service.",
+      "type_code_1": 1,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "10.2": [
+    {
+      "text": "Expand the multisectoral strategic workforce plan nationwide to the subnational level.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement the multisectoral strategic workforce plan consistently at the national, and subnational levels, with regular reviews to track progress and barriers, and at least annual updates.",
+      "type_code_1": 8,
+      "type_code_2": 7,
+      "type_code_3": null
+    },
+    {
+      "text": "Mobilize resources to ensure each local level has some capacity for epidemiology, case management, laboratory services, One Health, and others as needed.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and implement SOPs on how professionals at the national and subnational levels communicate during an infectious disease outbreak.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a database of human resources in all relevant sectors and levels of the public health system that can provide multidisciplinary health personnel during public health emergencies with SOPs for updating and maintaining it.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "10.4": [
+    {
+      "text": "Monitor and evaluate the performance of the epidemiology workforce within healthcare systems including veterinary services.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct engagement meetings with the health ministry, agriculture ministry, partners and stakeholders to strengthen options for field placements, and to sustain funding for epidemiology training programme management.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement epidemiology training tracks for relevant career tracks.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Expand epidemiology training programmes into three levels of training programmes with career tracks established for graduates in additional jurisdictions.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Secure sustainable funding for epidemiology training programmes and career tracks and pursue accreditation.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Ensure availability of at least one trained epidemiologist per 200 000 population.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish alumni association for epidemiology graduates (all levels).",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "11.1": [
+    {
+      "text": "Review existing strategic health emergency risk assessments, including for epidemics (i.e. communicable diseases, zoonoses and emerging infectious diseases), natural and technological hazards and other events that have the potential to cause health emergencies.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify potential gaps or areas in strategic risk assessments that require updating.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a mechanism to ensure participation of the health sector and other stakeholders in the above processes, including in workshops to review and agree on outputs.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct a comprehensive multihazard health emergency risk assessment at the national level; include analysis of geographic areas and vulnerable subpopulations that may be at higher risk.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct a prioritization exercise to assign priorities to those risk scenarios described in the strategic health emergency risk assessments, including those that pose the greatest threats to public health.",
+      "type_code_1": 2,
+      "type_code_2": 8,
+      "type_code_3": null
+    },
+    {
+      "text": "Map current national level resources to support the emergency response of the health sector at the national level, including human resources, finances, infrastructure, logistics and supplies (such as health facilities, emergency operation centres, transport, vehicles, cold chain capacity, telecommunications, warehousing, supply routes).",
+      "type_code_1": 2,
+      "type_code_2": 8,
+      "type_code_3": null
+    }
+  ],
+  "11.2": [
+    {
+      "text": "Map key stakeholders and ministries involved in multihazard emergency preparedness and response including human, animal (domestic and wildlife) and environmental health sectors, meteorology, border control, food and drug agency, military, private agricultural sector, emergency services, defence, transport, media and finance.",
+      "type_code_1": 2,
+      "type_code_2": 3,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct capacity assessments of each stakeholder to support emergency preparedness for priority risks at the national level, as appropriate.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify key measures for all sectors to strengthen emergency preparedness for priority risks at the national level.",
+      "type_code_1": 8,
+      "type_code_2": 2,
+      "type_code_3": null
+    },
+    {
+      "text": "Review current health sector multihazard emergency response plans and other response plans for specific hazards.",
+      "type_code_1": 2,
+      "type_code_2": 8,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop or update the national health sector multihazard emergency response plan.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "12.2": [
+    {
+      "text": "Form a steering committee or other management structure to develop objectives, essential functions and core components; oversee the EOC and monitor and evaluate its use.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop an EOC implementation plan that includes both the planning and development of the EOC (as outlined in public health emergency operations centre network framework) and the costing, funding and sustainability of the EOC.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop an EOC activation plan that includes scaled level of response with resource requirements at each level.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a mechanism to ensure that the national emergency response plan lays out the concept of operations for the entire emergency response system.",
+      "type_code_1": 3,
+      "type_code_2": 8,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a functional national EOC that includes dedicated plan and procedures, a secure physical space, an information and communication technology infrastructure for information management and support of emergency operations, and trained staff.",
+      "type_code_1": 10,
+      "type_code_2": 9,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and implement a training programme for national EOC staff including management, communications, finance and logistics.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop standardized forms and templates for data/information management, reporting, briefing and record-keeping.",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a database of subject matter experts for consultation on priority hazards.",
+      "type_code_1": 10,
+      "type_code_2": 13,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify critical pieces of information to inform emergency response, such as epidemic intelligence, and develop systems to capture and manage this information.",
+      "type_code_1": 2,
+      "type_code_2": 10,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop plans to link laboratory and surveillance information to the emergency response communications structure.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "12.3": [
+    {
+      "text": "Design and conduct various exercises to test emergency preparedness and response capacities at national and subnational levels based on priority risks/hazards at least every year.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct a coordinated exercise at least annually with relevant sectors based on priority risks/hazards.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Document recommended actionable improvements based on the exercise and maintain a record of recommendations and the status of their implementation.",
+      "type_code_1": 11,
+      "type_code_2": 7,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct after-action reviews of events and share results of after-action reviews with stakeholders at subnational and national levels.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and implement the corrective action plan based on the exercises and after-action review findings at national and subnational levels.",
+      "type_code_1": 11,
+      "type_code_2": 7,
+      "type_code_3": null
+    }
+  ],
+  "13.1": [
+    {
+      "text": "Identify sectors responsible for response to potential IHR related hazards (biological, chemical and radiation).",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify points-of-contact to assist with the implementation of prevention, detection and response activities at government agencies across multiple sectors (such as public health, animal health, security authorities, agriculture, chemical, radiation).",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Determine roles and responsibilities for responding to various threats and other incidents of concern through a review of national response plans, policies and procedures, or other means, through an engagement meeting or other means.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Assess risk of significant biological (and chemical or radiological) incidents of concern to the country.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop triggers for sharing information on biological threats or other incidents of concern (such as chemical, radiological) with relevant multisectoral agencies.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish an informal or formal communications process to share information, based on identified triggers, related to biological threats or other incidents of concern (such as chemical, radiological) among relevant multisectoral agencies (such as public health, animal health and security authorities).",
+      "type_code_1": 10,
+      "type_code_2": 3,
+      "type_code_3": null
+    },
+    {
+      "text": "Train staff on joint risk assessment and application of triggers, and sharing of information among all sectors relevant to hazards.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "14.1": [
+    {
+      "text": "Review national preparedness and response plans, legal and regulatory frameworks, and baseline capacity for stockpiling and deploying medical countermeasures, including sector roles and responsibilities, involving all key stakeholders.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Review national laws and regulations for the registration, procurement and use of medical devices, vaccines, drugs, biologicals and medical supplies from national and/or international sources during public health emergencies.",
+      "type_code_1": 7,
+      "type_code_2": "legal",
+      "type_code_3": null
+    },
+    {
+      "text": "Complete feasibility assessment for establishing a medical countermeasures stockpile, including secure and functional facilities to stockpile medical countermeasures at all levels.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Draft a national plan to send, receive, stockpile and deploy medical countermeasures.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "14.2": [
+    {
+      "text": "Review national preparedness and response plans, and legal and regulatory frameworks for sending and receiving health personnel with key stakeholders.",
+      "type_code_1": 7,
+      "type_code_2": "leagal",
+      "type_code_3": null
+    },
+    {
+      "text": "Review national laws and regulations for the registration of EMTs.",
+      "type_code_1": 7,
+      "type_code_2": "leagal",
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct a stakeholder meeting to determine baseline capacity/capabilities of relevant ministries and partnering agencies for deployment of EMTs.",
+      "type_code_1": 1,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify points of contact at relevant multisectoral organizations.",
+      "type_code_1": 1,
+      "type_code_2": 10,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop protocols, SOPs, technical guidelines and toolkits for sending and receiving health personnel, and for sharing information as appropriate.",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify and document barriers to registering, as well as receiving and deploying national/international health personnel and teams, including safety and liability guidance for personnel deployment.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop SOPs and training for the organization, transportation and distribution of personal protective equipment, medications and supplies to health personnel.",
+      "type_code_1": 12,
+      "type_code_2": 15,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop standardized plans for treatment centres for triage, IPC and treatment during emergency incidents.",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a communication network for health personnel during emergencies.",
+      "type_code_1": 8,
+      "type_code_2": 3,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop tools for emergency health disaster education of the public for community acceptance of deployed health personnel.",
+      "type_code_1": 14,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Draft a national plan to send and receive health personnel.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Apply to WHO EMT secretariat for assistance in developing national EMTs.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "14.3": [
+    {
+      "text": "Disseminate case management guidelines to subnational level and points of entry.",
+      "type_code_1": 5,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop and disseminate SOPs for the management and transport of potentially infectious patients, including patient referral and transportation mechanisms.",
+      "type_code_1": 8,
+      "type_code_2": 5,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify the transportation mechanism and referral centres based on priority risks.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "15.1": [
+    {
+      "text": "Identify people or units responsible for risk communication within each relevant ministry and relevant sectors, with defined terms of reference to work together during a public health emergency.",
+      "type_code_1": 1,
+      "type_code_2": 3,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify and assign spokespersons (holding a certain job position) for public health emergency.",
+      "type_code_1": 4,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a list of key stakeholders in government ministries and among implementing partners. Identify points of contact for communication including different means for internal information sharing (such as by email, SMS or phone or closed group social media platforms).",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a dedicated risk communication unit or team to work on two-way communication with the public (including affected at-risk communities) using SOPs, priority tasks and dedicated responsibilities for communication and decisionmaking authority during a public health event at the national level.",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a national multihazard, multisectoral emergency risk communication plan.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Assess existing capacities and needs within government ministries and key partner agencies, and develop training plans for priority skills identified for carrying out effective risk communication.",
+      "type_code_1": 2,
+      "type_code_2": 15,
+      "type_code_3": null
+    },
+    {
+      "text": "Test the existing system and plan through actual experience and/or table-top or simulation exercises.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop risk communication capacities through cascade training and/or mentorship at the subnational level on information sharing among key stakeholders, including through the media, social media and direct interaction with affected communities.",
+      "type_code_1": null,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop risk communication capacities through cascade training and/or mentorship at the subnational level on information sharing among key stakeholders, including through the media, social media and direct interaction with affected communities.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Communicate in local languages and use appropriate technology for information exchange (dissemination and receiving feedback from the public).",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a mechanism for systematically collecting feedback from the community (such as through telephone hotline, social media forums, direct engagement).",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a mechanism to conduct baseline surveys on knowledge, attitudes and practices on priority health threats and on health seeking practices.",
+      "type_code_1": 10,
+      "type_code_2": 2,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a mechanism to ensure regular collaboration among staff responsible for surveillance, risk assessment and risk communication.",
+      "type_code_1": 8,
+      "type_code_2": 3,
+      "type_code_3": null
+    }
+  ],
+  "15.2": [
+    {
+      "text": "Expand information sharing mechanism with other sectors including media, civil society and the private sector.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct regular risk communication coordination meetings at national and subnational levels. Document and share outcomes of the meetings.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Implement regular risk communication coordination among relevant key stakeholders at national and subnational levels.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Evaluate the effectiveness of the coordination mechanism among all partners either through a real event or simulation exercise.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "15.3": [
+    {
+      "text": "Establish mechanisms for systematically receiving community feedback through multiple channels including social media and direct dialogue.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct regular refresher training, briefing, supervision and engagement of social mobilizers and community engagers.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop mechanisms to systematically integrate feedback on community concerns and issues of interest into community engagement activities.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "16.1": [
+    {
+      "text": "Conduct capacity assessment at key points of entry to inform selection for IHR designation.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Designate points of entry according to the requirements of IHR.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify key relevant stakeholders that are related to establish capacities at each designated point of entry.",
+      "type_code_1": 2,
+      "type_code_2": 3,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify competent authorities at each designated point of entry.",
+      "type_code_1": 2,
+      "type_code_2": 4,
+      "type_code_3": null
+    },
+    {
+      "text": "Conduct review of appropriate medical services including diagnostic facilities for the prompt assessment and care of sick travellers as per Annex 1B, 1(a), and identify gaps and corrective actions.",
+      "type_code_1": 1,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop SOPs for medical services (identification of diagnostic facilities to collaborate with care of sick travellers and referral).",
+      "type_code_1": 12,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Train staff on medical services SOPs and ensure the provision of adequate resources including space, equipment and premises as per Annex 1B, 1(a), 1(b).",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish capacities at designated points of entry of appropriate medical services as per IHR Annex 1B, 1(a).",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a strategy to establish all the routine capacities prescribed in the IHR Annex 1B, 1.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a strategy to integrate designated points of entry into national surveillance systems.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "16.2": [
+    {
+      "text": "Identify key stakeholders for each designated point of entry for all-hazards.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Review the status of the emergency response plan at each designated point of entry.",
+      "type_code_1": 7,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a public health emergency contingency plan, including SOPs and guidance in some of the designated points of entry, prioritized by volume and frequency of international traffic, public health risks existing in areas in which the international traffic originates, or through which it passes, according to Annex 1B.2.",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Train staff of all designated points of entry on guidance and SOPs for responding to at least events due to biological hazards.",
+      "type_code_1": 15,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Allocate resources including funds to all designated points of entry for implementation of the plan during the events.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Integrate all designated points of entry into the national emergency preparedness and response plan with the involvement of relevant sectors and services.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ],
+  "17.1": [
+    {
+      "text": "Assess existing policies, legislation and plans for chemical event surveillance, alert and response.",
+      "type_code_1": 1,
+      "type_code_2": "legal",
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a strategy to fill gaps.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify key stakeholders in all sectors and establish focal points for coordination and collaboration for chemical event surveillance, alert and response.",
+      "type_code_1": 2,
+      "type_code_2": 4,
+      "type_code_3": null
+    },
+    {
+      "text": "Identify and describe priority chemical events to inform planning, a process which can include conducting an inventory of potentially hazardous chemical sites and manufacturing facilities and a review of past chemical events.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Assess capacities for chemical event surveillance, alert and response at all levels (national, subnational).",
+      "type_code_1": 2,
+      "type_code_2": 11,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop a strategy and action plan to increase capacities.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop guidelines and SOPs for surveillance, alert and response to chemical events and emergencies including for laboratories, and develop training packages on these guidelines and SOPs.",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop capacities for diagnosis and treatment of chemical poisonings and establish a poison information service that operates at least during office hours.",
+      "type_code_1": 8,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Assess existing laboratory capacities for the analysis of human and environmental samples to inform the assessment and management investigation of chemical events and poisonings.",
+      "type_code_1": 2,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Develop all the necessary policies and legislation for chemical event surveillance, alert and response.",
+      "type_code_1": 8,
+      "type_code_2": "legal",
+      "type_code_3": null
+    },
+    {
+      "text": "Develop event response plans at all levels (national, subnational, local) with the involvement of relevant stakeholders and ensure the following: Map and review all hazardous sites and facilities ; Define roles and responsibilities of relevant agencies for response during events ; Prepare protocols for the investigation and verification of chemical events and poisoning, including through laboratory testing ; Assess training needs and develop a training plan ; Conduct training of personnel at relevant agencies and facilities ; Implement SOPs for coordination and collaboration during chemical events.",
+      "type_code_1": 8,
+      "type_code_2": 12,
+      "type_code_3": null
+    },
+    {
+      "text": "Establish a surveillance system based on the above strategy and guidelines for surveillance and alert.",
+      "type_code_1": 13,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Provide adequate resources to the national poison information service to operate on a 24/7 basis, and integrate the poisons information service into the public health surveillance system.",
+      "type_code_1": 6,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Put in place agreements with designated quality assured laboratories (national or laboratories in other countries) for timely analysis of biological and environmental samples with suspected chemical exposure.",
+      "type_code_1": 10,
+      "type_code_2": "qa",
+      "type_code_3": null
+    }
+  ],
+  "18.1": [
+    {
+      "text": "Conduct after-action reviews or simulation exercises in the absence of real events to: evaluate/test the guidelines/SOPs (conduct jointly with the competent radiation authorities and the public health unit); test coordination and communication mechanisms between relevant national competent authority for nuclear regulatory control/safety and relevant sectors; test case management capacity; and update guidelines/SOPs and coordination and communication mechanisms based on the findings.",
+      "type_code_1": 11,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Respond to any radiological threats with joint risk assessment, investigation and implementation of the response plan.",
+      "type_code_1": 10,
+      "type_code_2": null,
+      "type_code_3": null
+    },
+    {
+      "text": "Ensure that if SOPs call for prepositioning of logistics to address a radiation emergency, distribute these logistics in all designated places at all times.",
+      "type_code_1": 12,
+      "type_code_2": 9,
+      "type_code_3": null
+    },
+    {
+      "text": "Share information with relevant stakeholders regularly on the risk and threats that are potential for emergencies.",
+      "type_code_1": 3,
+      "type_code_2": null,
+      "type_code_3": null
+    }
+  ]
+}
