@@ -1,5 +1,69 @@
 @import "chartist/dist/scss/chartist.scss";
 
+.plan-entry {
+  a {
+    color: color("black");
+    &:hover {
+      color: color("primary");
+    }
+  }
+}
+
+.tips-header {
+  font-family: Pathway Gothic One;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 48px;
+  line-height: 55px;
+  margin-bottom: 40px;
+}
+
+.plan-index-header {
+  margin-top: 50px;
+  h1 {
+    font-family: Pathway Gothic One;
+    text-transform: uppercase;
+    font-size: 58px;
+  }
+}
+
+.activity-count-header {
+  font-family: "Pathway Gothic One", sans-serif;
+  .activity-count-circle {
+    width: 90px;
+    height: 90px;
+    background-color: #D86422;
+    border-radius: 45px;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.5;
+    }
+    span {
+      color: #F8F9FA;
+      font-size: 36px;
+      line-height: 41px;
+    }
+  }
+  p {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 24px;
+    line-height: 28px;
+    color: rgba(45, 45, 53, 0.5);
+  }
+}
+
+.capacity-container {
+  h2 {
+    font-family: Karla;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    text-transform: uppercase;
+  }
+}
+
 .benchmark-container {
   margin-bottom: 50px;
   .header {
@@ -72,70 +136,6 @@
   }
 }
 
-.capacity-container {
-  h2 {
-    font-family: Karla;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 24px;
-    text-transform: uppercase;
-  }
-}
-
-.plan-entry {
-  a {
-    color: color("black");
-    &:hover {
-      color: color("primary");
-    }
-  }
-}
-
-.tips-header {
-  font-family: Pathway Gothic One;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 48px;
-  line-height: 55px;
-  margin-bottom: 40px;
-}
-
-.plan-index-header {
-  margin-top: 50px;
-  h1 {
-    font-family: Pathway Gothic One;
-    text-transform: uppercase;
-    font-size: 58px;
-  }
-}
-
-.activity-count-header {
-  font-family: "Pathway Gothic One", sans-serif;
-  .activity-count-circle {
-    width: 90px;
-    height: 90px;
-    background-color: #D86422;
-    border-radius: 45px;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
-    }
-    span {
-      color: #F8F9FA;
-      font-size: 36px;
-      line-height: 41px;
-    }
-  }
-  p {
-    margin: 0;
-    text-transform: uppercase;
-    font-size: 24px;
-    line-height: 28px;
-    color: rgba(45, 45, 53, 0.5);
-  }
-}
-
 .card.plan {
   overflow: hidden;
 
@@ -144,7 +144,7 @@
   }
 }
 
-#bar-chart {
+#bar-chart-for-ta {
   .ct-vertical {
     stroke: #C3C9D8;
     stroke-dasharray: 0;
@@ -167,5 +167,19 @@
 
   .ct-label {
     font-size: .5em;
+  }
+}
+
+.plan-container {
+  .tooltip-inner {
+    border: 1px solid black;
+    background-color: #F8F9FA;
+    color: #545B62;
+  }
+  .tooltip-inner {
+    font-family: Karla, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    letter-spacing: -0.2px;
   }
 }

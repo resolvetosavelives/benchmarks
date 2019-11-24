@@ -18,7 +18,7 @@ describe("PlanController", () => {
   beforeEach(() => {
     document.body.innerHTML = `
       <div data-controller="plan"
-         data-plan-chart-selector="#bar-chart"
+         data-plan-chart-selector="#bar-chart-for-ta"
          data-plan-chart-labels='["P1","P2","P3","P4","P5","P6","P7","D1","D2","D3","D4","R1","R2","R3","R4","R5","POE","CE","RE"]'
          data-plan-chart-series="[3, 9, 19, 9, 11, 13, 19, 7, 15, 18, 11, 15, 7, 19, 20, 16, 14, 4]"
          data-plan-chart-width="730"
@@ -30,7 +30,7 @@ describe("PlanController", () => {
           <input id="name" data-action="change->plan#validateName" required>
         </form>
 
-        <div id="bar-chart" class="ct-chart-bar"></div>
+        <div id="bar-chart-for-ta" class="ct-chart-bar"></div>
 
         <div class="benchmark-container" id="capacity-p7">
           <div id="activity_container_1-1">
@@ -140,7 +140,7 @@ describe("PlanController", () => {
     })
 
     it("uses the expected DOM node for the chart", () => {
-      expect(controller.chart.container).toBe(document.getElementById("bar-chart"))
+      expect(controller.chart.container).toBe(document.getElementById("bar-chart-for-ta"))
     })
   })
 

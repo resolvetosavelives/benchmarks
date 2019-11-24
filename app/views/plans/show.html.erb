@@ -1,12 +1,15 @@
 <%
-  chart_labels = %w(P1 P2 P3 P4 P5 P6 P7 D1 D2 D3 D4 R1 R2 R3 R4 R5 POE CE RE)
+  # NB: these labels come from the JEE1 but absent the P6 label cuz thats what
+  #   reflect the Benchmarks. This will probably be re-visited to use the actual
+  #   Indicator values from the actual Benchmarks, once those become available.
+  chart_labels = %w(P1 P2 P3 P4 P5 P7 D1 D2 D3 D4 R1 R2 R3 R4 R5 POE CE RE)
 %>
 
 <%= render "plan_review_modal" %>
 
 <div class="row">
   <div class="col plan-container" data-controller="plan"
-       data-plan-chart-selector="#bar-chart"
+       data-plan-chart-selector="#bar-chart-for-ta"
        data-plan-chart-labels="<%= chart_labels.to_json %>"
        data-plan-chart-series="<%= @plan.count_activities_by_capacity %>"
        data-plan-chart-width="730"
@@ -45,7 +48,8 @@
 
               <!-- Actual Bar Chart -->
               <h6 class="my-3">Actions per technical area</h6>
-              <div id="bar-chart" class="ct-chart-bar"></div>
+              <div id="bar-chart-for-ta" class="ct-chart-bar">
+              </div>
 
             </div>
 

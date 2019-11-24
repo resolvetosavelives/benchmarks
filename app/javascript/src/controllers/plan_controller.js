@@ -181,6 +181,13 @@ export default class extends Controller {
     return JSON.parse(this.activityMapTarget.value)
   }
 
+  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  initActivityCountButton() {
+    $(".activity-count-circle").click(() => {
+      $(".capacity-container").show()
+    })
+  }
+
   initBarChart() {
     this.chartLabels = JSON.parse(this.data.get("chartLabels"))
     let data = {
@@ -202,25 +209,38 @@ export default class extends Controller {
       },
     };
     this.chart = new Chartist.Bar(this.data.get("chartSelector"), data, options);
-    this.chart.on('created', this.setBarChartEventListeners.bind(this))
+    this.chart.on('created', () => {
+      this.initBarChartInteractivity()
+    })
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
-  setBarChartEventListeners() {
-    $("line.ct-bar").each((i, el) => {
-      let $el = $(el)
-      if (this.chartLabels[i]) {
-        $($el).on('click', () => {
-          $('.capacity-container').hide()
-          $('#capacity-' + this.chartLabels[i]).show()
-        })
-      }
+  initBarChartInteractivity() {
+    $("line.ct-bar").each((index, el) => {
+      let $elBarSegment = $(el)
+      this.initClickHandlerForTAChart($elBarSegment, index)
+      this.initTooltipForTAChartSegment($elBarSegment, index)
     })
   }
 
-  initActivityCountButton() {
-    $(".activity-count-circle").click(() => {
-      $(".capacity-container").show()
-    })
+  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  initClickHandlerForTAChart($elBarSegment, index) {
+    if (this.chartLabels[index]) {
+      $($elBarSegment).on('click', () => {
+        $('.capacity-container').hide()
+        $('#capacity-' + this.chartLabels[index]).show()
+      })
+    }
+  }
+
+  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  initTooltipForTAChartSegment($elBarSegment, index) {
+    let $elTitle = $('#capacity-' + this.chartLabels[index])
+    let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
+    $elBarSegment
+        .attr("title", tooltipTitle)
+        .attr("data-toggle", "tooltip")
+        .tooltip({container: ".plan-container"})
+        .tooltip('show')
   }
 }
