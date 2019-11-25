@@ -1,5 +1,11 @@
-<div class="capacity-container" id="capacity-<%= chart_label %>">
-  <h2 id="<%= capacity[:name].parameterize %>"><%= capacity[:id] %>. <%= capacity[:name] %></h2>
+<div class="capacity-container"
+     id="capacity-<%= chart_label %>"
+     title="<%= capacity[:name] %>"
+>
+  <h2 id="<%= capacity[:name].parameterize %>">
+    <%= capacity[:id] %>.
+    <%= capacity[:name] %>
+  </h2>
   <% (@benchmarks.capacity_benchmarks capacity[:id]).each do |benchmark| %>
     <!-- -->
     <% activities = @plan.activity_map.benchmark_activities(benchmark[:id]) %>
