@@ -241,6 +241,6 @@ export default class extends Controller {
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
         .tooltip({container: ".plan-container"})
-        .tooltip('show')
+        .tooltip()
   }
 }
