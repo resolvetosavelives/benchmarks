@@ -171,12 +171,13 @@
 }
 
 .plan-container {
-  .tooltip-inner {
-    border: 1px solid black;
-    background-color: #F8F9FA;
-    color: #545B62;
+
+  .tooltip.bs-tooltip-top .arrow:before {
+    border-top-color: #2D2D35;
   }
   .tooltip-inner {
+    color: #F8F9FA;
+    background-color: #2D2D35;
     font-family: Karla, sans-serif;
     font-size: 12px;
     line-height: 14px;
