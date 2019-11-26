@@ -95,7 +95,7 @@
               <% technical_area = @assessments[@display_assessment_type]['technical_areas'][technical_area_id] %>
               <tr class="technical-area-<%= technical_area_id %>"
                   data-controller="score-and-goal">
-                <% indicator = technical_area['indicators'][0] %>
+                <% indicator_id = technical_area['indicators'][0] %>
                 <th
                   class="border-right"
                   scope="row"
@@ -103,12 +103,15 @@
                 >
                   <%= @data_dictionary[technical_area_id] %>
                 </th>
-                <td class="border-right"><%= @data_dictionary[indicator] %></td>
-                <td>
-                  <%= render "validated_field", field_name: indicator, f: f %>
+                <td class="border-right">
+                  <strong><%= abbrev_from_named_id(indicator_id) %></strong>
+                  <%= @data_dictionary[indicator_id] %>
                 </td>
                 <td>
-                  <%= render "validated_field", field_name: "#{indicator}_goal", f:
+                  <%= render "validated_field", field_name: indicator_id, f: f %>
+                </td>
+                <td>
+                  <%= render "validated_field", field_name: "#{indicator_id}_goal", f:
                   f %>
                 </td>
               </tr>
@@ -116,7 +119,10 @@
               <% technical_area['indicators'].drop(1).each do |indicator| %>
                 <tr class="technical-area-<%= technical_area_id %>"
                     data-controller="score-and-goal">
-                  <td class="border-right"><%= @data_dictionary[indicator] %></td>
+                  <td class="border-right">
+                    <strong><%= abbrev_from_named_id(indicator) %></strong>
+                    <%= @data_dictionary[indicator] %>
+                  </td>
                   <td>
                     <%= render "validated_field", field_name: indicator, f: f %>
                   </td>
