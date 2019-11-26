@@ -19,7 +19,7 @@ class AppsTest < ApplicationSystemTestCase
 
     assert page.has_content?('SPAR 2018 SCORES')
     assert page.has_content?(
-             'C.1.3 Financing mechanism and funds for timely response to public health emergencies'
+             'C1.3 Financing mechanism and funds for timely response to public health emergencies'
            )
     assert_equal '3', find('#goal_form_spar_2018_ind_c13').value
     assert_equal '4', find('#goal_form_spar_2018_ind_c13_goal').value
