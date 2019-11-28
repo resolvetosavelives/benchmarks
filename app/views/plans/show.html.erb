@@ -1,81 +1,91 @@
-<%
-  # NB: these labels come from the JEE1 but absent the P6 label cuz thats what
-  #   reflect the Benchmarks. This will probably be re-visited to use the actual
-  #   Indicator values from the actual Benchmarks, once those become available.
-  chart_labels = %w(P1 P2 P3 P4 P5 P7 D1 D2 D3 D4 R1 R2 R3 R4 R5 POE CE RE)
-%>
+<% chart_labels = benchmark_ta_abbreviations %>
 
 <%= render "plan_review_modal" %>
 
 <div class="row">
+
   <div class="col plan-container" data-controller="plan"
-       data-plan-chart-selector="#bar-chart-for-ta"
+       data-plan-chart-selector="#bar-chart-by-technical-area"
        data-plan-chart-labels="<%= chart_labels.to_json %>"
-       data-plan-chart-series="<%= @plan.count_activities_by_capacity %>"
+       data-plan-chart-series="<%= @plan.count_activities_by_ta %>"
        data-plan-chart-width="730"
        data-plan-chart-height="240"
+       data-plan-activity-ids="<%= @plan.benchmark_indicator_activity_ids.to_json %>"
   >
+    <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |form| %>
 
-    <!-- Plan Form: Edit Name, Save Plan (its a DIV.row) -->
-    <%= render "plan_form" %>
+      <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
+      <%= render "plan_name_sticky", form: form %>
+      <%= form.hidden_field :benchmark_activity_ids,
+                            value: nil, # populated later via JS upon form submit event
+                            data: {target: "plan.fieldForActivityIds"},
+                            autocomplete: "off"
+      %>
 
-    <!-- Count of Total Activities -->
-    <div class="row">
-      <div class="col mt-5">
-        <div class="row mx-0 activity-count-header align-items-center">
-          <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
-            <span><%= @plan.all_activities.size %></span>
-          </div>
-          <div class="col-auto">
-            <p>Total Activities</p>
+      <!-- Count of Total Activities -->
+      <div class="row">
+        <div class="col mt-5">
+          <div class="row mx-0 activity-count-header align-items-center">
+            <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
+              <span><%= @plan.plan_activities.size %></span>
+            </div>
+            <div class="col-auto">
+              <p>Total Activities</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Row for Bar Chart and Nudge -->
-    <div class="row">
-      <div class="col mt-5">
-        <!-- Card for Bar Chart and Nudge -->
-        <div class="card plan">
-          <ul class="nav nav-tabs pt-3">
-            <li class="nav-item px-2">
-              <a class="nav-link active" href="#">Technical Area</a>
-            </li>
-          </ul>
-          <div class="row">
-            <div class="col-auto d-flex flex-column justify-content-center align-items-center bar-chart-col">
+      <!-- Row for Bar Chart and Nudge -->
+      <div class="row">
+        <div class="col mt-5">
+          <!-- Card for Bar Chart and Nudge -->
+          <div class="card plan">
+            <ul class="nav nav-tabs pt-3">
+              <li class="nav-item px-2">
+                <a class="nav-link active" href="#">Technical Area</a>
+              </li>
+            </ul>
+            <div class="row">
+              <div class="col-auto d-flex flex-column justify-content-center align-items-center bar-chart-col">
 
-              <!-- Actual Bar Chart -->
-              <h6 class="my-3">Actions per technical area</h6>
-              <div id="bar-chart-for-ta" class="ct-chart-bar">
+                <!-- Actual Bar Chart -->
+                <h6 class="my-3">Actions per technical area</h6>
+                <div id="bar-chart-by-technical-area" class="ct-chart-bar">
+                </div>
+
+              </div>
+
+              <div class="col">
+                <!-- RIGHT COL: nudge goes here -->
               </div>
 
             </div>
-
-            <div class="col">
-              <!-- RIGHT COL: nudge goes here -->
-            </div>
-
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- List of Activities -->
-    <div class="row">
-      <div class="col mt-5">
-        <% @benchmarks.capacities.each_with_index do |capacity, i| %>
-          <% if @plan.assessment_type == "from-capacities" %>
-            <% if (@plan.activity_map.capacity_activities capacity[:id]).length > 0 %>
-              <%= render 'capacity', capacity: capacity, chart_label: chart_labels[i] %>
-            <% end %>
-          <% else %>
-            <%= render 'capacity', capacity: capacity, chart_label: chart_labels[i] %>
+      <!-- List of Activities -->
+      <div class="row">
+        <div class="col mt-5">
+          <% @benchmark_technical_areas.each_with_index do |benchmark_technical_area, index| %>
+            <%= render 'technical_area',
+                       benchmark_technical_area: benchmark_technical_area,
+                       chart_label: chart_labels[index]
+            %>
           <% end %>
-        <% end %>
+        </div>
       </div>
-    </div>
 
+    <% end %>
   </div>
+
+  <script type="text/template" id="activity-row">
+      <%= render "activity",
+             benchmark_activity_id:    "{{benchmarkActivityId}}",
+             display_abbreviation:     "{{displayAbbreviation}}",
+             benchmark_activity_level: "{{benchmarkActivityLevel}}",
+             benchmark_activity_text:  "{{benchmarkActivityText}}"
+  %>
+  </script>
 </div>

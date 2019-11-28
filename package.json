@@ -6,13 +6,14 @@
     "@stimulus/webpack-helpers": "^1.1.1",
     "bootstrap": "4.3.1",
     "bootstrap-multiselect": "^0.9.13-1",
+    "chartist": "^0.11.4",
+    "hogan.js": "^3.0.2",
     "jquery": "^3.4.1",
     "jquery-ui": "^1.12.1",
     "jquery-ujs": "^1.2.2",
     "popper.js": "^1.15.0",
     "stimulus": "^1.1.1",
-    "turbolinks": "^5.2.0",
-    "chartist": "^0.11.4"
+    "turbolinks": "^5.2.0"
   },
   "prettier": {
     "semi": false

@@ -3,16 +3,12 @@
     <div class="col-10 offset-1 row justify-content-between">
 
       <div style="height: 60px;">
-        <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |f| %>
-          <%= f.hidden_field :activity_map, value: @plan.activity_map.to_json, data: {
-              target: "plan.activityMap"}, autocomplete: "off" %>
           <div class="form-group alt-header" style="min-width: 200px;">
-            <%= f.text_field :name, data: { target: "plan.name", action: "change->plan#validateName" }, class: "form-control", required: true %>
+            <%= form.text_field :name, data: { target: "plan.name", action: "change->plan#validateName" }, class: "form-control", required: true %>
             <div class="invalid-feedback">
               Cannot be empty
             </div>
           </div>
-        <% end %>
       </div>
 
       <div style="min-width: 140px;">

@@ -1,0 +1,275 @@
+[
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 1,
+    "benchmark_indicator_id": 1,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 3,
+    "benchmark_indicator_id": 4,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 4,
+    "benchmark_indicator_id": 7,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 6,
+    "benchmark_indicator_id": 8,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 7,
+    "benchmark_indicator_id": 9,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 8,
+    "benchmark_indicator_id": 10,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 9,
+    "benchmark_indicator_id": 26,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 10,
+    "benchmark_indicator_id": 11,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 11,
+    "benchmark_indicator_id": 12,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 11,
+    "benchmark_indicator_id": 13,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 12,
+    "benchmark_indicator_id": 20,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 13,
+    "benchmark_indicator_id": 21,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 14,
+    "benchmark_indicator_id": 14,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 15,
+    "benchmark_indicator_id": 15,
+    "score": 4,
+    "goal": 5
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 16,
+    "benchmark_indicator_id": 16,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 17,
+    "benchmark_indicator_id": 17,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 18,
+    "benchmark_indicator_id": 18,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 19,
+    "benchmark_indicator_id": 19,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 20,
+    "benchmark_indicator_id": 22,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 21,
+    "benchmark_indicator_id": 23,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 22,
+    "benchmark_indicator_id": 24,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 25,
+    "benchmark_indicator_id": 5,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 27,
+    "benchmark_indicator_id": 28,
+    "score": 4,
+    "goal": 5
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 28,
+    "benchmark_indicator_id": 25,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 29,
+    "benchmark_indicator_id": 30,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 30,
+    "benchmark_indicator_id": 29,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 31,
+    "benchmark_indicator_id": 32,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 33,
+    "benchmark_indicator_id": 33,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 34,
+    "benchmark_indicator_id": 37,
+    "score": 2,
+    "goal": 3
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 35,
+    "benchmark_indicator_id": 34,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 36,
+    "benchmark_indicator_id": 35,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 37,
+    "benchmark_indicator_id": 36,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 38,
+    "benchmark_indicator_id": 38,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 39,
+    "benchmark_indicator_id": 39,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 41,
+    "benchmark_indicator_id": 40,
+    "score": 3,
+    "goal": 4
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 43,
+    "benchmark_indicator_id": 41,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 44,
+    "benchmark_indicator_id": 42,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 45,
+    "benchmark_indicator_id": 43,
+    "score": 1,
+    "goal": 2
+  },
+  {
+    "plan_id": 1,
+    "assessment_indicator_id": 47,
+    "benchmark_indicator_id": 44,
+    "score": 3,
+    "goal": 4
+  }
+]

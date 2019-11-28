@@ -1,0 +1,308 @@
+[
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p1",
+    "text": "National legislation, policy and financing",
+    "sequence": 1
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p2",
+    "text": "IHR coordination, communication and advocacy",
+    "sequence": 2
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p3",
+    "text": "Antimicrobial resistance (AMR)",
+    "sequence": 3
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p4",
+    "text": "Zoonotic diseases",
+    "sequence": 4
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p5",
+    "text": "Food Safety",
+    "sequence": 5
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p6",
+    "text": "Biosafety and biosecurity",
+    "sequence": 6
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_p7",
+    "text": "Immunization",
+    "sequence": 7
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_d1",
+    "text": "National laboratory system",
+    "sequence": 8
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_d2",
+    "text": "Surveillance",
+    "sequence": 9
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_d3",
+    "text": "Reporting",
+    "sequence": 10
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_d4",
+    "text": "Workforce Development",
+    "sequence": 11
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_r1",
+    "text": "Emergency Preparedness",
+    "sequence": 12
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_r2",
+    "text": "Emergency response operations",
+    "sequence": 13
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_r3",
+    "text": "Linking public health and security authorities",
+    "sequence": 14
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_r4",
+    "text": "Medical countermeasures and personnel deployment",
+    "sequence": 15
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_r5",
+    "text": "Risk communication",
+    "sequence": 16
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_poe",
+    "text": "Points of entry",
+    "sequence": 17
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_ce",
+    "text": "Chemical events",
+    "sequence": 18
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ta_re",
+    "text": "Radiation emergencies",
+    "sequence": 19
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p1",
+    "text": "National legislation, policy and financing",
+    "sequence": 1
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p2",
+    "text": "IHR coordination, communication and advocacy",
+    "sequence": 2
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p3",
+    "text": "Antimicrobial resistance (AMR)",
+    "sequence": 3
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p4",
+    "text": "Zoonotic diseases",
+    "sequence": 4
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p5",
+    "text": "Food Safety",
+    "sequence": 5
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p6",
+    "text": "Biosafety and biosecurity",
+    "sequence": 6
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_p7",
+    "text": "Immunization",
+    "sequence": 7
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_d1",
+    "text": "National laboratory system",
+    "sequence": 8
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_d2",
+    "text": "Surveillance",
+    "sequence": 9
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_d3",
+    "text": "Reporting",
+    "sequence": 10
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_d4",
+    "text": "Human resources",
+    "sequence": 11
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_r1",
+    "text": "Emergency preparedness",
+    "sequence": 12
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_r2",
+    "text": "Emergency response operations",
+    "sequence": 13
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_r3",
+    "text": "Linking public health and security authorities",
+    "sequence": 14
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_r4",
+    "text": "Medical countermeasures and personnel deployment",
+    "sequence": 15
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_r5",
+    "text": "Risk communication",
+    "sequence": 16
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_poe",
+    "text": "Points of entry",
+    "sequence": 17
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_ce",
+    "text": "Chemical events",
+    "sequence": 18
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ta_re",
+    "text": "Radiation emergencies",
+    "sequence": 19
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c1",
+    "text": "Legislation and Financing",
+    "sequence": 1
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c2",
+    "text": "IHR Coordination and National IHR Focal Point Functions",
+    "sequence": 2
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c3",
+    "text": "Zoonotic events and the human-animal interface",
+    "sequence": 3
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c4",
+    "text": "Food safety",
+    "sequence": 4
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c5",
+    "text": "Laboratory",
+    "sequence": 5
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c6",
+    "text": "Surveillance",
+    "sequence": 6
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c7",
+    "text": "Human resources",
+    "sequence": 7
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c8",
+    "text": "National health emergency framework",
+    "sequence": 8
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c9",
+    "text": "Health service provision",
+    "sequence": 9
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c10",
+    "text": "Risk communication",
+    "sequence": 10
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c11",
+    "text": "Points of entry",
+    "sequence": 11
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c12",
+    "text": "Chemical events",
+    "sequence": 12
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ta_c13",
+    "text": "Radiation emergencies",
+    "sequence": 13
+  }
+]

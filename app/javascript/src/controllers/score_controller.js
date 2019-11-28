@@ -1,5 +1,4 @@
 import { Controller } from "stimulus"
-import $ from "jquery"
 
 /* This controller checks its child controllers to determine its form validity
  * and enables or disables its submit button accordingly.
