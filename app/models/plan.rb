@@ -210,4 +210,8 @@ class Plan < ApplicationRecord
     plan
   end
 
+  def activity_map
+    ActivityMap.new self[:activity_map]
+  end
+
 end

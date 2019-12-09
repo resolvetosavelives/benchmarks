@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.expand_path('./test/test_helper')
 
 class CostSheetTest < ActiveSupport::TestCase
   test 'creates a cost sheet from a plan' do
