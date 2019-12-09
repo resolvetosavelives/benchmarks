@@ -39,8 +39,13 @@ class AppsTest < ApplicationSystemTestCase
     find('input[type=submit]').trigger(:click)
 
     assert_current_path('/users/sign_in')
-    find('#user_email').fill_in with: 'savanni@cloudcity.io'
-    find('#user_password').fill_in with: '6hU$no8IlS8*'
+    click_link('Create an account')
+
+    assert_current_path('/users/sign_up')
+    sleep 0.1  # ugh without this form field(s) dont get filled
+    find('#user_email').fill_in with: 'email@example.com'
+    find('#user_password').fill_in with: '123123'
+    find('#user_password_confirmation').fill_in with: '123123'
     find('#new_user input[type=submit]').trigger(:click)
 
     assert_current_path('/plans')
