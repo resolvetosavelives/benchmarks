@@ -1,5 +1,5 @@
 class AssessmentTechnicalArea < ApplicationRecord
-  #include BenchmarkTechnicalAreaSeed
+  include AssessmentTechnicalAreaSeed
 
   belongs_to :assessment_publication
   has_many :assessment_indicators

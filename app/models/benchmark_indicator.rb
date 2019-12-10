@@ -1,4 +1,6 @@
 class BenchmarkIndicator < ApplicationRecord
+  include BenchmarkIndicatorSeed
+
   belongs_to :benchmark_technical_area
   has_many :activities, class_name: "BenchmarkIndicatorActivity"
   has_and_belongs_to_many :assessment_indicators

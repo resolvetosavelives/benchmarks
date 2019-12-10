@@ -22,7 +22,12 @@ task nu_gen_activities: %i[environment] do
     # there can be trailing rows that contain nothing so skip with +nil+
     next if capacity_id.nil? && indicator_id.nil?
 
-    activity_types = [type_code_1, type_code_2, type_code_3].compact
+    # activity_types will be made to be an array or nil
+    activity_types = [type_code_1, type_code_2, type_code_3].map do |type_num|
+      # there are some string values in the spreadsheet, discard them
+      num = type_num.to_i
+      (1..15).include?(num) ? num : nil # activity types are numbered 1-15
+    end.compact
     display_abbreviation = "#{capacity_id}.#{indicator_id}"
     row = {
         benchmark_indicator_display_abbreviation: display_abbreviation,

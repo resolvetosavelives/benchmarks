@@ -69,6 +69,18 @@ class Plan < ApplicationRecord
     end
   end
 
+  def count_activities_by_type
+    counts_by_type = Array.new(
+        BenchmarkIndicatorActivity::ACTIVITY_TYPES.size, 0)
+    plan_activities.each do |activity|
+      # some BIA's have no activity types and those are nil, we absorb with +&+
+      activity.benchmark_indicator_activity.activity_types&.each do |type_num|
+        counts_by_type[type_num - 1] += 1
+      end
+    end
+    counts_by_type
+  end
+
   def indicator_for(benchmark_indicator)
     plan_benchmark_indicators.detect do |pbi|
       benchmark_indicator.eql?(pbi.benchmark_indicator)

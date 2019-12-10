@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2019_11_28_030150) do
     t.string "text", limit: 1000
     t.integer "level"
     t.integer "sequence"
+    t.integer "activity_types", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["benchmark_indicator_id"], name: "index_benchmark_indicator_activities_on_benchmark_indicator_id"

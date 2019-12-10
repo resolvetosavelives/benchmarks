@@ -65,6 +65,7 @@ class AddBenchmarks < ActiveRecord::Migration[5.2]
       t.string :text, limit: 1000
       t.integer :level
       t.integer :sequence
+      t.integer :activity_types, array: true, default: []
       t.timestamps
     end
     add_foreign_key :benchmark_indicator_activities, :benchmark_indicators

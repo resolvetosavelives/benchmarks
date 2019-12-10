@@ -8,7 +8,8 @@ import $ from "jquery"
 //   "special" with mocking jquery that is not reset between tests.
 jest.mock("jquery")
 $.mockImplementation(() => ({
-  autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() })
+  autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() }),
+  on: jest.fn()
 }))
 
 import { changeValue, keypress } from "./utilities"

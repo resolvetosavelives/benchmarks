@@ -6239,8 +6239,7 @@
     "level": 2,
     "sequence": 2,
     "activity_types": [
-      7,
-      "legal"
+      7
     ]
   },
   {
@@ -6386,8 +6385,7 @@
     "level": 2,
     "sequence": 1,
     "activity_types": [
-      7,
-      "leagal"
+      7
     ]
   },
   {
@@ -6396,8 +6394,7 @@
     "level": 2,
     "sequence": 2,
     "activity_types": [
-      7,
-      "leagal"
+      7
     ]
   },
   {
@@ -6565,8 +6562,7 @@
     "level": 4,
     "sequence": 4,
     "activity_types": [
-      10,
-      "QA"
+      10
     ]
   },
   {
@@ -7046,8 +7042,7 @@
     "level": 2,
     "sequence": 2,
     "activity_types": [
-      2,
-      "legal"
+      2
     ]
   },
   {
@@ -7572,8 +7567,7 @@
     "level": 2,
     "sequence": 1,
     "activity_types": [
-      1,
-      "legal"
+      1
     ]
   },
   {
@@ -7657,8 +7651,7 @@
     "level": 3,
     "sequence": 1,
     "activity_types": [
-      8,
-      "legal"
+      8
     ]
   },
   {
@@ -7695,8 +7688,7 @@
     "level": 3,
     "sequence": 5,
     "activity_types": [
-      10,
-      "qa"
+      10
     ]
   },
   {
@@ -7863,8 +7855,7 @@
     "level": 2,
     "sequence": 9,
     "activity_types": [
-      4,
-      "lab"
+      4
     ]
   },
   {
