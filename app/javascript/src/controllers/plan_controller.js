@@ -1,7 +1,8 @@
 import { Controller } from "stimulus"
+import $ from "jquery"
 import Chartist from "chartist"
 
-import renderActivity from "../renderActivity"
+// TODO: test coverage for recent changes
 
 /* This controller handles almost all of the in-browser capabilities of the
  * draft plan form. Users can delete activities, add freeform activities, and

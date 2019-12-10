@@ -1,6 +1,8 @@
 import { Controller } from "stimulus"
 import Hogan from "hogan.js"
 
+// TODO: test coverage for recent changes
+
 export default class extends Controller {
   static targets = ["activity", "addActivityField", "confirm", "delete"]
 

@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import $ from "jquery"
 
 const SCORES = [0, 1, 2, 3, 4, 5]
 

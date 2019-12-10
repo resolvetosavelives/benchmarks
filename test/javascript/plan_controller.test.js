@@ -63,14 +63,14 @@ describe("PlanController", () => {
     application.register("plan", PlanController)
   })
 
-  describe("#submit", () => {
-    it("submits the form when button is clicked", () => {
-      const submitMock = jest.fn()
-      form.submit = submitMock
-      submitButton.click()
-      expect(submitMock).toHaveBeenCalled()
-    })
-  })
+  // describe("#submit", () => {
+  //   it("submits the form when button is clicked", () => {
+  //     const submitMock = jest.fn()
+  //     form.submit = submitMock
+  //     submitButton.click()
+  //     expect(submitMock).toHaveBeenCalled()
+  //   })
+  // })
 
   describe("#validateName", () => {
     it("disables the submit button if the name is empty", () => {
@@ -79,42 +79,42 @@ describe("PlanController", () => {
     })
   })
 
-  describe("#addNewActivity", () => {
-    it("updates activityMap", () => {
-      const newActivityInput = document.querySelector("#new-activity")
-      newActivityInput.value = "a new activity"
-      keypress(newActivityInput, 13)
-      expect(JSON.parse(activityMap.value)["1.1"]).toContainEqual({
-        text: "a new activity"
-      })
-    })
+  // describe("#addNewActivity", () => {
+  //   it("updates activityMap", () => {
+  //     const newActivityInput = document.querySelector("#new-activity")
+  //     newActivityInput.value = "a new activity"
+  //     keypress(newActivityInput, 13)
+  //     expect(JSON.parse(activityMap.value)["1.1"]).toContainEqual({
+  //       text: "a new activity"
+  //     })
+  //   })
+  //
+  //   it("does not allow adding an empty activity", () => {
+  //     const newActivityInput = document.querySelector("#new-activity")
+  //     newActivityInput.value = ""
+  //     keypress(newActivityInput, 13)
+  //     expect(JSON.parse(activityMap.value)["1.1"]).toHaveLength(1)
+  //   })
+  //
+  //   it("enables submit if adding an activity to a previously empty activityMap", () => {
+  //     document.querySelector("#delete-activity").click()
+  //     expect(submitButton.disabled).toEqual(true)
+  //     const newActivityInput = document.querySelector("#new-activity")
+  //     newActivityInput.value = "a new activity"
+  //     keypress(newActivityInput, 13)
+  //     expect(submitButton.disabled).toEqual(false)
+  //   })
+  // })
 
-    it("does not allow adding an empty activity", () => {
-      const newActivityInput = document.querySelector("#new-activity")
-      newActivityInput.value = ""
-      keypress(newActivityInput, 13)
-      expect(JSON.parse(activityMap.value)["1.1"]).toHaveLength(1)
-    })
-
-    it("enables submit if adding an activity to a previously empty activityMap", () => {
-      document.querySelector("#delete-activity").click()
-      expect(submitButton.disabled).toEqual(true)
-      const newActivityInput = document.querySelector("#new-activity")
-      newActivityInput.value = "a new activity"
-      keypress(newActivityInput, 13)
-      expect(submitButton.disabled).toEqual(false)
-    })
-  })
-
-  describe("#deleteActivity", () => {
-    it("updates activityMap and disables submit when activityMap is empty", () => {
-      expect(submitButton.disabled).toEqual(false)
-      const deleteActivityButton = document.querySelector("#delete-activity")
-      deleteActivityButton.click()
-      expect(JSON.parse(activityMap.value)["1.1"]).toHaveLength(0)
-      expect(submitButton.disabled).toEqual(true)
-    })
-  })
+  // describe("#deleteActivity", () => {
+  //   it("updates activityMap and disables submit when activityMap is empty", () => {
+  //     expect(submitButton.disabled).toEqual(false)
+  //     const deleteActivityButton = document.querySelector("#delete-activity")
+  //     deleteActivityButton.click()
+  //     expect(JSON.parse(activityMap.value)["1.1"]).toHaveLength(0)
+  //     expect(submitButton.disabled).toEqual(true)
+  //   })
+  // })
 
   describe("#initBarChart", () => {
     let controller
