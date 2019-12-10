@@ -1,14 +1,13 @@
 require File.expand_path('./test/application_system_test_case')
-require 'capybara/cuprite'
-require 'capybara/minitest/spec'
 
 class AppsTest < ApplicationSystemTestCase
+
   setup do
     Capybara.current_driver = :cuprite
     Capybara.javascript_driver = :cuprite
   end
 
-  test 'happy path test' do
+  test 'happy path for Armenia SPAR 2018' do
     visit root_url
     select 'Armenia', from: 'country'
     find('button').trigger(:click)
@@ -51,5 +50,76 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path('/plans')
     assert page.has_content?('WELCOME')
     assert page.has_content?('Updated Draft Plan')
+  end
+
+  test 'happy path for Nigeria JEE 1.0' do
+    visit root_url
+    select 'Nigeria', from: 'country'
+    find('button').trigger(:click)
+    assert page.has_content?("LET'S GET STARTED ON NIGERIA")
+    select 'JEE 1.0', from: 'assessment_type'
+    click_on("Next") #.trigger(:click)
+    assert_current_path(%r{goals\/Nigeria\/jee1})
+
+    ##
+    # Assessment/Goals page
+    assert page.has_content?('JEE 1.0 SCORES')
+    assert page.has_content?(
+        "P.1.1 Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)"
+    )
+    assert page.has_content?(
+        "RE.2 Enabling environment in place for management of radiation emergencies"
+    )
+    assert_equal '1', find('#goal_form_jee1_ind_p11').value
+    assert_equal '2', find('#goal_form_jee1_ind_p11_goal').value
+
+    find('#new_goal_form input[type=submit]').trigger(:click)
+
+    ##
+    # Draft Plan page
+    # verify and dismiss the popover
+    assert_selector("#draft-plan-review-modal")
+    within("#draft-plan-review-modal") do
+      click_on("Next")
+    end
+
+    assert_current_path(%r{plans\/\d+})
+    assert_equal 'Nigeria draft plan', find('#plan_name').value
+    assert page.has_content?('TOTAL ACTIVITIES')
+    assert_equal '235', find('.activity-count-circle span').text
+    assert_selector("#technical-area-B1")  # the first one
+    assert_selector("#technical-area-B18") # the last one
+
+    # verify bar chart by technical area filter functionality
+    find('line[data-original-title*="Radiation Emerg"]').click
+    assert_selector("#technical-area-B18") # the last one
+    assert_no_selector("#technical-area-B1")  # the first one
+
+    # "Radiation Emergencies" should be the only heading visible, with 4 acitivites
+    #within "#technical-area-B18" do
+    #  click_on('button[data-benchmark-activity-id="869"]')
+    #end
+
+    # unfilter to show all
+    find(".activity-count-circle").click
+    assert_selector("#technical-area-B1")
+    assert_selector("#technical-area-B18")
+
+    find('#plan_name').fill_in with: 'Updated Plan 789'
+    find('input[type=submit]').trigger(:click)
+
+    assert_current_path('/users/sign_in')
+    click_link('Create an account')
+
+    assert_current_path('/users/sign_up')
+    sleep 0.1  # ugh without this form field(s) dont get filled
+    find('#user_email').fill_in with: 'email@example.com'
+    find('#user_password').fill_in with: '123123'
+    find('#user_password_confirmation').fill_in with: '123123'
+    find('#new_user input[type=submit]').trigger(:click)
+
+    assert_current_path('/plans')
+    assert page.has_content?('WELCOME')
+    assert page.has_content?('Updated Plan 789')
   end
 end
