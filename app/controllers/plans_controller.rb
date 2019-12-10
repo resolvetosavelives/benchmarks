@@ -17,21 +17,29 @@
 # draft plan will be attached to their account.
 class PlansController < ApplicationController
   before_action :authenticate_user!, only: %i[index]
-  before_action :check_ownership, except: %i[index]
+  before_action :check_ownership, except: %i[index create]
 
   def show
-    @benchmarks = BenchmarksFixture.new
-    @plan = Plan.find_by_id!(params.fetch(:id))
-    @type_code_texts = @benchmarks.type_code_1s.values
+    @benchmark_technical_areas = BenchmarkTechnicalArea.all
+    @benchmark_indicators = BenchmarkIndicator.all
+    @plan = Plan.find(params.fetch(:id))
+  end
 
-    if @plan.assessment_type == 'from-capacities'
-      @capacity_areas =
-        @benchmarks.capacities.filter do |c|
-          (@plan.activity_map.capacity_activities c[:id]).length > 0
-        end.map { |c| c[:name] }
-    else
-      @capacity_areas = @benchmarks.capacities.map { |c| c[:name] }
+  # TODO: test coverage for this, and include for the session state part
+  def create
+    goal_form_params = goal_params
+    plan = Plan.from_goal_form(
+        goal_attrs: goal_form_params.to_h,
+        plan_name: "#{goal_form_params.fetch(:country)} draft plan",
+        user: current_user
+    )
+    if plan.new_record?
+      flash[:notice] = "Could not save your plan, something went wrong."
+      redirect_back fallback_location: root_path
+      return
     end
+    session[:plan_id] = plan.id unless current_user
+    redirect_to plan
   end
 
   def index
@@ -41,11 +49,14 @@ class PlansController < ApplicationController
     @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
   end
 
+  # TODO: test coverage for this
   def update
     plan = Plan.find_by_id!(params.fetch(:id))
+    benchmark_activity_ids = JSON.parse(plan_params.fetch(:benchmark_activity_ids))
+    name = plan_params.fetch(:name)
     plan.update!(
-      name: plan_params.fetch(:name),
-      activity_map: JSON.parse(plan_params.fetch(:activity_map))
+        name:                   name,
+        benchmark_activity_ids: benchmark_activity_ids
     )
     redirect_to plans_path
   end
@@ -75,6 +86,10 @@ class PlansController < ApplicationController
   end
 
   def plan_params
-    params.require(:plan).permit(:name, :activity_map)
+    params.require(:plan).permit(:name, :benchmark_activity_ids)
+  end
+
+  def goal_params
+    params.require(:goal_form).permit!
   end
 end

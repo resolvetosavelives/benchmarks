@@ -2,7 +2,7 @@
     class="modal"
     tabindex="-1"
     role="dialog"
-    id="capacity-selection-modal">
+    id="technical-area-selection-modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -21,7 +21,7 @@
 
       <div class="modal-body mx-4" data-controller="checkbox-list">
         <p> Select the capacity area(s) you'd like to focus on </p>
-        <%= form_tag '/country_select', id: "capacity-select-menu",
+        <%= form_tag '/country_select', id: "technical-area-select-menu",
             data: { action: "assessment-selection.form" } do %>
           <%= hidden_field_tag "country",
             nil,

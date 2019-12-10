@@ -1,0 +1,550 @@
+[
+  {
+    "named_id": "jee2_ind_p11",
+    "benchmark_indicator_display_abbreviation": "1.1"
+  },
+  {
+    "named_id": "jee1_ind_p11",
+    "benchmark_indicator_display_abbreviation": "1.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c11",
+    "benchmark_indicator_display_abbreviation": "1.1"
+  },
+  {
+    "named_id": "jee1_ind_p12",
+    "benchmark_indicator_display_abbreviation": "1.1"
+  },
+  {
+    "named_id": "jee2_ind_p12",
+    "benchmark_indicator_display_abbreviation": "1.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c12",
+    "benchmark_indicator_display_abbreviation": "1.2"
+  },
+  {
+    "named_id": "jee2_ind_p13",
+    "benchmark_indicator_display_abbreviation": "1.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c13",
+    "benchmark_indicator_display_abbreviation": "1.3"
+  },
+  {
+    "named_id": "jee2_ind_p21",
+    "benchmark_indicator_display_abbreviation": "2.1"
+  },
+  {
+    "named_id": "jee1_ind_p21",
+    "benchmark_indicator_display_abbreviation": "2.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c22",
+    "benchmark_indicator_display_abbreviation": "2.2"
+  },
+  {
+    "named_id": "jee2_ind_p41",
+    "benchmark_indicator_display_abbreviation": "4.1"
+  },
+  {
+    "named_id": "jee1_ind_p41",
+    "benchmark_indicator_display_abbreviation": "4.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c31",
+    "benchmark_indicator_display_abbreviation": "4.1"
+  },
+  {
+    "named_id": "jee2_ind_p42",
+    "benchmark_indicator_display_abbreviation": "4.2"
+  },
+  {
+    "named_id": "jee1_ind_p43",
+    "benchmark_indicator_display_abbreviation": "4.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c31",
+    "benchmark_indicator_display_abbreviation": "4.2"
+  },
+  {
+    "named_id": "jee2_ind_p51",
+    "benchmark_indicator_display_abbreviation": "5.1"
+  },
+  {
+    "named_id": "jee1_ind_p51",
+    "benchmark_indicator_display_abbreviation": "5.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c41",
+    "benchmark_indicator_display_abbreviation": "5.1"
+  },
+  {
+    "named_id": "jee2_ind_p52",
+    "benchmark_indicator_display_abbreviation": "5.2"
+  },
+  {
+    "named_id": "jee1_ind_p51",
+    "benchmark_indicator_display_abbreviation": "5.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c41",
+    "benchmark_indicator_display_abbreviation": "5.2"
+  },
+  {
+    "named_id": "jee2_ind_p61",
+    "benchmark_indicator_display_abbreviation": "8.1"
+  },
+  {
+    "named_id": "jee1_ind_p61",
+    "benchmark_indicator_display_abbreviation": "8.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c52",
+    "benchmark_indicator_display_abbreviation": "8.1"
+  },
+  {
+    "named_id": "jee2_ind_p62",
+    "benchmark_indicator_display_abbreviation": "8.2"
+  },
+  {
+    "named_id": "jee1_ind_p62",
+    "benchmark_indicator_display_abbreviation": "8.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c52",
+    "benchmark_indicator_display_abbreviation": "8.2"
+  },
+  {
+    "named_id": "jee2_ind_p71",
+    "benchmark_indicator_display_abbreviation": "6.1"
+  },
+  {
+    "named_id": "jee1_ind_p71",
+    "benchmark_indicator_display_abbreviation": "6.1"
+  },
+  {
+    "named_id": "jee2_ind_p72",
+    "benchmark_indicator_display_abbreviation": "6.2"
+  },
+  {
+    "named_id": "jee1_ind_p72",
+    "benchmark_indicator_display_abbreviation": "6.2"
+  },
+  {
+    "named_id": "jee2_ind_d12",
+    "benchmark_indicator_display_abbreviation": "7.2"
+  },
+  {
+    "named_id": "jee1_ind_d12",
+    "benchmark_indicator_display_abbreviation": "7.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c51",
+    "benchmark_indicator_display_abbreviation": "7.2"
+  },
+  {
+    "named_id": "jee2_ind_d13",
+    "benchmark_indicator_display_abbreviation": "7.3"
+  },
+  {
+    "named_id": "jee1_ind_d13",
+    "benchmark_indicator_display_abbreviation": "7.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c51",
+    "benchmark_indicator_display_abbreviation": "7.3"
+  },
+  {
+    "named_id": "jee2_ind_d11",
+    "benchmark_indicator_display_abbreviation": "7.1"
+  },
+  {
+    "named_id": "jee1_ind_d11",
+    "benchmark_indicator_display_abbreviation": "7.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c53",
+    "benchmark_indicator_display_abbreviation": "7.1"
+  },
+  {
+    "named_id": "jee2_ind_d14",
+    "benchmark_indicator_display_abbreviation": "7.4"
+  },
+  {
+    "named_id": "jee1_ind_d14",
+    "benchmark_indicator_display_abbreviation": "7.4"
+  },
+  {
+    "named_id": "jee2_ind_d21",
+    "benchmark_indicator_display_abbreviation": "9.1"
+  },
+  {
+    "named_id": "jee1_ind_d21",
+    "benchmark_indicator_display_abbreviation": "9.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c61",
+    "benchmark_indicator_display_abbreviation": "9.1"
+  },
+  {
+    "named_id": "jee1_ind_d24",
+    "benchmark_indicator_display_abbreviation": "9.1"
+  },
+  {
+    "named_id": "jee2_ind_d22",
+    "benchmark_indicator_display_abbreviation": "9.2"
+  },
+  {
+    "named_id": "jee1_ind_d22",
+    "benchmark_indicator_display_abbreviation": "9.2"
+  },
+  {
+    "named_id": "jee2_ind_d23",
+    "benchmark_indicator_display_abbreviation": "9.3"
+  },
+  {
+    "named_id": "jee1_ind_d23",
+    "benchmark_indicator_display_abbreviation": "9.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c62",
+    "benchmark_indicator_display_abbreviation": "9.3"
+  },
+  {
+    "named_id": "jee2_ind_d31",
+    "benchmark_indicator_display_abbreviation": "2.1"
+  },
+  {
+    "named_id": "jee1_ind_d31",
+    "benchmark_indicator_display_abbreviation": "2.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c21",
+    "benchmark_indicator_display_abbreviation": "2.1"
+  },
+  {
+    "named_id": "jee2_ind_d32",
+    "benchmark_indicator_display_abbreviation": "2.2"
+  },
+  {
+    "named_id": "jee1_ind_d32",
+    "benchmark_indicator_display_abbreviation": "2.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c21",
+    "benchmark_indicator_display_abbreviation": "2.2"
+  },
+  {
+    "named_id": "jee2_ind_d41",
+    "benchmark_indicator_display_abbreviation": "10.1"
+  },
+  {
+    "named_id": "jee1_ind_d43",
+    "benchmark_indicator_display_abbreviation": "10.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c71",
+    "benchmark_indicator_display_abbreviation": "10.1"
+  },
+  {
+    "named_id": "jee2_ind_d42",
+    "benchmark_indicator_display_abbreviation": "10.2"
+  },
+  {
+    "named_id": "jee1_ind_d41",
+    "benchmark_indicator_display_abbreviation": "10.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c71",
+    "benchmark_indicator_display_abbreviation": "10.2"
+  },
+  {
+    "named_id": "jee1_ind_p42",
+    "benchmark_indicator_display_abbreviation": "10.2"
+  },
+  {
+    "named_id": "jee2_ind_d43",
+    "benchmark_indicator_display_abbreviation": "10.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c71",
+    "benchmark_indicator_display_abbreviation": "10.3"
+  },
+  {
+    "named_id": "jee2_ind_d44",
+    "benchmark_indicator_display_abbreviation": "10.4"
+  },
+  {
+    "named_id": "jee1_ind_d42",
+    "benchmark_indicator_display_abbreviation": "10.4"
+  },
+  {
+    "named_id": "spar_2018_ind_c71",
+    "benchmark_indicator_display_abbreviation": "10.4"
+  },
+  {
+    "named_id": "jee2_ind_r11",
+    "benchmark_indicator_display_abbreviation": "11.1"
+  },
+  {
+    "named_id": "jee1_ind_r12",
+    "benchmark_indicator_display_abbreviation": "11.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c81",
+    "benchmark_indicator_display_abbreviation": "11.1"
+  },
+  {
+    "named_id": "jee2_ind_r12",
+    "benchmark_indicator_display_abbreviation": "11.2"
+  },
+  {
+    "named_id": "jee1_ind_r11",
+    "benchmark_indicator_display_abbreviation": "11.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c81",
+    "benchmark_indicator_display_abbreviation": "11.2"
+  },
+  {
+    "named_id": "jee2_ind_r23",
+    "benchmark_indicator_display_abbreviation": "12.3"
+  },
+  {
+    "named_id": "jee1_ind_r23",
+    "benchmark_indicator_display_abbreviation": "12.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c82",
+    "benchmark_indicator_display_abbreviation": "12.3"
+  },
+  {
+    "named_id": "jee2_ind_r21",
+    "benchmark_indicator_display_abbreviation": "12.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c82",
+    "benchmark_indicator_display_abbreviation": "12.1"
+  },
+  {
+    "named_id": "jee2_ind_r22",
+    "benchmark_indicator_display_abbreviation": "12.2"
+  },
+  {
+    "named_id": "jee1_ind_r21",
+    "benchmark_indicator_display_abbreviation": "12.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c82",
+    "benchmark_indicator_display_abbreviation": "12.2"
+  },
+  {
+    "named_id": "jee1_ind_r22",
+    "benchmark_indicator_display_abbreviation": "12.2"
+  },
+  {
+    "named_id": "jee2_ind_r41",
+    "benchmark_indicator_display_abbreviation": "14.1"
+  },
+  {
+    "named_id": "jee1_ind_r41",
+    "benchmark_indicator_display_abbreviation": "14.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c83",
+    "benchmark_indicator_display_abbreviation": "14.1"
+  },
+  {
+    "named_id": "jee2_ind_r42",
+    "benchmark_indicator_display_abbreviation": "14.2"
+  },
+  {
+    "named_id": "jee1_ind_r42",
+    "benchmark_indicator_display_abbreviation": "14.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c83",
+    "benchmark_indicator_display_abbreviation": "14.2"
+  },
+  {
+    "named_id": "jee2_ind_r43",
+    "benchmark_indicator_display_abbreviation": "14.3"
+  },
+  {
+    "named_id": "jee1_ind_r24",
+    "benchmark_indicator_display_abbreviation": "14.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c91",
+    "benchmark_indicator_display_abbreviation": "14.3"
+  },
+  {
+    "named_id": "jee2_ind_p33",
+    "benchmark_indicator_display_abbreviation": "3.3"
+  },
+  {
+    "named_id": "jee1_ind_p33",
+    "benchmark_indicator_display_abbreviation": "3.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c92",
+    "benchmark_indicator_display_abbreviation": "3.3"
+  },
+  {
+    "named_id": "jee2_ind_p31",
+    "benchmark_indicator_display_abbreviation": "3.1"
+  },
+  {
+    "named_id": "jee2_ind_p32",
+    "benchmark_indicator_display_abbreviation": "3.2"
+  },
+  {
+    "named_id": "jee1_ind_p31",
+    "benchmark_indicator_display_abbreviation": "3.2"
+  },
+  {
+    "named_id": "jee1_ind_p32",
+    "benchmark_indicator_display_abbreviation": "3.2"
+  },
+  {
+    "named_id": "jee2_ind_p34",
+    "benchmark_indicator_display_abbreviation": "3.4"
+  },
+  {
+    "named_id": "jee1_ind_p34",
+    "benchmark_indicator_display_abbreviation": "3.4"
+  },
+  {
+    "named_id": "jee2_ind_r31",
+    "benchmark_indicator_display_abbreviation": "13.1"
+  },
+  {
+    "named_id": "jee1_ind_r31",
+    "benchmark_indicator_display_abbreviation": "13.1"
+  },
+  {
+    "named_id": "jee2_ind_r51",
+    "benchmark_indicator_display_abbreviation": "15.1"
+  },
+  {
+    "named_id": "jee1_ind_r51",
+    "benchmark_indicator_display_abbreviation": "15.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c101",
+    "benchmark_indicator_display_abbreviation": "15.1"
+  },
+  {
+    "named_id": "jee2_ind_r52",
+    "benchmark_indicator_display_abbreviation": "15.2"
+  },
+  {
+    "named_id": "jee1_ind_r52",
+    "benchmark_indicator_display_abbreviation": "15.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c101",
+    "benchmark_indicator_display_abbreviation": "15.2"
+  },
+  {
+    "named_id": "jee2_ind_r53",
+    "benchmark_indicator_display_abbreviation": "15.1"
+  },
+  {
+    "named_id": "jee1_ind_r53",
+    "benchmark_indicator_display_abbreviation": "15.1"
+  },
+  {
+    "named_id": "jee2_ind_r54",
+    "benchmark_indicator_display_abbreviation": "15.3"
+  },
+  {
+    "named_id": "jee1_ind_r54",
+    "benchmark_indicator_display_abbreviation": "15.3"
+  },
+  {
+    "named_id": "spar_2018_ind_c101",
+    "benchmark_indicator_display_abbreviation": "15.3"
+  },
+  {
+    "named_id": "jee2_ind_r55",
+    "benchmark_indicator_display_abbreviation": "15.3"
+  },
+  {
+    "named_id": "jee1_ind_r55",
+    "benchmark_indicator_display_abbreviation": "15.3"
+  },
+  {
+    "named_id": "jee2_ind_poe1",
+    "benchmark_indicator_display_abbreviation": "16.1"
+  },
+  {
+    "named_id": "jee1_ind_poe1",
+    "benchmark_indicator_display_abbreviation": "16.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c111",
+    "benchmark_indicator_display_abbreviation": "16.1"
+  },
+  {
+    "named_id": "jee2_ind_poe2",
+    "benchmark_indicator_display_abbreviation": "16.2"
+  },
+  {
+    "named_id": "jee1_ind_poe2",
+    "benchmark_indicator_display_abbreviation": "16.2"
+  },
+  {
+    "named_id": "spar_2018_ind_c112",
+    "benchmark_indicator_display_abbreviation": "16.2"
+  },
+  {
+    "named_id": "jee2_ind_ce1",
+    "benchmark_indicator_display_abbreviation": "17.1"
+  },
+  {
+    "named_id": "jee1_ind_ce1",
+    "benchmark_indicator_display_abbreviation": "17.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c121",
+    "benchmark_indicator_display_abbreviation": "17.1"
+  },
+  {
+    "named_id": "jee2_ind_ce2",
+    "benchmark_indicator_display_abbreviation": "17.1"
+  },
+  {
+    "named_id": "jee1_ind_ce2",
+    "benchmark_indicator_display_abbreviation": "17.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c92",
+    "benchmark_indicator_display_abbreviation": "17.1"
+  },
+  {
+    "named_id": "jee2_ind_re1",
+    "benchmark_indicator_display_abbreviation": "18.1"
+  },
+  {
+    "named_id": "jee1_ind_re1",
+    "benchmark_indicator_display_abbreviation": "18.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c131",
+    "benchmark_indicator_display_abbreviation": "18.1"
+  },
+  {
+    "named_id": "jee2_ind_re2",
+    "benchmark_indicator_display_abbreviation": "18.1"
+  },
+  {
+    "named_id": "jee1_ind_re2",
+    "benchmark_indicator_display_abbreviation": "18.1"
+  },
+  {
+    "named_id": "spar_2018_ind_c92",
+    "benchmark_indicator_display_abbreviation": "18.1"
+  }
+]

@@ -9,38 +9,56 @@ FactoryBot.define do
   end
 
   factory :plan do
-    user
     name { "Nigeria Draft Plan" }
     country { "Nigeria" }
     assessment_type { "jee1" }
-    activity_map do
-      JSON.load File.open(File.join(
-          Rails.root, 'test/fixtures/files/nigeria_jee1_activity_map.json'))
-    end
-    goals do
-      JSON.load File.open(File.join(
-          Rails.root, 'test/fixtures/files/nigeria_jee1_goals.json'))
-    end
-    scores do
-      JSON.load File.open(File.join(
-          Rails.root, 'test/fixtures/files/nigeria_jee1_scores.json'))
-    end
 
-    factory :plan_from_capacities_with_one_activity do
-      assessment_type { "from-capacities" }
-      activity_map do
-        {
-            "1.1" => [
-                {
-                    text: "Identify and convene key stakeholders related to the review, formulation and implementation of legislation and policies.",
-                    type_code_1: 3,
-                    type_code_2: nil,
-                    type_code_3: nil
-                },
-            ]
-        }
+    factory :plan_nigeria_jee1 do
+      after :create do |plan|
+        begin
+          plan.plan_benchmark_indicators = JSON.load(File.open(File.join(
+              Rails.root, '/test/fixtures/files/plan_for_nigeria_jee1/plan_benchmark_indicators.json'))
+          ).map { |attrs| PlanBenchmarkIndicator.new(attrs) }
+
+          plan.plan_activities = JSON.load(File.open(File.join(
+              Rails.root, '/test/fixtures/files/plan_for_nigeria_jee1/plan_activities.json'))
+          ).map { |attrs| PlanActivity.new(attrs) }
+        rescue ActiveRecord::RecordNotSaved => rns
+          # try to show the developer some useful feedback for when they forgot to populate seed data
+          show_seed_warning rns
+        end
       end
     end
+
+    trait :with_user do
+      user
+    end
+
+    trait :legacy do
+      activity_map do
+        JSON.load File.open(File.join(
+            Rails.root, 'test/fixtures/files/nigeria_jee1_activity_map.json'))
+      end
+      goals do
+        JSON.load File.open(File.join(
+            Rails.root, 'test/fixtures/files/nigeria_jee1_goals.json'))
+      end
+      scores do
+        JSON.load File.open(File.join(
+            Rails.root, 'test/fixtures/files/nigeria_jee1_scores.json'))
+      end
+    end
+
+    factory :legacy_plan_nigeria_jee1, traits: [:legacy]
   end
 
+end
+
+def show_seed_warning(exception)
+  $stderr.puts ""
+  $stderr.puts "Exception: #{exception.class}: #{exception.message}".black.on_yellow if exception.present?
+  $stderr.puts "ATTENTION! This error most often means that RTSL Benchmarks seed data is not be present. Benchmarks seed data must be already present in the database for this factory to work. To fix this, you may run `RAILS_ENV=test rake db:seed`".black.on_yellow
+  $stderr.puts "If you have already populated the seed data and verified that it is present, then there is a different issue such as unsatisfied model validation.".yellow
+  $stderr.puts "If you changed database schema recently that is a likely cause.".yellow
+  $stderr.puts ""
 end

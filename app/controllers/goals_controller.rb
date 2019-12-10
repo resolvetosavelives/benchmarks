@@ -51,21 +51,6 @@ class GoalsController < ApplicationController
     end
   end
 
-  def create
-    crosswalk = JSON.load File.open './app/fixtures/crosswalk.json'
-    benchmarks = BenchmarksFixture.new
-
-    goal_params = params.fetch(:goal_form)
-
-    plan =
-      GoalForm.create_draft_plan! goal_params,
-                                  crosswalk,
-                                  benchmarks,
-                                  current_user
-    session[:plan_id] = plan.id unless current_user
-    redirect_to plan
-  end
-
   private
 
   def scores_from_assessment(assessment, assessment_type)

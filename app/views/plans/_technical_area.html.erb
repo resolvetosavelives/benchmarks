@@ -1,0 +1,16 @@
+<div class="technical-area-container"
+     id="technical-area-<%= chart_label %>"
+     title="<%= benchmark_technical_area.text %>"
+>
+  <% unless @plan.assessment_type == "from-capacities" %>
+    <h2 id="<%= benchmark_technical_area.text.parameterize %>">
+      <%= benchmark_technical_area.sequence %>.
+      <%= benchmark_technical_area.text %>
+    </h2>
+  <% end %>
+
+  <% benchmark_technical_area.benchmark_indicators.each do |benchmark_indicator| %>
+    <%= render 'benchmark_indicator', benchmark_indicator: benchmark_indicator %>
+  <% end %>
+
+</div>

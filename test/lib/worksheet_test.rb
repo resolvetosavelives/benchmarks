@@ -1,4 +1,4 @@
-require 'test_helper'
+require File.expand_path('./test/test_helper')
 
 class WorksheetTest < ActiveSupport::TestCase
   test 'create a printable worksheet from a plan' do

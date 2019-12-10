@@ -1,29 +1,71 @@
 import { Controller } from "stimulus"
+import Hogan from "hogan.js"
 
-/* Controller that handles deleting an entire benchmark. This covers only the workflow of pressing and then confirming the delete button on a benchmark given how much data can be deleted at once.
- *
- * Targets:
- *   self -- this is the benchmark container itself. It is hidden when a
- *   benchmark is deleted. Also, if during the delete process it is determined
- *   that there are no visible siblings, the parent container (containing the
- *   capacity area title) is also hidden.
- *
- *   confirm -- this target is for the initially visible delete button. When
- *   clicked, this button will be hidden and the "Really Delete" button will be
- *   displayed.
- *
- *   delete -- this target for for the "Really Delete" button on the form. If
- *   it is clicked, the delete action will be called.
- *
- * Note: confirm/delete is a little confusing. Consider reversing the names of
- * the two. The idea I am thinking of would be that you click on the delete
- * button, and then click on the delete confirmation button.
- */
+// TODO: test coverage for recent changes
+
 export default class extends Controller {
-  static targets = ["self", "confirm", "delete"]
+  static targets = ["activity", "addActivityField", "confirm", "delete"]
+
+  initialize() {
+    this.parentController = this.application.controllers.find(controller => {
+      return controller.context.identifier === "plan";                                                                           
+    });
+    this.parentController.childControllers.push(this)
+  }
 
   connect() {
     this.deleteTarget.hidden = true
+    this.benchmarkIndicatorId = this.data.get("indicator-id")
+    this.benchmarkAbbreviation = this.data.get("indicator-abbreviation")
+    this.initAutoCompleteForAddActivity()
+  }
+
+  initAutoCompleteForAddActivity() {
+    const self = this  // needed for nested callbacks which lose scope of "this"
+    const excludedActivities = JSON.parse(this.data.get("excluded-activities"))
+    if (this.hasAddActivityFieldTarget) {
+      $(this.addActivityFieldTarget).autocomplete({
+        appendTo: ".plan-container",
+        source: excludedActivities.map((benchmarkActivity) => {
+          benchmarkActivity.label = benchmarkActivity.text
+          benchmarkActivity.value = benchmarkActivity.text
+          // this is the object that will be at ui.item in autocomplete.select()
+          return benchmarkActivity
+        }),
+        select: function(event, ui) {
+          const benchmarkActivity = ui.item
+          self.addActivity(benchmarkActivity)
+        }
+      })
+    }
+  }
+
+  addActivity(benchmarkActivity) {
+    this.addActivityId(benchmarkActivity.id)
+    const activityRowTemplateSelector = this.data.get("activityRowTemplateSelector")
+    const context = {
+      benchmarkActivityId: benchmarkActivity.id,
+      displayAbbreviation: this.benchmarkAbbreviation,
+      benchmarkActivityLevel: benchmarkActivity.level,
+      benchmarkActivityText: benchmarkActivity.text,
+    }
+    const templateHtml = $(activityRowTemplateSelector).html()
+    const template = Hogan.compile(templateHtml)
+    const renderedContent = template.render(context)
+    $(renderedContent).insertBefore($(this.element).find(".activity-form"))
+    if (this.hasAddActivityFieldTarget) {
+      // NB: setTimeout is needed because without it the text field value does not
+      // clear, probably due to real time/asynchronous UI stuff happening
+      setTimeout(() => {
+        this.addActivityFieldTarget.value = ""
+      }, 100)
+    }
+  }
+
+  showAutocomplete() {
+    if (this.hasAddActivityFieldTarget) {
+      $(this.addActivityFieldTarget).autocomplete("search", " ")
+    }
   }
 
   /* The first step in the deletion process. This will hide the current target
@@ -42,21 +84,40 @@ export default class extends Controller {
     this.confirmTarget.hidden = false
   }
 
-  /* Carry out the delete process. */
-  delete(e) {
+  /* Delete an activity from the plan. */
+  deleteActivity(e) {
     const { currentTarget } = e
-    const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
-    const activityMap = JSON.parse(this.activityMapTarget.value)
-    delete activityMap[benchmarkId]
-    this.activityMapTarget.value = JSON.stringify(activityMap)
-    this.selfTarget.hidden = true
-    const siblings = $(this.selfTarget).siblings(".benchmark-container:visible")
+    const planActivityIdToRemove = Number(currentTarget.getAttribute("data-benchmark-activity-id"))
+    this.removeActivityId(planActivityIdToRemove)
+    currentTarget.closest(".row").classList.add("d-none")
+  }
+
+  // Delete a benchmark indicator, which means deleting its child activities
+  deleteActivitiesForIndicator(e) {
+    const { currentTarget } = e
+    const activityIds = JSON.parse(this.data.get("activityIds"))
+    activityIds.forEach((activityId) => {
+      this.removeActivityId(activityId)
+    })
+    this.element.hidden = true
+    const siblings = $(this.element).siblings(".benchmark-container:visible")
     if (siblings.length === 0) {
-      this.selfTarget.parentElement.hidden = true
+      this.element.parentElement.hidden = true
     }
   }
 
-  get activityMapTarget() {
-    return document.querySelector("#plan_activity_map")
+  addActivityId(activityId) {
+    this.parentController.addActivityId(activityId)
+  }
+
+  removeActivityId(activityId) {
+    this.parentController.removeActivityId(activityId)
+  }
+
+  hasActivities() {
+    if (this.activityTargets.length > 0) {
+      return true
+    }
+    return false
   }
 }
