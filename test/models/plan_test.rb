@@ -4,10 +4,19 @@ require "minitest/autorun"
 
 describe Plan do
 
+  describe "#count_activities_by_type" do
+    let(:plan) { create(:plan_nigeria_jee1) }
+
+    it "returns an array of the expected integers" do
+      expected = [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]
+      plan.count_activities_by_type.must_equal expected
+    end
+  end
+
   describe "#count_activities_by_ta" do
     let(:plan) { create(:plan_nigeria_jee1) }
 
-    it "returns an array" do
+    it "returns an array of the expected integers" do
       expected = [6, 12, 19, 9, 11, 13, 19, 7, 15, 18, 11, 15, 7, 19, 20, 16, 14, 4]
       plan.count_activities_by_ta.must_equal expected
     end
