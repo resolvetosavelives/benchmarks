@@ -1,0 +1,76 @@
+<% plan_indicator, indicator_score, indicator_goal = @plan.indicator_score_goal_for(benchmark_indicator) %>
+<% plan_indicator_activities = @plan.activities_for(benchmark_indicator) || [] %>
+
+<div data-controller="benchmark"
+     class="benchmark-container"
+     data-target="benchmark.self"
+     data-benchmark-indicator-id="<%= benchmark_indicator.id %>"
+     data-benchmark-indicator-abbreviation="<%= benchmark_indicator.display_abbreviation %>"
+     data-benchmark-excluded-activities="<%= @plan.excluded_activities_for(benchmark_indicator).to_json %>"
+     data-benchmark-activity-row-template-selector="#activity-row"
+     data-benchmark-activity-ids="<%= plan_indicator_activities.map{ |pia| pia.benchmark_indicator_activity_id } %>"
+>
+  <div class="row bg-light-gray px-2 header">
+    <div class="col-11">
+      <b>Benchmark <%= benchmark_indicator.display_abbreviation %>:</b>
+      <%= benchmark_indicator.text %>
+    </div>
+    <div class="col-1 d-flex justify-content-end" data-action="mouseleave->benchmark#reset">
+      <button
+        class="close confirm-delete"
+        type="button"
+        data-action="benchmark#confirm"
+        data-target="benchmark.confirm"
+      >
+        <img src="/delete-button.svg" />
+      </button>
+      <br>
+      <button class="close delete"
+              type="button"
+              data-action="benchmark#deleteActivitiesForIndicator"
+              data-target="benchmark.delete"
+      >
+        Really delete?
+      </button>
+    </div>
+  </div>
+
+
+  <%= content_tag :div, class: "activity-container", id: "activity_container_#{benchmark_indicator.text.parameterize}" do %>
+
+    <% if plan_indicator.blank? %>
+      <%= render 'no_capacity_gap' %>
+    <% elsif plan_indicator.present? && indicator_score.eql?(indicator_goal) %>
+      <%= render 'no_capacity_gap' %>
+    <% else %>
+      <% plan_indicator_activities.each do |plan_activity| %>
+        <% benchmark_activity = plan_activity.benchmark_indicator_activity %>
+        <%= render "activity",
+                   benchmark_activity_id:    benchmark_activity.id,
+                   display_abbreviation:     benchmark_indicator.display_abbreviation,
+                   benchmark_activity_level: benchmark_activity.level,
+                   benchmark_activity_text:  benchmark_activity.text
+        %>
+      <% end %>
+
+      <!-- Add an Activity -->
+      <div class="row activity-form">
+        <div class="col">
+          <%= text_field_tag(
+                  :new_activity,
+                  nil,
+                  id: nil, # avoids having multiple fields with same id "new_activity"
+                  class:       "w-100",
+                  placeholder: "+ Add Activity",
+                  data: {
+                      target: "benchmark.addActivityField",
+                      action: "focus->benchmark#showAutocomplete",
+                  },
+                  autocomplete: "off" # Not working..???
+              )
+          %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

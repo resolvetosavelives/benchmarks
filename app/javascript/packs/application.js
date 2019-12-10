@@ -21,6 +21,7 @@ import "bootstrap-multiselect/dist/css/bootstrap-multiselect"
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
+import $ from "jquery"
 import Turbolinks from "turbolinks"
 import Rails from "jquery-ujs"
 import {} from "jquery-ui/ui/widgets/autocomplete"

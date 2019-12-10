@@ -1,24 +1,26 @@
-<div class="row activity p-2 type-code-<%= (@benchmarks.type_code_1s[activity["type_code_1"].to_s] || "unknown").parameterize %>">
-  <% if goal.present? %>
-    <div class="col-auto d-flex flex-row align-items-center">
-      <span class="badge badge-pill badge-success badge-rounded-circle color-value-<%= goal.value %>">
-        <span><%= goal.value %></span>
-      </span>
-    </div>
-  <% end %>
-  <div class="col-1<%= goal.present? ? 0: 1 %>">
-    <strong><%= benchmark_id %></strong>
-    <%= activity["text"] %>
+<div
+  class="row activity p-2"
+  data-target="benchmark.activity"
+>
+  <div class="col-auto d-flex flex-row align-items-center">
+    <span class="badge badge-pill badge-success badge-rounded-circle color-value-<%= benchmark_activity_level %>">
+      <span class="activity-level"><%= benchmark_activity_level %></span>
+    </span>
+  </div>
+  <div class="col-11">
+    <strong><%= display_abbreviation %></strong>
+    <span class="activity-text">
+      <%= benchmark_activity_text %>
+    </span>
   </div>
   <div class="col-1">
     <button
       class="delete close"
       type="button"
-      data-action="plan#deleteActivity"
-      data-benchmark-id="<%= benchmark_id %>"
-      data-activity="<%= activity["text"] %>"
+      data-action="benchmark#deleteActivity"
+      data-benchmark-activity-id="<%= benchmark_activity_id %>"
     >
-      <img src="/delete-button.svg" />
+      <img src="/delete-button.svg"/>
     </button>
   </div>
 </div>

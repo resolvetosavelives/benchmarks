@@ -65,6 +65,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    choice (0.2.0)
     cliver (0.3.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -73,6 +74,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.1.5)
     crass (1.0.5)
     cuprite (0.6.0)
@@ -155,6 +157,11 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
+    rails-erd (1.6.0)
+      activerecord (>= 4.2)
+      activesupport (>= 4.2)
+      choice (~> 0.2.0)
+      ruby-graphviz (~> 1.2)
     rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     railties (5.2.3)
@@ -171,6 +178,7 @@ GEM
     responders (3.0.0)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    ruby-graphviz (1.2.4)
     rubyXL (3.4.5)
       nokogiri (>= 1.4.4)
       rubyzip (>= 1.1.6)
@@ -233,6 +241,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   coffee-rails (~> 4.2)
+  colorize
   cuprite
   devise
   factory_bot_rails
@@ -243,6 +252,7 @@ DEPENDENCIES
   puma (~> 3.11)
   rack-attack
   rails (~> 5.2.3)
+  rails-erd
   rake
   rubyXL
   sentry-raven

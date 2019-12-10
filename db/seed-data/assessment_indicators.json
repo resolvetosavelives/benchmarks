@@ -1,0 +1,728 @@
+[
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p11",
+    "text": "Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)",
+    "sequence": 1
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p12",
+    "text": "The State can demonstrate that it has adjusted and aligned its domestic legislation, policies and administrative arrangements to enable compliance with IHR (2005)",
+    "sequence": 2
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p21",
+    "text": "A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR",
+    "sequence": 3
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p31",
+    "text": "Antimicrobial resistance detection",
+    "sequence": 4
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p32",
+    "text": "Surveillance of infections caused by antimicrobial-resistant pathogens",
+    "sequence": 5
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p33",
+    "text": "Health care-associated infection (HCAI) prevention and control programs",
+    "sequence": 6
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p34",
+    "text": "Antimicrobial stewardship activities",
+    "sequence": 7
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p41",
+    "text": "Surveillance systems in place for priority zoonotic diseases/pathogens",
+    "sequence": 8
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p42",
+    "text": "Veterinary or animal health workforce",
+    "sequence": 9
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p43",
+    "text": "Mechanisms for responding to infectious and potential zoonotic diseases are established and functional",
+    "sequence": 10
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p51",
+    "text": "Mechanisms for multisectoral collaboration are established to ensure rapid response to food safety emergencies and outbreaks of foodborne diseases",
+    "sequence": 11
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p61",
+    "text": "Whole-of-government biosafety and biosecurity system is in place for human, animal, and agriculture facilities",
+    "sequence": 12
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p62",
+    "text": "Biosafety and biosecurity training and practices",
+    "sequence": 13
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p71",
+    "text": "Vaccine coverage (measles) as part of national program",
+    "sequence": 14
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_p72",
+    "text": "National vaccine access and delivery",
+    "sequence": 15
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d11",
+    "text": "Laboratory testing for detection of priority diseases",
+    "sequence": 16
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d12",
+    "text": "Specimen transport and referral system",
+    "sequence": 17
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d13",
+    "text": "Effective modern point-of-care laboratory-based diagnostics",
+    "sequence": 18
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d14",
+    "text": "Laboratory quality system",
+    "sequence": 19
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d21",
+    "text": "Indicator- and event-based surveillance systems",
+    "sequence": 20
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d22",
+    "text": "Interoperable, interconnected, electronic real-time reporting system",
+    "sequence": 21
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d23",
+    "text": "Integration and analysis of surveillance data",
+    "sequence": 22
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d24",
+    "text": "Syndromic surveillance systems",
+    "sequence": 23
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d31",
+    "text": "System for efficient reporting to FAO, OIE and WHO",
+    "sequence": 24
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d32",
+    "text": "Reporting network and protocols in country",
+    "sequence": 25
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d41",
+    "text": "Human resources available to implement IHR core capacity requirements",
+    "sequence": 26
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d42",
+    "text": "FETP or other applied epidemiology training program in place",
+    "sequence": 27
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_d43",
+    "text": "Workforce strategy",
+    "sequence": 28
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r11",
+    "text": "National multi-hazard public health emergency preparedness and response plan is developed and implemented",
+    "sequence": 29
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r12",
+    "text": "Priority public health risks and resources are mapped and utilized",
+    "sequence": 30
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r21",
+    "text": "Capacity to activate emergency operations",
+    "sequence": 31
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r22",
+    "text": "EOC operating procedures and plans",
+    "sequence": 32
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r23",
+    "text": "Emergency operations program",
+    "sequence": 33
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r24",
+    "text": "Case management procedures implemented for IHR relevant hazards",
+    "sequence": 34
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r31",
+    "text": "Public health and security authorities (e.g., law enforcement, border control, customs) are linked during a suspect or confirmed biological event",
+    "sequence": 35
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r41",
+    "text": "System in place for sending and receiving medical countermeasures during a public health emergency",
+    "sequence": 36
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r42",
+    "text": "System in place for sending and receiving health personnel during a public health emergency",
+    "sequence": 37
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r51",
+    "text": "Risk communication systems (plans, mechanisms, etc.)",
+    "sequence": 38
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r52",
+    "text": "Internal and partner communication and coordination",
+    "sequence": 39
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r53",
+    "text": "Public communication",
+    "sequence": 40
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r54",
+    "text": "Communication engagement with affected communities",
+    "sequence": 41
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_r55",
+    "text": "Dynamic listening and rumor management",
+    "sequence": 42
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_poe1",
+    "text": "Routine capacities established and functioning for detecting and responding to chemical events or emergencies",
+    "sequence": 43
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_poe2",
+    "text": "Effective public health response at points of entry",
+    "sequence": 44
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_ce1",
+    "text": "Mechanisms established and functioning for detecting and responding to chemical events or emergencies",
+    "sequence": 45
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_ce2",
+    "text": "Enabling environment in place for management of chemical events",
+    "sequence": 46
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_re1",
+    "text": "Mechanisms established and functioning for detecting and responding to radiological and nuclear emergencies",
+    "sequence": 47
+  },
+  {
+    "assessment_publication_named_id": "jee1",
+    "named_id": "jee1_ind_re2",
+    "text": "Enabling environment in place for management of radiation emergencies",
+    "sequence": 48
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p11",
+    "text": "The State has assessed, adjusted and aligned its domestic legislation, policies and administrative arrangements to enable compliance with IHR (2005)",
+    "sequence": 1
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p12",
+    "text": "Financing is available for implementation of IHR capacities",
+    "sequence": 2
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p13",
+    "text": "A financing mechanism and funds are available for timely response to public health emergencies",
+    "sequence": 3
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p21",
+    "text": "A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR",
+    "sequence": 4
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p31",
+    "text": "Effective multisectoral coordination on AMR",
+    "sequence": 5
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p32",
+    "text": "Surveillance of AMR",
+    "sequence": 6
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p33",
+    "text": "IPC",
+    "sequence": 7
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p34",
+    "text": "Optimize use of antimicrobial medicines in human and animal health and agriculture",
+    "sequence": 8
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p41",
+    "text": "Coordinated surveillance systems in place in animal and public health sectors for zoonotic diseases/pathogens identified as joint priorities",
+    "sequence": 9
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p42",
+    "text": "Mechanisms for responding to infectious and potential zoonotic diseases are established and functional",
+    "sequence": 10
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p51",
+    "text": "Surveillance in place for detection and monitoring of foodborne diseases and food contamination",
+    "sequence": 11
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p52",
+    "text": "Mechanisms are established and functional for the response and management of food safety emergencies",
+    "sequence": 12
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p61",
+    "text": "Whole-of-government biosafety and biosecurity system is in place for all sectors",
+    "sequence": 13
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p62",
+    "text": "Biosafety and biosecurity training and practices in all relevant sectors",
+    "sequence": 14
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p71",
+    "text": "Vaccine coverage (measles) as part of national program",
+    "sequence": 15
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_p72",
+    "text": "National vaccine access and delivery",
+    "sequence": 16
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d11",
+    "text": "Laboratory testing for detection of priority diseases",
+    "sequence": 17
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d12",
+    "text": "Specimen transport and referral system",
+    "sequence": 18
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d13",
+    "text": "Effective national diagnostic network",
+    "sequence": 19
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d14",
+    "text": "Laboratory quality system",
+    "sequence": 20
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d21",
+    "text": "Surveillance systems",
+    "sequence": 21
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d22",
+    "text": "Use of electronic tools",
+    "sequence": 22
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d23",
+    "text": "Analysis of surveillance data",
+    "sequence": 23
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d31",
+    "text": "System for efficient reporting to FAO, OIE and WHO",
+    "sequence": 24
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d32",
+    "text": "Reporting network and protocols in country",
+    "sequence": 25
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d41",
+    "text": "An up-to-date multisectoral workforce strategy is in place",
+    "sequence": 26
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d42",
+    "text": "Human resources available to effectively implement IHR",
+    "sequence": 27
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d43",
+    "text": "In-service trainings are available",
+    "sequence": 28
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_d44",
+    "text": "FETP or other applied epidemiology training program is in place",
+    "sequence": 29
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r11",
+    "text": "Strategic emergency risk assessments conducted, and emergency resources identified and mapped",
+    "sequence": 30
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r12",
+    "text": "National multisectoral multi-hazard emergency preparedness measures, including emergency response plans, area developed, implemented and tested",
+    "sequence": 31
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r21",
+    "text": "Emergency response coordination",
+    "sequence": 32
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r22",
+    "text": "EOC capacities, procedures and plans",
+    "sequence": 33
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r23",
+    "text": "Emergency exercise management program",
+    "sequence": 34
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r31",
+    "text": "Public health and security authorities (e.g., law enforcement, border control, customs) linked during a suspect or confirmed biological, chemical or radiological event",
+    "sequence": 35
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r41",
+    "text": "System in place for activating and coordinating medical countermeasures during a public health emergency",
+    "sequence": 36
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r42",
+    "text": "System in place for activating and coordinating health personnel during a public health emergency",
+    "sequence": 37
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r43",
+    "text": "Case management procedures implemented for IHR relevant hazards",
+    "sequence": 38
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r51",
+    "text": "Risk communication systems for unusual/unexpected events and emergencies",
+    "sequence": 39
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r52",
+    "text": "Internal and partner coordination for emergency risk communication",
+    "sequence": 40
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r53",
+    "text": "Public communication for emergencies",
+    "sequence": 41
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r54",
+    "text": "Communication engagement with affected communities",
+    "sequence": 42
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_r55",
+    "text": "Addressing perceptions, risky behaviors and misinformation",
+    "sequence": 43
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_poe1",
+    "text": "Routine capacities established at points of entry",
+    "sequence": 44
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_poe2",
+    "text": "Effective public health response at points of entry",
+    "sequence": 45
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_ce1",
+    "text": "Mechanisms established and functioning for detecting and responding to chemical events or emergencies",
+    "sequence": 46
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_ce2",
+    "text": "Enabling environment in place for management of chemical events",
+    "sequence": 47
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_re1",
+    "text": "Mechanisms established and functioning for detecting and responding to radiological and nuclear emergencies",
+    "sequence": 48
+  },
+  {
+    "assessment_publication_named_id": "jee2",
+    "named_id": "jee2_ind_re2",
+    "text": "Enabling environment in place for management of radiation emergencies",
+    "sequence": 49
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c11",
+    "text": "Legislation, laws, regulations, policy, administrative requirements or other government instruments to implement the IHR",
+    "sequence": 1
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c12",
+    "text": "Financing for the implementation of IHR capacities",
+    "sequence": 2
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c13",
+    "text": "Financing mechanism and funds for timely response to public health emergencies",
+    "sequence": 3
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c21",
+    "text": "National IHR Focal Point functions under IHR",
+    "sequence": 4
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c22",
+    "text": "Multisectoral IHR coordination mechanisms",
+    "sequence": 5
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c31",
+    "text": "Collaborative effort on activities to address zoonoses",
+    "sequence": 6
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c41",
+    "text": "Multisectoral collaboration mechanism for food safety events",
+    "sequence": 7
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c51",
+    "text": "Specimen referral and transport system",
+    "sequence": 8
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c52",
+    "text": "Implementation of a laboratory biosafety and biosecurity regime",
+    "sequence": 9
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c53",
+    "text": "Access to laboratory testing capacity for priority diseases",
+    "sequence": 10
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c61",
+    "text": "Early warning function: indicator- and event-based surveillance",
+    "sequence": 11
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c62",
+    "text": "Mechanism for event management (verification, risk assessment, analysis invesgitation)",
+    "sequence": 12
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c71",
+    "text": "Human resources for implementation of IHR capacities",
+    "sequence": 13
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c81",
+    "text": "Planning for emergency preparedness and response mechanism",
+    "sequence": 14
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c82",
+    "text": "Management of health emergency response operations",
+    "sequence": 15
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c83",
+    "text": "Emergency resource mobilization",
+    "sequence": 16
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c91",
+    "text": "Case management capacity for IHR relevant hazards",
+    "sequence": 17
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c92",
+    "text": "Capacity for infection prevention and control and chemical and radiation decontamination",
+    "sequence": 18
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c93",
+    "text": "Access to essential health services",
+    "sequence": 19
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c101",
+    "text": "Capacity for emergency risk communications",
+    "sequence": 20
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c111",
+    "text": "Core capacity requirements at all times for designated airports, ports and ground crossings",
+    "sequence": 21
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c112",
+    "text": "Effective public health response at points of entry",
+    "sequence": 22
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c121",
+    "text": "Resources for detection and alert",
+    "sequence": 23
+  },
+  {
+    "assessment_publication_named_id": "spar_2018",
+    "named_id": "spar_2018_ind_c131",
+    "text": "Capacity and resources",
+    "sequence": 24
+  }
+]

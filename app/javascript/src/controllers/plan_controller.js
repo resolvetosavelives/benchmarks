@@ -1,8 +1,8 @@
 import { Controller } from "stimulus"
-import Chartist from "chartist"
 import $ from "jquery"
+import Chartist from "chartist"
 
-import renderActivity from "../renderActivity"
+// TODO: test coverage for recent changes
 
 /* This controller handles almost all of the in-browser capabilities of the
  * draft plan form. Users can delete activities, add freeform activities, and
@@ -43,152 +43,68 @@ import renderActivity from "../renderActivity"
  *
  */
 export default class extends Controller {
-  static targets = ["activityMap", "newActivity", "submit", "form"]
+  static targets = ["fieldForActivityIds", "submit", "form"]
+
+  initialize() {
+    // benchmark controller will append itself to this array
+    this.childControllers = []
+  }
 
   connect() {
     this.initBarChart()
     this.initActivityCountButton()
+    console.log("plan.connect: getActivityIds().length: ", this.getActivityIds().length)
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
   }
 
-  /* Delete an activity from the plan. */
-  deleteActivity(e) {
-    const { currentTarget } = e
-    const activityToDelete = currentTarget.getAttribute("data-activity")
-    const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
-
-    const newActivityList = this.activityMap[benchmarkId].filter(
-      a => a.text !== activityToDelete
-    )
-    this.activityMapTarget.value = JSON.stringify({
-      ...this.activityMap,
-      [benchmarkId]: newActivityList
-    })
-    currentTarget.closest(".row").classList.add("d-none")
-    $(this.newActivity(benchmarkId)).autocomplete({
-      source: this.autocompletions(benchmarkId)
-    })
-    this.validateActivityMap()
+  getActivityIds() {
+    return JSON.parse(this.data.get("activityIds"))
   }
 
-  /* Add a new activity to a benchmark. The add activity form should have a
-   * "data-benchmark-id" tag on it to specify which benchmark to add the
-   * activity to, and must call this function to actually add the text in the
-   * field. */
-  addNewActivity(e) {
-    const { currentTarget } = e
-    const benchmarkId = currentTarget.getAttribute("data-benchmark-id")
-    if (e.keyCode === 13 && currentTarget.value.length) {
-      this.activityMapTarget.value = JSON.stringify({
-        ...this.activityMap,
-        [benchmarkId]: [
-          ...(this.activityMap[benchmarkId] || []),
-          { text: currentTarget.value }
-        ]
-      })
-      renderActivity(benchmarkId, currentTarget.value)
-      $(currentTarget).autocomplete({
-        source: this.autocompletions(benchmarkId)
-      })
-      e.target.value = ""
-      e.preventDefault()
-      this.validateActivityMap()
-
-      const noActivitiesNudge = currentTarget
-        .closest(".benchmark-container")
-        .querySelector(".no-activities")
-      if (noActivitiesNudge) {
-        noActivitiesNudge.hidden = true
+  setActivityIds(activityIds) {
+    this.data.set("activityIds", JSON.stringify(activityIds))
+    let anyActivities = false
+    this.childControllers.forEach((controller) => {
+      if (controller.hasActivities()) {
+        anyActivities = true
       }
-    }
-  }
-
-  /* Get a list of all of the possible activities for a benchmark. */
-  autocompletions(benchmarkId) {
-    return this.allActivities(benchmarkId).filter(
-      a => this.currentActivities(benchmarkId).includes(a) === false
-    )
-  }
-
-  /* Get the text of all of the current activities for a benchmark in the
-   * activity map. */
-  currentActivities(benchmarkId) {
-    return this.activityMap[benchmarkId]
-      ? this.activityMap[benchmarkId].map(a => a.text)
-      : []
-  }
-
-  /* This provides the list of all possible activities in for a benchmark.
-   *
-   * The "New Activity" field for each benchmark must have a `data-activites`
-   * attribute that that the server must populate with all of the possible
-   * activities for this benchmark.
-   */
-  allActivities(benchmarkId) {
-    return JSON.parse(
-      this.newActivity(benchmarkId).getAttribute("data-activities")
-    )
-  }
-
-  /* Retrieve a new activity field for the specified benchmark ID. */
-  newActivity(benchmarkId) {
-    return this.newActivityTargets.find(
-      t => t.getAttribute("data-benchmark-id") === benchmarkId
-    )
-  }
-
-  /* Check the validity of the plan name, disabling the submit button if the
-   * name is invalid. */
-  validateName() {
-    if (this.formTarget.checkValidity() === false) {
-      this.submitTarget.setAttribute("disabled", "disabled")
+    })
+    if (anyActivities === true) {
+      this.setFormIsValid()
     } else {
-      this.submitTarget.removeAttribute("disabled")
-    }
-    this.formTarget.classList.add("was-validated")
-  }
-
-  /* Check that the draft plan has at least one element in it, and disable the
-   * submit button if it does not. */
-  validateActivityMap() {
-    if (
-      Object.keys(this.activityMap).every(
-        key => this.activityMap[key].length === 0
-      )
-    ) {
-      this.submitTarget.setAttribute("disabled", "disabled")
-    } else {
-      this.submitTarget.removeAttribute("disabled")
+      this.setFormIsInvalid()
     }
   }
 
-  /* Submit the form.
-   *
-   * We cannot use a normal submit button because the submit button lives
-   * outside of the form on the page. We had to do this for formatting
-   * purposes.
-   */
-  submit() {
-    this.formTarget.submit()
+  addActivityId(activityId) {
+    const allPlanActivityIds = this.getActivityIds()
+    const indexOfActivityId = allPlanActivityIds.indexOf(activityId)
+    if (indexOfActivityId === -1) {
+      allPlanActivityIds.push(activityId)
+      this.setActivityIds(allPlanActivityIds)
+    }
   }
 
-  /* This causes stimulus to convert the activityMapTarget into a instance
-   * field.
-   */
-  get activityMap() {
-    return JSON.parse(this.activityMapTarget.value)
+  removeActivityId(activityId) {
+    const allPlanActivityIds = this.getActivityIds()
+    const indexOfActivityId = allPlanActivityIds.indexOf(activityId)
+    if (indexOfActivityId >= 0) {
+      allPlanActivityIds.splice(indexOfActivityId, 1)
+      this.setActivityIds(allPlanActivityIds)
+    }
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initActivityCountButton() {
     $(".activity-count-circle").click(() => {
-      $(".capacity-container").show()
+      $(".technical-area-container").show()
     })
   }
 
   initBarChart() {
+    let chartSelector = this.data.get("chartSelector")
     this.chartLabels = JSON.parse(this.data.get("chartLabels"))
     let data = {
       labels: this.chartLabels,
@@ -208,7 +124,7 @@ export default class extends Controller {
         }
       },
     };
-    this.chart = new Chartist.Bar(this.data.get("chartSelector"), data, options);
+    this.chart = new Chartist.Bar(chartSelector, data, options);
     this.chart.on('created', () => {
       this.initBarChartInteractivity()
     })
@@ -227,20 +143,47 @@ export default class extends Controller {
   initClickHandlerForTAChart($elBarSegment, index) {
     if (this.chartLabels[index]) {
       $($elBarSegment).on('click', () => {
-        $('.capacity-container').hide()
-        $('#capacity-' + this.chartLabels[index]).show()
+        $('.technical-area-container').hide()
+        $('#technical-area-' + this.chartLabels[index]).show()
       })
     }
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initTooltipForTAChartSegment($elBarSegment, index) {
-    let $elTitle = $('#capacity-' + this.chartLabels[index])
+    let $elTitle = $('#technical-area-' + this.chartLabels[index])
     let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
         .tooltip({container: ".plan-container"})
         .tooltip()
+  }
+
+  /* Check the validity of the plan name, disabling the submit button if the
+   * name is invalid. */
+  validateName() {
+    if (this.formTarget.checkValidity() === false) {
+      this.setFormIsInvalid()
+    } else {
+      this.setFormIsValid()
+    }
+  }
+
+  submit() {
+    let allBenchmarkActivityIds = this.data.get("activityIds")
+    console.log("plan.submit: allBenchmarkActivityIds.length: ", JSON.parse(allBenchmarkActivityIds).length)
+    this.fieldForActivityIdsTarget.value = allBenchmarkActivityIds
+    this.formTarget.submit()
+  }
+
+  setFormIsValid() {
+    this.submitTarget.removeAttribute("disabled")
+    this.formTarget.classList.add("was-validated")
+  }
+
+  setFormIsInvalid() {
+    this.submitTarget.setAttribute("disabled", "disabled")
+    this.formTarget.classList.add("was-validated")
   }
 }

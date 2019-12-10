@@ -1,0 +1,82 @@
+@startuml
+
+
+object AssessmentPublication {
+    id
+    indicators []
+    name, e.g. "JEE 1.0"
+    title, e.g. "Joint external ... Regulations (2005)"
+    created_at
+    updated_at
+}
+object AssessmentIndicator {
+    id
+    evaluation_publication
+    benchmark_indicators [] (**1+**)
+    title, e.g. "Legislation, laws ... implementation of IHR."
+    display_abbreviation, e.g. "P.1.1"
+    category, e.g. "National Legislation, Policy and Financing"
+    category_display_abbreviation, e.g. "P1"
+}
+object BenchmarkTechnicalArea {
+    id
+    text, e.g. "National Legislation, Policy and Financing"
+    sequence
+}
+object BenchmarkIndicator {
+    id
+    AssessmentIndicators [] (**1+**)
+    display_abbreviation, e.g."1.1"
+    title, e.g. "Domestic legislation, laws ... compliance with the IHR"
+    category, e.g. "National Legislation, Policy and Financing"
+    created_at
+    updated_at
+}
+object BenchmarkIndicatorActivity {
+    id
+    benchmark_indicator
+    text, e.g. "Identify and convene ... of legislation and policies."
+    created_at
+    updated_at
+}
+object Plan {
+    id
+    user (Optional)
+    evaluation_publication
+    name, e.g. "Draft Plan A.2 for Nigeria"
+    country, .e.g. "Nigeria"
+    activities []
+    scores []
+    goals []
+    created_at
+    updated_at
+}
+object PlanBenchmarkIndicator {
+    id
+    plan
+    benchmark_indicator
+    score
+    goal
+    created_at
+    updated_at
+}
+object PlanFromJee {
+    evaluation_framework "JEE 1.0"
+}
+object PlanFromSpar2018 {
+    evaluation_framework "SPAR 2018"
+}
+
+
+AssessmentPublication "1" o-- "many" AssessmentIndicator
+BenchmarkTechnicalArea "1 or more" o-- "1 or more" BenchmarkIndicator
+BenchmarkIndicator "1 or more" o-- "1 or more" AssessmentIndicator
+BenchmarkIndicator "1" o-- "many" BenchmarkIndicatorActivity
+Plan "1" o-- "many" PlanBenchmarkIndicator
+Plan "1" o-- "many" BenchmarkIndicatorActivity
+PlanBenchmarkIndicator "1" o-- "1" BenchmarkIndicator
+PlanFromJee <|-- Plan
+PlanFromSpar2018 <|-- Plan
+
+
+@enduml
