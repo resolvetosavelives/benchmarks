@@ -51,9 +51,16 @@ export default class extends Controller {
   }
 
   connect() {
+    this.currentIndex = 0 // used for tabs and charts arrays
+    this.charts = []
+    this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
+    this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
+    this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
+    this.chartWidth  = this.data.get("chartWidth")  // expects an integer
+    this.chartHeight = this.data.get("chartHeight") // expects an integer
     this.initBarChart()
     this.initActivityCountButton()
-    console.log("plan.connect: getActivityIds().length: ", this.getActivityIds().length)
+    console.log("plan.connect: getActivityIds().length: ", (this.getActivityIds() || []).length)
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
@@ -98,25 +105,23 @@ export default class extends Controller {
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initActivityCountButton() {
-    $(".activity-count-circle").click(() => {
+    $(".activity-count-circle").on('click', () => {
       $(".technical-area-container").show()
     })
   }
 
   initBarChart() {
-    let chartSelector = this.data.get("chartSelector")
-    this.chartLabels = JSON.parse(this.data.get("chartLabels"))
     let data = {
-      labels: this.chartLabels,
+      labels: this.chartLabels[this.currentIndex],
       series: [
-        JSON.parse(this.data.get("chartSeries"))
+        this.chartDataSeries[this.currentIndex]
       ]
     };
     let options = {
       high: 40,
       low: 0,
-      width: this.data.get("chartWidth"),
-      height: this.data.get("chartHeight"),
+      width: this.chartWidth,
+      height: this.chartHeight,
       axisY: {
         // show only even-numbered X-axis labels
         labelInterpolationFnc: function (value, index) {
@@ -124,10 +129,26 @@ export default class extends Controller {
         }
       },
     };
-    this.chart = new Chartist.Bar(chartSelector, data, options);
-    this.chart.on('created', () => {
-      this.initBarChartInteractivity()
+    this.charts[this.currentIndex] = new Chartist.Bar(this.chartSelectors[this.currentIndex], data, options);
+    this.charts[this.currentIndex].on('created', () => {
+      if (this.currentIndex === 0) {
+        this.initBarChartInteractivity()
+      }
     })
+    const self = this
+    // the "shown.bs.tab" event comes of bootstrap nav tabs
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+      self.handleChartHideShow(event)
+    })
+  }
+
+  // e.target: newly activated tab
+  // e.relatedTarget: previously active tab
+  handleChartHideShow(event) {
+    const {target: selectedTab} = event
+    const zeroBasedTabIndex = $(selectedTab).parents("ul").find("a").index(selectedTab)
+    this.currentIndex = zeroBasedTabIndex
+    this.initBarChart()
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
@@ -141,17 +162,19 @@ export default class extends Controller {
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initClickHandlerForTAChart($elBarSegment, index) {
-    if (this.chartLabels[index]) {
+    const chartLabels = this.chartLabels[this.currentIndex]
+    if (chartLabels[index]) {
       $($elBarSegment).on('click', () => {
         $('.technical-area-container').hide()
-        $('#technical-area-' + this.chartLabels[index]).show()
+        $('#technical-area-' + chartLabels[index]).show()
       })
     }
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initTooltipForTAChartSegment($elBarSegment, index) {
-    let $elTitle = $('#technical-area-' + this.chartLabels[index])
+    const chartLabels = this.chartLabels[this.currentIndex]
+    let $elTitle = $('#technical-area-' + chartLabels[index])
     let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
         .attr("title", tooltipTitle)

@@ -3,31 +3,30 @@ module AssessmentIndicatorSeed
 
   module ClassMethods
 
-    # TODO: GVT: this is currently not used, may remove
-    def seed_for_jee1!(jee1 = nil)
-      # if jee1 not exists then blow up to stop seeding
-      unless jee1.present?
-        jee1 = AssessmentPublication.find_by_slug! :jee1
+    def seed!
+      if AssessmentIndicator.count.zero?
+        eval_indicators_attrs = JSON.load File.open File.join Rails.root, '/db/seed-data/assessment_indicators.json'
+        eval_indicators_attrs.each do |hash_attrs|
+          attrs = hash_attrs.with_indifferent_access
+          pub_named_id = attrs[:assessment_publication_named_id]
+          ind_named_id = attrs[:named_id]
+          ta_named_id = AssessmentTechnicalArea.named_id_for(pub_named_id, ind_named_id)
+          assessment_technical_area = AssessmentTechnicalArea.find_by_named_id!(ta_named_id)
+          AssessmentIndicator.create!(
+              assessment_technical_area: assessment_technical_area,
+              text: attrs[:text],
+              named_id: attrs[:named_id],
+              sequence: attrs[:sequence]
+          )
+        end
       end
-
-      eval_indicators_jee1_attrs = JSON.load File.open File.join Rails.root, '/db/seed-data/assessment_indicators_jee1.json'
-      assessment_indicators_jee1 = {} # hash keyed by display_abbreviation to stash instances to use again later
-      eval_indicators_jee1_attrs.each_with_index do |hash_attrs, index|
-        attrs = hash_attrs.with_indifferent_access
-        assessment_indicators_jee1[attrs[:display_abbreviation]] = AssessmentIndicator.create!(
-            assessment_publication: jee1,
-            text: attrs[:text],
-            display_abbreviation: attrs[:display_abbreviation],
-            named_id: attrs[:named_id],
-            slug: attrs[:slug],
-            technical_area: attrs[:technical_area],
-            technical_area_display_abbreviation: attrs[:technical_area_display_abbreviation],
-            sequence: attrs[:sequence]
-        )
-      end
-      assessment_indicators_jee1
     end
 
+    def unseed!
+      ActiveRecord::Base.connection.exec_query(
+          "DELETE FROM #{self.table_name} CASCADE"
+      )
+    end
   end
 
 end
