@@ -141,7 +141,7 @@ class Plan < ApplicationRecord
   #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
   #  - activity sequence is scoped to benchmark_indicator_id even with differing goal levels, see +plan_activity_sequence+ below
   def self.from_goal_form(goal_attrs:, plan_name:, user: nil)
-    named_ids = if goal_attrs[:assessment_type].eql?("spar_2018")
+    named_ids = if ["from-capacities", "spar_2018"].include?(goal_attrs[:assessment_type])
                   # score keys have 3 underscores
                   goal_attrs.select { |k, v| k.count('_').eql?(3) }.keys
                 else # jee1 and jee2

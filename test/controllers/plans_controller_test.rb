@@ -4,6 +4,38 @@ require 'minitest/autorun'
 class PlansControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
+  test "#create plan checks that its saved and response is redirect" do
+    plan = create(:plan_nigeria_jee1)
+    Plan.stub(:from_goal_form, plan) do
+      post plans_path, params: {
+          "goal_form" => {
+              "country"                => "Nigeria",
+              "assessment_type"        => "from-capacities",
+              "spar_2018_ind_c21"      => "1",
+              "spar_2018_ind_c21_goal" => "2",
+          }
+      }
+    end
+    assert_response :redirect
+    assert_redirected_to plan_path plan
+  end
+
+  test "#create plan failure checks that its unsaved and response is redirect back" do
+    plan = build(:plan_nigeria_jee1)
+    Plan.stub(:from_goal_form, plan) do
+      post plans_path, params: {
+          "goal_form" => {
+              "country"                => "Nigeria",
+              "assessment_type"        => "from-capacities",
+              "spar_2018_ind_c21"      => "1",
+              "spar_2018_ind_c21_goal" => "2",
+          }
+      }
+    end
+    assert_response :redirect
+    assert_redirected_to root_path
+  end
+
   test 'plan#show redirects logged out user without session[:plan_id]' do
     get plan_path(1)
     assert_response :redirect
