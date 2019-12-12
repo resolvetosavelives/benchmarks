@@ -40,6 +40,8 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'm'
   gem 'colorize'
+  gem 'rubocop-rails'
+  gem 'standard'
 end
 
 group :development do
@@ -57,4 +59,5 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'cuprite'
   gem 'factory_bot_rails'
+  gem 'minitest-reporters'
 end
