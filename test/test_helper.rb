@@ -1,11 +1,16 @@
-ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
-require 'rails/test_help'
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
+require "rails/test_help"
 require "minitest/spec"
+require "minitest/reporters"
+Minitest::Reporters.use! [
+  Minitest::Reporters::SpecReporter.new,
+  # Minitest::Reporters::MeanTimeReporter.new
+]
 
-#class ActiveSupport::TestCase
+# class ActiveSupport::TestCase
 #  # any configs or customizations can go here
-#end
+# end
 
 ##
 # for FactoryBot support

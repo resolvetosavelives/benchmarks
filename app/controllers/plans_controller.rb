@@ -29,9 +29,9 @@ class PlansController < ApplicationController
   def create
     goal_form_params = goal_params
     @plan = Plan.from_goal_form(
-        goal_attrs: goal_form_params.to_h,
-        plan_name: "#{goal_form_params.fetch(:country)} draft plan",
-        user: current_user
+      goal_attrs: goal_form_params.to_h,
+      plan_name: "#{goal_form_params.fetch(:country)} draft plan",
+      user: current_user
     )
     unless @plan.persisted?
       flash[:notice] = "Could not save your plan, something went wrong."
@@ -45,8 +45,8 @@ class PlansController < ApplicationController
   def index
     @countries, @selectables = helpers.set_country_selection_options(true)
     @plans = current_user.plans.order(updated_at: :desc)
-    @assessments = JSON.load File.open './app/fixtures/assessments.json'
-    @data_dictionary = JSON.load File.open './app/fixtures/data_dictionary.json'
+    @assessments = JSON.load File.open "./app/fixtures/assessments.json"
+    @data_dictionary = JSON.load File.open "./app/fixtures/data_dictionary.json"
   end
 
   # TODO: test coverage for this
@@ -55,8 +55,8 @@ class PlansController < ApplicationController
     benchmark_activity_ids = JSON.parse(plan_params.fetch(:benchmark_activity_ids))
     name = plan_params.fetch(:name)
     plan.update!(
-        name:                   name,
-        benchmark_activity_ids: benchmark_activity_ids
+      name: name,
+      benchmark_activity_ids: benchmark_activity_ids
     )
     redirect_to plans_path
   end
@@ -71,7 +71,7 @@ class PlansController < ApplicationController
   private
 
   def alert_and_redirect
-    flash[:alert] = 'You are not allowed to access this plan'
+    flash[:alert] = "You are not allowed to access this plan"
     redirect_to root_path
   end
 

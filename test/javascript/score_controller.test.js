@@ -80,7 +80,7 @@ describe("ScoreController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <button type="button" data-action="click->score#getToGreen" id="gtg" />
+        <button type="button" data-action="click->score#getToGreen" id="gtg"></button>
         <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
         <input id="score1"      type="number" value="1" class="color-score-1" />
         <input id="score1_goal" type="number" value="2" class="color-score-2" data-goal="true" />

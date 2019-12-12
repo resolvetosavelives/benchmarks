@@ -4,5 +4,4 @@ class PlanBenchmarkIndicator < ApplicationRecord
   belongs_to :benchmark_indicator
 
   default_scope { includes(:benchmark_indicator) }
-
 end

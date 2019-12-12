@@ -39,7 +39,7 @@
         <tbody>
           <% @plans.each do |plan| %>
             <tr class="plan-entry">
-              <td class="py-4"> <%= link_to plan.name, plan %></a> </td>
+              <td class="py-4"><%= link_to plan.name, plan %></td>
               <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
               <td class="py-4 text-secondary">
                 <%= link_to (render 'shared/icon',
