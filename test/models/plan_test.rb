@@ -1,116 +1,117 @@
-require File.expand_path('./test/test_helper')
+require File.expand_path("./test/test_helper")
 require "minitest/spec"
 require "minitest/autorun"
 
 describe Plan do
-
   describe "#from_goal_form" do
-
     describe "for Nigeria JEE1" do
       let(:goal_attrs) do
         {
-            "country"            => "Nigeria",
-            "assessment_type"    => "jee1",
-            "jee1_ind_p11"       => "1",
-            "jee1_ind_p11_goal"  => "2",
-            "jee1_ind_p12"       => "1",
-            "jee1_ind_p12_goal"  => "2",
-            "jee1_ind_p21"       => "2",
-            "jee1_ind_p21_goal"  => "3",
-            "jee1_ind_p31"       => "2",
-            "jee1_ind_p31_goal"  => "3",
-            "jee1_ind_p32"       => "2",
-            "jee1_ind_p32_goal"  => "3",
-            "jee1_ind_p33"       => "2",
-            "jee1_ind_p33_goal"  => "3",
-            "jee1_ind_p34"       => "2",
-            "jee1_ind_p34_goal"  => "3",
-            "jee1_ind_p41"       => "2",
-            "jee1_ind_p41_goal"  => "3",
-            "jee1_ind_p42"       => "3",
-            "jee1_ind_p42_goal"  => "4",
-            "jee1_ind_p43"       => "1",
-            "jee1_ind_p43_goal"  => "2",
-            "jee1_ind_p51"       => "2",
-            "jee1_ind_p51_goal"  => "3",
-            "jee1_ind_p61"       => "1",
-            "jee1_ind_p61_goal"  => "2",
-            "jee1_ind_p62"       => "1",
-            "jee1_ind_p62_goal"  => "2",
-            "jee1_ind_p71"       => "3",
-            "jee1_ind_p71_goal"  => "4",
-            "jee1_ind_p72"       => "4",
-            "jee1_ind_p72_goal"  => "5",
-            "jee1_ind_d11"       => "3",
-            "jee1_ind_d11_goal"  => "4",
-            "jee1_ind_d12"       => "1",
-            "jee1_ind_d12_goal"  => "2",
-            "jee1_ind_d13"       => "2",
-            "jee1_ind_d13_goal"  => "3",
-            "jee1_ind_d14"       => "2",
-            "jee1_ind_d14_goal"  => "3",
-            "jee1_ind_d21"       => "3",
-            "jee1_ind_d21_goal"  => "4",
-            "jee1_ind_d22"       => "2",
-            "jee1_ind_d22_goal"  => "3",
-            "jee1_ind_d23"       => "3",
-            "jee1_ind_d23_goal"  => "4",
-            "jee1_ind_d24"       => "3",
-            "jee1_ind_d24_goal"  => "4",
-            "jee1_ind_d31"       => "3",
-            "jee1_ind_d31_goal"  => "4",
-            "jee1_ind_d32"       => "2",
-            "jee1_ind_d32_goal"  => "3",
-            "jee1_ind_d41"       => "3",
-            "jee1_ind_d41_goal"  => "4",
-            "jee1_ind_d42"       => "4",
-            "jee1_ind_d42_goal"  => "5",
-            "jee1_ind_d43"       => "2",
-            "jee1_ind_d43_goal"  => "3",
-            "jee1_ind_r11"       => "1",
-            "jee1_ind_r11_goal"  => "2",
-            "jee1_ind_r12"       => "1",
-            "jee1_ind_r12_goal"  => "2",
-            "jee1_ind_r21"       => "2",
-            "jee1_ind_r21_goal"  => "3",
-            "jee1_ind_r22"       => "2",
-            "jee1_ind_r22_goal"  => "3",
-            "jee1_ind_r23"       => "3",
-            "jee1_ind_r23_goal"  => "4",
-            "jee1_ind_r24"       => "2",
-            "jee1_ind_r24_goal"  => "3",
-            "jee1_ind_r31"       => "1",
-            "jee1_ind_r31_goal"  => "2",
-            "jee1_ind_r41"       => "1",
-            "jee1_ind_r41_goal"  => "2",
-            "jee1_ind_r42"       => "1",
-            "jee1_ind_r42_goal"  => "2",
-            "jee1_ind_r51"       => "1",
-            "jee1_ind_r51_goal"  => "2",
-            "jee1_ind_r52"       => "3",
-            "jee1_ind_r52_goal"  => "4",
-            "jee1_ind_r53"       => "2",
-            "jee1_ind_r53_goal"  => "3",
-            "jee1_ind_r54"       => "3",
-            "jee1_ind_r54_goal"  => "4",
-            "jee1_ind_r55"       => "3",
-            "jee1_ind_r55_goal"  => "4",
-            "jee1_ind_poe1"      => "1",
-            "jee1_ind_poe1_goal" => "2",
-            "jee1_ind_poe2"      => "1",
-            "jee1_ind_poe2_goal" => "2",
-            "jee1_ind_ce1"       => "1",
-            "jee1_ind_ce1_goal"  => "2",
-            "jee1_ind_ce2"       => "2",
-            "jee1_ind_ce2_goal"  => "3",
-            "jee1_ind_re1"       => "3",
-            "jee1_ind_re1_goal"  => "4",
-            "jee1_ind_re2"       => "3",
-            "jee1_ind_re2_goal"  => "4"
+          country: "Nigeria",
+          assessment_type: "jee1",
+          jee1_ind_p11: "1",
+          jee1_ind_p11_goal: "2",
+          jee1_ind_p12: "1",
+          jee1_ind_p12_goal: "2",
+          jee1_ind_p21: "2",
+          jee1_ind_p21_goal: "3",
+          jee1_ind_p31: "2",
+          jee1_ind_p31_goal: "3",
+          jee1_ind_p32: "2",
+          jee1_ind_p32_goal: "3",
+          jee1_ind_p33: "2",
+          jee1_ind_p33_goal: "3",
+          jee1_ind_p34: "2",
+          jee1_ind_p34_goal: "3",
+          jee1_ind_p41: "2",
+          jee1_ind_p41_goal: "3",
+          jee1_ind_p42: "3",
+          jee1_ind_p42_goal: "4",
+          jee1_ind_p43: "1",
+          jee1_ind_p43_goal: "2",
+          jee1_ind_p51: "2",
+          jee1_ind_p51_goal: "3",
+          jee1_ind_p61: "1",
+          jee1_ind_p61_goal: "2",
+          jee1_ind_p62: "1",
+          jee1_ind_p62_goal: "2",
+          jee1_ind_p71: "3",
+          jee1_ind_p71_goal: "4",
+          jee1_ind_p72: "4",
+          jee1_ind_p72_goal: "5",
+          jee1_ind_d11: "3",
+          jee1_ind_d11_goal: "4",
+          jee1_ind_d12: "1",
+          jee1_ind_d12_goal: "2",
+          jee1_ind_d13: "2",
+          jee1_ind_d13_goal: "3",
+          jee1_ind_d14: "2",
+          jee1_ind_d14_goal: "3",
+          jee1_ind_d21: "3",
+          jee1_ind_d21_goal: "4",
+          jee1_ind_d22: "2",
+          jee1_ind_d22_goal: "3",
+          jee1_ind_d23: "3",
+          jee1_ind_d23_goal: "4",
+          jee1_ind_d24: "3",
+          jee1_ind_d24_goal: "4",
+          jee1_ind_d31: "3",
+          jee1_ind_d31_goal: "4",
+          jee1_ind_d32: "2",
+          jee1_ind_d32_goal: "3",
+          jee1_ind_d41: "3",
+          jee1_ind_d41_goal: "4",
+          jee1_ind_d42: "4",
+          jee1_ind_d42_goal: "5",
+          jee1_ind_d43: "2",
+          jee1_ind_d43_goal: "3",
+          jee1_ind_r11: "1",
+          jee1_ind_r11_goal: "2",
+          jee1_ind_r12: "1",
+          jee1_ind_r12_goal: "2",
+          jee1_ind_r21: "2",
+          jee1_ind_r21_goal: "3",
+          jee1_ind_r22: "2",
+          jee1_ind_r22_goal: "3",
+          jee1_ind_r23: "3",
+          jee1_ind_r23_goal: "4",
+          jee1_ind_r24: "2",
+          jee1_ind_r24_goal: "3",
+          jee1_ind_r31: "1",
+          jee1_ind_r31_goal: "2",
+          jee1_ind_r41: "1",
+          jee1_ind_r41_goal: "2",
+          jee1_ind_r42: "1",
+          jee1_ind_r42_goal: "2",
+          jee1_ind_r51: "1",
+          jee1_ind_r51_goal: "2",
+          jee1_ind_r52: "3",
+          jee1_ind_r52_goal: "4",
+          jee1_ind_r53: "2",
+          jee1_ind_r53_goal: "3",
+          jee1_ind_r54: "3",
+          jee1_ind_r54_goal: "4",
+          jee1_ind_r55: "3",
+          jee1_ind_r55_goal: "4",
+          jee1_ind_poe1: "1",
+          jee1_ind_poe1_goal: "2",
+          jee1_ind_poe2: "1",
+          jee1_ind_poe2_goal: "2",
+          jee1_ind_ce1: "1",
+          jee1_ind_ce1_goal: "2",
+          jee1_ind_ce2: "2",
+          jee1_ind_ce2_goal: "3",
+          jee1_ind_re1: "3",
+          jee1_ind_re1_goal: "4",
+          jee1_ind_re2: "3",
+          jee1_ind_re2_goal: "4",
         }.with_indifferent_access
       end
-      let(:plan) { Plan.from_goal_form(
-          goal_attrs: goal_attrs, plan_name: "test plan 3854") }
+      let(:plan) {
+        Plan.from_goal_form(
+          goal_attrs: goal_attrs, plan_name: "test plan 3854"
+        )
+      }
 
       it "returns a saved plan instance" do
         assert plan.persisted?, "Plan was not saved"
@@ -132,60 +133,63 @@ describe Plan do
     describe "for Nigeria SPAR 2018" do
       let(:goal_attrs) do
         {
-            "country"                 => "Nigeria",
-            "assessment_type"         => "spar_2018",
-            "spar_2018_ind_c11"       => "4",
-            "spar_2018_ind_c11_goal"  => "5",
-            "spar_2018_ind_c12"       => "2",
-            "spar_2018_ind_c12_goal"  => "3",
-            "spar_2018_ind_c13"       => "3",
-            "spar_2018_ind_c13_goal"  => "4",
-            "spar_2018_ind_c21"       => "5",
-            "spar_2018_ind_c21_goal"  => "5",
-            "spar_2018_ind_c22"       => "5",
-            "spar_2018_ind_c22_goal"  => "5",
-            "spar_2018_ind_c31"       => "3",
-            "spar_2018_ind_c31_goal"  => "4",
-            "spar_2018_ind_c41"       => "4",
-            "spar_2018_ind_c41_goal"  => "5",
-            "spar_2018_ind_c51"       => "2",
-            "spar_2018_ind_c51_goal"  => "3",
-            "spar_2018_ind_c52"       => "1",
-            "spar_2018_ind_c52_goal"  => "2",
-            "spar_2018_ind_c53"       => "1",
-            "spar_2018_ind_c53_goal"  => "2",
-            "spar_2018_ind_c61"       => "4",
-            "spar_2018_ind_c61_goal"  => "5",
-            "spar_2018_ind_c62"       => "4",
-            "spar_2018_ind_c62_goal"  => "5",
-            "spar_2018_ind_c71"       => "3",
-            "spar_2018_ind_c71_goal"  => "4",
-            "spar_2018_ind_c81"       => "2",
-            "spar_2018_ind_c81_goal"  => "3",
-            "spar_2018_ind_c82"       => "3",
-            "spar_2018_ind_c82_goal"  => "4",
-            "spar_2018_ind_c83"       => "1",
-            "spar_2018_ind_c83_goal"  => "2",
-            "spar_2018_ind_c91"       => "2",
-            "spar_2018_ind_c91_goal"  => "3",
-            "spar_2018_ind_c92"       => "2",
-            "spar_2018_ind_c92_goal"  => "3",
-            "spar_2018_ind_c93"       => "1",
-            "spar_2018_ind_c93_goal"  => "2",
-            "spar_2018_ind_c101"      => "2",
-            "spar_2018_ind_c101_goal" => "3",
-            "spar_2018_ind_c111"      => "2",
-            "spar_2018_ind_c111_goal" => "3",
-            "spar_2018_ind_c112"      => "2",
-            "spar_2018_ind_c112_goal" => "3",
-            "spar_2018_ind_c121"      => "1",
-            "spar_2018_ind_c121_goal" => "2",
-            "spar_2018_ind_c131"      => "2",
-            "spar_2018_ind_c131_goal" => "3"
+          country: "Nigeria",
+          assessment_type: "spar_2018",
+          spar_2018_ind_c11: "4",
+          spar_2018_ind_c11_goal: "5",
+          spar_2018_ind_c12: "2",
+          spar_2018_ind_c12_goal: "3",
+          spar_2018_ind_c13: "3",
+          spar_2018_ind_c13_goal: "4",
+          spar_2018_ind_c21: "5",
+          spar_2018_ind_c21_goal: "5",
+          spar_2018_ind_c22: "5",
+          spar_2018_ind_c22_goal: "5",
+          spar_2018_ind_c31: "3",
+          spar_2018_ind_c31_goal: "4",
+          spar_2018_ind_c41: "4",
+          spar_2018_ind_c41_goal: "5",
+          spar_2018_ind_c51: "2",
+          spar_2018_ind_c51_goal: "3",
+          spar_2018_ind_c52: "1",
+          spar_2018_ind_c52_goal: "2",
+          spar_2018_ind_c53: "1",
+          spar_2018_ind_c53_goal: "2",
+          spar_2018_ind_c61: "4",
+          spar_2018_ind_c61_goal: "5",
+          spar_2018_ind_c62: "4",
+          spar_2018_ind_c62_goal: "5",
+          spar_2018_ind_c71: "3",
+          spar_2018_ind_c71_goal: "4",
+          spar_2018_ind_c81: "2",
+          spar_2018_ind_c81_goal: "3",
+          spar_2018_ind_c82: "3",
+          spar_2018_ind_c82_goal: "4",
+          spar_2018_ind_c83: "1",
+          spar_2018_ind_c83_goal: "2",
+          spar_2018_ind_c91: "2",
+          spar_2018_ind_c91_goal: "3",
+          spar_2018_ind_c92: "2",
+          spar_2018_ind_c92_goal: "3",
+          spar_2018_ind_c93: "1",
+          spar_2018_ind_c93_goal: "2",
+          spar_2018_ind_c101: "2",
+          spar_2018_ind_c101_goal: "3",
+          spar_2018_ind_c111: "2",
+          spar_2018_ind_c111_goal: "3",
+          spar_2018_ind_c112: "2",
+          spar_2018_ind_c112_goal: "3",
+          spar_2018_ind_c121: "1",
+          spar_2018_ind_c121_goal: "2",
+          spar_2018_ind_c131: "2",
+          spar_2018_ind_c131_goal: "3",
         }.with_indifferent_access
       end
-      let(:plan) { Plan.from_goal_form(
-          goal_attrs: goal_attrs, plan_name: "test plan 9391") }
+      let(:plan) {
+        Plan.from_goal_form(
+          goal_attrs: goal_attrs, plan_name: "test plan 9391"
+        )
+      }
 
       it "returns a saved plan instance" do
         assert plan.persisted?, "Plan was not saved"
@@ -207,20 +211,23 @@ describe Plan do
     describe "for Nigeria from capacity areas" do
       let(:goal_attrs) do
         {
-            "country"                => "Nigeria",
-            "assessment_type"        => "from-capacities",
-            "spar_2018_ind_c21"      => "1",
-            "spar_2018_ind_c21_goal" => "2",
-            "spar_2018_ind_c22"      => "1",
-            "spar_2018_ind_c22_goal" => "2",
-            "spar_2018_ind_c61"      => "1",
-            "spar_2018_ind_c61_goal" => "2",
-            "spar_2018_ind_c62"      => "1",
-            "spar_2018_ind_c62_goal" => "2"
+          country: "Nigeria",
+          assessment_type: "from-capacities",
+          spar_2018_ind_c21: "1",
+          spar_2018_ind_c21_goal: "2",
+          spar_2018_ind_c22: "1",
+          spar_2018_ind_c22_goal: "2",
+          spar_2018_ind_c61: "1",
+          spar_2018_ind_c61_goal: "2",
+          spar_2018_ind_c62: "1",
+          spar_2018_ind_c62_goal: "2",
         }.with_indifferent_access
       end
-      let(:plan) { Plan.from_goal_form(
-          goal_attrs: goal_attrs, plan_name: "test plan 3737") }
+      let(:plan) do
+        Plan.from_goal_form(
+          goal_attrs: goal_attrs, plan_name: "test plan 3737"
+        )
+      end
 
       it "returns a saved plan instance" do
         assert plan.persisted?, "Plan was not saved"
@@ -238,7 +245,6 @@ describe Plan do
         assert_equal 33, plan.plan_activities.size
       end
     end
-
   end
 
   describe "#count_activities_by_type" do
@@ -263,9 +269,9 @@ describe Plan do
     let(:plan) { create(:plan_nigeria_jee1) }
 
     it "returns the expected plan_benchmark_indicator" do
-      expected_pbi = plan.plan_benchmark_indicators.detect do |pbi|
+      expected_pbi = plan.plan_benchmark_indicators.detect { |pbi|
         pbi.benchmark_indicator.display_abbreviation.eql?("2.1")
-      end
+      }
       expected_pbi.wont_be_nil
 
       plan.indicator_for(expected_pbi.benchmark_indicator).must_equal expected_pbi
@@ -276,9 +282,9 @@ describe Plan do
     let(:plan) { create(:plan_nigeria_jee1) }
 
     it "returns the expected plan_benchmark_indicator, score, and goal" do
-      expected_pbi = plan.plan_benchmark_indicators.detect do |pbi|
+      expected_pbi = plan.plan_benchmark_indicators.detect { |pbi|
         pbi.benchmark_indicator.display_abbreviation.eql?("2.1")
-      end
+      }
       expected_pbi.wont_be_nil
 
       plan.indicator_score_goal_for(expected_pbi.benchmark_indicator).must_equal [expected_pbi, 2, 3]
@@ -289,9 +295,9 @@ describe Plan do
     let(:plan) { create(:plan_nigeria_jee1) }
 
     it "returns the expected plan_benchmark_indicator, score, and goal" do
-      expected_pbi = plan.plan_benchmark_indicators.detect do |pbi|
+      expected_pbi = plan.plan_benchmark_indicators.detect { |pbi|
         pbi.benchmark_indicator.display_abbreviation.eql?("2.1")
-      end
+      }
       expected_pbi.wont_be_nil
 
       result = plan.activities_for(expected_pbi.benchmark_indicator)
@@ -300,5 +306,4 @@ describe Plan do
       result.size.must_equal 9
     end
   end
-
 end

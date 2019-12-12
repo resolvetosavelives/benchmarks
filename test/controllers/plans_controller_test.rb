@@ -1,5 +1,5 @@
-require File.expand_path('./test/test_helper')
-require 'minitest/autorun'
+require File.expand_path("./test/test_helper")
+require "minitest/autorun"
 
 class PlansControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -8,12 +8,12 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     plan = create(:plan_nigeria_jee1)
     Plan.stub(:from_goal_form, plan) do
       post plans_path, params: {
-          "goal_form" => {
-              "country"                => "Nigeria",
-              "assessment_type"        => "from-capacities",
-              "spar_2018_ind_c21"      => "1",
-              "spar_2018_ind_c21_goal" => "2",
-          }
+        "goal_form" => {
+          "country" => "Nigeria",
+          "assessment_type" => "from-capacities",
+          "spar_2018_ind_c21" => "1",
+          "spar_2018_ind_c21_goal" => "2",
+        },
       }
     end
     assert_response :redirect
@@ -24,62 +24,62 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     plan = build(:plan_nigeria_jee1)
     Plan.stub(:from_goal_form, plan) do
       post plans_path, params: {
-          "goal_form" => {
-              "country"                => "Nigeria",
-              "assessment_type"        => "from-capacities",
-              "spar_2018_ind_c21"      => "1",
-              "spar_2018_ind_c21_goal" => "2",
-          }
+        "goal_form" => {
+          "country" => "Nigeria",
+          "assessment_type" => "from-capacities",
+          "spar_2018_ind_c21" => "1",
+          "spar_2018_ind_c21_goal" => "2",
+        },
       }
     end
     assert_response :redirect
     assert_redirected_to root_path
   end
 
-  test 'plan#show redirects logged out user without session[:plan_id]' do
+  test "plan#show redirects logged out user without session[:plan_id]" do
     get plan_path(1)
     assert_response :redirect
   end
 
-  test 'plan#show responds with success for assessment_type jee1' do
+  test "plan#show responds with success for assessment_type jee1" do
     plan = create(:plan_nigeria_jee1, :with_user)
     sign_in plan.user
     get plan_path(plan.id)
     assert_response :success
   end
 
-  test 'plan#show responds with success for assessment_type spar_2018' do
+  test "plan#show responds with success for assessment_type spar_2018" do
     plan = create(:plan_nigeria_jee1, :with_user)
     sign_in plan.user
     get plan_path(plan.id)
     assert_response :success
   end
 
-  test 'plan#show responds with success for assessment_type from-capacities' do
+  test "plan#show responds with success for assessment_type from-capacities" do
     plan = create(:plan, :with_user)
     sign_in plan.user
     get plan_path(plan.id)
     assert_response :success
   end
 
-  test 'logged in user can see their plan' do
+  test "logged in user can see their plan" do
     plan = create(:plan_nigeria_jee1, :with_user)
     sign_in plan.user
     get plan_path(plan.id)
     assert_response :ok
-    assert_select '.technical-area-container', 18
+    assert_select ".technical-area-container", 18
   end
 
   test "logged in user can't see someone else's plan" do
     plan = create(:plan_nigeria_jee1, :with_user)
-    other_user = User.new(email: 'test@example.com')
+    other_user = User.new(email: "test@example.com")
     sign_in other_user
     get plan_path(plan.id)
     assert_response :redirect
   end
 
   # TODO: GVT: not working until the add activities form is working again
-  #test 'plan/show.html.erb wires up plan controller correctly' do
+  # test 'plan/show.html.erb wires up plan controller correctly' do
   #  plan = create(:plan, :with_user)
   #  sign_in plan.user
   #  get plan_path(plan.id)
@@ -93,14 +93,14 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   #                1
   #  assert_select 'button[data-action="plan#deleteActivity"][data-benchmark-id="1.1"]',
   #                2
-  #end
+  # end
 
-  test 'logged in user can update their plan' do
+  test "logged in user can update their plan" do
     plan = create(:plan_nigeria_jee1, :with_user)
     sign_in plan.user
     put plan_path(plan.id),
-        params: { plan: { name: 'the plan', benchmark_activity_ids: '[]' } }
-    assert_equal Plan.find_by_name('the plan').id, plan.id
+      params: {plan: {name: "the plan", benchmark_activity_ids: "[]"}}
+    assert_equal Plan.find_by_name("the plan").id, plan.id
   end
 
   test "logged in user can't update someone else's plan" do
@@ -108,21 +108,21 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     other_user = create(:user)
     sign_in other_user
     put plan_path(plan.id),
-        params: { plan: { name: 'the plan', activity_map: '{}' } }
+      params: {plan: {name: "the plan", activity_map: "{}"}}
     assert_redirected_to root_path
-    assert_equal Plan.where(name: 'the plan').count, 0
+    assert_equal Plan.where(name: "the plan").count, 0
   end
 
   # TODO: GVT: redo this test case to work with the new db tables
-  #test "logged out user can't update a plan with id != session[:plan_id]" do
+  # test "logged out user can't update a plan with id != session[:plan_id]" do
   #  create_draft_plan_stub do |plan_id|
   #    put plan_path('another plan'), params: { plan: { name: 'different' } }
   #    assert_redirected_to root_path
   #  end
-  #end
+  # end
 
   # TODO: GVT: redo this test case to work with the new db tables
-  #test 'logged out user can update a plan with id == session[:plan_id]' do
+  # test 'logged out user can update a plan with id == session[:plan_id]' do
   #  create_draft_plan_stub do |plan_id|
   #    put plan_path(plan_id),
   #        params: { plan: { name: 'different', activity_map: '{}' } }
@@ -130,33 +130,33 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   #    assert_redirected_to new_user_session_path
   #    assert_equal Plan.find_by_name('different').id, plan_id
   #  end
-  #end
+  # end
 
   test "logged out user can't see a list of plans" do
     get plans_path
     assert_redirected_to new_user_session_path
   end
 
-  test 'logged in user sees a list of their plans' do
+  test "logged in user sees a list of their plans" do
     user =
-      User.create!(email: 'test@example.com', password: '123455', role: 'Donor')
-    plan1 = Plan.create!(name: 'owned plan', activity_map: {})
+      User.create!(email: "test@example.com", password: "123455", role: "Donor")
+    plan1 = Plan.create!(name: "owned plan", activity_map: {})
     user.plans << plan1
-    Plan.create!(name: 'orphan', activity_map: {})
+    Plan.create!(name: "orphan", activity_map: {})
 
     sign_in user
     get plans_path
     assert_response :ok
-    assert_select '.plan-entry', 1
+    assert_select ".plan-entry", 1
     assert_select "form#assessment-select-menu[data-target='assessment-selection.form']",
-                  1
+      1
 
     user.plans.first.destroy
     get plans_path
-    assert_select '.plan-entry', 0
+    assert_select ".plan-entry", 0
   end
 
-  test 'user deletes their plan' do
+  test "user deletes their plan" do
     plan = create(:plan_nigeria_jee1, :with_user)
     user = plan.user
     sign_in user

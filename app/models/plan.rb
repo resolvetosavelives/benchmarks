@@ -18,19 +18,18 @@ class Plan < ApplicationRecord
     # template to be rendered along with its partials. this is because rendering
     # views is the longest/slowest part of the response.
     includes(
-        {plan_activities: [:benchmark_indicator_activity, :benchmark_indicator]},
-        {plan_benchmark_indicators: [:benchmark_indicator]}
+      {plan_activities: [:benchmark_indicator_activity, :benchmark_indicator]},
+      {plan_benchmark_indicators: [:benchmark_indicator]}
     )
   end
-
 
   def update!(name:, benchmark_activity_ids:)
     current_activity_ids = benchmark_indicator_activity_ids
     # 1st, remove any needed
     remove_activity_ids = (current_activity_ids.to_set - benchmark_activity_ids.to_set).to_a
-    remove_activities = self.plan_activities.
-        where(benchmark_indicator_activity_id: remove_activity_ids).
-        all
+    remove_activities = plan_activities
+      .where(benchmark_indicator_activity_id: remove_activity_ids)
+      .all
     remove_activities.each(&:destroy) # must call destroy to invoke callback for sequence
     # 2nd, add any needed
     add_activity_ids = benchmark_activity_ids - current_activity_ids
@@ -42,7 +41,7 @@ class Plan < ApplicationRecord
       plan_activity = PlanActivity.new_for_benchmark_activity benchmark_activity
       plan_activity.plan = self
       plan_activity.sequence = (max_sequence + 1)
-      self.plan_activities << plan_activity
+      plan_activities << plan_activity
     end
     # lastly, now that the associations are handled, perform a basic update
     super name: name
@@ -71,7 +70,8 @@ class Plan < ApplicationRecord
 
   def count_activities_by_type
     counts_by_type = Array.new(
-        BenchmarkIndicatorActivity::ACTIVITY_TYPES.size, 0)
+      BenchmarkIndicatorActivity::ACTIVITY_TYPES.size, 0
+    )
     plan_activities.each do |activity|
       # some BIA's have no activity types and those are nil, we absorb with +&+
       activity.benchmark_indicator_activity.activity_types&.each do |type_num|
@@ -109,17 +109,17 @@ class Plan < ApplicationRecord
     # note that "all possible" is scoped within the given benchmark_indicator
     all_possible_activities = benchmark_indicator.activities
     included_activities = plan_activities
-                              .where(benchmark_indicator_activity_id: all_possible_activities)
-                              .map(&:benchmark_indicator_activity)
+      .where(benchmark_indicator_activity_id: all_possible_activities)
+      .map(&:benchmark_indicator_activity)
     (all_possible_activities.to_set - included_activities.to_set).to_a
   end
 
   # Not used yet..
-  #def activity_for(benchmark_indicator_activity)
+  # def activity_for(benchmark_indicator_activity)
   #  plan_activities.to_a.detect do |plan_activity|
   #    benchmark_indicator_activity.eql?(plan_activity.benchmark_indicator_activity)
   #  end
-  #end
+  # end
 
   ##
   # +goal_form_params+ will be, for example: {
@@ -141,23 +141,23 @@ class Plan < ApplicationRecord
   #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
   #  - activity sequence is scoped to benchmark_indicator_id even with differing goal levels, see +plan_activity_sequence+ below
   def self.from_goal_form(goal_attrs:, plan_name:, user: nil)
-    named_ids = if ["from-capacities", "spar_2018"].include?(goal_attrs[:assessment_type])
-                  # score keys have 3 underscores
-                  goal_attrs.select { |k, v| k.count('_').eql?(3) }.keys
-                else # jee1 and jee2
-                  # score keys have 2 underscores
-                  goal_attrs.select { |k, v| k.count('_').eql?(2) }.keys
-                end
+    named_ids = if %w[from-capacities spar_2018].include?(goal_attrs[:assessment_type])
+      # score keys have 3 underscores
+      goal_attrs.select { |k, _| k.count("_").eql?(3) }.keys
+    else # jee1 and jee2
+      # score keys have 2 underscores
+      goal_attrs.select { |k, _| k.count("_").eql?(2) }.keys
+    end
     scores_and_goals_by_named_id = {}
     named_ids.each do |named_id|
       scores_and_goals_by_named_id[named_id] = {
-          score: goal_attrs[named_id].to_i,
-          goal: goal_attrs[named_id + "_goal"].to_i
+        score: goal_attrs[named_id].to_i,
+        goal: goal_attrs[named_id + "_goal"].to_i,
       }
     end
     plan = Plan.new goal_attrs
-                        .slice(:country, :assessment_type)
-                        .merge({name: plan_name, user: user})
+      .slice(:country, :assessment_type)
+      .merge({name: plan_name, user: user})
     plan_benchmark_indicators = []
     plan_activities = []
     assessment_indicators = AssessmentIndicator.where(named_id: named_ids).all.uniq
@@ -182,32 +182,32 @@ class Plan < ApplicationRecord
       goal = score_and_goal[:goal]
       benchmark_indicators = assessment_indicator.benchmark_indicators.uniq
       benchmark_indicators.each do |benchmark_indicator|
-        already_seen_indicator = plan_benchmark_indicators.any? do |pbi|
+        already_seen_indicator = plan_benchmark_indicators.any? { |pbi|
           pbi.benchmark_indicator.id.eql?(benchmark_indicator.id)
-        end
+        }
         unless already_seen_indicator
           plan_benchmark_indicators << PlanBenchmarkIndicator.new(
-              plan: plan,
-              assessment_indicator: assessment_indicator,
-              benchmark_indicator: benchmark_indicator,
-              score: score,
-              goal: goal
+            plan: plan,
+            assessment_indicator: assessment_indicator,
+            benchmark_indicator: benchmark_indicator,
+            score: score,
+            goal: goal
           )
           # reset the activity sequence for each unique benchmark_indicator
           plan_activity_sequence = 0
         end
-        bia = benchmark_indicator.activities.
-            where("level > :score AND level <= :goal", score_and_goal).
-            order(:sequence).
-            all
+        bia = benchmark_indicator.activities
+          .where("level > :score AND level <= :goal", score_and_goal)
+          .order(:sequence)
+          .all
         bia.each do |benchmark_indicator_activity|
           unless plan_activities.any? { |pa| pa.benchmark_indicator_activity.id.eql?(benchmark_indicator_activity.id) }
             plan_activity_sequence += 1
             plan_activities << PlanActivity.new(
-                plan: plan,
-                benchmark_indicator_activity: benchmark_indicator_activity,
-                benchmark_indicator: benchmark_indicator,
-                sequence: plan_activity_sequence,
+              plan: plan,
+              benchmark_indicator_activity: benchmark_indicator_activity,
+              benchmark_indicator: benchmark_indicator,
+              sequence: plan_activity_sequence,
             )
           end
         end
@@ -225,5 +225,4 @@ class Plan < ApplicationRecord
   def activity_map
     ActivityMap.new self[:activity_map]
   end
-
 end

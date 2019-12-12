@@ -9,6 +9,6 @@ class BenchmarkIndicator < ApplicationRecord
 
   def activities_excluded_from(activity_ids)
     excluded_ids = (activities.map(&:id).to_set - activity_ids.to_set).to_a
-    activities.select {|a| excluded_ids.include?(a.id) }
+    activities.select { |a| excluded_ids.include?(a.id) }
   end
 end
