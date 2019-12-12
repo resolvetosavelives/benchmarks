@@ -28,18 +28,18 @@ class PlansController < ApplicationController
   # TODO: test coverage for this, and include for the session state part
   def create
     goal_form_params = goal_params
-    plan = Plan.from_goal_form(
+    @plan = Plan.from_goal_form(
         goal_attrs: goal_form_params.to_h,
         plan_name: "#{goal_form_params.fetch(:country)} draft plan",
         user: current_user
     )
-    if plan.new_record?
+    unless @plan.persisted?
       flash[:notice] = "Could not save your plan, something went wrong."
       redirect_back fallback_location: root_path
       return
     end
-    session[:plan_id] = plan.id unless current_user
-    redirect_to plan
+    session[:plan_id] = @plan.id unless current_user
+    redirect_to @plan
   end
 
   def index
