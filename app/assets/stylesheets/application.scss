@@ -54,7 +54,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  font-family: Karla;
+  font-family: Karla, sans-serif;
 }
 
 footer {
@@ -71,7 +71,7 @@ footer {
   }
 
   .copyright {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     font-size: 14px;
     line-height: 16px;
   }
@@ -122,17 +122,17 @@ h4 {
 }
 
 thead {
-  font-family: Karla;
+  font-family: Karla, sans-serif;
   font-size: 24px;
   line-height: 54px;
 }
 
 th {
-  font-family: Karla;
+  font-family: Karla, sans-serif;
 }
 
 td {
-  font-family: Karla;
+  font-family: Karla, sans-serif;
   font-size: 17px;
   line-height: 24px;
 }
@@ -205,7 +205,7 @@ td {
   }
 
   h2 {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -220,7 +220,7 @@ td {
 }
 
 .alt-header {
-  font-family: Karla;
+  font-family: Karla, sans-serif;
   text-transform: uppercase;
   input {
     font-size: 30px;
@@ -281,7 +281,7 @@ input[type="number"] {
 }
 
 .modal-body {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .modal-content {

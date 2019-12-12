@@ -1,4 +1,4 @@
-@import "chartist/dist/scss/chartist.scss";
+@import "chartist/dist/scss/chartist";
 
 .plan-entry {
   a {
@@ -55,7 +55,7 @@
 
 .technical-area-container {
   h2 {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     font-style: normal;
     font-weight: bold;
     font-size: 24px;
@@ -127,8 +127,7 @@
   }
 
   .activity-form {
-    padding: 0.5rem;
-    padding-left: 0;
+    padding: 0.5rem 0.5rem 0.5rem 0;
     border-left: 8px solid rgba(216, 100, 34, 0.5);
     input {
       border: none;

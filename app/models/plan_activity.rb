@@ -8,8 +8,8 @@ class PlanActivity < ApplicationRecord
 
   def self.new_for_benchmark_activity(benchmark_indicator_activity)
     new(
-        benchmark_indicator_activity: benchmark_indicator_activity,
-        benchmark_indicator_id: benchmark_indicator_activity.benchmark_indicator_id
+      benchmark_indicator_activity: benchmark_indicator_activity,
+      benchmark_indicator_id: benchmark_indicator_activity.benchmark_indicator_id
     )
   end
 
@@ -22,9 +22,9 @@ class PlanActivity < ApplicationRecord
   # apart and could lead to strange behavior. In the same example, with this
   # code, when [1,2,3,4,5] and the 3rd one is deleted, what remains is [1,2,3,4]
   def update_sequences
-    update_sql = "UPDATE #{self.class.table_name} SET sequence = sequence - 1" +
-        "WHERE benchmark_indicator_id = #{self.benchmark_indicator_id}" +
-        "  AND sequence >= #{self.sequence}"
+    update_sql = "UPDATE #{self.class.table_name} SET sequence = sequence - 1" \
+      "WHERE benchmark_indicator_id = #{benchmark_indicator_id}" \
+      "  AND sequence >= #{sequence}"
     ActiveRecord::Base.connection.exec_query update_sql
   end
 end
