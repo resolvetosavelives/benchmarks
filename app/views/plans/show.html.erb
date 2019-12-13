@@ -6,7 +6,7 @@
 
   <div class="col plan-container" data-controller="plan"
        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
-       data-plan-chart-labels='[<%= chart_labels_by_technical_area %>, <%= Array.new(15, "") %>]'
+       data-plan-chart-labels='[<%= chart_labels_by_technical_area %>, <%= BenchmarkIndicatorActivity::ACTIVITY_TYPES.to_json %>]'
        data-plan-chart-series='[<%= @plan.count_activities_by_ta %>, <%= @plan.count_activities_by_type %>]'
        data-plan-chart-width="730"
        data-plan-chart-height="240"
