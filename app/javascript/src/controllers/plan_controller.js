@@ -58,12 +58,20 @@ export default class extends Controller {
     this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
     this.chartWidth  = this.data.get("chartWidth")  // expects an integer
     this.chartHeight = this.data.get("chartHeight") // expects an integer
+    this.chartInteractivityEntryPoints = [
+      this.initInteractivityForChartByTechnicalArea.bind(this),
+      this.initInteractivityForChartByActivityType.bind(this),
+    ]
     this.initBarChart()
     this.initActivityCountButton()
     console.log("plan.connect: getActivityIds().length: ", (this.getActivityIds() || []).length)
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
+    // the "shown.bs.tab" event comes of bootstrap nav tabs
+    $('a[data-toggle="tab"]').on('shown.bs.tab', (event) => {
+      this.handleChartHideShow(event)
+    })
   }
 
   getActivityIds() {
@@ -111,35 +119,34 @@ export default class extends Controller {
   }
 
   initBarChart() {
+    const dataSet = this.chartDataSeries[this.currentIndex]
     let data = {
       labels: this.chartLabels[this.currentIndex],
-      series: [
-        this.chartDataSeries[this.currentIndex]
-      ]
+      series: [dataSet]
     };
+    const heightValue = this.getNextMultipleOfTenForSeries(dataSet)
     let options = {
-      high: 40,
+      high: heightValue,
       low: 0,
       width: this.chartWidth,
       height: this.chartHeight,
       axisY: {
         // show only even-numbered X-axis labels
         labelInterpolationFnc: function (value, index) {
-          return index % 2 === 0 ? value : null;
+          return value % 10 == 0  ? value: null;
         }
       },
     };
     this.charts[this.currentIndex] = new Chartist.Bar(this.chartSelectors[this.currentIndex], data, options);
     this.charts[this.currentIndex].on('created', () => {
-      if (this.currentIndex === 0) {
-        this.initBarChartInteractivity()
-      }
+      this.chartInteractivityEntryPoints[this.currentIndex]()
     })
-    const self = this
-    // the "shown.bs.tab" event comes of bootstrap nav tabs
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
-      self.handleChartHideShow(event)
-    })
+  }
+
+  getNextMultipleOfTenForSeries(seriesArray) {
+    const maxInt = Math.max(...seriesArray)
+    const currentMultipleOfTen = Math.floor(maxInt / 10)
+    return (currentMultipleOfTen + 1) * 10
   }
 
   // e.target: newly activated tab
@@ -152,16 +159,17 @@ export default class extends Controller {
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
-  initBarChartInteractivity() {
-    $("line.ct-bar").each((index, el) => {
+  initInteractivityForChartByTechnicalArea() {
+    // query for bar segments only within the selector of the current chart
+    $("line.ct-bar", this.chartSelectors[this.currentIndex]).each((segmentIndex, el) => {
       let $elBarSegment = $(el)
-      this.initClickHandlerForTAChart($elBarSegment, index)
-      this.initTooltipForTAChartSegment($elBarSegment, index)
+      this.initClickHandlerForChartByTechnicalArea($elBarSegment, segmentIndex)
+      this.initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, segmentIndex)
     })
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
-  initClickHandlerForTAChart($elBarSegment, index) {
+  initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
     const chartLabels = this.chartLabels[this.currentIndex]
     if (chartLabels[index]) {
       $($elBarSegment).on('click', () => {
@@ -172,10 +180,28 @@ export default class extends Controller {
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
-  initTooltipForTAChartSegment($elBarSegment, index) {
+  initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
     const chartLabels = this.chartLabels[this.currentIndex]
     let $elTitle = $('#technical-area-' + chartLabels[index])
     let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
+    $elBarSegment
+        .attr("title", tooltipTitle)
+        .attr("data-toggle", "tooltip")
+        .tooltip({container: ".plan-container"})
+        .tooltip()
+  }
+
+  initInteractivityForChartByActivityType() {
+    // query for bar segments only within the selector of the current chart
+    $("line.ct-bar", this.chartSelectors[this.currentIndex]).each((segmentIndex, el) => {
+      let $elBarSegment = $(el)
+      this.initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
+    })
+  }
+
+  initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
+    const chartLabels = this.chartLabels[this.currentIndex]
+    let tooltipTitle = chartLabels[segmentIndex] + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
