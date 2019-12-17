@@ -13,14 +13,14 @@
        data-plan-activity-ids='<%= @plan.benchmark_indicator_activity_ids.to_json %>'
   >
     <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |form| %>
-
-      <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
-      <%= render "plan_name_sticky", form: form %>
       <%= form.hidden_field :benchmark_activity_ids,
                             value: nil, # populated later via JS upon form submit event
                             data: {target: "plan.fieldForActivityIds"},
                             autocomplete: "off"
       %>
+
+      <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
+      <%= render "plan_name_sticky", form: form %>
 
       <!-- Count of Total Activities -->
       <div class="row">
@@ -82,8 +82,8 @@
       </div>
 
       <!-- List of Activities -->
-      <div class="row">
-        <div class="col mt-5">
+      <div class="row my-5">
+        <div id="activity-list-by-tech-container" class="col-auto">
           <% @benchmark_technical_areas.each_with_index do |benchmark_technical_area, index| %>
             <%= render 'technical_area',
                        benchmark_technical_area: benchmark_technical_area,
@@ -91,17 +91,22 @@
             %>
           <% end %>
         </div>
+        <div id="activity-list-by-type-container" class="col-auto">
+          <h2></h2>
+          <div class="col"></div>
+        </div>
       </div>
 
     <% end %>
   </div>
 
-  <script type="text/template" id="activity-row">
-      <%= render "activity",
-             benchmark_activity_id:    "{{benchmarkActivityId}}",
-             display_abbreviation:     "{{displayAbbreviation}}",
-             benchmark_activity_level: "{{benchmarkActivityLevel}}",
-             benchmark_activity_text:  "{{benchmarkActivityText}}"
-  %>
+  <script type="text/template" id="activity-row-template">
+    <%= render "activity",
+               benchmark_activity_id:    "{{benchmarkActivityId}}",
+               display_abbreviation:     "{{displayAbbreviation}}",
+               benchmark_activity_level: "{{benchmarkActivityLevel}}",
+               benchmark_activity_text:  "{{benchmarkActivityText}}",
+               activity_type_classes:    "{{benchmarkActivityTypes}}"
+    %>
   </script>
 </div>

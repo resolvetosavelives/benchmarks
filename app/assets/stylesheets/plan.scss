@@ -53,7 +53,7 @@
   }
 }
 
-.technical-area-container {
+.plan-container {
   h2 {
     font-family: Karla, sans-serif;
     font-style: normal;
@@ -66,17 +66,21 @@
 
 .benchmark-container {
   margin-bottom: 50px;
+
   .header {
     padding-top: 32px;
     padding-bottom: 32px;
+
     .delete {
       font-size: 15px;
       text-align: right;
     }
+
     .confirm-delete,
     .delete {
       display: none;
     }
+
     &:hover {
       .confirm-delete,
       .delete {
@@ -85,31 +89,41 @@
     }
   }
 
-  .row {
-    border: 1px solid color("light-gray");
-    margin: 0;
-
-    .badge-rounded-circle {
-      height: 2.25em;
-      width: 2.25em;
-    }
-    .badge-rounded-circle span {
-      position: relative;
-      top: 0.4em;
-      color: white;
+  .activity-form {
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    border-left: 8px solid rgba(216, 100, 34, 0.5);
+    input {
+      border: none;
     }
   }
+}
 
-  .activity {
+.benchmark-container .row,
+.activity.row {
+  border: 1px solid color("light-gray");
+}
+
+.activity.row {
+
+  .badge-rounded-circle {
+    height: 2.25em;
+    width: 2.25em;
+  }
+
+  .badge-rounded-circle span {
+    position: relative;
+    top: 0.4em;
+    color: white;
+  }
+
+  .delete {
+    display: none;
+  }
+
+  &:hover {
+    border: 1px solid color("primary");
     .delete {
-      display: none;
-    }
-
-    &:hover {
-      border: 1px solid color("primary");
-      .delete {
-        display: inherit;
-      }
+      display: inherit;
     }
   }
 
@@ -125,15 +139,8 @@
   .color-value-5 {
     background-color: color("green");
   }
-
-  .activity-form {
-    padding: 0.5rem 0.5rem 0.5rem 0;
-    border-left: 8px solid rgba(216, 100, 34, 0.5);
-    input {
-      border: none;
-    }
-  }
 }
+
 
 .card.plan {
   overflow: hidden;

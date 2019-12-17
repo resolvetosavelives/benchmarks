@@ -25,14 +25,17 @@ class Plan < ApplicationRecord
 
   def update!(name:, benchmark_activity_ids:)
     current_activity_ids = benchmark_indicator_activity_ids
-    # 1st, remove any needed
-    remove_activity_ids = (current_activity_ids.to_set - benchmark_activity_ids.to_set).to_a
+    # Use +Set+ to avoid adding duplicates.
+    current_activity_id_set = current_activity_ids.to_set
+    benchmark_activity_id_set = benchmark_activity_ids.to_set
+    # 1st, remove any needed.
+    remove_activity_ids = (current_activity_id_set - benchmark_activity_id_set).to_a
     remove_activities = plan_activities
       .where(benchmark_indicator_activity_id: remove_activity_ids)
       .all
     remove_activities.each(&:destroy) # must call destroy to invoke callback for sequence
-    # 2nd, add any needed
-    add_activity_ids = benchmark_activity_ids - current_activity_ids
+    # 2nd, add any needed.
+    add_activity_ids = (benchmark_activity_id_set - current_activity_id_set).to_a
     add_activity_ids.each do |benchmark_activity_id|
       benchmark_activity = BenchmarkIndicatorActivity.find(benchmark_activity_id)
       benchmark_indicator = benchmark_activity.benchmark_indicator
