@@ -40,14 +40,20 @@
 
         <%= form_tag '/country_select', id: "assessment-select-menu",
           data: { target: "assessment-selection.form" } do %>
-          <%= hidden_field_tag "country",
-            nil,
-            data: { target: "assessment-selection.countryName" }
+          <%= hidden_field_tag(
+                  "country",
+                  nil,
+                  {
+                      id:   "country_for_assessment_selection_modal",
+                      data: {target: "assessment-selection.countryName"}
+                  },
+              )
           %>
           <div class="input-group mb-4">
             <%= select_tag "assessment_type",
               options_from_collection_for_select([], 'assessment_type', 'assessment_type'),
               class: "custom-select",
+              id: "assessment_type_for_modal",
               data: { target: "assessment-selection.assessmentTypeSelect",
                       action: "assessment-selection#validateAndEnableNext" }
             %>

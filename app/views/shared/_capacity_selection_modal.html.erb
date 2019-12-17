@@ -25,6 +25,7 @@
             data: { action: "assessment-selection.form" } do %>
           <%= hidden_field_tag "country",
             nil,
+            id: "country_for_capacity_selection_modal",
             data: { target: "assessment-selection.countryName" }
           %>
           <%= hidden_field_tag "assessment_type", "from-capacities" %>
