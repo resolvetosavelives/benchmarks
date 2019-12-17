@@ -6,6 +6,8 @@ class PlanActivity < ApplicationRecord
 
   default_scope { includes(:benchmark_indicator_activity).order(:sequence) }
 
+  delegate :text, to: :benchmark_indicator_activity
+
   def self.new_for_benchmark_activity(benchmark_indicator_activity)
     new(
       benchmark_indicator_activity: benchmark_indicator_activity,

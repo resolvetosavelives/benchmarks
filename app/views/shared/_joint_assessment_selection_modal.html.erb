@@ -34,7 +34,7 @@
         </p>
 
         <p>
-          <strong>Create a plan by a recent assessment or by capacity areas:</strong>
+          <strong>Create a plan by a recent assessment or by technical areas:</strong>
         </p>
 
         <%= form_tag '/country_select', id: "assessment-select-menu", data: { target: "assessment-selection.form" } do %>
@@ -63,7 +63,7 @@
             data: { target: "assessment-selection.submitForm",
                     action: "assessment-selection#next",
                     current: "assessment-selection-modal",
-                    next: "capacity-selection-modal" } %>
+                    next: "technical-area-selection-modal" } %>
         <% end %>
       </div>
     </div>

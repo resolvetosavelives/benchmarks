@@ -5,7 +5,8 @@ module BenchmarkIndicatorActivitySeed
     def seed!
       return unless BenchmarkIndicatorActivity.count.zero?
 
-      benchmark_activities_attrs = JSON.load File.open File.join Rails.root, "/db/seed-data/benchmark_indicator_activities.json"
+      warn "Seeding data for BenchmarkIndicatorActivities..."
+      benchmark_activities_attrs = JSON.parse File.read File.join Rails.root, "/db/seed-data/benchmark_indicator_activities.json"
       benchmark_activities_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
         display_abbreviation = attrs[:benchmark_indicator_display_abbreviation]

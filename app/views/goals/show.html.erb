@@ -7,7 +7,7 @@
       <div class="form-group">
         <strong><%= label_tag "Select country" %></strong>
         <%= select_tag "country",
-          options_from_collection_for_select(@countries, 'name', 'name', @country),
+          options_from_collection_for_select(@countries, 'name', 'name', @country.name),
           class: "custom-select",
           data: { target: "assessment-selection.countrySelect",
                   action: "change -> assessment-selection#selectCountry
@@ -18,14 +18,14 @@
       <% end %>
     </div>
 
-    <% unless @goals.assessment_type == "from-capacities" %>
+    <% unless @goals.assessment_type == "from-technical-areas" %>
       <div class="col-5">
         <div
           data-controller="filter"
-          data-filter-placeholder="Select Capacity Area(s)"
+          data-filter-placeholder="Select Technical Area(s)"
           data-filter-class-prefix="technical-area"
         >
-          <strong><%= label_tag "Filter by Capacity Area:" %></strong>
+          <strong><%= label_tag "Filter by Technical Area:" %></strong>
           <%= select_tag "technical_areas",
             options_for_select(@technical_areas),
             class: "form-control custom-select text-left",
@@ -133,7 +133,7 @@
     </div>
   <% end %>
   <%= render "shared/assessment_selection_modal" %>
-  <%= render "shared/capacity_selection_modal" %>
+  <%= render "shared/technical_area_selection_modal" %>
 </div>
 <% else %>
 <div class="col">

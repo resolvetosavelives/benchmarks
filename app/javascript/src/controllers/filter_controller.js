@@ -2,7 +2,7 @@ import "bootstrap-multiselect"
 import { Controller } from "stimulus"
 
 /* This controller handles filtering the draft plan. It is fairly general and
- * is used to filter the capacity areas in the goals page and the activity
+ * is used to filter the technical areas in the goals page and the activity
  * types in the draft plan page.
  *
  * Parameters:

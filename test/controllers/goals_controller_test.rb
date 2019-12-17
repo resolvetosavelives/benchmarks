@@ -1,4 +1,4 @@
-require "minitest/mock"
+require File.expand_path("./test/test_helper")
 
 class GoalsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -33,7 +33,7 @@ class GoalsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "viewing a goal form created from list of capacities" do
-    get "/goals/Australia/from-capacities?capacity_ids[]=spar_2018_ta_c5&capacity_ids[]=spar_2018_ta_c6"
+    get "/goals/Australia/from-technical-areas?technical_area_ids[]=spar_2018_ta_c5&technical_area_ids[]=spar_2018_ta_c6"
     # there are a total of 5 score and goal fields for this assessment
     assert_select 'input[type="number"][data-goal="true"]', 5
     assert_select 'input[type="number"][data-goal="false"]', 5

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_28_030150) do
+ActiveRecord::Schema.define(version: 2019_12_18_171059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,12 +53,11 @@ ActiveRecord::Schema.define(version: 2019_11_28_030150) do
   end
 
   create_table "assessments", force: :cascade do |t|
-    t.string "country"
     t.string "assessment_type"
     t.jsonb "scores"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["country", "assessment_type"], name: "index_assessments_on_country_and_assessment_type", unique: true
+    t.string "country_alpha3", limit: 3
   end
 
   create_table "benchmark_indicator_activities", force: :cascade do |t|
@@ -90,6 +89,22 @@ ActiveRecord::Schema.define(version: 2019_11_28_030150) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "countries", force: :cascade do |t|
+    t.string "name", limit: 100
+    t.string "alpha2", limit: 2
+    t.string "alpha3", limit: 3
+    t.string "country_code", limit: 3
+    t.string "region", limit: 50
+    t.string "sub_region", limit: 50
+    t.string "intermediate_region", limit: 50
+    t.string "region_code", limit: 3
+    t.string "sub_region_code", limit: 3
+    t.string "intermediate_region_code", limit: 3
+    t.index ["alpha2"], name: "index_countries_on_alpha2", unique: true
+    t.index ["alpha3"], name: "index_countries_on_alpha3", unique: true
+    t.index ["name"], name: "index_countries_on_name", unique: true
+  end
+
   create_table "plan_activities", force: :cascade do |t|
     t.integer "plan_id"
     t.integer "benchmark_indicator_activity_id"
@@ -116,14 +131,11 @@ ActiveRecord::Schema.define(version: 2019_11_28_030150) do
 
   create_table "plans", force: :cascade do |t|
     t.string "name"
-    t.string "country"
-    t.string "assessment_type"
-    t.jsonb "activity_map"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.jsonb "goals"
-    t.jsonb "scores"
+    t.string "country_alpha3", limit: 3
+    t.integer "assessment_type"
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
@@ -149,6 +161,7 @@ ActiveRecord::Schema.define(version: 2019_11_28_030150) do
   add_foreign_key "assessment_indicators_benchmark_indicators", "assessment_indicators"
   add_foreign_key "assessment_indicators_benchmark_indicators", "benchmark_indicators"
   add_foreign_key "assessment_technical_areas", "assessment_publications"
+  add_foreign_key "assessments", "countries", column: "country_alpha3", primary_key: "alpha3"
   add_foreign_key "benchmark_indicator_activities", "benchmark_indicators"
   add_foreign_key "benchmark_indicators", "benchmark_technical_areas"
   add_foreign_key "plan_activities", "benchmark_indicator_activities"
@@ -157,5 +170,6 @@ ActiveRecord::Schema.define(version: 2019_11_28_030150) do
   add_foreign_key "plan_benchmark_indicators", "assessment_indicators"
   add_foreign_key "plan_benchmark_indicators", "benchmark_indicators"
   add_foreign_key "plan_benchmark_indicators", "plans"
+  add_foreign_key "plans", "countries", column: "country_alpha3", primary_key: "alpha3"
   add_foreign_key "plans", "users"
 end

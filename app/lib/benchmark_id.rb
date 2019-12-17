@@ -10,7 +10,7 @@ class BenchmarkId
   end
 
   # Retrieve the capacity ID as a string.
-  def capacity_s
+  def technical_area_s
     @capacity.to_s
   end
 

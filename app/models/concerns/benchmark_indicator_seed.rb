@@ -10,6 +10,7 @@ module BenchmarkIndicatorSeed
     def seed_indicators!
       return unless BenchmarkIndicator.count.zero?
 
+      warn "Seeding data for BenchmarkIndicators..."
       benchmark_indicators_attrs = JSON.load File.open File.join Rails.root, "/db/seed-data/benchmark_indicators.json"
       benchmark_indicators_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
