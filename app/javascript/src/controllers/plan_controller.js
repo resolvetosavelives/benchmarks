@@ -1,6 +1,7 @@
 import { Controller } from "stimulus"
 import $ from "jquery"
 import Chartist from "chartist"
+import Hogan from "hogan.js";
 
 // TODO: test coverage for recent changes
 
@@ -114,6 +115,7 @@ export default class extends Controller {
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initActivityCountButton() {
     $(".activity-count-circle").on('click', () => {
+      $("#activity-list-by-type-container").hide()
       $(".technical-area-container").show()
     })
   }
@@ -173,6 +175,7 @@ export default class extends Controller {
     const chartLabels = this.chartLabels[this.currentIndex]
     if (chartLabels[index]) {
       $($elBarSegment).on('click', () => {
+        $("#activity-list-by-type-container").hide()
         $('.technical-area-container').hide()
         $('#technical-area-' + chartLabels[index]).show()
       })
@@ -196,6 +199,7 @@ export default class extends Controller {
     $("line.ct-bar", this.chartSelectors[this.currentIndex]).each((segmentIndex, el) => {
       let $elBarSegment = $(el)
       this.initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
+      this.initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
     })
   }
 
@@ -209,6 +213,27 @@ export default class extends Controller {
         .tooltip()
   }
 
+  initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
+      $($elBarSegment).on('click', () => {
+        this.filterByActivityType(segmentIndex)
+      })
+  }
+
+  // generates some HTML and appends it to the DOM and hides the other
+  filterByActivityType(segmentIndex) {
+    const chartLabels = this.chartLabels[this.currentIndex]
+    const selectedActivityType = chartLabels[segmentIndex]
+    if (selectedActivityType) {
+      const $activityTypeHeading = $("<h2>" + selectedActivityType + " actions</h2>")
+      // needs to be wrapped in a div.col in order to work with bootstrap grid
+      const $activityTypeContainer = $("<div class='col'></div>")
+      const $activityRowContent = $('.activity.row.activity-type-' + (segmentIndex  + 1)).clone()
+      $activityTypeContainer.append($activityRowContent)
+      $('.technical-area-container').hide()
+      $("#activity-list-by-type-container").empty().append($activityTypeHeading).append($activityTypeContainer).show()
+    }
+  }
+
   /* Check the validity of the plan name, disabling the submit button if the
    * name is invalid. */
   validateName() {
@@ -219,20 +244,21 @@ export default class extends Controller {
     }
   }
 
-  submit() {
+  saveActivityIdsToField() {
     let allBenchmarkActivityIds = this.data.get("activityIds")
-    console.log("plan.submit: allBenchmarkActivityIds.length: ", JSON.parse(allBenchmarkActivityIds).length)
+    console.log("plan.saveActivityIdsToField: allBenchmarkActivityIds.length: ", JSON.parse(allBenchmarkActivityIds).length)
     this.fieldForActivityIdsTarget.value = allBenchmarkActivityIds
-    this.formTarget.submit()
   }
 
   setFormIsValid() {
     this.submitTarget.removeAttribute("disabled")
+    this.formTarget.removeAttribute("disabled")
     this.formTarget.classList.add("was-validated")
   }
 
   setFormIsInvalid() {
     this.submitTarget.setAttribute("disabled", "disabled")
+    this.formTarget.setAttribute("disabled", "disabled")
     this.formTarget.classList.add("was-validated")
   }
 }

@@ -38,16 +38,14 @@ describe("PlanController", () => {
         <div id="bar-chart-by-technical-area" class="ct-chart-bar"></div>
 
         <div class="benchmark-container" id="technical-area-p7">
-          <div id="activity_container_1-1">
-            <div class="activity">
-              <div class="row">
-                Activity 1
-                <button id="delete-activity"
-                        data-action="plan#deleteActivity"
-                        data-benchmark-id="1.1"
-                        data-activity="activity 1">Delete Activity</button>
-              </div>
-          </div>
+          <div class="activity">
+            <div class="row">
+              Activity 1
+              <button id="delete-activity"
+                      data-action="plan#deleteActivity"
+                      data-benchmark-id="1.1"
+                      data-activity="activity 1">Delete Activity</button>
+            </div>
           <div class="activity-form">
             <input id="new-activity" data-target="plan.newActivity" data-action="keypress->plan#addNewActivity" data-benchmark-id="1.1">
           </div>
