@@ -2,7 +2,7 @@
      id="technical-area-<%= chart_label %>"
      title="<%= benchmark_technical_area.text %>"
 >
-  <% unless @plan.assessment_type == "from-capacities" %>
+  <% unless @plan.from_technical_areas? %>
     <h2 id="<%= benchmark_technical_area.text.parameterize %>">
       <%= benchmark_technical_area.sequence %>.
       <%= benchmark_technical_area.text %>

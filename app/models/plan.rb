@@ -1,7 +1,16 @@
-# A draft plan. This consists of the assessment goals and a large activity map,
-# organized by Technical Capacity and Benchmark Indicator. The activity_map
+# This consists of the assessment goals 
+# organized by Technical Area and Benchmark Indicator. The activity_map
 # field is an ActivityMap object.
 class Plan < ApplicationRecord
+  ASSESSMENT_TYPES = [
+    1, # jee1
+    2, # spar_2018
+    3, # from-technical-areas
+  ].freeze
+  # TODO: update this implementation once the assessments page is modernized
+  ASSESSMENT_TYPE_NAMED_IDS = %w{jee1 spar_2018 from-technical-areas}.freeze
+
+  belongs_to :country, foreign_key: "country_alpha3", primary_key: "alpha3"
   belongs_to :user, optional: true
   has_many :plan_benchmark_indicators, dependent: :destroy
   has_many :benchmark_indicators, through: :plan_benchmark_indicators
@@ -21,6 +30,19 @@ class Plan < ApplicationRecord
       {plan_activities: [:benchmark_indicator_activity, :benchmark_indicator]},
       {plan_benchmark_indicators: [:benchmark_indicator]}
     )
+  end
+
+  validates :assessment_type, inclusion: ASSESSMENT_TYPES
+  validates :country, presence: true
+
+  def from_technical_areas?
+    assessment_type.eql?(ASSESSMENT_TYPES.third)
+  end
+
+  # TODO: update this implementation once the assessments page is modernized
+  def assessment_type_str
+    # need to subtract one because ASSESSMENT_TYPES start at one instead of zero
+    ASSESSMENT_TYPE_NAMED_IDS[assessment_type - 1]
   end
 
   def update!(name:, benchmark_activity_ids:)
@@ -95,6 +117,11 @@ class Plan < ApplicationRecord
     [pbi, pbi&.score, pbi&.goal]
   end
 
+  def indicator_goal_for(benchmark_indicator)
+    pbi = indicator_for(benchmark_indicator)
+    pbi&.goal
+  end
+
   ##
   # arg is a BenchmarkIndicatorActivity
   def activities_for(benchmark_indicator)
@@ -143,8 +170,8 @@ class Plan < ApplicationRecord
   #  - assessment_indicator maps to multiple benchmark_indicators
   #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
   #  - activity sequence is scoped to benchmark_indicator_id even with differing goal levels, see +plan_activity_sequence+ below
-  def self.from_goal_form(goal_attrs:, plan_name:, user: nil)
-    named_ids = if %w[from-capacities spar_2018].include?(goal_attrs[:assessment_type])
+  def self.from_goal_form(goal_attrs:, plan_name:, country:, user: nil)
+    named_ids = if %w[from-technical-areas spar_2018].include?(goal_attrs[:assessment_type])
       # score keys have 3 underscores
       goal_attrs.select { |k, _| k.count("_").eql?(3) }.keys
     else # jee1 and jee2
@@ -158,9 +185,17 @@ class Plan < ApplicationRecord
         goal: goal_attrs[named_id + "_goal"].to_i,
       }
     end
-    plan = Plan.new goal_attrs
-      .slice(:country, :assessment_type)
-      .merge({name: plan_name, user: user})
+    # TODO: update this implementation once the assessments page is modernized
+    assessment_type_str = goal_attrs[:assessment_type]
+    assessment_type_int = ASSESSMENT_TYPES[
+        ASSESSMENT_TYPE_NAMED_IDS.index(assessment_type_str)
+    ]
+    plan = Plan.new({
+      name: plan_name,
+      country: country,
+      user: user,
+      assessment_type: assessment_type_int,
+     })
     plan_benchmark_indicators = []
     plan_activities = []
     assessment_indicators = AssessmentIndicator.where(named_id: named_ids).all.uniq

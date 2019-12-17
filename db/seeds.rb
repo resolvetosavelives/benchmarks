@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 ##
 # Use a transaction here in case any step fails it can be re-run in its entirety.
 # It helps in case there is partial failure but some step(s) have succeed and

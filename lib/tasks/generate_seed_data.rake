@@ -10,7 +10,7 @@ task nu_gen_activities: %i[environment] do
   benchmark_activities = activity_worksheet.drop(1).map do |row|
     cells = row.cells
     # +cell+ which has no value will be +nil+ so use +&+ to avoid exceptions
-    capacity_id  = cells[0]&.value
+    technical_area_id  = cells[0]&.value
     indicator_id = cells[1]&.value
     level        = cells[2]&.value
     text         = cells[3]&.value&.gsub("\n", "")
@@ -20,7 +20,7 @@ task nu_gen_activities: %i[environment] do
     sequence     = cells[7]&.value
 
     # there can be trailing rows that contain nothing so skip with +nil+
-    next if capacity_id.nil? && indicator_id.nil?
+    next if technical_area_id.nil? && indicator_id.nil?
 
     # activity_types will be made to be an array or nil
     activity_types = [type_code_1, type_code_2, type_code_3].map do |type_num|
@@ -28,7 +28,7 @@ task nu_gen_activities: %i[environment] do
       num = type_num.to_i
       (1..15).include?(num) ? num : nil # activity types are numbered 1-15
     end.compact
-    display_abbreviation = "#{capacity_id}.#{indicator_id}"
+    display_abbreviation = "#{technical_area_id}.#{indicator_id}"
     row = {
         benchmark_indicator_display_abbreviation: display_abbreviation,
         text: text,
@@ -259,7 +259,6 @@ task nu_gen_evaluations: %i[environment] do
     is_spar_2018_ind = "SPARIND"
 
     if section_id.present?
-      #puts "GVT: SET section_id: #{section_id}"
       section_id_keeper = section_id
       section_counter   = 1
     end

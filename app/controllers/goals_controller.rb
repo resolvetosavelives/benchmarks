@@ -14,9 +14,9 @@
 # but not saved.
 class GoalsController < ApplicationController
   def show
-    @country = params[:country]
+    @country = Country.find_by_name params[:country]
     assessment_type = params[:assessment_type]
-    capacity_ids = params[:capacity_ids]
+    technical_area_ids = params[:technical_area_ids]
 
     assessment =
       Assessment.find_by(country: @country, assessment_type: assessment_type)
@@ -27,7 +27,7 @@ class GoalsController < ApplicationController
 
     if assessment
       @goals =
-        GoalForm.new country: @country,
+        GoalForm.new country: @country.name,
                      assessment_type: assessment_type,
                      scores: scores_from_assessment(assessment, assessment_type)
 
@@ -36,17 +36,17 @@ class GoalsController < ApplicationController
       @technical_areas = technical_areas(@technical_area_ids, @data_dictionary)
       @label = @assessments[assessment_type]['label']
       @display_assessment_type = assessment_type
-    elsif capacity_ids
-      @technical_area_ids = capacity_ids
+    elsif technical_area_ids
+      @technical_area_ids = technical_area_ids
       @goals =
-        GoalForm.new country: @country,
+        GoalForm.new country: @country.name,
                      assessment_type: assessment_type,
                      scores:
                        scores_from_technical_area_ids(
                          @technical_area_ids,
                          @assessments
                        )
-      @label = 'Capacity Area'
+      @label = 'Technical Area'
       @display_assessment_type = 'spar_2018'
     end
   end

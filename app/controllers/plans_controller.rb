@@ -28,9 +28,11 @@ class PlansController < ApplicationController
   # TODO: test coverage for this, and include for the session state part
   def create
     goal_form_params = goal_params
+    country = Country.find_by_name! goal_form_params.fetch(:country)
     @plan = Plan.from_goal_form(
       goal_attrs: goal_form_params.to_h,
-      plan_name: "#{goal_form_params.fetch(:country)} draft plan",
+      plan_name: "#{country.name} draft plan",
+      country: country,
       user: current_user
     )
     unless @plan.persisted?

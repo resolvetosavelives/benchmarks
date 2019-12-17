@@ -7,7 +7,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title display-header mx-4">
-          Plan by Capacity Area
+          Plan by Technical Area
         </h1>
         <button
           type="button"
@@ -20,30 +20,30 @@
       </div>
 
       <div class="modal-body mx-4" data-controller="checkbox-list">
-        <p> Select the capacity area(s) you'd like to focus on </p>
+        <p> Select the technical area(s) you'd like to focus on </p>
         <%= form_tag '/country_select', id: "technical-area-select-menu",
             data: { action: "assessment-selection.form" } do %>
           <%= hidden_field_tag "country",
             nil,
-            id: "country_for_capacity_selection_modal",
+            id: "country_for_technical_area_selection_modal",
             data: { target: "assessment-selection.countryName" }
           %>
-          <%= hidden_field_tag "assessment_type", "from-capacities" %>
+          <%= hidden_field_tag "assessment_type", "from-technical-areas" %>
           <div class="input-group mb-2">
             <ul class="list-unstyled">
               <li id="select-all-buttons">
                 <a data-action="click->checkbox-list#selectAll" class="text-primary">Select All</a>
                 | <a data-action="click->checkbox-list#deselectAll" class="text-primary">Deselect All</a>
               </li>
-              <% @assessments["spar_2018"]["technical_area_order"].each do |capacity_id| %>
-                <li> <%= check_box_tag "capacity_ids[#{capacity_id}]",
-                        capacity_id,
+              <% @assessments["spar_2018"]["technical_area_order"].each do |technical_area_id| %>
+                <li> <%= check_box_tag "technical_area_ids[#{technical_area_id}]",
+                        technical_area_id,
                         false,
-                        name: "capacity_ids[]",
+                        name: "technical_area_ids[]",
                         data: { target: "checkbox-list.listItem",
                                 action: "change->checkbox-list#updateState" } %>
-                     <%= label_tag @data_dictionary[capacity_id],
-                       @data_dictionary[capacity_id] %> </li>
+                     <%= label_tag @data_dictionary[technical_area_id],
+                       @data_dictionary[technical_area_id] %> </li>
               <% end %>
             </ul>
           </div>

@@ -3,11 +3,12 @@ module AssessmentPublicationSeed
 
   module ClassMethods
     def seed!
-      if AssessmentPublication.count.zero?
-        AssessmentPublication.create! name: "JEE 1.0", named_id: "jee1", title: "Joint external evaluation tool: International Health Regulations (2005)"
-        AssessmentPublication.create! name: "SPAR 2018", named_id: "spar_2018", title: "International Health Regulations (2005) State Party Self-assessment Annual Reporting Tool"
-        AssessmentPublication.create! name: "JEE 2.0", named_id: "jee2", title: "Joint external evaluation tool: International Health Regulations (2005), second edition"
-      end
+      return unless AssessmentPublication.count.zero?
+
+      warn "Seeding data for AssessmentPublications..."
+      AssessmentPublication.create! name: "JEE 1.0", named_id: "jee1", title: "Joint external evaluation tool: International Health Regulations (2005)"
+      AssessmentPublication.create! name: "SPAR 2018", named_id: "spar_2018", title: "International Health Regulations (2005) State Party Self-assessment Annual Reporting Tool"
+      AssessmentPublication.create! name: "JEE 2.0", named_id: "jee2", title: "Joint external evaluation tool: International Health Regulations (2005), second edition"
     end
 
     def unseed!

@@ -1,5 +1,4 @@
 require File.expand_path("./test/test_helper")
-require "minitest/autorun"
 
 class PlansControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
@@ -10,7 +9,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
       post plans_path, params: {
         "goal_form" => {
           "country" => "Nigeria",
-          "assessment_type" => "from-capacities",
+          "assessment_type" => "from-technical-areas",
           "spar_2018_ind_c21" => "1",
           "spar_2018_ind_c21_goal" => "2",
         },
@@ -26,7 +25,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
       post plans_path, params: {
         "goal_form" => {
           "country" => "Nigeria",
-          "assessment_type" => "from-capacities",
+          "assessment_type" => "from-technical-areas",
           "spar_2018_ind_c21" => "1",
           "spar_2018_ind_c21_goal" => "2",
         },
@@ -55,7 +54,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "plan#show responds with success for assessment_type from-capacities" do
+  test "plan#show responds with success for assessment_type from-technical-areas" do
     plan = create(:plan, :with_user)
     sign_in plan.user
     get plan_path(plan.id)
@@ -138,11 +137,10 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "logged in user sees a list of their plans" do
-    user =
-      User.create!(email: "test@example.com", password: "123455", role: "Donor")
-    plan1 = Plan.create!(name: "owned plan", activity_map: {})
-    user.plans << plan1
-    Plan.create!(name: "orphan", activity_map: {})
+    plan = create(:plan_nigeria_jee1, :with_user)
+    user = plan.user
+    # create other plan which will have no user
+    create(:plan_nigeria_jee1)
 
     sign_in user
     get plans_path

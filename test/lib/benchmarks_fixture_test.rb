@@ -31,7 +31,7 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
     benchmarks = BenchmarksFixture.new
 
     assert_equal %w[7.1 7.2 7.3 7.4],
-                 ((benchmarks.capacity_benchmarks 7).map { |v| v[:id].to_s })
+                 ((benchmarks.technical_area_benchmarks 7).map { |v| v[:id].to_s })
   end
 
   test 'reports activities for the requested level' do
@@ -97,9 +97,9 @@ class BenchmarksFixtureTest < ActiveSupport::TestCase
 
   test 'returns the correct capacity text for a given id' do
     benchmarks = BenchmarksFixture.new
-    assert_raises(ArgumentError) { benchmarks.capacity_text '19' }
+    assert_raises(ArgumentError) { benchmarks.technical_area_text '19' }
 
-    assert_equal 'Chemical Events', (benchmarks.capacity_text '17')
+    assert_equal 'Chemical Events', (benchmarks.technical_area_text '17')
   end
 
   test 'returns the correct indicator text for a given id' do
