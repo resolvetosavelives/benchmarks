@@ -37,12 +37,12 @@
           <strong>Create a plan by a recent assessment or by capacity areas:</strong>
         </p>
 
-        <%= form_tag '/country_select', id: "assessment-select-menu",
-          data: { target: "assessment-selection.form" } do %>
+        <%= form_tag '/country_select', id: "assessment-select-menu", data: { target: "assessment-selection.form" } do %>
           <div class="input-group mb-4">
             <%= select_tag "country",
               options_from_collection_for_select(@countries, 'name', 'name'),
               class: "custom-select",
+              id: "country_for_joint_assessment_modal",
               data: { target: "assessment-selection.countrySelect",
                       action: "assessment-selection#selectCountry
                                assessment-selection#validateAndEnableNext"
