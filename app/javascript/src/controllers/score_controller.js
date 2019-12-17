@@ -21,13 +21,6 @@ export default class extends Controller {
     this.childControllers = []
   }
 
-  getToGreen(e) {
-    document.querySelectorAll("[data-goal=true]").forEach(field => {
-      if (field.value < 4) field.value = 4
-      this.setFieldColor(field)
-    })
-  }
-
   setFieldColor(field) {
     field.classList.remove(
       ...Array.from(field.classList).filter(c => c.match("color-score"))
@@ -52,8 +45,8 @@ export default class extends Controller {
    * The logic here is a little confusing, and it might be easier to call
    * `this.form.submit()` directly.
    */
-  submit(e) {
-    const { currentTarget: form } = e
+  submit(event) {
+    const { currentTarget: form } = event
     if (form.checkValidity() === false) {
       event.preventDefault()
       event.stopPropagation()
