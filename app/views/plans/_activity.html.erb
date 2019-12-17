@@ -1,6 +1,8 @@
 <div
-  class="row activity p-2"
+  data-controller="activity"
   data-target="benchmark.activity"
+  data-benchmark-activity-id="<%= benchmark_activity_id %>"
+  class="activity row p-2 <%= activity_type_classes %>"
 >
   <div class="col-auto d-flex flex-row align-items-center">
     <span class="badge badge-pill badge-success badge-rounded-circle color-value-<%= benchmark_activity_level %>">
@@ -17,7 +19,7 @@
     <button
       class="delete close"
       type="button"
-      data-action="benchmark#deleteActivity"
+      data-action="activity#deleteSelf"
       data-benchmark-activity-id="<%= benchmark_activity_id %>"
     >
       <img src="/delete-button.svg" alt="Delete this activity"/>

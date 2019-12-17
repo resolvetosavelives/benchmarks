@@ -35,4 +35,8 @@ class BenchmarkIndicatorActivity < ApplicationRecord
       sequence: nil,
     }
   end
+
+  def activity_types
+    self[:activity_types] || []
+  end
 end

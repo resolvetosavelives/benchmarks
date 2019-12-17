@@ -7,6 +7,7 @@ export default class extends Controller {
   static targets = ["activity", "addActivityField", "confirm", "delete"]
 
   initialize() {
+    this.childControllers = []
     this.parentController = this.application.controllers.find(controller => {
       return controller.context.identifier === "plan";                                                                           
     });
@@ -34,24 +35,23 @@ export default class extends Controller {
         }),
         select: function(event, ui) {
           const benchmarkActivity = ui.item
-          self.addActivity(benchmarkActivity)
+          self.addActivityAndRender(benchmarkActivity)
         }
       })
     }
   }
 
-  addActivity(benchmarkActivity) {
+  addActivityAndRender(benchmarkActivity) {
     this.addActivityId(benchmarkActivity.id)
-    const activityRowTemplateSelector = this.data.get("activityRowTemplateSelector")
-    const context = {
+    const templateData = {
       benchmarkActivityId: benchmarkActivity.id,
       displayAbbreviation: this.benchmarkAbbreviation,
       benchmarkActivityLevel: benchmarkActivity.level,
       benchmarkActivityText: benchmarkActivity.text,
     }
-    const templateHtml = $(activityRowTemplateSelector).html()
-    const template = Hogan.compile(templateHtml)
-    const renderedContent = template.render(context)
+    const activityRowTemplateSelector = this.data.get("activityRowTemplateSelector")
+    const compiledTemplate = this.getTemplateFor(activityRowTemplateSelector)
+    const renderedContent = compiledTemplate.render(templateData)
     $(renderedContent).insertBefore($(this.element).find(".activity-form"))
     if (this.hasAddActivityFieldTarget) {
       // NB: setTimeout is needed because without it the text field value does not
@@ -84,14 +84,6 @@ export default class extends Controller {
     this.confirmTarget.hidden = false
   }
 
-  /* Delete an activity from the plan. */
-  deleteActivity(e) {
-    const { currentTarget } = e
-    const planActivityIdToRemove = Number(currentTarget.getAttribute("data-benchmark-activity-id"))
-    this.removeActivityId(planActivityIdToRemove)
-    currentTarget.closest(".row").classList.add("d-none")
-  }
-
   // Delete a benchmark indicator, which means deleting its child activities
   deleteActivitiesForIndicator(e) {
     const { currentTarget } = e
@@ -119,5 +111,11 @@ export default class extends Controller {
       return true
     }
     return false
+  }
+
+  // returns a String of template content ready for data/context
+  getTemplateFor(jqSelector) {
+    const templateHtml = $(jqSelector).html()
+    return Hogan.compile(templateHtml)
   }
 }
