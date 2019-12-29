@@ -16,8 +16,10 @@ export default class extends Controller {
 
   connect() {
     this.deleteTarget.hidden = true
-    this.benchmarkIndicatorId = this.data.get("indicator-id")
-    this.benchmarkAbbreviation = this.data.get("indicator-abbreviation")
+    this.technicalAreaId = Number(this.data.get("technicalAreaId"))
+    this.indicatorId = Number(this.data.get("indicatorId"))
+    this.indicatorDisplayAbbrev = Number(this.data.get("indicatorDisplayAbbrev"))
+    this.barSegmentIndex = Number(this.data.get("barSegmentIndex"))
     this.initAutoCompleteForAddActivity()
   }
 
@@ -36,18 +38,30 @@ export default class extends Controller {
         select: function(event, ui) {
           const benchmarkActivity = ui.item
           self.addActivityAndRender(benchmarkActivity)
+          // remove the selected activity from the set of activities that appears in tha autocomplete menu
+          const excludedActivities = JSON.parse(self.data.get("excluded-activities"))
+          const selectedActivity = excludedActivities.find((a) => {
+            return a.id === benchmarkActivity.id
+          })
+          const indexOfActivity = excludedActivities.indexOf(selectedActivity)
+          excludedActivities.splice(indexOfActivity, 1)
+          self.data.set("excluded-activities", JSON.stringify(excludedActivities))
+          self.initAutoCompleteForAddActivity()
         }
       })
     }
   }
 
   addActivityAndRender(benchmarkActivity) {
-    this.addActivityId(benchmarkActivity.id)
+    this.addActivityId(benchmarkActivity.id, {barSegmentIndex: this.barSegmentIndex})
     const templateData = {
+      benchmarkTechnicalAreaId: this.technicalAreaId,
+      benchmarkIndicatorId: this.indicatorId,
+      indicatorDisplayAbbrev: this.indicatorDisplayAbbrev,
       benchmarkActivityId: benchmarkActivity.id,
-      displayAbbreviation: this.benchmarkAbbreviation,
       benchmarkActivityLevel: benchmarkActivity.level,
       benchmarkActivityText: benchmarkActivity.text,
+      barSegmentIndex: this.barSegmentIndex
     }
     const activityRowTemplateSelector = this.data.get("activityRowTemplateSelector")
     const compiledTemplate = this.getTemplateFor(activityRowTemplateSelector)
@@ -89,7 +103,7 @@ export default class extends Controller {
     const { currentTarget } = e
     const activityIds = JSON.parse(this.data.get("activityIds"))
     activityIds.forEach((activityId) => {
-      this.removeActivityId(activityId)
+      this.removeActivityId(activityId, {barSegmentIndex: this.barSegmentIndex})
     })
     this.element.hidden = true
     const siblings = $(this.element).siblings(".benchmark-container:visible")
@@ -98,12 +112,12 @@ export default class extends Controller {
     }
   }
 
-  addActivityId(activityId) {
-    this.parentController.addActivityId(activityId)
+  addActivityId(activityId, data) {
+    this.parentController.addActivityId(activityId, data)
   }
 
-  removeActivityId(activityId) {
-    this.parentController.removeActivityId(activityId)
+  removeActivityId(activityId, data) {
+    this.parentController.removeActivityId(activityId, data)
   }
 
   hasActivities() {

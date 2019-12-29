@@ -44,35 +44,39 @@ import Hogan from "hogan.js";
  *
  */
 export default class extends Controller {
-  static targets = ["fieldForActivityIds", "submit", "form"]
+  static targets = ["fieldForActivityIds", "submit", "form", "technicalAreaContainer"]
 
   initialize() {
     // benchmark controller will append itself to this array
     this.childControllers = []
+    this.charts = []
+    this.currentChartIndex = 0 // used for tabs and charts arrays
   }
 
   connect() {
-    this.currentIndex = 0 // used for tabs and charts arrays
-    this.charts = []
-    this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
-    this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
-    this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
-    this.chartWidth  = this.data.get("chartWidth")  // expects an integer
-    this.chartHeight = this.data.get("chartHeight") // expects an integer
+    this.initFromDomData()
     this.chartInteractivityEntryPoints = [
       this.initInteractivityForChartByTechnicalArea.bind(this),
       this.initInteractivityForChartByActivityType.bind(this),
     ]
     this.initBarChart()
     this.initActivityCountButton()
-    console.log("plan.connect: getActivityIds().length: ", (this.getActivityIds() || []).length)
-    if (document.referrer.match("goals")) {
-      $("#draft-plan-review-modal").modal("show")
-    }
     // the "shown.bs.tab" event comes of bootstrap nav tabs
     $('a[data-toggle="tab"]').on('shown.bs.tab', (event) => {
       this.handleChartHideShow(event)
     })
+    console.log("plan.connect: getActivityIds().length: ", (this.getActivityIds() || []).length)
+    if (document.referrer.match("goals")) {
+      $("#draft-plan-review-modal").modal("show")
+    }
+  }
+
+  initFromDomData() {
+    this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
+    this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
+    this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
+    this.chartWidth  = this.data.get("chartWidth")  // expects an integer
+    this.chartHeight = this.data.get("chartHeight") // expects an integer
   }
 
   getActivityIds() {
@@ -94,21 +98,24 @@ export default class extends Controller {
     }
   }
 
-  addActivityId(activityId) {
+  addActivityId(activityId, data) {
     const allPlanActivityIds = this.getActivityIds()
     const indexOfActivityId = allPlanActivityIds.indexOf(activityId)
     if (indexOfActivityId === -1) {
       allPlanActivityIds.push(activityId)
       this.setActivityIds(allPlanActivityIds)
+      this.incrementActivityCount(data)
     }
   }
 
-  removeActivityId(activityId) {
+  removeActivityId(activityId, data) {
+    console.log("GVT: removeActivityId(): data: ", data)
     const allPlanActivityIds = this.getActivityIds()
     const indexOfActivityId = allPlanActivityIds.indexOf(activityId)
     if (indexOfActivityId >= 0) {
       allPlanActivityIds.splice(indexOfActivityId, 1)
       this.setActivityIds(allPlanActivityIds)
+      this.decrementActivityCount(data)
     }
   }
 
@@ -121,9 +128,9 @@ export default class extends Controller {
   }
 
   initBarChart() {
-    const dataSet = this.chartDataSeries[this.currentIndex]
+    const dataSet = this.chartDataSeries[this.currentChartIndex]
     let data = {
-      labels: this.chartLabels[this.currentIndex],
+      labels: this.chartLabels[this.currentChartIndex],
       series: [dataSet]
     };
     const heightValue = this.getNextMultipleOfTenForSeries(dataSet)
@@ -139,10 +146,14 @@ export default class extends Controller {
         }
       },
     };
-    this.charts[this.currentIndex] = new Chartist.Bar(this.chartSelectors[this.currentIndex], data, options);
-    this.charts[this.currentIndex].on('created', () => {
-      this.chartInteractivityEntryPoints[this.currentIndex]()
+    this.charts[this.currentChartIndex] = new Chartist.Bar(this.chartSelectors[this.currentChartIndex], data, options);
+    this.charts[this.currentChartIndex].on('created', () => {
+      this.chartInteractivityEntryPoints[this.currentChartIndex]()
     })
+  }
+
+  updateChart() {
+    this.charts[this.currentChartIndex].update()
   }
 
   getNextMultipleOfTenForSeries(seriesArray) {
@@ -156,14 +167,14 @@ export default class extends Controller {
   handleChartHideShow(event) {
     const {target: selectedTab} = event
     const zeroBasedTabIndex = $(selectedTab).parents("ul").find("a").index(selectedTab)
-    this.currentIndex = zeroBasedTabIndex
+    this.currentChartIndex = zeroBasedTabIndex
     this.initBarChart()
   }
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initInteractivityForChartByTechnicalArea() {
     // query for bar segments only within the selector of the current chart
-    $("line.ct-bar", this.chartSelectors[this.currentIndex]).each((segmentIndex, el) => {
+    $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each((segmentIndex, el) => {
       let $elBarSegment = $(el)
       this.initClickHandlerForChartByTechnicalArea($elBarSegment, segmentIndex)
       this.initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, segmentIndex)
@@ -172,7 +183,7 @@ export default class extends Controller {
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
-    const chartLabels = this.chartLabels[this.currentIndex]
+    const chartLabels = this.chartLabels[this.currentChartIndex]
     if (chartLabels[index]) {
       $($elBarSegment).on('click', () => {
         $("#activity-list-by-type-container").hide()
@@ -184,7 +195,7 @@ export default class extends Controller {
 
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
-    const chartLabels = this.chartLabels[this.currentIndex]
+    const chartLabels = this.chartLabels[this.currentChartIndex]
     let $elTitle = $('#technical-area-' + chartLabels[index])
     let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
@@ -196,7 +207,7 @@ export default class extends Controller {
 
   initInteractivityForChartByActivityType() {
     // query for bar segments only within the selector of the current chart
-    $("line.ct-bar", this.chartSelectors[this.currentIndex]).each((segmentIndex, el) => {
+    $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each((segmentIndex, el) => {
       let $elBarSegment = $(el)
       this.initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
       this.initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
@@ -204,7 +215,7 @@ export default class extends Controller {
   }
 
   initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
-    const chartLabels = this.chartLabels[this.currentIndex]
+    const chartLabels = this.chartLabels[this.currentChartIndex]
     let tooltipTitle = chartLabels[segmentIndex] + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
         .attr("title", tooltipTitle)
@@ -221,16 +232,21 @@ export default class extends Controller {
 
   // generates some HTML and appends it to the DOM and hides the other
   filterByActivityType(segmentIndex) {
-    const chartLabels = this.chartLabels[this.currentIndex]
+    const chartLabels = this.chartLabels[this.currentChartIndex]
     const selectedActivityType = chartLabels[segmentIndex]
     if (selectedActivityType) {
       const $activityTypeHeading = $("<h2>" + selectedActivityType + " actions</h2>")
       // needs to be wrapped in a div.col in order to work with bootstrap grid
       const $activityTypeContainer = $("<div class='col'></div>")
       const $activityRowContent = $('.activity.row.activity-type-' + (segmentIndex  + 1)).clone()
+      $activityRowContent.attr("data-activity-bar-segment-index", segmentIndex)
       $activityTypeContainer.append($activityRowContent)
       $('.technical-area-container').hide()
-      $("#activity-list-by-type-container").empty().append($activityTypeHeading).append($activityTypeContainer).show()
+      $("#activity-list-by-type-container")
+          .empty()
+          .append($activityTypeHeading)
+          .append($activityTypeContainer)
+          .show()
     }
   }
 
@@ -261,4 +277,15 @@ export default class extends Controller {
     this.formTarget.setAttribute("disabled", "disabled")
     this.formTarget.classList.add("was-validated")
   }
+
+  incrementActivityCount(data) {
+    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]++
+    this.updateChart()
+  }
+
+  decrementActivityCount(data) {
+    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]--
+    this.updateChart()
+  }
+
 }

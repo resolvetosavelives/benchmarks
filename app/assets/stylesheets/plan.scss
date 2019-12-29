@@ -64,6 +64,11 @@
   }
 }
 
+.benchmark-container .row,
+.activity.row {
+  border: 1px solid color("light-gray");
+}
+
 .benchmark-container {
   margin-bottom: 50px;
 
@@ -96,11 +101,6 @@
       border: none;
     }
   }
-}
-
-.benchmark-container .row,
-.activity.row {
-  border: 1px solid color("light-gray");
 }
 
 .activity.row {
