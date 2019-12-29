@@ -15,6 +15,7 @@ describe Assessment do
       assessment = Assessment.new country: country
       assessment.save.must_equal true, assessment.errors.inspect
       assessment.reload.country.must_equal country
+      assessment.destroy # clean up afterwards
     end
   end
 end
