@@ -41,7 +41,6 @@ class CountrySelectionHelperTest < ActionView::TestCase
 
   def assert_afghanistan(afghanistan)
     assert_instance_of Array, afghanistan
-    # TODO: this assertion fails because there sometimes are additional elements in the Array, dunno why but it only happens during the test suite
     assert_equal 2, afghanistan.size, afghanistan.inspect
     afghanistan_first = afghanistan.first
     assert_instance_of Hash, afghanistan_first
