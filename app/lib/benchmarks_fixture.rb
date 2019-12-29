@@ -19,24 +19,24 @@ class BenchmarksFixture
   # Get the text for a capacity based on its id. The parameter can be either a
   # number or a string. This will raise ArgumentError if the capacity does not
   # actually exist in the system.
-  def capacity_text(capacity_id)
-    capacity_id_str = String(capacity_id)
-    unless @fixture['benchmarks'][capacity_id_str]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id_str}")
+  def technical_area_text(technical_area_id)
+    technical_area_id_str = String(technical_area_id)
+    unless @fixture['benchmarks'][technical_area_id_str]
+      raise (ArgumentError.new "Invalid capacity: #{technical_area_id_str}")
     end
-    @fixture['benchmarks'][capacity_id_str]['name']
+    @fixture['benchmarks'][technical_area_id_str]['name']
   end
 
-  def capacity_benchmarks(capacity_id)
-    capacity_id_str = String(capacity_id)
-    unless @fixture['benchmarks'][capacity_id_str]
-      raise (ArgumentError.new "Invalid capacity: #{capacity_id_str}")
+  def technical_area_benchmarks(technical_area_id)
+    technical_area_id_str = String(technical_area_id)
+    unless @fixture['benchmarks'][technical_area_id_str]
+      raise (ArgumentError.new "Invalid capacity: #{technical_area_id_str}")
     end
-    indicators = @fixture['benchmarks'][capacity_id_str]['indicators']
+    indicators = @fixture['benchmarks'][technical_area_id_str]['indicators']
     indicators.keys.map(&:to_i).sort.map do |k|
       k_str = String(k)
       {
-        id: (BenchmarkId.new capacity_id, k),
+        id: (BenchmarkId.new technical_area_id, k),
         indicator: indicators[k_str]['indicator'],
         objective: indicators[k_str]['objective']
       }
@@ -48,15 +48,15 @@ class BenchmarksFixture
   # component is out of range, or the indicator component is out of range for
   # the capacity.
   def indicator_text(benchmark_id)
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]
-      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.technical_area_s}")
     end
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
            benchmark_id.indicator_s
          ]
       raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
     end
-    @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+    @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
       benchmark_id.indicator_s
     ][
       'indicator'
@@ -67,15 +67,15 @@ class BenchmarksFixture
   # BenchmarkId. This function will be raise ArgumentError if the capacity or
   # indicator is out of range.
   def objective_text(benchmark_id)
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]
-      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.technical_area_s}")
     end
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
            benchmark_id.indicator_s
          ]
       raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
     end
-    @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+    @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
       benchmark_id.indicator_s
     ][
       'objective'
@@ -86,10 +86,10 @@ class BenchmarksFixture
   # benchmark_id must be a BenchmarkId, score and goal must both be numbers
   # between 1 and 5, and goal must match or exceed score.
   def goal_activities(benchmark_id, score, goal)
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]
-      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.technical_area_s}")
     end
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
            benchmark_id.indicator_s
          ]
       raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
@@ -105,7 +105,7 @@ class BenchmarksFixture
 
     return(
       (score.value + 1..goal.value).reduce([]) do |acc, level|
-        acc.concat @fixture['benchmarks'][benchmark_id.capacity_s][
+        acc.concat @fixture['benchmarks'][benchmark_id.technical_area_s][
                      'indicators'
                    ][
                      benchmark_id.indicator_s
@@ -123,10 +123,10 @@ class BenchmarksFixture
   # benchmark. benchmark_id must be a BenchmarkId, and level must be a number
   # between 2 and 5.
   def level_activities(benchmark_id, level)
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]
-      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.capacity_s}")
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]
+      raise (ArgumentError.new "Invalid capacity: #{benchmark_id.technical_area_s}")
     end
-    unless @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+    unless @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
            benchmark_id.indicator_s
          ]
       raise (ArgumentError.new "Invalid indicator: #{benchmark_id.indicator_s}")
@@ -135,7 +135,7 @@ class BenchmarksFixture
       raise RangeError.new 'level is not between 2 and 5'
     end
     return(
-      @fixture['benchmarks'][benchmark_id.capacity_s]['indicators'][
+      @fixture['benchmarks'][benchmark_id.technical_area_s]['indicators'][
         benchmark_id.indicator_s
       ][
         'activities'
@@ -151,7 +151,7 @@ class BenchmarksFixture
   def activity_texts(benchmark_id)
     @fixture.dig(
       'benchmarks',
-      benchmark_id.capacity_s,
+      benchmark_id.technical_area_s,
       'indicators',
       benchmark_id.indicator_s,
       'activities'

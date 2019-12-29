@@ -10,6 +10,7 @@ class ApplicationRecord < ActiveRecord::Base
   # statement of DELETE ... CASCADE. If this becomes more complicated or blocks
   # other useful things then by all means go ahead and remove it.
   SEEDABLE_MODELS = %w[
+    Country
     Assessment
     AssessmentPublication
     AssessmentTechnicalArea

@@ -122,26 +122,26 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("Updated Draft Plan")
   end
 
-  test "happy path for Nigeria from capacity areas IHR Comm and Surveillance" do
+  test "happy path for Nigeria from technical areas IHR Comm and Surveillance" do
     visit root_url
     select "Nigeria", from: "country"
     find("button").trigger(:click)
     # popover should appear to choose which plan type to make
     assert page.has_content?("LET'S GET STARTED ON NIGERIA")
-    select "Plan by Capacity Areas", from: "assessment_type"
+    select "Plan by Technical Areas", from: "assessment_type"
     click_on("Next")
-    # next, choose which capacity areas from the popover that should appear
+    # next, choose which technical areas from the popover that should appear
     assert_selector("#technical-area-selection-modal")
     within("#technical-area-selection-modal") do
-      find("#capacity_ids_spar_2018_ta_c2").click # IHR Communications
-      find("#capacity_ids_spar_2018_ta_c6").click # Surveillance
+      find("#technical_area_ids_spar_2018_ta_c2").click # IHR Communications
+      find("#technical_area_ids_spar_2018_ta_c6").click # Surveillance
       click_on("Next")
     end
 
     ##
     # Assessment/Goals page
-    assert_current_path(%r{goals\/Nigeria\/from-capacities\?capacity_ids%5B%5D=spar_2018_ta_c2&capacity_ids%5B%5D=spar_2018_ta_c6})
-    assert page.has_content?("CAPACITY AREA SCORES")
+    assert_current_path(%r{goals\/Nigeria\/from-technical-areas\?technical_area_ids%5B%5D=spar_2018_ta_c2&technical_area_ids%5B%5D=spar_2018_ta_c6})
+    assert page.has_content?("TECHNICAL AREA SCORES")
     assert page.has_content?(
       "C2.1 National IHR Focal Point functions under IHR"
     )

@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 /* This controller handles all of the modal dialogue boxes involved with
  * assessment selection. The functions here support two different workflows
- * (and an envolving understanding of Stimulus).
+ * (and an evolving understanding of Stimulus).
  *
  * This is actually a multi-step modal with varying steps, more wizard-like
  * than a modal. Current state must be stored in the Next button so that it can
@@ -9,7 +9,7 @@ import { Controller } from "stimulus"
  * dictates which state the modal is going into.
  *
  * In that light, known states are null, "assessment-selection-modal" and
- * "from-capacities".
+ * "from-technical-areas".
  *
  *   null -- no modal is currently open
  *
@@ -19,11 +19,11 @@ import { Controller } from "stimulus"
  *   or the version that shows both the country list and the assessment list
  *   (_joint_assessment_selection_modal.html.erb).
  *
- *   from-capacities -- the modal for selecting the capacities for an
- *   assessment is open (_capacity_selection_modal.html.erb).
+ *   from-technical-areas -- the modal for selecting the capacities for an
+ *   assessment is open (_technical_area_selection_modal.html.erb).
  *
  *   If the current state is `assessment-selection-modal` and the
- *   `assessmentTypeSelect` value is `from-capacities`, the transition to the
+ *   `assessmentTypeSelect` value is `from-technical-areas`, the transition to the
  *   capacities dialogue will be honored. `assessmentTypeSelect` is anything
  *   else, it will be assumed to be an actual assessment type, and the entire
  *   form will be submitted, instead.
@@ -101,7 +101,7 @@ export default class extends Controller {
     } else if (currentModal === "assessment-selection-modal") {
       $(`#${currentModal}`).modal("hide")
 
-      if (this.assessmentTypeSelectTarget.value === "from-capacities") {
+      if (this.assessmentTypeSelectTarget.value === "from-technical-areas") {
         $(`#${nextModal}`).modal("show")
       } else {
         this.formTarget.submit()
@@ -148,7 +148,7 @@ export default class extends Controller {
       { type: "-- Select One --", text: "-- Select One --" }
     ]
       .concat(this.selectables[countryName])
-      .concat([{ type: "from-capacities", text: "Plan by Capacity Areas" }])
+      .concat([{ type: "from-technical-areas", text: "Plan by Technical Areas" }])
     while (this.assessmentTypeSelectTarget.firstChild)
       this.assessmentTypeSelectTarget.removeChild(
         this.assessmentTypeSelectTarget.firstChild

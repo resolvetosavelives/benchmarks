@@ -18,18 +18,18 @@ class ActivityMap
 
   # Return a list of BenchmarkIds corresponding to the specified Technical
   # Capacity present in the draft plan.
-  def capacity_benchmarks(capacity_id_str)
-    capacity_id = Integer(capacity_id_str)
+  def technical_area_benchmarks(technical_area_id_str)
+    technical_area_id = Integer(technical_area_id_str)
     @m.keys.map do |benchmark_id_str|
       BenchmarkId.from_s benchmark_id_str
-    end.filter { |benchmark_id| benchmark_id.capacity == capacity_id }.sort
+    end.filter { |benchmark_id| benchmark_id.capacity == technical_area_id }.sort
   end
 
   # Return a dictionary mapping BenchmarkId => Activities, for all benchmarks
   # that match the specified Technical Capacity id.
-  def capacity_activities(capacity_id_str)
-    capacity_id = Integer(capacity_id_str)
-    capacity_benchmarks(capacity_id).reduce({}) do |acc, benchmark_id|
+  def technical_area_activities(technical_area_id_str)
+    technical_area_id = Integer(technical_area_id_str)
+    technical_area_benchmarks(technical_area_id).reduce({}) do |acc, benchmark_id|
       acc[benchmark_id.to_s] = benchmark_activities(benchmark_id)
       acc
     end

@@ -3,6 +3,24 @@ require "minitest/spec"
 require "minitest/autorun"
 
 describe Plan do
+  describe "#assessment_type=" do
+    describe "when blank" do
+      let(:plan) { Plan.new }
+
+      it "does nothing" do
+        plan.assessment_type.must_be_nil
+      end
+    end
+
+    describe "when set to an integer" do
+      let(:plan) { Plan.new(assessment_type: 1) }
+
+      it "is set" do
+        plan.assessment_type.must_equal 1
+      end
+    end
+  end
+
   describe "#from_goal_form" do
     describe "for Nigeria JEE1" do
       let(:goal_attrs) do
@@ -109,7 +127,7 @@ describe Plan do
       end
       let(:plan) {
         Plan.from_goal_form(
-          goal_attrs: goal_attrs, plan_name: "test plan 3854"
+          goal_attrs: goal_attrs, country: Country.find_by_name("Nigeria"), plan_name: "test plan 3854"
         )
       }
 
@@ -187,7 +205,7 @@ describe Plan do
       end
       let(:plan) {
         Plan.from_goal_form(
-          goal_attrs: goal_attrs, plan_name: "test plan 9391"
+          goal_attrs: goal_attrs, country: Country.find_by_name("Nigeria"), plan_name: "test plan 9391"
         )
       }
 
@@ -208,11 +226,11 @@ describe Plan do
       end
     end
 
-    describe "for Nigeria from capacity areas" do
+    describe "for Nigeria from technical areas" do
       let(:goal_attrs) do
         {
           country: "Nigeria",
-          assessment_type: "from-capacities",
+          assessment_type: "from-technical-areas",
           spar_2018_ind_c21: "1",
           spar_2018_ind_c21_goal: "2",
           spar_2018_ind_c22: "1",
@@ -225,7 +243,7 @@ describe Plan do
       end
       let(:plan) do
         Plan.from_goal_form(
-          goal_attrs: goal_attrs, plan_name: "test plan 3737"
+          goal_attrs: goal_attrs, country: Country.find_by_name("Nigeria"), plan_name: "test plan 3737"
         )
       end
 
