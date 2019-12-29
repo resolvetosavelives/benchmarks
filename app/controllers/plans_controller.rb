@@ -22,6 +22,7 @@ class PlansController < ApplicationController
   def show
     @benchmark_technical_areas = BenchmarkTechnicalArea.all
     @benchmark_indicators = BenchmarkIndicator.all
+    @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map
     @plan = Plan.find(params.fetch(:id))
   end
 

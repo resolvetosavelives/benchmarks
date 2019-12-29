@@ -6,6 +6,8 @@ class BenchmarkIndicatorActivity < ApplicationRecord
 
   default_scope { order(:sequence) }
 
+  delegate :benchmark_technical_area_id, to: :benchmark_indicator
+
   # Note that these values are 0-indexed but in the DB they are 1-indexed
   ACTIVITY_TYPES = [
     "Advocacy",
@@ -30,6 +32,7 @@ class BenchmarkIndicatorActivity < ApplicationRecord
     {
       id: nil,
       benchmark_indicator_id: nil,
+      benchmark_technical_area_id: nil,
       text: nil,
       level: nil,
       sequence: nil,

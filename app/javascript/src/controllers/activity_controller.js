@@ -9,15 +9,20 @@ export default class extends Controller {
     this.parentController.childControllers.push(this)
   }
 
+  connect() {
+    this.technicalAreaId = Number(this.data.get("technicalAreaId"))
+    this.indicatorId = Number(this.data.get("indicatorId"))
+    this.id = Number(this.data.get("id"))
+    this.barSegmentIndex = Number(this.data.get("barSegmentIndex"))
+  }
+
   deleteSelf(e) {
     const { currentTarget } = e
-    const planActivityIdToRemove = Number(currentTarget.getAttribute("data-benchmark-activity-id"))
-    console.log("GVT: planActivityIdToRemove: ", planActivityIdToRemove)
-    this.removeActivityId(planActivityIdToRemove)
+    this.removeActivityId(this.id, {barSegmentIndex: this.barSegmentIndex})
     currentTarget.closest(".row").classList.add("d-none")
   }
 
-  removeActivityId(activityId) {
-    this.parentController.removeActivityId(activityId)
+  removeActivityId(activityId, data) {
+    this.parentController.removeActivityId(activityId, data)
   }
 }
