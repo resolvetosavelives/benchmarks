@@ -1,7 +1,10 @@
 <div
   data-controller="activity"
   data-target="benchmark.activity"
-  data-benchmark-activity-id="<%= benchmark_activity_id %>"
+  data-activity-technical-area-id="<%= benchmark_technical_area_id %>"
+  data-activity-indicator-id="<%= benchmark_indicator_id %>"
+  data-activity-id="<%= benchmark_activity_id %>"
+  data-activity-bar-segment-index="<%= bar_segment_index %>"
   class="activity row p-2 <%= activity_type_classes %>"
 >
   <div class="col-auto d-flex flex-row align-items-center">
@@ -10,7 +13,7 @@
     </span>
   </div>
   <div class="col-10">
-    <strong><%= display_abbreviation %></strong>
+    <strong><%= indicator_display_abbrev %></strong>
     <span class="activity-text">
       <%= benchmark_activity_text %>
     </span>
@@ -20,7 +23,6 @@
       class="delete close"
       type="button"
       data-action="activity#deleteSelf"
-      data-benchmark-activity-id="<%= benchmark_activity_id %>"
     >
       <img src="/delete-button.svg" alt="Delete this activity"/>
     </button>

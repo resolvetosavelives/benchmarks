@@ -1,4 +1,4 @@
-<% chart_labels_by_technical_area = benchmark_ta_abbreviations %>
+<% chart_labels_by_technical_area = @technical_area_abbrev_map.keys %>
 
 <%= render "plan_review_modal" %>
 
@@ -11,6 +11,7 @@
        data-plan-chart-width="730"
        data-plan-chart-height="240"
        data-plan-activity-ids='<%= @plan.benchmark_indicator_activity_ids.to_json %>'
+       data-plan-technical-area-map="<%= @technical_area_abbrev_map.to_json %>"
   >
     <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |form| %>
       <%= form.hidden_field :benchmark_activity_ids,
@@ -102,11 +103,14 @@
 
   <script type="text/template" id="activity-row-template">
     <%= render "activity",
-               benchmark_activity_id:    "{{benchmarkActivityId}}",
-               display_abbreviation:     "{{displayAbbreviation}}",
-               benchmark_activity_level: "{{benchmarkActivityLevel}}",
-               benchmark_activity_text:  "{{benchmarkActivityText}}",
-               activity_type_classes:    "{{benchmarkActivityTypes}}"
+               benchmark_technical_area_id: "{{benchmarkTechnicalAreaId}}",
+               bar_segment_index:           "{{barSegmentIndex}}",
+               benchmark_indicator_id:      "{{benchmarkIndicatorId}}",
+               indicator_display_abbrev:    "{{indicatorDisplayAbbrev}}",
+               benchmark_activity_id:       "{{benchmarkActivityId}}",
+               benchmark_activity_level:    "{{benchmarkActivityLevel}}",
+               benchmark_activity_text:     "{{benchmarkActivityText}}",
+               activity_type_classes:       "{{benchmarkActivityTypes}}"
     %>
   </script>
 </div>

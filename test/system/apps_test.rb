@@ -165,18 +165,18 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert page.has_content?("TOTAL ACTIVITIES")
     assert_equal "33", find(".activity-count-circle span").text
-    assert_selector("div[data-benchmark-indicator-abbreviation='1.1']")
-    assert_selector("div[data-benchmark-indicator-abbreviation='9.1']")
+    assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
+    assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
     # verify bar chart by technical area filter functionality
     find('line[data-original-title*="Surveillance"]').click
-    assert_no_selector("div[data-benchmark-indicator-abbreviation='1.1']")
-    assert_selector("div[data-benchmark-indicator-abbreviation='9.1']")
+    assert_no_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
+    assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
     # unfilter to show all
     find(".activity-count-circle").click
-    assert_selector("div[data-benchmark-indicator-abbreviation='1.1']")
-    assert_selector("div[data-benchmark-indicator-abbreviation='9.1']")
+    assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
+    assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
     find("#plan_name").fill_in with: "Updated Plan 789"
     find("input[type=submit]").trigger(:click)

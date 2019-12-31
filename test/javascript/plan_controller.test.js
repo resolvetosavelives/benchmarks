@@ -124,28 +124,28 @@ describe("PlanController", () => {
       controller = application.controllers[0]
     })
 
-    it("defaults currentIndex to zero", () => {
-      expect(controller.currentIndex).toEqual(0)
+    it("defaults currentChartIndex to zero", () => {
+      expect(controller.currentChartIndex).toEqual(0)
     })
 
     it("constructs a Chartist.Bar instance", () => {
-      expect(controller.charts[controller.currentIndex]).toBeInstanceOf(Chartist.Bar)
+      expect(controller.charts[controller.currentChartIndex]).toBeInstanceOf(Chartist.Bar)
     })
 
     it("populates the array of labels", () => {
-      expect(controller.chartLabels[controller.currentIndex].length).toBe(18)
+      expect(controller.chartLabels[controller.currentChartIndex].length).toBe(18)
     })
 
     it("has the expected width", () => {
-      expect(controller.charts[controller.currentIndex].options.width).toBe("730")
+      expect(controller.charts[controller.currentChartIndex].options.width).toBe("730")
     })
 
     it("has the expected height", () => {
-      expect(controller.charts[controller.currentIndex].options.height).toBe("240")
+      expect(controller.charts[controller.currentChartIndex].options.height).toBe("240")
     })
 
     it("uses the expected DOM node for the chart", () => {
-      expect(controller.charts[controller.currentIndex].container).toBe(document.getElementById("bar-chart-by-technical-area"))
+      expect(controller.charts[controller.currentChartIndex].container).toBe(document.getElementById("bar-chart-by-technical-area"))
     })
   })
 

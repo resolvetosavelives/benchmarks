@@ -5,7 +5,15 @@ class BenchmarkTechnicalArea < ApplicationRecord
 
   default_scope { includes(:benchmark_indicators).order(:sequence) }
 
-  def self.to_abbreviations
-    all.map { |bta| "B#{bta.sequence}" }
+  def self.to_abbreviation_map
+    abbreviation_map = {}
+    all.each do |bta|
+      abbreviation_map[bta.to_abbreviation] = bta.id
+    end
+    abbreviation_map
+  end
+
+  def to_abbreviation
+    "B#{sequence}"
   end
 end
