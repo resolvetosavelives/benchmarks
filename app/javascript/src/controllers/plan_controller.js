@@ -44,13 +44,14 @@ import Hogan from "hogan.js";
  *
  */
 export default class extends Controller {
-  static targets = ["fieldForActivityIds", "submit", "form", "technicalAreaContainer"]
+  static targets = ["fieldForActivityIds", "submit", "form", "technicalAreaContainer", "activityCountCircle"]
 
   initialize() {
     // benchmark controller will append itself to this array
     this.childControllers = []
     this.charts = []
     this.currentChartIndex = 0 // used for tabs and charts arrays
+    this.decrementActivityCountCircleUiTimerId = null
   }
 
   connect() {
@@ -65,13 +66,14 @@ export default class extends Controller {
     $('a[data-toggle="tab"]').on('shown.bs.tab', (event) => {
       this.handleChartHideShow(event)
     })
-    console.log("plan.connect: getActivityIds().length: ", (this.getActivityIds() || []).length)
+    console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
   }
 
   initFromDomData() {
+    this.activityIds     = JSON.parse(this.data.get("activityIds"))
     this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
     this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
     this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
@@ -79,12 +81,7 @@ export default class extends Controller {
     this.chartHeight = this.data.get("chartHeight") // expects an integer
   }
 
-  getActivityIds() {
-    return JSON.parse(this.data.get("activityIds"))
-  }
-
-  setActivityIds(activityIds) {
-    this.data.set("activityIds", JSON.stringify(activityIds))
+  updateFormValidity() {
     let anyActivities = false
     this.childControllers.forEach((controller) => {
       if (controller.hasActivities()) {
@@ -99,22 +96,22 @@ export default class extends Controller {
   }
 
   addActivityId(activityId, data) {
-    const allPlanActivityIds = this.getActivityIds()
-    const indexOfActivityId = allPlanActivityIds.indexOf(activityId)
+    const allActivityIds = this.activityIds
+    const indexOfActivityId = allActivityIds.indexOf(activityId)
     if (indexOfActivityId === -1) {
-      allPlanActivityIds.push(activityId)
-      this.setActivityIds(allPlanActivityIds)
+      allActivityIds.push(activityId)
+      this.updateFormValidity()
       this.incrementActivityCount(data)
     }
   }
 
   removeActivityId(activityId, data) {
     console.log("GVT: removeActivityId(): data: ", data)
-    const allPlanActivityIds = this.getActivityIds()
-    const indexOfActivityId = allPlanActivityIds.indexOf(activityId)
+    const allActivityIds = this.activityIds
+    const indexOfActivityId = allActivityIds.indexOf(activityId)
     if (indexOfActivityId >= 0) {
-      allPlanActivityIds.splice(indexOfActivityId, 1)
-      this.setActivityIds(allPlanActivityIds)
+      allActivityIds.splice(indexOfActivityId, 1)
+      this.updateFormValidity()
       this.decrementActivityCount(data)
     }
   }
@@ -261,9 +258,8 @@ export default class extends Controller {
   }
 
   saveActivityIdsToField() {
-    let allBenchmarkActivityIds = this.data.get("activityIds")
-    console.log("plan.saveActivityIdsToField: allBenchmarkActivityIds.length: ", JSON.parse(allBenchmarkActivityIds).length)
-    this.fieldForActivityIdsTarget.value = allBenchmarkActivityIds
+    console.log("plan.saveActivityIdsToField: allBenchmarkActivityIds.length: ", this.activityIds.length)
+    this.fieldForActivityIdsTarget.value = JSON.stringify(this.activityIds)
   }
 
   setFormIsValid() {
@@ -279,13 +275,51 @@ export default class extends Controller {
   }
 
   incrementActivityCount(data) {
-    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]++
+    this.incrementActivityCountCircleUI()
+    this.incrementChartSegmentCountData(data)
     this.updateChart()
   }
 
   decrementActivityCount(data) {
-    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]--
+    this.decrementActivityCountCircleUI()
+    this.decrementChartSegmentCountData(data)
     this.updateChart()
   }
 
+  incrementActivityCountCircleUI() {
+    if (this.hasActivityCountCircleTarget) {
+      this.activityCountCircleTarget.textContent = this.currentActivityCount()
+    }
+  }
+
+  // NB: this one is a little tricky because when an indicator is deleted all of the activities it contains
+  // are deleted in which causes to rapid invocations of this function and hence many/rapid DOM updates which
+  // causes some of those updates to be skipped/lost/discard in the flurry of activity.
+  // to solve this we have a kind of "debounce" implementation to delay a DOM update until 10ms has passed.
+  decrementActivityCountCircleUI() {
+    if (this.hasActivityCountCircleTarget) {
+      // the first time this is run the decrementActivityCountCircleUiTimerId will be null.
+      // subsequent invocations will have the decrementActivityCountCircleUiTimerId set to a value
+      // when there is a previous invocation but its setTimeout function has not yet triggered, which
+      // is when we want to clear it to avoid overly-rapid DOM updates.
+      if (this.decrementActivityCountCircleUiTimerId) {
+        clearTimeout(this.decrementActivityCountCircleUiTimerId)
+      }
+      this.decrementActivityCountCircleUiTimerId = setTimeout(() => {
+        this.activityCountCircleTarget.textContent = this.currentActivityCount()
+      }, 10) // 10ms should be enough
+    }
+  }
+
+  incrementChartSegmentCountData(data) {
+    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]++
+  }
+
+  decrementChartSegmentCountData(data) {
+    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]--
+  }
+
+  currentActivityCount() {
+    return this.activityIds.length
+  }
 }
