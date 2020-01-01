@@ -5,13 +5,12 @@
 <div class="row">
 
   <div class="col plan-container" data-controller="plan"
+       data-plan-activity-ids='<%= @plan.benchmark_indicator_activity_ids.to_json %>'
        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
        data-plan-chart-labels='[<%= chart_labels_by_technical_area %>, <%= BenchmarkIndicatorActivity::ACTIVITY_TYPES.to_json %>]'
        data-plan-chart-series='[<%= @plan.count_activities_by_ta %>, <%= @plan.count_activities_by_type %>]'
        data-plan-chart-width="730"
        data-plan-chart-height="240"
-       data-plan-activity-ids='<%= @plan.benchmark_indicator_activity_ids.to_json %>'
-       data-plan-technical-area-map="<%= @technical_area_abbrev_map.to_json %>"
   >
     <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |form| %>
       <%= form.hidden_field :benchmark_activity_ids,
@@ -28,7 +27,7 @@
         <div class="col mt-5">
           <div class="row mx-0 activity-count-header align-items-center">
             <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
-              <span><%= @plan.plan_activities.size %></span>
+              <span data-target="plan.activityCountCircle"><%= @plan.plan_activities.size %></span>
             </div>
             <div class="col-auto">
               <p>Total Activities</p>
