@@ -45,6 +45,10 @@ class Plan < ApplicationRecord
     ASSESSMENT_TYPE_NAMED_IDS[assessment_type - 1]
   end
 
+  def activity_ids
+    plan_activities.map(&:benchmark_indicator_activity).map(&:id)
+  end
+
   def update!(name:, benchmark_activity_ids:)
     current_activity_ids = benchmark_indicator_activity_ids
     # Use +Set+ to avoid adding duplicates.

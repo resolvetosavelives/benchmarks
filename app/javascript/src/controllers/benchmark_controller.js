@@ -1,8 +1,6 @@
 import { Controller } from "stimulus"
 import Hogan from "hogan.js"
 
-// TODO: test coverage for recent changes
-
 export default class extends Controller {
   static targets = ["activity", "addActivityField", "confirm", "delete"]
 
@@ -12,11 +10,12 @@ export default class extends Controller {
       return controller.context.identifier === "plan";                                                                           
     });
     this.parentController.childControllers.push(this)
+    this.planPageDataModel = this.parentController.planPageDataModel
+    this.planPageViewModel = this.parentController.planPageViewModel
   }
 
   connect() {
     this.deleteTarget.hidden = true
-    this.technicalAreaId = Number(this.data.get("technicalAreaId"))
     this.indicatorId = Number(this.data.get("indicatorId"))
     this.indicatorDisplayAbbrev = Number(this.data.get("indicatorDisplayAbbrev"))
     this.barSegmentIndex = Number(this.data.get("barSegmentIndex"))
@@ -25,7 +24,7 @@ export default class extends Controller {
 
   initAutoCompleteForAddActivity() {
     const self = this  // needed for nested callbacks which lose scope of "this"
-    const excludedActivities = JSON.parse(this.data.get("excluded-activities"))
+    const excludedActivities = this.planPageDataModel.getExcludedActivitiesForIndicator(this.indicatorId)
     if (this.hasAddActivityFieldTarget) {
       $(this.addActivityFieldTarget).autocomplete({
         appendTo: ".plan-container",
@@ -38,14 +37,6 @@ export default class extends Controller {
         select: function(event, ui) {
           const benchmarkActivity = ui.item
           self.addActivityAndRender(benchmarkActivity)
-          // remove the selected activity from the set of activities that appears in tha autocomplete menu
-          const excludedActivities = JSON.parse(self.data.get("excluded-activities"))
-          const selectedActivity = excludedActivities.find((a) => {
-            return a.id === benchmarkActivity.id
-          })
-          const indexOfActivity = excludedActivities.indexOf(selectedActivity)
-          excludedActivities.splice(indexOfActivity, 1)
-          self.data.set("excluded-activities", JSON.stringify(excludedActivities))
           self.initAutoCompleteForAddActivity()
         }
       })
@@ -53,10 +44,8 @@ export default class extends Controller {
   }
 
   addActivityAndRender(benchmarkActivity) {
-    this.addActivityId(benchmarkActivity.id, {barSegmentIndex: this.barSegmentIndex})
+    this.addActivityId(benchmarkActivity.id, this.barSegmentIndex)
     const templateData = {
-      benchmarkTechnicalAreaId: this.technicalAreaId,
-      benchmarkIndicatorId: this.indicatorId,
       indicatorDisplayAbbrev: this.indicatorDisplayAbbrev,
       benchmarkActivityId: benchmarkActivity.id,
       benchmarkActivityLevel: benchmarkActivity.level,
@@ -100,11 +89,11 @@ export default class extends Controller {
 
   // Delete a benchmark indicator, which means deleting its child activities
   deleteActivitiesForIndicator(e) {
-    const { currentTarget } = e
-    const activityIds = JSON.parse(this.data.get("activityIds"))
+    const activityIds = this.planPageDataModel.getActivityIdsForIndicator(this.indicatorId)
     activityIds.forEach((activityId) => {
-      this.removeActivityId(activityId, {barSegmentIndex: this.barSegmentIndex})
+      this.removeActivityId(activityId, this.barSegmentIndex)
     })
+    const { currentTarget } = e
     this.element.hidden = true
     const siblings = $(this.element).siblings(".benchmark-container:visible")
     if (siblings.length === 0) {
@@ -112,12 +101,14 @@ export default class extends Controller {
     }
   }
 
-  addActivityId(activityId, data) {
-    this.parentController.addActivityId(activityId, data)
+  addActivityId(activityId, barSegmentIndex) {
+    this.planPageDataModel.addActivityById(activityId, barSegmentIndex)
+    this.planPageViewModel.activityAdded(activityId, barSegmentIndex)
   }
 
-  removeActivityId(activityId, data) {
-    this.parentController.removeActivityId(activityId, data)
+  removeActivityId(activityId, barSegmentIndex) {
+    this.planPageDataModel.removeActivityById(activityId, barSegmentIndex)
+    this.planPageViewModel.activityRemoved(activityId, barSegmentIndex)
   }
 
   hasActivities() {

@@ -5,12 +5,9 @@
 <div
   data-controller="benchmark"
   data-target="benchmark.self"
-  data-benchmark-technical-area-id="<%= benchmark_technical_area.id %>"
   data-benchmark-indicator-id="<%= benchmark_indicator.id %>"
   data-benchmark-indicator-display-abbrev="<%= benchmark_indicator.display_abbreviation %>"
-  data-benchmark-excluded-activities="<%= @plan.excluded_activities_for(benchmark_indicator).to_json %>"
   data-benchmark-activity-row-template-selector="#activity-row-template"
-  data-benchmark-activity-ids="<%= plan_indicator_activities.map { |pia| pia.benchmark_indicator_activity_id } %>"
   data-benchmark-bar-segment-index="<%= bar_segment_index %>"
   class="benchmark-container col"
 >
