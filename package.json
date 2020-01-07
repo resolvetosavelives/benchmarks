@@ -37,7 +37,8 @@
     ],
     "moduleDirectories": [
       "node_modules",
-      "app/javascript/src/controllers"
+      "app/javascript/src/controllers",
+      "app/javascript/src"
     ]
   }
 }

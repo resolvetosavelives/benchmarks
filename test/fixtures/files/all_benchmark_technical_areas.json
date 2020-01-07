@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "text": "National Legislation, Policy and Financing",
+    "sequence": 1,
+    "created_at": "2019-12-29T04:39:42.450Z",
+    "updated_at": "2019-12-29T04:39:42.450Z"
+  },
+  {
+    "id": 2,
+    "text": "IHR Coordination, Communication and Advocacy and Reporting",
+    "sequence": 2,
+    "created_at": "2019-12-29T04:39:42.452Z",
+    "updated_at": "2019-12-29T04:39:42.452Z"
+  },
+  {
+    "id": 3,
+    "text": "Antimicrobial Resistance",
+    "sequence": 3,
+    "created_at": "2019-12-29T04:39:42.454Z",
+    "updated_at": "2019-12-29T04:39:42.454Z"
+  },
+  {
+    "id": 4,
+    "text": "Zoonotic Disease",
+    "sequence": 4,
+    "created_at": "2019-12-29T04:39:42.456Z",
+    "updated_at": "2019-12-29T04:39:42.456Z"
+  },
+  {
+    "id": 5,
+    "text": "Food Safety",
+    "sequence": 5,
+    "created_at": "2019-12-29T04:39:42.457Z",
+    "updated_at": "2019-12-29T04:39:42.457Z"
+  },
+  {
+    "id": 6,
+    "text": "Immunization",
+    "sequence": 6,
+    "created_at": "2019-12-29T04:39:42.459Z",
+    "updated_at": "2019-12-29T04:39:42.459Z"
+  },
+  {
+    "id": 7,
+    "text": "National Laboratory System",
+    "sequence": 7,
+    "created_at": "2019-12-29T04:39:42.460Z",
+    "updated_at": "2019-12-29T04:39:42.460Z"
+  },
+  {
+    "id": 8,
+    "text": "Biosafety and Biosecurity",
+    "sequence": 8,
+    "created_at": "2019-12-29T04:39:42.532Z",
+    "updated_at": "2019-12-29T04:39:42.532Z"
+  },
+  {
+    "id": 9,
+    "text": "Surveillance",
+    "sequence": 9,
+    "created_at": "2019-12-29T04:39:42.534Z",
+    "updated_at": "2019-12-29T04:39:42.534Z"
+  },
+  {
+    "id": 10,
+    "text": "Human Resources",
+    "sequence": 10,
+    "created_at": "2019-12-29T04:39:42.536Z",
+    "updated_at": "2019-12-29T04:39:42.536Z"
+  },
+  {
+    "id": 11,
+    "text": "Emergency Preparedness",
+    "sequence": 11,
+    "created_at": "2019-12-29T04:39:42.538Z",
+    "updated_at": "2019-12-29T04:39:42.538Z"
+  },
+  {
+    "id": 12,
+    "text": "Emergency Response Operations",
+    "sequence": 12,
+    "created_at": "2019-12-29T04:39:42.540Z",
+    "updated_at": "2019-12-29T04:39:42.540Z"
+  },
+  {
+    "id": 13,
+    "text": "Linking Public Health and Security Authorities",
+    "sequence": 13,
+    "created_at": "2019-12-29T04:39:42.542Z",
+    "updated_at": "2019-12-29T04:39:42.542Z"
+  },
+  {
+    "id": 14,
+    "text": "Medical Countermeasures and Personnel Deployment",
+    "sequence": 14,
+    "created_at": "2019-12-29T04:39:42.543Z",
+    "updated_at": "2019-12-29T04:39:42.543Z"
+  },
+  {
+    "id": 15,
+    "text": "Risk Communication",
+    "sequence": 15,
+    "created_at": "2019-12-29T04:39:42.545Z",
+    "updated_at": "2019-12-29T04:39:42.545Z"
+  },
+  {
+    "id": 16,
+    "text": "Points of Entry",
+    "sequence": 16,
+    "created_at": "2019-12-29T04:39:42.547Z",
+    "updated_at": "2019-12-29T04:39:42.547Z"
+  },
+  {
+    "id": 17,
+    "text": "Chemical Events",
+    "sequence": 17,
+    "created_at": "2019-12-29T04:39:42.548Z",
+    "updated_at": "2019-12-29T04:39:42.548Z"
+  },
+  {
+    "id": 18,
+    "text": "Radiation Emergencies",
+    "sequence": 18,
+    "created_at": "2019-12-29T04:39:42.550Z",
+    "updated_at": "2019-12-29T04:39:42.550Z"
+  }
+]
