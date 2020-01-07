@@ -1,33 +1,41 @@
 import { Application, Controller } from "stimulus"
-import PlanController from "plan_controller"
 import Chartist from "chartist"
-import $ from "jquery"
-// TODO: this is an obstacle to test coverage for setBarChartEventListeners()
-//   because it gets removes the regular jQuery methods, but when I move it to
-//   be lower scoped beforeEach methods other tests fail. There is something
-//   "special" with mocking jquery that is not reset between tests.
-jest.mock("jquery")
-$.mockImplementation(() => ({
-  autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() }),
-  on: jest.fn()
-}))
+import "jquery"
+import "plan_page_data_model"
+import PlanController from "plan_controller"
+import { changeValue } from "./utilities"
 
-import { changeValue, keypress } from "./utilities"
+function mock_jquery() {
+  jest.mock("jquery")
+  jest.fn().mockImplementation("jquery", () => ({
+    autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() }),
+    on: jest.fn()
+  }))
+}
+
+function mock_plan_page_data_model() {
+  window.STATE_FROM_SERVER = {}
+  jest.mock("plan_page_data_model", () => {
+    return jest.fn().mockImplementation(() => {
+      return { technicalAreas: []}
+    })
+  })
+}
 
 describe("PlanController", () => {
   let application, submitButton, form, name
   beforeEach(() => {
+    mock_jquery()
+    mock_plan_page_data_model()
     document.body.innerHTML = `
-      <div data-controller="plan"
-         data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
-         data-plan-chart-labels='[["B1","B2","B3","B4","B5","B6","B7","B8","B9","B10","B11","B12","B13","B14","B15","B16","B17","B18"], ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]]'
-         data-plan-chart-series="[[6, 12, 19, 9, 11, 13, 19, 7, 15, 18, 11, 15, 7, 19, 20, 16, 14, 4], [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]]"
-         data-plan-chart-width="730"
-         data-plan-chart-height="240"
-         data-plan-activity-ids="[1,2,3,4,5,6,56,57,58,59,60,61,62,63,64,72,73,74,107,108,109,110,111,112,113,128,129,130,131,132,133,148,149,150,151,152,153,176,177,178,179,188,189,190,191,192,219,220,221,222,223,224,225,238,239,240,241,265,266,267,268,269,270,294,295,296,297,298,299,300,317,318,319,320,321,324,325,326,327,328,329,330,348,349,350,361,362,363,364,370,371,372,373,374,393,394,426,427,428,429,430,442,443,444,445,446,468,469,470,471,472,482,483,484,485,486,487,507,508,509,510,511,556,557,558,559,560,561,562,563,564,565,566,567,568,585,586,587,588,589,628,629,630,631,632,633,634,635,636,637,652,653,654,655,656,661,662,663,664,665,666,667,682,683,684,685,699,700,701,702,703,704,705,706,707,708,709,710,725,726,727,733,734,735,736,737,738,739,740,741,742,743,744,745,762,763,764,765,780,781,782,785,786,787,788,789,790,791,792,793,794,807,808,809,810,811,812,827,828,829,830,831,832,833,834,835,836,837,838,839,840,869,870,871,872]"
+      <div class="col plan-container" 
+        data-controller="plan"
+        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
+        data-plan-chart-labels='[["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18"], ["Advocacy", "Assessment and Data Use", "Coordination", "Designation", "Dissemination", "Financing", "Monitoring and Evaluation", "Planning and Strategy", "Procurement", "Program Implementation", "SimEx and AAR", "SOPs", "Surveillance", "Tool Development", "Training"]]'
+        data-plan-chart-series="[[6, 12, 19, 9, 11, 13, 19, 7, 15, 18, 11, 15, 7, 19, 20, 16, 14, 4], [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]]"
+        data-plan-chart-width="730"
+        data-plan-chart-height="240"
       >
-
-
 
         <button id="submit-button" data-target="plan.submit" data-action="plan#submit">Save</button>
         <form data-target="plan.form" data-action="submit->score#submit">

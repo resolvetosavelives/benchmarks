@@ -7,22 +7,23 @@ export default class extends Controller {
       return controller.context.identifier === "benchmark";
     });
     this.parentController.childControllers.push(this)
+    this.planPageDataModel = this.parentController.planPageDataModel
+    this.planPageViewModel = this.parentController.planPageViewModel
   }
 
   connect() {
-    this.technicalAreaId = Number(this.data.get("technicalAreaId"))
-    this.indicatorId = Number(this.data.get("indicatorId"))
     this.id = Number(this.data.get("id"))
     this.barSegmentIndex = Number(this.data.get("barSegmentIndex"))
   }
 
   deleteSelf(e) {
     const { currentTarget } = e
-    this.removeActivityId(this.id, {barSegmentIndex: this.barSegmentIndex})
-    currentTarget.closest(".row").classList.add("d-none")
+    this.removeActivityId(this.id, this.barSegmentIndex)
+    currentTarget.closest(".row").remove()
   }
 
-  removeActivityId(activityId, data) {
-    this.parentController.removeActivityId(activityId, data)
+  removeActivityId(activityId, barSegmentIndex) {
+    this.planPageDataModel.removeActivityById(activityId, barSegmentIndex)
+    this.planPageViewModel.activityRemoved(activityId, barSegmentIndex)
   }
 }

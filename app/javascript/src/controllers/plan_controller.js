@@ -1,9 +1,8 @@
 import { Controller } from "stimulus"
 import $ from "jquery"
 import Chartist from "chartist"
-import Hogan from "hogan.js";
-
-// TODO: test coverage for recent changes
+import PlanPageDataModel from "../plan_page_data_model"
+import PlanPageViewModel from "../plan_page_view_model"
 
 /* This controller handles almost all of the in-browser capabilities of the
  * draft plan form. Users can delete activities, add freeform activities, and
@@ -52,33 +51,46 @@ export default class extends Controller {
     this.charts = []
     this.currentChartIndex = 0 // used for tabs and charts arrays
     this.decrementActivityCountCircleUiTimerId = null
+    this.planPageDataModel = new PlanPageDataModel(window.STATE_FROM_SERVER)
   }
 
   connect() {
-    this.initFromDomData()
+    this.planPageViewModel = new PlanPageViewModel(this.element)
+    this.initDataFromDom()
     this.chartInteractivityEntryPoints = [
       this.initInteractivityForChartByTechnicalArea.bind(this),
       this.initInteractivityForChartByActivityType.bind(this),
     ]
     this.initBarChart()
     this.initActivityCountButton()
-    // the "shown.bs.tab" event comes of bootstrap nav tabs
-    $('a[data-toggle="tab"]').on('shown.bs.tab', (event) => {
-      this.handleChartHideShow(event)
-    })
-    console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
+    // console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
+    this.initEventListeners()
     if (document.referrer.match("goals")) {
       $("#draft-plan-review-modal").modal("show")
     }
   }
 
-  initFromDomData() {
-    this.activityIds     = JSON.parse(this.data.get("activityIds"))
+  initDataFromDom() {
     this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
     this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
     this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
     this.chartWidth  = this.data.get("chartWidth")  // expects an integer
     this.chartHeight = this.data.get("chartHeight") // expects an integer
+  }
+
+  initEventListeners() {
+    // the "shown.bs.tab" event comes of bootstrap nav tabs
+    $('a[data-toggle="tab"]').on('shown.bs.tab', (event) => {
+      this.handleChartHideShow(event)
+    })
+    this.element.addEventListener("planActivityAdded", (planActivityAddedEvent) => {
+      this.updateFormValidity()
+      this.incrementActivityCount(planActivityAddedEvent.detail.barSegmentIndex)
+    })
+    this.element.addEventListener("planActivityRemoved", (planActivityRemovedEvent) => {
+      this.updateFormValidity()
+      this.decrementActivityCount(planActivityRemovedEvent.detail.barSegmentIndex)
+    })
   }
 
   updateFormValidity() {
@@ -92,27 +104,6 @@ export default class extends Controller {
       this.setFormIsValid()
     } else {
       this.setFormIsInvalid()
-    }
-  }
-
-  addActivityId(activityId, data) {
-    const allActivityIds = this.activityIds
-    const indexOfActivityId = allActivityIds.indexOf(activityId)
-    if (indexOfActivityId === -1) {
-      allActivityIds.push(activityId)
-      this.updateFormValidity()
-      this.incrementActivityCount(data)
-    }
-  }
-
-  removeActivityId(activityId, data) {
-    console.log("GVT: removeActivityId(): data: ", data)
-    const allActivityIds = this.activityIds
-    const indexOfActivityId = allActivityIds.indexOf(activityId)
-    if (indexOfActivityId >= 0) {
-      allActivityIds.splice(indexOfActivityId, 1)
-      this.updateFormValidity()
-      this.decrementActivityCount(data)
     }
   }
 
@@ -161,6 +152,7 @@ export default class extends Controller {
 
   // e.target: newly activated tab
   // e.relatedTarget: previously active tab
+  // TODO: modify this to use PlanPageViewModel events instead?
   handleChartHideShow(event) {
     const {target: selectedTab} = event
     const zeroBasedTabIndex = $(selectedTab).parents("ul").find("a").index(selectedTab)
@@ -168,7 +160,7 @@ export default class extends Controller {
     this.initBarChart()
   }
 
-  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  // TODO: add test coverage for this now that its unblocked
   initInteractivityForChartByTechnicalArea() {
     // query for bar segments only within the selector of the current chart
     $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each((segmentIndex, el) => {
@@ -178,7 +170,7 @@ export default class extends Controller {
     })
   }
 
-  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  // TODO: add test coverage for this now that its unblocked
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
     if (chartLabels[index]) {
@@ -190,7 +182,7 @@ export default class extends Controller {
     }
   }
 
-  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
+  // TODO: add test coverage for this now that its unblocked
   initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
     let $elTitle = $('#technical-area-' + chartLabels[index])
@@ -258,8 +250,8 @@ export default class extends Controller {
   }
 
   saveActivityIdsToField() {
-    console.log("plan.saveActivityIdsToField: allBenchmarkActivityIds.length: ", this.activityIds.length)
-    this.fieldForActivityIdsTarget.value = JSON.stringify(this.activityIds)
+    console.log("plan.saveActivityIdsToField: this.getActivityIds().length: ", this.getActivityIds().length)
+    this.fieldForActivityIdsTarget.value = JSON.stringify(this.getActivityIds())
   }
 
   setFormIsValid() {
@@ -274,9 +266,9 @@ export default class extends Controller {
     this.formTarget.classList.add("was-validated")
   }
 
-  incrementActivityCount(data) {
+  incrementActivityCount(barSegmentIndex) {
     this.incrementActivityCountCircleUI()
-    this.incrementChartSegmentCountData(data)
+    this.incrementChartSegmentCountData(barSegmentIndex)
     this.updateChart()
   }
 
@@ -287,6 +279,7 @@ export default class extends Controller {
   }
 
   incrementActivityCountCircleUI() {
+    console.log("GVT: incrementActivityCountCircleUI..")
     if (this.hasActivityCountCircleTarget) {
       this.activityCountCircleTarget.textContent = this.currentActivityCount()
     }
@@ -311,15 +304,19 @@ export default class extends Controller {
     }
   }
 
-  incrementChartSegmentCountData(data) {
-    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]++
+  incrementChartSegmentCountData(barSegmentIndex) {
+    this.chartDataSeries[this.currentChartIndex][barSegmentIndex]++
   }
 
-  decrementChartSegmentCountData(data) {
-    this.chartDataSeries[this.currentChartIndex][data.barSegmentIndex]--
+  decrementChartSegmentCountData(barSegmentIndex) {
+    this.chartDataSeries[this.currentChartIndex][barSegmentIndex]--
+  }
+
+  getActivityIds() {
+    return this.planPageDataModel.activityIds
   }
 
   currentActivityCount() {
-    return this.activityIds.length
+    return this.planPageDataModel.currentActivityCount()
   }
 }
