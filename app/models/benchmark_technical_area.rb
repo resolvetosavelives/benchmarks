@@ -16,4 +16,12 @@ class BenchmarkTechnicalArea < ApplicationRecord
   def to_abbreviation
     "B#{sequence}"
   end
+
+  def attributes
+    {
+        id: nil,
+        text: nil,
+        sequence: nil
+    }
+  end
 end

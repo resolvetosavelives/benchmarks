@@ -28,7 +28,7 @@ export default class extends Controller {
   connect() {
     $('[data-toggle="tooltip"]').tooltip({
       trigger: "manual",
-      container: "#new_goal_form"
+      container: "form"
     })
   }
 

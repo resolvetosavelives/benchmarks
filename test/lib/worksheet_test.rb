@@ -22,7 +22,7 @@ class WorksheetTest < ActiveSupport::TestCase
     assert_equal "Benchmark Objective:", sheet[0][0].value
     assert_equal "To establish a multisectoral IHR coordination mechanism to support the implementation of prevention, detection and response activities",
       sheet[0][2].value
-    assert_equal "Activity required for JEE1 score 3", sheet[6][0].value
+    assert_equal "Activity required for JEE 1.0 score 3", sheet[6][0].value
     assert_equal "Create/update the national action plan for improving health security and IHR capacity based on IHR monitoring and evaluation results.",
       sheet[7][0].value
     assert_equal "To establish a multisectoral IHR coordination mechanism to support the implementation of prevention, detection and response activities",

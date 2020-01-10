@@ -37,6 +37,8 @@ The application should now be available [on localhost](https://localhost:3000/)
 
 ## Fixtures
 
+TODO: This needs updated, much of it no longer applies.
+
 The application uses four data fixtures. Those fixtures are all considered part of the code, and updating the fixtures requires a new deployment of the application.
 
 *   app/fixtures/assessments.json -- this describes the structure of the assessments. It contains all of the technical areas and their associated indicators, and provides the sort order of the technical areas.

@@ -1,7 +1,7 @@
 ul.ui-autocomplete {
   list-style: none;
   margin-left: 0;
-  border: solid 1px #7b9dd4;
+  border: solid 1px color("info");
   background: color("white");
   padding-left: 0;
 
@@ -9,7 +9,7 @@ ul.ui-autocomplete {
     padding-bottom: 5px;
     .ui-state-active,
     &:not(.ui-autocomplete-category):hover {
-      background: #2c8dc9;
+      background: color("info");
       color: color("white");
     }
 
@@ -19,7 +19,6 @@ ul.ui-autocomplete {
 
     &.ui-autocomplete-category {
       padding-left: 12px;
-      font-family: Karla, sans-serif;
       font-style: italic;
       font-weight: bold;
       font-size: 17px;

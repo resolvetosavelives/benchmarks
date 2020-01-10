@@ -65,9 +65,6 @@ export default class extends Controller {
     this.initActivityCountButton()
     // console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
     this.initEventListeners()
-    if (document.referrer.match("goals")) {
-      $("#draft-plan-review-modal").modal("show")
-    }
   }
 
   initDataFromDom() {

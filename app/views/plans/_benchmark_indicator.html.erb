@@ -1,4 +1,4 @@
-<% plan_indicator, indicator_score, indicator_goal = @plan.indicator_score_goal_for(benchmark_indicator) %>
+<% plan_indicator_goal = @plan.goal_for(benchmark_indicator: benchmark_indicator) %>
 <% plan_indicator_activities = @plan.activities_for(benchmark_indicator) || [] %>
 <% bar_segment_index = benchmark_technical_area.sequence - 1 %>
 
@@ -37,9 +37,7 @@
   </div>
 
 
-  <% if plan_indicator.blank? %>
-    <%= render 'no_capacity_gap' %>
-  <% elsif plan_indicator.present? && indicator_score.eql?(indicator_goal) %>
+  <% if plan_indicator_goal.blank? %>
     <%= render 'no_capacity_gap' %>
   <% else %>
     <% plan_indicator_activities.each do |plan_activity| %>

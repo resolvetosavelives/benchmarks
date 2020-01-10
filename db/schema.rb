@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_18_171059) do
+ActiveRecord::Schema.define(version: 2020_01_14_161400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,12 +34,19 @@ ActiveRecord::Schema.define(version: 2019_12_18_171059) do
   end
 
   create_table "assessment_publications", force: :cascade do |t|
-    t.string "name", limit: 20
     t.string "title", limit: 200
     t.string "named_id", limit: 10
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "abbrev", limit: 10
+    t.string "revision", limit: 10
     t.index ["named_id"], name: "index_assessment_publications_on_named_id"
+  end
+
+  create_table "assessment_scores", force: :cascade do |t|
+    t.integer "assessment_id", null: false
+    t.integer "assessment_indicator_id", null: false
+    t.integer "value", null: false
   end
 
   create_table "assessment_technical_areas", force: :cascade do |t|
@@ -53,11 +60,10 @@ ActiveRecord::Schema.define(version: 2019_12_18_171059) do
   end
 
   create_table "assessments", force: :cascade do |t|
-    t.string "assessment_type"
-    t.jsonb "scores"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "country_alpha3", limit: 3
+    t.integer "assessment_publication_id"
   end
 
   create_table "benchmark_indicator_activities", force: :cascade do |t|
@@ -116,17 +122,11 @@ ActiveRecord::Schema.define(version: 2019_12_18_171059) do
     t.index ["plan_id"], name: "index_plan_activities_on_plan_id"
   end
 
-  create_table "plan_benchmark_indicators", force: :cascade do |t|
-    t.integer "plan_id"
-    t.integer "assessment_indicator_id"
-    t.integer "benchmark_indicator_id"
-    t.integer "score"
-    t.integer "goal"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["plan_id", "assessment_indicator_id"], name: "plan_BIs_plan_id_and_assessment_indicator_id"
-    t.index ["plan_id", "benchmark_indicator_id"], name: "plan_BIs_plan_id_and_benchmark_indicator_id"
-    t.index ["plan_id"], name: "index_plan_benchmark_indicators_on_plan_id"
+  create_table "plan_goals", force: :cascade do |t|
+    t.integer "plan_id", null: false
+    t.integer "assessment_indicator_id", null: false
+    t.integer "benchmark_indicator_id", null: false
+    t.integer "value", null: false
   end
 
   create_table "plans", force: :cascade do |t|
@@ -134,8 +134,7 @@ ActiveRecord::Schema.define(version: 2019_12_18_171059) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
-    t.string "country_alpha3", limit: 3
-    t.integer "assessment_type"
+    t.integer "assessment_id"
     t.index ["user_id"], name: "index_plans_on_user_id"
   end
 
@@ -160,16 +159,19 @@ ActiveRecord::Schema.define(version: 2019_12_18_171059) do
   add_foreign_key "assessment_indicators", "assessment_technical_areas"
   add_foreign_key "assessment_indicators_benchmark_indicators", "assessment_indicators"
   add_foreign_key "assessment_indicators_benchmark_indicators", "benchmark_indicators"
+  add_foreign_key "assessment_scores", "assessment_indicators"
+  add_foreign_key "assessment_scores", "assessments"
   add_foreign_key "assessment_technical_areas", "assessment_publications"
+  add_foreign_key "assessments", "assessment_publications"
   add_foreign_key "assessments", "countries", column: "country_alpha3", primary_key: "alpha3"
   add_foreign_key "benchmark_indicator_activities", "benchmark_indicators"
   add_foreign_key "benchmark_indicators", "benchmark_technical_areas"
   add_foreign_key "plan_activities", "benchmark_indicator_activities"
   add_foreign_key "plan_activities", "benchmark_indicators"
   add_foreign_key "plan_activities", "plans"
-  add_foreign_key "plan_benchmark_indicators", "assessment_indicators"
-  add_foreign_key "plan_benchmark_indicators", "benchmark_indicators"
-  add_foreign_key "plan_benchmark_indicators", "plans"
-  add_foreign_key "plans", "countries", column: "country_alpha3", primary_key: "alpha3"
+  add_foreign_key "plan_goals", "assessment_indicators"
+  add_foreign_key "plan_goals", "benchmark_indicators"
+  add_foreign_key "plan_goals", "plans"
+  add_foreign_key "plans", "assessments"
   add_foreign_key "plans", "users"
 end
