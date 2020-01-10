@@ -1,0 +1,26 @@
+.home-page
+  .row
+    .col.left-panel
+      .row
+        .col
+          %h1 Step up to preparedness
+          %h2.my-4
+            Accelerating implementation through better planning
+          %p
+            This digital tool supports accelerated planning and implementation of
+            International Health Regulation (IHR) core capacities, specifically
+            focusing on those needed to develop and guide your National Action
+            Plan for Health Security (NAPHS).
+          %p
+            This tool provides a database of key actions—Benchmarks developed by
+            the World Health Organization (WHO) and partners—needed to improve
+            your Joint External Evaluation (JEE) or State Parties Self-Assessment
+            Annual Reporting Tool (SPAR) scores by one or more steps.
+          %p
+            You will have the opportunity to create a draft plan, customize it
+            online or download it, view implementation guidance, and review an
+            analysis of your actions.
+      .row.my-4
+        .col-8
+          = link_to "Get Started", get_started_url, class: "btn btn-success", type: "button"
+    .col.right-panel.m-auto= render "hero_image"

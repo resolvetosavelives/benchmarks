@@ -1,0 +1,115 @@
+<div class="plan-set-goals">
+
+  <div class="row bg-dark-blue p-4 full-width stick-to-top text-white">
+    <%# unless @plan.from_technical_areas? %>
+      <div class="col-5 offset-1">
+        <div
+          data-controller="filter"
+          data-filter-placeholder="Select Technical Area(s)"
+          data-filter-class-prefix="technical-area"
+        >
+          <strong><%= label_tag "Filter by Technical Area:" %></strong>
+          <%= select_tag "technical_areas",
+                         options_from_collection_for_select(@plan.assessment_technical_areas, :id, :text),
+                         class: "form-control custom-select text-left",
+                         multiple: "multiple",
+                         data: { target: "filter.multiselectTechnicalAreas",
+                                 options: @plan.assessment_technical_areas.to_json },
+                         autocomplete: "off" %>
+        </div>
+      </div>
+    <%# end %>
+  </div>
+
+  <%= form_for @plan, url: "/plans/",
+    html: {novalidate: true,
+           autocomplete: "off",
+           class: "needs-validation",
+           data: {controller: "score",
+                   action: "submit->score#submit",
+                   target: "score.form",
+                   type: @assessment_type}
+          } do |form| %>
+    <%= form.hidden_field :assessment_id %>
+    <div class="row py-4">
+      <div class="col-6">
+        <h1 class="alt-header">
+          <%= @publication.abbrev %> Scores
+        </h1>
+
+        <%= render "instructions" %>
+      </div>
+      <div class="col-lg-6 col-md-12 d-flex justify-content-end">
+        <%= image_tag("scores-widget.svg", class: "w-100 scores-widget") %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <table class="table table-fixed table-scores border-bottom w-100">
+          <colgroup>
+            <col width="220px" />
+            <col />
+            <col width="90px" />
+            <col width="90px" />
+          </colgroup>
+          <thead>
+            <tr class="jee-table-header">
+              <th>Technical Areas</th>
+              <th>Indicators</th>
+              <th>Score</th>
+              <th>Goal</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @plan.assessment_technical_areas.each do |assessment_technical_area| %>
+              <% assessment_indicator = assessment_technical_area.assessment_indicators.first %>
+              <tr class="technical-area-<%= assessment_technical_area.id %>"
+                  data-controller="score-and-goal">
+                <th
+                  class="border-right"
+                  scope="row"
+                  rowspan="<%= assessment_technical_area.assessment_indicators.size %>"
+                >
+                  <%= assessment_technical_area.text %>
+                </th>
+                <td class="border-right">
+                  <strong><%= abbrev_from_named_id assessment_indicator.named_id %></strong>
+                  <%= assessment_indicator.text %>
+                </td>
+                <td>
+                  <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
+                </td>
+                <td>
+                  <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.calculate_goal_value_for(assessment_indicator: assessment_indicator), is_goal: true %>
+                </td>
+              </tr>
+
+              <% assessment_technical_area.assessment_indicators.drop(1).each do |assessment_indicator| %>
+                <tr class="technical-area-<%= assessment_technical_area.id %>"
+                    data-controller="score-and-goal">
+                  <td class="border-right">
+                    <strong><%= abbrev_from_named_id assessment_indicator.named_id %></strong>
+                    <%= assessment_indicator.text %>
+                  </td>
+                  <td>
+                    <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
+                  </td>
+                  <td>
+                    <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.calculate_goal_value_for(assessment_indicator: assessment_indicator), is_goal: true %>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col d-flex justify-content-end">
+        <%= form.submit "Next", class: "btn btn-primary goals-next-button", data: { target: "score.submitButton"} %>
+      </div>
+    </div>
+  <% end %>
+</div>

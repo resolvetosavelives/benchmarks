@@ -6,9 +6,9 @@ module AssessmentPublicationSeed
       return unless AssessmentPublication.count.zero?
 
       warn "Seeding data for AssessmentPublications..."
-      AssessmentPublication.create! name: "JEE 1.0", named_id: "jee1", title: "Joint external evaluation tool: International Health Regulations (2005)"
-      AssessmentPublication.create! name: "SPAR 2018", named_id: "spar_2018", title: "International Health Regulations (2005) State Party Self-assessment Annual Reporting Tool"
-      AssessmentPublication.create! name: "JEE 2.0", named_id: "jee2", title: "Joint external evaluation tool: International Health Regulations (2005), second edition"
+      AssessmentPublication.create! named_id: "jee1", abbrev: "JEE", revision: "1.0", title: "Joint External Evaluation"
+      AssessmentPublication.create! named_id: "spar_2018", abbrev: "SPAR", revision: "2018", title: "State Party Annual Report"
+      AssessmentPublication.create! named_id: "jee2", abbrev: "JEE", revision: "2.0", title: "Joint External Evaluation"
     end
 
     def unseed!

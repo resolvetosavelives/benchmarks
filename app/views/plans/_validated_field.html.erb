@@ -1,12 +1,12 @@
-<% is_goal = field_name.match?("goal") %>
+<% field_name = is_goal ? "plan[indicators][#{named_id}_goal]": "plan[indicators][#{named_id}]" %>
 <div class="form-group">
-  <%= f.number_field field_name,
+  <%= number_field_tag field_name, value,
     data: { action: "change->score-and-goal#validatePair",
             goal: is_goal,
             target: is_goal ? "score-and-goal.goal": "score-and-goal.score",
             toggle: "tooltip",
             placement: "top",
           },
-    class: "form-control w-70px color-score-#{@goals.send(field_name)}",
+    class: "form-control w-70px color-score-#{value}",
     required: true %>
 </div>

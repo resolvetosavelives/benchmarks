@@ -25,7 +25,7 @@ class Worksheet
     @benchmark_technical_areas.each_with_index do |benchmark_technical_area, ta_index|
       benchmark_technical_area.benchmark_indicators.each do |benchmark_indicator|
         row_index = 0
-        indicator_goal = @plan.indicator_goal_for(benchmark_indicator)
+        goal_value = @plan.goal_value_for(benchmark_indicator: benchmark_indicator)
         plan_activities = @plan.activities_for(benchmark_indicator)
         next if plan_activities.empty?
 
@@ -34,16 +34,12 @@ class Worksheet
           ta_xlsx_worksheets << current_worksheet
         end
         plan_activities.each do |plan_activity|
-          assessment_label = if @plan.from_technical_areas?
-            "SPAR 2018"
-          else
-            @plan.assessment_type_str.upcase
-          end
+          assessment_label = @plan.type_description
           row_index = populate_worksheet(
             current_worksheet,
             row_index,
             assessment_label,
-            indicator_goal,
+            goal_value,
             benchmark_indicator.objective,
             plan_activity.text
           )

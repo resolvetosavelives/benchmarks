@@ -16,25 +16,66 @@
 # the draft plan. After login (even if an account creation is involved), the
 # draft plan will be attached to their account.
 class PlansController < ApplicationController
-  before_action :authenticate_user!, only: %i[index]
-  before_action :check_ownership, except: %i[index create]
+  # workaround for XHR being unable to detect a redirect. JS handles this on the client.
+  GET_STARTED_REDIRECT_KEY = "Get-Started-Redirect-To:"
 
-  def show
-    @benchmark_technical_areas = BenchmarkTechnicalArea.all
-    @benchmark_indicators = BenchmarkIndicator.all
-    @all_activities = BenchmarkIndicatorActivity.all
-    @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map
-    @plan = Plan.find(params.fetch(:id))
+  before_action :authenticate_user!, only: %i[index]
+  before_action :check_ownership, except: %i[get_started goals index create]
+
+  ##
+  # the purpose of this action is to select which assessment upon which to base a plan
+  def get_started
+    @countries = Country.all_assessed
+    @technical_areas_jee1 = AssessmentTechnicalArea.jee1
+    @technical_areas_spar_2018 = AssessmentTechnicalArea.spar_2018
+    @get_started_form = GetStartedForm.new get_started_params.to_h
+    @redirect_key = GET_STARTED_REDIRECT_KEY
+    if request.post? && request.xhr?
+      if @get_started_form.valid?
+        url = plan_goals_url(
+          country_name: @get_started_form.country.name,
+          assessment_type: @get_started_form.assessment_type,
+          plan_term: @get_started_form.plan_term_s,
+          areas: @get_started_form.technical_area_ids.join("-")
+        )
+        Rails.logger.info "Redirect workaround for an XHR request to URL: #{url}"
+        render plain: "#{GET_STARTED_REDIRECT_KEY}#{url}"
+        return
+      else
+        render layout: false
+        return
+      end
+    end
+    # will just render the view template
+  end
+
+  ##
+  # the purpose of this action is to edit goal values for a plan's indicators
+  def goals
+    assessment_type = params[:assessment_type]
+    country_name = params[:country_name]
+    technical_area_ids = params[:areas].to_s.split("-")
+    country = Country.find_by_name country_name
+    assessment_publication = AssessmentPublication.find_by_named_id assessment_type
+    @assessment = Assessment.find_by_country_alpha3_and_assessment_publication_id country.try(:alpha3), assessment_publication.id
+    if @assessment.blank?
+      render "assessment_not_found"
+      return
+    end
+    @publication = @assessment.assessment_publication
+    @plan = Plan.new_from_assessment(
+      assessment: @assessment,
+      technical_area_ids: technical_area_ids,
+      is_5_year_plan: params[:plan_term].eql?("5-year"))
   end
 
   # TODO: test coverage for this, and include for the session state part
   def create
-    goal_form_params = goal_params
-    country = Country.find_by_name! goal_form_params.fetch(:country)
-    @plan = Plan.from_goal_form(
-      goal_attrs: goal_form_params.to_h,
-      plan_name: "#{country.name} draft plan",
-      country: country,
+    assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
+    @plan = Plan.create_from_goal_form(
+      indicator_attrs: plan_create_params.fetch(:indicators),
+      assessment: assessment,
+      plan_name: "#{assessment.country.name} draft plan",
       user: current_user
     )
     unless @plan.persisted?
@@ -46,23 +87,28 @@ class PlansController < ApplicationController
     redirect_to @plan
   end
 
-  def index
-    @countries, @selectables = helpers.set_country_selection_options(true)
-    @plans = current_user.plans.order(updated_at: :desc)
-    @assessments = JSON.load File.open "./app/fixtures/assessments.json"
-    @data_dictionary = JSON.load File.open "./app/fixtures/data_dictionary.json"
+  def show
+    @benchmark_technical_areas = BenchmarkTechnicalArea.all
+    @benchmark_indicators = BenchmarkIndicator.all
+    @all_activities = BenchmarkIndicatorActivity.all
+    @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map
+    @plan = Plan.find(params.fetch(:id))
   end
 
   # TODO: test coverage for this
   def update
     plan = Plan.find_by_id!(params.fetch(:id))
-    benchmark_activity_ids = JSON.parse(plan_params.fetch(:benchmark_activity_ids))
-    name = plan_params.fetch(:name)
+    benchmark_activity_ids = JSON.parse(plan_update_params.fetch(:benchmark_activity_ids))
+    name = plan_update_params.fetch(:name)
     plan.update!(
       name: name,
       benchmark_activity_ids: benchmark_activity_ids
     )
     redirect_to plans_path
+  end
+
+  def index
+    @plans = current_user.plans.order(updated_at: :desc)
   end
 
   def destroy
@@ -89,8 +135,16 @@ class PlansController < ApplicationController
     end
   end
 
-  def plan_params
-    params.require(:plan).permit(:name, :benchmark_activity_ids)
+  def get_started_params
+    params.fetch(:get_started_form, {}).permit!
+  end
+
+  def plan_create_params
+    params.require(:plan).permit(:assessment_id, indicators: {})
+  end
+
+  def plan_update_params
+    params.require(:plan).permit(:id, :name, :benchmark_activity_ids)
   end
 
   def goal_params

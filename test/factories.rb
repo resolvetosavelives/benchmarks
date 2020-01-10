@@ -9,14 +9,13 @@ FactoryBot.define do
 
   factory :plan do
     name { "Nigeria Draft Plan" }
-    country { Country.find_by_name("Nigeria") }
-    assessment_type { 1 } # type 1 is JEE1
+    assessment { Assessment.find_by_country_alpha3_and_assessment_publication_id!("NGA", 1) }
 
     factory :plan_nigeria_jee1 do
       after :create do |plan|
-        plan.plan_benchmark_indicators = JSON.parse(File.read(File.join(
-          Rails.root, "/test/fixtures/files/plan_for_nigeria_jee1/plan_benchmark_indicators.json"
-        ))).map { |attrs| PlanBenchmarkIndicator.new(attrs) }
+        plan.goals = JSON.parse(File.read(File.join(
+          Rails.root, "/test/fixtures/files/plan_for_nigeria_jee1/plan_goals.json"
+        ))).map { |attrs| PlanGoal.new(attrs) }
 
         plan.plan_activities = JSON.parse(File.read(File.join(
           Rails.root, "/test/fixtures/files/plan_for_nigeria_jee1/plan_activities.json"
@@ -30,26 +29,6 @@ FactoryBot.define do
     trait :with_user do
       user
     end
-
-    trait :legacy do
-      activity_map do
-        JSON.parse File.read(File.join(
-          Rails.root, "test/fixtures/files/nigeria_jee1_activity_map.json"
-        ))
-      end
-      goals do
-        JSON.parse File.read(File.join(
-          Rails.root, "test/fixtures/files/nigeria_jee1_goals.json"
-        ))
-      end
-      scores do
-        JSON.parse File.read(File.join(
-          Rails.root, "test/fixtures/files/nigeria_jee1_scores.json"
-        ))
-      end
-    end
-
-    factory :legacy_plan_nigeria_jee1, traits: [:legacy]
   end
 end
 

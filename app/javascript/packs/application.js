@@ -25,6 +25,8 @@ import $ from "jquery"
 import Turbolinks from "turbolinks"
 import Rails from "jquery-ujs"
 import {} from "jquery-ui/ui/widgets/autocomplete"
+import "chosen-js"
+import "chosen-js/chosen.css"
 
 Turbolinks.start()
 

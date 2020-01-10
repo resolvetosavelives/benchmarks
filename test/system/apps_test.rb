@@ -7,37 +7,37 @@ class AppsTest < ApplicationSystemTestCase
   end
 
   test "happy path for Nigeria JEE 1.0" do
+    ##
+    # visit home page
     visit root_url
-    select "Nigeria", from: "country"
-    find("button").trigger(:click)
-    assert page.has_content?("LET'S GET STARTED ON NIGERIA")
-    select "JEE 1.0", from: "assessment_type"
-    click_on("Next") # .trigger(:click)
-    assert_current_path(%r{goals\/Nigeria\/jee1})
+    click_on("Get Started")
 
     ##
-    # Assessment/Goals page
-    assert page.has_content?("JEE 1.0 SCORES")
+    # navigate to Get Started page and submit its form
+    assert_current_path("/get_started")
+    assert page.has_content?("LET'S GET STARTED")
+    select_from_chosen('Nigeria', from: 'get_started_form_country_id')
+    choose "Joint External Evaluation (JEE)"
+    choose "1 year plan"
+    click_on("Next")
+
+    ##
+    # turn up on the Goal-setting page for the selected options and hit save
+    assert_current_path("/plan/goals/Nigeria/jee1/1-year")
+    assert page.has_content?("JEE SCORES")
     assert page.has_content?(
       "P.1.1 Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)"
     )
     assert page.has_content?(
       "RE.2 Enabling environment in place for management of radiation emergencies"
     )
-    assert_equal "1", find("#goal_form_jee1_ind_p11").value
-    assert_equal "2", find("#goal_form_jee1_ind_p11_goal").value
-
-    find("#new_goal_form input[type=submit]").trigger(:click)
+    assert_equal "1", find("#plan_indicators_jee1_ind_p11").value
+    assert_equal "2", find("#plan_indicators_jee1_ind_p11_goal").value
+    find("#new_plan input[type=submit]").trigger(:click)
 
     ##
-    # Draft Plan page
-    # verify and dismiss the popover
-    assert_selector("#draft-plan-review-modal")
-    within("#draft-plan-review-modal") do
-      click_on("Next")
-    end
-
-    assert_current_path(%r{plans\/\d+})
+    # wind up on the View Plan page after the plan has been saved, and then make an edit
+    assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert page.has_content?("TOTAL ACTIVITIES")
     assert_equal "235", find(".activity-count-circle span").text
@@ -49,22 +49,22 @@ class AppsTest < ApplicationSystemTestCase
     assert_selector("#technical-area-B18") # the last one
     assert_no_selector("#technical-area-B1") # the first one
 
-    # "Radiation Emergencies" should be the only heading visible, with 4 acitivites
-    # within "#technical-area-B18" do
-    #  click_on('button[data-benchmark-activity-id="869"]')
-    # end
-
-    # unfilter to show all
+    # un-filter to show all
     find(".activity-count-circle").click
     assert_selector("#technical-area-B1")
     assert_selector("#technical-area-B18")
 
-    find("#plan_name").fill_in with: "Updated Plan 789"
+    # edit the plan name and hit save button
+    find("#plan_name").fill_in with: "Saved Nigeria Plan 789"
     find("input[type=submit]").trigger(:click)
 
+    ##
+    # wind up on sign-in page and go to create an account
     assert_current_path("/users/sign_in")
     click_link("Create an account")
 
+    ##
+    # wind up on create account page
     assert_current_path("/users/sign_up")
     sleep 0.1 # ugh without this form field(s) dont get filled
     find("#user_email").fill_in with: "email@example.com"
@@ -72,44 +72,58 @@ class AppsTest < ApplicationSystemTestCase
     find("#user_password_confirmation").fill_in with: "123123"
     find("#new_user input[type=submit]").trigger(:click)
 
+    ##
+    # wind up on create account page
     assert_current_path("/plans")
-    assert page.has_content?("WELCOME")
-    assert page.has_content?("Updated Plan 789")
+    assert page.has_content?("Welcome! You have signed up successfully.")
+    assert page.has_content?("Saved Nigeria Plan 789")
   end
 
-  test "happy path for Armenia SPAR 2018" do
+  test "happy path for Armenia SPAR 2018 5-year plan" do
+    ##
+    # start on the home page
     visit root_url
-    select "Armenia", from: "country"
-    find("button").trigger(:click)
-    assert page.has_content?("LET'S GET STARTED ON ARMENIA")
-    select "SPAR 2018", from: "assessment_type"
-    find("#assessment-select-menu button").trigger(:click)
-    assert_current_path(%r{goals\/Armenia\/spar_2018})
+    click_on("Get Started")
 
-    assert page.has_content?("SPAR 2018 SCORES")
-    assert page.has_content?(
-      "C1.3 Financing mechanism and funds for timely response to public health emergencies"
-    )
-    assert_equal "3", find("#goal_form_spar_2018_ind_c13").value
-    assert_equal "4", find("#goal_form_spar_2018_ind_c13_goal").value
+    ##
+    # go to the Get Started page and fill the form
+    assert_current_path("/get_started")
+    assert page.has_content?("LET'S GET STARTED")
+    select_from_chosen('Armenia', from: 'get_started_form_country_id')
+    choose "State Party Annual Report (SPAR)"
+    choose "5 year plan"
+    click_on("Next")
 
-    find("#new_goal_form input[type=submit]").trigger(:click)
+    ##
+    # turn up on the plan goal-setting page
+    assert_current_path("/plan/goals/Armenia/spar_2018/5-year")
+    assert page.has_content?("SPAR SCORES")
+    assert page.has_content?("C4.1 Multisectoral collaboration mechanism for food safety events")
+    # verify that the 5-year plan has set goal from 2 to 4
+    assert_equal "2", find("#plan_indicators_spar_2018_ind_c41").value
+    assert_equal "4", find("#plan_indicators_spar_2018_ind_c41_goal").value
+    find("#new_plan input[type=submit]").trigger(:click)
 
-    assert_current_path(%r{plans\/\d+})
+    ##
+    # wind up on the View Plan page, make an edit, and save the plan
+    assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Armenia draft plan", find("#plan_name").value
     assert page.has_content?("TOTAL ACTIVITIES")
     # activity count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
-    assert_equal "98", find(".activity-count-circle span").text
-
+    assert_equal "107", find(".activity-count-circle span").text
     assert page.has_content?(
       "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors."
     )
-    find("#plan_name").fill_in with: "Updated Draft Plan"
+    find("#plan_name").fill_in with: "Saved Armenia Plan"
     find("input[type=submit]").trigger(:click)
 
+    ##
+    # wind up on the Sign In page, go to Create an Account
     assert_current_path("/users/sign_in")
     click_link("Create an account")
 
+    ##
+    # at the Create an Account page, fill and submit the form
     assert_current_path("/users/sign_up")
     sleep 0.1 # ugh without this form field(s) dont get filled
     find("#user_email").fill_in with: "email@example.com"
@@ -117,54 +131,50 @@ class AppsTest < ApplicationSystemTestCase
     find("#user_password_confirmation").fill_in with: "123123"
     find("#new_user input[type=submit]").trigger(:click)
 
+    ##
+    # wind up on the View Plan page, make an edit, and save the plan
     assert_current_path("/plans")
-    assert page.has_content?("WELCOME")
-    assert page.has_content?("Updated Draft Plan")
+    assert page.has_content?("Welcome! You have signed up successfully.")
+    assert page.has_content?("Saved Armenia Plan")
   end
 
-  test "happy path for Nigeria from technical areas IHR Comm and Surveillance" do
+  test "happy path for Nigeria JEE 1.0 plan by technical areas IHR Comm and Surveillance" do
+    ##
+    # start on the home page
     visit root_url
-    select "Nigeria", from: "country"
-    find("button").trigger(:click)
-    # popover should appear to choose which plan type to make
-    assert page.has_content?("LET'S GET STARTED ON NIGERIA")
-    select "Plan by Technical Areas", from: "assessment_type"
+    click_on("Get Started")
+
+    ##
+    # go to the Get Started page and fill the form
+    assert_current_path("/get_started")
+    assert page.has_content?("LET'S GET STARTED")
+    select_from_chosen('Nigeria', from: 'get_started_form_country_id')
+    choose "Joint External Evaluation (JEE)"
+    # kludge: must select "1 year plan" after assessment type, otherwise it wont select and
+    #   fails form validation. extra weird because that same flow works in the other test cases.
+    sleep 0.2 # ugh without this form field not filled
+    choose "1 year plan"
+    check "Optional: Plan by technical area(s)"
+    check "IHR coordination, communication and advocacy"
+    check "Surveillance"
     click_on("Next")
-    # next, choose which technical areas from the popover that should appear
-    assert_selector("#technical-area-selection-modal")
-    within("#technical-area-selection-modal") do
-      find("#technical_area_ids_spar_2018_ta_c2").click # IHR Communications
-      find("#technical_area_ids_spar_2018_ta_c6").click # Surveillance
-      click_on("Next")
-    end
 
     ##
-    # Assessment/Goals page
-    assert_current_path(%r{goals\/Nigeria\/from-technical-areas\?technical_area_ids%5B%5D=spar_2018_ta_c2&technical_area_ids%5B%5D=spar_2018_ta_c6})
-    assert page.has_content?("TECHNICAL AREA SCORES")
-    assert page.has_content?(
-      "C2.1 National IHR Focal Point functions under IHR"
-    )
-    assert page.has_content?(
-      "C6.2 Mechanism for event management (verification, risk assessment, analysis invesgitation)"
-    )
-    assert_equal "1", find("#goal_form_spar_2018_ind_c21").value
-    assert_equal "2", find("#goal_form_spar_2018_ind_c21_goal").value
-
-    find("#new_goal_form input[type=submit]").trigger(:click)
+    # turn up on the plan goal-setting page
+    assert_current_path("/plan/goals/Nigeria/jee1/1-year/2-9")
+    assert page.has_content?("JEE SCORES")
+    assert page.has_content?("P.2.1 A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR")
+    assert page.has_content?("D.2.1 Indicator- and event-based surveillance systems")
+    assert_equal "2", find("#plan_indicators_jee1_ind_p21").value
+    assert_equal "3", find("#plan_indicators_jee1_ind_p21_goal").value
+    find("#new_plan input[type=submit]").trigger(:click)
 
     ##
-    # Draft Plan page
-    # verify and dismiss the popover
-    assert_selector("#draft-plan-review-modal")
-    within("#draft-plan-review-modal") do
-      click_on("Next")
-    end
-
-    assert_current_path(%r{plans\/\d+})
+    # turn up on the View Plan, make an edit, save the plan
+    assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert page.has_content?("TOTAL ACTIVITIES")
-    assert_equal "33", find(".activity-count-circle span").text
+    assert_equal "20", find(".activity-count-circle span").text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
@@ -173,17 +183,21 @@ class AppsTest < ApplicationSystemTestCase
     assert_no_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
-    # unfilter to show all
+    # un-filter to show all
     find(".activity-count-circle").click
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
-    find("#plan_name").fill_in with: "Updated Plan 789"
+    find("#plan_name").fill_in with: "Saved Nigeria Plan by Areas 789"
     find("input[type=submit]").trigger(:click)
 
+    ##
+    # wind up on sign-in page and go to create an account
     assert_current_path("/users/sign_in")
     click_link("Create an account")
 
+    ##
+    # wind up on create account page
     assert_current_path("/users/sign_up")
     sleep 0.1 # ugh without this form field(s) dont get filled
     find("#user_email").fill_in with: "email@example.com"
@@ -192,7 +206,16 @@ class AppsTest < ApplicationSystemTestCase
     find("#new_user input[type=submit]").trigger(:click)
 
     assert_current_path("/plans")
-    assert page.has_content?("WELCOME")
-    assert page.has_content?("Updated Plan 789")
+    assert page.has_content?("Welcome! You have signed up successfully.")
+    assert page.has_content?("Saved Nigeria Plan by Areas 789")
+  end
+
+  ##
+  # usage: select_from_chosen('Option', from: 'id_of_field')
+  #   example, Get Started form: select_from_chosen('Armenia', from: 'get_started_form_country_id')
+  def select_from_chosen(item_text, options)
+    field = find_field(options[:from], visible: false)
+    find("##{field[:id]}_chosen").click
+    find("##{field[:id]}_chosen ul.chosen-results li", text: item_text).click
   end
 end

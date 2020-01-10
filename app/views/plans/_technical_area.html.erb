@@ -4,12 +4,12 @@
      data-technical-area-id="<%= benchmark_technical_area.id %>"
      data-target="plan.technicalAreaContainer"
 >
-  <% unless @plan.from_technical_areas? %>
+  <%# unless @plan.from_technical_areas? %>
     <h2 id="<%= benchmark_technical_area.text.parameterize %>">
       <%= benchmark_technical_area.sequence %>.
       <%= benchmark_technical_area.text %>
     </h2>
-  <% end %>
+  <%# end %>
 
   <% benchmark_technical_area.benchmark_indicators.each do |benchmark_indicator| %>
     <%= render 'benchmark_indicator',
