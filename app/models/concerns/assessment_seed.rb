@@ -93,6 +93,9 @@ module AssessmentSeed
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
+        "DELETE FROM assessment_scores CASCADE"
+      )
+      ActiveRecord::Base.connection.exec_query(
         "DELETE FROM #{table_name} CASCADE"
       )
     end
