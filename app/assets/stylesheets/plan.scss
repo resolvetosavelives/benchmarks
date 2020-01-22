@@ -151,6 +151,39 @@
 }
 
 .plan.card {
+  .nudge-container {
+    padding: 0;
+    .card {
+      width: 400px;
+      min-height: 238px;
+      margin: 20px auto;
+      padding: 1em;
+      background-color: #F8F9FA;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+    }
+    .nudge-content-0 {
+      text-align: center;
+      svg.analyze {
+        height: 51px;
+        width: 51px;
+        margin-top: 35px;
+        margin-bottom: 10px;
+        path {
+          fill: #2C8DC9;
+          transform: scale(2.5);
+        }
+      }
+      svg.cursor {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        top: 77px;
+        left: 190px;
+      }
+    }
+  }
+
   // ct-* are chartist style class we are overriding
   .ct-vertical {
     stroke: #C3C9D8;
@@ -174,6 +207,7 @@
 
   .ct-label {
     font-size: 11px;
+    color: #545B62;
   }
 
   #bar-chart-by-activity-type {
@@ -196,7 +230,6 @@
 }
 
 .plan-container {
-
   .tooltip.bs-tooltip-top .arrow:before {
     border-top-color: color("gray-dark-transparent");
   }
