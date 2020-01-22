@@ -3,18 +3,27 @@ require "minitest/spec"
 require "minitest/autorun"
 
 describe Assessment do
-  describe "#save" do
-    it "cannot be saved without a country" do
+  describe "#validation" do
+    it "requires a country" do
       assessment = Assessment.new
-      assessment.save.must_equal false, assessment.errors.inspect
+      assessment.valid?.must_equal false, assessment.errors.inspect
+      assessment.errors[:country].present?.must_equal true
     end
 
-    it "can be created with a country" do
+    it "requires a country" do
+      assessment = Assessment.new
+      assessment.valid?.must_equal false, assessment.errors.inspect
+      assessment.errors[:assessment_publication].present?.must_equal true
+    end
+
+    it "works when valid" do
       country = Country.first
       country.must_be_instance_of Country
-      assessment = Assessment.new country: country
-      assessment.save.must_equal true, assessment.errors.inspect
-      assessment.reload.country.must_equal country
+      assessment_publication = AssessmentPublication.first
+      assessment_publication.must_be_instance_of AssessmentPublication
+      assessment = Assessment.new country: country, assessment_publication: assessment_publication
+
+      assessment.valid?.must_equal true
       assessment.destroy # clean up afterwards
     end
   end

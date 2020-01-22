@@ -11,10 +11,10 @@ class ApplicationRecord < ActiveRecord::Base
   # other useful things then by all means go ahead and remove it.
   SEEDABLE_MODELS = %w[
     Country
-    Assessment
     AssessmentPublication
     AssessmentTechnicalArea
     AssessmentIndicator
+    Assessment
     BenchmarkTechnicalArea
     BenchmarkIndicator
     BenchmarkIndicatorActivity

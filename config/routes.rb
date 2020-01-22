@@ -1,12 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'landing#show'
-  get '/privacy_policy', to: 'privacy_policy#show'
-  post '/country_select', to: 'country_select#create'
-  get '/goals(/:country)(/:assessment_type)', to: 'goals#show'
-  post '/goals', to: 'goals#create'
+  root to: "pages#home"
+  get "/privacy_policy", to: "pages#privacy_policy"
+  match "/get_started", to: "plans#get_started", via: [:get, :post]
+  get "plan/goals/:country_name/:assessment_type(/:plan_term)(/:areas)", to: "plans#goals", as: "plan_goals"
   resources :plans, only: %i[show index create update destroy]
   resources :worksheets, only: %i[show]
   resources :costsheets, only: %i[show]
+  devise_for :users, controllers: {sessions: "users/sessions", registrations: "users/registrations"}
 end

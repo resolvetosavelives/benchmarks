@@ -33,19 +33,28 @@ module AssessmentSeed
         next if [country_code, status, first_indicator_score].any?(&:blank?) ||
           !status.downcase.eql?("completed")
 
-        scores_with_headers = cells.drop(data_column_offset).map { |cell|
+        scores_with_headers = cells.drop(data_column_offset).map do |cell|
           {
             indicator_id: indicator_names[cell.index_in_collection - data_column_offset],
             # need to use +floor+ here to avoid decimal values, e.g. 1.0 and 5.0
-            score: (cell.value).floor,
+            score: cell.value.floor,
           }
-        }
+        end
         country = Country.find_by_alpha3!(country_code)
-        assessment = Assessment.find_or_create_by(
-          country_alpha3: country.alpha3,
-          assessment_type: assessment_type
+        assessment_publication = AssessmentPublication.find_by_named_id!(assessment_type)
+        assessment = Assessment.create!(
+          country: country,
+          assessment_publication: assessment_publication
         )
-        assessment.update!(scores: scores_with_headers)
+        scores_with_headers.each do |indicator_score_attr|
+          indicator_named_id = AssessmentIndicator.send("named_id_for_#{assessment_type}", indicator_score_attr[:indicator_id])
+          assessment_indicator = AssessmentIndicator.find_by_named_id(indicator_named_id)
+          AssessmentScore.create!(
+            assessment: assessment,
+            assessment_indicator: assessment_indicator,
+            value: indicator_score_attr[:score],
+          )
+        end
       end
     end
 
@@ -65,11 +74,20 @@ module AssessmentSeed
           }
         }
         country = Country.find_by_alpha3!(country_code)
-        assessment = Assessment.find_or_create_by(
-          country_alpha3: country.alpha3,
-          assessment_type: assessment_type
+        assessment_publication = AssessmentPublication.find_by_named_id!(assessment_type)
+        assessment = Assessment.create!(
+          country: country,
+          assessment_publication: assessment_publication
         )
-        assessment.update!(scores: scores_with_headers)
+        scores_with_headers.each do |indicator_score_attr|
+          indicator_named_id = AssessmentIndicator.send("named_id_for_#{assessment_type}", indicator_score_attr[:indicator_id])
+          assessment_indicator = AssessmentIndicator.find_by_named_id(indicator_named_id)
+          AssessmentScore.create!(
+            assessment: assessment,
+            assessment_indicator: assessment_indicator,
+            value: indicator_score_attr[:score],
+          )
+        end
       end
     end
 

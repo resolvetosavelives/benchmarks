@@ -1,0 +1,6 @@
+.text-nowrap
+  = check_box_tag "get_started_form[technical_area_ids][]", technical_area.id, false,
+    {class: "form-check-inline",
+      id: "technical_area_id_#{technical_area.id}",
+      "data-target": "get-started.checkboxForTechnicalArea"}
+  %label{for: "technical_area_id_#{technical_area.id}"}= technical_area.text

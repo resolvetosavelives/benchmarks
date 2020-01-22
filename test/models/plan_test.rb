@@ -2,31 +2,20 @@ require File.expand_path("./test/test_helper")
 require "minitest/spec"
 require "minitest/autorun"
 
+def assessment_for_nigeria_jee1
+  Assessment.find_by_country_alpha3_and_assessment_publication_id! "NGA", 1
+end
+
+def assessment_for_nigeria_spar2018
+  Assessment.find_by_country_alpha3_and_assessment_publication_id! "NGA", 2
+end
+
 describe Plan do
-  describe "#assessment_type=" do
-    describe "when blank" do
-      let(:plan) { Plan.new }
 
-      it "does nothing" do
-        plan.assessment_type.must_be_nil
-      end
-    end
-
-    describe "when set to an integer" do
-      let(:plan) { Plan.new(assessment_type: 1) }
-
-      it "is set" do
-        plan.assessment_type.must_equal 1
-      end
-    end
-  end
-
-  describe "#from_goal_form" do
+  describe "#create_from_goal_form" do
     describe "for Nigeria JEE1" do
-      let(:goal_attrs) do
+      let(:indicator_attrs) do
         {
-          country: "Nigeria",
-          assessment_type: "jee1",
           jee1_ind_p11: "1",
           jee1_ind_p11_goal: "2",
           jee1_ind_p12: "1",
@@ -126,8 +115,10 @@ describe Plan do
         }.with_indifferent_access
       end
       let(:plan) {
-        Plan.from_goal_form(
-          goal_attrs: goal_attrs, country: Country.find_by_name("Nigeria"), plan_name: "test plan 3854"
+        Plan.create_from_goal_form(
+          indicator_attrs: indicator_attrs,
+          assessment: assessment_for_nigeria_jee1,
+          plan_name: "test plan 3854"
         )
       }
 
@@ -140,7 +131,7 @@ describe Plan do
       end
 
       it "has the expected number of indicators" do
-        assert_equal 39, plan.plan_benchmark_indicators.size
+        assert_equal 39, plan.goals.size
       end
 
       it "has the expected number of activities" do
@@ -149,10 +140,8 @@ describe Plan do
     end
 
     describe "for Nigeria SPAR 2018" do
-      let(:goal_attrs) do
+      let(:indicator_attrs) do
         {
-          country: "Nigeria",
-          assessment_type: "spar_2018",
           spar_2018_ind_c11: "4",
           spar_2018_ind_c11_goal: "5",
           spar_2018_ind_c12: "2",
@@ -204,8 +193,10 @@ describe Plan do
         }.with_indifferent_access
       end
       let(:plan) {
-        Plan.from_goal_form(
-          goal_attrs: goal_attrs, country: Country.find_by_name("Nigeria"), plan_name: "test plan 9391"
+        Plan.create_from_goal_form(
+          indicator_attrs: indicator_attrs,
+          assessment: assessment_for_nigeria_spar2018,
+          plan_name: "test plan 9391"
         )
       }
 
@@ -218,7 +209,7 @@ describe Plan do
       end
 
       it "has the expected number of indicators" do
-        assert_equal 36, plan.plan_benchmark_indicators.size
+        assert_equal 36, plan.goals.size
       end
 
       it "has the expected number of activities" do
@@ -227,10 +218,8 @@ describe Plan do
     end
 
     describe "for Nigeria from technical areas" do
-      let(:goal_attrs) do
+      let(:indicator_attrs) do
         {
-          country: "Nigeria",
-          assessment_type: "from-technical-areas",
           spar_2018_ind_c21: "1",
           spar_2018_ind_c21_goal: "2",
           spar_2018_ind_c22: "1",
@@ -242,8 +231,10 @@ describe Plan do
         }.with_indifferent_access
       end
       let(:plan) do
-        Plan.from_goal_form(
-          goal_attrs: goal_attrs, country: Country.find_by_name("Nigeria"), plan_name: "test plan 3737"
+        Plan.create_from_goal_form(
+          indicator_attrs: indicator_attrs,
+          assessment: assessment_for_nigeria_spar2018,
+          plan_name: "test plan 3737"
         )
       end
 
@@ -256,7 +247,7 @@ describe Plan do
       end
 
       it "has the expected number of indicators" do
-        assert_equal 4, plan.plan_benchmark_indicators.size
+        assert_equal 4, plan.goals.size
       end
 
       it "has the expected number of activities" do
@@ -283,42 +274,16 @@ describe Plan do
     end
   end
 
-  describe "#indicator_for" do
-    let(:plan) { create(:plan_nigeria_jee1) }
-
-    it "returns the expected plan_benchmark_indicator" do
-      expected_pbi = plan.plan_benchmark_indicators.detect { |pbi|
-        pbi.benchmark_indicator.display_abbreviation.eql?("2.1")
-      }
-      expected_pbi.wont_be_nil
-
-      plan.indicator_for(expected_pbi.benchmark_indicator).must_equal expected_pbi
-    end
-  end
-
-  describe "#indicator_score_goal_for" do
-    let(:plan) { create(:plan_nigeria_jee1) }
-
-    it "returns the expected plan_benchmark_indicator, score, and goal" do
-      expected_pbi = plan.plan_benchmark_indicators.detect { |pbi|
-        pbi.benchmark_indicator.display_abbreviation.eql?("2.1")
-      }
-      expected_pbi.wont_be_nil
-
-      plan.indicator_score_goal_for(expected_pbi.benchmark_indicator).must_equal [expected_pbi, 2, 3]
-    end
-  end
-
   describe "#activities_for" do
     let(:plan) { create(:plan_nigeria_jee1) }
 
     it "returns the expected plan_benchmark_indicator, score, and goal" do
-      expected_pbi = plan.plan_benchmark_indicators.detect { |pbi|
-        pbi.benchmark_indicator.display_abbreviation.eql?("2.1")
+      expected_pg = plan.goals.detect { |pg|
+        pg.benchmark_indicator.display_abbreviation.eql?("2.1")
       }
-      expected_pbi.wont_be_nil
+      expected_pg.wont_be_nil
 
-      result = plan.activities_for(expected_pbi.benchmark_indicator)
+      result = plan.activities_for(expected_pg.benchmark_indicator)
       result.must_be_instance_of Array
       result.first.must_be_instance_of PlanActivity
       result.size.must_equal 9

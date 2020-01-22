@@ -6,7 +6,7 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application' %>
+    <%= javascript_pack_tag 'application', async: true %>
   </head>
 
   <body>
@@ -27,14 +27,16 @@
             </div>
           <% end %>
 
-          <%= yield %>
+          <div class="page-content-container">
+            <%= yield %>
+          </div>
 
         </div>
       </div>
     </div>
 
-    <% if controller_name == "landing" %>
-      <%= render "layouts/landing_page_footer" %>
+    <% if controller_name.eql?("pages") && action_name.eql?("home") %>
+      <%= render "layouts/home_page_footer" %>
     <% else %>
       <%= render "layouts/standard_footer" %>
     <% end %>

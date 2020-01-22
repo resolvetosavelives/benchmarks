@@ -16,12 +16,15 @@
 directions in the following link, which is also where this technique was borrowed from:
 https://hashrocket.com/blog/posts/create-quick-json-data-dumps-from-postgresql
 
-```
+To connect to Postgres running within the Docker container:
+`psql -U postgres -h localhost`
+
+Then, within the `psql` command client:
+```                                                           
 \c benchmarks_development;
 \t
 \pset format unaligned
-WITH t AS (select name, country, assessment_type from plans) SELECT json_agg(t) FROM t;
-WITH t AS (SELECT plan_id, assessment_indicator_id, benchmark_indicator_id, score, goal FROM plan_benchmark_indicators) SELECT json_agg(t) FROM t;
+WITH t AS (select name, assessment_id from plans) SELECT json_agg(t) FROM t;
+WITH t AS (SELECT plan_id, assessment_indicator_id, benchmark_indicator_id, value FROM plan_goals) SELECT json_agg(t) FROM t;
 WITH t AS (SELECT plan_id, benchmark_indicator_activity_id, benchmark_indicator_id, sequence FROM plan_activities) SELECT json_agg(t) FROM t;
 ```
- 

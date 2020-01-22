@@ -1,17 +1,10 @@
-<div data-controller="assessment-selection">
-  <%= hidden_field_tag "countries_and_assessments", @selectables.to_json, data:
-    { target: "assessment-selection.selectables" } %>
+<div>
   <div class="row plan-index-header">
     <div class="col pl-0 py-4">
       <h1>WELCOME</h1>
     </div>
     <div class="col-2 pl-0 py-4">
-      <%= button_tag "CREATE PLAN",
-        type: :button,
-        class: "btn btn-primary w-100",
-        data: { action: 'assessment-selection#next',
-                next: 'assessment-selection-modal' }
-      %>
+      <%= button_to "CREATE PLAN", get_started_url, class: "btn btn-primary btn-block", type: "button", method: :get %>
     </div>
   </div>
 
@@ -85,8 +78,4 @@
       </div>
     <% end %>
   </div>
-
-
-  <%= render "shared/joint_assessment_selection_modal" %>
-  <%= render "shared/technical_area_selection_modal" %>
 </div>

@@ -2,7 +2,7 @@
 
 .plan-entry {
   a {
-    color: color("black");
+    color: color("dark");
     &:hover {
       color: color("primary");
     }
@@ -32,14 +32,14 @@
   .activity-count-circle {
     width: 90px;
     height: 90px;
-    background-color: #D86422;
+    background-color: color("primary");
     border-radius: 45px;
     cursor: pointer;
     &:hover {
       opacity: 0.5;
     }
     span {
-      color: #F8F9FA;
+      color: color("light");
       font-size: 36px;
       line-height: 41px;
     }
@@ -129,15 +129,15 @@
 
   .color-value-0,
   .color-value-1 {
-    background-color: color("red");
+    background-color: color("danger");
   }
   .color-value-2,
   .color-value-3 {
-    background-color: color("yellow");
+    background-color: color("warning");
   }
   .color-value-4,
   .color-value-5 {
-    background-color: color("green");
+    background-color: color("success");
   }
 }
 
@@ -198,14 +198,59 @@
 .plan-container {
 
   .tooltip.bs-tooltip-top .arrow:before {
-    border-top-color: #2D2D35;
+    border-top-color: color("gray-dark-transparent");
   }
   .tooltip-inner {
     color: #F8F9FA;
-    background-color: #2D2D35;
+    background-color: color("gray-dark-transparent");
     font-family: Karla, sans-serif;
     font-size: 12px;
     line-height: 14px;
     letter-spacing: -0.2px;
+  }
+}
+
+#get_started {
+  h1 {
+    margin-bottom: 0.5em;
+  }
+  h4 {
+    margin-bottom: 0.7em;
+  }
+  h4.disabled {
+    color: color("text-disabled");
+  }
+  .form-row {
+    margin-top: 1em;
+    margin-bottom: 2.5em;
+  }
+  .form-check {
+    margin-top: 0.8em;
+  }
+  .was-validated {
+    .form-check-label {
+      color: black;
+    }
+    .card.required {
+      border-color: color("red");
+    }
+  }
+  input[type=submit] {
+    width: 8.5em;
+    height: 2.3em;
+  }
+  .plan-by-technical-area-container {
+    margin-top: 0.7em;
+    margin-left: 1.3em;
+    .card {
+      margin-top: 6px;
+      padding: 7px;
+      .row {
+        margin: 0.5em 0 0.5em 0;
+      }
+      .form-check-inline {
+        margin-right: 4px;
+      }
+    }
   }
 }
