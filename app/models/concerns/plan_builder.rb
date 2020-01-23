@@ -64,7 +64,6 @@ module PlanBuilder
     #  - make sure activities include multiple benchmark_indicator_activities.levels when appro
     #  - assessment_indicator maps to multiple benchmark_indicators
     #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
-    #  - activity sequence is scoped to benchmark_indicator_id even with differing goal levels, see +plan_activity_sequence+ below
     def create_from_goal_form(indicator_attrs:, assessment:, plan_name:, user: nil)
       num_of_underscores = assessment.spar_2018? ? 3 : 2
       named_ids = indicator_attrs.select { |k, _| k.count("_").eql?(num_of_underscores) }.keys
@@ -84,20 +83,6 @@ module PlanBuilder
       plan_activities = []
       assessment_indicators = AssessmentIndicator.where(named_id: named_ids).all.uniq
 
-      # NB: Since Activities are an ordered list, we use +plan_activity_sequence+
-      # to store a 1-based index of the sequence of each plan_activity within the
-      # scope of each unique benchmark_indicator. There are cases where the same
-      # benchmark_indicator will appear twice but with different score levels
-      # because of how indicators are crosswalked. So this handles that complexity
-      # to ensure that even across multiple score levels, activities' sequences
-      # are scoped to a benchmark_indicator_id. For example, when this is NOT
-      # working properly, you will see benchmark_indicator(id:4,goal:3) having a
-      # sequence of 1 - 5, and the same benchmark_indicator(id:4,goal:4:4) but
-      # having a different goal level having a sequence of 1 - 4. Correct
-      # functionality would be that all 9 activities for benchmark_indicator(id:4)
-      # having sequence of 1 - 9.
-      plan_activity_sequence = 0
-
       assessment_indicators.each do |assessment_indicator|
         score_and_goal = scores_and_goals_by_named_id[assessment_indicator.named_id]
         goal_value = score_and_goal[:goal]
@@ -113,8 +98,6 @@ module PlanBuilder
               benchmark_indicator: benchmark_indicator,
               value: goal_value
             )
-            # reset the activity sequence for each unique benchmark_indicator
-            plan_activity_sequence = 0
           end
           bia = benchmark_indicator.activities
             .where("level > :score AND level <= :goal", score_and_goal)
@@ -122,12 +105,9 @@ module PlanBuilder
             .all
           bia.each do |benchmark_indicator_activity|
             unless plan_activities.any? { |pa| pa.benchmark_indicator_activity.id.eql?(benchmark_indicator_activity.id) }
-              plan_activity_sequence += 1
               plan_activities << PlanActivity.new(
                 plan: plan,
                 benchmark_indicator_activity: benchmark_indicator_activity,
-                benchmark_indicator: benchmark_indicator,
-                sequence: plan_activity_sequence,
               )
             end
           end

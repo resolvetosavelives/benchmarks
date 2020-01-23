@@ -16,12 +16,7 @@ class Plan < ApplicationRecord
   belongs_to :assessment
   belongs_to :user, optional: true
   has_many :goals, class_name: "PlanGoal", dependent: :destroy
-  has_many :plan_activities, dependent: :destroy do
-    # when indicator has zero activities this will return +nil+
-    def max_sequence_for_indicator(indicator_id)
-      where(benchmark_indicator_id: indicator_id).maximum(:sequence)
-    end
-  end
+  has_many :plan_activities, dependent: :destroy
   has_many :benchmark_indicator_activities, through: :plan_activities
 
   delegate :alpha3, to: :country
@@ -33,7 +28,7 @@ class Plan < ApplicationRecord
     # views is the longest/slowest part of the response.
     includes(
       {assessment: [:scores]},
-      {plan_activities: [:benchmark_indicator_activity, :benchmark_indicator]},
+      {plan_activities: {benchmark_indicator_activity: :benchmark_indicator}},
       {goals: [:benchmark_indicator, :assessment_indicator]}
     )
   end
@@ -55,17 +50,13 @@ class Plan < ApplicationRecord
     remove_activities = plan_activities
       .where(benchmark_indicator_activity_id: remove_activity_ids)
       .all
-    remove_activities.each(&:destroy) # must call destroy to invoke callback for sequence
+    remove_activities.each(&:destroy)
     # 2nd, add any needed.
     add_activity_ids = (benchmark_activity_id_set - current_activity_id_set).to_a
     add_activity_ids.each do |benchmark_activity_id|
       benchmark_activity = BenchmarkIndicatorActivity.find(benchmark_activity_id)
-      benchmark_indicator = benchmark_activity.benchmark_indicator
-      max_sequence = plan_activities.max_sequence_for_indicator(benchmark_indicator.id)
-      max_sequence = 0 if max_sequence.blank?
       plan_activity = PlanActivity.new_for_benchmark_activity benchmark_activity
       plan_activity.plan = self
-      plan_activity.sequence = (max_sequence + 1)
       plan_activities << plan_activity
     end
     # lastly, now that the associations are handled, perform a basic update
@@ -122,7 +113,7 @@ class Plan < ApplicationRecord
   # arg is a BenchmarkIndicatorActivity
   def activities_for(benchmark_indicator)
     plan_activities.to_a.select do |plan_activity|
-      benchmark_indicator.eql?(plan_activity.benchmark_indicator)
+      benchmark_indicator.eql?(plan_activity.benchmark_indicator_activity.benchmark_indicator)
     end
   end
 
