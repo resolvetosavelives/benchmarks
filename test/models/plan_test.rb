@@ -277,7 +277,7 @@ describe Plan do
   describe "#activities_for" do
     let(:plan) { create(:plan_nigeria_jee1) }
 
-    it "returns the expected plan_benchmark_indicator, score, and goal" do
+    it "returns an array of the expected benchmark activities" do
       expected_pg = plan.goals.detect { |pg|
         pg.benchmark_indicator.display_abbreviation.eql?("2.1")
       }
@@ -285,8 +285,8 @@ describe Plan do
 
       result = plan.activities_for(expected_pg.benchmark_indicator)
       result.must_be_instance_of Array
-      result.first.must_be_instance_of PlanActivity
       result.size.must_equal 9
+      result.first.must_be_instance_of PlanActivity
     end
   end
 end
