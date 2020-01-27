@@ -10,6 +10,7 @@ FactoryBot.define do
   factory :plan do
     name { "Nigeria Draft Plan" }
     assessment { Assessment.find_by_country_alpha3_and_assessment_publication_id!("NGA", 1) }
+    term { Plan::TERM_TYPES.first }
 
     factory :plan_nigeria_jee1 do
       after :create do |plan|

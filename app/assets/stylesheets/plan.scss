@@ -53,7 +53,7 @@
   }
 }
 
-.plan-container {
+.technical-area-container {
   h2 {
     font-family: Karla, sans-serif;
     font-style: normal;
@@ -148,9 +148,7 @@
   ul.nav-tabs {
     background-color: rgba(0, 0, 0, 0.03);
   }
-}
 
-.plan.card {
   .nudge-container {
     padding: 0;
     .card {
@@ -161,6 +159,25 @@
       background-color: #F8F9FA;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 5px;
+      ul {
+        padding-left: 30px;
+      }
+    }
+    p {
+      margin-bottom: 20px;
+      margin-left: 12px;
+    }
+    svg.lightbulb {
+      height: 18px;
+      width: 12px;
+      position: relative;
+      top: -2px;
+      left: -7px;
+      path {
+        height: 18px;
+        width: 12px;
+        fill: #FFCA1E;
+      }
     }
     .nudge-content-0 {
       text-align: center;

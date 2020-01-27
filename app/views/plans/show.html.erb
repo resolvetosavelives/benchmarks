@@ -3,6 +3,9 @@
 <div class="row">
 
   <div class="col plan-container" data-controller="plan"
+       data-plan-term='<%= @plan.term %>'
+       data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-activity-type"]'
+       data-plan-nudge-template-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
        data-plan-chart-labels='<%= [chart_labels_by_technical_area, BenchmarkIndicatorActivity::ACTIVITY_TYPES].to_json %>'
        data-plan-chart-series='<%= [@plan.count_activities_by_ta, @plan.count_activities_by_type].to_json %>'
@@ -62,7 +65,7 @@
                   </div>
 
                   <!-- Right Col -->
-                  <%= render "nudge_container" %>
+                  <%= render "nudge_container", dom_id: "nudge-by-technical-area" %>
                 </div>
               </div>
 
@@ -76,7 +79,7 @@
                   </div>
 
                   <!-- Right Col -->
-                  <%= render "nudge_container" %>
+                  <%= render "nudge_container", dom_id: "nudge-by-activity-type" %>
                 </div>
               </div>
 
@@ -118,6 +121,39 @@
     %>
   </script>
 </div>
+
+<script type="text/template" id="nudge-for-technical-area-1-year">
+  <p>
+    <%= render file: Rails.root.join("app", "assets", "images", "ico-lightbulb.svg") %>
+    Follow best practice
+  </p>
+  <ul>
+    <li>
+      Focus on no more than 2-3 activities per technical area.
+    </li>
+    <li>
+      Consider reducing the number of technical areas included and focus on the areas that scored low in your capacity assessments or are identified as gaps in the AAR's and simulation reviews.
+    </li>
+  </ul>
+</script>
+
+<script type="text/template" id="nudge-for-technical-area-5-year">
+  <p>
+    <%= render file: Rails.root.join("app", "assets", "images", "ico-lightbulb.svg") %>
+    Follow best practice
+  </p>
+  <ul>
+    <li>
+      5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic.
+    </li>
+    <li>
+      Prioritize activities based on the country risk and capacity assessments focused on technical areas that address gaps identified including those in AAR's and simulations.
+    </li>
+    <li>
+      Remember &mdash; you will still need to create a smaller more focused implementation plan as part of the 5 year plan to ensure implementation.
+    </li>
+  </ul>
+</script>
 
 <script type="application/javascript">
     window.STATE_FROM_SERVER = {

@@ -43,6 +43,11 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "235", find(".activity-count-circle span").text
     assert_selector("#technical-area-B1") # the first one
     assert_selector("#technical-area-B18") # the last one
+    assert_selector(".nudge-container") do
+      assert page.has_content?( # nudge content for 1-year plan
+        "Focus on no more than 2-3 activities per technical area"
+      )
+    end
 
     # verify bar chart by technical area filter functionality
     find('line[data-original-title*="Radiation Emerg"]').click
@@ -138,7 +143,7 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("Saved Armenia Plan")
   end
 
-  test "happy path for Nigeria JEE 1.0 plan by technical areas IHR Comm and Surveillance" do
+  test "happy path for Nigeria JEE 1.0 plan by technical areas 5-year" do
     ##
     # start on the home page
     visit root_url
@@ -150,23 +155,25 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen('Nigeria', from: 'get_started_form_country_id')
     choose "Joint External Evaluation (JEE)"
-    # kludge: must select "1 year plan" after assessment type, otherwise it wont select and
+    # kludge: must select "5 year plan" after assessment type, otherwise it wont select and
     #   fails form validation. extra weird because that same flow works in the other test cases.
-    sleep 0.2 # ugh without this form field not filled
-    choose "1 year plan"
     check "Optional: Plan by technical area(s)"
+    sleep 0.1 # ugh without this form field not filled
     check "IHR coordination, communication and advocacy"
     check "Surveillance"
+    sleep 0.2 # ugh without this form field not filled
+    choose "5 year plan"
     click_on("Next")
 
     ##
     # turn up on the plan goal-setting page
-    assert_current_path("/plan/goals/Nigeria/jee1/1-year/2-9")
+    assert_current_path("/plan/goals/Nigeria/jee1/5-year/2-9")
     assert page.has_content?("JEE SCORES")
     assert page.has_content?("P.2.1 A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR")
     assert page.has_content?("D.2.1 Indicator- and event-based surveillance systems")
     assert_equal "2", find("#plan_indicators_jee1_ind_p21").value
-    assert_equal "3", find("#plan_indicators_jee1_ind_p21_goal").value
+    # verify that this 5-year plan has goal set to 4 instead of 3
+    assert_equal "4", find("#plan_indicators_jee1_ind_p21_goal").value
     find("#new_plan input[type=submit]").trigger(:click)
 
     ##
@@ -174,9 +181,16 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert page.has_content?("TOTAL ACTIVITIES")
-    assert_equal "20", find(".activity-count-circle span").text
+    assert_equal "28", find(".activity-count-circle span").text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
+
+    # verify nudge content for 5-year plan
+    assert_selector(".nudge-container") do
+      assert page.has_content?(
+          "5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic"
+      )
+    end
 
     # verify bar chart by technical area filter functionality
     find('line[data-original-title*="Surveillance"]').click
