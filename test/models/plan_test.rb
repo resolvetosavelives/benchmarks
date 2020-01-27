@@ -6,13 +6,72 @@ def assessment_for_nigeria_jee1
   Assessment.find_by_country_alpha3_and_assessment_publication_id! "NGA", 1
 end
 
-def assessment_for_nigeria_spar2018
+def assessment_nigeria_spar2018
   Assessment.find_by_country_alpha3_and_assessment_publication_id! "NGA", 2
 end
 
 describe Plan do
+  describe "#validation" do
+    it "requires an assessment" do
+      plan = Plan.new
+      plan.valid?.must_equal false, plan.errors.inspect
+      plan.errors[:assessment].present?.must_equal true
+    end
 
-  describe "#create_from_goal_form" do
+    it "requires a name" do
+      plan = Plan.new
+      plan.valid?.must_equal false, plan.errors.inspect
+      plan.errors[:name].present?.must_equal true
+    end
+
+    it "requires a term" do
+      plan = Plan.new
+      plan.valid?.must_equal false, plan.errors.inspect
+      plan.errors[:term].present?.must_equal true
+    end
+
+    it "works when valid" do
+      assessment = assessment_for_nigeria_jee1
+      plan = Plan.new name: "blah plan", assessment: assessment, term: 100
+      plan.valid?.must_equal true, plan.errors.inspect
+    end
+  end
+
+  describe "#is_5_year?" do
+    let(:subject) { Plan.new }
+
+    it "is false by default" do
+      subject.is_5_year?.must_equal false
+    end
+
+    it "is true when set to 5 year" do
+      subject.term = Plan::TERM_TYPES.second
+
+      subject.is_5_year?.must_equal true
+    end
+  end
+
+  describe ".new_from_assessment" do
+    describe "for Nigeria JEE 5-year plan" do
+      let(:subject) {
+        Plan.new_from_assessment(assessment: assessment_for_nigeria_jee1, is_5_year_plan: true)
+      }
+
+      it "has the expected assessment" do
+        subject.assessment.must_equal assessment_for_nigeria_jee1
+      end
+
+      it "has the expected name" do
+        subject.name.must_equal "Nigeria draft plan"
+      end
+
+      it "has the expected term" do
+        subject.term.must_equal 500
+      end
+    end
+  end
+
+  describe ".create_from_goal_form" do
     describe "for Nigeria JEE1" do
       let(:indicator_attrs) do
         {
@@ -126,6 +185,10 @@ describe Plan do
         assert plan.persisted?, "Plan was not saved"
       end
 
+      it "has the expected term" do
+        plan.term.must_equal Plan::TERM_TYPES.first
+      end
+
       it "has the expected name" do
         assert_equal "test plan 3854", plan.name
       end
@@ -195,7 +258,7 @@ describe Plan do
       let(:plan) {
         Plan.create_from_goal_form(
           indicator_attrs: indicator_attrs,
-          assessment: assessment_for_nigeria_spar2018,
+          assessment: assessment_nigeria_spar2018,
           plan_name: "test plan 9391"
         )
       }
@@ -217,7 +280,7 @@ describe Plan do
       end
     end
 
-    describe "for Nigeria from technical areas" do
+    describe "for Nigeria from technical areas 5-year" do
       let(:indicator_attrs) do
         {
           spar_2018_ind_c21: "1",
@@ -233,13 +296,18 @@ describe Plan do
       let(:plan) do
         Plan.create_from_goal_form(
           indicator_attrs: indicator_attrs,
-          assessment: assessment_for_nigeria_spar2018,
+          assessment: assessment_nigeria_spar2018,
+          is_5_year_plan: true,
           plan_name: "test plan 3737"
         )
       end
 
       it "returns a saved plan instance" do
         assert plan.persisted?, "Plan was not saved"
+      end
+
+      it "has the expected term" do
+        plan.term.must_equal Plan::TERM_TYPES.second
       end
 
       it "has the expected name" do

@@ -9,9 +9,8 @@ class Plan < ApplicationRecord
   ].freeze
   # TODO: update this implementation once the assessments page is modernized
   ASSESSMENT_TYPE_NAMED_IDS = %w{jee1 spar_2018 from-technical-areas}.freeze
+  TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
   include PlanBuilder
-
-  attr_accessor :is_5_year_plan
 
   belongs_to :assessment
   belongs_to :user, optional: true
@@ -35,6 +34,11 @@ class Plan < ApplicationRecord
 
   validates :assessment, presence: true
   validates :name, presence: true
+  validates :term, inclusion: TERM_TYPES
+
+  def is_5_year?
+    term.eql?(TERM_TYPES.second)
+  end
 
   def activity_ids
     plan_activities.map(&:benchmark_indicator_activity).map(&:id)

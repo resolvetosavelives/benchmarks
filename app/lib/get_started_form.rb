@@ -54,7 +54,7 @@ class GetStartedForm
     "#{plan_term}-year" if plan_term.present?
   end
 
-  # return IDs only when the coresponding checkbox is selected
+  # return IDs only when the corresponding checkbox is selected
   def technical_area_ids
     if plan_by_technical_ids?
       @technical_area_ids

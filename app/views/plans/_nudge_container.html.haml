@@ -1,6 +1,6 @@
 .col.nudge-container
-  .card
-    .nudge-content-0.d-flex.flex-column.align-items-center
+  .card{id: dom_id}
+    .nudge-content-0
       %div
         = render file: Rails.root.join("app", "assets", "images", "ico-analyze.svg")
         = render file: Rails.root.join("app", "assets", "images", "ico-cursor.svg")

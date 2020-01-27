@@ -80,11 +80,30 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
         let(:plan) { Plan.new }
 
         it "responds with success" do
-          Plan.stub(:create_from_goal_form, plan) do
+          Plan.expects(:create_from_goal_form).with { |value|
+            value[:is_5_year_plan].eql?(false)
+          }.returns(plan)
+          post plans_url, params: {
+            plan: {
+              assessment_id: "123",
+              term: "100",
+              indicators: {abc: "123"},
+            },
+          }
+          assert_response :redirect
+          assert_redirected_to plan_path(plan.id)
+        end
+
+        describe "for a 5-year plan" do
+          it "responds with success" do
+            Plan.expects(:create_from_goal_form).with { |value|
+              value[:is_5_year_plan].eql?(true)
+            }.returns(plan)
             post plans_url, params: {
               plan: {
-                assessment_id: 123,
-                indicators: {abc: 123},
+                assessment_id: "123",
+                term: "500",
+                indicators: {abc: "123"},
               },
             }
             assert_response :redirect
@@ -99,8 +118,9 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           Plan.stub(:create_from_goal_form, plan) do
             post plans_url, params: {
               plan: {
-                assessment_id: 123,
-                indicators: {abc: 123},
+                assessment_id: "123",
+                term: "100",
+                indicators: {abc: "123"},
               },
             }
             assert_response :redirect
