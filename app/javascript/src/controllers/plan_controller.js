@@ -62,12 +62,16 @@ export default class extends Controller {
       this.initInteractivityForChartByActivityType.bind(this),
     ]
     this.initBarChart()
+    this.renderNudge()
     this.initActivityCountButton()
     // console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
     this.initEventListeners()
   }
 
   initDataFromDom() {
+    this.term = parseInt(this.data.get("term"))
+    this.nudgeSelectors  = JSON.parse(this.data.get("nudgeSelectors")) // expects an array of strings
+    this.nudgeTemplateSelectors = JSON.parse(this.data.get("nudgeTemplateSelectors")) // expects an array of strings
     this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
     this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
     this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
@@ -139,6 +143,13 @@ export default class extends Controller {
 
   updateChart() {
     this.charts[this.currentChartIndex].update()
+  }
+
+  renderNudge() {
+    const currentNudgeEl = this.nudgeSelectors[this.currentChartIndex]
+    const currentNudgeTplSelector = this.nudgeTemplateSelectors[ this.term === 500 ? 1: 0]
+    const nudgeHtmlContent = $(currentNudgeTplSelector).html()
+    $(currentNudgeEl).empty().html(nudgeHtmlContent)
   }
 
   getNextMultipleOfTenForSeries(seriesArray) {

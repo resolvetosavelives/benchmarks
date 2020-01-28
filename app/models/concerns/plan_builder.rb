@@ -16,7 +16,7 @@ module PlanBuilder
   # are populated in this module before the Plan is persisted.
   def calculate_goal_value_for(assessment_indicator:)
     score = score_value_for(assessment_indicator: assessment_indicator)
-    if is_5_year_plan
+    if is_5_year?
       if score <= 3
         4
       else
@@ -31,10 +31,11 @@ module PlanBuilder
 
   module ClassMethods
     def new_from_assessment(assessment:, is_5_year_plan: false, technical_area_ids: nil)
+      plan_term = is_5_year_plan ? Plan::TERM_TYPES.second : Plan::TERM_TYPES.first
       plan = Plan.new(
         assessment: assessment,
         name: "#{assessment.country.name} draft plan",
-        is_5_year_plan: is_5_year_plan
+        term: plan_term
       )
       assessment_publication = assessment.assessment_publication
       assessment_technical_areas = if technical_area_ids.present? && technical_area_ids.any?
@@ -64,7 +65,7 @@ module PlanBuilder
     #  - make sure activities include multiple benchmark_indicator_activities.levels when appro
     #  - assessment_indicator maps to multiple benchmark_indicators
     #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
-    def create_from_goal_form(indicator_attrs:, assessment:, plan_name:, user: nil)
+    def create_from_goal_form(indicator_attrs:, assessment:, plan_name:, is_5_year_plan: false, user: nil)
       num_of_underscores = assessment.spar_2018? ? 3 : 2
       named_ids = indicator_attrs.select { |k, _| k.count("_").eql?(num_of_underscores) }.keys
       scores_and_goals_by_named_id = {}
@@ -74,9 +75,11 @@ module PlanBuilder
           goal:  indicator_attrs[named_id + "_goal"].to_i,
         }
       end
+      plan_term = is_5_year_plan ? Plan::TERM_TYPES.second : Plan::TERM_TYPES.first
       plan = Plan.new({
         name: plan_name,
         assessment: assessment,
+        term: plan_term,
         user: user,
       })
       plan_goals = []

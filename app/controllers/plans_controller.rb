@@ -66,7 +66,7 @@ class PlansController < ApplicationController
     @plan = Plan.new_from_assessment(
       assessment: @assessment,
       technical_area_ids: technical_area_ids,
-      is_5_year_plan: params[:plan_term].eql?("5-year"))
+      is_5_year_plan: params[:plan_term].start_with?("5"))
   end
 
   # TODO: test coverage for this, and include for the session state part
@@ -75,6 +75,7 @@ class PlansController < ApplicationController
     @plan = Plan.create_from_goal_form(
       indicator_attrs: plan_create_params.fetch(:indicators),
       assessment: assessment,
+      is_5_year_plan: plan_create_params.fetch(:term).start_with?("5"),
       plan_name: "#{assessment.country.name} draft plan",
       user: current_user
     )
@@ -140,7 +141,7 @@ class PlansController < ApplicationController
   end
 
   def plan_create_params
-    params.require(:plan).permit(:assessment_id, indicators: {})
+    params.require(:plan).permit(:assessment_id, :term, indicators: {})
   end
 
   def plan_update_params

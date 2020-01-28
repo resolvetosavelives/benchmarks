@@ -53,7 +53,7 @@
   }
 }
 
-.plan-container {
+.technical-area-container {
   h2 {
     font-family: Karla, sans-serif;
     font-style: normal;
@@ -148,9 +148,59 @@
   ul.nav-tabs {
     background-color: rgba(0, 0, 0, 0.03);
   }
-}
 
-.plan.card {
+  .nudge-container {
+    padding: 0;
+    .card {
+      width: 400px;
+      min-height: 238px;
+      margin: 20px auto;
+      padding: 1em;
+      background-color: #F8F9FA;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+      ul {
+        padding-left: 30px;
+      }
+    }
+    p {
+      margin-bottom: 20px;
+      margin-left: 12px;
+    }
+    svg.lightbulb {
+      height: 18px;
+      width: 12px;
+      position: relative;
+      top: -2px;
+      left: -7px;
+      path {
+        height: 18px;
+        width: 12px;
+        fill: #FFCA1E;
+      }
+    }
+    .nudge-content-0 {
+      text-align: center;
+      svg.analyze {
+        height: 51px;
+        width: 51px;
+        margin-top: 35px;
+        margin-bottom: 10px;
+        path {
+          fill: #2C8DC9;
+          transform: scale(2.5);
+        }
+      }
+      svg.cursor {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        top: 77px;
+        left: 190px;
+      }
+    }
+  }
+
   // ct-* are chartist style class we are overriding
   .ct-vertical {
     stroke: #C3C9D8;
@@ -174,6 +224,7 @@
 
   .ct-label {
     font-size: 11px;
+    color: #545B62;
   }
 
   #bar-chart-by-activity-type {
@@ -196,7 +247,6 @@
 }
 
 .plan-container {
-
   .tooltip.bs-tooltip-top .arrow:before {
     border-top-color: color("gray-dark-transparent");
   }
