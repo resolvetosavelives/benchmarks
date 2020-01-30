@@ -1,9 +1,3 @@
 .col.nudge-container
   .card{id: dom_id}
-    .nudge-content-0
-      %div
-        = render file: Rails.root.join("app", "assets", "images", "ico-analyze.svg")
-        = render file: Rails.root.join("app", "assets", "images", "ico-cursor.svg")
-      %h4
-        Click on any bar in the chart to get tips on how to consolidate
-        and prioritize your plan.
+    = render partial: "nudge_content_zero"
