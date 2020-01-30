@@ -93,6 +93,7 @@ class PlansController < ApplicationController
     @benchmark_indicators = BenchmarkIndicator.all
     @all_activities = BenchmarkIndicatorActivity.all
     @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map
+    @nudges_by_activity_type_json = File.read(Rails.root.join("app", "fixtures", "nudges_for_activity_types.json"))
     @plan = Plan.find(params.fetch(:id))
   end
 

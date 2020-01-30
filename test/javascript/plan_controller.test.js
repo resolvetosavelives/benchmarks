@@ -1,6 +1,7 @@
+const fs = require('fs')
 import { Application, Controller } from "stimulus"
 import Chartist from "chartist"
-import "jquery"
+import $ from "jquery"
 import "plan_page_data_model"
 import PlanController from "plan_controller"
 import { changeValue } from "./utilities"
@@ -27,62 +28,16 @@ describe("PlanController", () => {
   beforeEach(() => {
     mock_jquery()
     mock_plan_page_data_model()
-    document.body.innerHTML = `
-      <div class="col plan-container" 
-        data-controller="plan"
-        data-plan-term='100'
-        data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-activity-type"]'
-        data-plan-nudge-template-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
-        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
-        data-plan-chart-labels='[["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18"], ["Advocacy", "Assessment and Data Use", "Coordination", "Designation", "Dissemination", "Financing", "Monitoring and Evaluation", "Planning and Strategy", "Procurement", "Program Implementation", "SimEx and AAR", "SOPs", "Surveillance", "Tool Development", "Training"]]'
-        data-plan-chart-series="[[6, 12, 19, 9, 11, 13, 19, 7, 15, 18, 11, 15, 7, 19, 20, 16, 14, 4], [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]]"
-        data-plan-chart-width="730"
-        data-plan-chart-height="240"
-      >
+    const showPlanPageDocument = fs.readFileSync(`${__dirname}/../fixtures/for_js_tests/plan_show_page_with_two_technical_areas.html`, "utf-8")
+    document.body.innerHTML = showPlanPageDocument
 
-        <button id="submit-button" data-target="plan.submit" data-action="plan#submit">Save</button>
-        <form data-target="plan.form" data-action="submit->score#submit">
-          <input data-target="plan.fieldForActivityIds" autocomplete="off" type="hidden" name="plan[benchmark_activity_ids]" id="plan_benchmark_activity_ids">
-          <input id="name" data-action="change->plan#validateName" required>
-        </form>
-
-        <div id="bar-chart-by-technical-area" class="ct-chart-bar"></div>
-
-        <div class="benchmark-container" id="technical-area-p7">
-          <div class="activity">
-            <div class="row">
-              Activity 1
-              <button id="delete-activity"
-                      data-action="plan#deleteActivity"
-                      data-benchmark-id="1.1"
-                      data-activity="activity 1">Delete Activity</button>
-            </div>
-          <div class="activity-form">
-            <input id="new-activity" data-target="plan.newActivity" data-action="keypress->plan#addNewActivity" data-benchmark-id="1.1">
-          </div>
-        </div>
-      </div>
-      `
-
-    submitButton = document.getElementById("submit-button")
+    submitButton = document.querySelector("input[type='submit']")
     form = document.querySelector("form")
-    name = document.querySelector("#name")
-    document
-      .querySelector("#new-activity")
-      .setAttribute("data-activities", JSON.stringify([{ text: "activity 1" }]))
+    name = document.querySelector("input#plan_name")
 
     application = Application.start()
     application.register("plan", PlanController)
   })
-
-  // describe("#submit", () => {
-  //   it("submits the form when button is clicked", () => {
-  //     const submitMock = jest.fn()
-  //     form.submit = submitMock
-  //     submitButton.click()
-  //     expect(submitMock).toHaveBeenCalled()
-  //   })
-  // })
 
   describe("#validateName", () => {
     it("disables the submit button if the name is empty", () => {
@@ -90,43 +45,6 @@ describe("PlanController", () => {
       expect(submitButton.disabled).toEqual(true)
     })
   })
-
-  // describe("#addNewActivity", () => {
-  //   it("updates activityMap", () => {
-  //     const newActivityInput = document.querySelector("#new-activity")
-  //     newActivityInput.value = "a new activity"
-  //     keypress(newActivityInput, 13)
-  //     expect(JSON.parse(activityMap.value)["1.1"]).toContainEqual({
-  //       text: "a new activity"
-  //     })
-  //   })
-  //
-  //   it("does not allow adding an empty activity", () => {
-  //     const newActivityInput = document.querySelector("#new-activity")
-  //     newActivityInput.value = ""
-  //     keypress(newActivityInput, 13)
-  //     expect(JSON.parse(activityMap.value)["1.1"]).toHaveLength(1)
-  //   })
-  //
-  //   it("enables submit if adding an activity to a previously empty activityMap", () => {
-  //     document.querySelector("#delete-activity").click()
-  //     expect(submitButton.disabled).toEqual(true)
-  //     const newActivityInput = document.querySelector("#new-activity")
-  //     newActivityInput.value = "a new activity"
-  //     keypress(newActivityInput, 13)
-  //     expect(submitButton.disabled).toEqual(false)
-  //   })
-  // })
-
-  // describe("#deleteActivity", () => {
-  //   it("updates activityMap and disables submit when activityMap is empty", () => {
-  //     expect(submitButton.disabled).toEqual(false)
-  //     const deleteActivityButton = document.querySelector("#delete-activity")
-  //     deleteActivityButton.click()
-  //     expect(JSON.parse(activityMap.value)["1.1"]).toHaveLength(0)
-  //     expect(submitButton.disabled).toEqual(true)
-  //   })
-  // })
 
   describe("#initBarChart", () => {
     let controller
@@ -148,7 +66,7 @@ describe("PlanController", () => {
     })
 
     it("has the expected width", () => {
-      expect(controller.charts[controller.currentChartIndex].options.width).toBe("730")
+      expect(controller.charts[controller.currentChartIndex].options.width).toBe("710")
     })
 
     it("has the expected height", () => {
@@ -160,18 +78,222 @@ describe("PlanController", () => {
     })
   })
 
-  // SEE NOTE near the top of this file
-  // describe("#setBarChartEventListeners", () => {
-  //   let controller
-  //
-  //   beforeEach(() => {
-  //     controller = application.controllers[0]
-  //     controller.setBarChartEventListeners()
-  //   })
-  //
-  //   it("shows the selected one and hides the others", () => {
-  //     // $('#technical-area-' + this.chartLabels[i]).show()
-  //     // expect(controller.chart).toBeInstanceOf(Chartist.Bar)
-  //   })
-  // })
+  describe("#initActivityCountButton", () => {
+    it("calls the expected method", () => {
+      const controller = application.controllers[0]
+      controller.clickActivityCountButton = jest.fn()
+
+      $(".activity-count-circle").trigger("click")
+
+      expect(controller.clickActivityCountButton).toHaveBeenCalled()
+    })
+  })
+
+  describe("#countByActivityType", () => {
+    it("returns the expected integer", () => {
+      const controller = application.controllers[0] 
+
+      const result = controller.countByActivityType(0)
+
+      expect(result).toEqual(6)
+    })
+  })
+
+  describe("#getListItemsForNudge", () => {
+    const nudgeData = {
+      "activity_type_name": "Training",
+      "threshold_a": 3,
+      "threshold_b": 6,
+      "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
+      "content_for_b": "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.\nPlan to test, socialize, validate and disseminate the trainings.\nDevelop the trainings with sustainability, including frequency and number of participants, in mind.",
+      "content_for_c": "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.\nPlan to test, socialize, validate and disseminate the trainings.\nDevelop the trainings with sustainability, including frequency and number of participants, in mind.\nConsider a technical working group to review and validate new tools for quality assurance."
+    }
+
+    describe("when indexForThreshold is zero", () => {
+      it("returns content_for_a", () => {
+        const controller = application.controllers[0]
+        controller.countByActivityType = jest.fn()
+        controller.getIndexForThreshold = jest.fn(() => 0)
+
+        const result = controller.getListItemsForNudge(nudgeData, 789)
+
+        expect(controller.countByActivityType).toHaveBeenCalledWith(789)
+        expect(result.length).toEqual(2)
+        expect(result[0]).toEqual("Refer to the best practice document and case studies from similar contexts.")
+      })
+    })
+
+    describe("when indexForThreshold is one", () => {
+      it("returns content_for_a", () => {
+        const controller = application.controllers[0]
+        controller.countByActivityType = jest.fn()
+        controller.getIndexForThreshold = jest.fn(() => 1)
+
+        const result = controller.getListItemsForNudge(nudgeData, 789)
+
+        expect(controller.countByActivityType).toHaveBeenCalledWith(789)
+        expect(result.length).toEqual(3)
+        expect(result[0]).toEqual("Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.")
+      })
+    })
+
+    describe("when indexForThreshold is two", () => {
+      it("returns content_for_a", () => {
+        const controller = application.controllers[0]
+        controller.countByActivityType = jest.fn()
+        controller.getIndexForThreshold = jest.fn(() => 2)
+
+        const result = controller.getListItemsForNudge(nudgeData, 789)
+
+        expect(controller.countByActivityType).toHaveBeenCalledWith(789)
+        expect(result.length).toEqual(4)
+        expect(result[0]).toEqual("Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.")
+      })
+    })
+
+  })
+
+  describe("#getIndexForThresholdOfTwo", () => {
+
+    describe("when countByActivityType is less than threshold A minus one", () => {
+      it("returns zero", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfTwo(2,3, 6)
+
+        expect(result).toEqual(0)
+      })
+    })
+
+    describe("when countByActivityType equals threshold A", () => {
+      it("returns one", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfTwo(3, 3, 6)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+    describe("when countByActivityType equals threshold A plus one", () => {
+      it("returns one", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfTwo(4, 3, 6)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+    describe("when countByActivityType is less than threshold B minus one", () => {
+      it("returns one", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfTwo(5,3, 6)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+    describe("when countByActivityType equals threshold B", () => {
+      it("returns one", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfTwo(6, 3, 6)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+    describe("when countByActivityType equals threshold B plus one", () => {
+      it("returns two", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfTwo(7, 3, 6)
+
+        expect(result).toEqual(2)
+      })
+    })
+
+  })
+
+  describe("#getIndexForThreshold", () => {
+
+    describe("when both thresholdA and thresholdB are present", () => {
+      it("returns zero", () => {
+        const controller = application.controllers[0]
+        controller.getIndexForThresholdOfOne = jest.fn()
+        controller.getIndexForThresholdOfTwo = jest.fn()
+
+        controller.getIndexForThreshold(1,3, 6)
+
+        expect(controller.getIndexForThresholdOfOne).not.toHaveBeenCalled()
+        expect(controller.getIndexForThresholdOfTwo).toHaveBeenCalledWith(1, 3, 6)
+      })
+    })
+
+    describe("when only thresholdA is present", () => {
+      describe("and thresholdB is NULL", () => {
+        it("returns one", () => {
+          const controller = application.controllers[0]
+          controller.getIndexForThresholdOfOne = jest.fn()
+          controller.getIndexForThresholdOfTwo = jest.fn()
+
+          controller.getIndexForThreshold(1, 3, null)
+
+          expect(controller.getIndexForThresholdOfOne).toHaveBeenCalledWith(1, 3)
+          expect(controller.getIndexForThresholdOfTwo).not.toHaveBeenCalled()
+        })
+      })
+
+      describe("and thresholdB is undefined", () => {
+        it("returns one", () => {
+          const controller = application.controllers[0]
+          controller.getIndexForThresholdOfOne = jest.fn()
+          controller.getIndexForThresholdOfTwo = jest.fn()
+
+          controller.getIndexForThreshold(1, 3, undefined)
+
+          expect(controller.getIndexForThresholdOfOne).toHaveBeenCalledWith(1, 3)
+          expect(controller.getIndexForThresholdOfTwo).not.toHaveBeenCalled()
+        })
+      })
+    })
+
+  })
+
+  describe("#getIndexForThresholdOfOne", () => {
+
+    describe("when countByActivityType is less than threshold minus one", () => {
+      it("returns zero", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfOne(2,3)
+
+        expect(result).toEqual(0)
+      })
+    })
+
+    describe("when countByActivityType equals threshold", () => {
+      it("returns one", () => {
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfOne(3, 3)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+    describe("when countByActivityType equals threshold plus one", () => {
+      it("returns one", () => { 
+        const controller = application.controllers[0]
+
+        const result = controller.getIndexForThresholdOfOne(4, 3)
+
+        expect(result).toEqual(1)
+      })
+    })
+
+  })
+
 })

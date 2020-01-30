@@ -1,6 +1,7 @@
 import { Controller } from "stimulus"
 import $ from "jquery"
 import Chartist from "chartist"
+import Hogan from "hogan.js"
 import PlanPageDataModel from "../plan_page_data_model"
 import PlanPageViewModel from "../plan_page_view_model"
 
@@ -18,12 +19,6 @@ import PlanPageViewModel from "../plan_page_view_model"
  * draft plan. See benchmark_controller.js
  *
  * Targets:
- *   activityMap -- this field contains all of the activities in the plan,
- *   classified by benchmark ID. The server will populate this field when
- *   rendering the page, and this controller will modify the field as the user
- *   edits the draft plan. Note that the benchmark_controller will also edit
- *   the field.
- *
  *   newActivity -- this is a single target that represents all of the fields
  *   that the user can use to add activities to the plan. Each field must be
  *   tagged with "data-benchmark-id" so this controller knows which benchmark
@@ -52,6 +47,10 @@ export default class extends Controller {
     this.currentChartIndex = 0 // used for tabs and charts arrays
     this.decrementActivityCountCircleUiTimerId = null
     this.planPageDataModel = new PlanPageDataModel(window.STATE_FROM_SERVER)
+    // nudge data are intentionally excluded from STATE_FROM_SERVER because they are not state,
+    // they do not change but instead are static and fixed, displayed only.
+    this.dataForNudgeByActivityType = window.NUDGES_BY_ACTIVITY_TYPE
+    this.currentlySelectedActivityType = null
   }
 
   connect() {
@@ -62,7 +61,7 @@ export default class extends Controller {
       this.initInteractivityForChartByActivityType.bind(this),
     ]
     this.initBarChart()
-    this.renderNudge()
+    this.renderNudgeForTechnicalAreas()
     this.initActivityCountButton()
     // console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
     this.initEventListeners()
@@ -71,7 +70,8 @@ export default class extends Controller {
   initDataFromDom() {
     this.term = parseInt(this.data.get("term"))
     this.nudgeSelectors  = JSON.parse(this.data.get("nudgeSelectors")) // expects an array of strings
-    this.nudgeTemplateSelectors = JSON.parse(this.data.get("nudgeTemplateSelectors")) // expects an array of strings
+    this.nudgeContentSelectors = JSON.parse(this.data.get("nudgeContentSelectors")) // expects an array of strings
+    this.nudgeTemplateSelector = this.data.get("nudgeTemplateSelector") // expects a string
     this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
     this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
     this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
@@ -111,9 +111,13 @@ export default class extends Controller {
   // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initActivityCountButton() {
     $(".activity-count-circle").on('click', () => {
-      $("#activity-list-by-type-container").hide()
-      $(".technical-area-container").show()
+      this.clickActivityCountButton()
     })
+  }
+
+  clickActivityCountButton() {
+    $("#activity-list-by-type-container").hide()
+    $(".technical-area-container").show()
   }
 
   initBarChart() {
@@ -145,9 +149,9 @@ export default class extends Controller {
     this.charts[this.currentChartIndex].update()
   }
 
-  renderNudge() {
+  renderNudgeForTechnicalAreas() {
     const currentNudgeEl = this.nudgeSelectors[this.currentChartIndex]
-    const currentNudgeTplSelector = this.nudgeTemplateSelectors[ this.term === 500 ? 1: 0]
+    const currentNudgeTplSelector = this.nudgeContentSelectors[ this.term === 500 ? 1: 0]
     const nudgeHtmlContent = $(currentNudgeTplSelector).html()
     $(currentNudgeEl).empty().html(nudgeHtmlContent)
   }
@@ -158,8 +162,6 @@ export default class extends Controller {
     return (currentMultipleOfTen + 1) * 10
   }
 
-  // e.target: newly activated tab
-  // e.relatedTarget: previously active tab
   // TODO: modify this to use PlanPageViewModel events instead?
   handleChartHideShow(event) {
     const {target: selectedTab} = event
@@ -168,7 +170,6 @@ export default class extends Controller {
     this.initBarChart()
   }
 
-  // TODO: add test coverage for this now that its unblocked
   initInteractivityForChartByTechnicalArea() {
     // query for bar segments only within the selector of the current chart
     $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each((segmentIndex, el) => {
@@ -178,7 +179,6 @@ export default class extends Controller {
     })
   }
 
-  // TODO: add test coverage for this now that its unblocked
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
     if (chartLabels[index]) {
@@ -190,7 +190,6 @@ export default class extends Controller {
     }
   }
 
-  // TODO: add test coverage for this now that its unblocked
   initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
     let $elTitle = $('#technical-area-' + chartLabels[index])
@@ -224,6 +223,11 @@ export default class extends Controller {
   initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
       $($elBarSegment).on('click', () => {
         this.filterByActivityType(segmentIndex)
+        // avoid click on the already selected chart segment re-presenting the same content
+        if (this.currentlySelectedActivityType !== segmentIndex) {
+          this.currentlySelectedActivityType = segmentIndex
+          this.renderNudgeForActivityType()
+        }
       })
   }
 
@@ -245,6 +249,68 @@ export default class extends Controller {
           .append($activityTypeContainer)
           .show()
     }
+  }
+
+  renderNudgeForActivityType() {
+    const indexOfActivityType = this.currentlySelectedActivityType
+    const nudgeData = window.NUDGES_BY_ACTIVITY_TYPE[indexOfActivityType]
+    const listItems = this.getListItemsForNudge(nudgeData, indexOfActivityType)
+    const templateData = {
+      activity_type: nudgeData["activity_type_name"],
+      listItems: listItems.map(itemText => {
+        return {item: itemText}
+      })
+    }
+
+    const currentNudgeTplSelector = this.nudgeTemplateSelector
+    const nudgeHtmlContent = $(currentNudgeTplSelector).html()
+    const compiledTemplate = Hogan.compile(nudgeHtmlContent)
+    const renderedContent = compiledTemplate.render(templateData)
+
+    const currentNudgeEl = this.nudgeSelectors[this.currentChartIndex]
+    $(currentNudgeEl).children().fadeOut(() => {
+      $(currentNudgeEl).empty().html(renderedContent).fadeIn()
+    })
+  }
+
+  getListItemsForNudge(nudgeData, selectedActivityTypeIndex) {
+    const thresholdA = nudgeData["threshold_a"]
+    const thresholdB = nudgeData["threshold_b"]
+    const currentActivityCount = this.countByActivityType(selectedActivityTypeIndex)
+    let indexForThreshold = this.getIndexForThreshold(currentActivityCount, thresholdA, thresholdB)
+    const contentKey = ["content_for_a", "content_for_b", "content_for_c"][indexForThreshold]
+    return nudgeData[contentKey].split("\n")
+  }
+
+  getIndexForThreshold(currentActivityCount, thresholdA, thresholdB) {
+    if (thresholdA && thresholdB) {
+      return this.getIndexForThresholdOfTwo(currentActivityCount, thresholdA, thresholdB)
+    } else {
+      return this.getIndexForThresholdOfOne(currentActivityCount, thresholdA)
+    }
+  }
+
+  getIndexForThresholdOfTwo(currentActivityCount, thresholdA, thresholdB) {
+    if (currentActivityCount < thresholdA) {
+      return 0
+    } else if (thresholdA <= currentActivityCount && currentActivityCount <= thresholdB) {
+      return 1
+    } else if (thresholdB < currentActivityCount) {
+      return 2
+    }
+  }
+
+  getIndexForThresholdOfOne(currentActivityCount, threshold) {
+    if (currentActivityCount < threshold) {
+      return 0
+    } else if (threshold <= currentActivityCount) {
+      return 1
+    }
+  }
+
+  countByActivityType(selectedActivityTypeIndex) {
+    const dataSet = this.chartDataSeries[this.currentChartIndex]
+    return dataSet[selectedActivityTypeIndex]
   }
 
   /* Check the validity of the plan name, disabling the submit button if the
@@ -278,16 +344,17 @@ export default class extends Controller {
     this.incrementActivityCountCircleUI()
     this.incrementChartSegmentCountData(barSegmentIndex)
     this.updateChart()
+    this.renderNudgeForActivityType()
   }
 
   decrementActivityCount(data) {
     this.decrementActivityCountCircleUI()
     this.decrementChartSegmentCountData(data)
     this.updateChart()
+    this.renderNudgeForActivityType()
   }
 
   incrementActivityCountCircleUI() {
-    console.log("GVT: incrementActivityCountCircleUI..")
     if (this.hasActivityCountCircleTarget) {
       this.activityCountCircleTarget.textContent = this.currentActivityCount()
     }
