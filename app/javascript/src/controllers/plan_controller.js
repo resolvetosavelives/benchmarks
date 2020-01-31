@@ -50,7 +50,7 @@ export default class extends Controller {
     // nudge data are intentionally excluded from STATE_FROM_SERVER because they are not state,
     // they do not change but instead are static and fixed, displayed only.
     this.dataForNudgeByActivityType = window.NUDGES_BY_ACTIVITY_TYPE
-    this.currentlySelectedActivityType = null
+    this.resetCurrentlySelectedActivityType()
   }
 
   connect() {
@@ -67,10 +67,15 @@ export default class extends Controller {
     this.initEventListeners()
   }
 
+  resetCurrentlySelectedActivityType() {
+    this.currentlySelectedActivityType = null
+  }
+
   initDataFromDom() {
     this.term = parseInt(this.data.get("term"))
     this.nudgeSelectors  = JSON.parse(this.data.get("nudgeSelectors")) // expects an array of strings
     this.nudgeContentSelectors = JSON.parse(this.data.get("nudgeContentSelectors")) // expects an array of strings
+    this.nudgeContentZeroSelector = this.data.get("nudgeContentZeroSelector") // expects a string
     this.nudgeTemplateSelector = this.data.get("nudgeTemplateSelector") // expects a string
     this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
     this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
@@ -108,7 +113,6 @@ export default class extends Controller {
     }
   }
 
-  // TODO: no test coverage for this yet because mocking jQuery ($) in the way.
   initActivityCountButton() {
     $(".activity-count-circle").on('click', () => {
       this.clickActivityCountButton()
@@ -118,6 +122,8 @@ export default class extends Controller {
   clickActivityCountButton() {
     $("#activity-list-by-type-container").hide()
     $(".technical-area-container").show()
+    this.resetCurrentlySelectedActivityType()
+    this.renderNudge()
   }
 
   initBarChart() {
@@ -251,8 +257,17 @@ export default class extends Controller {
     }
   }
 
+  renderNudge() {
+    this.renderNudgeForActivityType()
+  }
+
   renderNudgeForActivityType() {
     const indexOfActivityType = this.currentlySelectedActivityType
+    const currentActivityCount = this.countByActivityType(indexOfActivityType)
+    if (!indexOfActivityType || !(currentActivityCount >= 1)) {
+      return this.renderNudgeZeroForActivityType()
+    }
+
     const nudgeData = window.NUDGES_BY_ACTIVITY_TYPE[indexOfActivityType]
     const listItems = this.getListItemsForNudge(nudgeData, indexOfActivityType)
     const templateData = {
@@ -270,6 +285,15 @@ export default class extends Controller {
     const currentNudgeEl = this.nudgeSelectors[this.currentChartIndex]
     $(currentNudgeEl).children().fadeOut(() => {
       $(currentNudgeEl).empty().html(renderedContent).fadeIn()
+    })
+  }
+
+  renderNudgeZeroForActivityType() {
+    const nudgeContentZeroSelector = this.nudgeContentZeroSelector
+    const nudgeZeroContent = $(nudgeContentZeroSelector).html()
+    const nudgeElByActivityType = this.nudgeSelectors[1] // 1 is for activity type tab
+    $(nudgeElByActivityType).children().fadeOut(() => {
+      $(nudgeElByActivityType).empty().html(nudgeZeroContent).fadeIn()
     })
   }
 
