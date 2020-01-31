@@ -56,17 +56,19 @@ class PlansController < ApplicationController
     country_name = params[:country_name]
     technical_area_ids = params[:areas].to_s.split("-")
     country = Country.find_by_name country_name
-    assessment_publication = AssessmentPublication.find_by_named_id assessment_type
-    @assessment = Assessment.find_by_country_alpha3_and_assessment_publication_id country.try(:alpha3), assessment_publication.id
+    @publication = AssessmentPublication.find_by_named_id assessment_type
+    if country.present? && @publication.present?
+      @assessment = Assessment.deep_load(country.try(:alpha3), @publication.try(:id))
+    end
     if @assessment.blank?
       render "assessment_not_found"
       return
     end
-    @publication = @assessment.assessment_publication
     @plan = Plan.new_from_assessment(
       assessment: @assessment,
       technical_area_ids: technical_area_ids,
-      is_5_year_plan: params[:plan_term].start_with?("5"))
+      is_5_year_plan: params[:plan_term].start_with?("5")
+    )
   end
 
   # TODO: test coverage for this, and include for the session state part
@@ -89,12 +91,15 @@ class PlansController < ApplicationController
   end
 
   def show
-    @benchmark_technical_areas = BenchmarkTechnicalArea.all
-    @benchmark_indicators = BenchmarkIndicator.all
-    @all_activities = BenchmarkIndicatorActivity.all
-    @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map
+    benchmark_document = BenchmarkDocument.new
+    @benchmark_technical_areas = benchmark_document.technical_areas
+    @benchmark_indicators = benchmark_document.indicators
+    @all_activities = benchmark_document.activities
+    @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map(@benchmark_technical_areas)
     @nudges_by_activity_type_json = File.read(Rails.root.join("app", "fixtures", "nudges_for_activity_types.json"))
-    @plan = Plan.find(params.fetch(:id))
+    @plan = Plan.deep_load(params.fetch(:id))
+    @count_activities_by_ta = @plan.count_activities_by_ta(@benchmark_technical_areas)
+    @count_activities_by_type = @plan.count_activities_by_type
   end
 
   # TODO: test coverage for this

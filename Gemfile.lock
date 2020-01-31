@@ -242,6 +242,10 @@ GEM
     sentry-raven (2.11.0)
       faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.13.0)
+    skylight (4.2.1)
+      skylight-core (= 4.2.1)
+    skylight-core (4.2.1)
+      activesupport (>= 4.2.0)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -311,6 +315,7 @@ DEPENDENCIES
   rubocop-rails
   rubyXL
   sentry-raven
+  skylight
   spring
   spring-watcher-listen (~> 2.0.0)
   standard

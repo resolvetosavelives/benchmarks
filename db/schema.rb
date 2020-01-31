@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_161252) do
+ActiveRecord::Schema.define(version: 2020_02_02_214510) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,6 +116,8 @@ ActiveRecord::Schema.define(version: 2020_01_27_161252) do
     t.integer "benchmark_indicator_activity_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "benchmark_indicator_id"
+    t.integer "benchmark_technical_area_id"
     t.index ["plan_id"], name: "index_plan_activities_on_plan_id"
   end
 
@@ -165,6 +167,8 @@ ActiveRecord::Schema.define(version: 2020_01_27_161252) do
   add_foreign_key "benchmark_indicator_activities", "benchmark_indicators"
   add_foreign_key "benchmark_indicators", "benchmark_technical_areas"
   add_foreign_key "plan_activities", "benchmark_indicator_activities"
+  add_foreign_key "plan_activities", "benchmark_indicators"
+  add_foreign_key "plan_activities", "benchmark_technical_areas"
   add_foreign_key "plan_activities", "plans"
   add_foreign_key "plan_goals", "assessment_indicators"
   add_foreign_key "plan_goals", "benchmark_indicators"

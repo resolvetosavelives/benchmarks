@@ -34,14 +34,20 @@ class GetStartedForm
   end
 
   def set_country
-    self.country = Country.find_by_id country_id
+    if country_id.present?
+      # we use the +with_assessments_and_publication+ method here because we want to
+      # fetch additional data to optimize for which data the view template will use.
+      self.country = Country.with_assessments_and_publication(country_id)
+    end
   end
 
   def set_assessment
     if country.present? && assessment_type.present? && is_known?(assessment_type)
       assessment_publication = AssessmentPublication.find_by_named_id(assessment_type)
       if assessment_publication.present?
-        self.assessment = Assessment.find_by_country_alpha3_and_assessment_publication_id(country.alpha3, assessment_publication.id)
+        # we use the +with_publication+ method here because we want to
+        # fetch additional data to optimize for which data the view template will use.
+        self.assessment = Assessment.with_publication(country.alpha3, assessment_publication.id)
       end
     end
   end
