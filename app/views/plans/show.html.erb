@@ -7,6 +7,7 @@
        data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-activity-type"]'
        data-plan-nudge-content-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
        data-plan-nudge-template-selector="#nudge-template"
+       data-plan-nudge-content-zero-selector='#nudge-content-zero'
        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
        data-plan-chart-labels='<%= [chart_labels_by_technical_area, BenchmarkIndicatorActivity::ACTIVITY_TYPES].to_json %>'
        data-plan-chart-series='<%= [@plan.count_activities_by_ta, @plan.count_activities_by_type].to_json %>'
@@ -168,6 +169,10 @@
     </li>
     {{/listItems}}
   </ul>
+</script>
+
+<script type="text/template" id="nudge-content-zero">
+  <%= render partial: "nudge_content_zero" %>
 </script>
 
 <script type="application/javascript">
