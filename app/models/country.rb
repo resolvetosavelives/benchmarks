@@ -5,6 +5,11 @@ class Country < ApplicationRecord
 
   default_scope { order(:name) }
   scope :all_assessed, -> { joins(:assessments).distinct.all }
+  scope :with_assessments_and_publication, ->(country_id) {
+    includes(assessments: :assessment_publication)
+      .where(id: country_id)
+      .first
+  }
 
   def attributes
     {

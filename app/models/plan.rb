@@ -21,16 +21,12 @@ class Plan < ApplicationRecord
   delegate :alpha3, to: :country
   delegate :jee1?, :spar_2018?, :type_description, to: :assessment
 
-  default_scope do
-    # NB: these includes are structured in ways that prepare for the plans/show
-    # template to be rendered along with its partials. this is because rendering
-    # views is the longest/slowest part of the response.
-    includes(
-      {assessment: [:scores]},
-      {plan_activities: {benchmark_indicator_activity: :benchmark_indicator}},
-      {goals: [:benchmark_indicator, :assessment_indicator]}
-    )
-  end
+  scope :deep_load, ->(id) {
+    includes(:goals,
+      {plan_activities: :benchmark_indicator_activity})
+      .where(id: id)
+      .first
+  }
 
   validates :assessment, presence: true
   validates :name, presence: true
@@ -77,15 +73,17 @@ class Plan < ApplicationRecord
   # Constructs an Array containing n elements where n equals
   # +BenchmarkTechnicalArea.all.size+ (there are 18 as of year 2019) with each
   # element containing an integer that is the count of the activities for that
-  # technical area, ordered by +BenchmarkTechnicalArea.sequence+, e.g.,
-  # result[0] is TA 1, result[17] is TA.sequence==18
+  # technical area, ordered by +BenchmarkTechnicalArea.sequence+
   # @return Array of Integers
-  def count_activities_by_ta
-    BenchmarkTechnicalArea.all.map do |bta|
-      bta.benchmark_indicators.sum do |benchmark_indicator|
-        activities_for(benchmark_indicator).size
-      end
+  def count_activities_by_ta(benchmark_technical_areas)
+    counts_by_ta_id = Array.new(benchmark_technical_areas.size, 0)
+    plan_activities.reduce(counts_by_ta_id) do |accumulator_h, activity|
+      # sequence is one-based so subtract one to make zero-based
+      ta_sequence = activity.benchmark_technical_area.sequence - 1
+      accumulator_h[ta_sequence] += 1
+      accumulator_h
     end
+    counts_by_ta_id.compact
   end
 
   def count_activities_by_type
@@ -103,13 +101,13 @@ class Plan < ApplicationRecord
 
   def goal_for(benchmark_indicator:)
     goals.detect do |goal|
-      benchmark_indicator.eql?(goal.benchmark_indicator)
+      goal.benchmark_indicator_id.eql?(benchmark_indicator.id)
     end
   end
 
   def goal_value_for(benchmark_indicator:)
     goals.detect do |goal|
-      benchmark_indicator.eql?(goal.benchmark_indicator)
+      goal.benchmark_indicator_id.eql?(benchmark_indicator.id)
     end&.value
   end
 
@@ -117,7 +115,7 @@ class Plan < ApplicationRecord
   # arg is a BenchmarkIndicatorActivity
   def activities_for(benchmark_indicator)
     plan_activities.to_a.select do |plan_activity|
-      benchmark_indicator.eql?(plan_activity.benchmark_indicator_activity.benchmark_indicator)
+      plan_activity.benchmark_indicator_id.eql?(benchmark_indicator.id)
     end
   end
 

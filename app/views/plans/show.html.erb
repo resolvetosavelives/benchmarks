@@ -10,7 +10,7 @@
        data-plan-nudge-content-zero-selector='#nudge-content-zero'
        data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
        data-plan-chart-labels='<%= [chart_labels_by_technical_area, BenchmarkIndicatorActivity::ACTIVITY_TYPES].to_json %>'
-       data-plan-chart-series='<%= [@plan.count_activities_by_ta, @plan.count_activities_by_type].to_json %>'
+       data-plan-chart-series='<%= [@count_activities_by_ta, @count_activities_by_type].to_json %>'
        data-plan-chart-width="710"
        data-plan-chart-height="240"
   >

@@ -192,11 +192,14 @@ td {
   }
   a.btn {
     width: 250px;
-    height: 4.5em;
-    line-height: 4.5em;
-    padding: 0;
-    margin: 0;
   }
+}
+
+a.cta-btn {
+  height: 4.5em !important;
+  line-height: 4.5em;
+  padding: 0;
+  margin: 0;
 }
 
 .display-header {

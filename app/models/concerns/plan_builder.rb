@@ -39,9 +39,9 @@ module PlanBuilder
       )
       assessment_publication = assessment.assessment_publication
       assessment_technical_areas = if technical_area_ids.present? && technical_area_ids.any?
-        assessment_publication.assessment_technical_areas.where(id: technical_area_ids).all
+        assessment_publication.assessment_technical_areas.includes(:assessment_indicators).where(id: technical_area_ids).all
       else
-        assessment_publication.assessment_technical_areas
+        assessment_publication.assessment_technical_areas.includes(:assessment_indicators)
       end
       assessment_indicators = assessment_technical_areas.map(&:assessment_indicators)
       plan.assessment_technical_areas = assessment_technical_areas
@@ -84,8 +84,7 @@ module PlanBuilder
       })
       plan_goals = []
       plan_activities = []
-      assessment_indicators = AssessmentIndicator.where(named_id: named_ids).all.uniq
-
+      assessment_indicators = AssessmentIndicator.includes({benchmark_indicators: :benchmark_technical_area}).where(named_id: named_ids).distinct.all
       assessment_indicators.each do |assessment_indicator|
         score_and_goal = scores_and_goals_by_named_id[assessment_indicator.named_id]
         goal_value = score_and_goal[:goal]
@@ -107,19 +106,21 @@ module PlanBuilder
             .order(:sequence)
             .all
           bia.each do |benchmark_indicator_activity|
-            unless plan_activities.any? { |pa| pa.benchmark_indicator_activity.id.eql?(benchmark_indicator_activity.id) }
+            unless plan_activities.any? { |pa| pa.benchmark_indicator_activity_id.eql?(benchmark_indicator_activity.id) }
               plan_activities << PlanActivity.new(
                 plan: plan,
                 benchmark_indicator_activity: benchmark_indicator_activity,
+                benchmark_indicator: benchmark_indicator,
+                benchmark_technical_area: benchmark_indicator.benchmark_technical_area
               )
             end
           end
         end
-        Plan.transaction do
-          plan.goals = plan_goals
-          plan.plan_activities = plan_activities
-          plan.save!
-        end
+      end
+      Plan.transaction do
+        plan.goals = plan_goals
+        plan.plan_activities = plan_activities
+        plan.save!
       end
       plan
     end
