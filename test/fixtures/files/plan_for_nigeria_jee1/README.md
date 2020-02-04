@@ -26,5 +26,5 @@ Then, within the `psql` command client:
 \pset format unaligned
 WITH t AS (select name, assessment_id from plans) SELECT json_agg(t) FROM t;
 WITH t AS (SELECT plan_id, assessment_indicator_id, benchmark_indicator_id, value FROM plan_goals) SELECT json_agg(t) FROM t;
-WITH t AS (SELECT plan_id, benchmark_indicator_activity_id FROM plan_activities) SELECT json_agg(t) FROM t;
+WITH t AS (SELECT plan_id, benchmark_indicator_activity_id, benchmark_indicator_id, benchmark_technical_area_id FROM plan_activities) SELECT json_agg(t) FROM t;
 ```

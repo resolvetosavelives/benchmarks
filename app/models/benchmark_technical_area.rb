@@ -5,9 +5,10 @@ class BenchmarkTechnicalArea < ApplicationRecord
 
   default_scope { includes(:benchmark_indicators).order(:sequence) }
 
-  def self.to_abbreviation_map
+  def self.to_abbreviation_map(benchmark_technical_areas = nil)
     abbreviation_map = {}
-    all.each do |bta|
+    technical_areas = benchmark_technical_areas.blank? ? all: benchmark_technical_areas
+    technical_areas.each do |bta|
       abbreviation_map[bta.to_abbreviation] = bta.id
     end
     abbreviation_map

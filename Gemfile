@@ -20,6 +20,8 @@ gem "rack-attack"
 gem "bootstrap", "~> 4.3.1"
 gem "jquery-rails"
 gem "hamlit-rails"
+# skylight.io is a performance analysis tool, our free trial expires on 2020-02-29.
+gem "skylight"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,6 +1,8 @@
 class PlanActivity < ApplicationRecord
   belongs_to :plan
   belongs_to :benchmark_indicator_activity
+  belongs_to :benchmark_indicator
+  belongs_to :benchmark_technical_area
 
   default_scope { includes(:benchmark_indicator_activity).order("benchmark_indicator_activities.level", "benchmark_indicator_activities.sequence") }
 
