@@ -1,0 +1,39 @@
+.benchmark-document {
+  .sidebar-right {
+    .print-link {
+      margin-bottom: 1em;
+    }
+    .card {
+      margin-bottom: 2em;
+      ul {
+        li {
+          margin: 0 0 0.5em 0;
+        }
+      }
+      ol {
+        padding-left: 1.3em;
+        color: color("primary");
+      }
+      li {
+        font-size: 14px;
+      }
+    }
+  }
+  svg {
+    path {
+      fill: color("primary") !important;
+    }
+  }
+  .card.callout {
+    background: #2C8DC9;
+    color: white;
+    margin: 2.5em 0;
+    .card-header {
+      background: rgba(0, 0, 0, 0.03);
+    }
+    h4 {
+      color: white;
+      text-transform: uppercase;
+    }
+  }
+}
