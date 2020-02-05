@@ -1,0 +1,87 @@
+.card
+  .card-header
+    .tab
+      Sections
+  .card-body
+    %ul.nav.flex-column
+      %li
+        %a{href: "#"}
+          Introduction
+      %li
+        Technical Areas
+      %ol
+        %li
+          %a{href: "#"}
+            National legislation, policy, and financing
+        %li
+          %a{href: "#"}
+            IHR coordination, communication, and advocacy and reporting
+        %li
+          %a{href: "#"}
+            Antimicrobial resistance
+        %li
+          %a{href: "#"}
+            Zoonotic disease
+        %li
+          %a{href: "#"}
+            Food safety
+        %li
+          %a{href: "#"}
+            Immunization
+        %li
+          %a{href: "#"}
+            National laboratory system
+        %li
+          %a{href: "#"}
+            Biosafety and biosecurity
+        %li
+          %a{href: "#"}
+            Surveillance
+        %li
+          %a{href: "#"}
+            Human resources
+        %li
+          %a{href: "#"}
+            Emergency preparedness
+        %li
+          %a{href: "#"}
+            Emergency response operations
+        %li
+          %a{href: "#"}
+            Linking public health and security authorities
+        %li
+          %a{href: "#"}
+            Medical countermeasures and personal deployment
+        %li
+          %a{href: "#"}
+            Risk communication
+        %li
+          %a{href: "#"}
+            Points of entry
+        %li
+          %a{href: "#"}
+            Chemical events
+        %li
+          %a{href: "#"}
+            Radiation emergencies
+      %li
+        %a{href: "#"}
+          Acronyms
+      %li
+        %a{href: "#"}
+          Acknowledgement
+
+
+.card
+  .card-header
+    .tab
+      Download
+  .card-body
+    .row.flex-nowrap
+      .col-1
+        = render file: Rails.root.join("app", "assets", "images", "ico-download.svg")
+      .col-11
+        %a{href: "http://www.who.int/iris/bitstream/10665/311158/1/9789241515429-eng.pdf?ua=1", target: "_blank"}
+          WHO Benchmarks for International Health Regulations (IHR) Capacities
+        .small.text-muted
+          PDF 2 MB
