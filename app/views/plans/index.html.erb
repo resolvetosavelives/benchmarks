@@ -35,18 +35,16 @@
               <td class="py-4"><%= link_to plan.name, plan %></td>
               <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
               <td class="py-4 text-secondary">
-                <%= link_to (render 'shared/icon',
-                             image_name: "ico-download.svg",
-                             text: "Download XLS"),
-                             costsheet_path(plan.id),
-                             data: { turbolinks: false } %>
+                <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
+                  <%= render file: Rails.root.join("app", "assets", "images", "ico-download.svg") %>
+                  Download XLS
+                <% end %>
               </td>
               <td class="py-4 text-secondary">
-                <%= link_to (render 'shared/icon',
-                             image_name: "ico-print.svg",
-                             text: "Print Worksheets"),
-                             worksheet_path(plan.id),
-                             data: { turbolinks: false } %>
+                <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
+                  <%= render file: Rails.root.join("app", "assets", "images", "ico-print.svg") %>
+                  Print Worksheets
+                <% end %>
               </td>
               <td class="py-4 text-secondary">
                 <%= link_to "Delete", plan_path(plan.id), method: :delete %>

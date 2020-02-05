@@ -41,6 +41,7 @@ $theme-colors: $colors;
 @import "./plan";
 @import "./assessments";
 @import "./chosen-custom";
+@import "./benchmark-document";
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
@@ -94,27 +95,54 @@ a {
   color: color("primary");
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
+  color: #212529;
+}
+
+h1, h2 {
   font-family: Pathway Gothic One, sans-serif;
+  font-weight: normal;
+}
+h3, h4, h5, h6 {
+  font-family: Karla, sans-serif;
+  font-weight: bold;
+}
+
+
+h1 {
   font-size: 58px;
-  line-height: 67px;
+  line-height: 62px;
   text-transform: uppercase;
+  margin-bottom: 50px;
 }
 
 h2 {
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 48px;
+  line-height: 55px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
 }
 
 h3 {
-  font-size: 29px;
-  line-height: 35px;
+  font-size: 24px;
+  line-height: 28px;
+  margin-bottom: 20px;
 }
 
 h4 {
   font-size: 21px;
   line-height: 26px;
+  margin-bottom: 20px;
+}
+
+h5 {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+h6 {
+  font-size: 15px;
+  line-height: 18px;
 }
 
 thead {
@@ -258,4 +286,20 @@ input[type="number"] {
 
   -moz-appearance: textfield;
   text-align: center;
+}
+
+svg.print, svg.download {
+  height: 16px;
+  width: 16px;
+  path {
+    fill: #2d2d35;
+  }
+}
+
+a:hover {
+  svg {
+    path {
+      fill: color("primary")
+    }
+  }
 }
