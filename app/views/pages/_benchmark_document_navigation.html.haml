@@ -5,14 +5,25 @@
   .card-body
     %ul.nav.flex-column
       %li
-        %a{href: "#"}
+        %a{href: introduction_path}
           Introduction
       %li
         Technical Areas
       %ol
         %li
-          %a{href: "#"}
+          %a{href: technical_area_1_path}
             National legislation, policy, and financing
+          - if request.path.eql?(technical_area_1_path)
+            %ul
+              %li
+                %a{href: "#{technical_area_1_path}#1.1"}
+                  Benchmark 1.1
+              %li
+                %a{href: "#{technical_area_1_path}#1.2"}
+                  Benchmark 1.2
+              %li
+                %a{href: "#{technical_area_1_path}#1.3"}
+                  Benchmark 1.3
         %li
           %a{href: "#"}
             IHR coordination, communication, and advocacy and reporting
@@ -70,7 +81,6 @@
       %li
         %a{href: "#"}
           Acknowledgement
-
 
 .card
   .card-header

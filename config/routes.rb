@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root to: "pages#home"
   get "/privacy_policy", to: "pages#privacy_policy"
-  get "/document/introduction", to: "pages#introduction", as: "benchmarks_intro"
+  get "/document/introduction", to: "pages#introduction", as: "introduction"
+  get "/document/1-national-legislation-policy-and-financing", to: "pages#technical_area_1", as: "technical_area_1"
   match "/get_started", to: "plans#get_started", via: [:get, :post]
   get "plan/goals/:country_name/:assessment_type(/:plan_term)(/:areas)", to: "plans#goals", as: "plan_goals"
   resources :plans, only: %i[show index create update destroy]

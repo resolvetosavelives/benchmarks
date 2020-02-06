@@ -24,4 +24,27 @@ describe PagesController do
     end
   end
 
+  describe "benchmarks introduction page" do
+    it "is connected as the root URL" do
+      assert_routing("/document/introduction", {controller: "pages", action: "introduction"})
+    end
+
+    it "responds with success" do
+      get introduction_url
+      assert_response :success
+      assert_template "pages/introduction"
+    end
+  end
+
+  describe "benchmarks technical area page 1" do
+    it "is connected as the root URL" do
+      assert_routing("/document/1-national-legislation-policy-and-financing", {controller: "pages", action: "technical_area_1"})
+    end
+
+    it "responds with success" do
+      get technical_area_1_url
+      assert_response :success
+      assert_template "pages/technical_area_1"
+    end
+  end
 end
