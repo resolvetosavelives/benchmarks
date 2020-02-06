@@ -8,6 +8,10 @@
       ul {
         li {
           margin: 0 0 0.5em 0;
+          ul {
+            list-style: none;
+            padding-left: 0;
+          }
         }
       }
       ol {
