@@ -1,5 +1,46 @@
 .benchmark-document {
+
+  .callout-with-icon {
+    @include make-row();
+    h3 {
+      margin-bottom: 0;
+    }
+    svg {
+      margin-top: 1.2em;
+    }
+    svg.scales-of-justice {
+      width: 48px;
+      height: 38px;
+    }
+    svg.dollar {
+      width: 27px;
+      height: 48px;
+      margin-left: 0.6em;
+    }
+    svg.star {
+      width: 48px;
+      height: 46px;
+    }
+    svg.bar-chart {
+      width: 48px;
+      height: 46px;
+      margin-left: 0.2em;
+      path {
+        transform: scale(2);
+      }
+    }
+    path {
+      fill: #2C8DC9;
+    }
+    margin-bottom: 1.2em;
+  }
+
   .sidebar-right {
+    svg {
+      path {
+        fill: color("primary");
+      }
+    }
     .print-link {
       margin-bottom: 1em;
     }
@@ -7,7 +48,7 @@
       margin-bottom: 2em;
       ul {
         li {
-          margin: 0 0 0.5em 0;
+          margin: 0 0 0.7em 0;
           ul {
             list-style: none;
             padding-left: 0;
@@ -23,11 +64,7 @@
       }
     }
   }
-  svg {
-    path {
-      fill: color("primary") !important;
-    }
-  }
+
   .card.callout {
     background: #2C8DC9;
     color: white;
@@ -38,6 +75,52 @@
     h4 {
       color: white;
       text-transform: uppercase;
+    }
+  }
+
+  hr.indicator-hr {
+    border-width: 3px;
+    border-color: #D5D5D7;
+    margin: 1.6em 0
+  }
+
+  .indicator-head {
+    h3 {
+      margin-bottom: 0;
+    }
+    margin-bottom: 1.5em;
+  }
+
+  .indicator-capacity-row {
+    @include make-row(0);
+    padding: 1px 0;
+    border-bottom: 1px solid #D5D5D7;
+    &.first {
+      border-top: 1px solid #D5D5D7;
+    }
+    .head {
+      color: white;
+      text-align: right;
+      padding: 1em;
+      .level-num {
+        font-size: 1.4em;
+      }
+      .level-desc {
+        font-size: 1.2em;
+      }
+    }
+    .body {
+      padding: 1em;
+      strong {
+        text-transform: uppercase;
+        margin-bottom: -15px;
+      }
+      ul {
+        padding-left: 1.2em;
+        li {
+          margin-bottom: 1em;
+        }
+      }
     }
   }
 }
