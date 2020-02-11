@@ -7,7 +7,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
     describe "#get_started" do
       it "is connected as /privacy_policy" do
-        assert_routing("/get_started", {controller: "plans", action: "get_started"})
+        assert_routing("/get-started", {controller: "plans", action: "get_started"})
       end
 
       it "responds with success" do

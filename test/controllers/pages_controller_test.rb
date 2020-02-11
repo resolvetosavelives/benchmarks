@@ -25,7 +25,7 @@ describe PagesController do
   end
 
   describe "benchmarks introduction page" do
-    it "is connected as the root URL" do
+    it "is connected at the expected URL" do
       assert_routing("/document/introduction", {controller: "pages", action: "introduction"})
     end
 
@@ -37,7 +37,7 @@ describe PagesController do
   end
 
   describe "benchmarks technical area page 1" do
-    it "is connected as the root URL" do
+    it "is connected at the expected URL" do
       assert_routing("/document/1-national-legislation-policy-and-financing", {controller: "pages", action: "technical_area_1"})
     end
 
@@ -45,6 +45,18 @@ describe PagesController do
       get technical_area_1_url
       assert_response :success
       assert_template "pages/technical_area_1"
+    end
+  end
+
+  describe "resource library" do
+    it "is connected at the expected URL" do
+      assert_routing("/resource-library", {controller: "pages", action: "resource_library"})
+    end
+
+    it "responds with success" do
+      get resource_library_url
+      assert_response :success
+      assert_template "pages/resource_library"
     end
   end
 end

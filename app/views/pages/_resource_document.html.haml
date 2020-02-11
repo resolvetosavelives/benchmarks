@@ -1,0 +1,20 @@
+- if [title, author, description, relevant_section].any?(&:present?)
+  .row.no-gutters
+    .document.col.card.flex-row
+      .cover-image
+        %img{src: image_path("resource-library/ENG-Facilitator-Guide-IDSR-Training.png")}
+      .document-about.col
+        - if title.present?
+          .document-title
+            = title
+        - if author.present? || date.present?
+          .document-byline
+            = [author, date].join(", ")
+        - if description.present?
+          .document-desc
+            = description
+        - if relevant_section.present?
+          .document-relevant-sections
+            %strong
+              Relevant Section:
+            = relevant_section
