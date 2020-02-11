@@ -61,14 +61,15 @@ body {
 footer {
   margin-top: auto;
   color: white;
-  font-family: Crimson Text, sans-serif;
-  font-size: 22px;
-  line-height: 28px;
+  font-family: Karla, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
 
   .heading {
     display: inline-block;
     padding-bottom: 1rem;
     border-bottom: solid 1px white;
+    font-size: 21px;
   }
 
   .copyright {
@@ -113,7 +114,7 @@ h1 {
   font-size: 58px;
   line-height: 62px;
   text-transform: uppercase;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 h2 {
