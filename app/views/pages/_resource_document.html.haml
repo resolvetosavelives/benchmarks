@@ -1,9 +1,10 @@
-- if [title, author, description, relevant_pages].any?(&:present?)
+- if [title, author, description, relevant_pages, download_url, thumbnail_url].any?(&:present?)
   .row.no-gutters
     .document.col.card.flex-row
-      .cover-image
-        %a{href: download_url, target: "_blank"}
-          %img{src: image_path("resource-library/ENG-Facilitator-Guide-IDSR-Training.png")}
+      - if thumbnail_url.present?
+        .cover-image
+          %a{href: download_url, target: "_blank"}
+            %img{src: image_path(thumbnail_url)}
       .document-about.col
         - if download_url.present? && title.present?
           %a{href: download_url, target: "_blank"}

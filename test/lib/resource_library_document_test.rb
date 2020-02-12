@@ -14,16 +14,25 @@ describe ResourceLibraryDocument do
   end
 
   describe ".all_from_csv" do
-    let(:result) { ResourceLibraryDocument.all_from_csv CSV.read(Rails.root.join("data", "resource_library_documents_from_airtable.csv")) }
+    let(:csv_data) { CSV.read(Rails.root.join("data", "resource_library_documents_from_airtable.csv")) }
+    let(:result) { ResourceLibraryDocument.all_from_csv(csv_data) }
 
     it "returns an array of ResourceLibraryDocuments" do
       result.must_be_instance_of Array
+      result.size.must_equal(csv_data.size - 1)
       result.first.must_be_instance_of ResourceLibraryDocument
+      result.last.must_be_instance_of ResourceLibraryDocument
     end
   end
 
-  describe ".new" do
-    let(:result) { ResourceLibraryDocument.new("title xyz", "desc xyz", "author xyz", "date xyz", "page xyz", "blah url") }
+  describe "#new_from_csv" do
+    let(:result) {
+      ResourceLibraryDocument.new_from_csv(
+        "title xyz", "desc xyz", "author xyz", "date xyz", "page xyz", "CSV download URL", "CSV thumbnail URL") }
+    before do
+      ResourceLibraryDocument.expects(:extract_download_url).with("CSV download URL").returns("test download URL")
+      ResourceLibraryDocument.stubs(:extract_download_url).with("CSV thumbnail URL").returns("test thumbnail URL")
+    end
 
     it "returns an instance of ResourceLibraryDocument with its members set" do
       result.must_be_instance_of ResourceLibraryDocument
@@ -32,7 +41,8 @@ describe ResourceLibraryDocument do
       result.author.must_equal "author xyz"
       result.date.must_equal "date xyz"
       result.relevant_pages.must_equal "page xyz"
-      result.download_url.must_equal "blah url"
+      result.download_url.must_equal "test download URL"
+      result.thumbnail_url.must_equal "test thumbnail URL"
     end
   end
 
