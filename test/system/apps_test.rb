@@ -14,7 +14,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # navigate to Get Started page and submit its form
-    assert_current_path("/get_started")
+    assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen('Nigeria', from: 'get_started_form_country_id')
     choose "Joint External Evaluation (JEE)"
@@ -92,7 +92,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # go to the Get Started page and fill the form
-    assert_current_path("/get_started")
+    assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen('Armenia', from: 'get_started_form_country_id')
     choose "State Party Annual Report (SPAR)"
@@ -151,7 +151,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # go to the Get Started page and fill the form
-    assert_current_path("/get_started")
+    assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen('Nigeria', from: 'get_started_form_country_id')
     choose "Joint External Evaluation (JEE)"
