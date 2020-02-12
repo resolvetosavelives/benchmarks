@@ -1,9 +1,17 @@
 .resource-library {
-  .document {
+  .result-metadata {
+    .pipe-with-space {
+      margin: 0 0.5em;
+    }
+  }
+  .document.card {
     min-height: 220px;
     padding: 1.2em;
     margin-bottom: 1em;
     .cover-image {
+      img {
+        border: 1px solid #EFEFEF;
+      }
     }
     .document-title {
       color: color("primary");
@@ -16,4 +24,58 @@
       margin-bottom: 1em;
     }
   }
+
+  //
+  // Apply the RTSL UX palette to the Chosen UI control by Harvest.
+  // Info on Chosen including its config options at: https://harvesthq.github.io/chosen/
+  //
+  // It was a little tough to style it, Chosen's styles are applied with high specificity
+  // which makes them difficult to override, hence plenty of use of "!important".
+  //
+  //
+  $our-chosen-height: 1.8em;
+  .chosen-container {
+    background-image: none;
+    width: 100% !important;
+  }
+  .chosen-container,
+  .chosen-container .chosen-single,
+  .chosen-container .chosen-single span {
+    font-size: 16px;
+    height: $our-chosen-height !important;
+    line-height: $our-chosen-height;
+  }
+
+  // this background-position stuff it to re-position the sprite image
+  // used to display the down/up arrow on the right side of the chosen box.
+  .chosen-container .chosen-single div b {
+    background-position: 0.1em 0.3em !important;
+  }
+  .chosen-container-active.chosen-with-drop .chosen-single div b {
+    background-position: -1em 0.3em !important;
+  }
+
+  // this background-image stuff is to remove the background gradient
+  // chosen has by default.
+  .chosen-container .chosen-results li.active-result.highlighted {
+    background-color: #2C8DC9;
+    background-image: none;
+    color: color("light")
+  }
+  .chosen-container-active.chosen-with-drop a.chosen-single,
+  .chosen-container a.chosen-single {
+    background-image: none;
+  }
+
+  // this section is to get the spacing right on the dropdown menu options
+  .chosen-container ul.chosen-results {
+    padding: 0;
+    margin: 0;
+  }
+  .chosen-container .chosen-results li {
+    font-size: 16px !important;
+    line-height: 22px !important;
+    padding: 0.65em 0.65em !important;
+  }
+
 }

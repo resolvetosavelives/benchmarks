@@ -3,4 +3,13 @@
     .tab
       Filter by
   .card-body
-    Coming soon.
+    %form{"data-target": "resource-library.filterForm"}
+      .form-row
+        .col
+          %strong
+            Technical Area
+      .form-row
+        .col
+          = select_tag :technical_area_id,
+              options_from_collection_for_select(@technical_areas, :id, :text),
+              {include_blank: true, prompt: "Type or select an option", class: "custom-select", "data-target": "resource-library.technicalAreaSelect"}
