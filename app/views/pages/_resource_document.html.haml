@@ -1,10 +1,14 @@
-- if [title, author, description, relevant_section].any?(&:present?)
+- if [title, author, description, relevant_pages].any?(&:present?)
   .row.no-gutters
     .document.col.card.flex-row
       .cover-image
-        %img{src: image_path("resource-library/ENG-Facilitator-Guide-IDSR-Training.png")}
+        %a{href: download_url, target: "_blank"}
+          %img{src: image_path("resource-library/ENG-Facilitator-Guide-IDSR-Training.png")}
       .document-about.col
-        - if title.present?
+        - if download_url.present? && title.present?
+          %a{href: download_url, target: "_blank"}
+            = title
+        - elsif title.present?
           .document-title
             = title
         - if author.present? || date.present?
@@ -13,8 +17,8 @@
         - if description.present?
           .document-desc
             = description
-        - if relevant_section.present?
+        - if relevant_pages.present?
           .document-relevant-sections
             %strong
               Relevant Section:
-            = relevant_section
+            = relevant_pages
