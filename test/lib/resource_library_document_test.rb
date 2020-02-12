@@ -14,8 +14,9 @@ describe ResourceLibraryDocument do
   end
 
   describe ".all_from_csv" do
-    let(:csv_data) { CSV.read(Rails.root.join("data", "resource_library_documents_from_airtable.csv")) }
-    let(:result) { ResourceLibraryDocument.all_from_csv(csv_data) }
+    let(:path_to_csv_file) { Rails.root.join("data", "resource_library_documents_from_airtable.csv") }
+    let(:csv_data) { CSV.read(path_to_csv_file) }
+    let(:result) { ResourceLibraryDocument.all_from_csv(path_to_csv_file) }
 
     it "returns an array of ResourceLibraryDocuments" do
       result.must_be_instance_of Array
@@ -28,7 +29,7 @@ describe ResourceLibraryDocument do
   describe "#new_from_csv" do
     let(:result) {
       ResourceLibraryDocument.new_from_csv(
-        "title xyz", "desc xyz", "author xyz", "date xyz", "page xyz", "CSV download URL", "CSV thumbnail URL") }
+        "title xyz", "desc xyz", "author xyz", "date xyz", "page xyz", "CSV download URL", "CSV thumbnail URL", "Antimicrobial Resistance") }
     before do
       ResourceLibraryDocument.expects(:extract_download_url).with("CSV download URL").returns("test download URL")
       ResourceLibraryDocument.stubs(:extract_download_url).with("CSV thumbnail URL").returns("test thumbnail URL")
@@ -43,6 +44,7 @@ describe ResourceLibraryDocument do
       result.relevant_pages.must_equal "page xyz"
       result.download_url.must_equal "test download URL"
       result.thumbnail_url.must_equal "test thumbnail URL"
+      result.technical_area.must_equal "Antimicrobial Resistance"
     end
   end
 

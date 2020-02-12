@@ -1,13 +1,15 @@
 <nav class="navbar navbar-expand-lg text-white bg-blue justify-content-between">
   <%= link_to image_tag("who-logo.svg", alt: "WHO Logo"), "https://extranet.who.int/sph/country-planning", target: "_blank" %>
- <div>
-  <ul class="navbar-nav">
-    <li class="nav-item"><%= link_to "HOME", root_path %></li>
-    <li class="nav-item"><%= link_to "WHO BENCHMARKS", introduction_url %></li>
+  <div>
+    <ul class="navbar-nav">
+      <li class="nav-item"><%= link_to "HOME", root_path %></li>
+      <li class="nav-item"><%= link_to "WHO BENCHMARKS", introduction_url %></li>
+      <li class="nav-item"><%= link_to "RESOURCE LIBRARY", resource_library_url %></li>
       <% if current_user %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <%= current_user.email %> <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
+            <%= current_user.email %>
+            <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
           </a>
           <div class="dropdown-menu">
             <%= link_to "My Plans", plans_path, class: "dropdown-item" %>
@@ -20,6 +22,6 @@
           <%= link_to "LOG IN", new_user_session_path %>
         </li>
       <% end %>
-  </ul>
- </div>
+    </ul>
+  </div>
 </nav>
