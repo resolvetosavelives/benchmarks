@@ -1,0 +1,16 @@
+- require 'csv'
+
+- cache "resource-library" do
+  - documents = ResourceLibraryDocument.all_from_csv CSV.read(Rails.root.join("data", "resource_library_documents_from_airtable.csv"))
+  .resource-library
+    %h1 Resource Library
+    .row.flex-wrap-reverse
+      .col-lg-3.col-md-12
+        = render partial: "resource_filter_by"
+      .col-lg-7.col-md-12
+        %p
+          %strong
+            Showing:
+          = pluralize documents.size, "resource"
+        - documents.each do |document|                                
+          = render partial: "resource_document", locals: document.to_h

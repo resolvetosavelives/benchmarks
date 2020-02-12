@@ -1,0 +1,19 @@
+.resource-library {
+  .document {
+    min-height: 220px;
+    padding: 1.2em;
+    margin-bottom: 1em;
+    .cover-image {
+    }
+    .document-title {
+      color: color("primary");
+    }
+    .document-byline {
+      color: color("text-disabled");
+      margin-bottom: 1em;
+    }
+    .document-desc {
+      margin-bottom: 1em;
+    }
+  }
+}
