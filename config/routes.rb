@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   # Benchmark Document section
   get "/document/introduction", to: "pages#introduction", as: "introduction"
   get "/document/1-national-legislation-policy-and-financing", to: "pages#technical_area_1", as: "technical_area_1"
+  get "/document/2-ihr-coordination-communication-and-advocacy-and-reporting", to: "pages#technical_area_2", as: "technical_area_2"
+  get "/document/3-antimicrobial-resistance", to: "pages#technical_area_3", as: "technical_area_3"
   get "/document/acronyms", to: "pages#acronyms", as: "acronyms"
   get "/document/acknowledgement", to: "pages#acknowledgement", as: "acknowledgement"
-  get "/document/2-ihr-coordination-communication-and-advocacy-and-reporting", to: "pages#technical_area_2", as: "technical_area_2"
 end
