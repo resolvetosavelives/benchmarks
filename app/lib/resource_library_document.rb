@@ -1,16 +1,29 @@
-class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url)
+class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url, :thumbnail_url)
 
   def self.all_from_csv(array_of_rows)
     array_of_rows.drop(1).map do |row|
-      new(
+      new_from_csv(
         row[2]&.strip,
         row[3]&.strip,
         row[7]&.strip,
         row[8]&.strip,
         row[11]&.strip,
-        extract_download_url(row[1]&.strip)
+        row[1]&.strip,
+        row[13]&.strip
       )
     end
+  end
+
+  def self.new_from_csv(title, description, author, date, relevant_pages, download_url, thumbnail_url)
+    new(
+      title,
+      description,
+      author,
+      date,
+      relevant_pages,
+      extract_download_url(download_url),
+      extract_download_url(thumbnail_url)
+    )
   end
 
   ##
