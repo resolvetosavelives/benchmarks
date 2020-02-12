@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   root to: "pages#home"
-  match "/get_started", to: "plans#get_started", via: [:get, :post]
+  match "/get-started", to: "plans#get_started", via: [:get, :post]
   get "plan/goals/:country_name/:assessment_type(/:plan_term)(/:areas)", to: "plans#goals", as: "plan_goals"
   resources :plans, only: %i[show index create update destroy]
   resources :worksheets, only: %i[show]
@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   ##
   # static pages
   get "/privacy_policy", to: "pages#privacy_policy"
+  get "/resource-library", to: "pages#resource_library", as: "resource_library"
   ##
   # Benchmark Document section
   get "/document/introduction", to: "pages#introduction", as: "introduction"
