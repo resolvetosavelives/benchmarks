@@ -53,11 +53,27 @@
                 %a{href: "#{technical_area_3_path}#3.4"}
                   Benchmark 3.4
         %li
-          %a{href: "#"}
+          %a{href: technical_area_4_path}
             Zoonotic disease
+          - if request.path.eql?(technical_area_4_path)
+            %ul
+              %li
+                %a{href: "#{technical_area_4_path}#4.1"}
+                  Benchmark 4.1
+              %li
+                %a{href: "#{technical_area_4_path}#4.2"}
+                  Benchmark 4.2
         %li
-          %a{href: "#"}
+          %a{href: technical_area_5_path}
             Food safety
+          - if request.path.eql?(technical_area_5_path)
+            %ul
+              %li
+                %a{href: "#{technical_area_5_path}#5.1"}
+                  Benchmark 5.1
+              %li
+                %a{href: "#{technical_area_4_path}#5.2"}
+                  Benchmark 5.2
         %li
           %a{href: "#"}
             Immunization
