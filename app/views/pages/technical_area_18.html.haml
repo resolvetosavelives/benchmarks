@@ -1,0 +1,176 @@
+= render layout: "layouts/benchmark_document" do
+
+  %h1
+    18. Radiation emergencies
+  
+  %p
+    States Parties should have surveillance and response capacity for radiological emergencies and nuclear incidents. This requires effective coordination among all sectors involved in radiation emergency preparedness and response.
+    
+  .callout-with-icon
+    .col-1.mx-auto.px-0
+      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+    .col
+      %h3
+        Impact
+      Timely detection and effective response to potential radiological emergencies and nuclear incidents with cross-sectoral coordination. 
+      
+  .callout-with-icon
+    .col-1.mx-auto.px-0
+      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+    .col
+      %h3
+        Monitoring and evaluation
+      (1) Mechanisms established and functioning for detecting and responding to radiological emergencies. 
+
+  %hr.indicator-hr
+  %a{name: "18.1"}
+
+  .indicator-head
+    %h3
+      Benchmark 18.1
+    Mechanism is in place for detecting and responding to radiological and nuclear emergencies emergencies
+  %p
+    %strong
+      Objective:
+    Establish a mechanism to detect and respond to radiological and nuclear emergencies
+
+  .indicator-capacity-row.first
+    .head.col.bg-danger
+      .level-num
+        01
+      .level-desc
+        No capacity
+    .body.col-9
+      No mechanism (such as policies, plans and coordination process) is in place for the detection, assessment and response to radiation emergencies.
+
+  .indicator-capacity-row
+    .head.col.bg-warning
+      .level-num
+        02
+      .level-desc
+        Limited capacity
+    .body.col-9
+      %strong
+        Actions to achieve this level:
+      %ul
+        %li 
+          Identify key stakeholders and designate focal points responsible for radiation-related hazards and emergencies, especially from radiation authorities and public health units. 
+        %li 
+          Develop SOPs or protocols for coordination and communication with national authorities, clearly indicating roles and responsibilities, including for the health ministry and IHR focal points.
+        %li 
+          Convene a meeting with key stakeholders to review, assess, map and develop policies, strategies and plans for detection, assessment and response to radiation emergencies.
+        %li 
+          Disseminate these policies, plans and legislation for radiological event surveillance, alert and response to relevant stakeholders.
+        %li 
+          Conduct a risk assessment for radiation hazards.
+        %li 
+          Develop a radiation monitoring mechanism with required SOPs and guidelines, and establish a mechanism to share information among the relevant stakeholders.
+        %li 
+          Train relevant staff on these SOPs, guidelines and information sharing.
+        %li 
+          Procure logistics for robust radiation monitoring systems. 
+        %li 
+          Designate or secure access to laboratory capacity to monitor, identify and assess exposure.
+        
+  .indicator-capacity-row
+    .head.col.bg-warning
+      .level-num
+        03
+      .level-desc
+        Developed capacity
+    .body.col-9
+      %strong
+        Actions to achieve this level:
+      %ul
+        %li 
+          Identify key technical experts from relevant sectors to develop technical guidelines or SOPs for the management of radiation emergencies (including risk assessment, reporting, event confirmation, notification and investigation).
+        %li 
+          Develop training package(s) on these guidelines/SOPs for the management of radiation emergencies and train relevant staff at least at the national level.
+        %li 
+          Develop policies, protocols and strategies for national and international transport of radioactive materials, samples and waste management, and ensure logistic requirements for transportation.
+        %li 
+          Procure or ensure access to stockpile to support radiation emergency preparedness and response, and develop a distribution plan for the event of an emergency. 
+        %li 
+          Develop guidelines for management of radiological waste including that from the hospitals and medical services.
+        %li 
+          Establish a waste management site with the required capacity for monitoring it. 
+        %li 
+          Develop case management guidelines to manage cases of radiation emergencies (either as a stand-alone guideline or as part of the case management guidelines for all hazards (refer to Benchmark 14.3)). 
+        %li 
+          Identify health facilities that can manage patients in the event of a radiation emergency. 
+        %li 
+          Train relevant healthcare workers on these protocols and guidelines.
+        %li 
+          Develop a mechanism for systematic information exchange between competent radiological authorities and human health surveillance units about radiological events and potential risks.
+        
+  .indicator-capacity-row
+    .col.head.bg-success
+      .level-num
+        04
+      .level-desc
+        Demonstrated capacity
+    .col-9.body
+      %strong
+        Actions to achieve this level:
+      %ul
+        %li 
+          Conduct after-action reviews or simulation exercises in the absence of real events to:
+          %li
+            evaluate/test the guidelines/SOPs (conduct jointly with the competent radiation authorities and the public health unit);
+          %li
+            test coordination and communication mechanisms between relevant national competent authority for nuclear regulatory control/safety and relevant sectors;
+          %li
+            test case management capacity; and 
+          %li
+            update guidelines/SOPs and coordination and communication mechanisms based on the findings.
+        %li 
+          Respond to any radiological threats with joint risk assessment, investigation and implementation of the response plan.
+        %li 
+          Ensure that if SOPs call for prepositioning of logistics to address a radiation emergency, distribute these logistics in all designated places at all times.
+        %li 
+          Share information with relevant stakeholders regularly on the risk and threats that are potential for emergencies.
+        
+        
+  .indicator-capacity-row
+    .head.col.bg-success
+      .level-num
+        05
+      .level-desc
+        Sustainable capacity
+    .body.col-9
+      %strong
+        Actions to achieve this level:
+      %ul
+        %li 
+          Document and disseminate best practices of test results and reviews.
+        %li 
+          Conduct regular training of staff of health facilities to manage patients in the event of a radiation emergency. 
+        %li 
+          Develop and conduct emergency response drills and other exercises on radiation emergency and update the response plan, mechanisms and guidelines accordingly.
+        %li 
+          Sustain a mechanism to ensure response capacity at national, subnational and local levels.
+        
+  %h3 Tools:
+  %ul
+    %li 
+      %a{href:"https://www.who.int/hac/techguidance/preparedness/risk-management-radiation-december2017.pdf", target: "_blank"}
+        Health Emergency and Disaster Risk Management - Radiation Emergencies 
+    %li 
+      %a{href:"https://www.who.int/ionizing_radiation/a_e/radiological-nuclear-emergencies/en/", target: "_blank"}
+        Development of WHO Guidelines on Public Health Response to Radiological and Nuclear Emergencies (2012-2016)
+    %li 
+      %a{href:"https://www.who.int/ionizing_radiation/about/med_exposure/en/index1.html", target: "_blank"}
+        Medical Radiation exposure
+    %li 
+      Radiation Emergencies - 
+      %a{href:"https://www.who.int/ionizing_radiation/a_e/en/", target: "_blank"}
+        WHO Webpage
+    %li 
+      Incident and Emergency Center – 
+      %a{href: "https://www.iaea.org/about/organizational-structure/department-of-nuclear-safety-and-security/incident-and-emergency-centre", target: "_blank"}
+        International Atomic Energy Agency
+    %li 
+      Resources from 
+      %a{href: "https://www.iaea.org/publications", target: "_blank"}
+        International Atomic Energy Agency 
+  
