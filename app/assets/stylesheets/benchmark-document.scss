@@ -1,7 +1,7 @@
 .benchmark-document {
 
   .callout-with-icon {
-    @include make-row();
+    @include make-row(0);
     h3 {
       margin-bottom: 0;
     }
