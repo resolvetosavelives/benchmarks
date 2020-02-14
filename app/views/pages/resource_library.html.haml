@@ -1,6 +1,6 @@
 - require 'csv'
 
-.resource-library{"data-controller": "resource-library"}
+.resource-library{"data-controller": "resource-library", "data-resource-library-technical-areas": @technical_areas.to_json, "data-resource-library-template-selector": "#templateForFilterCirterionBadgePill"}
   %h1 Resource Library
   .row.flex-wrap-reverse
     .col-lg-4.col-md-12
@@ -14,9 +14,18 @@
             |
           %strong
             Selections:
+          %span#filterCriteriaDisplay{"data-target": "resource-library.filterCriteriaDisplay"}
+
         %p
           %strong
             Showing:
           %span{"data-target": "resource-library.documentCount"}
       - @documents.each do |document|
-        = render partial: "resource_document", locals: document.to_h
+        = render partial: "resource_document", locals: {document: document}
+
+%script#templateForFilterCirterionBadgePill{type: "text/html"}
+  %span.badge.badge-pill
+    {{text}}
+    %svg.x-close{"data-action": "click->resource-library\#{{methodName}}", xmlns: "http://www.w3.org/2000/svg"}
+      %path{d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"}
+      %path{d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"}

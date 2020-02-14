@@ -3,6 +3,26 @@
     .pipe-with-space {
       margin: 0 0.5em;
     }
+    #filterCriteriaDisplay {
+      line-height: 2.1em;
+      .badge-pill {
+        background-color: #ABABAB;
+        color: white;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0 0.1em;
+        padding-top: 0.4em;
+        padding-right: 0.25em;
+        svg.x-close {
+          position: relative;
+          top: -0.1em;
+          cursor: pointer;
+          width: 20px;
+          height: 20px;
+          fill: white;
+        }
+      }
+    }
   }
   .document.card {
     min-height: 220px;
@@ -24,7 +44,14 @@
       margin-bottom: 1em;
     }
   }
-
+  .card.resource-filter-by {
+    .form-row {
+      margin-bottom: 1.2em;
+      .col {
+        margin-bottom: 0.4em;
+      }
+    }
+  }
   //
   // Apply the RTSL UX palette to the Chosen UI control by Harvest.
   // Info on Chosen including its config options at: https://harvesthq.github.io/chosen/
