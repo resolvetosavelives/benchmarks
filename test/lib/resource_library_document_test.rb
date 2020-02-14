@@ -14,9 +14,8 @@ describe ResourceLibraryDocument do
   end
 
   describe ".all_from_csv" do
-    let(:path_to_csv_file) { Rails.root.join("data", "resource_library_documents_from_airtable.csv") }
-    let(:csv_data) { CSV.read(path_to_csv_file) }
-    let(:result) { ResourceLibraryDocument.all_from_csv(path_to_csv_file) }
+    let(:csv_data) { CSV.read(ResourceLibraryDocument::PATH_TO_CSV_FILE) }
+    let(:result) { ResourceLibraryDocument.all_from_csv }
 
     it "returns an array of ResourceLibraryDocuments" do
       result.must_be_instance_of Array
@@ -29,7 +28,9 @@ describe ResourceLibraryDocument do
   describe "#new_from_csv" do
     let(:result) {
       ResourceLibraryDocument.new_from_csv(
-        "title xyz", "desc xyz", "author xyz", "date xyz", "page xyz", "CSV download URL", "CSV thumbnail URL", "Antimicrobial Resistance") }
+        "title xyz", "desc xyz", "author xyz", "date xyz", "page xyz",
+        "CSV download URL", "CSV thumbnail URL", "Antimicrobial Resistance",
+        "Case Study") }
     before do
       ResourceLibraryDocument.expects(:extract_download_url).with("CSV download URL").returns("test download URL")
       ResourceLibraryDocument.stubs(:extract_download_url).with("CSV thumbnail URL").returns("test thumbnail URL")
@@ -45,7 +46,32 @@ describe ResourceLibraryDocument do
       result.download_url.must_equal "test download URL"
       result.thumbnail_url.must_equal "test thumbnail URL"
       result.technical_area.must_equal "Antimicrobial Resistance"
+      result.resource_type.must_equal "Case Study"
     end
   end
 
+  describe ".resource_type_ordinal" do
+
+    describe "for a known type" do
+      it "returns the expected integer" do
+        ResourceLibraryDocument.resource_type_ordinal("Briefing Note").must_equal 1
+        ResourceLibraryDocument.resource_type_ordinal("Case Study").must_equal 2
+        ResourceLibraryDocument.resource_type_ordinal("Training Package").must_equal 8
+      end
+    end
+
+    describe "for nil" do
+      it "returns nil" do
+        ResourceLibraryDocument.resource_type_ordinal(nil).must_be_nil
+      end
+    end
+
+    describe "for an invalid type" do
+      it "returns nil" do
+        ResourceLibraryDocument.resource_type_ordinal("Something Else").must_be_nil
+        ResourceLibraryDocument.resource_type_ordinal("Briefing Notes").must_be_nil
+      end
+    end
+
+  end
 end

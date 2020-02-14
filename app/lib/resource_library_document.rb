@@ -1,9 +1,12 @@
 require 'csv'
 
-class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url, :thumbnail_url, :technical_area)
+class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url, :thumbnail_url, :technical_area, :resource_type)
+  PATH_TO_CSV_FILE = Rails.root.join("data", "resource_library_documents_from_airtable.csv").freeze
+  # NB: these are in singular form because that is how they are in AirTable/CSV data source
+  RESOURCE_TYPES = ["Briefing Note", "Case Study", "Example", "Guideline", "Manual", "Template", "Tool", "Training Package"].freeze
 
-  def self.all_from_csv(path_to_csv_file)
-    array_of_rows = CSV.read(path_to_csv_file)
+  def self.all_from_csv
+    array_of_rows = CSV.read(PATH_TO_CSV_FILE)
     array_of_rows.drop(1).map do |row|
       new_from_csv(
         row[2]&.strip,
@@ -13,12 +16,13 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
         row[11]&.strip,
         row[1]&.strip,
         row[13]&.strip,
-        row[4]&.strip
+        row[4]&.strip,
+        row[6]&.strip
       )
     end
   end
 
-  def self.new_from_csv(title, description, author, date, relevant_pages, download_url, thumbnail_url, technical_area)
+  def self.new_from_csv(title, description, author, date, relevant_pages, download_url, thumbnail_url, technical_area, resource_type)
     new(
       title,
       description,
@@ -27,7 +31,8 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
       relevant_pages,
       extract_download_url(download_url),
       extract_download_url(thumbnail_url),
-      technical_area
+      technical_area,
+      resource_type
     )
   end
 
@@ -43,6 +48,16 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
     # pluck out the URL from within the parentheses at the end of this string
     match = first_attachment.match(/.*\((.*)\)\Z/)
     return match[1] if match
+  end
+
+  def self.resource_type_ordinal(resource_type_name)
+    index = RESOURCE_TYPES.index(resource_type_name)
+    return nil if index.nil?
+    index + 1
+  end
+
+  def resource_type_ordinal
+    self.class.resource_type_ordinal self.resource_type
   end
 
 end
