@@ -1,5 +1,6 @@
 - if [title, author, description, relevant_pages, download_url, thumbnail_url].any?(&:present?)
-  .row.no-gutters
+  - tid = technical_area_to_id(@technical_areas, technical_area)
+  .document.row.no-gutters{class: "technical-area-#{tid}"}
     .document.col.card.flex-row
       - if thumbnail_url.present?
         .cover-image

@@ -3,7 +3,7 @@ class BenchmarkTechnicalArea < ApplicationRecord
 
   has_many :benchmark_indicators
 
-  default_scope { includes(:benchmark_indicators).order(:sequence) }
+  default_scope { order(:sequence) }
 
   def self.to_abbreviation_map(benchmark_technical_areas = nil)
     abbreviation_map = {}
