@@ -95,7 +95,6 @@ class PlansController < ApplicationController
     @benchmark_technical_areas = benchmark_document.technical_areas
     @benchmark_indicators = benchmark_document.indicators
     @all_activities = benchmark_document.activities
-    @technical_area_abbrev_map = BenchmarkTechnicalArea.to_abbreviation_map(@benchmark_technical_areas)
     @nudges_by_activity_type_json = File.read(Rails.root.join("app", "fixtures", "nudges_for_activity_types.json"))
     @plan = Plan.deep_load(params.fetch(:id))
     @count_activities_by_ta = @plan.count_activities_by_ta(@benchmark_technical_areas)

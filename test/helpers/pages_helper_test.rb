@@ -10,11 +10,11 @@ class PagesHelperTest < ActionView::TestCase
   end
 
   test "#technical_area_to_id handles arg not in the collection" do
-    assert_equal nil, technical_area_to_id(technical_areas, "asd123")
+    assert_nil technical_area_to_id(technical_areas, "asd123")
   end
 
   test "#technical_area_to_id handles nil" do
-    assert_equal nil, technical_area_to_id(technical_areas, nil)
+    assert_nil technical_area_to_id(technical_areas, nil)
   end
 
 end

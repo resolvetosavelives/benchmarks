@@ -186,19 +186,19 @@ export default class extends Controller {
   }
 
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
-    const chartLabels = this.chartLabels[this.currentChartIndex]
-    if (chartLabels[index]) {
+    if (index > 0) {
       $($elBarSegment).on('click', () => {
         $("#activity-list-by-type-container").hide()
         $('.technical-area-container').hide()
-        $('#technical-area-' + chartLabels[index]).show()
+        // NB: index is zero-based, but the target is 1-based, which is why +1.
+        $(`#technical-area-${index + 1}`).show()
       })
     }
   }
 
   initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
-    const chartLabels = this.chartLabels[this.currentChartIndex]
-    let $elTitle = $('#technical-area-' + chartLabels[index])
+    // NB: index is zero-based, but the target is 1-based, which is why +1.
+    let $elTitle = $(`#technical-area-${index + 1}`)
     let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
         .attr("title", tooltipTitle)
