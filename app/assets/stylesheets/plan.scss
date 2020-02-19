@@ -243,6 +243,7 @@
   .ct-chart-bar {
     // needs more bottom margin to allow the angled labels to display w/o cut off
     margin : 0 0 50px 0;
+    overflow: visible;
   }
 }
 
