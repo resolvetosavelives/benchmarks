@@ -41,8 +41,8 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert page.has_content?("TOTAL ACTIVITIES")
     assert_equal "235", find(".activity-count-circle span").text
-    assert_selector("#technical-area-B1") # the first one
-    assert_selector("#technical-area-B18") # the last one
+    assert_selector("#technical-area-1") # the first one
+    assert_selector("#technical-area-18") # the last one
     assert_selector(".nudge-container") do
       assert page.has_content?( # nudge content for 1-year plan
         "Focus on no more than 2-3 activities per technical area"
@@ -51,13 +51,13 @@ class AppsTest < ApplicationSystemTestCase
 
     # verify bar chart by technical area filter functionality
     find('line[data-original-title*="Radiation Emerg"]').click
-    assert_selector("#technical-area-B18") # the last one
-    assert_no_selector("#technical-area-B1") # the first one
+    assert_selector("#technical-area-18") # the last one
+    assert_no_selector("#technical-area-1") # the first one
 
     # un-filter to show all
     find(".activity-count-circle").click
-    assert_selector("#technical-area-B1")
-    assert_selector("#technical-area-B18")
+    assert_selector("#technical-area-1")
+    assert_selector("#technical-area-18")
 
     # edit the plan name and hit save button
     find("#plan_name").fill_in with: "Saved Nigeria Plan 789"

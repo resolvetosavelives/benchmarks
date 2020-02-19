@@ -230,22 +230,19 @@
     color: #545B62;
   }
 
-  #bar-chart-by-activity-type {
-    // needs more bottom margin to allow the angled labels to display w/o cutoff
-    .ct-chart-bar {
-      overflow: visible;
-      margin : 0 0 90px 0;
-    }
+  // labels for chart by activity type at 45º angle per design
+  .ct-label.ct-horizontal {
+    position: fixed; // makes the labels and their position scale/zoom well
+    justify-content: flex-end;
+    text-align: right;
+    transform-origin: right;
+    transform: translate(-45%) rotate(-45deg);
+    white-space: nowrap;
+  }
 
-    // labels for chart by activity type at 45º angle per design
-    .ct-label.ct-horizontal {
-      position: fixed; // makes the labels and their position scale/zoom well
-      justify-content: flex-end;
-      text-align: right;
-      transform-origin: right;
-      transform: translate(-45%) rotate(-45deg);
-      white-space: nowrap;
-    }
+  .ct-chart-bar {
+    // needs more bottom margin to allow the angled labels to display w/o cut off
+    margin : 0 0 50px 0;
   }
 }
 

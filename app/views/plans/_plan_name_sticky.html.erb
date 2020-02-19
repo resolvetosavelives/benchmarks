@@ -2,7 +2,7 @@
 
   <div class="col-11 mx-auto row justify-content-between">
 
-    <div class="col-2">
+    <div class="col-auto">
       <div style="height: 60px;">
         <div class="form-group alt-header" style="min-width: 200px;">
           <%= form.text_field :name, data: { target: "plan.name", action: "change->plan#validateName" }, class: "form-control", required: true %>
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div class="col-2">
+    <div class="col-auto">
       <div style="min-width: 140px;">
         <%= submit_tag "Save Plan", data: { target: "plan.submit", action: "plan#saveActivityIdsToField"}, class: "btn btn-orange w-100 align-self-center" %>
       </div>
