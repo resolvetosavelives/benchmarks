@@ -1,1 +1,4 @@
-defaults
+# Browsers that we support
+
+IE 10
+> 0.5% # this should be pretty wide support, but not overly so.

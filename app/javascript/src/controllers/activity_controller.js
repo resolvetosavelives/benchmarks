@@ -19,7 +19,7 @@ export default class extends Controller {
   deleteSelf(e) {
     const { currentTarget } = e
     this.removeActivityId(this.id, this.barSegmentIndex)
-    currentTarget.closest(".row").remove()
+    $(currentTarget.closest(".row")).remove()
   }
 
   removeActivityId(activityId, barSegmentIndex) {

@@ -4,7 +4,7 @@
     <title>Resolve To Save Lives -- Benchmarks</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><%#= this meta tag is per Bootstrap: https://getbootstrap.com/docs/4.4/getting-started/introduction/  %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application', async: true %>
   </head>
@@ -12,9 +12,9 @@
   <body>
     <%= render "layouts/header" %>
 
-    <div class="container-fluid">
+    <div class="container page-container">
       <div class="row">
-        <div class="col-11 mx-auto">
+        <div class="col-12">
 
           <% if notice %>
             <div class="alert alert-primary">
@@ -27,7 +27,7 @@
             </div>
           <% end %>
 
-          <div class="page-content-container">
+          <div>
             <%= yield %>
           </div>
 
