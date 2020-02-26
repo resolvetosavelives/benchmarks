@@ -2,19 +2,24 @@
   "name": "benchmarks",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^4.0.7",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-regenerator": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@rails/webpacker": "^4.2.2",
+    "@stimulus/polyfills": "^1.1.1",
     "@stimulus/webpack-helpers": "^1.1.1",
     "bootstrap": "4.3.1",
     "bootstrap-multiselect": "^0.9.13-1",
     "chartist": "^0.11.4",
+    "chosen-js": "^1.8.7",
+    "core-js": "^3.6.4",
     "hogan.js": "^3.0.2",
     "jquery": "^3.4.1",
     "jquery-ui": "^1.12.1",
     "jquery-ujs": "^1.2.2",
     "popper.js": "^1.15.0",
     "stimulus": "^1.1.1",
-    "turbolinks": "^5.2.0",
-    "chosen-js": "^1.8.7"
+    "turbolinks": "^5.2.0"
   },
   "prettier": {
     "semi": false
@@ -24,10 +29,9 @@
   },
   "devDependencies": {
     "babel-jest": "^24.9.0",
-    "babel-preset-es2015": "^6.24.1",
     "jest": "^24.9.0",
     "mutationobserver-shim": "^0.3.3",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.10.3"
   },
   "jest": {
     "setupFiles": [

@@ -46,6 +46,10 @@ $theme-colors: $colors;
 @import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
 @import url('https://fonts.googleapis.com/css?family=Karla:700&display=swap');
+@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+  /* styles specific to IE 10-11 go here */
+  @import "./ie";
+}
 
 html {
   height: 100%;
@@ -114,6 +118,7 @@ h1 {
   font-size: 58px;
   line-height: 62px;
   text-transform: uppercase;
+  margin-top: 30px;
   margin-bottom: 30px;
 }
 
@@ -191,11 +196,6 @@ nav.navbar {
   }
 }
 
-.page-content-container {
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
 .login-button {
   width: 244px;
   font-size: 26px;
@@ -246,7 +246,6 @@ a.cta-btn {
   position: sticky;
   z-index: 1;
   top: 0;
-  margin-top: -40px;
 }
 
 .full-width {

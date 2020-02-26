@@ -11,7 +11,8 @@ class PlanActivity < ApplicationRecord
   def self.new_for_benchmark_activity(benchmark_indicator_activity)
     new(
       benchmark_indicator_activity: benchmark_indicator_activity,
-      benchmark_indicator_id: benchmark_indicator_activity.benchmark_indicator_id
+      benchmark_indicator_id: benchmark_indicator_activity.benchmark_indicator_id,
+      benchmark_technical_area_id: benchmark_indicator_activity.benchmark_technical_area_id
     )
   end
 end

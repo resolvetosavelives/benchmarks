@@ -18,15 +18,6 @@
   margin-bottom: 40px;
 }
 
-.plan-index-header {
-  margin-top: 50px;
-  h1 {
-    font-family: Pathway Gothic One;
-    text-transform: uppercase;
-    font-size: 58px;
-  }
-}
-
 .activity-count-header {
   font-family: "Pathway Gothic One", sans-serif;
   .activity-count-circle {
@@ -83,13 +74,13 @@
 
     .confirm-delete,
     .delete {
-      display: none;
+      visibility: hidden;
     }
 
     &:hover {
       .confirm-delete,
       .delete {
-        display: inherit;
+        visibility: visible;
       }
     }
   }
@@ -149,10 +140,29 @@
     background-color: rgba(0, 0, 0, 0.03);
   }
 
+  .tab-pane {
+    width: 100%;
+    padding: 0 2em;
+  }
+
+  .chart-pane {
+    width: 100%;
+    flex-grow: 2;
+  }
+
+  .chart-container {
+    width: 100%; // this is what effectively sets the chart width
+    svg {
+      margin-left: -10px; // this is to slide the chart to the left since the SVG has plenty of white space on the left side for some reason
+    }
+  }
+
   .nudge-container {
     padding: 0;
+    flex-grow: 1;
     .card {
-      width: 400px;
+      max-width: 400px;
+      min-width: 260px;
       min-height: 238px;
       margin: 20px auto;
       padding: 1em;
@@ -162,13 +172,13 @@
       ul {
         padding-left: 30px;
       }
-    }
-    p {
-      margin: 10px 12px 20px 12px;
-      font-weight: bold;
-    }
-    li {
-      font-size: 14px;
+      p {
+        margin: 10px 12px 20px 12px;
+        font-weight: bold;
+      }
+      li {
+        font-size: 14px;
+      }
     }
     svg.lightbulb {
       height: 18px;

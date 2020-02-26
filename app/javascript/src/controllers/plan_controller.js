@@ -4,6 +4,7 @@ import Chartist from "chartist"
 import Hogan from "hogan.js"
 import PlanPageDataModel from "../plan_page_data_model"
 import PlanPageViewModel from "../plan_page_view_model"
+// import {ForIE} from "../ie"
 
 /* This controller handles almost all of the in-browser capabilities of the
  * draft plan form. Users can delete activities, add freeform activities, and
@@ -139,7 +140,7 @@ export default class extends Controller {
       width: this.chartWidth,
       height: this.chartHeight,
       axisY: {
-        // show only even-numbered X-axis labels
+        // show multiples of 10
         labelInterpolationFnc: function (value, index) {
           return value % 10 == 0  ? value: null;
         }
@@ -148,6 +149,7 @@ export default class extends Controller {
     this.charts[this.currentChartIndex] = new Chartist.Bar(this.chartSelectors[this.currentChartIndex], data, options);
     this.charts[this.currentChartIndex].on('created', () => {
       this.chartInteractivityEntryPoints[this.currentChartIndex]()
+      this.fixesForIE()
     })
   }
 
@@ -293,7 +295,9 @@ export default class extends Controller {
     const nudgeZeroContent = $(nudgeContentZeroSelector).html()
     const nudgeElByActivityType = this.nudgeSelectors[1] // 1 is for activity type tab
     $(nudgeElByActivityType).children().fadeOut(() => {
-      $(nudgeElByActivityType).empty().html(nudgeZeroContent).fadeIn()
+      $(nudgeElByActivityType).empty().html(nudgeZeroContent).fadeIn(() => {
+        this.sizeTheSvgForIE()
+      })
     })
   }
 
@@ -417,5 +421,69 @@ export default class extends Controller {
 
   currentActivityCount() {
     return this.planPageDataModel.currentActivityCount()
+  }
+
+  //
+  // The problem: needed a method to detect IE 10 and 11 for the purpose of working around an IE-specific
+  //   issue, namely what the offsetTheChartSegmentLabelsForIE method addresses.
+  //
+  // Attempted solutions: First I tried to use Modernizr https://modernizr.com/ to take a
+  //   feature-detection approach to working around the issue (as opposed to browser detection, which is not as
+  //   good as a feature detection approach). At the time I tried it, Modernizr offered no detector for CSS transforms
+  //   for SVG. The closest thing I found was this issue on the Modernizr repo which is still
+  //   open/unmerged/unresolved: https://github.com/Modernizr/Modernizr/issues/1985
+  //   Also looked into 3rd party libraries to handle this, most of which check the user agent string which is known to
+  //   be an imperfect method, and would have required us to add yet another 3rd party library which we would rather avoid anyways.
+  //
+  // The solution: a browser detection technique via `document.documentMode` which is present on
+  //   MS Internet Explorer 6 - 11 which is sufficient for this purpose. We actually just wanted to target IE 10-11
+  //  but this is fine: its a simple and reliable dection method and does not require the addition of any additional code/libraries.
+  //
+  isIE() {
+    return !!document.documentMode
+  }
+
+  //
+  // The problem: IE does not support CSS transforms on SVG elements, which is what we used to get those
+  //   bar chart segment labels rendered at a 45º angle in modern web browsers. That does not work in IE 10/11.
+  //
+  // Attempted solutions: tried to do this in CSS which would have been better and easier with the IE-specific
+  //  stylesheet that we already have, but could not get these offsets to take effect via CSS for IE.
+  //
+  // The solution: In conjunction with the writing mode change in the IE-specific stylesheet to render these
+  //   elements sideways at 90º, apply X and Y offsets here via JavaScript to the SVG nodes (TEXT nodes in IE).
+  //   The offsets are arbitrary, just what aligned with the bar chart segments in IE 11 and looked decent on IE 11.
+  //
+  offsetTheChartSegmentLabelsForIE() {
+    if (!this.isIE()) {
+      return
+    }
+
+    $(".ct-label.ct-horizontal", this.chartSelectors[this.currentChartIndex]).each((i, el) => {
+      const offsetX = 15
+      const offsetY = 12
+      const $el = $(el)
+      const curXcoord = parseInt($el.attr("x"))
+      const curYcoord = parseInt($el.attr("y"))
+      $el.attr("x", curXcoord + offsetX).attr("y", curYcoord - offsetY)
+    })
+  }
+
+  //
+  // The problem: IE does not support CSS transforms on SVG elements
+  //
+  // The solution: Set the SVG PATH node's transform attribute via JS
+  //
+  sizeTheSvgForIE() {
+    if (!this.isIE()) {
+      return
+    }
+
+    $(".ico-bar-chart svg path", this.element).attr("transform", "scale(2.5)")
+  }
+
+  fixesForIE() {
+    this.sizeTheSvgForIE()
+    this.offsetTheChartSegmentLabelsForIE()
   }
 }
