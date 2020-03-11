@@ -376,7 +376,6 @@ describe Plan do
     end
   end
 
-
   describe "#activities_for" do
     let(:plan) { create(:plan_nigeria_jee1) }
 
@@ -390,6 +389,23 @@ describe Plan do
       result.must_be_instance_of Array
       result.size.must_equal 9
       result.first.must_be_instance_of PlanActivity
+    end
+  end
+
+  describe "#update" do
+    let(:subject) {
+      create(:plan_nigeria_jee1)
+    }
+
+    it "works as expected" do
+      subject.persisted?.must_equal true
+      subject.plan_activities.size.must_equal 235
+      # this is keeping the pre-exisitng activities and adding one activity of id=15
+      result = subject.update! name: "changed plan 789", benchmark_activity_ids: [563, 370, 733, 661, 807, 1, 682, 324, 699, 585, 827, 785, 393, 188, 371, 734, 586, 564, 394, 828, 700, 2, 808, 662, 683, 325, 786, 189, 829, 3, 809, 787, 735, 701, 190, 684, 663, 372, 565, 587, 326, 566, 702, 588, 4, 191, 664, 788, 736, 810, 373, 685, 830, 327, 789, 5, 589, 567, 811, 703, 328, 737, 192, 665, 831, 374, 738, 790, 666, 329, 812, 568, 832, 704, 6, 833, 330, 791, 667, 705, 706, 792, 834, 793, 707, 835, 794, 708, 709, 710, 148, 442, 628, 725, 482, 739, 238, 219, 176, 107, 836, 128, 72, 56, 361, 348, 741, 483, 239, 740, 177, 57, 443, 349, 220, 108, 726, 837, 129, 73, 362, 629, 149, 240, 727, 350, 363, 58, 444, 109, 74, 130, 742, 484, 838, 150, 178, 630, 221, 179, 743, 131, 364, 631, 110, 59, 839, 241, 222, 151, 485, 445, 744, 446, 486, 632, 223, 152, 132, 111, 60, 840, 633, 745, 133, 112, 487, 153, 224, 634, 113, 225, 635, 636, 637, 317, 780, 652, 507, 265, 426, 468, 762, 61, 869, 781, 266, 653, 763, 508, 318, 62, 469, 427, 870, 764, 509, 267, 319, 782, 871, 63, 470, 428, 654, 429, 872, 64, 655, 268, 765, 320, 471, 510, 511, 321, 430, 269, 472, 656, 270, 294, 556, 557, 295, 558, 296, 559, 297, 298, 560, 299, 561, 562, 300, 15]
+
+      result.must_equal true
+      updated_plan = Plan.find(subject.id)
+      updated_plan.plan_activities.size.must_equal 236
     end
   end
 end
