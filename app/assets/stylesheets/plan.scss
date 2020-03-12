@@ -257,6 +257,16 @@
   }
 }
 
+.stick-to-top {
+  input.plan-name {
+    height: 38px;
+  }
+  input.plan-save {
+    height: 38px;
+    min-width: 140px;
+  }
+}
+
 .plan-container {
   .tooltip.bs-tooltip-top .arrow:before {
     border-top-color: color("gray-dark-transparent");
