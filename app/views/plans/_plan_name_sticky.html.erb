@@ -2,15 +2,15 @@
 
   <div class="container mx-auto row no-gutters justify-content-between p-2">
 
-    <div class="col-auto m-2 form-group alt-header" style="height: 60px; min-width: 200px;">
-      <%= form.text_field :name, data: { target: "plan.name", action: "change->plan#validateName" }, class: "form-control", required: true %>
+    <div class="col-lg-5 m-2 form-group alt-header">
+      <%= form.text_field :name, data: { target: "plan.name", action: "change->plan#validateName" }, class: "plan-name form-control", required: true %>
       <div class="invalid-feedback">
         Cannot be empty
       </div>
     </div>
 
-    <div class="col-auto m-2" style="min-width: 140px;">
-      <%= submit_tag "Save Plan", data: { target: "plan.submit", action: "plan#saveActivityIdsToField"}, class: "btn btn-orange w-100" %>
+    <div class="col-auto m-2">
+      <%= submit_tag "Save Plan", data: { target: "plan.submit", action: "plan#saveActivityIdsToField"}, class: "plan-save btn btn-orange w-100" %>
     </div>
 
   </div>
