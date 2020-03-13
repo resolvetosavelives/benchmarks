@@ -28,6 +28,7 @@ export default class extends Controller {
     if (this.hasAddActivityFieldTarget) {
       $(this.addActivityFieldTarget).autocomplete({
         appendTo: ".plan-container",
+        minLength: 0, // this allows the down/up arrows to open the menu even without any chars entered, #171505810
         source: excludedActivities.map((benchmarkActivity) => {
           benchmarkActivity.label = benchmarkActivity.text
           benchmarkActivity.value = benchmarkActivity.text
