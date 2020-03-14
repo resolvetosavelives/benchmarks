@@ -1,58 +1,60 @@
-<footer class="pt-4">
-  <div class="bg-dark-blue pt-4">
-    <div class="row p-0 m-0">
-      <div class="col ml-5">
-        <div class="row">
-          <div class="col">
-            <%= content_tag :span, "About", class: "heading" %>
+<footer class="bg-dark-blue pt-4">
+
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <%= content_tag :span, "About", class: "heading" %>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col">
+              <span>This tool is designed to accelerate the planning process for National Action Plans for Health Security within the International Health Regulations (IHR) Monitoring and Evaluation Framework.</span>
+            </div>
           </div>
         </div>
-        <div class="row pt-4">
-          <div class="col">
-            <span>This tool is designed to accelerate the planning process for National Action Plans for Health Security within the International Health Regulations (IHR) Monitoring and Evaluation Framework.</span>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <%= content_tag :span, "For Reference", class: "heading" %>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col">
+              <ul class="list-unstyled p-0">
+                <li><%= link_to "JEE 1.0", "https://www.who.int/ihr/publications/WHO_HSE_GCR_2016_2/en/", class: "text-white", target: "_blank" %></li>
+                <li><%= link_to "JEE 2.0", "https://www.who.int/ihr/publications/WHO_HSE_GCR_2018_2/en/", class: "text-white", target: "_blank" %></li>
+                <li><%= link_to "e-SPAR", "https://extranet.who.int/e-spar", class: "text-white", target: "_blank" %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <%= content_tag :span, "Contact", class: "heading" %>
+            </div>
+          </div>
+          <div class="row pt-4">
+            <div class="col">
+              <ul class="list-unstyled p-0">
+                <li><%= mail_to "sla@resolvetosavelives.org", "Report an Error" %></li>
+                <li><%= link_to "Privacy Policy", privacy_policy_path %></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="row">
-          <div class="col">
-            <%= content_tag :span, "For Reference", class: "heading" %>
-          </div>
-        </div>
-        <div class="row pt-4">
-          <div class="col">
-            <ul class="list-unstyled p-0">
-              <li><%= link_to "JEE 1.0", "https://www.who.int/ihr/publications/WHO_HSE_GCR_2016_2/en/", class: "text-white", target: "_blank" %></li>
-              <li><%= link_to "JEE 2.0", "https://www.who.int/ihr/publications/WHO_HSE_GCR_2018_2/en/", class: "text-white", target: "_blank" %></li>
-              <li><%= link_to "e-SPAR", "https://extranet.who.int/e-spar", class: "text-white", target: "_blank" %></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="row">
-          <div class="col">
-            <%= content_tag :span, "Contact", class: "heading" %>
-          </div>
-        </div>
-        <div class="row pt-4">
-          <div class="col">
-            <ul class="list-unstyled p-0">
-              <li><%= mail_to "sla@resolvetosavelives.org", "Report an Error" %></li>
-              <li><%= link_to "Privacy Policy", privacy_policy_path %></li>
-            </ul>
-          </div>
+      <div class="row pt-5">
+        <div class="col text-center">
+          <%= link_to image_tag(image_path("prevent-epidemics-logo.svg")), "https://preventepidemics.org", target: "_blank", class: "footer-logo" %>
+          <!-- <%= link_to image_tag(image_path("rtsl-logo.svg")), "https://www.resolvetosavelives.org", target: "_blank", class: "footer-logo" %> -->
+          <!-- <%= link_to image_tag(image_path("world-bank.svg")), "https://www.worldbank.org/", target: "_blank", class: "footer-logo"  %> -->
+          <!-- <%= link_to image_tag(image_path("cdc.svg")), "https://www.cdc.gov", target: "_blank", class: "footer-logo" %> -->
+          <%= content_tag :p, "© #{Date.today.year}. World Health Organization. All rights reserved.", class: "py-3 copyright" %>
         </div>
       </div>
     </div>
-    <div class="row pt-5">
-      <div class="col text-center">
-        <%= link_to image_tag(image_path("prevent-epidemics-logo.svg")), "https://preventepidemics.org", target: "_blank", class: "footer-logo" %>
-        <!-- <%= link_to image_tag(image_path("rtsl-logo.svg")), "https://www.resolvetosavelives.org", target: "_blank", class: "footer-logo" %> -->
-        <!-- <%= link_to image_tag(image_path("world-bank.svg")), "https://www.worldbank.org/", target: "_blank", class: "footer-logo"  %> -->
-        <!-- <%= link_to image_tag(image_path("cdc.svg")), "https://www.cdc.gov", target: "_blank", class: "footer-logo" %> -->
-        <%= content_tag :p, "© #{Date.today.year}. World Health Organization. All rights reserved.", class: "py-3 copyright" %>
-      </div>
-    </div>
-  </div>
+
 </footer>

@@ -1,44 +1,54 @@
-<nav class="navbar navbar-expand-lg text-white bg-blue justify-content-between px-4">
+<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
 
-  <a class="navbar-brand" href="https://extranet.who.int/sph/country-planning" target="_blank">
-    <%= image_tag("who-logo.svg", alt: "WHO Logo") %>
-  </a>
+  <div class="container">
 
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="<%= root_path %>">
-        HOME
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="<%= introduction_url %>">
-        WHO BENCHMARKS
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="<%= resource_library_url %>">
-        RESOURCE LIBRARY
-      </a>
-    </li>
-    <% if current_user %>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-          <%= current_user.email %>
-          <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <%= link_to "My Plans", plans_path, class: "dropdown-item" %>
-          <div class="dropdown-divider"></div>
-          <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-        </div>
-      </li>
-    <% else %>
-      <li class="nav-item">
-        <a class="nav-link" href="<%= new_user_session_path %>">
-          LOG IN
-        </a>
-      </li>
-    <% end %>
-  </ul>
+    <a class="navbar-brand" href="https://extranet.who.int/sph/country-planning" target="_blank">
+      <%= image_tag("who-logo.svg", alt: "WHO Logo") %>
+    </a>
+
+    <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
+      <ul class="navbar-nav">
+        <li class="nav-item mx-lg-2">
+          <a class="nav-link py-1" href="<%= root_path %>">
+            HOME
+          </a>
+        </li>
+        <li class="nav-item mx-lg-2">
+          <a class="nav-link py-1" href="<%= introduction_url %>">
+            WHO BENCHMARKS
+          </a>
+        </li>
+        <li class="nav-item mx-lg-2">
+          <a class="nav-link py-1" href="<%= resource_library_url %>">
+            RESOURCE LIBRARY
+          </a>
+        </li>
+        <% if current_user %>
+          <li class="nav-item dropdown ml-lg-2">
+            <a class="nav-link py-1 dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <%= current_user.email %>
+              <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdownMenuLink">
+              <%= link_to "My Plans", plans_path, class: "dropdown-item" %>
+              <div class="dropdown-divider"></div>
+              <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            </div>
+          </li>
+        <% else %>
+          <li class="nav-item ml-lg-2">
+            <a class="nav-link py-1" href="<%= new_user_session_path %>">
+              LOG IN
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+  </div>
 
 </nav>
