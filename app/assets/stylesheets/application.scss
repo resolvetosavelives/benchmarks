@@ -183,16 +183,20 @@ td {
 }
 
 nav.navbar {
-  min-height: 110px;
-  .nav-item {
+  min-height: max-content; // this is needed to prevent smaller screen sizes heights from collapsing
+  ul.navbar-nav {
+    text-align: right;
+  }
+  li.nav-item {
     letter-spacing: 0.1em;
     white-space: nowrap;
+    &:last-child a.nav-link {
+      padding-right: 0; // this is for the last A tag on the right to align with the edge of the page container
+    }
   }
   a.nav-link {
-    color: white;
+    color: white !important;
     text-decoration: none;
-    padding: 0;
-    text-align: right;
   }
 }
 
