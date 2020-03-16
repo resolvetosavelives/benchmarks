@@ -20,3 +20,14 @@ footer {
   // needs more bottom margin to allow the angled labels to display w/o cut off
   margin : 0 0 60px 0 !important;
 }
+
+
+//
+// This is to fix the problem of the navbar, for smaller screen sizes when the toggler is displayed,
+// and when the toggler is used to expand the menu, that the .container height does not expand along
+// with its content, resulting in the navbar's menu content being cut off at the top and bottom on IE.
+//
+nav.navbar {
+  flex-shrink: 0;
+  flex-basis: auto;
+}
