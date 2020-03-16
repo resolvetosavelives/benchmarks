@@ -1,29 +1,8 @@
 <div class="plan-set-goals">
 
-  <div class="row bg-dark-blue p-4 full-width stick-to-top text-white">
-    <%# unless @plan.from_technical_areas? %>
-      <div class="col-5 offset-1">
-        <div
-          data-controller="filter"
-          data-filter-placeholder="Select Technical Area(s)"
-          data-filter-class-prefix="technical-area"
-        >
-          <strong><%= label_tag "Filter by Technical Area:" %></strong>
-          <%= select_tag "technical_areas",
-                         options_from_collection_for_select(@plan.assessment_technical_areas, :id, :text),
-                         class: "form-control custom-select text-left",
-                         multiple: "multiple",
-                         data: { target: "filter.multiselectTechnicalAreas",
-                                 options: @plan.assessment_technical_areas.to_json },
-                         autocomplete: "off" %>
-        </div>
-      </div>
-    <%# end %>
-  </div>
-
   <div class="row py-4">
     <div class="col col-lg-6">
-      <h1 class="alt-header">
+      <h1 class="alt-header mt-0">
         <%= @publication.abbrev %> Scores
       </h1>
       <%= render "instructions" %>
