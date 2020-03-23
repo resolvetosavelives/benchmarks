@@ -22,7 +22,9 @@
     "turbolinks": "^5.2.0"
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "preferSingleQuotes": false,
+    "addTrailingCommas": true
   },
   "scripts": {
     "test": "jest"
