@@ -218,9 +218,6 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-performance (1.5.1)
       rubocop (>= 0.71.0)
-    rubocop-rails (2.4.0)
-      rack (>= 1.1)
-      rubocop (>= 0.72.0)
     ruby-graphviz (1.2.4)
     ruby-progressbar (1.10.1)
     rubyXL (3.4.5)
@@ -312,7 +309,6 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rake
-  rubocop-rails
   rubyXL
   sentry-raven
   skylight
