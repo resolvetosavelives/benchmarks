@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   ##
   # static pages
   get "/privacy_policy", to: "pages#privacy_policy"
-  get "/resource-library", to: "pages#resource_library", as: "resource_library"
+  get "/reference-library", to: "pages#resource_library", as: "reference_library"
   ##
   # Benchmark Document section
   get "/document/introduction", to: "pages#introduction", as: "introduction"
