@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'csv'
 
-class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url, :thumbnail_url, :technical_area, :resource_type)
-  PATH_TO_CSV_FILE = Rails.root.join("data", "resource_library_documents_from_airtable.csv").freeze
+class ReferenceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url, :thumbnail_url, :technical_area, :reference_type)
+  PATH_TO_CSV_FILE = Rails.root.join('data', 'reference_library_documents_from_airtable.csv').freeze
   # NB: these are in singular form because that is how they are in AirTable/CSV data source
-  RESOURCE_TYPES = ["Briefing Note", "Case Study", "Example", "Guideline", "Manual", "Template", "Tool", "Training Package"].freeze
+  REFERENCE_TYPES = ["Briefing Note", "Case Study", "Example", "Guideline", "Manual", "Template", "Tool", "Training Package"].freeze
 
   def self.all_from_csv
     array_of_rows = CSV.read(PATH_TO_CSV_FILE)
@@ -22,7 +24,7 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
     end
   end
 
-  def self.new_from_csv(title, description, author, date, relevant_pages, download_url, thumbnail_url, technical_area, resource_type)
+  def self.new_from_csv(title, description, author, date, relevant_pages, download_url, thumbnail_url, technical_area, reference_type)
     new(
       title,
       description,
@@ -32,7 +34,7 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
       extract_download_url(download_url),
       extract_download_url(thumbnail_url),
       technical_area,
-      resource_type
+      reference_type
     )
   end
 
@@ -41,6 +43,7 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
   # example arg: "One health zoonotic disease prioroitization for Multisectoral Engagement in Burkina Faso (FRENCH).pdf (https://dl.airtable.com/.attachments/d273fbb3427d94635ddb734a14f95e26/98c1a677/OnehealthzoonoticdiseaseprioroitizationforMultisectoralEngagementinBurkinaFasoFRENCH.pdf),One health zoonotic disease prioroitization for Multisectoral Engagement in Burkina Faso.pdf (https://dl.airtable.com/.attachments/a78a3c2b524ddac30133b6aa882817aa/15400a04/OnehealthzoonoticdiseaseprioroitizationforMultisectoralEngagementinBurkinaFaso.pdf)"
   def self.extract_download_url(attachments_field)
     return "" if attachments_field.blank?
+
     # tokenize into an array based on comma. most have one but some have two.
     attachments = attachments_field.split(",")
     # take the last one which was probably the first added
@@ -50,14 +53,14 @@ class ResourceLibraryDocument < Struct.new(:title, :description, :author, :date,
     return match[1] if match
   end
 
-  def self.resource_type_ordinal(resource_type_name)
-    index = RESOURCE_TYPES.index(resource_type_name)
+  def self.reference_type_ordinal(reference_type_name)
+    index = REFERENCE_TYPES.index(reference_type_name)
     return nil if index.nil?
+
     index + 1
   end
 
-  def resource_type_ordinal
-    self.class.resource_type_ordinal self.resource_type
+  def reference_type_ordinal
+    self.class.reference_type_ordinal reference_type
   end
-
 end

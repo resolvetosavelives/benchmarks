@@ -1,4 +1,4 @@
-.resource-library {
+.reference-library {
   .result-metadata {
     .pipe-with-space {
       margin: 0 0.5em;
@@ -6,7 +6,7 @@
     #filterCriteriaDisplay {
       line-height: 2.1em;
       .badge-pill {
-        background-color: #ABABAB;
+        background-color: #ababab;
         color: white;
         font-size: 14px;
         font-weight: normal;
@@ -30,7 +30,7 @@
     margin-bottom: 1em;
     .cover-image {
       img {
-        border: 1px solid #EFEFEF;
+        border: 1px solid #efefef;
       }
     }
     .document-title {
@@ -44,7 +44,7 @@
       margin-bottom: 1em;
     }
   }
-  .card.resource-filter-by {
+  .card.reference-filter-by {
     .form-row {
       margin-bottom: 1.2em;
       .col {
@@ -85,9 +85,9 @@
   // this background-image stuff is to remove the background gradient
   // chosen has by default.
   .chosen-container .chosen-results li.active-result.highlighted {
-    background-color: #2C8DC9;
+    background-color: #2c8dc9;
     background-image: none;
-    color: color("light")
+    color: color("light");
   }
   .chosen-container-active.chosen-with-drop a.chosen-single,
   .chosen-container a.chosen-single {
@@ -104,5 +104,4 @@
     line-height: 22px !important;
     padding: 0.65em 0.65em !important;
   }
-
 }

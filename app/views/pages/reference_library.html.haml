@@ -1,31 +1,31 @@
 - require 'csv'
 
-.resource-library{"data-controller": "resource-library", "data-resource-library-technical-areas": @technical_areas.to_json, "data-resource-library-template-selector": "#templateForFilterCirterionBadgePill"}
+.reference-library{"data-controller": "reference-library", "data-reference-library-technical-areas": @technical_areas.to_json, "data-reference-library-template-selector": "#templateForFilterCirterionBadgePill"}
   %h1 Reference Library
   .row.flex-wrap-reverse
     .col-lg-4.col-md-12
-      = render partial: "resource_filter_by"
+      = render partial: "reference_filter_by"
     .col-lg-7.col-md-12
       .result-metadata
         %p
-          %a{href: "#", "data-action": "resource-library#resetForm", "data-turbolinks": "false"}
+          %a{href: "#", "data-action": "reference-library#resetForm", "data-turbolinks": "false"}
             Reset
           %span.pipe-with-space
             |
           %strong
             Selections:
-          %span#filterCriteriaDisplay{"data-target": "resource-library.filterCriteriaDisplay"}
+          %span#filterCriteriaDisplay{"data-target": "reference-library.filterCriteriaDisplay"}
 
         %p
           %strong
             Showing:
-          %span{"data-target": "resource-library.documentCount"}
+          %span{"data-target": "reference-library.documentCount"}
       - @documents.each do |document|
-        = render partial: "resource_document", locals: {document: document}
+        = render partial: "reference_document", locals: {document: document}
 
 %script#templateForFilterCirterionBadgePill{type: "text/html"}
   %span.badge.badge-pill
     {{text}}
-    %svg.x-close{"data-action": "click->resource-library\#{{methodName}}", xmlns: "http://www.w3.org/2000/svg"}
+    %svg.x-close{"data-action": "click->reference-library\#{{methodName}}", xmlns: "http://www.w3.org/2000/svg"}
       %path{d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"}
       %path{d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"}

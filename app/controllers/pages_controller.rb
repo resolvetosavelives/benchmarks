@@ -3,6 +3,6 @@
 class PagesController < ApplicationController
   def reference_library
     @technical_areas = BenchmarkTechnicalArea.all
-    @documents = ResourceLibraryDocument.all_from_csv
+    @documents = ReferenceLibraryDocument.all_from_csv
   end
 end

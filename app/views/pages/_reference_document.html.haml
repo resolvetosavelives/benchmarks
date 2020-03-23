@@ -1,6 +1,6 @@
 - if [document.title, document.author, document.description, document.relevant_pages, document.download_url, document.thumbnail_url].any?(&:present?)
   - tid = technical_area_to_id(@technical_areas, document.technical_area)
-  .document.row.no-gutters{class: "technical-area-#{tid} resource-type-#{document.resource_type_ordinal}"}
+  .document.row.no-gutters{class: "technical-area-#{tid} reference-type-#{document.reference_type_ordinal}"}
     .document.col.card.flex-row
       - if document.thumbnail_url.present?
         .cover-image
