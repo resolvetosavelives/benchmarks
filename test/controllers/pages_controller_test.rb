@@ -48,15 +48,15 @@ describe PagesController do
     end
   end
 
-  describe "resource library" do
+  describe "reference library" do
     it "is connected at the expected URL" do
-      assert_routing("/resource-library", {controller: "pages", action: "resource_library"})
+      assert_routing("/reference-library", {controller: "pages", action: "reference_library"})
     end
 
     it "responds with success" do
-      get resource_library_url
+      get reference_library_url
       assert_response :success
-      assert_template "pages/resource_library"
+      assert_template "pages/reference_library"
     end
   end
 end
