@@ -4,10 +4,12 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   describe PlansController do
-
     describe "#get_started" do
       it "is connected as /privacy_policy" do
-        assert_routing("/get-started", {controller: "plans", action: "get_started"})
+        assert_routing(
+          "/get-started",
+          { controller: "plans", action: "get_started" },
+        )
       end
 
       it "responds with success" do
@@ -18,22 +20,40 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
       describe "with an ajax request with partial params for Nigeria" do
         it "responds with success containing the redirect key" do
-          post get_started_url, xhr: true, params: {get_started_form: {country_id: "162"}}
+          post get_started_url,
+               xhr: true, params: { get_started_form: { country_id: "162" } }
           assert_response :success
           response_body = response.body
-          response_body.starts_with?(PlansController::GET_STARTED_REDIRECT_KEY).must_equal false
+          response_body.starts_with?(
+            PlansController::GET_STARTED_REDIRECT_KEY,
+          ).must_equal false
           assert_template :get_started
         end
       end
 
       describe "with an ajax request with valid params for Nigeria JEE1 1-year" do
         it "responds with success containing the redirect key" do
-          post get_started_url, xhr: true, params: {get_started_form: {country_id: "162", assessment_type: "jee1", plan_term: "1"}}
+          post get_started_url,
+               xhr: true,
+               params: {
+                 get_started_form: {
+                   country_id: "162", assessment_type: "jee1", plan_term: "1"
+                 },
+               }
           assert_response :success
           assert_template nil
           response_body = response.body
-          response_body.starts_with?(PlansController::GET_STARTED_REDIRECT_KEY).must_equal true
-          redirect_url = plan_goals_url({country_name: "Nigeria", assessment_type: "jee1", plan_term: "1-year"})
+          response_body.starts_with?(
+            PlansController::GET_STARTED_REDIRECT_KEY,
+          ).must_equal true
+          redirect_url =
+            plan_goals_url(
+              {
+                country_name: "Nigeria",
+                assessment_type: "jee1",
+                plan_term: "1-year",
+              },
+            )
           response_body.end_with?(redirect_url).must_equal true
         end
       end
@@ -42,36 +62,59 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
     describe "#goals" do
       describe "for a non-existent assessment" do
         it "responds with success" do
-          get plan_goals_url({country_name: "Xyz", assessment_type: "jee1", plan_term: "5-year"})
+          get plan_goals_url(
+                {
+                  country_name: "Xyz",
+                  assessment_type: "jee1",
+                  plan_term: "5-year",
+                },
+              )
           assert_response :success
         end
       end
 
       describe "for JEE1 5-year" do
         it "responds with success" do
-          get plan_goals_url({country_name: "Nigeria", assessment_type: "jee1", plan_term: "5-year"})
+          get plan_goals_url(
+                {
+                  country_name: "Nigeria",
+                  assessment_type: "jee1",
+                  plan_term: "5-year",
+                },
+              )
           assert_response :success
         end
       end
 
       describe "for SPAR 2018 1-year" do
         it "responds with success" do
-          get plan_goals_url({country_name: "Nigeria", assessment_type: "spar_2018", plan_term: "1-year"})
+          get plan_goals_url(
+                {
+                  country_name: "Nigeria",
+                  assessment_type: "spar_2018",
+                  plan_term: "1-year",
+                },
+              )
           assert_response :success
         end
       end
 
       describe "for JEE1 5-year plan by selected areas" do
         it "responds with success" do
-          get plan_goals_url({country_name: "Nigeria", assessment_type: "jee1", plan_term: "1-year", technical_area_ids: "2-4-9"})
+          get plan_goals_url(
+                {
+                  country_name: "Nigeria",
+                  assessment_type: "jee1",
+                  plan_term: "1-year",
+                  technical_area_ids: "2-4-9",
+                },
+              )
           assert_response :success
         end
       end
-
     end
 
     describe "#create" do
-
       describe "when the plan is saved" do
         before do
           plan.stubs(:persisted?).returns(true)
@@ -80,32 +123,32 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
         let(:plan) { Plan.new }
 
         it "responds with success" do
-          Plan.expects(:create_from_goal_form).with { |value|
+          Plan.expects(:create_from_goal_form).with do |value|
             value[:is_5_year_plan].eql?(false)
-          }.returns(plan)
-          post plans_url, params: {
-            plan: {
-              assessment_id: "123",
-              term: "100",
-              indicators: {abc: "123"},
-            },
-          }
+          end.returns(plan)
+          post plans_url,
+               params: {
+                 plan: {
+                   assessment_id: "123", term: "100", indicators: { abc: "123" }
+                 },
+               }
           assert_response :redirect
           assert_redirected_to plan_path(plan.id)
         end
 
         describe "for a 5-year plan" do
           it "responds with success" do
-            Plan.expects(:create_from_goal_form).with { |value|
+            Plan.expects(:create_from_goal_form).with do |value|
               value[:is_5_year_plan].eql?(true)
-            }.returns(plan)
-            post plans_url, params: {
-              plan: {
-                assessment_id: "123",
-                term: "500",
-                indicators: {abc: "123"},
-              },
-            }
+            end.returns(plan)
+            post plans_url,
+                 params: {
+                   plan: {
+                     assessment_id: "123",
+                     term: "500",
+                     indicators: { abc: "123" },
+                   },
+                 }
             assert_response :redirect
             assert_redirected_to plan_path(plan.id)
           end
@@ -116,23 +159,21 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
         it "responds with a redirect" do
           plan = Plan.new
           Plan.stub(:create_from_goal_form, plan) do
-            post plans_url, params: {
-              plan: {
-                assessment_id: "123",
-                term: "100",
-                indicators: {abc: "123"},
-              },
-            }
+            post plans_url,
+                 params: {
+                   plan: {
+                     assessment_id: "123",
+                     term: "100",
+                     indicators: { abc: "123" },
+                   },
+                 }
             assert_response :redirect
             assert_redirected_to root_path
           end
         end
       end
-
     end
-
   end
-
 
   #test "logged in user can see their plan" do
   #  plan = create(:plan_nigeria_jee1, :with_user)

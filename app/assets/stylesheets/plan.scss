@@ -95,7 +95,6 @@
 }
 
 .activity.row {
-
   .badge-rounded-circle {
     height: 2.25em;
     width: 2.25em;
@@ -132,7 +131,6 @@
   }
 }
 
-
 .card.plan {
   overflow: hidden;
 
@@ -166,7 +164,7 @@
       min-height: 238px;
       margin: 20px auto;
       padding: 1em;
-      background-color: #F8F9FA;
+      background-color: #f8f9fa;
       box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
       border-radius: 5px;
       ul {
@@ -189,7 +187,7 @@
       path {
         height: 18px;
         width: 12px;
-        fill: #FFCA1E;
+        fill: #ffca1e;
       }
     }
     .nudge-content-0 {
@@ -200,7 +198,7 @@
         margin-top: 35px;
         margin-bottom: 10px;
         path {
-          fill: #2C8DC9;
+          fill: #2c8dc9;
           transform: scale(2.5);
         }
       }
@@ -216,7 +214,7 @@
 
   // ct-* are chartist style class we are overriding
   .ct-vertical {
-    stroke: #C3C9D8;
+    stroke: #c3c9d8;
     stroke-dasharray: 0;
     stroke-width: 0.7;
   }
@@ -226,18 +224,18 @@
   }
 
   .ct-series .ct-bar {
-    stroke: #0D4A59;
+    stroke: #0d4a59;
     stroke-width: 24;
 
     &:hover {
-      stroke: #4D838F;
+      stroke: #4d838f;
       cursor: pointer;
     }
   }
 
   .ct-label {
     font-size: 11px;
-    color: #545B62;
+    color: #545b62;
   }
 
   // labels for chart by activity type at 45º angle per design
@@ -252,7 +250,7 @@
 
   .ct-chart-bar {
     // needs more bottom margin to allow the angled labels to display w/o cut off
-    margin : 0 0 50px 0;
+    margin: 0 0 50px 0;
     overflow: visible;
   }
 }
@@ -272,7 +270,7 @@
     border-top-color: color("gray-dark-transparent");
   }
   .tooltip-inner {
-    color: #F8F9FA;
+    color: #f8f9fa;
     background-color: color("gray-dark-transparent");
     font-family: Karla, sans-serif;
     font-size: 12px;
@@ -306,7 +304,7 @@
       border-color: color("red");
     }
   }
-  input[type=submit] {
+  input[type="submit"] {
     width: 8.5em;
     height: 2.3em;
   }
@@ -357,9 +355,9 @@
   // this background-image stuff is to remove the background gradient
   // chosen has by default.
   .chosen-container .chosen-results li.active-result.highlighted {
-    background-color: #2C8DC9;
+    background-color: #2c8dc9;
     background-image: none;
-    color: color("light")
+    color: color("light");
   }
   .chosen-container-active.chosen-with-drop a.chosen-single,
   .chosen-container a.chosen-single {
@@ -375,5 +373,4 @@
     font-size: 16px !important;
     padding: 0.65em 0.65em !important;
   }
-
 }

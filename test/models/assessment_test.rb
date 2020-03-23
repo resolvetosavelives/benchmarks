@@ -21,7 +21,9 @@ describe Assessment do
       country.must_be_instance_of Country
       assessment_publication = AssessmentPublication.first
       assessment_publication.must_be_instance_of AssessmentPublication
-      assessment = Assessment.new country: country, assessment_publication: assessment_publication
+      assessment =
+        Assessment.new country: country,
+                       assessment_publication: assessment_publication
 
       assessment.valid?.must_equal true
       assessment.destroy # clean up afterwards

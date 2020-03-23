@@ -6,11 +6,15 @@ module CountrySeed
       return unless Country.count.zero?
 
       warn "Seeding data for Countries..."
-      eval_indicators_attrs = JSON.parse(
-        File.read(
-          File.join(Rails.root, "/db/seed-data/ISO-3166-Countries-with-Regional-Codes-all.json")
+      eval_indicators_attrs =
+        JSON.parse(
+          File.read(
+            File.join(
+              Rails.root,
+              "/db/seed-data/ISO-3166-Countries-with-Regional-Codes-all.json",
+            ),
+          ),
         )
-      )
       eval_indicators_attrs.each do |attrs|
         Country.create(
           name: attrs["name"],
@@ -28,9 +32,7 @@ module CountrySeed
     end
 
     def unseed!
-      ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name}"
-      )
+      ActiveRecord::Base.connection.exec_query("DELETE FROM #{table_name}")
     end
   end
 end

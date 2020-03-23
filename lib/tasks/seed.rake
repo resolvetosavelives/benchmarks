@@ -6,7 +6,10 @@ namespace :db do
         ActiveSupport::Inflector.constantize(model_class).unseed!
       rescue ActiveRecord::InvalidForeignKey => ifk
         warn ""
-        warn "Not able to delete data for #{model_class}, probably because there is plan data that depends on it. Exception follows..".yellow.on_black
+        warn "Not able to delete data for #{
+               model_class
+             }, probably because there is plan data that depends on it. Exception follows.."
+               .yellow.on_black
         warn ""
         raise ifk
       end

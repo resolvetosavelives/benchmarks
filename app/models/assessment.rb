@@ -10,15 +10,22 @@ class Assessment < ApplicationRecord
   has_many :plans
   default_scope { order("country_alpha3") }
 
-  scope :with_publication, -> (country_alpha3, assessment_publication_id) {
-    includes(:assessment_publication)
-      .find_by_country_alpha3_and_assessment_publication_id(country_alpha3, assessment_publication_id)
-  }
+  scope :with_publication,
+        lambda { |country_alpha3, assessment_publication_id|
+          includes(:assessment_publication)
+            .find_by_country_alpha3_and_assessment_publication_id(
+            country_alpha3,
+            assessment_publication_id,
+          )
+        }
 
-  scope :deep_load, -> (country_alpha3, assessment_publication_id) {
-    includes({scores: :assessment_indicator})
-      .with_publication(country_alpha3, assessment_publication_id)
-  }
+  scope :deep_load,
+        lambda { |country_alpha3, assessment_publication_id|
+          includes({ scores: :assessment_indicator }).with_publication(
+            country_alpha3,
+            assessment_publication_id,
+          )
+        }
 
   delegate :jee1?, :spar_2018?, :type_description, to: :assessment_publication
 
@@ -29,10 +36,6 @@ class Assessment < ApplicationRecord
   end
 
   def attributes
-    {
-        id: nil,
-        assessment_type: nil,
-        country_alpha3: nil
-    }
+    { id: nil, assessment_type: nil, country_alpha3: nil }
   end
 end

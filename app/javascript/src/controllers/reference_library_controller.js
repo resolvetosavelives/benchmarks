@@ -8,7 +8,7 @@ export default class extends Controller {
     "documentCount",
     "technicalAreaSelect",
     "checkboxForReferenceType",
-    "filterCriteriaDisplay"
+    "filterCriteriaDisplay",
   ]
 
   initialize() {
@@ -22,7 +22,7 @@ export default class extends Controller {
 
   connect() {
     $(this.technicalAreaSelectTarget).chosen({
-      no_results_text: "No countries match"
+      no_results_text: "No countries match",
     })
     $(this.technicalAreaSelectTarget).on(
       "change",
@@ -81,19 +81,15 @@ export default class extends Controller {
     // 2nd, hide technical areas other than the currently selected one
     const taID = this.currentTechnicalAreaId
     if (taID > 0) {
-      $(".document.row", this.element)
-        .not(`.technical-area-${taID}`)
-        .hide()
+      $(".document.row", this.element).not(`.technical-area-${taID}`).hide()
     }
     // 3rd, hide any rows that are not of any of the currently checked reference types
     const classes = this.currentReferenceTypeOrdinals.map(
-      ordinal => `.reference-type-${ordinal}`
+      (ordinal) => `.reference-type-${ordinal}`
     )
     if (classes.length > 0) {
       const classes_str = classes.join(", ")
-      $(".document.row", this.element)
-        .not(classes_str)
-        .hide()
+      $(".document.row", this.element).not(classes_str).hide()
     }
     // lastly, update the other dynamic page elements
     this.updateDocumentCountDisplay()
@@ -124,7 +120,7 @@ export default class extends Controller {
   }
 
   putFilterPillsForReferenceTypes(referenceTypeOrdinals) {
-    referenceTypeOrdinals.forEach(referenceTypeOrdinal => {
+    referenceTypeOrdinals.forEach((referenceTypeOrdinal) => {
       const idOfReferenceTypeCheckbox = $(
         `input[type=checkbox][value=${referenceTypeOrdinal}]`,
         this.element
@@ -158,7 +154,7 @@ export default class extends Controller {
   }
 
   technicalAreaForId(taId) {
-    return this.technicalAreas.find(ta => ta.id === taId)
+    return this.technicalAreas.find((ta) => ta.id === taId)
   }
 
   removeFilterCriterionOfTechnicalArea() {

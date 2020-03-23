@@ -53,9 +53,11 @@ describe Plan do
 
   describe ".new_from_assessment" do
     describe "for Nigeria JEE 5-year plan" do
-      let(:subject) {
-        Plan.new_from_assessment(assessment: assessment_for_nigeria_jee1, is_5_year_plan: true)
-      }
+      let(:subject) do
+        Plan.new_from_assessment(
+          assessment: assessment_for_nigeria_jee1, is_5_year_plan: true,
+        )
+      end
 
       it "has the expected assessment" do
         subject.assessment.must_equal assessment_for_nigeria_jee1
@@ -173,13 +175,13 @@ describe Plan do
           jee1_ind_re2_goal: "4",
         }.with_indifferent_access
       end
-      let(:plan) {
+      let(:plan) do
         Plan.create_from_goal_form(
           indicator_attrs: indicator_attrs,
           assessment: assessment_for_nigeria_jee1,
-          plan_name: "test plan 3854"
+          plan_name: "test plan 3854",
         )
-      }
+      end
 
       it "returns a saved plan instance" do
         assert plan.persisted?, "Plan was not saved"
@@ -255,13 +257,13 @@ describe Plan do
           spar_2018_ind_c131_goal: "3",
         }.with_indifferent_access
       end
-      let(:plan) {
+      let(:plan) do
         Plan.create_from_goal_form(
           indicator_attrs: indicator_attrs,
           assessment: assessment_nigeria_spar2018,
-          plan_name: "test plan 9391"
+          plan_name: "test plan 9391",
         )
-      }
+      end
 
       it "returns a saved plan instance" do
         assert plan.persisted?, "Plan was not saved"
@@ -298,7 +300,7 @@ describe Plan do
           indicator_attrs: indicator_attrs,
           assessment: assessment_nigeria_spar2018,
           is_5_year_plan: true,
-          plan_name: "test plan 3737"
+          plan_name: "test plan 3737",
         )
       end
 
@@ -339,8 +341,29 @@ describe Plan do
       let(:plan) { create(:plan_nigeria_jee1) }
 
       it "returns an array of the expected integers" do
-        expected = [6, 12, 19, 9, 11, 13, 19, 7, 15, 18, 11, 15, 7, 19, 20, 16, 14, 4]
-        plan.count_activities_by_ta(benchmark_technical_areas).must_equal expected
+        expected = [
+          6,
+          12,
+          19,
+          9,
+          11,
+          13,
+          19,
+          7,
+          15,
+          18,
+          11,
+          15,
+          7,
+          19,
+          20,
+          16,
+          14,
+          4,
+        ]
+        plan.count_activities_by_ta(
+          benchmark_technical_areas,
+        ).must_equal expected
       end
     end
 
@@ -348,16 +371,16 @@ describe Plan do
       let(:benchmark_technical_areas) { BenchmarkTechnicalArea.all }
       let(:indicator_attrs) do
         {
-            jee1_ind_p21: "2",
-            jee1_ind_p21_goal: "3",
-            jee1_ind_d21: "3",
-            jee1_ind_d21_goal: "4",
-            jee1_ind_d22: "2",
-            jee1_ind_d22_goal: "3",
-            jee1_ind_d23: "3",
-            jee1_ind_d23_goal: "4",
-            jee1_ind_d24: "3",
-            jee1_ind_d24_goal: "4",
+          jee1_ind_p21: "2",
+          jee1_ind_p21_goal: "3",
+          jee1_ind_d21: "3",
+          jee1_ind_d21_goal: "4",
+          jee1_ind_d22: "2",
+          jee1_ind_d22_goal: "3",
+          jee1_ind_d23: "3",
+          jee1_ind_d23_goal: "4",
+          jee1_ind_d24: "3",
+          jee1_ind_d24_goal: "4",
         }.with_indifferent_access
       end
       let(:plan) do
@@ -365,13 +388,15 @@ describe Plan do
           indicator_attrs: indicator_attrs,
           assessment: assessment_for_nigeria_jee1,
           is_5_year_plan: true,
-          plan_name: "test plan 3737"
+          plan_name: "test plan 3737",
         )
       end
 
       it "returns an array of the expected integers" do
         expected = [0, 5, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        plan.count_activities_by_ta(benchmark_technical_areas).must_equal expected
+        plan.count_activities_by_ta(
+          benchmark_technical_areas,
+        ).must_equal expected
       end
     end
   end
@@ -380,9 +405,10 @@ describe Plan do
     let(:plan) { create(:plan_nigeria_jee1) }
 
     it "returns an array of the expected benchmark activities" do
-      expected_pg = plan.goals.detect { |pg|
-        pg.benchmark_indicator.display_abbreviation.eql?("2.1")
-      }
+      expected_pg =
+        plan.goals.detect do |pg|
+          pg.benchmark_indicator.display_abbreviation.eql?("2.1")
+        end
       expected_pg.wont_be_nil
 
       result = plan.activities_for(expected_pg.benchmark_indicator)
@@ -393,15 +419,252 @@ describe Plan do
   end
 
   describe "#update" do
-    let(:subject) {
-      create(:plan_nigeria_jee1)
-    }
+    let(:subject) { create(:plan_nigeria_jee1) }
 
     it "works as expected" do
       subject.persisted?.must_equal true
       subject.plan_activities.size.must_equal 235
       # this is keeping the pre-exisitng activities and adding one activity of id=15
-      result = subject.update! name: "changed plan 789", benchmark_activity_ids: [563, 370, 733, 661, 807, 1, 682, 324, 699, 585, 827, 785, 393, 188, 371, 734, 586, 564, 394, 828, 700, 2, 808, 662, 683, 325, 786, 189, 829, 3, 809, 787, 735, 701, 190, 684, 663, 372, 565, 587, 326, 566, 702, 588, 4, 191, 664, 788, 736, 810, 373, 685, 830, 327, 789, 5, 589, 567, 811, 703, 328, 737, 192, 665, 831, 374, 738, 790, 666, 329, 812, 568, 832, 704, 6, 833, 330, 791, 667, 705, 706, 792, 834, 793, 707, 835, 794, 708, 709, 710, 148, 442, 628, 725, 482, 739, 238, 219, 176, 107, 836, 128, 72, 56, 361, 348, 741, 483, 239, 740, 177, 57, 443, 349, 220, 108, 726, 837, 129, 73, 362, 629, 149, 240, 727, 350, 363, 58, 444, 109, 74, 130, 742, 484, 838, 150, 178, 630, 221, 179, 743, 131, 364, 631, 110, 59, 839, 241, 222, 151, 485, 445, 744, 446, 486, 632, 223, 152, 132, 111, 60, 840, 633, 745, 133, 112, 487, 153, 224, 634, 113, 225, 635, 636, 637, 317, 780, 652, 507, 265, 426, 468, 762, 61, 869, 781, 266, 653, 763, 508, 318, 62, 469, 427, 870, 764, 509, 267, 319, 782, 871, 63, 470, 428, 654, 429, 872, 64, 655, 268, 765, 320, 471, 510, 511, 321, 430, 269, 472, 656, 270, 294, 556, 557, 295, 558, 296, 559, 297, 298, 560, 299, 561, 562, 300, 15]
+      result =
+        subject.update! name: "changed plan 789",
+                        benchmark_activity_ids: [
+                          563,
+                          370,
+                          733,
+                          661,
+                          807,
+                          1,
+                          682,
+                          324,
+                          699,
+                          585,
+                          827,
+                          785,
+                          393,
+                          188,
+                          371,
+                          734,
+                          586,
+                          564,
+                          394,
+                          828,
+                          700,
+                          2,
+                          808,
+                          662,
+                          683,
+                          325,
+                          786,
+                          189,
+                          829,
+                          3,
+                          809,
+                          787,
+                          735,
+                          701,
+                          190,
+                          684,
+                          663,
+                          372,
+                          565,
+                          587,
+                          326,
+                          566,
+                          702,
+                          588,
+                          4,
+                          191,
+                          664,
+                          788,
+                          736,
+                          810,
+                          373,
+                          685,
+                          830,
+                          327,
+                          789,
+                          5,
+                          589,
+                          567,
+                          811,
+                          703,
+                          328,
+                          737,
+                          192,
+                          665,
+                          831,
+                          374,
+                          738,
+                          790,
+                          666,
+                          329,
+                          812,
+                          568,
+                          832,
+                          704,
+                          6,
+                          833,
+                          330,
+                          791,
+                          667,
+                          705,
+                          706,
+                          792,
+                          834,
+                          793,
+                          707,
+                          835,
+                          794,
+                          708,
+                          709,
+                          710,
+                          148,
+                          442,
+                          628,
+                          725,
+                          482,
+                          739,
+                          238,
+                          219,
+                          176,
+                          107,
+                          836,
+                          128,
+                          72,
+                          56,
+                          361,
+                          348,
+                          741,
+                          483,
+                          239,
+                          740,
+                          177,
+                          57,
+                          443,
+                          349,
+                          220,
+                          108,
+                          726,
+                          837,
+                          129,
+                          73,
+                          362,
+                          629,
+                          149,
+                          240,
+                          727,
+                          350,
+                          363,
+                          58,
+                          444,
+                          109,
+                          74,
+                          130,
+                          742,
+                          484,
+                          838,
+                          150,
+                          178,
+                          630,
+                          221,
+                          179,
+                          743,
+                          131,
+                          364,
+                          631,
+                          110,
+                          59,
+                          839,
+                          241,
+                          222,
+                          151,
+                          485,
+                          445,
+                          744,
+                          446,
+                          486,
+                          632,
+                          223,
+                          152,
+                          132,
+                          111,
+                          60,
+                          840,
+                          633,
+                          745,
+                          133,
+                          112,
+                          487,
+                          153,
+                          224,
+                          634,
+                          113,
+                          225,
+                          635,
+                          636,
+                          637,
+                          317,
+                          780,
+                          652,
+                          507,
+                          265,
+                          426,
+                          468,
+                          762,
+                          61,
+                          869,
+                          781,
+                          266,
+                          653,
+                          763,
+                          508,
+                          318,
+                          62,
+                          469,
+                          427,
+                          870,
+                          764,
+                          509,
+                          267,
+                          319,
+                          782,
+                          871,
+                          63,
+                          470,
+                          428,
+                          654,
+                          429,
+                          872,
+                          64,
+                          655,
+                          268,
+                          765,
+                          320,
+                          471,
+                          510,
+                          511,
+                          321,
+                          430,
+                          269,
+                          472,
+                          656,
+                          270,
+                          294,
+                          556,
+                          557,
+                          295,
+                          558,
+                          296,
+                          559,
+                          297,
+                          298,
+                          560,
+                          299,
+                          561,
+                          562,
+                          300,
+                          15,
+                        ]
 
       result.must_equal true
       updated_plan = Plan.find(subject.id)

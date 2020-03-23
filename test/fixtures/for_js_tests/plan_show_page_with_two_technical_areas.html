@@ -1,952 +1,1301 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-11 mx-auto">
-            <div class="page-content-container">
-                <div class="row">
-                    <div class="col plan-container" data-controller="plan"
-                         data-plan-term='100'
-                         data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-activity-type"]'
-                         data-plan-nudge-content-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
-                         data-plan-nudge-template-selector="#nudge-template"
-                         data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
-                         data-plan-chart-labels='[["Legislation","IHR coordination","AMR","Zoonotic disease","Food safety","Immunization","Laboratory","Biosafety & biosecurity","Surveillance","Human resources","Preparedness","Rapid response","Linking public health","Medical countermeasures","Risk communication","Points of entry","Chemical events","Radiation"],["Advocacy","Assessment and Data Use","Coordination","Designation","Dissemination","Financing","Monitoring and Evaluation","Planning and Strategy","Procurement","Program Implementation","SimEx and AAR","SOPs","Surveillance","Tool Development","Training"]]'
-                         data-plan-chart-series='[[6,12,19,9,11,13,19,7,15,18,11,15,7,19,20,16,14,4],[8,40,23,7,9,9,20,45,2,45,13,32,8,3,23]]'
-                         data-plan-chart-width="710"
-                         data-plan-chart-height="240">
-                        <form class="edit_plan" id="edit_plan_19"
-                              data-target="plan.form" action="/plans/19"
-                              accept-charset="UTF-8" method="post"
-                              name="edit_plan_19">
-                            <input name="utf8" type="hidden" value="✓"><input
-                                type="hidden" name="_method"
-                                value="patch"><input type="hidden"
-                                                     name="authenticity_token"
-                                                     value="32vPrqeTQA6RTaZo8Ky8LGyvNyPcjFsssasO8/qGnpuG7HoisDtmcfHwtxSh0cEcfPyP+l33I40ssSXhLt/WAw==">
-                            <input data-target="plan.fieldForActivityIds"
-                                   autocomplete="off" type="hidden"
-                                   name="plan[benchmark_activity_ids]"
-                                   id="plan_benchmark_activity_ids">
-                            <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
-                            <div class="row bg-dark-blue py-4 px-0 full-width stick-to-top text-white">
-                                <div class="col-11 mx-auto row justify-content-between">
-                                    <div style="height: 60px;">
-                                        <div class="form-group alt-header"
-                                             style="min-width: 200px;">
-                                            <input data-target="plan.name"
-                                                   data-action="change-&gt;plan#validateName"
-                                                   class="form-control"
-                                                   required="required"
-                                                   type="text"
-                                                   value="Nigeria draft plan"
-                                                   name="plan[name]"
-                                                   id="plan_name">
-                                            <div class="invalid-feedback">
-                                                Cannot be empty
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div style="min-width: 140px;">
-                                        <input type="submit" name="commit"
-                                               value="Save Plan"
-                                               data-target="plan.submit"
-                                               data-action="plan#saveActivityIdsToField"
-                                               data-disable-with="Save Plan"
-                                               class="btn btn-orange w-100 align-self-center">
-                                    </div>
-                                </div>
-                            </div><!-- Count of Total Activities -->
-                            <div class="row">
-                                <div class="col mt-5">
-                                    <div class="row mx-0 activity-count-header align-items-center">
-                                        <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
-                                            <span data-target="plan.activityCountCircle">235</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <p>
-                                                Total Activities
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- Row for Charts and Nudges -->
-                            <div class="row">
-                                <div class="col mt-5">
-                                    <!-- Card for Bar Charts and Nudges -->
-                                    <div class="plan card">
-                                        <ul class="nav nav-tabs pt-3"
-                                            role="tablist">
-                                            <li class="nav-item px-2">
-                                                <a class="nav-link active"
-                                                   data-toggle="tab"
-                                                   href="#tabContentForTechnicalArea"
-                                                   id="tabForTechnicalArea"
-                                                   role="tab"
-                                                   aria-controls="technical-area"
-                                                   aria-selected="true">Technical
-                                                    Area</a>
-                                            </li>
-                                            <li class="nav-item px-2">
-                                                <a class="nav-link"
-                                                   data-toggle="tab"
-                                                   href="#tabContentForActivityType"
-                                                   id="tabForActivityType"
-                                                   role="tab"
-                                                   aria-controls="activity-type"
-                                                   aria-selected="false">Activity
-                                                    Type</a>
-                                            </li>
-                                        </ul>
-                                        <div class="row tab-content">
-                                            <div id="tabContentForTechnicalArea"
-                                                 aria-labelledby="tabForTechnicalArea"
-                                                 role="tabpanel"
-                                                 class="col-auto tab-pane fade show active">
-                                                <div class="row">
-                                                    <!-- Left Col -->
-                                                    <div class="col-auto d-flex mx-auto flex-column justify-content-center align-items-center">
-                                                        <h6 class="my-3">
-                                                            Actions per
-                                                            benchmark technical
-                                                            area
-                                                        </h6>
-                                                        <!-- Actual Chart, by Technical Area -->
-                                                        <div id="bar-chart-by-technical-area"
-                                                             class="ct-chart-bar"></div>
-                                                    </div><!-- Right Col -->
-                                                    <div class='col nudge-container'>
-                                                        <div class='card'
-                                                             id='nudge-by-technical-area'>
-                                                            <div class='nudge-content-0'>
-                                                                <div>
-                                                                    <svg class="analyze"
-                                                                         xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M20.8333 13.3333C21.1083 13.3333 21.3333 13.5583 21.3333 13.8333V15.5C21.3333 15.775 21.1083 16 20.8333 16H0.5C0.225 16 0 15.775 0 15.5V0.5C0 0.225 0.225 0 0.5 0H2.16667C2.44167 0 2.66667 0.225 2.66667 0.5V13.3333H20.8333ZM8 11.5V8.5C8 8.225 7.775 8 7.5 8H5.83333C5.55833 8 5.33333 8.225 5.33333 8.5V11.5C5.33333 11.775 5.55833 12 5.83333 12H7.5C7.775 12 8 11.775 8 11.5ZM16 11.5V5.83333C16 5.55833 15.775 5.33333 15.5 5.33333H13.8333C13.5583 5.33333 13.3333 5.55833 13.3333 5.83333V11.5C13.3333 11.775 13.5583 12 13.8333 12H15.5C15.775 12 16 11.775 16 11.5ZM12 11.5V3.16667C12 2.89167 11.775 2.66667 11.5 2.66667H9.83333C9.55833 2.66667 9.33333 2.89167 9.33333 3.16667V11.5C9.33333 11.775 9.55833 12 9.83333 12H11.5C11.775 12 12 11.775 12 11.5ZM20 11.5V1.83333C20 1.55833 19.775 1.33333 19.5 1.33333H17.8333C17.5583 1.33333 17.3333 1.55833 17.3333 1.83333V11.5C17.3333 11.775 17.5583 12 17.8333 12H19.5C19.775 12 20 11.775 20 11.5Z"></path>
-                                                                    </svg>
-                                                                    <svg class="cursor"
-                                                                         xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M9.4434 10.2852H6.12828L7.873 14.535C7.99453 14.8296 7.85565 15.1599 7.57787 15.2849L6.04146 15.9545C5.75506 16.0795 5.43387 15.9367 5.31234 15.651L3.65444 11.6155L0.946187 14.401C0.585281 14.7722 0 14.486 0 13.9993V0.571835C0 0.0593356 0.622531 -0.190508 0.946156 0.170086L9.83403 9.31202C10.1925 9.66136 9.92799 10.2852 9.4434 10.2852Z"></path>
-                                                                    </svg>
-                                                                </div>
-                                                                <h4>
-                                                                    Click on any
-                                                                    bar in the
-                                                                    chart to get
-                                                                    tips on how
-                                                                    to
-                                                                    consolidate
-                                                                    and
-                                                                    prioritize
-                                                                    your plan.
-                                                                </h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="tabContentForActivityType"
-                                                 aria-labelledby="tabForActivityType"
-                                                 role="tabpanel"
-                                                 class="col-auto tab-pane fade">
-                                                <div class="row">
-                                                    <!-- Left Col -->
-                                                    <div class="col-auto d-flex mx-auto flex-column justify-content-center align-items-center">
-                                                        <h6 class="my-3">
-                                                            Actions per activity
-                                                            type
-                                                        </h6>
-                                                        <!-- Actual Chart, by Activity Type -->
-                                                        <div id="bar-chart-by-activity-type"
-                                                             class="ct-chart-bar"></div>
-                                                    </div><!-- Right Col -->
-                                                    <div class='col nudge-container'>
-                                                        <div class='card'
-                                                             id='nudge-by-activity-type'>
-                                                            <div class='nudge-content-0'>
-                                                                <div>
-                                                                    <svg class="analyze"
-                                                                         xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M20.8333 13.3333C21.1083 13.3333 21.3333 13.5583 21.3333 13.8333V15.5C21.3333 15.775 21.1083 16 20.8333 16H0.5C0.225 16 0 15.775 0 15.5V0.5C0 0.225 0.225 0 0.5 0H2.16667C2.44167 0 2.66667 0.225 2.66667 0.5V13.3333H20.8333ZM8 11.5V8.5C8 8.225 7.775 8 7.5 8H5.83333C5.55833 8 5.33333 8.225 5.33333 8.5V11.5C5.33333 11.775 5.55833 12 5.83333 12H7.5C7.775 12 8 11.775 8 11.5ZM16 11.5V5.83333C16 5.55833 15.775 5.33333 15.5 5.33333H13.8333C13.5583 5.33333 13.3333 5.55833 13.3333 5.83333V11.5C13.3333 11.775 13.5583 12 13.8333 12H15.5C15.775 12 16 11.775 16 11.5ZM12 11.5V3.16667C12 2.89167 11.775 2.66667 11.5 2.66667H9.83333C9.55833 2.66667 9.33333 2.89167 9.33333 3.16667V11.5C9.33333 11.775 9.55833 12 9.83333 12H11.5C11.775 12 12 11.775 12 11.5ZM20 11.5V1.83333C20 1.55833 19.775 1.33333 19.5 1.33333H17.8333C17.5583 1.33333 17.3333 1.55833 17.3333 1.83333V11.5C17.3333 11.775 17.5583 12 17.8333 12H19.5C19.775 12 20 11.775 20 11.5Z"></path>
-                                                                    </svg>
-                                                                    <svg class="cursor"
-                                                                         xmlns="http://www.w3.org/2000/svg">
-                                                                        <path d="M9.4434 10.2852H6.12828L7.873 14.535C7.99453 14.8296 7.85565 15.1599 7.57787 15.2849L6.04146 15.9545C5.75506 16.0795 5.43387 15.9367 5.31234 15.651L3.65444 11.6155L0.946187 14.401C0.585281 14.7722 0 14.486 0 13.9993V0.571835C0 0.0593356 0.622531 -0.190508 0.946156 0.170086L9.83403 9.31202C10.1925 9.66136 9.92799 10.2852 9.4434 10.2852Z"></path>
-                                                                    </svg>
-                                                                </div>
-                                                                <h4>
-                                                                    Click on any
-                                                                    bar in the
-                                                                    chart to get
-                                                                    tips on how
-                                                                    to
-                                                                    consolidate
-                                                                    and
-                                                                    prioritize
-                                                                    your plan.
-                                                                </h4>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!-- List of Activities -->
-                            <div class="row my-5">
-                                <div id="activity-list-by-tech-container"
-                                     class="col-auto">
-                                    <div class="technical-area-container"
-                                         id="technical-area-B1"
-                                         title="National Legislation, Policy and Financing"
-                                         data-technical-area-id="1"
-                                         data-target="plan.technicalAreaContainer">
-                                        <h2 id="national-legislation-policy-and-financing">
-                                            1. National Legislation, Policy and
-                                            Financing
-                                        </h2>
-                                        <div data-controller="benchmark"
-                                             data-target="benchmark.self"
-                                             data-benchmark-indicator-id="1"
-                                             data-benchmark-indicator-display-abbrev="1.1"
-                                             data-benchmark-activity-row-template-selector="#activity-row-template"
-                                             data-benchmark-bar-segment-index="0"
-                                             class="benchmark-container col">
-                                            <div class="row bg-light-gray px-2 header">
-                                                <div class="col-11">
-                                                    <b>Benchmark 1.1:</b>
-                                                    Domestic legislation, laws,
-                                                    regulations, policy and
-                                                    administrative requirements
-                                                    are available in all
-                                                    relevant sectors and
-                                                    effectively enable
-                                                    compliance with the IHR
-                                                </div>
-                                                <div class="col-1 d-flex justify-content-end"
-                                                     data-action="mouseleave-&gt;benchmark#reset">
-                                                    <button class="close confirm-delete"
-                                                            type="button"
-                                                            data-action="benchmark#confirm"
-                                                            data-target="benchmark.confirm">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete activities for this section">
-                                                    </button>
-                                                    <br>
-                                                    <button class="close delete"
-                                                            type="button"
-                                                            data-action="benchmark#deleteActivitiesForIndicator"
-                                                            data-target="benchmark.delete">
-                                                        Really delete?
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="1"
-                                                 data-activity-bar-segment-index="0"
-                                                 class="activity row p-2 activity-type-3">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-2"><span
-                                                            class="activity-level">2</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>1.1</strong> <span
-                                                        class="activity-text">Identify and convene key stakeholders related to the review, formulation and implementation of legislation and policies.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="2"
-                                                 data-activity-bar-segment-index="0"
-                                                 class="activity row p-2 activity-type-2">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-2"><span
-                                                            class="activity-level">2</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>1.1</strong> <span
-                                                        class="activity-text">Assess current relevant legislation, laws, regulations, policy and administrative requirements for IHR implementation and identify gaps, including reporting, prevention and control.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="3"
-                                                 data-activity-bar-segment-index="0"
-                                                 class="activity row p-2 activity-type-8">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-2"><span
-                                                            class="activity-level">2</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>1.1</strong> <span
-                                                        class="activity-text">Develop an implementation plan for the formulation/revision/adjustment and approval of prioritized legislation/regulations and policy (including regulatory or parliamentary process based on the country’s practices, as necessary).</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="4"
-                                                 data-activity-bar-segment-index="0"
-                                                 class="activity row p-2 activity-type-1">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-2"><span
-                                                            class="activity-level">2</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>1.1</strong> <span
-                                                        class="activity-text">Develop advocacy materials and package to raise awareness of the requirements of adjustments to parliamentarians, government, oppositions and other relevant stakeholders.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="5"
-                                                 data-activity-bar-segment-index="0"
-                                                 class="activity row p-2 activity-type-8 activity-type-14">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-2"><span
-                                                            class="activity-level">2</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>1.1</strong> <span
-                                                        class="activity-text">Develop an orientation package to implement the legislation, laws, regulations, policy and administrative requirements.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="6"
-                                                 data-activity-bar-segment-index="0"
-                                                 class="activity row p-2 activity-type-1">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-2"><span
-                                                            class="activity-level">2</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>1.1</strong> <span
-                                                        class="activity-text">Identify legislative/policy champion(s) or broker(s) who can advocate for the law or policy to reach a successful end state.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div><!-- Add an Activity -->
-                                            <div class="row activity-form">
-                                                <div class="col">
-                                                    <input type="text"
-                                                           name="new_activity"
-                                                           class="w-100"
-                                                           placeholder="+ Add Activity"
-                                                           data-target="benchmark.addActivityField"
-                                                           data-action="focus-&gt;benchmark#showAutocomplete"
-                                                           autocomplete="off">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div data-controller="benchmark"
-                                             data-target="benchmark.self"
-                                             data-benchmark-indicator-id="2"
-                                             data-benchmark-indicator-display-abbrev="1.2"
-                                             data-benchmark-activity-row-template-selector="#activity-row-template"
-                                             data-benchmark-bar-segment-index="0"
-                                             class="benchmark-container col">
-                                            <div class="row bg-light-gray px-2 header">
-                                                <div class="col-11">
-                                                    <b>Benchmark 1.2:</b>
-                                                    Financing is available for
-                                                    the implementation of IHR
-                                                    capacities
-                                                </div>
-                                                <div class="col-1 d-flex justify-content-end"
-                                                     data-action="mouseleave-&gt;benchmark#reset">
-                                                    <button class="close confirm-delete"
-                                                            type="button"
-                                                            data-action="benchmark#confirm"
-                                                            data-target="benchmark.confirm">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete activities for this section">
-                                                    </button>
-                                                    <br>
-                                                    <button class="close delete"
-                                                            type="button"
-                                                            data-action="benchmark#deleteActivitiesForIndicator"
-                                                            data-target="benchmark.delete">
-                                                        Really delete?
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="row p-3 no-activities">
-                                                <div class="col font-italic">
-                                                    There is no capacity gap for
-                                                    activities. You should
-                                                    review the Benchmarks
-                                                    document to ensure you have
-                                                    completed the tasks up to
-                                                    this level.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div data-controller="benchmark"
-                                             data-target="benchmark.self"
-                                             data-benchmark-indicator-id="3"
-                                             data-benchmark-indicator-display-abbrev="1.3"
-                                             data-benchmark-activity-row-template-selector="#activity-row-template"
-                                             data-benchmark-bar-segment-index="0"
-                                             class="benchmark-container col">
-                                            <div class="row bg-light-gray px-2 header">
-                                                <div class="col-11">
-                                                    <b>Benchmark 1.3:</b>
-                                                    Financing available for
-                                                    timely response to public
-                                                    health emergencies
-                                                </div>
-                                                <div class="col-1 d-flex justify-content-end"
-                                                     data-action="mouseleave-&gt;benchmark#reset">
-                                                    <button class="close confirm-delete"
-                                                            type="button"
-                                                            data-action="benchmark#confirm"
-                                                            data-target="benchmark.confirm">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete activities for this section">
-                                                    </button>
-                                                    <br>
-                                                    <button class="close delete"
-                                                            type="button"
-                                                            data-action="benchmark#deleteActivitiesForIndicator"
-                                                            data-target="benchmark.delete">
-                                                        Really delete?
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="row p-3 no-activities">
-                                                <div class="col font-italic">
-                                                    There is no capacity gap for
-                                                    activities. You should
-                                                    review the Benchmarks
-                                                    document to ensure you have
-                                                    completed the tasks up to
-                                                    this level.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="technical-area-container"
-                                         id="technical-area-B2"
-                                         title="IHR Coordination, Communication and Advocacy and Reporting"
-                                         data-technical-area-id="2"
-                                         data-target="plan.technicalAreaContainer">
-                                        <h2 id="ihr-coordination-communication-and-advocacy-and-reporting">
-                                            2. IHR Coordination, Communication
-                                            and Advocacy and Reporting
-                                        </h2>
-                                        <div data-controller="benchmark"
-                                             data-target="benchmark.self"
-                                             data-benchmark-indicator-id="4"
-                                             data-benchmark-indicator-display-abbrev="2.1"
-                                             data-benchmark-activity-row-template-selector="#activity-row-template"
-                                             data-benchmark-bar-segment-index="1"
-                                             class="benchmark-container col">
-                                            <div class="row bg-light-gray px-2 header">
-                                                <div class="col-11">
-                                                    <b>Benchmark 2.1:</b> The
-                                                    IHR NFP is fully functional
-                                                </div>
-                                                <div class="col-1 d-flex justify-content-end"
-                                                     data-action="mouseleave-&gt;benchmark#reset">
-                                                    <button class="close confirm-delete"
-                                                            type="button"
-                                                            data-action="benchmark#confirm"
-                                                            data-target="benchmark.confirm">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete activities for this section">
-                                                    </button>
-                                                    <br>
-                                                    <button class="close delete"
-                                                            type="button"
-                                                            data-action="benchmark#deleteActivitiesForIndicator"
-                                                            data-target="benchmark.delete">
-                                                        Really delete?
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="56"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-10 activity-type-12 activity-type-7">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Implement SOPs for communicating and coordinating between NFPs and WHO and review performance regularly.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="57"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-10 activity-type-12">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Implement SOPs for communicating between the NFP and relevant sectors including those responsible for surveillance and reporting, points of entry, public health services, clinics and hospitals and other government departments/ministries and review performance regularly.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="58"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-10 activity-type-12">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Establish SOPs for communication and coordination between the NFP and nongovernmental agencies, including media and civil society.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="59"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-7 activity-type-11">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Regularly test the mechanism for multisectoral collaboration and communication through actual experience and/or scenarios for high risk, deliberate or mass gathering events.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="60"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-10">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Develop communication channels, such as website updates or newsletters, to apprise relevant sectors and partners on developments in the relation to IHR implementation.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="61"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-7">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-4"><span
-                                                            class="activity-level">4</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Conduct formal evaluation of the role of NFPs and the coordination mechanism.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="62"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-15">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-4"><span
-                                                            class="activity-level">4</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Conduct regular refresher training for NFPs and orientation/training for new staff.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="63"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-11">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-4"><span
-                                                            class="activity-level">4</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Review NFP mastery of information and best practices.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="64"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2 activity-type-11">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-4"><span
-                                                            class="activity-level">4</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.1</strong> <span
-                                                        class="activity-text">Routinely conduct after-action reviews or simulations and apply the lessons learnt relating to coordination and NFP role, prioritized for actions within national action plans.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div><!-- Add an Activity -->
-                                            <div class="row activity-form">
-                                                <div class="col">
-                                                    <input type="text"
-                                                           name="new_activity"
-                                                           class="w-100"
-                                                           placeholder="+ Add Activity"
-                                                           data-target="benchmark.addActivityField"
-                                                           data-action="focus-&gt;benchmark#showAutocomplete"
-                                                           autocomplete="off">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div data-controller="benchmark"
-                                             data-target="benchmark.self"
-                                             data-benchmark-indicator-id="5"
-                                             data-benchmark-indicator-display-abbrev="2.2"
-                                             data-benchmark-activity-row-template-selector="#activity-row-template"
-                                             data-benchmark-bar-segment-index="1"
-                                             class="benchmark-container col">
-                                            <div class="row bg-light-gray px-2 header">
-                                                <div class="col-11">
-                                                    <b>Benchmark 2.2:</b>
-                                                    Multisectoral IHR
-                                                    coordination mechanism
-                                                    effectively supports the
-                                                    implementation of
-                                                    prevention, detection and
-                                                    response activities
-                                                </div>
-                                                <div class="col-1 d-flex justify-content-end"
-                                                     data-action="mouseleave-&gt;benchmark#reset">
-                                                    <button class="close confirm-delete"
-                                                            type="button"
-                                                            data-action="benchmark#confirm"
-                                                            data-target="benchmark.confirm">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete activities for this section">
-                                                    </button>
-                                                    <br>
-                                                    <button class="close delete"
-                                                            type="button"
-                                                            data-action="benchmark#deleteActivitiesForIndicator"
-                                                            data-target="benchmark.delete">
-                                                        Really delete?
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="72"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.2</strong> <span
-                                                        class="activity-text">Create/update the national action plan for improving health security and IHR capacity based on IHR monitoring and evaluation results.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="73"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.2</strong> <span
-                                                        class="activity-text">Update or review the coordination mechanism to address zoonoses and other existing or new health events at the human–animal interface.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div data-controller="activity"
-                                                 data-target="benchmark.activity"
-                                                 data-activity-id="74"
-                                                 data-activity-bar-segment-index="1"
-                                                 class="activity row p-2">
-                                                <div class="col-auto d-flex flex-row align-items-center">
-                                                    <span class="badge badge-pill badge-success badge-rounded-circle color-value-3"><span
-                                                            class="activity-level">3</span></span>
-                                                </div>
-                                                <div class="col-10">
-                                                    <strong>2.2</strong> <span
-                                                        class="activity-text">Document and disseminate evidence that the coordination mechanism for food safety among stakeholders from all relevant sectors is working as per the protocol.</span>
-                                                </div>
-                                                <div class="col">
-                                                    <button class="delete close"
-                                                            type="button"
-                                                            data-action="activity#deleteSelf">
-                                                        <img src="/delete-button.svg"
-                                                             alt="Delete this activity">
-                                                    </button>
-                                                </div>
-                                            </div><!-- Add an Activity -->
-                                            <div class="row activity-form">
-                                                <div class="col">
-                                                    <input type="text"
-                                                           name="new_activity"
-                                                           class="w-100"
-                                                           placeholder="+ Add Activity"
-                                                           data-target="benchmark.addActivityField"
-                                                           data-action="focus-&gt;benchmark#showAutocomplete"
-                                                           autocomplete="off">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="activity-list-by-type-container"
-                                     class="col-auto">
-                                    <div class="col"></div>
-                                </div>
-                            </div>
-                        </form>
+  <div class="row">
+    <div class="col-11 mx-auto">
+      <div class="page-content-container">
+        <div class="row">
+          <div
+            class="col plan-container"
+            data-controller="plan"
+            data-plan-term="100"
+            data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-activity-type"]'
+            data-plan-nudge-content-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
+            data-plan-nudge-template-selector="#nudge-template"
+            data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
+            data-plan-chart-labels='[["Legislation","IHR coordination","AMR","Zoonotic disease","Food safety","Immunization","Laboratory","Biosafety & biosecurity","Surveillance","Human resources","Preparedness","Rapid response","Linking public health","Medical countermeasures","Risk communication","Points of entry","Chemical events","Radiation"],["Advocacy","Assessment and Data Use","Coordination","Designation","Dissemination","Financing","Monitoring and Evaluation","Planning and Strategy","Procurement","Program Implementation","SimEx and AAR","SOPs","Surveillance","Tool Development","Training"]]'
+            data-plan-chart-series="[[6,12,19,9,11,13,19,7,15,18,11,15,7,19,20,16,14,4],[8,40,23,7,9,9,20,45,2,45,13,32,8,3,23]]"
+            data-plan-chart-width="710"
+            data-plan-chart-height="240"
+          >
+            <form
+              class="edit_plan"
+              id="edit_plan_19"
+              data-target="plan.form"
+              action="/plans/19"
+              accept-charset="UTF-8"
+              method="post"
+              name="edit_plan_19"
+            >
+              <input name="utf8" type="hidden" value="✓" /><input
+                type="hidden"
+                name="_method"
+                value="patch"
+              /><input
+                type="hidden"
+                name="authenticity_token"
+                value="32vPrqeTQA6RTaZo8Ky8LGyvNyPcjFsssasO8/qGnpuG7HoisDtmcfHwtxSh0cEcfPyP+l33I40ssSXhLt/WAw=="
+              />
+              <input
+                data-target="plan.fieldForActivityIds"
+                autocomplete="off"
+                type="hidden"
+                name="plan[benchmark_activity_ids]"
+                id="plan_benchmark_activity_ids"
+              />
+              <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
+              <div
+                class="row bg-dark-blue py-4 px-0 full-width stick-to-top text-white"
+              >
+                <div class="col-11 mx-auto row justify-content-between">
+                  <div style="height: 60px;">
+                    <div
+                      class="form-group alt-header"
+                      style="min-width: 200px;"
+                    >
+                      <input
+                        data-target="plan.name"
+                        data-action="change-&gt;plan#validateName"
+                        class="form-control"
+                        required="required"
+                        type="text"
+                        value="Nigeria draft plan"
+                        name="plan[name]"
+                        id="plan_name"
+                      />
+                      <div class="invalid-feedback">
+                        Cannot be empty
+                      </div>
                     </div>
-                    <script type="text/template" id="activity-row-template">
-                        <div
-                                data-controller="activity"
-                                data-target="benchmark.activity"
-                                data-activity-id="{{benchmarkActivityId}}"
-                                data-activity-bar-segment-index="{{barSegmentIndex}}"
-                                class="activity row p-2 {{benchmarkActivityTypes}}"
-                        >
-                            <div class="col-auto d-flex flex-row align-items-center">
-							<span class="badge badge-pill badge-success badge-rounded-circle color-value-{{benchmarkActivityLevel}}">
-							<span class="activity-level">{{benchmarkActivityLevel}}</span>
-							</span>
-                            </div>
-                            <div class="col-10">
-                                <strong>{{indicatorDisplayAbbrev}}</strong>
-                                <span class="activity-text">
-							{{benchmarkActivityText}}
-							</span>
-                            </div>
-                            <div class="col">
-                                <button
-                                        class="delete close"
-                                        type="button"
-                                        data-action="activity#deleteSelf"
-                                >
-                                    <img src="/delete-button.svg"
-                                         alt="Delete this activity"/>
-                                </button>
-                            </div>
-                        </div>
-
-                    </script>
+                  </div>
+                  <div style="min-width: 140px;">
+                    <input
+                      type="submit"
+                      name="commit"
+                      value="Save Plan"
+                      data-target="plan.submit"
+                      data-action="plan#saveActivityIdsToField"
+                      data-disable-with="Save Plan"
+                      class="btn btn-orange w-100 align-self-center"
+                    />
+                  </div>
                 </div>
-                <script type="text/template"
-                        id="nudge-for-technical-area-1-year">
-                    <p>
-                        <svg class="lightbulb"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8.57877 15.4626V16.4098C8.57877 16.7633 8.35903 17.0639 8.05245 17.1754V17.4924C8.05245 17.9409 7.699 18.3044 7.26298 18.3044H4.6314C4.19538 18.3044 3.84193 17.9409 3.84193 17.4924V17.1754C3.53535 17.0639 3.31561 16.7633 3.31561 16.4098V15.4626C3.31561 15.2384 3.49235 15.0566 3.71035 15.0566H8.18403C8.40202 15.0566 8.57877 15.2384 8.57877 15.4626ZM3.8713 13.974C3.54541 13.974 3.25202 13.7683 3.13525 13.4554C1.85827 10.034 0.157715 10.3787 0.157715 6.93701C0.157715 3.64869 2.74998 0.982666 5.94719 0.982666C9.14439 0.982666 11.7367 3.64869 11.7367 6.93701C11.7367 10.3787 10.0361 10.034 8.75916 13.4554C8.64239 13.7683 8.34896 13.974 8.02311 13.974H3.8713ZM3.31561 6.93701C3.31561 5.44464 4.49614 4.23049 5.94719 4.23049C6.23788 4.23049 6.4735 3.98812 6.4735 3.68919C6.4735 3.39025 6.23788 3.14788 5.94719 3.14788C3.91571 3.14788 2.26298 4.84768 2.26298 6.93701C2.26298 7.23595 2.49864 7.47832 2.78929 7.47832C3.07995 7.47832 3.31561 7.23595 3.31561 6.93701Z"/>
-                        </svg>
-
-                        Follow best practice
-                    </p>
-                    <ul>
-                        <li>
-                            Focus on no more than 2-3 activities per technical
-                            area.
-                        </li>
-                        <li>
-                            Consider reducing the number of technical areas
-                            included and focus on the areas that scored low in
-                            your capacity assessments or are identified as gaps
-                            in the AAR's and simulation reviews.
-                        </li>
+              </div>
+              <!-- Count of Total Activities -->
+              <div class="row">
+                <div class="col mt-5">
+                  <div
+                    class="row mx-0 activity-count-header align-items-center"
+                  >
+                    <div
+                      class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center"
+                    >
+                      <span data-target="plan.activityCountCircle">235</span>
+                    </div>
+                    <div class="col-auto">
+                      <p>
+                        Total Activities
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Row for Charts and Nudges -->
+              <div class="row">
+                <div class="col mt-5">
+                  <!-- Card for Bar Charts and Nudges -->
+                  <div class="plan card">
+                    <ul class="nav nav-tabs pt-3" role="tablist">
+                      <li class="nav-item px-2">
+                        <a
+                          class="nav-link active"
+                          data-toggle="tab"
+                          href="#tabContentForTechnicalArea"
+                          id="tabForTechnicalArea"
+                          role="tab"
+                          aria-controls="technical-area"
+                          aria-selected="true"
+                          >Technical Area</a
+                        >
+                      </li>
+                      <li class="nav-item px-2">
+                        <a
+                          class="nav-link"
+                          data-toggle="tab"
+                          href="#tabContentForActivityType"
+                          id="tabForActivityType"
+                          role="tab"
+                          aria-controls="activity-type"
+                          aria-selected="false"
+                          >Activity Type</a
+                        >
+                      </li>
                     </ul>
-                </script>
-                <script type="text/template"
-                        id="nudge-for-technical-area-5-year">
-
-                    <p>
-                        <svg class="lightbulb"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8.57877 15.4626V16.4098C8.57877 16.7633 8.35903 17.0639 8.05245 17.1754V17.4924C8.05245 17.9409 7.699 18.3044 7.26298 18.3044H4.6314C4.19538 18.3044 3.84193 17.9409 3.84193 17.4924V17.1754C3.53535 17.0639 3.31561 16.7633 3.31561 16.4098V15.4626C3.31561 15.2384 3.49235 15.0566 3.71035 15.0566H8.18403C8.40202 15.0566 8.57877 15.2384 8.57877 15.4626ZM3.8713 13.974C3.54541 13.974 3.25202 13.7683 3.13525 13.4554C1.85827 10.034 0.157715 10.3787 0.157715 6.93701C0.157715 3.64869 2.74998 0.982666 5.94719 0.982666C9.14439 0.982666 11.7367 3.64869 11.7367 6.93701C11.7367 10.3787 10.0361 10.034 8.75916 13.4554C8.64239 13.7683 8.34896 13.974 8.02311 13.974H3.8713ZM3.31561 6.93701C3.31561 5.44464 4.49614 4.23049 5.94719 4.23049C6.23788 4.23049 6.4735 3.98812 6.4735 3.68919C6.4735 3.39025 6.23788 3.14788 5.94719 3.14788C3.91571 3.14788 2.26298 4.84768 2.26298 6.93701C2.26298 7.23595 2.49864 7.47832 2.78929 7.47832C3.07995 7.47832 3.31561 7.23595 3.31561 6.93701Z"/>
-                        </svg>
-
-                        Follow best practice
-                    </p>
-                    <ul>
-                        <li>
-                            5 year plans are useful for long-term planning and
-                            budgeting but should still be prioritized and
-                            realistic.
-                        </li>
-                        <li>
-                            Prioritize activities based on the country risk and
-                            capacity assessments focused on technical areas that
-                            address gaps identified including those in AAR's and
-                            simulations.
-                        </li>
-                        <li>
-                            Remember &mdash; you will still need to create a
-                            smaller more focused implementation plan as part of
-                            the 5 year plan to ensure implementation.
-                        </li>
-                    </ul>
-                </script>
-                <script type="text/template" id="nudge-template">
-
-                    <p>
-                        <svg class="lightbulb"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8.57877 15.4626V16.4098C8.57877 16.7633 8.35903 17.0639 8.05245 17.1754V17.4924C8.05245 17.9409 7.699 18.3044 7.26298 18.3044H4.6314C4.19538 18.3044 3.84193 17.9409 3.84193 17.4924V17.1754C3.53535 17.0639 3.31561 16.7633 3.31561 16.4098V15.4626C3.31561 15.2384 3.49235 15.0566 3.71035 15.0566H8.18403C8.40202 15.0566 8.57877 15.2384 8.57877 15.4626ZM3.8713 13.974C3.54541 13.974 3.25202 13.7683 3.13525 13.4554C1.85827 10.034 0.157715 10.3787 0.157715 6.93701C0.157715 3.64869 2.74998 0.982666 5.94719 0.982666C9.14439 0.982666 11.7367 3.64869 11.7367 6.93701C11.7367 10.3787 10.0361 10.034 8.75916 13.4554C8.64239 13.7683 8.34896 13.974 8.02311 13.974H3.8713ZM3.31561 6.93701C3.31561 5.44464 4.49614 4.23049 5.94719 4.23049C6.23788 4.23049 6.4735 3.98812 6.4735 3.68919C6.4735 3.39025 6.23788 3.14788 5.94719 3.14788C3.91571 3.14788 2.26298 4.84768 2.26298 6.93701C2.26298 7.23595 2.49864 7.47832 2.78929 7.47832C3.07995 7.47832 3.31561 7.23595 3.31561 6.93701Z"/>
-                        </svg>
-
-                        {{heading}}
-                    </p>
-                    <ul>
-                        {{#listItems}}
-                        <li>
-                            {{> listItem}
-                        </li>
-                        {{/listItems}}
-                    </ul>
-                </script>
-            </div>
+                    <div class="row tab-content">
+                      <div
+                        id="tabContentForTechnicalArea"
+                        aria-labelledby="tabForTechnicalArea"
+                        role="tabpanel"
+                        class="col-auto tab-pane fade show active"
+                      >
+                        <div class="row">
+                          <!-- Left Col -->
+                          <div
+                            class="col-auto d-flex mx-auto flex-column justify-content-center align-items-center"
+                          >
+                            <h6 class="my-3">
+                              Actions per benchmark technical area
+                            </h6>
+                            <!-- Actual Chart, by Technical Area -->
+                            <div
+                              id="bar-chart-by-technical-area"
+                              class="ct-chart-bar"
+                            ></div>
+                          </div>
+                          <!-- Right Col -->
+                          <div class="col nudge-container">
+                            <div class="card" id="nudge-by-technical-area">
+                              <div class="nudge-content-0">
+                                <div>
+                                  <svg
+                                    class="analyze"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M20.8333 13.3333C21.1083 13.3333 21.3333 13.5583 21.3333 13.8333V15.5C21.3333 15.775 21.1083 16 20.8333 16H0.5C0.225 16 0 15.775 0 15.5V0.5C0 0.225 0.225 0 0.5 0H2.16667C2.44167 0 2.66667 0.225 2.66667 0.5V13.3333H20.8333ZM8 11.5V8.5C8 8.225 7.775 8 7.5 8H5.83333C5.55833 8 5.33333 8.225 5.33333 8.5V11.5C5.33333 11.775 5.55833 12 5.83333 12H7.5C7.775 12 8 11.775 8 11.5ZM16 11.5V5.83333C16 5.55833 15.775 5.33333 15.5 5.33333H13.8333C13.5583 5.33333 13.3333 5.55833 13.3333 5.83333V11.5C13.3333 11.775 13.5583 12 13.8333 12H15.5C15.775 12 16 11.775 16 11.5ZM12 11.5V3.16667C12 2.89167 11.775 2.66667 11.5 2.66667H9.83333C9.55833 2.66667 9.33333 2.89167 9.33333 3.16667V11.5C9.33333 11.775 9.55833 12 9.83333 12H11.5C11.775 12 12 11.775 12 11.5ZM20 11.5V1.83333C20 1.55833 19.775 1.33333 19.5 1.33333H17.8333C17.5583 1.33333 17.3333 1.55833 17.3333 1.83333V11.5C17.3333 11.775 17.5583 12 17.8333 12H19.5C19.775 12 20 11.775 20 11.5Z"
+                                    ></path>
+                                  </svg>
+                                  <svg
+                                    class="cursor"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M9.4434 10.2852H6.12828L7.873 14.535C7.99453 14.8296 7.85565 15.1599 7.57787 15.2849L6.04146 15.9545C5.75506 16.0795 5.43387 15.9367 5.31234 15.651L3.65444 11.6155L0.946187 14.401C0.585281 14.7722 0 14.486 0 13.9993V0.571835C0 0.0593356 0.622531 -0.190508 0.946156 0.170086L9.83403 9.31202C10.1925 9.66136 9.92799 10.2852 9.4434 10.2852Z"
+                                    ></path>
+                                  </svg>
+                                </div>
+                                <h4>
+                                  Click on any bar in the chart to get tips on
+                                  how to consolidate and prioritize your plan.
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        id="tabContentForActivityType"
+                        aria-labelledby="tabForActivityType"
+                        role="tabpanel"
+                        class="col-auto tab-pane fade"
+                      >
+                        <div class="row">
+                          <!-- Left Col -->
+                          <div
+                            class="col-auto d-flex mx-auto flex-column justify-content-center align-items-center"
+                          >
+                            <h6 class="my-3">
+                              Actions per activity type
+                            </h6>
+                            <!-- Actual Chart, by Activity Type -->
+                            <div
+                              id="bar-chart-by-activity-type"
+                              class="ct-chart-bar"
+                            ></div>
+                          </div>
+                          <!-- Right Col -->
+                          <div class="col nudge-container">
+                            <div class="card" id="nudge-by-activity-type">
+                              <div class="nudge-content-0">
+                                <div>
+                                  <svg
+                                    class="analyze"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M20.8333 13.3333C21.1083 13.3333 21.3333 13.5583 21.3333 13.8333V15.5C21.3333 15.775 21.1083 16 20.8333 16H0.5C0.225 16 0 15.775 0 15.5V0.5C0 0.225 0.225 0 0.5 0H2.16667C2.44167 0 2.66667 0.225 2.66667 0.5V13.3333H20.8333ZM8 11.5V8.5C8 8.225 7.775 8 7.5 8H5.83333C5.55833 8 5.33333 8.225 5.33333 8.5V11.5C5.33333 11.775 5.55833 12 5.83333 12H7.5C7.775 12 8 11.775 8 11.5ZM16 11.5V5.83333C16 5.55833 15.775 5.33333 15.5 5.33333H13.8333C13.5583 5.33333 13.3333 5.55833 13.3333 5.83333V11.5C13.3333 11.775 13.5583 12 13.8333 12H15.5C15.775 12 16 11.775 16 11.5ZM12 11.5V3.16667C12 2.89167 11.775 2.66667 11.5 2.66667H9.83333C9.55833 2.66667 9.33333 2.89167 9.33333 3.16667V11.5C9.33333 11.775 9.55833 12 9.83333 12H11.5C11.775 12 12 11.775 12 11.5ZM20 11.5V1.83333C20 1.55833 19.775 1.33333 19.5 1.33333H17.8333C17.5583 1.33333 17.3333 1.55833 17.3333 1.83333V11.5C17.3333 11.775 17.5583 12 17.8333 12H19.5C19.775 12 20 11.775 20 11.5Z"
+                                    ></path>
+                                  </svg>
+                                  <svg
+                                    class="cursor"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M9.4434 10.2852H6.12828L7.873 14.535C7.99453 14.8296 7.85565 15.1599 7.57787 15.2849L6.04146 15.9545C5.75506 16.0795 5.43387 15.9367 5.31234 15.651L3.65444 11.6155L0.946187 14.401C0.585281 14.7722 0 14.486 0 13.9993V0.571835C0 0.0593356 0.622531 -0.190508 0.946156 0.170086L9.83403 9.31202C10.1925 9.66136 9.92799 10.2852 9.4434 10.2852Z"
+                                    ></path>
+                                  </svg>
+                                </div>
+                                <h4>
+                                  Click on any bar in the chart to get tips on
+                                  how to consolidate and prioritize your plan.
+                                </h4>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- List of Activities -->
+              <div class="row my-5">
+                <div id="activity-list-by-tech-container" class="col-auto">
+                  <div
+                    class="technical-area-container"
+                    id="technical-area-B1"
+                    title="National Legislation, Policy and Financing"
+                    data-technical-area-id="1"
+                    data-target="plan.technicalAreaContainer"
+                  >
+                    <h2 id="national-legislation-policy-and-financing">
+                      1. National Legislation, Policy and Financing
+                    </h2>
+                    <div
+                      data-controller="benchmark"
+                      data-target="benchmark.self"
+                      data-benchmark-indicator-id="1"
+                      data-benchmark-indicator-display-abbrev="1.1"
+                      data-benchmark-activity-row-template-selector="#activity-row-template"
+                      data-benchmark-bar-segment-index="0"
+                      class="benchmark-container col"
+                    >
+                      <div class="row bg-light-gray px-2 header">
+                        <div class="col-11">
+                          <b>Benchmark 1.1:</b>
+                          Domestic legislation, laws, regulations, policy and
+                          administrative requirements are available in all
+                          relevant sectors and effectively enable compliance
+                          with the IHR
+                        </div>
+                        <div
+                          class="col-1 d-flex justify-content-end"
+                          data-action="mouseleave-&gt;benchmark#reset"
+                        >
+                          <button
+                            class="close confirm-delete"
+                            type="button"
+                            data-action="benchmark#confirm"
+                            data-target="benchmark.confirm"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete activities for this section"
+                            />
+                          </button>
+                          <br />
+                          <button
+                            class="close delete"
+                            type="button"
+                            data-action="benchmark#deleteActivitiesForIndicator"
+                            data-target="benchmark.delete"
+                          >
+                            Really delete?
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="1"
+                        data-activity-bar-segment-index="0"
+                        class="activity row p-2 activity-type-3"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-2"
+                            ><span class="activity-level">2</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>1.1</strong>
+                          <span class="activity-text"
+                            >Identify and convene key stakeholders related to
+                            the review, formulation and implementation of
+                            legislation and policies.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="2"
+                        data-activity-bar-segment-index="0"
+                        class="activity row p-2 activity-type-2"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-2"
+                            ><span class="activity-level">2</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>1.1</strong>
+                          <span class="activity-text"
+                            >Assess current relevant legislation, laws,
+                            regulations, policy and administrative requirements
+                            for IHR implementation and identify gaps, including
+                            reporting, prevention and control.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="3"
+                        data-activity-bar-segment-index="0"
+                        class="activity row p-2 activity-type-8"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-2"
+                            ><span class="activity-level">2</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>1.1</strong>
+                          <span class="activity-text"
+                            >Develop an implementation plan for the
+                            formulation/revision/adjustment and approval of
+                            prioritized legislation/regulations and policy
+                            (including regulatory or parliamentary process based
+                            on the country’s practices, as necessary).</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="4"
+                        data-activity-bar-segment-index="0"
+                        class="activity row p-2 activity-type-1"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-2"
+                            ><span class="activity-level">2</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>1.1</strong>
+                          <span class="activity-text"
+                            >Develop advocacy materials and package to raise
+                            awareness of the requirements of adjustments to
+                            parliamentarians, government, oppositions and other
+                            relevant stakeholders.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="5"
+                        data-activity-bar-segment-index="0"
+                        class="activity row p-2 activity-type-8 activity-type-14"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-2"
+                            ><span class="activity-level">2</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>1.1</strong>
+                          <span class="activity-text"
+                            >Develop an orientation package to implement the
+                            legislation, laws, regulations, policy and
+                            administrative requirements.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="6"
+                        data-activity-bar-segment-index="0"
+                        class="activity row p-2 activity-type-1"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-2"
+                            ><span class="activity-level">2</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>1.1</strong>
+                          <span class="activity-text"
+                            >Identify legislative/policy champion(s) or
+                            broker(s) who can advocate for the law or policy to
+                            reach a successful end state.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Add an Activity -->
+                      <div class="row activity-form">
+                        <div class="col">
+                          <input
+                            type="text"
+                            name="new_activity"
+                            class="w-100"
+                            placeholder="+ Add Activity"
+                            data-target="benchmark.addActivityField"
+                            data-action="focus-&gt;benchmark#showAutocomplete"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-controller="benchmark"
+                      data-target="benchmark.self"
+                      data-benchmark-indicator-id="2"
+                      data-benchmark-indicator-display-abbrev="1.2"
+                      data-benchmark-activity-row-template-selector="#activity-row-template"
+                      data-benchmark-bar-segment-index="0"
+                      class="benchmark-container col"
+                    >
+                      <div class="row bg-light-gray px-2 header">
+                        <div class="col-11">
+                          <b>Benchmark 1.2:</b>
+                          Financing is available for the implementation of IHR
+                          capacities
+                        </div>
+                        <div
+                          class="col-1 d-flex justify-content-end"
+                          data-action="mouseleave-&gt;benchmark#reset"
+                        >
+                          <button
+                            class="close confirm-delete"
+                            type="button"
+                            data-action="benchmark#confirm"
+                            data-target="benchmark.confirm"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete activities for this section"
+                            />
+                          </button>
+                          <br />
+                          <button
+                            class="close delete"
+                            type="button"
+                            data-action="benchmark#deleteActivitiesForIndicator"
+                            data-target="benchmark.delete"
+                          >
+                            Really delete?
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row p-3 no-activities">
+                        <div class="col font-italic">
+                          There is no capacity gap for activities. You should
+                          review the Benchmarks document to ensure you have
+                          completed the tasks up to this level.
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-controller="benchmark"
+                      data-target="benchmark.self"
+                      data-benchmark-indicator-id="3"
+                      data-benchmark-indicator-display-abbrev="1.3"
+                      data-benchmark-activity-row-template-selector="#activity-row-template"
+                      data-benchmark-bar-segment-index="0"
+                      class="benchmark-container col"
+                    >
+                      <div class="row bg-light-gray px-2 header">
+                        <div class="col-11">
+                          <b>Benchmark 1.3:</b>
+                          Financing available for timely response to public
+                          health emergencies
+                        </div>
+                        <div
+                          class="col-1 d-flex justify-content-end"
+                          data-action="mouseleave-&gt;benchmark#reset"
+                        >
+                          <button
+                            class="close confirm-delete"
+                            type="button"
+                            data-action="benchmark#confirm"
+                            data-target="benchmark.confirm"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete activities for this section"
+                            />
+                          </button>
+                          <br />
+                          <button
+                            class="close delete"
+                            type="button"
+                            data-action="benchmark#deleteActivitiesForIndicator"
+                            data-target="benchmark.delete"
+                          >
+                            Really delete?
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row p-3 no-activities">
+                        <div class="col font-italic">
+                          There is no capacity gap for activities. You should
+                          review the Benchmarks document to ensure you have
+                          completed the tasks up to this level.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="technical-area-container"
+                    id="technical-area-B2"
+                    title="IHR Coordination, Communication and Advocacy and Reporting"
+                    data-technical-area-id="2"
+                    data-target="plan.technicalAreaContainer"
+                  >
+                    <h2
+                      id="ihr-coordination-communication-and-advocacy-and-reporting"
+                    >
+                      2. IHR Coordination, Communication and Advocacy and
+                      Reporting
+                    </h2>
+                    <div
+                      data-controller="benchmark"
+                      data-target="benchmark.self"
+                      data-benchmark-indicator-id="4"
+                      data-benchmark-indicator-display-abbrev="2.1"
+                      data-benchmark-activity-row-template-selector="#activity-row-template"
+                      data-benchmark-bar-segment-index="1"
+                      class="benchmark-container col"
+                    >
+                      <div class="row bg-light-gray px-2 header">
+                        <div class="col-11">
+                          <b>Benchmark 2.1:</b> The IHR NFP is fully functional
+                        </div>
+                        <div
+                          class="col-1 d-flex justify-content-end"
+                          data-action="mouseleave-&gt;benchmark#reset"
+                        >
+                          <button
+                            class="close confirm-delete"
+                            type="button"
+                            data-action="benchmark#confirm"
+                            data-target="benchmark.confirm"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete activities for this section"
+                            />
+                          </button>
+                          <br />
+                          <button
+                            class="close delete"
+                            type="button"
+                            data-action="benchmark#deleteActivitiesForIndicator"
+                            data-target="benchmark.delete"
+                          >
+                            Really delete?
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="56"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-10 activity-type-12 activity-type-7"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Implement SOPs for communicating and coordinating
+                            between NFPs and WHO and review performance
+                            regularly.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="57"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-10 activity-type-12"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Implement SOPs for communicating between the NFP
+                            and relevant sectors including those responsible for
+                            surveillance and reporting, points of entry, public
+                            health services, clinics and hospitals and other
+                            government departments/ministries and review
+                            performance regularly.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="58"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-10 activity-type-12"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Establish SOPs for communication and coordination
+                            between the NFP and nongovernmental agencies,
+                            including media and civil society.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="59"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-7 activity-type-11"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Regularly test the mechanism for multisectoral
+                            collaboration and communication through actual
+                            experience and/or scenarios for high risk,
+                            deliberate or mass gathering events.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="60"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-10"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Develop communication channels, such as website
+                            updates or newsletters, to apprise relevant sectors
+                            and partners on developments in the relation to IHR
+                            implementation.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="61"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-7"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-4"
+                            ><span class="activity-level">4</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Conduct formal evaluation of the role of NFPs and
+                            the coordination mechanism.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="62"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-15"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-4"
+                            ><span class="activity-level">4</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Conduct regular refresher training for NFPs and
+                            orientation/training for new staff.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="63"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-11"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-4"
+                            ><span class="activity-level">4</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Review NFP mastery of information and best
+                            practices.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="64"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2 activity-type-11"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-4"
+                            ><span class="activity-level">4</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.1</strong>
+                          <span class="activity-text"
+                            >Routinely conduct after-action reviews or
+                            simulations and apply the lessons learnt relating to
+                            coordination and NFP role, prioritized for actions
+                            within national action plans.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Add an Activity -->
+                      <div class="row activity-form">
+                        <div class="col">
+                          <input
+                            type="text"
+                            name="new_activity"
+                            class="w-100"
+                            placeholder="+ Add Activity"
+                            data-target="benchmark.addActivityField"
+                            data-action="focus-&gt;benchmark#showAutocomplete"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      data-controller="benchmark"
+                      data-target="benchmark.self"
+                      data-benchmark-indicator-id="5"
+                      data-benchmark-indicator-display-abbrev="2.2"
+                      data-benchmark-activity-row-template-selector="#activity-row-template"
+                      data-benchmark-bar-segment-index="1"
+                      class="benchmark-container col"
+                    >
+                      <div class="row bg-light-gray px-2 header">
+                        <div class="col-11">
+                          <b>Benchmark 2.2:</b>
+                          Multisectoral IHR coordination mechanism effectively
+                          supports the implementation of prevention, detection
+                          and response activities
+                        </div>
+                        <div
+                          class="col-1 d-flex justify-content-end"
+                          data-action="mouseleave-&gt;benchmark#reset"
+                        >
+                          <button
+                            class="close confirm-delete"
+                            type="button"
+                            data-action="benchmark#confirm"
+                            data-target="benchmark.confirm"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete activities for this section"
+                            />
+                          </button>
+                          <br />
+                          <button
+                            class="close delete"
+                            type="button"
+                            data-action="benchmark#deleteActivitiesForIndicator"
+                            data-target="benchmark.delete"
+                          >
+                            Really delete?
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="72"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.2</strong>
+                          <span class="activity-text"
+                            >Create/update the national action plan for
+                            improving health security and IHR capacity based on
+                            IHR monitoring and evaluation results.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="73"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.2</strong>
+                          <span class="activity-text"
+                            >Update or review the coordination mechanism to
+                            address zoonoses and other existing or new health
+                            events at the human–animal interface.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        data-controller="activity"
+                        data-target="benchmark.activity"
+                        data-activity-id="74"
+                        data-activity-bar-segment-index="1"
+                        class="activity row p-2"
+                      >
+                        <div
+                          class="col-auto d-flex flex-row align-items-center"
+                        >
+                          <span
+                            class="badge badge-pill badge-success badge-rounded-circle color-value-3"
+                            ><span class="activity-level">3</span></span
+                          >
+                        </div>
+                        <div class="col-10">
+                          <strong>2.2</strong>
+                          <span class="activity-text"
+                            >Document and disseminate evidence that the
+                            coordination mechanism for food safety among
+                            stakeholders from all relevant sectors is working as
+                            per the protocol.</span
+                          >
+                        </div>
+                        <div class="col">
+                          <button
+                            class="delete close"
+                            type="button"
+                            data-action="activity#deleteSelf"
+                          >
+                            <img
+                              src="/delete-button.svg"
+                              alt="Delete this activity"
+                            />
+                          </button>
+                        </div>
+                      </div>
+                      <!-- Add an Activity -->
+                      <div class="row activity-form">
+                        <div class="col">
+                          <input
+                            type="text"
+                            name="new_activity"
+                            class="w-100"
+                            placeholder="+ Add Activity"
+                            data-target="benchmark.addActivityField"
+                            data-action="focus-&gt;benchmark#showAutocomplete"
+                            autocomplete="off"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="activity-list-by-type-container" class="col-auto">
+                  <div class="col"></div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <script type="text/template" id="activity-row-template">
+                             <div
+                                     data-controller="activity"
+                                     data-target="benchmark.activity"
+                                     data-activity-id="{{benchmarkActivityId}}"
+                                     data-activity-bar-segment-index="{{barSegmentIndex}}"
+                                     class="activity row p-2 {{benchmarkActivityTypes}}"
+                             >
+                                 <div class="col-auto d-flex flex-row align-items-center">
+            <span class="badge badge-pill badge-success badge-rounded-circle color-value-{{benchmarkActivityLevel}}">
+            <span class="activity-level">{{benchmarkActivityLevel}}</span>
+            </span>
+                                 </div>
+                                 <div class="col-10">
+                                     <strong>{{indicatorDisplayAbbrev}}</strong>
+                                     <span class="activity-text">
+            {{benchmarkActivityText}}
+            </span>
+                                 </div>
+                                 <div class="col">
+                                     <button
+                                             class="delete close"
+                                             type="button"
+                                             data-action="activity#deleteSelf"
+                                     >
+                                         <img src="/delete-button.svg"
+                                              alt="Delete this activity"/>
+                                     </button>
+                                 </div>
+                             </div>
+          </script>
         </div>
+        <script type="text/template" id="nudge-for-technical-area-1-year">
+          <p>
+              <svg class="lightbulb"
+                   xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.57877 15.4626V16.4098C8.57877 16.7633 8.35903 17.0639 8.05245 17.1754V17.4924C8.05245 17.9409 7.699 18.3044 7.26298 18.3044H4.6314C4.19538 18.3044 3.84193 17.9409 3.84193 17.4924V17.1754C3.53535 17.0639 3.31561 16.7633 3.31561 16.4098V15.4626C3.31561 15.2384 3.49235 15.0566 3.71035 15.0566H8.18403C8.40202 15.0566 8.57877 15.2384 8.57877 15.4626ZM3.8713 13.974C3.54541 13.974 3.25202 13.7683 3.13525 13.4554C1.85827 10.034 0.157715 10.3787 0.157715 6.93701C0.157715 3.64869 2.74998 0.982666 5.94719 0.982666C9.14439 0.982666 11.7367 3.64869 11.7367 6.93701C11.7367 10.3787 10.0361 10.034 8.75916 13.4554C8.64239 13.7683 8.34896 13.974 8.02311 13.974H3.8713ZM3.31561 6.93701C3.31561 5.44464 4.49614 4.23049 5.94719 4.23049C6.23788 4.23049 6.4735 3.98812 6.4735 3.68919C6.4735 3.39025 6.23788 3.14788 5.94719 3.14788C3.91571 3.14788 2.26298 4.84768 2.26298 6.93701C2.26298 7.23595 2.49864 7.47832 2.78929 7.47832C3.07995 7.47832 3.31561 7.23595 3.31561 6.93701Z"/>
+              </svg>
+
+              Follow best practice
+          </p>
+          <ul>
+              <li>
+                  Focus on no more than 2-3 activities per technical
+                  area.
+              </li>
+              <li>
+                  Consider reducing the number of technical areas
+                  included and focus on the areas that scored low in
+                  your capacity assessments or are identified as gaps
+                  in the AAR's and simulation reviews.
+              </li>
+          </ul>
+        </script>
+        <script type="text/template" id="nudge-for-technical-area-5-year">
+
+          <p>
+              <svg class="lightbulb"
+                   xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.57877 15.4626V16.4098C8.57877 16.7633 8.35903 17.0639 8.05245 17.1754V17.4924C8.05245 17.9409 7.699 18.3044 7.26298 18.3044H4.6314C4.19538 18.3044 3.84193 17.9409 3.84193 17.4924V17.1754C3.53535 17.0639 3.31561 16.7633 3.31561 16.4098V15.4626C3.31561 15.2384 3.49235 15.0566 3.71035 15.0566H8.18403C8.40202 15.0566 8.57877 15.2384 8.57877 15.4626ZM3.8713 13.974C3.54541 13.974 3.25202 13.7683 3.13525 13.4554C1.85827 10.034 0.157715 10.3787 0.157715 6.93701C0.157715 3.64869 2.74998 0.982666 5.94719 0.982666C9.14439 0.982666 11.7367 3.64869 11.7367 6.93701C11.7367 10.3787 10.0361 10.034 8.75916 13.4554C8.64239 13.7683 8.34896 13.974 8.02311 13.974H3.8713ZM3.31561 6.93701C3.31561 5.44464 4.49614 4.23049 5.94719 4.23049C6.23788 4.23049 6.4735 3.98812 6.4735 3.68919C6.4735 3.39025 6.23788 3.14788 5.94719 3.14788C3.91571 3.14788 2.26298 4.84768 2.26298 6.93701C2.26298 7.23595 2.49864 7.47832 2.78929 7.47832C3.07995 7.47832 3.31561 7.23595 3.31561 6.93701Z"/>
+              </svg>
+
+              Follow best practice
+          </p>
+          <ul>
+              <li>
+                  5 year plans are useful for long-term planning and
+                  budgeting but should still be prioritized and
+                  realistic.
+              </li>
+              <li>
+                  Prioritize activities based on the country risk and
+                  capacity assessments focused on technical areas that
+                  address gaps identified including those in AAR's and
+                  simulations.
+              </li>
+              <li>
+                  Remember &mdash; you will still need to create a
+                  smaller more focused implementation plan as part of
+                  the 5 year plan to ensure implementation.
+              </li>
+          </ul>
+        </script>
+        <script type="text/template" id="nudge-template">
+
+          <p>
+              <svg class="lightbulb"
+                   xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.57877 15.4626V16.4098C8.57877 16.7633 8.35903 17.0639 8.05245 17.1754V17.4924C8.05245 17.9409 7.699 18.3044 7.26298 18.3044H4.6314C4.19538 18.3044 3.84193 17.9409 3.84193 17.4924V17.1754C3.53535 17.0639 3.31561 16.7633 3.31561 16.4098V15.4626C3.31561 15.2384 3.49235 15.0566 3.71035 15.0566H8.18403C8.40202 15.0566 8.57877 15.2384 8.57877 15.4626ZM3.8713 13.974C3.54541 13.974 3.25202 13.7683 3.13525 13.4554C1.85827 10.034 0.157715 10.3787 0.157715 6.93701C0.157715 3.64869 2.74998 0.982666 5.94719 0.982666C9.14439 0.982666 11.7367 3.64869 11.7367 6.93701C11.7367 10.3787 10.0361 10.034 8.75916 13.4554C8.64239 13.7683 8.34896 13.974 8.02311 13.974H3.8713ZM3.31561 6.93701C3.31561 5.44464 4.49614 4.23049 5.94719 4.23049C6.23788 4.23049 6.4735 3.98812 6.4735 3.68919C6.4735 3.39025 6.23788 3.14788 5.94719 3.14788C3.91571 3.14788 2.26298 4.84768 2.26298 6.93701C2.26298 7.23595 2.49864 7.47832 2.78929 7.47832C3.07995 7.47832 3.31561 7.23595 3.31561 6.93701Z"/>
+              </svg>
+
+              {{heading}}
+          </p>
+          <ul>
+              {{#listItems}}
+              <li>
+                  {{> listItem}
+              </li>
+              {{/listItems}}
+          </ul>
+        </script>
+      </div>
     </div>
+  </div>
 </div>

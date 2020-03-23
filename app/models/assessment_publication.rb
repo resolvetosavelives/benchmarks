@@ -1,5 +1,5 @@
 class AssessmentPublication < ApplicationRecord
-  NAMED_IDS = %w{jee1 spar_2018 jee2}.freeze
+  NAMED_IDS = %w[jee1 spar_2018 jee2].freeze
   include AssessmentPublicationSeed
 
   has_many :assessment_technical_areas

@@ -32,13 +32,16 @@ class PlansController < ApplicationController
     @redirect_key = GET_STARTED_REDIRECT_KEY
     if request.post? && request.xhr?
       if @get_started_form.valid?
-        url = plan_goals_url(
-          country_name: @get_started_form.country.name,
-          assessment_type: @get_started_form.assessment_type,
-          plan_term: @get_started_form.plan_term_s,
-          areas: @get_started_form.technical_area_ids.join("-")
-        )
-        Rails.logger.info "Redirect workaround for an XHR request to URL: #{url}"
+        url =
+          plan_goals_url(
+            country_name: @get_started_form.country.name,
+            assessment_type: @get_started_form.assessment_type,
+            plan_term: @get_started_form.plan_term_s,
+            areas: @get_started_form.technical_area_ids.join("-"),
+          )
+        Rails.logger.info "Redirect workaround for an XHR request to URL: #{
+                            url
+                          }"
         render plain: "#{GET_STARTED_REDIRECT_KEY}#{url}"
         return
       else
@@ -58,29 +61,32 @@ class PlansController < ApplicationController
     country = Country.find_by_name country_name
     @publication = AssessmentPublication.find_by_named_id assessment_type
     if country.present? && @publication.present?
-      @assessment = Assessment.deep_load(country.try(:alpha3), @publication.try(:id))
+      @assessment =
+        Assessment.deep_load(country.try(:alpha3), @publication.try(:id))
     end
     if @assessment.blank?
       render "assessment_not_found"
       return
     end
-    @plan = Plan.new_from_assessment(
-      assessment: @assessment,
-      technical_area_ids: technical_area_ids,
-      is_5_year_plan: params[:plan_term].start_with?("5")
-    )
+    @plan =
+      Plan.new_from_assessment(
+        assessment: @assessment,
+        technical_area_ids: technical_area_ids,
+        is_5_year_plan: params[:plan_term].start_with?("5"),
+      )
   end
 
   # TODO: test coverage for this, and include for the session state part
   def create
     assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
-    @plan = Plan.create_from_goal_form(
-      indicator_attrs: plan_create_params.fetch(:indicators),
-      assessment: assessment,
-      is_5_year_plan: plan_create_params.fetch(:term).start_with?("5"),
-      plan_name: "#{assessment.country.name} draft plan",
-      user: current_user
-    )
+    @plan =
+      Plan.create_from_goal_form(
+        indicator_attrs: plan_create_params.fetch(:indicators),
+        assessment: assessment,
+        is_5_year_plan: plan_create_params.fetch(:term).start_with?("5"),
+        plan_name: "#{assessment.country.name} draft plan",
+        user: current_user,
+      )
     unless @plan.persisted?
       flash[:notice] = "Could not save your plan, something went wrong."
       redirect_back fallback_location: root_path
@@ -95,21 +101,23 @@ class PlansController < ApplicationController
     @benchmark_technical_areas = benchmark_document.technical_areas
     @benchmark_indicators = benchmark_document.indicators
     @all_activities = benchmark_document.activities
-    @nudges_by_activity_type_json = File.read(Rails.root.join("app", "fixtures", "nudges_for_activity_types.json"))
+    @nudges_by_activity_type_json =
+      File.read(
+        Rails.root.join("app", "fixtures", "nudges_for_activity_types.json"),
+      )
     @plan = Plan.deep_load(params.fetch(:id))
-    @count_activities_by_ta = @plan.count_activities_by_ta(@benchmark_technical_areas)
+    @count_activities_by_ta =
+      @plan.count_activities_by_ta(@benchmark_technical_areas)
     @count_activities_by_type = @plan.count_activities_by_type
   end
 
   # TODO: test coverage for this
   def update
     plan = Plan.find_by_id!(params.fetch(:id))
-    benchmark_activity_ids = JSON.parse(plan_update_params.fetch(:benchmark_activity_ids))
+    benchmark_activity_ids =
+      JSON.parse(plan_update_params.fetch(:benchmark_activity_ids))
     name = plan_update_params.fetch(:name)
-    plan.update!(
-      name: name,
-      benchmark_activity_ids: benchmark_activity_ids
-    )
+    plan.update!(name: name, benchmark_activity_ids: benchmark_activity_ids)
     redirect_to plans_path
   end
 

@@ -18,9 +18,9 @@ export default class extends Controller {
   static targets = ["score", "goal"]
 
   initialize() {
-    this.parentController = this.application.controllers.find(controller => {
-      return controller.context.identifier === "score";
-    });
+    this.parentController = this.application.controllers.find((controller) => {
+      return controller.context.identifier === "score"
+    })
     this.parentController.childControllers.push(this)
     this.isFullyValid = true
   }
@@ -28,13 +28,14 @@ export default class extends Controller {
   connect() {
     $('[data-toggle="tooltip"]').tooltip({
       trigger: "manual",
-      container: "form"
+      container: "form",
     })
   }
 
   validatePair(event, field) {
     let currentField
-    if (field) { // NB: this is used in testing only cuz events are diff there
+    if (field) {
+      // NB: this is used in testing only cuz events are diff there
       currentField = field
     } else {
       currentField = event.currentTarget
@@ -64,7 +65,8 @@ export default class extends Controller {
     } else if (isValidScore && isValidGoal && !isValidPair) {
       $(currentField).tooltip("show")
       returnValue = 4
-    } else { // all valid
+    } else {
+      // all valid
       $(this.scoreTarget).tooltip("hide")
       $(this.goalTarget).tooltip("hide")
       this.isFullyValid = true
@@ -88,8 +90,8 @@ export default class extends Controller {
     } else if (!SCORES.includes(Number(field.value))) {
       field.setCustomValidity("invalid")
       field.setAttribute(
-          "data-original-title",
-          "The value must be within range"
+        "data-original-title",
+        "The value must be within range"
       )
       isValid = false
     } else {
@@ -103,8 +105,8 @@ export default class extends Controller {
     if (Number(this.scoreTarget.value) > Number(this.goalTarget.value)) {
       currentField.setCustomValidity("invalid")
       currentField.setAttribute(
-          "data-original-title",
-          "The goal must be higher than the capacity score"
+        "data-original-title",
+        "The goal must be higher than the capacity score"
       )
       return false
     }
@@ -114,5 +116,4 @@ export default class extends Controller {
   isValid() {
     return this.isFullyValid
   }
-
 }

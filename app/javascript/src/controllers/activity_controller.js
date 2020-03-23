@@ -1,11 +1,10 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-
   initialize() {
-    this.parentController = this.application.controllers.find(controller => {
-      return controller.context.identifier === "benchmark";
-    });
+    this.parentController = this.application.controllers.find((controller) => {
+      return controller.context.identifier === "benchmark"
+    })
     this.parentController.childControllers.push(this)
     this.planPageDataModel = this.parentController.planPageDataModel
     this.planPageViewModel = this.parentController.planPageViewModel

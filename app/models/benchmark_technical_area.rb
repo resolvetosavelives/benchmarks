@@ -6,10 +6,6 @@ class BenchmarkTechnicalArea < ApplicationRecord
   default_scope { order(:sequence) }
 
   def attributes
-    {
-        id: nil,
-        text: nil,
-        sequence: nil
-    }
+    { id: nil, text: nil, sequence: nil }
   end
 end

@@ -12,9 +12,11 @@
  */
 
 $colors: (
-  "blue": #2c8dc9, // used in header bg color
-  "dark-blue": #20313b, // used in footer bg color
-  "green": #46b754,
+  "blue": #2c8dc9,
+  // used in header bg color
+    "dark-blue": #20313b,
+  // used in footer bg color
+    "green": #46b754,
   "orange": #d86422,
   "red": #e93939,
   "yellow": #ffca1e,
@@ -28,7 +30,7 @@ $colors: (
   "light": #f8f9fa,
   "dark": #2d2d35,
   "gray-dark-transparent": rgba(45, 45, 53, 0.8),
-  "text-disabled": #ABABAB
+  "text-disabled": #ababab,
 ) !default;
 
 $theme-colors: $colors;
@@ -45,8 +47,9 @@ $theme-colors: $colors;
 @import url("https://fonts.googleapis.com/css?family=Crimson+Text:400&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Pathway+Gothic+One&subset=latin");
 @import url("https://fonts.googleapis.com/css?family=Karla&subset=latin");
-@import url('https://fonts.googleapis.com/css?family=Karla:700&display=swap');
-@media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+@import url("https://fonts.googleapis.com/css?family=Karla:700&display=swap");
+@media screen and (-ms-high-contrast: active),
+  screen and (-ms-high-contrast: none) {
   /* styles specific to IE 10-11 go here */
   @import "./ie";
 }
@@ -100,19 +103,27 @@ a {
   color: color("primary");
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: #212529;
 }
 
-h1, h2 {
+h1,
+h2 {
   font-family: Pathway Gothic One, sans-serif;
   font-weight: normal;
 }
-h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
   font-family: Karla, sans-serif;
   font-weight: bold;
 }
-
 
 h1 {
   font-size: 58px;
@@ -280,7 +291,8 @@ input[type="number"] {
   text-align: center;
 }
 
-svg.print, svg.download {
+svg.print,
+svg.download {
   height: 16px;
   width: 16px;
   path {
@@ -291,7 +303,7 @@ svg.print, svg.download {
 a:hover {
   svg {
     path {
-      fill: color("primary")
+      fill: color("primary");
     }
   }
 }
@@ -317,7 +329,7 @@ svg.step-up-hero {
   }
 
   path.text {
-    fill: #383B41;
+    fill: #383b41;
   }
 
   a:hover {

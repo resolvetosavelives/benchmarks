@@ -6,8 +6,8 @@ class WorksheetsController < ApplicationController
     plan = Plan.find_by_id! params.fetch(:id)
 
     send_data Worksheet.new(plan).to_s,
-      filename: "#{plan.name} worksheet.xlsx",
-      type: "application/vnd.ms-excel"
+              filename: "#{plan.name} worksheet.xlsx",
+              type: "application/vnd.ms-excel"
   end
 
   def check_ownership

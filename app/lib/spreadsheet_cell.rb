@@ -1,7 +1,7 @@
 # This is a convenience structure that makes it easier to create a
 # SpreadsheetCell in a declarative way.
 
-require 'rubyXL/convenience_methods'
+require "rubyXL/convenience_methods"
 
 class SpreadsheetCell
   def initialize(worksheet, row, col, params)
@@ -12,11 +12,11 @@ class SpreadsheetCell
     if text
       @cell = worksheet.add_cell(row, col, text)
       @cell.change_text_wrap true
-      @cell.change_vertical_alignment 'top'
+      @cell.change_vertical_alignment "top"
     elsif formula
-      @cell = worksheet.add_cell(row, col, '', formula)
+      @cell = worksheet.add_cell(row, col, "", formula)
       @cell.change_text_wrap true
-      @cell.change_vertical_alignment 'top'
+      @cell.change_vertical_alignment "top"
     else
       @cell = worksheet[row][col]
       @cell = worksheet.add_cell(row, col) unless @cell
@@ -77,7 +77,7 @@ class SpreadsheetCell
     end
 
     %i[top bottom left right].each do |border|
-      @cell.change_border(border, 'thin') if borders.include? border
+      @cell.change_border(border, "thin") if borders.include? border
     end
     self
   end

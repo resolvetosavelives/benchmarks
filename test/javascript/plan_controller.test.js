@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require("fs")
 import { Application, Controller } from "stimulus"
 import Chartist from "chartist"
 import $ from "jquery"
@@ -10,7 +10,7 @@ function mock_jquery() {
   jest.mock("jquery")
   jest.fn().mockImplementation("jquery", () => ({
     autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() }),
-    on: jest.fn()
+    on: jest.fn(),
   }))
 }
 
@@ -18,7 +18,7 @@ function mock_plan_page_data_model() {
   window.STATE_FROM_SERVER = {}
   jest.mock("plan_page_data_model", () => {
     return jest.fn().mockImplementation(() => {
-      return { technicalAreas: []}
+      return { technicalAreas: [] }
     })
   })
 }
@@ -28,7 +28,10 @@ describe("PlanController", () => {
   beforeEach(() => {
     mock_jquery()
     mock_plan_page_data_model()
-    const showPlanPageDocument = fs.readFileSync(`${__dirname}/../fixtures/for_js_tests/plan_show_page_with_two_technical_areas.html`, "utf-8")
+    const showPlanPageDocument = fs.readFileSync(
+      `${__dirname}/../fixtures/for_js_tests/plan_show_page_with_two_technical_areas.html`,
+      "utf-8"
+    )
     document.body.innerHTML = showPlanPageDocument
 
     submitButton = document.querySelector("input[type='submit']")
@@ -58,23 +61,33 @@ describe("PlanController", () => {
     })
 
     it("constructs a Chartist.Bar instance", () => {
-      expect(controller.charts[controller.currentChartIndex]).toBeInstanceOf(Chartist.Bar)
+      expect(controller.charts[controller.currentChartIndex]).toBeInstanceOf(
+        Chartist.Bar
+      )
     })
 
     it("populates the array of labels", () => {
-      expect(controller.chartLabels[controller.currentChartIndex].length).toBe(18)
+      expect(controller.chartLabels[controller.currentChartIndex].length).toBe(
+        18
+      )
     })
 
     it("has the expected width", () => {
-      expect(controller.charts[controller.currentChartIndex].options.width).toBe("710")
+      expect(
+        controller.charts[controller.currentChartIndex].options.width
+      ).toBe("710")
     })
 
     it("has the expected height", () => {
-      expect(controller.charts[controller.currentChartIndex].options.height).toBe("240")
+      expect(
+        controller.charts[controller.currentChartIndex].options.height
+      ).toBe("240")
     })
 
     it("uses the expected DOM node for the chart", () => {
-      expect(controller.charts[controller.currentChartIndex].container).toBe(document.getElementById("bar-chart-by-technical-area"))
+      expect(controller.charts[controller.currentChartIndex].container).toBe(
+        document.getElementById("bar-chart-by-technical-area")
+      )
     })
   })
 
@@ -91,7 +104,7 @@ describe("PlanController", () => {
 
   describe("#countByActivityType", () => {
     it("returns the expected integer", () => {
-      const controller = application.controllers[0] 
+      const controller = application.controllers[0]
 
       const result = controller.countByActivityType(0)
 
@@ -101,12 +114,15 @@ describe("PlanController", () => {
 
   describe("#getListItemsForNudge", () => {
     const nudgeData = {
-      "activity_type_name": "Training",
-      "threshold_a": 3,
-      "threshold_b": 6,
-      "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-      "content_for_b": "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.\nPlan to test, socialize, validate and disseminate the trainings.\nDevelop the trainings with sustainability, including frequency and number of participants, in mind.",
-      "content_for_c": "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.\nPlan to test, socialize, validate and disseminate the trainings.\nDevelop the trainings with sustainability, including frequency and number of participants, in mind.\nConsider a technical working group to review and validate new tools for quality assurance."
+      activity_type_name: "Training",
+      threshold_a: 3,
+      threshold_b: 6,
+      content_for_a:
+        "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
+      content_for_b:
+        "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.\nPlan to test, socialize, validate and disseminate the trainings.\nDevelop the trainings with sustainability, including frequency and number of participants, in mind.",
+      content_for_c:
+        "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.\nPlan to test, socialize, validate and disseminate the trainings.\nDevelop the trainings with sustainability, including frequency and number of participants, in mind.\nConsider a technical working group to review and validate new tools for quality assurance.",
     }
 
     describe("when indexForThreshold is zero", () => {
@@ -119,7 +135,9 @@ describe("PlanController", () => {
 
         expect(controller.countByActivityType).toHaveBeenCalledWith(789)
         expect(result.length).toEqual(2)
-        expect(result[0]).toEqual("Refer to the best practice document and case studies from similar contexts.")
+        expect(result[0]).toEqual(
+          "Refer to the best practice document and case studies from similar contexts."
+        )
       })
     })
 
@@ -133,7 +151,9 @@ describe("PlanController", () => {
 
         expect(controller.countByActivityType).toHaveBeenCalledWith(789)
         expect(result.length).toEqual(3)
-        expect(result[0]).toEqual("Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.")
+        expect(result[0]).toEqual(
+          "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training."
+        )
       })
     })
 
@@ -147,19 +167,19 @@ describe("PlanController", () => {
 
         expect(controller.countByActivityType).toHaveBeenCalledWith(789)
         expect(result.length).toEqual(4)
-        expect(result[0]).toEqual("Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training.")
+        expect(result[0]).toEqual(
+          "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training."
+        )
       })
     })
-
   })
 
   describe("#getIndexForThresholdOfTwo", () => {
-
     describe("when countByActivityType is less than threshold A minus one", () => {
       it("returns zero", () => {
         const controller = application.controllers[0]
 
-        const result = controller.getIndexForThresholdOfTwo(2,3, 6)
+        const result = controller.getIndexForThresholdOfTwo(2, 3, 6)
 
         expect(result).toEqual(0)
       })
@@ -189,7 +209,7 @@ describe("PlanController", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 
-        const result = controller.getIndexForThresholdOfTwo(5,3, 6)
+        const result = controller.getIndexForThresholdOfTwo(5, 3, 6)
 
         expect(result).toEqual(1)
       })
@@ -214,21 +234,23 @@ describe("PlanController", () => {
         expect(result).toEqual(2)
       })
     })
-
   })
 
   describe("#getIndexForThreshold", () => {
-
     describe("when both thresholdA and thresholdB are present", () => {
       it("returns zero", () => {
         const controller = application.controllers[0]
         controller.getIndexForThresholdOfOne = jest.fn()
         controller.getIndexForThresholdOfTwo = jest.fn()
 
-        controller.getIndexForThreshold(1,3, 6)
+        controller.getIndexForThreshold(1, 3, 6)
 
         expect(controller.getIndexForThresholdOfOne).not.toHaveBeenCalled()
-        expect(controller.getIndexForThresholdOfTwo).toHaveBeenCalledWith(1, 3, 6)
+        expect(controller.getIndexForThresholdOfTwo).toHaveBeenCalledWith(
+          1,
+          3,
+          6
+        )
       })
     })
 
@@ -241,7 +263,10 @@ describe("PlanController", () => {
 
           controller.getIndexForThreshold(1, 3, null)
 
-          expect(controller.getIndexForThresholdOfOne).toHaveBeenCalledWith(1, 3)
+          expect(controller.getIndexForThresholdOfOne).toHaveBeenCalledWith(
+            1,
+            3
+          )
           expect(controller.getIndexForThresholdOfTwo).not.toHaveBeenCalled()
         })
       })
@@ -254,21 +279,22 @@ describe("PlanController", () => {
 
           controller.getIndexForThreshold(1, 3, undefined)
 
-          expect(controller.getIndexForThresholdOfOne).toHaveBeenCalledWith(1, 3)
+          expect(controller.getIndexForThresholdOfOne).toHaveBeenCalledWith(
+            1,
+            3
+          )
           expect(controller.getIndexForThresholdOfTwo).not.toHaveBeenCalled()
         })
       })
     })
-
   })
 
   describe("#getIndexForThresholdOfOne", () => {
-
     describe("when countByActivityType is less than threshold minus one", () => {
       it("returns zero", () => {
         const controller = application.controllers[0]
 
-        const result = controller.getIndexForThresholdOfOne(2,3)
+        const result = controller.getIndexForThresholdOfOne(2, 3)
 
         expect(result).toEqual(0)
       })
@@ -285,7 +311,7 @@ describe("PlanController", () => {
     })
 
     describe("when countByActivityType equals threshold plus one", () => {
-      it("returns one", () => { 
+      it("returns one", () => {
         const controller = application.controllers[0]
 
         const result = controller.getIndexForThresholdOfOne(4, 3)
@@ -293,7 +319,5 @@ describe("PlanController", () => {
         expect(result).toEqual(1)
       })
     })
-
   })
-
 })

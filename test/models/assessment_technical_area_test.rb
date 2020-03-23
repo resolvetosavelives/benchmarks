@@ -1,7 +1,6 @@
 require File.expand_path("./test/test_helper")
 
 describe AssessmentTechnicalArea do
-
   describe "#assessment_publication" do
     it "returns an instance of assessment_publication" do
       assessment_technical_area = AssessmentTechnicalArea.first

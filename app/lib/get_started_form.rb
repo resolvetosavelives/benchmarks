@@ -2,7 +2,10 @@ class GetStartedForm
   include ActiveModel::Model
 
   # actual form inputs
-  attr_accessor :country_id, :assessment_type, :plan_by_technical_ids, :plan_term
+  attr_accessor :country_id,
+                :assessment_type,
+                :plan_by_technical_ids,
+                :plan_term
   attr_writer :technical_area_ids
   # object instances that should result from the inputs
   attr_accessor :country, :assessment
@@ -42,12 +45,15 @@ class GetStartedForm
   end
 
   def set_assessment
-    if country.present? && assessment_type.present? && is_known?(assessment_type)
-      assessment_publication = AssessmentPublication.find_by_named_id(assessment_type)
+    if country.present? && assessment_type.present? &&
+         is_known?(assessment_type)
+      assessment_publication =
+        AssessmentPublication.find_by_named_id(assessment_type)
       if assessment_publication.present?
         # we use the +with_publication+ method here because we want to
         # fetch additional data to optimize for which data the view template will use.
-        self.assessment = Assessment.with_publication(country.alpha3, assessment_publication.id)
+        self.assessment =
+          Assessment.with_publication(country.alpha3, assessment_publication.id)
       end
     end
   end
@@ -62,11 +68,6 @@ class GetStartedForm
 
   # return IDs only when the corresponding checkbox is selected
   def technical_area_ids
-    if plan_by_technical_ids?
-      @technical_area_ids
-    else
-      []
-    end
+    plan_by_technical_ids? ? @technical_area_ids : []
   end
-
 end

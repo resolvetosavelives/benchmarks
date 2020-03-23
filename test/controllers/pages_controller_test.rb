@@ -1,10 +1,9 @@
 require "test_helper"
 
 describe PagesController do
-
   describe "#home" do
     it "is connected as the root URL" do
-      assert_routing("/", {controller: "pages", action: "home"})
+      assert_routing("/", { controller: "pages", action: "home" })
     end
 
     it "responds with success" do
@@ -15,7 +14,10 @@ describe PagesController do
 
   describe "#privacy_policy" do
     it "is connected as /privacy_policy" do
-      assert_routing("/privacy_policy", {controller: "pages", action: "privacy_policy"})
+      assert_routing(
+        "/privacy_policy",
+        { controller: "pages", action: "privacy_policy" },
+      )
     end
 
     it "respond with success" do
@@ -26,7 +28,10 @@ describe PagesController do
 
   describe "benchmarks introduction page" do
     it "is connected at the expected URL" do
-      assert_routing("/document/introduction", {controller: "pages", action: "introduction"})
+      assert_routing(
+        "/document/introduction",
+        { controller: "pages", action: "introduction" },
+      )
     end
 
     it "responds with success" do
@@ -38,7 +43,10 @@ describe PagesController do
 
   describe "benchmarks technical area page 1" do
     it "is connected at the expected URL" do
-      assert_routing("/document/1-national-legislation-policy-and-financing", {controller: "pages", action: "technical_area_1"})
+      assert_routing(
+        "/document/1-national-legislation-policy-and-financing",
+        { controller: "pages", action: "technical_area_1" },
+      )
     end
 
     it "responds with success" do
@@ -50,7 +58,10 @@ describe PagesController do
 
   describe "reference library" do
     it "is connected at the expected URL" do
-      assert_routing("/reference-library", {controller: "pages", action: "reference_library"})
+      assert_routing(
+        "/reference-library",
+        { controller: "pages", action: "reference_library" },
+      )
     end
 
     it "responds with success" do

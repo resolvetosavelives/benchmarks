@@ -3,7 +3,6 @@ require "minitest/spec"
 require "minitest/autorun"
 
 describe AssessmentPublication do
-
   describe ".jee1" do
     it "returns the expected instance" do
       result = AssessmentPublication.jee1
