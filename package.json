@@ -28,9 +28,11 @@
     "test": "jest"
   },
   "devDependencies": {
+    "@prettier/plugin-ruby": "0.18.0",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "mutationobserver-shim": "^0.3.3",
+    "prettier": "2.0.1",
     "webpack-dev-server": "^3.10.3"
   },
   "jest": {
