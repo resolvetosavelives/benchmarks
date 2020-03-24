@@ -51,6 +51,7 @@ Locally, development requires only a working Postgres database and Ruby 2.6.3. W
 ```
 docker-compose up -d db
 bundle install
+yarn install
 rails db:create
 rails db:migrate
 rails db:seed
