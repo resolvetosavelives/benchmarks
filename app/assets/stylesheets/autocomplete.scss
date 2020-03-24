@@ -27,3 +27,14 @@ ul.ui-autocomplete {
     }
   }
 }
+
+// this ensures that this helper is still available on screen readers: https://a11yproject.com/posts/how-to-hide-content/
+.ui-helper-hidden-accessible {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* added line */
+}
