@@ -39,6 +39,9 @@ export default class extends Controller {
   }
 
   presubmitFormToLoadOtherFields() {
+    const countryValue = this.countrySelectTarget.value
+    this.formTarget.reset()
+    this.countrySelectTarget.value = countryValue
     window.submittedGetStartedAtLeastOnce = true
     $(this.formTarget).submit()
   }

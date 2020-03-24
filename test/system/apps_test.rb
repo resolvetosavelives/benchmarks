@@ -19,6 +19,11 @@ class AppsTest < ApplicationSystemTestCase
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
+    select_from_chosen("Angola", from: "get_started_form_country_id")
+    assert_current_path("/get-started")
+    select_from_chosen('Nigeria', from: 'get_started_form_country_id')
+    choose "Joint External Evaluation (JEE)"
+    choose "1 year plan"
     click_on("Next")
 
     ##
