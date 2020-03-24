@@ -95,14 +95,13 @@ export default class extends Controller {
   }
 
   // Delete a benchmark indicator, which means deleting its child activities
-  deleteActivitiesForIndicator(e) {
+  deleteActivitiesForIndicator() {
     const activityIds = this.planPageDataModel.getActivityIdsForIndicator(
       this.indicatorId
     )
     activityIds.forEach((activityId) => {
       this.removeActivityId(activityId, this.barSegmentIndex)
     })
-    const { currentTarget } = e
     this.element.hidden = true
     const siblings = $(this.element).siblings(".benchmark-container:visible")
     if (siblings.length === 0) {

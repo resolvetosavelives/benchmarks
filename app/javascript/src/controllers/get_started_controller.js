@@ -44,7 +44,7 @@ export default class extends Controller {
   }
 
   // the API arguments here come from jQuery Ajax
-  updateFormControlsFromServerResponse(jqEvent, responseData, status) {
+  updateFormControlsFromServerResponse(jqEvent, responseData) {
     // match at the beginning only because its elsewhere in the response
     const regex = new RegExp("^" + this.redirectKey)
     const isRedirect = regex.test(responseData)

@@ -61,7 +61,7 @@ export default class extends Controller {
     $(".document.row", this.element).show()
   }
 
-  handleCheckboxToggle(event) {
+  handleCheckboxToggle() {
     const selectedReferenceTypes = this.checkboxForReferenceTypeTargets.reduce(
       (accumulator, chk) => {
         if (chk.checked === true) {

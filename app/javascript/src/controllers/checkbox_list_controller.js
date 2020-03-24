@@ -12,12 +12,12 @@ export default class extends Controller {
     this.submitFormTarget.disabled = selected.length === 0
   }
 
-  selectAll(e) {
+  selectAll() {
     this.listItemTargets.forEach((target) => (target.checked = true))
     this.updateState()
   }
 
-  deselectAll(e) {
+  deselectAll() {
     this.listItemTargets.forEach((target) => (target.checked = false))
     this.updateState()
   }

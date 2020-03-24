@@ -159,7 +159,7 @@ export default class extends Controller {
       height: this.chartHeight,
       axisY: {
         // show multiples of 10
-        labelInterpolationFnc: function (value, index) {
+        labelInterpolationFnc: function (value) {
           return value % 10 == 0 ? value : null
         },
       },
