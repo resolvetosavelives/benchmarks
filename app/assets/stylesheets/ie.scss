@@ -18,9 +18,8 @@ footer {
 }
 .ct-chart-bar {
   // needs more bottom margin to allow the angled labels to display w/o cut off
-  margin : 0 0 60px 0 !important;
+  margin: 0 0 60px 0 !important;
 }
-
 
 //
 // This is to fix the problem of the navbar, for smaller screen sizes when the toggler is displayed,
@@ -32,6 +31,14 @@ nav.navbar {
   flex-basis: auto;
 }
 
-.col {
-  flex: 1 1 auto;
+/*
+ * a flex basis of 0 does not work in IE11 when the flex-direction is set to column.
+ * for more info, please refer to: https://makandracards.com/makandra/54644-do-not-use-flex-1-or-flex-basis-0-inside-flex-direction-column-when-you-need-to-support-ie11
+ * this fixes the bug reported in: https://www.pivotaltracker.com/story/show/171365497, but is applicable wherever we use a flex-direction of column, because with the default
+ * bootstrap setting of flex-basis: 0, child elements will have a height of 0 and not be positioned correctly
+*/
+.flex-column {
+  .col {
+    flex: 1 1 auto;
+  }
 }
