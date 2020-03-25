@@ -27,3 +27,6 @@ Turbolinks.start()
 const application = Application.start()
 const context = require.context("../src/controllers", true, /\.js$/)
 application.load(definitionsFromContext(context))
+
+// fix for IE Benchmarks doc page Monitoring icon too small/out of alignment #171365469
+$(".benchmark-document .callout-with-icon svg.bar-chart path").attr("transform", "scale(2)");
