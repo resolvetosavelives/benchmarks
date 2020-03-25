@@ -112,17 +112,17 @@ class Worksheet
                           "Budget: This can be an estimate for budget. It's helpful if the detailed description is specific. Budget can also be added in the next stage."
 
     worksheet.merge_cells 0, 0, 0, 2
-    worksheet.merge_cells 2, 0, 3, 7
-    worksheet.merge_cells 5, 0, 6, 7
-    worksheet.merge_cells 9, 0, 13, 7
-    worksheet.merge_cells 14, 0, 14, 7
-    worksheet.merge_cells 16, 0, 19, 7
-    worksheet.merge_cells 20, 0, 20, 7
-    worksheet.merge_cells 21, 1, 21, 7
-    worksheet.merge_cells 22, 1, 22, 7
-    worksheet.merge_cells 23, 1, 23, 7
-    worksheet.merge_cells 25, 0, 26, 7
-    worksheet.merge_cells 28, 0, 29, 7
+    worksheet.merge_cells 2, 0, 3, 6
+    worksheet.merge_cells 5, 0, 6, 6
+    worksheet.merge_cells 9, 0, 13, 6
+    worksheet.merge_cells 14, 0, 14, 6
+    worksheet.merge_cells 16, 0, 19, 6
+    worksheet.merge_cells 20, 0, 20, 6
+    worksheet.merge_cells 21, 1, 21, 6
+    worksheet.merge_cells 22, 1, 22, 6
+    worksheet.merge_cells 23, 1, 23, 6
+    worksheet.merge_cells 25, 0, 26, 6
+    worksheet.merge_cells 28, 0, 29, 6
   end
 
   def bordered_merge_cells(worksheet, row, col, width, height)
@@ -175,21 +175,21 @@ class Worksheet
                         row_index + 32,
                         0,
                         text: "Responsible for Implementation:"
-    bordered_merge_cells worksheet, row_index + 32, 3, 5, 2
+    bordered_merge_cells worksheet, row_index + 32, 3, 4, 2
     SpreadsheetCell.new worksheet,
                         row_index + 35,
                         0,
                         text: "Estimated Start and End Dates:"
-    bordered_merge_cells worksheet, row_index + 35, 3, 5, 2
+    bordered_merge_cells worksheet, row_index + 35, 3, 4, 2
     SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget"
-    bordered_merge_cells worksheet, row_index + 38, 3, 5, 2
+    bordered_merge_cells worksheet, row_index + 38, 3, 4, 2
 
     worksheet.merge_cells row_index, 0, row_index, 1
-    worksheet.merge_cells row_index, 2, row_index + 3, 7
+    worksheet.merge_cells row_index, 2, row_index + 3, 6
     worksheet.merge_cells row_index + 6, 0, row_index + 6, 3
-    worksheet.merge_cells row_index + 7, 0, row_index + 9, 7
+    worksheet.merge_cells row_index + 7, 0, row_index + 9, 6
     worksheet.merge_cells row_index + 11, 0, row_index + 11, 2
-    worksheet.merge_cells row_index + 12, 0, row_index + 26, 7
+    worksheet.merge_cells row_index + 12, 0, row_index + 26, 6
     worksheet.merge_cells row_index + 28, 0, row_index + 28, 2
     worksheet.merge_cells row_index + 30, 0, row_index + 30, 2
     worksheet.merge_cells row_index + 32, 0, row_index + 32, 2
