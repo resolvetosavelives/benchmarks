@@ -13,19 +13,9 @@
     <%= render "layouts/header" %>
 
     <div class="container page-container">
+      <%= render partial: "layouts/flash" %>
       <div class="row">
         <div class="col-12">
-
-          <% if notice %>
-            <div class="alert alert-primary">
-              <%= notice %>
-            </div>
-          <% end %>
-          <% if alert %>
-            <div class="alert alert-warning">
-              <%= alert %>
-            </div>
-          <% end %>
 
           <div>
             <%= yield %>

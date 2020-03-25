@@ -56,6 +56,13 @@ rails db:create
 rails db:migrate
 rails db:seed
 rails server -b 0.0.0.0
+```                                                                                    
+
+Optionally, you may run the webpacker asset compilation process in a separate tab/process which is nice 
+because it compiles much faster than the ruby app server process does, and also because it watches the files
+and triggers re-compile upon save.
+```
+./bin/webpack-dev-server
 ```
 
 The application should now be available [on localhost](https://localhost:3000/)
