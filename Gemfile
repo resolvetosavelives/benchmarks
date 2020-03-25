@@ -28,7 +28,6 @@ group :development, :test do
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "m"
   gem "colorize"
-  gem "standard"
   gem "minitest-rails"
 end
 
