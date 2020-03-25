@@ -4,17 +4,21 @@ require "minitest/autorun"
 
 describe GetStartedForm do
   let(:attrs_for_nigeria_jee1_2areas) do
-    { # all string values so as to repro how received from an ActionController
-      country_id: "162", # 162 is Nigeria
+    {
+      # all string values so as to repro how received from an ActionController
+      country_id: "162",
+      # 162 is Nigeria
       assessment_type: "jee1",
-      technical_area_ids: %w(1 2),
+      technical_area_ids: %w[1 2],
       plan_term: "1",
       plan_by_technical_ids: "1",
     }
   end
   let(:attrs_for_nigeria_jee1_5yr) do
-    { # all string values so as to repro how received from an ActionController
-      country_id: "162", # 162 is Nigeria
+    {
+      # all string values so as to repro how received from an ActionController
+      country_id: "162",
+      # 162 is Nigeria
       assessment_type: "jee1",
       plan_term: "5",
     }
@@ -25,9 +29,14 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new }
 
       it "returns nil for all its members" do
-        [:country_id, :assessment_type, :plan_by_technical_ids, :plan_term, :country, :assessment].each do |mth|
-          subject.send(mth).must_be_nil
-        end
+        %i[
+          country_id
+          assessment_type
+          plan_by_technical_ids
+          plan_term
+          country
+          assessment
+        ].each { |mth| subject.send(mth).must_be_nil }
       end
     end
 
@@ -116,7 +125,7 @@ describe GetStartedForm do
     end
 
     describe "when empty" do
-      let(:subject) { GetStartedForm.new() }
+      let(:subject) { GetStartedForm.new }
 
       it "returns the expected string value" do
         subject.plan_term_s.must_be_nil
@@ -126,7 +135,7 @@ describe GetStartedForm do
 
   describe "validation" do
     describe "when empty" do
-      let(:subject) { GetStartedForm.new() }
+      let(:subject) { GetStartedForm.new }
 
       it "has errors on country" do
         subject.valid?.must_equal false

@@ -1,4 +1,4 @@
-# This consists of the assessment goals 
+# This consists of the assessment goals
 # organized by Technical Area and Benchmark Indicator. The activity_map
 # field is an ActivityMap object.
 class Plan < ApplicationRecord
@@ -8,7 +8,7 @@ class Plan < ApplicationRecord
     3, # from-technical-areas
   ].freeze
   # TODO: update this implementation once the assessments page is modernized
-  ASSESSMENT_TYPE_NAMED_IDS = %w{jee1 spar_2018 from-technical-areas}.freeze
+  ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 from-technical-areas].freeze
   TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
   include PlanBuilder
 

@@ -5,7 +5,7 @@ class CostsheetsControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     @plan = create(:plan, :with_user)
-    @non_extant_plan_id = 987654321
+    @non_extant_plan_id = 987_654_321
   end
 
   test "costsheets#show redirects logged out user" do

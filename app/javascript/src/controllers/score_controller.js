@@ -23,15 +23,15 @@ export default class extends Controller {
 
   setFieldColor(field) {
     field.classList.remove(
-      ...Array.from(field.classList).filter(c => c.match("color-score"))
+      ...Array.from(field.classList).filter((c) => c.match("color-score"))
     )
     field.classList.add(`color-score-${field.value}`)
   }
 
   updateFormStateFromChildren() {
-    const allAreValid = (this.childControllers.every((childController) => {
+    const allAreValid = this.childControllers.every((childController) => {
       return childController.isValid()
-    }))
+    })
     if (allAreValid) {
       this.submitButtonTarget.removeAttribute("disabled")
     } else {

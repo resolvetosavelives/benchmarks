@@ -6,9 +6,9 @@ export default class extends Controller {
 
   initialize() {
     this.childControllers = []
-    this.parentController = this.application.controllers.find(controller => {
-      return controller.context.identifier === "plan";                                                                           
-    });
+    this.parentController = this.application.controllers.find((controller) => {
+      return controller.context.identifier === "plan"
+    })
     this.parentController.childControllers.push(this)
     this.planPageDataModel = this.parentController.planPageDataModel
     this.planPageViewModel = this.parentController.planPageViewModel
@@ -17,14 +17,18 @@ export default class extends Controller {
   connect() {
     this.deleteTarget.hidden = true
     this.indicatorId = Number(this.data.get("indicatorId"))
-    this.indicatorDisplayAbbrev = Number(this.data.get("indicatorDisplayAbbrev"))
+    this.indicatorDisplayAbbrev = Number(
+      this.data.get("indicatorDisplayAbbrev")
+    )
     this.barSegmentIndex = Number(this.data.get("barSegmentIndex"))
     this.initAutoCompleteForAddActivity()
   }
 
   initAutoCompleteForAddActivity() {
-    const self = this  // needed for nested callbacks which lose scope of "this"
-    const excludedActivities = this.planPageDataModel.getExcludedActivitiesForIndicator(this.indicatorId)
+    const self = this // needed for nested callbacks which lose scope of "this"
+    const excludedActivities = this.planPageDataModel.getExcludedActivitiesForIndicator(
+      this.indicatorId
+    )
     if (this.hasAddActivityFieldTarget) {
       $(this.addActivityFieldTarget).autocomplete({
         appendTo: ".plan-container",
@@ -35,11 +39,11 @@ export default class extends Controller {
           // this is the object that will be at ui.item in autocomplete.select()
           return benchmarkActivity
         }),
-        select: function(event, ui) {
+        select: function (event, ui) {
           const benchmarkActivity = ui.item
           self.addActivityAndRender(benchmarkActivity)
           self.initAutoCompleteForAddActivity()
-        }
+        },
       })
     }
   }
@@ -51,9 +55,11 @@ export default class extends Controller {
       benchmarkActivityId: benchmarkActivity.id,
       benchmarkActivityLevel: benchmarkActivity.level,
       benchmarkActivityText: benchmarkActivity.text,
-      barSegmentIndex: this.barSegmentIndex
+      barSegmentIndex: this.barSegmentIndex,
     }
-    const activityRowTemplateSelector = this.data.get("activityRowTemplateSelector")
+    const activityRowTemplateSelector = this.data.get(
+      "activityRowTemplateSelector"
+    )
     const compiledTemplate = this.getTemplateFor(activityRowTemplateSelector)
     const renderedContent = compiledTemplate.render(templateData)
     $(renderedContent).insertBefore($(this.element).find(".activity-form"))
@@ -89,12 +95,13 @@ export default class extends Controller {
   }
 
   // Delete a benchmark indicator, which means deleting its child activities
-  deleteActivitiesForIndicator(e) {
-    const activityIds = this.planPageDataModel.getActivityIdsForIndicator(this.indicatorId)
+  deleteActivitiesForIndicator() {
+    const activityIds = this.planPageDataModel.getActivityIdsForIndicator(
+      this.indicatorId
+    )
     activityIds.forEach((activityId) => {
       this.removeActivityId(activityId, this.barSegmentIndex)
     })
-    const { currentTarget } = e
     this.element.hidden = true
     const siblings = $(this.element).siblings(".benchmark-container:visible")
     if (siblings.length === 0) {

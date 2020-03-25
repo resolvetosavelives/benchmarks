@@ -8,7 +8,6 @@ import $ from "jquery"
 $.fn.tooltip = jest.fn()
 
 describe("ScoreAndGoalController", () => {
-
   describe("#initialize", () => {
     let application
     beforeEach(() => {
@@ -61,35 +60,45 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns false for empty value", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       const field = document.getElementById("score1")
       field.value = ""
 
       const result = scoreAndGoalController.isFieldValid(field)
       expect(result).toBe(false)
-      expect(field.getAttribute("data-original-title")).toBe("The value cannot be empty")
+      expect(field.getAttribute("data-original-title")).toBe(
+        "The value cannot be empty"
+      )
       expect(field.parentElement.classList).toContain("was-validated")
     })
 
     it("returns false for an out-of-range value", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       const field = document.getElementById("score1")
       field.value = "6"
 
       const result = scoreAndGoalController.isFieldValid(field)
       expect(result).toBe(false)
-      expect(field.getAttribute("data-original-title")).toBe("The value must be within range")
+      expect(field.getAttribute("data-original-title")).toBe(
+        "The value must be within range"
+      )
       expect(field.parentElement.classList).toContain("was-validated")
     })
 
     it("returns true for a valid value", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       const field = document.getElementById("score1")
       field.value = "3"
 
@@ -119,27 +128,33 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns false when", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       const scoreField = document.getElementById("score1")
-      const goalField  = document.getElementById("score1_goal")
+      const goalField = document.getElementById("score1_goal")
       scoreField.value = "3"
-      goalField.value  = "2"
+      goalField.value = "2"
 
       const result = scoreAndGoalController.isFieldPairValid(goalField)
       expect(result).toBe(false)
-      expect(goalField.getAttribute("data-original-title")).toBe("The goal must be higher than the capacity score")
+      expect(goalField.getAttribute("data-original-title")).toBe(
+        "The goal must be higher than the capacity score"
+      )
     })
 
     it("returns false for an out-of-range value", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       const scoreField = document.getElementById("score1")
-      const goalField  = document.getElementById("score1_goal")
+      const goalField = document.getElementById("score1_goal")
       scoreField.value = "2"
-      goalField.value  = "3"
+      goalField.value = "3"
 
       const result = scoreAndGoalController.isFieldValid(scoreField)
       expect(result).toBe(true)
@@ -166,9 +181,11 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns 1 when score and goal is invalid", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       scoreAndGoalController.isFieldValid = jest.fn().mockReturnValue(false)
       const field = document.getElementById("score1")
 
@@ -177,12 +194,15 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns 2 when score is invalid", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
-      scoreAndGoalController.isFieldValid = jest.fn().
-        mockReturnValueOnce(false).
-        mockReturnValueOnce(true)
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
+      scoreAndGoalController.isFieldValid = jest
+        .fn()
+        .mockReturnValueOnce(false)
+        .mockReturnValueOnce(true)
       const field = document.getElementById("score1")
 
       const result = scoreAndGoalController.validatePair(null, field)
@@ -190,12 +210,15 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns 3 when goal is invalid", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
-      scoreAndGoalController.isFieldValid = jest.fn().
-        mockReturnValueOnce(true).
-        mockReturnValueOnce(false)
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
+      scoreAndGoalController.isFieldValid = jest
+        .fn()
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(false)
       const field = document.getElementById("score1")
 
       const result = scoreAndGoalController.validatePair(null, field)
@@ -203,12 +226,15 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns 4 when score and goal are valid but the pair is invalid", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
-      scoreAndGoalController.isFieldValid = jest.fn().
-        mockReturnValueOnce(true).
-        mockReturnValueOnce(true)
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
+      scoreAndGoalController.isFieldValid = jest
+        .fn()
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
       scoreAndGoalController.isFieldPairValid = jest.fn().mockReturnValue(false)
       const field = document.getElementById("score1")
 
@@ -217,12 +243,15 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns 5 when score and goal and pair all are valid", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
-      scoreAndGoalController.isFieldValid = jest.fn().
-        mockReturnValueOnce(true).
-        mockReturnValueOnce(true)
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
+      scoreAndGoalController.isFieldValid = jest
+        .fn()
+        .mockReturnValueOnce(true)
+        .mockReturnValueOnce(true)
       scoreAndGoalController.isFieldPairValid = jest.fn().mockReturnValue(true)
       const field = document.getElementById("score1")
 
@@ -251,18 +280,22 @@ describe("ScoreAndGoalController", () => {
     })
 
     it("returns true when isFullyValid equals true", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       scoreAndGoalController.isFullyValid = true
 
       expect(scoreAndGoalController.isValid()).toBe(true)
     })
 
     it("returns false when isFullyValid equals false", () => {
-      const scoreAndGoalController = application.controllers.find(controller => {
-        return controller.context.identifier === "score-and-goal";
-      });
+      const scoreAndGoalController = application.controllers.find(
+        (controller) => {
+          return controller.context.identifier === "score-and-goal"
+        }
+      )
       scoreAndGoalController.isFullyValid = false
 
       expect(scoreAndGoalController.isValid()).toBe(false)

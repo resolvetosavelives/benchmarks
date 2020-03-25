@@ -8,17 +8,17 @@ export default class extends Controller {
   }
 
   updateState() {
-    const selected = this.listItemTargets.filter(target => target.checked)
+    const selected = this.listItemTargets.filter((target) => target.checked)
     this.submitFormTarget.disabled = selected.length === 0
   }
 
-  selectAll(e) {
-    this.listItemTargets.forEach(target => (target.checked = true))
+  selectAll() {
+    this.listItemTargets.forEach((target) => (target.checked = true))
     this.updateState()
   }
 
-  deselectAll(e) {
-    this.listItemTargets.forEach(target => (target.checked = false))
+  deselectAll() {
+    this.listItemTargets.forEach((target) => (target.checked = false))
     this.updateState()
   }
 }

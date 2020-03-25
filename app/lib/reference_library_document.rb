@@ -1,11 +1,32 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
-class ReferenceLibraryDocument < Struct.new(:title, :description, :author, :date, :relevant_pages, :download_url, :thumbnail_url, :technical_area, :reference_type)
-  PATH_TO_CSV_FILE = Rails.root.join('data', 'reference_library_documents_from_airtable.csv').freeze
+class ReferenceLibraryDocument < Struct.new(
+  :title,
+  :description,
+  :author,
+  :date,
+  :relevant_pages,
+  :download_url,
+  :thumbnail_url,
+  :technical_area,
+  :reference_type,
+)
+  PATH_TO_CSV_FILE =
+    Rails.root.join("data", "reference_library_documents_from_airtable.csv")
+      .freeze
   # NB: these are in singular form because that is how they are in AirTable/CSV data source
-  REFERENCE_TYPES = ["Briefing Note", "Case Study", "Example", "Guideline", "Manual", "Template", "Tool", "Training Package"].freeze
+  REFERENCE_TYPES = [
+    "Briefing Note",
+    "Case Study",
+    "Example",
+    "Guideline",
+    "Manual",
+    "Template",
+    "Tool",
+    "Training Package",
+  ].freeze
 
   def self.all_from_csv
     array_of_rows = CSV.read(PATH_TO_CSV_FILE)
@@ -19,12 +40,22 @@ class ReferenceLibraryDocument < Struct.new(:title, :description, :author, :date
         row[1]&.strip,
         row[13]&.strip,
         row[4]&.strip,
-        row[6]&.strip
+        row[6]&.strip,
       )
     end
   end
 
-  def self.new_from_csv(title, description, author, date, relevant_pages, download_url, thumbnail_url, technical_area, reference_type)
+  def self.new_from_csv(
+    title,
+    description,
+    author,
+    date,
+    relevant_pages,
+    download_url,
+    thumbnail_url,
+    technical_area,
+    reference_type
+  )
     new(
       title,
       description,
@@ -34,7 +65,7 @@ class ReferenceLibraryDocument < Struct.new(:title, :description, :author, :date
       extract_download_url(download_url),
       extract_download_url(thumbnail_url),
       technical_area,
-      reference_type
+      reference_type,
     )
   end
 

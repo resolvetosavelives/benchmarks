@@ -16,7 +16,7 @@ class AppsTest < ApplicationSystemTestCase
     # navigate to Get Started page and submit its form
     assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
-    select_from_chosen('Nigeria', from: 'get_started_form_country_id')
+    select_from_chosen("Nigeria", from: "get_started_form_country_id")
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
     click_on("Next")
@@ -26,11 +26,11 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path("/plan/goals/Nigeria/jee1/1-year")
     assert page.has_content?("JEE SCORES")
     assert page.has_content?(
-      "P.1.1 Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)"
-    )
+             "P.1.1 Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)",
+           )
     assert page.has_content?(
-      "RE.2 Enabling environment in place for management of radiation emergencies"
-    )
+             "RE.2 Enabling environment in place for management of radiation emergencies",
+           )
     assert_equal "1", find("#plan_indicators_jee1_ind_p11").value
     assert_equal "2", find("#plan_indicators_jee1_ind_p11_goal").value
     find("#new_plan input[type=submit]").trigger(:click)
@@ -44,13 +44,14 @@ class AppsTest < ApplicationSystemTestCase
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-18") # the last one
     assert_selector(".nudge-container") do
-      assert page.has_content?( # nudge content for 1-year plan
-        "Focus on no more than 2-3 activities per technical area"
-      )
+      assert page.has_content?(
+               # nudge content for 1-year plan
+               "Focus on no more than 2-3 activities per technical area",
+             )
     end
 
     # verify bar chart by technical area filter functionality
-    find('line[data-original-title*="Radiation Emerg"]').click
+    find("line[data-original-title*=\"Radiation Emerg\"]").click
     assert_selector("#technical-area-18") # the last one
     assert_no_selector("#technical-area-1") # the first one
 
@@ -71,7 +72,7 @@ class AppsTest < ApplicationSystemTestCase
     ##
     # wind up on create account page
     assert_current_path("/users/sign_up")
-    sleep 0.1 # ugh without this form field(s) dont get filled
+    sleep 0.1
     find("#user_email").fill_in with: "email@example.com"
     find("#user_password").fill_in with: "123123"
     find("#user_password_confirmation").fill_in with: "123123"
@@ -81,7 +82,7 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on create account page
     assert_current_path("/plans")
     assert page.has_content?("Welcome! You have signed up successfully.")
-    assert page.has_content?("Saved Nigeria Plan 789")
+    assert page.has_content?("Saved Nigeria Plan 789") # ugh without this form field(s) dont get filled
   end
 
   test "happy path for Armenia SPAR 2018 5-year plan" do
@@ -94,7 +95,7 @@ class AppsTest < ApplicationSystemTestCase
     # go to the Get Started page and fill the form
     assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
-    select_from_chosen('Armenia', from: 'get_started_form_country_id')
+    select_from_chosen("Armenia", from: "get_started_form_country_id")
     choose "State Party Annual Report (SPAR)"
     choose "5 year plan"
     click_on("Next")
@@ -103,7 +104,9 @@ class AppsTest < ApplicationSystemTestCase
     # turn up on the plan goal-setting page
     assert_current_path("/plan/goals/Armenia/spar_2018/5-year")
     assert page.has_content?("SPAR SCORES")
-    assert page.has_content?("C4.1 Multisectoral collaboration mechanism for food safety events")
+    assert page.has_content?(
+             "C4.1 Multisectoral collaboration mechanism for food safety events",
+           )
     # verify that the 5-year plan has set goal from 2 to 4
     assert_equal "2", find("#plan_indicators_spar_2018_ind_c41").value
     assert_equal "4", find("#plan_indicators_spar_2018_ind_c41_goal").value
@@ -117,8 +120,8 @@ class AppsTest < ApplicationSystemTestCase
     # activity count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
     assert_equal "107", find(".activity-count-circle span").text
     assert page.has_content?(
-      "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors."
-    )
+             "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors.",
+           )
     find("#plan_name").fill_in with: "Saved Armenia Plan"
     find("input[type=submit]").trigger(:click)
 
@@ -130,7 +133,7 @@ class AppsTest < ApplicationSystemTestCase
     ##
     # at the Create an Account page, fill and submit the form
     assert_current_path("/users/sign_up")
-    sleep 0.1 # ugh without this form field(s) dont get filled
+    sleep 0.1
     find("#user_email").fill_in with: "email@example.com"
     find("#user_password").fill_in with: "123123"
     find("#user_password_confirmation").fill_in with: "123123"
@@ -140,7 +143,7 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on the View Plan page, make an edit, and save the plan
     assert_current_path("/plans")
     assert page.has_content?("Welcome! You have signed up successfully.")
-    assert page.has_content?("Saved Armenia Plan")
+    assert page.has_content?("Saved Armenia Plan") # ugh without this form field(s) dont get filled
   end
 
   test "happy path for Nigeria JEE 1.0 plan by technical areas 5-year" do
@@ -153,15 +156,15 @@ class AppsTest < ApplicationSystemTestCase
     # go to the Get Started page and fill the form
     assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
-    select_from_chosen('Nigeria', from: 'get_started_form_country_id')
+    select_from_chosen("Nigeria", from: "get_started_form_country_id")
     choose "Joint External Evaluation (JEE)"
     # kludge: must select "5 year plan" after assessment type, otherwise it wont select and
     #   fails form validation. extra weird because that same flow works in the other test cases.
     check "Optional: Plan by technical area(s)"
-    sleep 0.1 # ugh without this form field not filled
+    sleep 0.1
     check "IHR coordination, communication and advocacy"
     check "Surveillance"
-    sleep 0.2 # ugh without this form field not filled
+    sleep 0.2
     choose "5 year plan"
     click_on("Next")
 
@@ -169,8 +172,12 @@ class AppsTest < ApplicationSystemTestCase
     # turn up on the plan goal-setting page
     assert_current_path("/plan/goals/Nigeria/jee1/5-year/2-9")
     assert page.has_content?("JEE SCORES")
-    assert page.has_content?("P.2.1 A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR")
-    assert page.has_content?("D.2.1 Indicator- and event-based surveillance systems")
+    assert page.has_content?(
+             "P.2.1 A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR",
+           )
+    assert page.has_content?(
+             "D.2.1 Indicator- and event-based surveillance systems",
+           )
     assert_equal "2", find("#plan_indicators_jee1_ind_p21").value
     # verify that this 5-year plan has goal set to 4 instead of 3
     assert_equal "4", find("#plan_indicators_jee1_ind_p21_goal").value
@@ -188,12 +195,12 @@ class AppsTest < ApplicationSystemTestCase
     # verify nudge content for 5-year plan
     assert_selector(".nudge-container") do
       assert page.has_content?(
-          "5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic"
-      )
+               "5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic",
+             )
     end
 
     # verify bar chart by technical area filter functionality
-    find('line[data-original-title*="Surveillance"]').click
+    find("line[data-original-title*=\"Surveillance\"]").click
     assert_no_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
@@ -213,7 +220,7 @@ class AppsTest < ApplicationSystemTestCase
     ##
     # wind up on create account page
     assert_current_path("/users/sign_up")
-    sleep 0.1 # ugh without this form field(s) dont get filled
+    sleep 0.1
     find("#user_email").fill_in with: "email@example.com"
     find("#user_password").fill_in with: "123123"
     find("#user_password_confirmation").fill_in with: "123123"
@@ -221,7 +228,7 @@ class AppsTest < ApplicationSystemTestCase
 
     assert_current_path("/plans")
     assert page.has_content?("Welcome! You have signed up successfully.")
-    assert page.has_content?("Saved Nigeria Plan by Areas 789")
+    assert page.has_content?("Saved Nigeria Plan by Areas 789") # ugh without this form field(s) dont get filled
   end
 
   ##

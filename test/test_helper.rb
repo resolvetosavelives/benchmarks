@@ -4,10 +4,7 @@ require "rails/test_help"
 require "minitest/rails"
 require "minitest/reporters"
 require "mocha/minitest"
-Minitest::Reporters.use! [
-  Minitest::Reporters::SpecReporter.new,
-  # Minitest::Reporters::MeanTimeReporter.new
-]
+Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new] # Minitest::Reporters::MeanTimeReporter.new
 
 class ActiveSupport::TestCase
   include FactoryBot::Syntax::Methods

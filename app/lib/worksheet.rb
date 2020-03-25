@@ -22,27 +22,32 @@ class Worksheet
     create_instructions_sheet @workbook[0]
     ta_xlsx_worksheets = []
     current_worksheet = nil
-    @benchmark_technical_areas.each_with_index do |benchmark_technical_area, ta_index|
-      benchmark_technical_area.benchmark_indicators.each do |benchmark_indicator|
+    @benchmark_technical_areas
+      .each_with_index do |benchmark_technical_area, ta_index|
+      benchmark_technical_area.benchmark_indicators
+        .each do |benchmark_indicator|
         row_index = 0
-        goal_value = @plan.goal_value_for(benchmark_indicator: benchmark_indicator)
+        goal_value =
+          @plan.goal_value_for(benchmark_indicator: benchmark_indicator)
         plan_activities = @plan.activities_for(benchmark_indicator)
         next if plan_activities.empty?
 
         if ta_xlsx_worksheets[ta_index].blank?
-          current_worksheet = @workbook.add_worksheet(benchmark_technical_area.text)
+          current_worksheet =
+            @workbook.add_worksheet(benchmark_technical_area.text)
           ta_xlsx_worksheets << current_worksheet
         end
         plan_activities.each do |plan_activity|
           assessment_label = @plan.type_description
-          row_index = populate_worksheet(
-            current_worksheet,
-            row_index,
-            assessment_label,
-            goal_value,
-            benchmark_indicator.objective,
-            plan_activity.text
-          )
+          row_index =
+            populate_worksheet(
+              current_worksheet,
+              row_index,
+              assessment_label,
+              goal_value,
+              benchmark_indicator.objective,
+              plan_activity.text,
+            )
         end
       end
     end
@@ -53,28 +58,34 @@ class Worksheet
     SpreadsheetCell.new worksheet,
                         2,
                         0,
-                        text: "1. Use these worksheets in your workshop to discuss key items for each activity recommended for stepping up."
+                        text:
+                          "1. Use these worksheets in your workshop to discuss key items for each activity recommended for stepping up."
     SpreadsheetCell.new worksheet,
                         5,
                         0,
-                        text: "2. Enter the information into the NAPHS costing spreadsheet."
+                        text:
+                          "2. Enter the information into the NAPHS costing spreadsheet."
     SpreadsheetCell.new worksheet, 7, 0, text: "Key"
     SpreadsheetCell.new worksheet,
                         9,
                         0,
-                        text: "Detailed Activity Description: Detailed activity planning is important to understand where, how, and how much of the activity you will implement. Make sure it is achievable and realistic. Adjust the suggested benchmark activity to your country context. Use the implemenation tips and tricks and the Reference Library to check how other have implemented this activity in other places."
+                        text:
+                          "Detailed Activity Description: Detailed activity planning is important to understand where, how, and how much of the activity you will implement. Make sure it is achievable and realistic. Adjust the suggested benchmark activity to your country context. Use the implemenation tips and tricks and the Reference Library to check how other have implemented this activity in other places."
     SpreadsheetCell.new worksheet,
                         14,
                         0,
-                        text: "Implementation Level: Will the activity be at the national or sub-national level?"
+                        text:
+                          "Implementation Level: Will the activity be at the national or sub-national level?"
     SpreadsheetCell.new worksheet,
                         16,
                         0,
-                        text: "Responsible for implementation: It's useful to allocate responsibility to a specific person or team to ensure someone is accountable for next steps but at this stage in planning, responsibility can also be allocated to a department."
+                        text:
+                          "Responsible for implementation: It's useful to allocate responsibility to a specific person or team to ensure someone is accountable for next steps but at this stage in planning, responsibility can also be allocated to a department."
     SpreadsheetCell.new worksheet,
                         20,
                         0,
-                        text: "Priority: It's helpful to list all the activities that you may want to do then prioritize them at the end."
+                        text:
+                          "Priority: It's helpful to list all the activities that you may want to do then prioritize them at the end."
     SpreadsheetCell.new worksheet,
                         21,
                         1,
@@ -82,19 +93,23 @@ class Worksheet
     SpreadsheetCell.new worksheet,
                         22,
                         1,
-                        text: "2. High Priority - is an urgent gap in current capacity"
+                        text:
+                          "2. High Priority - is an urgent gap in current capacity"
     SpreadsheetCell.new worksheet,
                         22,
                         1,
-                        text: "3. Lower Priority - is required to continue to build strong health security systems"
+                        text:
+                          "3. Lower Priority - is required to continue to build strong health security systems"
     SpreadsheetCell.new worksheet,
                         25,
                         0,
-                        text: "Estimated Start & End Dates: This can be an estimate of length/duration of how long it is expected to implement."
+                        text:
+                          "Estimated Start & End Dates: This can be an estimate of length/duration of how long it is expected to implement."
     SpreadsheetCell.new worksheet,
                         28,
                         0,
-                        text: "Budget: This can be an estimate for budget. It's helpful if the detailed description is specific. Budget can also be added in the next stage."
+                        text:
+                          "Budget: This can be an estimate for budget. It's helpful if the detailed description is specific. Budget can also be added in the next stage."
 
     worksheet.merge_cells 0, 0, 0, 2
     worksheet.merge_cells 2, 0, 3, 7
@@ -132,33 +147,39 @@ class Worksheet
     SpreadsheetCell.new worksheet, row_index, 0, text: "Benchmark Objective:"
     SpreadsheetCell.new worksheet, row_index, 2, text: objective_text
     SpreadsheetCell.new worksheet,
-      row_index + 6,
-      0,
-      text: "Activity required for #{assessment_label} #{goal_level_str}"
+                        row_index + 6,
+                        0,
+                        text:
+                          "Activity required for #{assessment_label} #{
+                            goal_level_str
+                          }"
     SpreadsheetCell.new worksheet, row_index + 7, 0, text: activity_text
     SpreadsheetCell.new worksheet,
-      row_index + 11,
-      0,
-      text: "Detailed Activity Description"
+                        row_index + 11,
+                        0,
+                        text: "Detailed Activity Description"
     SpreadsheetCell.new worksheet,
-      row_index + 28,
-      0,
-      text: "Implementation Level (circle one)"
+                        row_index + 28,
+                        0,
+                        text: "Implementation Level (circle one)"
     SpreadsheetCell.new worksheet, row_index + 28, 3, text: "National"
     SpreadsheetCell.new worksheet, row_index + 28, 4, text: "Sub-national"
-    SpreadsheetCell.new worksheet, row_index + 30, 0, text: "Priority (circle one)"
+    SpreadsheetCell.new worksheet,
+                        row_index + 30,
+                        0,
+                        text: "Priority (circle one)"
     SpreadsheetCell.new worksheet, row_index + 30, 3, text: "Done"
     SpreadsheetCell.new worksheet, row_index + 30, 4, text: "High"
     SpreadsheetCell.new worksheet, row_index + 30, 5, text: "Low"
     SpreadsheetCell.new worksheet,
-      row_index + 32,
-      0,
-      text: "Responsible for Implementation:"
+                        row_index + 32,
+                        0,
+                        text: "Responsible for Implementation:"
     bordered_merge_cells worksheet, row_index + 32, 3, 5, 2
     SpreadsheetCell.new worksheet,
-      row_index + 35,
-      0,
-      text: "Estimated Start and End Dates:"
+                        row_index + 35,
+                        0,
+                        text: "Estimated Start and End Dates:"
     bordered_merge_cells worksheet, row_index + 35, 3, 5, 2
     SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget"
     bordered_merge_cells worksheet, row_index + 38, 3, 5, 2
@@ -177,5 +198,4 @@ class Worksheet
 
     row_index + SECTION_ROW_OFFSET
   end
-
 end

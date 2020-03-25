@@ -1,5 +1,4 @@
 .benchmark-document {
-
   .callout-with-icon {
     @include make-row(0);
     h3 {
@@ -30,7 +29,7 @@
       }
     }
     path {
-      fill: #2C8DC9;
+      fill: #2c8dc9;
     }
     margin-bottom: 1.2em;
   }
@@ -66,7 +65,7 @@
   }
 
   .card.callout {
-    background: #2C8DC9;
+    background: #2c8dc9;
     color: white;
     margin: 2.5em 0;
     .card-header {
@@ -80,8 +79,8 @@
 
   hr.indicator-hr {
     border-width: 3px;
-    border-color: #D5D5D7;
-    margin: 1.6em 0
+    border-color: #d5d5d7;
+    margin: 1.6em 0;
   }
 
   .indicator-head {
@@ -94,9 +93,9 @@
   .indicator-capacity-row {
     @include make-row(0);
     padding: 1px 0;
-    border-bottom: 1px solid #D5D5D7;
+    border-bottom: 1px solid #d5d5d7;
     &.first {
-      border-top: 1px solid #D5D5D7;
+      border-top: 1px solid #d5d5d7;
     }
     .head {
       color: white;

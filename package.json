@@ -1,5 +1,8 @@
 {
   "name": "benchmarks",
+  "engines": {
+    "node": ">=12"
+  },
   "private": true,
   "dependencies": {
     "@babel/core": "^7.8.4",
@@ -22,15 +25,21 @@
     "turbolinks": "^5.2.0"
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "preferSingleQuotes": false,
+    "addTrailingCommas": true
   },
   "scripts": {
     "test": "jest"
   },
   "devDependencies": {
+    "@prettier/plugin-ruby": "0.18.0",
+    "babel-eslint": "^10.1.0",
     "babel-jest": "^24.9.0",
+    "eslint": "6.0.0",
     "jest": "^24.9.0",
     "mutationobserver-shim": "^0.3.3",
+    "prettier": "2.0.1",
     "webpack-dev-server": "^3.10.3"
   },
   "jest": {

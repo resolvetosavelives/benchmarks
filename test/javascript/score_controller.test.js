@@ -2,7 +2,6 @@ import { Application, Controller } from "stimulus"
 import ScoreController from "score_controller"
 
 describe("ScoreController", () => {
-
   describe("#initialize", () => {
     let application
     let controller
@@ -40,8 +39,16 @@ describe("ScoreController", () => {
       expect(submitButton.disabled).toEqual(false) // initially enabled
 
       const controller = application.controllers[0]
-      const childController1 = { isValid: () => { return true } }
-      const childController2 = { isValid: () => { return false } }
+      const childController1 = {
+        isValid: () => {
+          return true
+        },
+      }
+      const childController2 = {
+        isValid: () => {
+          return false
+        },
+      }
       controller.childControllers = [childController1, childController2]
 
       controller.updateFormStateFromChildren()
@@ -53,8 +60,16 @@ describe("ScoreController", () => {
       expect(submitButton.disabled).toEqual(false) // initially enabled
 
       const controller = application.controllers[0]
-      const child1 = { isValid: () => { return true } }
-      const child2 = { isValid: () => { return true } }
+      const child1 = {
+        isValid: () => {
+          return true
+        },
+      }
+      const child2 = {
+        isValid: () => {
+          return true
+        },
+      }
       controller.childControllers = [child1, child2]
 
       controller.updateFormStateFromChildren()
@@ -67,13 +82,20 @@ describe("ScoreController", () => {
       expect(submitButton.disabled).toEqual(true) // initially disabled
 
       const controller = application.controllers[0]
-      const child1 = { isValid: () => { return true } }
-      const child2 = { isValid: () => { return true } }
+      const child1 = {
+        isValid: () => {
+          return true
+        },
+      }
+      const child2 = {
+        isValid: () => {
+          return true
+        },
+      }
       controller.childControllers = [child1, child2]
 
       controller.updateFormStateFromChildren()
       expect(submitButton.disabled).toEqual(false)
     })
   })
-
 })

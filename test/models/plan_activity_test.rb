@@ -17,7 +17,8 @@ describe PlanActivity do
       result.benchmark_indicator_id.wont_be_nil
       result.benchmark_indicator_id.must_equal bia.benchmark_indicator_id
       result.benchmark_technical_area_id.wont_be_nil
-      result.benchmark_technical_area_id.must_equal bia.benchmark_technical_area_id
+      result.benchmark_technical_area_id.must_equal bia
+                                                      .benchmark_technical_area_id
     end
   end
 end

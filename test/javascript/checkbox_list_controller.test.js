@@ -3,7 +3,7 @@ import CheckboxListController from "checkbox_list_controller"
 import $ from "jquery"
 jest.mock("jquery")
 $.mockImplementation(() => ({
-  autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() })
+  autocomplete: jest.fn().mockReturnValue({ menu: jest.fn() }),
 }))
 
 describe("CheckboxListController", () => {

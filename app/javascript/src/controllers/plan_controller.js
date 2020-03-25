@@ -39,7 +39,13 @@ import PlanPageViewModel from "../plan_page_view_model"
  *
  */
 export default class extends Controller {
-  static targets = ["fieldForActivityIds", "submit", "form", "technicalAreaContainer", "activityCountCircle"]
+  static targets = [
+    "fieldForActivityIds",
+    "submit",
+    "form",
+    "technicalAreaContainer",
+    "activityCountCircle",
+  ]
 
   initialize() {
     // benchmark controller will append itself to this array
@@ -74,30 +80,42 @@ export default class extends Controller {
 
   initDataFromDom() {
     this.term = parseInt(this.data.get("term"))
-    this.nudgeSelectors  = JSON.parse(this.data.get("nudgeSelectors")) // expects an array of strings
-    this.nudgeContentSelectors = JSON.parse(this.data.get("nudgeContentSelectors")) // expects an array of strings
+    this.nudgeSelectors = JSON.parse(this.data.get("nudgeSelectors")) // expects an array of strings
+    this.nudgeContentSelectors = JSON.parse(
+      this.data.get("nudgeContentSelectors")
+    ) // expects an array of strings
     this.nudgeContentZeroSelector = this.data.get("nudgeContentZeroSelector") // expects a string
     this.nudgeTemplateSelector = this.data.get("nudgeTemplateSelector") // expects a string
-    this.chartSelectors  = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
-    this.chartLabels     = JSON.parse(this.data.get("chartLabels"))    // expects an array of integer arrays
-    this.chartDataSeries = JSON.parse(this.data.get("chartSeries"))    // expects an array of integer arrays
-    this.chartWidth  = this.data.get("chartWidth")  // expects an integer
+    this.chartSelectors = JSON.parse(this.data.get("chartSelectors")) // expects an array of strings
+    this.chartLabels = JSON.parse(this.data.get("chartLabels")) // expects an array of integer arrays
+    this.chartDataSeries = JSON.parse(this.data.get("chartSeries")) // expects an array of integer arrays
+    this.chartWidth = this.data.get("chartWidth") // expects an integer
     this.chartHeight = this.data.get("chartHeight") // expects an integer
   }
 
   initEventListeners() {
     // the "shown.bs.tab" event comes of bootstrap nav tabs
-    $('a[data-toggle="tab"]').on('shown.bs.tab', (event) => {
+    $('a[data-toggle="tab"]').on("shown.bs.tab", (event) => {
       this.handleChartHideShow(event)
     })
-    this.element.addEventListener("planActivityAdded", (planActivityAddedEvent) => {
-      this.updateFormValidity()
-      this.incrementActivityCount(planActivityAddedEvent.detail.barSegmentIndex)
-    })
-    this.element.addEventListener("planActivityRemoved", (planActivityRemovedEvent) => {
-      this.updateFormValidity()
-      this.decrementActivityCount(planActivityRemovedEvent.detail.barSegmentIndex)
-    })
+    this.element.addEventListener(
+      "planActivityAdded",
+      (planActivityAddedEvent) => {
+        this.updateFormValidity()
+        this.incrementActivityCount(
+          planActivityAddedEvent.detail.barSegmentIndex
+        )
+      }
+    )
+    this.element.addEventListener(
+      "planActivityRemoved",
+      (planActivityRemovedEvent) => {
+        this.updateFormValidity()
+        this.decrementActivityCount(
+          planActivityRemovedEvent.detail.barSegmentIndex
+        )
+      }
+    )
   }
 
   updateFormValidity() {
@@ -115,7 +133,7 @@ export default class extends Controller {
   }
 
   initActivityCountButton() {
-    $(".activity-count-circle").on('click', () => {
+    $(".activity-count-circle").on("click", () => {
       this.clickActivityCountButton()
     })
   }
@@ -131,8 +149,8 @@ export default class extends Controller {
     const dataSet = this.chartDataSeries[this.currentChartIndex]
     let data = {
       labels: this.chartLabels[this.currentChartIndex],
-      series: [dataSet]
-    };
+      series: [dataSet],
+    }
     const heightValue = this.getNextMultipleOfTenForSeries(dataSet)
     let options = {
       high: heightValue,
@@ -141,13 +159,17 @@ export default class extends Controller {
       height: this.chartHeight,
       axisY: {
         // show multiples of 10
-        labelInterpolationFnc: function (value, index) {
-          return value % 10 == 0  ? value: null;
-        }
+        labelInterpolationFnc: function (value) {
+          return value % 10 == 0 ? value : null
+        },
       },
-    };
-    this.charts[this.currentChartIndex] = new Chartist.Bar(this.chartSelectors[this.currentChartIndex], data, options);
-    this.charts[this.currentChartIndex].on('created', () => {
+    }
+    this.charts[this.currentChartIndex] = new Chartist.Bar(
+      this.chartSelectors[this.currentChartIndex],
+      data,
+      options
+    )
+    this.charts[this.currentChartIndex].on("created", () => {
       this.chartInteractivityEntryPoints[this.currentChartIndex]()
       this.fixesForIE()
     })
@@ -159,7 +181,9 @@ export default class extends Controller {
 
   renderNudgeForTechnicalAreas() {
     const currentNudgeEl = this.nudgeSelectors[this.currentChartIndex]
-    const currentNudgeTplSelector = this.nudgeContentSelectors[ this.term === 500 ? 1: 0]
+    const currentNudgeTplSelector = this.nudgeContentSelectors[
+      this.term === 500 ? 1 : 0
+    ]
     const nudgeHtmlContent = $(currentNudgeTplSelector).html()
     $(currentNudgeEl).empty().html(nudgeHtmlContent)
   }
@@ -172,26 +196,37 @@ export default class extends Controller {
 
   // TODO: modify this to use PlanPageViewModel events instead?
   handleChartHideShow(event) {
-    const {target: selectedTab} = event
-    const zeroBasedTabIndex = $(selectedTab).parents("ul").find("a").index(selectedTab)
+    const { target: selectedTab } = event
+    const zeroBasedTabIndex = $(selectedTab)
+      .parents("ul")
+      .find("a")
+      .index(selectedTab)
     this.currentChartIndex = zeroBasedTabIndex
     this.initBarChart()
   }
 
   initInteractivityForChartByTechnicalArea() {
     // query for bar segments only within the selector of the current chart
-    $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each((segmentIndex, el) => {
-      let $elBarSegment = $(el)
-      this.initClickHandlerForChartByTechnicalArea($elBarSegment, segmentIndex)
-      this.initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, segmentIndex)
-    })
+    $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each(
+      (segmentIndex, el) => {
+        let $elBarSegment = $(el)
+        this.initClickHandlerForChartByTechnicalArea(
+          $elBarSegment,
+          segmentIndex
+        )
+        this.initTooltipForSegmentOfChartByTechnicalArea(
+          $elBarSegment,
+          segmentIndex
+        )
+      }
+    )
   }
 
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
     if (index > 0) {
-      $($elBarSegment).on('click', () => {
+      $($elBarSegment).on("click", () => {
         $("#activity-list-by-type-container").hide()
-        $('.technical-area-container').hide()
+        $(".technical-area-container").hide()
         // NB: index is zero-based, but the target is 1-based, which is why +1.
         $(`#technical-area-${index + 1}`).show()
       })
@@ -201,42 +236,52 @@ export default class extends Controller {
   initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
     // NB: index is zero-based, but the target is 1-based, which is why +1.
     let $elTitle = $(`#technical-area-${index + 1}`)
-    let tooltipTitle = $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
+    let tooltipTitle =
+      $elTitle.attr("title") + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
-        .attr("title", tooltipTitle)
-        .attr("data-toggle", "tooltip")
-        .tooltip({container: ".plan-container"})
-        .tooltip()
+      .attr("title", tooltipTitle)
+      .attr("data-toggle", "tooltip")
+      .tooltip({ container: ".plan-container" })
+      .tooltip()
   }
 
   initInteractivityForChartByActivityType() {
     // query for bar segments only within the selector of the current chart
-    $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each((segmentIndex, el) => {
-      let $elBarSegment = $(el)
-      this.initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
-      this.initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex)
-    })
+    $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each(
+      (segmentIndex, el) => {
+        let $elBarSegment = $(el)
+        this.initTooltipForSegmentOfChartByActivityType(
+          $elBarSegment,
+          segmentIndex
+        )
+        this.initClickHandlerForSegmentOfChartByActivityType(
+          $elBarSegment,
+          segmentIndex
+        )
+      }
+    )
   }
 
   initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
-    let tooltipTitle = chartLabels[segmentIndex] + ": " + $elBarSegment.attr("ct:value")
+    let tooltipTitle =
+      chartLabels[segmentIndex] + ": " + $elBarSegment.attr("ct:value")
     $elBarSegment
-        .attr("title", tooltipTitle)
-        .attr("data-toggle", "tooltip")
-        .tooltip({container: ".plan-container"})
-        .tooltip()
+      .attr("title", tooltipTitle)
+      .attr("data-toggle", "tooltip")
+      .tooltip({ container: ".plan-container" })
+      .tooltip()
   }
 
   initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
-      $($elBarSegment).on('click', () => {
-        this.filterByActivityType(segmentIndex)
-        // avoid click on the already selected chart segment re-presenting the same content
-        if (this.currentlySelectedActivityType !== segmentIndex) {
-          this.currentlySelectedActivityType = segmentIndex
-          this.renderNudgeForActivityType()
-        }
-      })
+    $($elBarSegment).on("click", () => {
+      this.filterByActivityType(segmentIndex)
+      // avoid click on the already selected chart segment re-presenting the same content
+      if (this.currentlySelectedActivityType !== segmentIndex) {
+        this.currentlySelectedActivityType = segmentIndex
+        this.renderNudgeForActivityType()
+      }
+    })
   }
 
   // generates some HTML and appends it to the DOM and hides the other
@@ -244,18 +289,22 @@ export default class extends Controller {
     const chartLabels = this.chartLabels[this.currentChartIndex]
     const selectedActivityType = chartLabels[segmentIndex]
     if (selectedActivityType) {
-      const $activityTypeHeading = $("<h2>" + selectedActivityType + " actions</h2>")
+      const $activityTypeHeading = $(
+        "<h2>" + selectedActivityType + " actions</h2>"
+      )
       // needs to be wrapped in a div.col in order to work with bootstrap grid
       const $activityTypeContainer = $("<div class='col'></div>")
-      const $activityRowContent = $('.activity.row.activity-type-' + (segmentIndex  + 1)).clone()
+      const $activityRowContent = $(
+        ".activity.row.activity-type-" + (segmentIndex + 1)
+      ).clone()
       $activityRowContent.attr("data-activity-bar-segment-index", segmentIndex)
       $activityTypeContainer.append($activityRowContent)
-      $('.technical-area-container').hide()
+      $(".technical-area-container").hide()
       $("#activity-list-by-type-container")
-          .empty()
-          .append($activityTypeHeading)
-          .append($activityTypeContainer)
-          .show()
+        .empty()
+        .append($activityTypeHeading)
+        .append($activityTypeContainer)
+        .show()
     }
   }
 
@@ -274,9 +323,9 @@ export default class extends Controller {
     const listItems = this.getListItemsForNudge(nudgeData, indexOfActivityType)
     const templateData = {
       activity_type: nudgeData["activity_type_name"],
-      listItems: listItems.map(itemText => {
-        return {item: itemText}
-      })
+      listItems: listItems.map((itemText) => {
+        return { item: itemText }
+      }),
     }
 
     const currentNudgeTplSelector = this.nudgeTemplateSelector
@@ -285,34 +334,53 @@ export default class extends Controller {
     const renderedContent = compiledTemplate.render(templateData)
 
     const currentNudgeEl = this.nudgeSelectors[this.currentChartIndex]
-    $(currentNudgeEl).children().fadeOut(() => {
-      $(currentNudgeEl).empty().html(renderedContent).fadeIn()
-    })
+    $(currentNudgeEl)
+      .children()
+      .fadeOut(() => {
+        $(currentNudgeEl).empty().html(renderedContent).fadeIn()
+      })
   }
 
   renderNudgeZeroForActivityType() {
     const nudgeContentZeroSelector = this.nudgeContentZeroSelector
     const nudgeZeroContent = $(nudgeContentZeroSelector).html()
     const nudgeElByActivityType = this.nudgeSelectors[1] // 1 is for activity type tab
-    $(nudgeElByActivityType).children().fadeOut(() => {
-      $(nudgeElByActivityType).empty().html(nudgeZeroContent).fadeIn(() => {
-        this.sizeTheSvgForIE()
+    $(nudgeElByActivityType)
+      .children()
+      .fadeOut(() => {
+        $(nudgeElByActivityType)
+          .empty()
+          .html(nudgeZeroContent)
+          .fadeIn(() => {
+            this.sizeTheSvgForIE()
+          })
       })
-    })
   }
 
   getListItemsForNudge(nudgeData, selectedActivityTypeIndex) {
     const thresholdA = nudgeData["threshold_a"]
     const thresholdB = nudgeData["threshold_b"]
-    const currentActivityCount = this.countByActivityType(selectedActivityTypeIndex)
-    let indexForThreshold = this.getIndexForThreshold(currentActivityCount, thresholdA, thresholdB)
-    const contentKey = ["content_for_a", "content_for_b", "content_for_c"][indexForThreshold]
+    const currentActivityCount = this.countByActivityType(
+      selectedActivityTypeIndex
+    )
+    let indexForThreshold = this.getIndexForThreshold(
+      currentActivityCount,
+      thresholdA,
+      thresholdB
+    )
+    const contentKey = ["content_for_a", "content_for_b", "content_for_c"][
+      indexForThreshold
+    ]
     return nudgeData[contentKey].split("\n")
   }
 
   getIndexForThreshold(currentActivityCount, thresholdA, thresholdB) {
     if (thresholdA && thresholdB) {
-      return this.getIndexForThresholdOfTwo(currentActivityCount, thresholdA, thresholdB)
+      return this.getIndexForThresholdOfTwo(
+        currentActivityCount,
+        thresholdA,
+        thresholdB
+      )
     } else {
       return this.getIndexForThresholdOfOne(currentActivityCount, thresholdA)
     }
@@ -321,7 +389,10 @@ export default class extends Controller {
   getIndexForThresholdOfTwo(currentActivityCount, thresholdA, thresholdB) {
     if (currentActivityCount < thresholdA) {
       return 0
-    } else if (thresholdA <= currentActivityCount && currentActivityCount <= thresholdB) {
+    } else if (
+      thresholdA <= currentActivityCount &&
+      currentActivityCount <= thresholdB
+    ) {
       return 1
     } else if (thresholdB < currentActivityCount) {
       return 2
@@ -352,7 +423,10 @@ export default class extends Controller {
   }
 
   saveActivityIdsToField() {
-    console.log("plan.saveActivityIdsToField: this.getActivityIds().length: ", this.getActivityIds().length)
+    console.log(
+      "plan.saveActivityIdsToField: this.getActivityIds().length: ",
+      this.getActivityIds().length
+    )
     this.fieldForActivityIdsTarget.value = JSON.stringify(this.getActivityIds())
   }
 
@@ -459,7 +533,10 @@ export default class extends Controller {
       return
     }
 
-    $(".ct-label.ct-horizontal", this.chartSelectors[this.currentChartIndex]).each((i, el) => {
+    $(
+      ".ct-label.ct-horizontal",
+      this.chartSelectors[this.currentChartIndex]
+    ).each((i, el) => {
       const offsetX = 15
       const offsetY = 12
       const $el = $(el)
