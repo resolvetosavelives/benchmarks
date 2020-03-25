@@ -39,9 +39,12 @@ export default class extends Controller {
   }
 
   presubmitFormToLoadOtherFields() {
+    // the following reset/set flow is done to fix
+    // the bug reported here: https://www.pivotaltracker.com/story/show/171721472
     const countryValue = this.countrySelectTarget.value
     this.formTarget.reset()
     this.countrySelectTarget.value = countryValue
+
     window.submittedGetStartedAtLeastOnce = true
     $(this.formTarget).submit()
   }
