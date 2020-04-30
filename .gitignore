@@ -34,3 +34,6 @@
 yarn-debug.log*
 .yarn-integrity
 .DS_Store
+
+* Ignore .idea directory for rubymine/jetbrains editors
+.idea/
