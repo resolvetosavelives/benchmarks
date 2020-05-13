@@ -33,10 +33,10 @@
             <div class="col-md-auto w-220">
               <h3>Technical Areas</h3>
             </div>
-            <div class="header col-md">
+            <div class="col-md">
               <h3>Indicators</h3>
             </div>
-            <div class="bordeheader col-md w-180 d-flex flex-row justify-content-md-around">
+            <div class="col-md w-180 d-flex flex-row justify-content-md-around">
               <h3 class="text-center">Score</h3>
               <h3 class="text-center">Goal</h3>
             </div>
@@ -62,7 +62,7 @@
                       </div>
                       <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
                     </div>
-                    <div class="col d-flex flex-row p-o justify-content-start">
+                    <div class="col d-flex flex-row p-0 justify-content-start">
                       <div class="d-md-none col-sm-auto label">
                         <strong>&nbsp;Goal</strong>
                       </div>
