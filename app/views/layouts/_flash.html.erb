@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col">
+    <% if notice.present? %>
+      <div class="alert alert-primary">
+        <%= notice %>
+      </div>
+    <% end %>
+    <% if alert.present? %>
+      <div class="alert alert-warning">
+        <%= alert %>
+      </div>
+    <% end %>
+  </div>
+</div>
