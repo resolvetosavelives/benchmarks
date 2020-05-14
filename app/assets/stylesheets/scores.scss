@@ -1,17 +1,49 @@
-.table-scores {
-  tbody {
-    tr {
-      &:nth-child(odd) {
-        background: color("light");
-      }
-      th {
-        background: #e2e6ea;
-        border-top: 1px solid rgba(45, 45, 53, 0.25);
-      }
-      td {
-        border-top: 1px solid rgba(45, 45, 53, 0.25);
-      }
+.plan-set-goals {
+  .w-220 {
+    @media (min-width: 768px) {
+      width: 220px;
     }
+  }
+
+  .w-180 {
+    @media (min-width: 768px) {
+      max-width: 180px;
+    }
+  }
+
+  h3 {
+    line-height: 54px;
+    padding: 12px;
+  }
+
+  .technical-area {
+    background-color: #e2e6ea;
+    padding: 12px;
+    border-top: 1px solid rgba(45, 45, 53, 0.25);
+  }
+
+  .indicators {
+    font-size: 17px;
+    padding: 12px;
+    border-top: 1px solid rgba(45, 45, 53, 0.25);
+    @media (min-width: 768px) {
+      border-right: 1px solid rgba(45, 45, 53, 0.25);
+    }
+  }
+
+  .score-goal {
+    padding: 0;
+    @media (min-width: 768px) {
+      padding: 12px;
+      border-top: 1px solid rgba(45, 45, 53, 0.25);
+    }
+    .label {
+      line-height: 38px;
+    }
+  }
+
+  .row .odd {
+    background: color("light");
   }
 
   .form-control {

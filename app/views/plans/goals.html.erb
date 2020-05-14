@@ -7,89 +7,79 @@
       </h1>
       <%= render "instructions" %>
     </div>
-    <div class="col-lg-6 col-md-12 py-md-4 my-auto">
+    <div class="col-lg-6 col-lg-12 py-lg-4 my-auto">
       <!-- Capacity Score Levels graphic -->
       <%= render file: Rails.root.join("app", "assets", "images", "scores-widget.svg") %>
     </div>
   </div>
 
   <%= form_for @plan, url: "/plans/",
-    html: {novalidate: true,
-           autocomplete: "off",
-           class: "needs-validation",
-           data: {controller: "score",
-                   action: "submit->score#submit",
-                   target: "score.form",
-                   type: @assessment_type}
-          } do |form| %>
+               html: {novalidate: true,
+                      autocomplete: "off",
+                      class: "needs-validation",
+                      data: {controller: "score",
+                             action: "submit->score#submit",
+                             target: "score.form",
+                             type: @assessment_type}
+               } do |form| %>
     <%= form.hidden_field :assessment_id %>
     <%= form.hidden_field :term %>
 
+    <% counter = 0 %>
     <div class="row py-4">
-      <div class="col">
-        <table class="table table-fixed table-scores border-bottom w-100">
-          <colgroup>
-            <col width="220px" />
-            <col />
-            <col width="90px" />
-            <col width="90px" />
-          </colgroup>
-          <thead>
-            <tr class="jee-table-header">
-              <th>Technical Areas</th>
-              <th>Indicators</th>
-              <th>Score</th>
-              <th>Goal</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @plan.assessment_technical_areas.each do |assessment_technical_area| %>
-              <% assessment_indicator = assessment_technical_area.assessment_indicators.first %>
-              <tr class="technical-area-<%= assessment_technical_area.id %>"
-                  data-controller="score-and-goal">
-                <th
-                  class="border-right"
-                  scope="row"
-                  rowspan="<%= assessment_technical_area.assessment_indicators.size %>"
-                >
-                  <%= assessment_technical_area.text %>
-                </th>
-                <td class="border-right">
-                  <strong><%= abbrev_from_named_id assessment_indicator.named_id %></strong>
-                  <%= assessment_indicator.text %>
-                </td>
-                <td>
-                  <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
-                </td>
-                <td>
-                  <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.calculate_goal_value_for(assessment_indicator: assessment_indicator), is_goal: true %>
-                </td>
-              </tr>
-
-              <% assessment_technical_area.assessment_indicators.drop(1).each do |assessment_indicator| %>
-                <tr class="technical-area-<%= assessment_technical_area.id %>"
-                    data-controller="score-and-goal">
-                  <td class="border-right">
+      <div class="col border-bottom">
+        <div class="d-none d-sm-none d-md-block">
+          <div class="row border-top no-gutters">
+            <div class="col-md-auto w-220">
+              <h3>Technical Areas</h3>
+            </div>
+            <div class="col-md">
+              <h3>Indicators</h3>
+            </div>
+            <div class="col-md w-180 d-flex flex-row justify-content-md-around">
+              <h3 class="text-center">Score</h3>
+              <h3 class="text-center">Goal</h3>
+            </div>
+          </div>
+        </div>
+        <% @plan.assessment_technical_areas.each do |assessment_technical_area| %>
+          <div class="row no-gutters technical-area-<%= assessment_technical_area.id %>" data-controller="score-and-goal">
+            <div class="technical-area w-220 col-sm-12 col-md-auto">
+              <strong><%= assessment_technical_area.text %></strong>
+            </div>
+            <div class="col-sm-12 col-md">
+              <% assessment_technical_area.assessment_indicators.each do |assessment_indicator| %>
+                <div class="<%= counter % 2 == 0 ? 'odd' : '' %> row no-gutters">
+                  <% counter += 1 %>
+                  <div class="indicators col-sm-12 col-md">
                     <strong><%= abbrev_from_named_id assessment_indicator.named_id %></strong>
                     <%= assessment_indicator.text %>
-                  </td>
-                  <td>
-                    <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
-                  </td>
-                  <td>
-                    <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.calculate_goal_value_for(assessment_indicator: assessment_indicator), is_goal: true %>
-                  </td>
-                </tr>
+                  </div>
+                  <div class="score-goal w-180 col-sm-12 d-flex flex-row justify-content-between">
+                    <div class="col d-flex flex-row p-0 justify-content-start">
+                      <div class="d-md-none col-sm-auto label">
+                        <strong>Score</strong>
+                      </div>
+                      <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
+                    </div>
+                    <div class="col d-flex flex-row p-0 justify-content-start">
+                      <div class="d-md-none col-sm-auto label">
+                        <strong>&nbsp;Goal</strong>
+                      </div>
+                      <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.calculate_goal_value_for(assessment_indicator: assessment_indicator), is_goal: true %>
+                    </div>
+                  </div>
+                </div>
               <% end %>
-            <% end %>
-          </tbody>
-        </table>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
+
     <div class="row">
       <div class="col d-flex justify-content-end">
-        <%= form.submit "Next", class: "btn btn-primary goals-next-button", data: { target: "score.submitButton"} %>
+        <%= form.submit "Next", class: "btn btn-primary goals-next-button", data: {target: "score.submitButton"} %>
       </div>
     </div>
   <% end %>
