@@ -223,14 +223,12 @@ export default class extends Controller {
   }
 
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
-    if (index > 0) {
-      $($elBarSegment).on("click", () => {
-        $("#activity-list-by-type-container").hide()
-        $(".technical-area-container").hide()
-        // NB: index is zero-based, but the target is 1-based, which is why +1.
-        $(`#technical-area-${index + 1}`).show()
-      })
-    }
+    $($elBarSegment).on("click", () => {
+      $("#activity-list-by-type-container").hide()
+      $(".technical-area-container").hide()
+      // NB: index is zero-based, but the target is 1-based, which is why +1.
+      $(`#technical-area-${index + 1}`).show()
+    })
   }
 
   initTooltipForSegmentOfChartByTechnicalArea($elBarSegment, index) {
