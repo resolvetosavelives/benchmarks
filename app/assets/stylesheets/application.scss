@@ -226,6 +226,7 @@ nav.navbar {
 }
 
 a.cta-btn {
+  -webkit-appearance: none; // This is so the background-color works on Safari
   height: 4.5em !important;
   line-height: 4.5em;
   padding: 0;
