@@ -37,3 +37,6 @@ yarn-debug.log*
 
 * Ignore .idea directory for rubymine/jetbrains editors
 .idea/
+
+# ESlint apparently generates this file
+.eslintcache

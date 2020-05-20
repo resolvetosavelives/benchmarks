@@ -12,7 +12,6 @@
     "@stimulus/polyfills": "^1.1.1",
     "@stimulus/webpack-helpers": "^1.1.1",
     "bootstrap": "4.3.1",
-    "bootstrap-multiselect": "^0.9.13-1",
     "chartist": "^0.11.4",
     "chosen-js": "^1.8.7",
     "core-js": "^3.6.4",

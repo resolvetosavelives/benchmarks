@@ -1,5 +1,5 @@
 const fs = require("fs")
-import { Application, Controller } from "stimulus"
+import { Application } from "stimulus"
 import Chartist from "chartist"
 import $ from "jquery"
 import "plan_page_data_model"
@@ -24,7 +24,7 @@ function mock_plan_page_data_model() {
 }
 
 describe("PlanController", () => {
-  let application, submitButton, form, name
+  let application, submitButton, name
   beforeEach(() => {
     mock_jquery()
     mock_plan_page_data_model()
@@ -35,7 +35,6 @@ describe("PlanController", () => {
     document.body.innerHTML = showPlanPageDocument
 
     submitButton = document.querySelector("input[type='submit']")
-    form = document.querySelector("form")
     name = document.querySelector("input#plan_name")
 
     application = Application.start()
@@ -75,7 +74,7 @@ describe("PlanController", () => {
     it("has the expected width", () => {
       expect(
         controller.charts[controller.currentChartIndex].options.width
-      ).toBe("710")
+      ).toBe("100%")
     })
 
     it("has the expected height", () => {

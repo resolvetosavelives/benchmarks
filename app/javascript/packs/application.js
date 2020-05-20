@@ -7,7 +7,6 @@ import "regenerator-runtime/runtime"
 
 import "bootstrap"
 import "stylesheets/application.scss"
-import "bootstrap-multiselect/dist/css/bootstrap-multiselect"
 
 // stimulus polyfill must be loaded first, also needed for IE 10 to work properly
 import "@stimulus/polyfills"
@@ -28,4 +27,7 @@ const context = require.context("../src/controllers", true, /\.js$/)
 application.load(definitionsFromContext(context))
 
 // fix for IE Benchmarks doc page Monitoring icon too small/out of alignment #171365469
-$(".benchmark-document .callout-with-icon svg.bar-chart path").attr("transform", "scale(2)");
+$(".benchmark-document .callout-with-icon svg.bar-chart path").attr(
+  "transform",
+  "scale(2)"
+)
