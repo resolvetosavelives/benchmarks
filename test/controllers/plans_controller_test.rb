@@ -191,7 +191,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   #  assert_response :redirect
   #end
   #
-  ## TODO: GVT: not working until the add activities form is working again
+  ## TODO: GVT: not working until the add actions form is working again
   ## test 'plan/show.html.erb wires up plan controller correctly' do
   ##  plan = create(:plan, :with_user)
   ##  sign_in plan.user
@@ -201,9 +201,9 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   ##  assert_select 'form[data-target="plan.form"]', 1
   ##  assert_select 'input[data-target="plan.name"][data-action="change->plan#validateName"]',
   ##                1
-  ##  assert_select 'input[data-target="plan.newActivity"][data-action="keypress->plan#addNewActivity"][data-benchmark-id="1.1"]',
+  ##  assert_select 'input[data-target="plan.newAction"][data-action="keypress->plan#addNewAction"][data-benchmark-id="1.1"]',
   ##                1
-  ##  assert_select 'button[data-action="plan#deleteActivity"][data-benchmark-id="1.1"]',
+  ##  assert_select 'button[data-action="plan#deleteAction"][data-benchmark-id="1.1"]',
   ##                2
   ## end
   #
@@ -211,7 +211,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   #  plan = create(:plan_nigeria_jee1, :with_user)
   #  sign_in plan.user
   #  put plan_path(plan.id),
-  #    params: {plan: {name: "the plan", benchmark_activity_ids: "[]"}}
+  #    params: {plan: {name: "the plan", benchmark_action_ids: "[]"}}
   #  assert_equal Plan.find_by_name("the plan").id, plan.id
   #end
   #
@@ -220,7 +220,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   #  other_user = create(:user)
   #  sign_in other_user
   #  put plan_path(plan.id),
-  #    params: {plan: {name: "the plan", activity_map: "{}"}}
+  #    params: {plan: {name: "the plan", action_map: "{}"}}
   #  assert_redirected_to root_path
   #  assert_equal Plan.where(name: "the plan").count, 0
   #end
@@ -237,7 +237,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   ## test 'logged out user can update a plan with id == session[:plan_id]' do
   ##  create_draft_plan_stub do |plan_id|
   ##    put plan_path(plan_id),
-  ##        params: { plan: { name: 'different', activity_map: '{}' } }
+  ##        params: { plan: { name: 'different', action_map: '{}' } }
   ##    follow_redirect!
   ##    assert_redirected_to new_user_session_path
   ##    assert_equal Plan.find_by_name('different').id, plan_id

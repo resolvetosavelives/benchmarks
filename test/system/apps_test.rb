@@ -48,14 +48,14 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on the View Plan page after the plan has been saved, and then make an edit
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIVITIES")
-    assert_equal "235", find(".activity-count-circle span").text
+    assert page.has_content?("TOTAL ACTIONS")
+    assert_equal "235", find(".action-count-circle span").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-18") # the last one
     assert_selector(".nudge-container") do
       assert page.has_content?(
                # nudge content for 1-year plan
-               "Focus on no more than 2-3 activities per technical area",
+               "Focus on no more than 2-3 actions per technical area",
              )
     end
 
@@ -65,7 +65,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_no_selector("#technical-area-1") # the first one
 
     # un-filter to show all
-    find(".activity-count-circle").click
+    find(".action-count-circle").click
     assert_selector("#technical-area-1")
     assert_selector("#technical-area-18")
 
@@ -125,9 +125,9 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on the View Plan page, make an edit, and save the plan
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Armenia draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIVITIES")
-    # activity count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
-    assert_equal "107", find(".activity-count-circle span").text
+    assert page.has_content?("TOTAL ACTIONS")
+    # action count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
+    assert_equal "107", find(".action-count-circle span").text
     assert page.has_content?(
              "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors.",
            )
@@ -196,8 +196,8 @@ class AppsTest < ApplicationSystemTestCase
     # turn up on the View Plan, make an edit, save the plan
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIVITIES")
-    assert_equal "28", find(".activity-count-circle span").text
+    assert page.has_content?("TOTAL ACTIONS")
+    assert_equal "28", find(".action-count-circle span").text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
@@ -214,7 +214,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
     # un-filter to show all
-    find(".activity-count-circle").click
+    find(".action-count-circle").click
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 

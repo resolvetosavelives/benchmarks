@@ -1,15 +1,15 @@
-class BenchmarkIndicatorActivity < ApplicationRecord
-  include BenchmarkIndicatorActivitySeed
+class BenchmarkIndicatorAction < ApplicationRecord
+  include BenchmarkIndicatorActionSeed
 
   belongs_to :benchmark_indicator
-  has_many :plan_activity
+  has_many :plan_action
 
   default_scope { order(:sequence) }
 
   delegate :benchmark_technical_area_id, to: :benchmark_indicator
 
   # Note that these values are 0-indexed but in the DB they are 1-indexed
-  ACTIVITY_TYPES = [
+  ACTION_TYPES = [
     "Advocacy",
     "Assessment and Data Use",
     "Coordination",
@@ -39,7 +39,7 @@ class BenchmarkIndicatorActivity < ApplicationRecord
     }
   end
 
-  def activity_types
-    self[:activity_types] || []
+  def action_types
+    self[:action_types] || []
   end
 end

@@ -90,22 +90,22 @@ describe("PlanController", () => {
     })
   })
 
-  describe("#initActivityCountButton", () => {
+  describe("#initActionCountButton", () => {
     it("calls the expected method", () => {
       const controller = application.controllers[0]
-      controller.clickActivityCountButton = jest.fn()
+      controller.clickActionCountButton = jest.fn()
 
-      $(".activity-count-circle").trigger("click")
+      $(".action-count-circle").trigger("click")
 
-      expect(controller.clickActivityCountButton).toHaveBeenCalled()
+      expect(controller.clickActionCountButton).toHaveBeenCalled()
     })
   })
 
-  describe("#countByActivityType", () => {
+  describe("#countByActionType", () => {
     it("returns the expected integer", () => {
       const controller = application.controllers[0]
 
-      const result = controller.countByActivityType(0)
+      const result = controller.countByActionType(0)
 
       expect(result).toEqual(6)
     })
@@ -113,7 +113,7 @@ describe("PlanController", () => {
 
   describe("#getListItemsForNudge", () => {
     const nudgeData = {
-      activity_type_name: "Training",
+      action_type_name: "Training",
       threshold_a: 3,
       threshold_b: 6,
       content_for_a:
@@ -127,12 +127,12 @@ describe("PlanController", () => {
     describe("when indexForThreshold is zero", () => {
       it("returns content_for_a", () => {
         const controller = application.controllers[0]
-        controller.countByActivityType = jest.fn()
+        controller.countByActionType = jest.fn()
         controller.getIndexForThreshold = jest.fn(() => 0)
 
         const result = controller.getListItemsForNudge(nudgeData, 789)
 
-        expect(controller.countByActivityType).toHaveBeenCalledWith(789)
+        expect(controller.countByActionType).toHaveBeenCalledWith(789)
         expect(result.length).toEqual(2)
         expect(result[0]).toEqual(
           "Refer to the best practice document and case studies from similar contexts."
@@ -143,12 +143,12 @@ describe("PlanController", () => {
     describe("when indexForThreshold is one", () => {
       it("returns content_for_a", () => {
         const controller = application.controllers[0]
-        controller.countByActivityType = jest.fn()
+        controller.countByActionType = jest.fn()
         controller.getIndexForThreshold = jest.fn(() => 1)
 
         const result = controller.getListItemsForNudge(nudgeData, 789)
 
-        expect(controller.countByActivityType).toHaveBeenCalledWith(789)
+        expect(controller.countByActionType).toHaveBeenCalledWith(789)
         expect(result.length).toEqual(3)
         expect(result[0]).toEqual(
           "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training."
@@ -159,12 +159,12 @@ describe("PlanController", () => {
     describe("when indexForThreshold is two", () => {
       it("returns content_for_a", () => {
         const controller = application.controllers[0]
-        controller.countByActivityType = jest.fn()
+        controller.countByActionType = jest.fn()
         controller.getIndexForThreshold = jest.fn(() => 2)
 
         const result = controller.getListItemsForNudge(nudgeData, 789)
 
-        expect(controller.countByActivityType).toHaveBeenCalledWith(789)
+        expect(controller.countByActionType).toHaveBeenCalledWith(789)
         expect(result.length).toEqual(4)
         expect(result[0]).toEqual(
           "Utilize a variety of mediums for new trainings including face-to-face, in-service, online, and cascade training."
@@ -174,7 +174,7 @@ describe("PlanController", () => {
   })
 
   describe("#getIndexForThresholdOfTwo", () => {
-    describe("when countByActivityType is less than threshold A minus one", () => {
+    describe("when countByActionType is less than threshold A minus one", () => {
       it("returns zero", () => {
         const controller = application.controllers[0]
 
@@ -184,7 +184,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType equals threshold A", () => {
+    describe("when countByActionType equals threshold A", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 
@@ -194,7 +194,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType equals threshold A plus one", () => {
+    describe("when countByActionType equals threshold A plus one", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 
@@ -204,7 +204,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType is less than threshold B minus one", () => {
+    describe("when countByActionType is less than threshold B minus one", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 
@@ -214,7 +214,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType equals threshold B", () => {
+    describe("when countByActionType equals threshold B", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 
@@ -224,7 +224,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType equals threshold B plus one", () => {
+    describe("when countByActionType equals threshold B plus one", () => {
       it("returns two", () => {
         const controller = application.controllers[0]
 
@@ -289,7 +289,7 @@ describe("PlanController", () => {
   })
 
   describe("#getIndexForThresholdOfOne", () => {
-    describe("when countByActivityType is less than threshold minus one", () => {
+    describe("when countByActionType is less than threshold minus one", () => {
       it("returns zero", () => {
         const controller = application.controllers[0]
 
@@ -299,7 +299,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType equals threshold", () => {
+    describe("when countByActionType equals threshold", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 
@@ -309,7 +309,7 @@ describe("PlanController", () => {
       })
     })
 
-    describe("when countByActivityType equals threshold plus one", () => {
+    describe("when countByActionType equals threshold plus one", () => {
       it("returns one", () => {
         const controller = application.controllers[0]
 

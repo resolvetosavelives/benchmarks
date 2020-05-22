@@ -199,8 +199,8 @@ describe Plan do
         assert_equal 39, plan.goals.size
       end
 
-      it "has the expected number of activities" do
-        assert_equal 235, plan.plan_activities.size
+      it "has the expected number of actions" do
+        assert_equal 235, plan.plan_actions.size
       end
     end
 
@@ -277,8 +277,8 @@ describe Plan do
         assert_equal 36, plan.goals.size
       end
 
-      it "has the expected number of activities" do
-        assert_equal 182, plan.plan_activities.size
+      it "has the expected number of actions" do
+        assert_equal 182, plan.plan_actions.size
       end
     end
 
@@ -320,22 +320,22 @@ describe Plan do
         assert_equal 4, plan.goals.size
       end
 
-      it "has the expected number of activities" do
-        assert_equal 33, plan.plan_activities.size
+      it "has the expected number of actions" do
+        assert_equal 33, plan.plan_actions.size
       end
     end
   end
 
-  describe "#count_activities_by_type" do
+  describe "#count_actions_by_type" do
     let(:plan) { create(:plan_nigeria_jee1) }
 
     it "returns an array of the expected integers" do
       expected = [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]
-      plan.count_activities_by_type.must_equal expected
+      plan.count_actions_by_type.must_equal expected
     end
   end
 
-  describe "#count_activities_by_ta" do
+  describe "#count_actions_by_ta" do
     describe "for a full plan" do
       let(:benchmark_technical_areas) { BenchmarkTechnicalArea.all }
       let(:plan) { create(:plan_nigeria_jee1) }
@@ -361,7 +361,7 @@ describe Plan do
           14,
           4,
         ]
-        plan.count_activities_by_ta(
+        plan.count_actions_by_ta(
           benchmark_technical_areas,
         ).must_equal expected
       end
@@ -394,27 +394,27 @@ describe Plan do
 
       it "returns an array of the expected integers" do
         expected = [0, 5, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        plan.count_activities_by_ta(
+        plan.count_actions_by_ta(
           benchmark_technical_areas,
         ).must_equal expected
       end
     end
   end
 
-  describe "#activities_for" do
+  describe "#actions_for" do
     let(:plan) { create(:plan_nigeria_jee1) }
 
-    it "returns an array of the expected benchmark activities" do
+    it "returns an array of the expected benchmark actions" do
       expected_pg =
         plan.goals.detect do |pg|
           pg.benchmark_indicator.display_abbreviation.eql?("2.1")
         end
       expected_pg.wont_be_nil
 
-      result = plan.activities_for(expected_pg.benchmark_indicator)
+      result = plan.actions_for(expected_pg.benchmark_indicator)
       result.must_be_instance_of Array
       result.size.must_equal 9
-      result.first.must_be_instance_of PlanActivity
+      result.first.must_be_instance_of PlanAction
     end
   end
 
@@ -423,11 +423,11 @@ describe Plan do
 
     it "works as expected" do
       subject.persisted?.must_equal true
-      subject.plan_activities.size.must_equal 235
-      # this is keeping the pre-exisitng activities and adding one activity of id=15
+      subject.plan_actions.size.must_equal 235
+      # this is keeping the pre-exisitng actions and adding one action of id=15
       result =
         subject.update! name: "changed plan 789",
-                        benchmark_activity_ids: [
+                        benchmark_action_ids: [
                           563,
                           370,
                           733,
@@ -668,7 +668,7 @@ describe Plan do
 
       result.must_equal true
       updated_plan = Plan.find(subject.id)
-      updated_plan.plan_activities.size.must_equal 236
+      updated_plan.plan_actions.size.must_equal 236
     end
   end
 end

@@ -18,9 +18,9 @@
   margin-bottom: 40px;
 }
 
-.activity-count-header {
+.action-count-header {
   font-family: "Pathway Gothic One", sans-serif;
-  .activity-count-circle {
+  .action-count-circle {
     width: 90px;
     height: 90px;
     background-color: color("primary");
@@ -56,7 +56,7 @@
 }
 
 .benchmark-container .row,
-.activity.row {
+.action.row {
   border: 1px solid color("light-gray");
 }
 
@@ -85,7 +85,7 @@
     }
   }
 
-  .activity-form {
+  .action-form {
     padding: 0.5rem 0.5rem 0.5rem 0;
     border-left: 8px solid rgba(216, 100, 34, 0.5);
     input {
@@ -94,7 +94,7 @@
   }
 }
 
-.activity.row {
+.action.row {
   .badge-rounded-circle {
     height: 2.25em;
     width: 2.25em;
@@ -238,7 +238,7 @@
     color: #545b62;
   }
 
-  // labels for chart by activity type at 45º angle per design
+  // labels for chart by action type at 45º angle per design
   .ct-label.ct-horizontal {
     position: fixed; // makes the labels and their position scale/zoom well
     justify-content: flex-end;

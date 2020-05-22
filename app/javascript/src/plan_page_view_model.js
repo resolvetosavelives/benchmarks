@@ -21,37 +21,37 @@ export default class PlanPageViewModel {
     this.element = domElement
   }
 
-  activityAdded(activityId, barSegmentIndex) {
-    console.log("GVT: activityAdded..")
-    const event = new PlanActivityAddedEvent(activityId, barSegmentIndex)
+  actionAdded(actionId, barSegmentIndex) {
+    console.log("GVT: actionAdded..")
+    const event = new PlanActionAddedEvent(actionId, barSegmentIndex)
     this.element.dispatchEvent(event)
   }
 
-  activityRemoved(activityId, barSegmentIndex) {
-    console.log("GVT: activityRemoved..")
-    const event = new PlanActivityRemovedEvent(activityId, barSegmentIndex)
+  actionRemoved(actionId, barSegmentIndex) {
+    console.log("GVT: actionRemoved..")
+    const event = new PlanActionRemovedEvent(actionId, barSegmentIndex)
     this.element.dispatchEvent(event)
   }
 }
 
-export class PlanActivityAddedEvent extends CustomEvent {
-  constructor(activityId, barSegmentIndex) {
-    super("planActivityAdded", {
+export class PlanActionAddedEvent extends CustomEvent {
+  constructor(actionId, barSegmentIndex) {
+    super("planActionAdded", {
       detail: {
         bubbles: true,
-        activityId: activityId,
+        actionId: actionId,
         barSegmentIndex: barSegmentIndex,
       },
     })
   }
 }
 
-export class PlanActivityRemovedEvent extends CustomEvent {
-  constructor(activityId, barSegmentIndex) {
-    super("planActivityRemoved", {
+export class PlanActionRemovedEvent extends CustomEvent {
+  constructor(actionId, barSegmentIndex) {
+    super("planActionRemoved", {
       detail: {
         bubbles: true,
-        activityId: activityId,
+        actionId: actionId,
         barSegmentIndex: barSegmentIndex,
       },
     })

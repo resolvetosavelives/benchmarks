@@ -3,60 +3,60 @@ export default class PlanPageDataModel {
     // DO NOT access any of these members from outside this class, instead use/add methods to access them.
     this._technicalAreas = initialData.technicalAreas
     this._indicators = initialData.indicators
-    this._activities = initialData.activities
+    this._actions = initialData.actions
     this._plan = initialData.plan
-    this._planActivityIds = initialData.planActivityIds || []
+    this._planActionIds = initialData.planActionIds || []
   }
 
-  // this method returns an Array containing the IDs of the activities belonging to this plan,
-  // which is a subset of all possible activities.
-  get activityIds() {
-    return this._planActivityIds
+  // this method returns an Array containing the IDs of the actions belonging to this plan,
+  // which is a subset of all possible actions.
+  get actionIds() {
+    return this._planActionIds
   }
 
-  // this method returns an Array containing all possible activities.
-  get activities() {
-    return this._activities
+  // this method returns an Array containing all possible actions.
+  get actions() {
+    return this._actions
   }
 
-  currentActivityCount() {
-    return this.activityIds.length
+  currentActionCount() {
+    return this.actionIds.length
   }
 
-  getActivityIdsForIndicator(indicatorId) {
-    let activitiesForIndicator = []
-    this.activities.forEach((activity) => {
+  getActionIdsForIndicator(indicatorId) {
+    let actionsForIndicator = []
+    this.actions.forEach((action) => {
       if (
-        indicatorId === activity.benchmark_indicator_id &&
-        this.activityIds.indexOf(activity.id) >= 0
+        indicatorId === action.benchmark_indicator_id &&
+        this.actionIds.indexOf(action.id) >= 0
       ) {
-        activitiesForIndicator.push(activity.id)
+        actionsForIndicator.push(action.id)
       }
     })
-    return activitiesForIndicator
+    return actionsForIndicator
   }
 
-  getExcludedActivitiesForIndicator(indicatorId) {
-    let excludedActivities = []
-    this.activities.forEach((activity) => {
+  getExcludedActionsForIndicator(indicatorId) {
+    let excludedActions = []
+    this.actions.forEach((action) => {
       if (
-        indicatorId === activity.benchmark_indicator_id &&
-        this.activityIds.indexOf(activity.id) === -1
+        indicatorId === action.benchmark_indicator_id &&
+        this.actionIds.indexOf(action.id) === -1
       ) {
-        excludedActivities.push(activity)
+        excludedActions.push(action)
       }
     })
-    return excludedActivities
+    return excludedActions
   }
 
-  addActivityById(activityId) {
-    this.activityIds.push(activityId)
+  addActionById(actionId) {
+    this.actionIds.push(actionId)
   }
 
-  removeActivityById(activityId) {
-    const indexOfActivityId = this.activityIds.indexOf(activityId)
-    if (indexOfActivityId >= 0) {
-      this.activityIds.splice(indexOfActivityId, 1)
+  removeActionById(actionId) {
+    const indexOfActionId = this.actionIds.indexOf(actionId)
+    if (indexOfActionId >= 0) {
+      this.actionIds.splice(indexOfActionId, 1)
     }
   }
 }

@@ -67,8 +67,8 @@ module PlanBuilder
     ##
     # TODO: no test coverage yet. Cases to test for should include..
     #  - duplicated benchmark_indicator.ids in plan_benchmark_indicators
-    #  - duplicate activities
-    #  - make sure activities include multiple benchmark_indicator_activities.levels when appro
+    #  - duplicate actions
+    #  - make sure actions include multiple benchmark_indicator_actions.levels when appro
     #  - assessment_indicator maps to multiple benchmark_indicators
     #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
     def create_from_goal_form(
@@ -99,7 +99,7 @@ module PlanBuilder
           },
         )
       plan_goals = []
-      plan_activities = []
+      plan_actions = []
       assessment_indicators =
         AssessmentIndicator.includes(
           { benchmark_indicators: :benchmark_technical_area },
@@ -124,20 +124,20 @@ module PlanBuilder
               )
           end
           bia =
-            benchmark_indicator.activities.where(
+            benchmark_indicator.actions.where(
               "level > :score AND level <= :goal",
               score_and_goal,
             ).order(:sequence).all
-          bia.each do |benchmark_indicator_activity|
-            unless plan_activities.any? do |pa|
-                     pa.benchmark_indicator_activity_id.eql?(
-                       benchmark_indicator_activity.id,
+          bia.each do |benchmark_indicator_action|
+            unless plan_actions.any? do |pa|
+                     pa.benchmark_indicator_action_id.eql?(
+                       benchmark_indicator_action.id,
                      )
                    end
-              plan_activities <<
-                PlanActivity.new(
+              plan_actions <<
+                PlanAction.new(
                   plan: plan,
-                  benchmark_indicator_activity: benchmark_indicator_activity,
+                  benchmark_indicator_action: benchmark_indicator_action,
                   benchmark_indicator: benchmark_indicator,
                   benchmark_technical_area:
                     benchmark_indicator.benchmark_technical_area,
@@ -148,7 +148,7 @@ module PlanBuilder
       end
       Plan.transaction do
         plan.goals = plan_goals
-        plan.plan_activities = plan_activities
+        plan.plan_actions = plan_actions
         plan.save!
       end
       plan

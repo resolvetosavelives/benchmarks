@@ -1,25 +1,25 @@
-module BenchmarkIndicatorActivitySeed
+module BenchmarkIndicatorActionSeed
   extend ActiveSupport::Concern
 
   module ClassMethods
     def seed!
-      return unless BenchmarkIndicatorActivity.count.zero?
+      return unless BenchmarkIndicatorAction.count.zero?
 
-      warn "Seeding data for BenchmarkIndicatorActivities..."
-      benchmark_activities_attrs =
+      warn "Seeding data for BenchmarkIndicatorActions..."
+      benchmark_actions_attrs =
         JSON.parse File.read File.join Rails.root,
-                                       "/db/seed-data/benchmark_indicator_activities.json"
-      benchmark_activities_attrs.each do |hash_attrs|
+                                       "/db/seed-data/benchmark_indicator_actions.json"
+      benchmark_actions_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
         display_abbreviation = attrs[:benchmark_indicator_display_abbreviation]
         benchmark_indicator =
           BenchmarkIndicator.find_by_display_abbreviation!(display_abbreviation)
-        BenchmarkIndicatorActivity.create!(
+        BenchmarkIndicatorAction.create!(
           benchmark_indicator: benchmark_indicator,
           text: attrs[:text],
           level: attrs[:level],
           sequence: attrs[:sequence],
-          activity_types: attrs[:activity_types],
+          action_types: attrs[:action_types],
         )
       end
     end

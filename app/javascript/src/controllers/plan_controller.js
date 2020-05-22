@@ -7,8 +7,8 @@ import PlanPageViewModel from "../plan_page_view_model"
 // import {ForIE} from "../ie"
 
 /* This controller handles almost all of the in-browser capabilities of the
- * draft plan form. Users can delete activities, add freeform activities, and
- * add known activities because of this controller. All changes are stored in
+ * draft plan form. Users can delete actions, add freeform actions, and
+ * add known actions because of this controller. All changes are stored in
  * the browser window and will not be saved until the form is submitted.
  *
  * This controller hooks some elements based on data attributes instead of
@@ -20,10 +20,10 @@ import PlanPageViewModel from "../plan_page_view_model"
  * draft plan. See benchmark_controller.js
  *
  * Targets:
- *   newActivity -- this is a single target that represents all of the fields
- *   that the user can use to add activities to the plan. Each field must be
+ *   newAction -- this is a single target that represents all of the fields
+ *   that the user can use to add actions to the plan. Each field must be
  *   tagged with "data-benchmark-id" so this controller knows which benchmark
- *   to add the activity to.
+ *   to add the action to.
  *
  *   submit -- the submit button for the form. This controller only needs to be
  *   able to toggle the enabled/disabled status of the button. To work with
@@ -40,11 +40,11 @@ import PlanPageViewModel from "../plan_page_view_model"
  */
 export default class extends Controller {
   static targets = [
-    "fieldForActivityIds",
+    "fieldForActionIds",
     "submit",
     "form",
     "technicalAreaContainer",
-    "activityCountCircle",
+    "actionCountCircle",
   ]
 
   initialize() {
@@ -52,30 +52,30 @@ export default class extends Controller {
     this.childControllers = []
     this.charts = []
     this.currentChartIndex = 0 // used for tabs and charts arrays
-    this.decrementActivityCountCircleUiTimerId = null
+    this.decrementActionCountCircleUiTimerId = null
     this.planPageDataModel = new PlanPageDataModel(window.STATE_FROM_SERVER)
     // nudge data are intentionally excluded from STATE_FROM_SERVER because they are not state,
     // they do not change but instead are static and fixed, displayed only.
-    this.dataForNudgeByActivityType = window.NUDGES_BY_ACTIVITY_TYPE
-    this.resetCurrentlySelectedActivityType()
+    this.dataForNudgeByActionType = window.NUDGES_BY_ACTION_TYPE
+    this.resetCurrentlySelectedActionType()
   }
 
   connect() {
     this.planPageViewModel = new PlanPageViewModel(this.element)
     this.initDataFromDom()
-    this.chartInteractivityEntryPoints = [
-      this.initInteractivityForChartByTechnicalArea.bind(this),
-      this.initInteractivityForChartByActivityType.bind(this),
+    this.chartInteractionEntryPoints = [
+      this.initInteractionForChartByTechnicalArea.bind(this),
+      this.initInteractionForChartByActionType.bind(this),
     ]
     this.initBarChart()
     this.renderNudgeForTechnicalAreas()
-    this.initActivityCountButton()
-    // console.log("plan.connect: this.activityIds.length: ", (this.activityIds || []).length)
+    this.initActionCountButton()
+    // console.log("plan.connect: this.actionIds.length: ", (this.actionIds || []).length)
     this.initEventListeners()
   }
 
-  resetCurrentlySelectedActivityType() {
-    this.currentlySelectedActivityType = null
+  resetCurrentlySelectedActionType() {
+    this.currentlySelectedActionType = null
   }
 
   initDataFromDom() {
@@ -98,50 +98,43 @@ export default class extends Controller {
     $('a[data-toggle="tab"]').on("shown.bs.tab", (event) => {
       this.handleChartHideShow(event)
     })
+    this.element.addEventListener("planActionAdded", (planActionAddedEvent) => {
+      this.updateFormValidity()
+      this.incrementActionCount(planActionAddedEvent.detail.barSegmentIndex)
+    })
     this.element.addEventListener(
-      "planActivityAdded",
-      (planActivityAddedEvent) => {
+      "planActionRemoved",
+      (planActionRemovedEvent) => {
         this.updateFormValidity()
-        this.incrementActivityCount(
-          planActivityAddedEvent.detail.barSegmentIndex
-        )
-      }
-    )
-    this.element.addEventListener(
-      "planActivityRemoved",
-      (planActivityRemovedEvent) => {
-        this.updateFormValidity()
-        this.decrementActivityCount(
-          planActivityRemovedEvent.detail.barSegmentIndex
-        )
+        this.decrementActionCount(planActionRemovedEvent.detail.barSegmentIndex)
       }
     )
   }
 
   updateFormValidity() {
-    let anyActivities = false
+    let anyActions = false
     this.childControllers.forEach((controller) => {
-      if (controller.hasActivities()) {
-        anyActivities = true
+      if (controller.hasActions()) {
+        anyActions = true
       }
     })
-    if (anyActivities === true) {
+    if (anyActions === true) {
       this.setFormIsValid()
     } else {
       this.setFormIsInvalid()
     }
   }
 
-  initActivityCountButton() {
-    $(".activity-count-circle").on("click", () => {
-      this.clickActivityCountButton()
+  initActionCountButton() {
+    $(".action-count-circle").on("click", () => {
+      this.clickActionCountButton()
     })
   }
 
-  clickActivityCountButton() {
-    $("#activity-list-by-type-container").hide()
+  clickActionCountButton() {
+    $("#action-list-by-type-container").hide()
     $(".technical-area-container").show()
-    this.resetCurrentlySelectedActivityType()
+    this.resetCurrentlySelectedActionType()
     this.renderNudge()
   }
 
@@ -170,7 +163,7 @@ export default class extends Controller {
       options
     )
     this.charts[this.currentChartIndex].on("created", () => {
-      this.chartInteractivityEntryPoints[this.currentChartIndex]()
+      this.chartInteractionEntryPoints[this.currentChartIndex]()
       this.fixesForIE()
     })
   }
@@ -205,7 +198,7 @@ export default class extends Controller {
     this.initBarChart()
   }
 
-  initInteractivityForChartByTechnicalArea() {
+  initInteractionForChartByTechnicalArea() {
     // query for bar segments only within the selector of the current chart
     $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each(
       (segmentIndex, el) => {
@@ -224,7 +217,7 @@ export default class extends Controller {
 
   initClickHandlerForChartByTechnicalArea($elBarSegment, index) {
     $($elBarSegment).on("click", () => {
-      $("#activity-list-by-type-container").hide()
+      $("#action-list-by-type-container").hide()
       $(".technical-area-container").hide()
       // NB: index is zero-based, but the target is 1-based, which is why +1.
       $(`#technical-area-${index + 1}`).show()
@@ -243,16 +236,16 @@ export default class extends Controller {
       .tooltip()
   }
 
-  initInteractivityForChartByActivityType() {
+  initInteractionForChartByActionType() {
     // query for bar segments only within the selector of the current chart
     $("line.ct-bar", this.chartSelectors[this.currentChartIndex]).each(
       (segmentIndex, el) => {
         let $elBarSegment = $(el)
-        this.initTooltipForSegmentOfChartByActivityType(
+        this.initTooltipForSegmentOfChartByActionType(
           $elBarSegment,
           segmentIndex
         )
-        this.initClickHandlerForSegmentOfChartByActivityType(
+        this.initClickHandlerForSegmentOfChartByActionType(
           $elBarSegment,
           segmentIndex
         )
@@ -260,7 +253,7 @@ export default class extends Controller {
     )
   }
 
-  initTooltipForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
+  initTooltipForSegmentOfChartByActionType($elBarSegment, segmentIndex) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
     let tooltipTitle =
       chartLabels[segmentIndex] + ": " + $elBarSegment.attr("ct:value")
@@ -271,56 +264,56 @@ export default class extends Controller {
       .tooltip()
   }
 
-  initClickHandlerForSegmentOfChartByActivityType($elBarSegment, segmentIndex) {
+  initClickHandlerForSegmentOfChartByActionType($elBarSegment, segmentIndex) {
     $($elBarSegment).on("click", () => {
-      this.filterByActivityType(segmentIndex)
+      this.filterByActionType(segmentIndex)
       // avoid click on the already selected chart segment re-presenting the same content
-      if (this.currentlySelectedActivityType !== segmentIndex) {
-        this.currentlySelectedActivityType = segmentIndex
-        this.renderNudgeForActivityType()
+      if (this.currentlySelectedActionType !== segmentIndex) {
+        this.currentlySelectedActionType = segmentIndex
+        this.renderNudgeForActionType()
       }
     })
   }
 
   // generates some HTML and appends it to the DOM and hides the other
-  filterByActivityType(segmentIndex) {
+  filterByActionType(segmentIndex) {
     const chartLabels = this.chartLabels[this.currentChartIndex]
-    const selectedActivityType = chartLabels[segmentIndex]
-    if (selectedActivityType) {
-      const $activityTypeHeading = $(
-        "<h2>" + selectedActivityType + " actions</h2>"
+    const selectedActionType = chartLabels[segmentIndex]
+    if (selectedActionType) {
+      const $actionTypeHeading = $(
+        "<h2>" + selectedActionType + " actions</h2>"
       )
       // needs to be wrapped in a div.col in order to work with bootstrap grid
-      const $activityTypeContainer = $("<div class='col'></div>")
-      const $activityRowContent = $(
-        ".activity.row.activity-type-" + (segmentIndex + 1)
+      const $actionTypeContainer = $("<div class='col'></div>")
+      const $actionRowContent = $(
+        ".action.row.action-type-" + (segmentIndex + 1)
       ).clone()
-      $activityRowContent.attr("data-activity-bar-segment-index", segmentIndex)
-      $activityTypeContainer.append($activityRowContent)
+      $actionRowContent.attr("data-action-bar-segment-index", segmentIndex)
+      $actionTypeContainer.append($actionRowContent)
       $(".technical-area-container").hide()
-      $("#activity-list-by-type-container")
+      $("#action-list-by-type-container")
         .empty()
-        .append($activityTypeHeading)
-        .append($activityTypeContainer)
+        .append($actionTypeHeading)
+        .append($actionTypeContainer)
         .show()
     }
   }
 
   renderNudge() {
-    this.renderNudgeForActivityType()
+    this.renderNudgeForActionType()
   }
 
-  renderNudgeForActivityType() {
-    const indexOfActivityType = this.currentlySelectedActivityType
-    const currentActivityCount = this.countByActivityType(indexOfActivityType)
-    if (!indexOfActivityType || !(currentActivityCount >= 1)) {
-      return this.renderNudgeZeroForActivityType()
+  renderNudgeForActionType() {
+    const indexOfActionType = this.currentlySelectedActionType
+    const currentActionCount = this.countByActionType(indexOfActionType)
+    if (!indexOfActionType || !(currentActionCount >= 1)) {
+      return this.renderNudgeZeroForActionType()
     }
 
-    const nudgeData = window.NUDGES_BY_ACTIVITY_TYPE[indexOfActivityType]
-    const listItems = this.getListItemsForNudge(nudgeData, indexOfActivityType)
+    const nudgeData = window.NUDGES_BY_ACTION_TYPE[indexOfActionType]
+    const listItems = this.getListItemsForNudge(nudgeData, indexOfActionType)
     const templateData = {
-      activity_type: nudgeData["activity_type_name"],
+      action_type: nudgeData["action_type_name"],
       listItems: listItems.map((itemText) => {
         return { item: itemText }
       }),
@@ -339,14 +332,14 @@ export default class extends Controller {
       })
   }
 
-  renderNudgeZeroForActivityType() {
+  renderNudgeZeroForActionType() {
     const nudgeContentZeroSelector = this.nudgeContentZeroSelector
     const nudgeZeroContent = $(nudgeContentZeroSelector).html()
-    const nudgeElByActivityType = this.nudgeSelectors[1] // 1 is for activity type tab
-    $(nudgeElByActivityType)
+    const nudgeElByActionType = this.nudgeSelectors[1] // 1 is for action type tab
+    $(nudgeElByActionType)
       .children()
       .fadeOut(() => {
-        $(nudgeElByActivityType)
+        $(nudgeElByActionType)
           .empty()
           .html(nudgeZeroContent)
           .fadeIn(() => {
@@ -355,14 +348,12 @@ export default class extends Controller {
       })
   }
 
-  getListItemsForNudge(nudgeData, selectedActivityTypeIndex) {
+  getListItemsForNudge(nudgeData, selectedActionTypeIndex) {
     const thresholdA = nudgeData["threshold_a"]
     const thresholdB = nudgeData["threshold_b"]
-    const currentActivityCount = this.countByActivityType(
-      selectedActivityTypeIndex
-    )
+    const currentActionCount = this.countByActionType(selectedActionTypeIndex)
     let indexForThreshold = this.getIndexForThreshold(
-      currentActivityCount,
+      currentActionCount,
       thresholdA,
       thresholdB
     )
@@ -372,42 +363,42 @@ export default class extends Controller {
     return nudgeData[contentKey].split("\n")
   }
 
-  getIndexForThreshold(currentActivityCount, thresholdA, thresholdB) {
+  getIndexForThreshold(currentActionCount, thresholdA, thresholdB) {
     if (thresholdA && thresholdB) {
       return this.getIndexForThresholdOfTwo(
-        currentActivityCount,
+        currentActionCount,
         thresholdA,
         thresholdB
       )
     } else {
-      return this.getIndexForThresholdOfOne(currentActivityCount, thresholdA)
+      return this.getIndexForThresholdOfOne(currentActionCount, thresholdA)
     }
   }
 
-  getIndexForThresholdOfTwo(currentActivityCount, thresholdA, thresholdB) {
-    if (currentActivityCount < thresholdA) {
+  getIndexForThresholdOfTwo(currentActionCount, thresholdA, thresholdB) {
+    if (currentActionCount < thresholdA) {
       return 0
     } else if (
-      thresholdA <= currentActivityCount &&
-      currentActivityCount <= thresholdB
+      thresholdA <= currentActionCount &&
+      currentActionCount <= thresholdB
     ) {
       return 1
-    } else if (thresholdB < currentActivityCount) {
+    } else if (thresholdB < currentActionCount) {
       return 2
     }
   }
 
-  getIndexForThresholdOfOne(currentActivityCount, threshold) {
-    if (currentActivityCount < threshold) {
+  getIndexForThresholdOfOne(currentActionCount, threshold) {
+    if (currentActionCount < threshold) {
       return 0
-    } else if (threshold <= currentActivityCount) {
+    } else if (threshold <= currentActionCount) {
       return 1
     }
   }
 
-  countByActivityType(selectedActivityTypeIndex) {
+  countByActionType(selectedActionTypeIndex) {
     const dataSet = this.chartDataSeries[this.currentChartIndex]
-    return dataSet[selectedActivityTypeIndex]
+    return dataSet[selectedActionTypeIndex]
   }
 
   /* Check the validity of the plan name, disabling the submit button if the
@@ -420,12 +411,12 @@ export default class extends Controller {
     }
   }
 
-  saveActivityIdsToField() {
+  saveActionIdsToField() {
     console.log(
-      "plan.saveActivityIdsToField: this.getActivityIds().length: ",
-      this.getActivityIds().length
+      "plan.saveActionIdsToField: this.getActionIds().length: ",
+      this.getActionIds().length
     )
-    this.fieldForActivityIdsTarget.value = JSON.stringify(this.getActivityIds())
+    this.fieldForActionIdsTarget.value = JSON.stringify(this.getActionIds())
   }
 
   setFormIsValid() {
@@ -440,41 +431,41 @@ export default class extends Controller {
     this.formTarget.classList.add("was-validated")
   }
 
-  incrementActivityCount(barSegmentIndex) {
-    this.incrementActivityCountCircleUI()
+  incrementActionCount(barSegmentIndex) {
+    this.incrementActionCountCircleUI()
     this.incrementChartSegmentCountData(barSegmentIndex)
     this.updateChart()
-    this.renderNudgeForActivityType()
+    this.renderNudgeForActionType()
   }
 
-  decrementActivityCount(data) {
-    this.decrementActivityCountCircleUI()
+  decrementActionCount(data) {
+    this.decrementActionCountCircleUI()
     this.decrementChartSegmentCountData(data)
     this.updateChart()
-    this.renderNudgeForActivityType()
+    this.renderNudgeForActionType()
   }
 
-  incrementActivityCountCircleUI() {
-    if (this.hasActivityCountCircleTarget) {
-      this.activityCountCircleTarget.textContent = this.currentActivityCount()
+  incrementActionCountCircleUI() {
+    if (this.hasActionCountCircleTarget) {
+      this.actionCountCircleTarget.textContent = this.currentActionCount()
     }
   }
 
-  // NB: this one is a little tricky because when an indicator is deleted all of the activities it contains
+  // NB: this one is a little tricky because when an indicator is deleted all of the actions it contains
   // are deleted in which causes to rapid invocations of this function and hence many/rapid DOM updates which
-  // causes some of those updates to be skipped/lost/discard in the flurry of activity.
+  // causes some of those updates to be skipped/lost/discard in the flurry of action.
   // to solve this we have a kind of "debounce" implementation to delay a DOM update until 10ms has passed.
-  decrementActivityCountCircleUI() {
-    if (this.hasActivityCountCircleTarget) {
-      // the first time this is run the decrementActivityCountCircleUiTimerId will be null.
-      // subsequent invocations will have the decrementActivityCountCircleUiTimerId set to a value
+  decrementActionCountCircleUI() {
+    if (this.hasActionCountCircleTarget) {
+      // the first time this is run the decrementActionCountCircleUiTimerId will be null.
+      // subsequent invocations will have the decrementActionCountCircleUiTimerId set to a value
       // when there is a previous invocation but its setTimeout function has not yet triggered, which
       // is when we want to clear it to avoid overly-rapid DOM updates.
-      if (this.decrementActivityCountCircleUiTimerId) {
-        clearTimeout(this.decrementActivityCountCircleUiTimerId)
+      if (this.decrementActionCountCircleUiTimerId) {
+        clearTimeout(this.decrementActionCountCircleUiTimerId)
       }
-      this.decrementActivityCountCircleUiTimerId = setTimeout(() => {
-        this.activityCountCircleTarget.textContent = this.currentActivityCount()
+      this.decrementActionCountCircleUiTimerId = setTimeout(() => {
+        this.actionCountCircleTarget.textContent = this.currentActionCount()
       }, 10) // 10ms should be enough
     }
   }
@@ -487,12 +478,12 @@ export default class extends Controller {
     this.chartDataSeries[this.currentChartIndex][barSegmentIndex]--
   }
 
-  getActivityIds() {
-    return this.planPageDataModel.activityIds
+  getActionIds() {
+    return this.planPageDataModel.actionIds
   }
 
-  currentActivityCount() {
-    return this.planPageDataModel.currentActivityCount()
+  currentActionCount() {
+    return this.planPageDataModel.currentActionCount()
   }
 
   //
