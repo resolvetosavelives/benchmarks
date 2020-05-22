@@ -7,7 +7,7 @@
       </h1>
       <%= render "instructions" %>
     </div>
-    <div class="col-lg-6 col-lg-12 py-lg-4 my-auto">
+    <div class="col-lg-6 col-md-12 py-lg-4 my-auto">
       <!-- Capacity Score Levels graphic -->
       <%= render file: Rails.root.join("app", "assets", "images", "scores-widget.svg") %>
     </div>
@@ -62,7 +62,7 @@
                       </div>
                       <%= render "validated_field", named_id: assessment_indicator.named_id, value: @plan.score_value_for(assessment_indicator: assessment_indicator), is_goal: false %>
                     </div>
-                    <div class="col d-flex flex-row p-0 justify-content-start">
+                    <div class="col d-flex flex-row p-10 p-md-0 justify-content-start justify-content-md-end">
                       <div class="d-md-none col-sm-auto label">
                         <strong>&nbsp;Goal</strong>
                       </div>
