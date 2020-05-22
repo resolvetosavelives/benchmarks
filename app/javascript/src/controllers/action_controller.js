@@ -17,12 +17,12 @@ export default class extends Controller {
 
   deleteSelf(e) {
     const { currentTarget } = e
-    this.removeActivityId(this.id, this.barSegmentIndex)
+    this.removeActionId(this.id, this.barSegmentIndex)
     $(currentTarget.closest(".row")).remove()
   }
 
-  removeActivityId(activityId, barSegmentIndex) {
-    this.planPageDataModel.removeActivityById(activityId, barSegmentIndex)
-    this.planPageViewModel.activityRemoved(activityId, barSegmentIndex)
+  removeActionId(actionId, barSegmentIndex) {
+    this.planPageDataModel.removeActionById(actionId, barSegmentIndex)
+    this.planPageViewModel.actionRemoved(actionId, barSegmentIndex)
   }
 }

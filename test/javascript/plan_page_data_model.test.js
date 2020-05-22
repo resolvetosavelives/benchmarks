@@ -1,13 +1,13 @@
 import PlanPageDataModel from "plan_page_data_model"
 import AllTechnicalAreas from "../fixtures/files/all_benchmark_technical_areas"
 import AllIndicators from "../fixtures/files/all_benchmark_indicators"
-import AllActivities from "../fixtures/files/all_benchmark_indicator_activities"
+import AllActions from "../fixtures/files/all_benchmark_indicator_actions"
 
 function new_model_for_nigeria_jee1() {
   return new PlanPageDataModel({
     technicalAreas: AllTechnicalAreas,
     indicators: AllIndicators,
-    activities: AllActivities,
+    actions: AllActions,
     plan: {
       id: 3,
       name: "Nigeria draft plan",
@@ -17,7 +17,7 @@ function new_model_for_nigeria_jee1() {
       country_alpha3: "NGA",
       assessment_type: 1,
     },
-    planActivityIds: [
+    planActionIds: [
       556,
       725,
       482,
@@ -270,27 +270,27 @@ describe("PlanPageDataModel", () => {
       expect(model._technicalAreas.length).toEqual(18)
       expect(model._indicators).toBeInstanceOf(Array)
       expect(model._indicators.length).toEqual(44)
-      expect(model._activities).toBeInstanceOf(Array)
-      expect(model._activities.length).toEqual(876)
-      expect(model._planActivityIds).toBeInstanceOf(Array)
-      expect(model._planActivityIds.length).toEqual(235)
+      expect(model._actions).toBeInstanceOf(Array)
+      expect(model._actions.length).toEqual(876)
+      expect(model._planActionIds).toBeInstanceOf(Array)
+      expect(model._planActionIds.length).toEqual(235)
     })
   })
 
-  describe("getExcludedActivitiesForIndicator", () => {
+  describe("getExcludedActionsForIndicator", () => {
     it("returns the expected integer for the given indicatorId", () => {
       const model = new_model_for_nigeria_jee1()
-      const result = model.getExcludedActivitiesForIndicator(1)
+      const result = model.getExcludedActionsForIndicator(1)
 
       expect(result).toBeInstanceOf(Array)
       expect(result.length).toEqual(11)
     })
   })
 
-  describe("activityIds", () => {
+  describe("actionIds", () => {
     it("returns the expected integer", () => {
       const model = new_model_for_nigeria_jee1()
-      const result = model.activityIds
+      const result = model.actionIds
 
       expect(result).toBeInstanceOf(Array)
       expect(result.length).toEqual(235)
@@ -298,19 +298,19 @@ describe("PlanPageDataModel", () => {
     })
   })
 
-  describe("currentActivityCount", () => {
+  describe("currentActionCount", () => {
     it("returns the expected integer", () => {
       const model = new_model_for_nigeria_jee1()
-      const result = model.currentActivityCount()
+      const result = model.currentActionCount()
 
       expect(result).toEqual(235)
     })
   })
 
-  describe("getActivityIdsForIndicator", () => {
-    it("returns the expected array of activities", () => {
+  describe("getActionIdsForIndicator", () => {
+    it("returns the expected array of actions", () => {
       const model = new_model_for_nigeria_jee1()
-      const result = model.getActivityIdsForIndicator(1)
+      const result = model.getActionIdsForIndicator(1)
 
       expect(result).toBeInstanceOf(Array)
       expect(result.length).toEqual(6)
@@ -318,10 +318,10 @@ describe("PlanPageDataModel", () => {
     })
   })
 
-  describe("getExcludedActivitiesForIndicator", () => {
-    it("returns the expected array of activities", () => {
+  describe("getExcludedActionsForIndicator", () => {
+    it("returns the expected array of actions", () => {
       const model = new_model_for_nigeria_jee1()
-      const result = model.getExcludedActivitiesForIndicator(1)
+      const result = model.getExcludedActionsForIndicator(1)
 
       expect(result).toBeInstanceOf(Array)
       expect(result.length).toEqual(11)
@@ -337,21 +337,21 @@ describe("PlanPageDataModel", () => {
     })
   })
 
-  describe("addActivityById", () => {
-    it("returns the expected array of activities", () => {
+  describe("addActionById", () => {
+    it("returns the expected array of actions", () => {
       const model = new_model_for_nigeria_jee1()
-      model.addActivityById(7)
+      model.addActionById(7)
 
-      expect(model.activityIds.length).toEqual(236)
+      expect(model.actionIds.length).toEqual(236)
     })
   })
 
-  describe("removeActivityById", () => {
-    it("returns the expected array of activities", () => {
+  describe("removeActionById", () => {
+    it("returns the expected array of actions", () => {
       const model = new_model_for_nigeria_jee1()
-      model.removeActivityById(1)
+      model.removeActionById(1)
 
-      expect(model.activityIds.length).toEqual(234)
+      expect(model.actionIds.length).toEqual(234)
     })
   })
 })

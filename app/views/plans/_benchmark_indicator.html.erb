@@ -1,5 +1,5 @@
 <% plan_indicator_goal = @plan.goal_for(benchmark_indicator: benchmark_indicator) %>
-<% plan_indicator_activities = @plan.activities_for(benchmark_indicator) || [] %>
+<% plan_indicator_actions = @plan.actions_for(benchmark_indicator) || [] %>
 <% bar_segment_index = benchmark_technical_area.sequence - 1 %>
 
 <div
@@ -7,7 +7,7 @@
   data-target="benchmark.self"
   data-benchmark-indicator-id="<%= benchmark_indicator.id %>"
   data-benchmark-indicator-display-abbrev="<%= benchmark_indicator.display_abbreviation %>"
-  data-benchmark-activity-row-template-selector="#activity-row-template"
+  data-benchmark-action-row-template-selector="#action-row-template"
   data-benchmark-bar-segment-index="<%= bar_segment_index %>"
   class="benchmark-container col"
 >
@@ -23,12 +23,12 @@
         data-action="benchmark#confirm"
         data-target="benchmark.confirm"
       >
-        <img src="/delete-button.svg" alt="Delete activities for this section" />
+        <img src="/delete-button.svg" alt="Delete actions for this section" />
       </button>
       <br>
       <button class="close delete"
               type="button"
-              data-action="benchmark#deleteActivitiesForIndicator"
+              data-action="benchmark#deleteActionsForIndicator"
               data-target="benchmark.delete"
       >
         Really delete?
@@ -40,31 +40,31 @@
   <% if plan_indicator_goal.blank? %>
     <%= render 'no_capacity_gap' %>
   <% else %>
-    <% plan_indicator_activities.each do |plan_activity| %>
-      <% benchmark_activity = plan_activity.benchmark_indicator_activity %>
-      <%= render "activity",
+    <% plan_indicator_actions.each do |plan_action| %>
+      <% benchmark_action = plan_action.benchmark_indicator_action %>
+      <%= render "action",
                  bar_segment_index:           bar_segment_index,
                  benchmark_technical_area_id: benchmark_technical_area.id,
                  benchmark_indicator_id:      benchmark_indicator.id,
                  indicator_display_abbrev:    benchmark_indicator.display_abbreviation,
-                 benchmark_activity_id:       benchmark_activity.id,
-                 benchmark_activity_level:    benchmark_activity.level,
-                 benchmark_activity_text:     benchmark_activity.text,
-                 activity_type_classes:       benchmark_activity.activity_types.map { |type_num| "activity-type-#{type_num}" }.join(" ")
+                 benchmark_action_id:       benchmark_action.id,
+                 benchmark_action_level:    benchmark_action.level,
+                 benchmark_action_text:     benchmark_action.text,
+                 action_type_classes:       benchmark_action.action_types.map { |type_num| "action-type-#{type_num}" }.join(" ")
       %>
     <% end %>
 
-    <!-- Add an Activity -->
-    <div class="row activity-form">
+    <!-- Add an Action -->
+    <div class="row action-form">
       <div class="col">
         <%= text_field_tag(
-                :new_activity,
+                :new_action,
                 nil,
-                id: nil, # avoids having multiple fields with same id "new_activity"
+                id: nil, # avoids having multiple fields with same id "new_action"
                 class:       "w-100",
-                placeholder: "+ Add Activity",
+                placeholder: "+ Add Action",
                 data: {
-                    target: "benchmark.addActivityField",
+                    target: "benchmark.addActionField",
                     action: "focus->benchmark#showAutocomplete",
                 },
                 autocomplete: "off"

@@ -1,10 +1,10 @@
 class BenchmarkDocument
-  attr_reader :technical_areas, :indicators, :activities
+  attr_reader :technical_areas, :indicators, :actions
 
   def initialize
     @technical_areas =
-      BenchmarkTechnicalArea.includes({ benchmark_indicators: :activities }).all
+      BenchmarkTechnicalArea.includes({ benchmark_indicators: :actions }).all
     @indicators = @technical_areas.map(&:benchmark_indicators).flatten
-    @activities = @indicators.map(&:activities).flatten
+    @actions = @indicators.map(&:actions).flatten
   end
 end

@@ -17,6 +17,6 @@ class ApplicationRecord < ActiveRecord::Base
     Assessment
     BenchmarkTechnicalArea
     BenchmarkIndicator
-    BenchmarkIndicatorActivity
+    BenchmarkIndicatorAction
   ]
 end

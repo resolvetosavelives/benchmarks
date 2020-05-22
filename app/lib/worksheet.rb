@@ -29,15 +29,15 @@ class Worksheet
         row_index = 0
         goal_value =
           @plan.goal_value_for(benchmark_indicator: benchmark_indicator)
-        plan_activities = @plan.activities_for(benchmark_indicator)
-        next if plan_activities.empty?
+        plan_actions = @plan.actions_for(benchmark_indicator)
+        next if plan_actions.empty?
 
         if ta_xlsx_worksheets[ta_index].blank?
           current_worksheet =
             @workbook.add_worksheet(benchmark_technical_area.text)
           ta_xlsx_worksheets << current_worksheet
         end
-        plan_activities.each do |plan_activity|
+        plan_actions.each do |plan_action|
           assessment_label = @plan.type_description
           row_index =
             populate_worksheet(
@@ -46,7 +46,7 @@ class Worksheet
               assessment_label,
               goal_value,
               benchmark_indicator.objective,
-              plan_activity.text,
+              plan_action.text,
             )
         end
       end
@@ -59,7 +59,7 @@ class Worksheet
                         2,
                         0,
                         text:
-                          "1. Use these worksheets in your workshop to discuss key items for each activity recommended for stepping up."
+                          "1. Use these worksheets in your workshop to discuss key items for each action recommended for stepping up."
     SpreadsheetCell.new worksheet,
                         5,
                         0,
@@ -70,12 +70,12 @@ class Worksheet
                         9,
                         0,
                         text:
-                          "Detailed Activity Description: Detailed activity planning is important to understand where, how, and how much of the activity you will implement. Make sure it is achievable and realistic. Adjust the suggested benchmark activity to your country context. Use the implemenation tips and tricks and the Reference Library to check how other have implemented this activity in other places."
+                          "Detailed Action Description: Detailed action planning is important to understand where, how, and how much of the action you will implement. Make sure it is achievable and realistic. Adjust the suggested benchmark action to your country context. Use the implemenation tips and tricks and the Reference Library to check how other have implemented this action in other places."
     SpreadsheetCell.new worksheet,
                         14,
                         0,
                         text:
-                          "Implementation Level: Will the activity be at the national or sub-national level?"
+                          "Implementation Level: Will the action be at the national or sub-national level?"
     SpreadsheetCell.new worksheet,
                         16,
                         0,
@@ -85,11 +85,11 @@ class Worksheet
                         20,
                         0,
                         text:
-                          "Priority: It's helpful to list all the activities that you may want to do then prioritize them at the end."
+                          "Priority: It's helpful to list all the actions that you may want to do then prioritize them at the end."
     SpreadsheetCell.new worksheet,
                         21,
                         1,
-                        text: "1. Done - Activity is already implemented"
+                        text: "1. Done - Action is already implemented"
     SpreadsheetCell.new worksheet,
                         22,
                         1,
@@ -140,7 +140,7 @@ class Worksheet
   end
 
   def populate_worksheet(
-    worksheet, row_index, assessment_label, goal, objective_text, activity_text
+    worksheet, row_index, assessment_label, goal, objective_text, action_text
   )
     goal_level_str = goal.present? ? "score #{goal}" : ""
 
@@ -150,14 +150,14 @@ class Worksheet
                         row_index + 6,
                         0,
                         text:
-                          "Activity required for #{assessment_label} #{
+                          "Action required for #{assessment_label} #{
                             goal_level_str
                           }"
-    SpreadsheetCell.new worksheet, row_index + 7, 0, text: activity_text
+    SpreadsheetCell.new worksheet, row_index + 7, 0, text: action_text
     SpreadsheetCell.new worksheet,
                         row_index + 11,
                         0,
-                        text: "Detailed Activity Description"
+                        text: "Detailed Action Description"
     SpreadsheetCell.new worksheet,
                         row_index + 28,
                         0,

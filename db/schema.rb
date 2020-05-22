@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_02_214510) do
+ActiveRecord::Schema.define(version: 2020_05_22_165716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,15 +66,15 @@ ActiveRecord::Schema.define(version: 2020_02_02_214510) do
     t.integer "assessment_publication_id"
   end
 
-  create_table "benchmark_indicator_activities", force: :cascade do |t|
+  create_table "benchmark_indicator_actions", force: :cascade do |t|
     t.integer "benchmark_indicator_id"
     t.string "text", limit: 1000
     t.integer "level"
     t.integer "sequence"
-    t.integer "activity_types", default: [], array: true
+    t.integer "action_types", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["benchmark_indicator_id"], name: "index_benchmark_indicator_activities_on_benchmark_indicator_id"
+    t.index ["benchmark_indicator_id"], name: "index_benchmark_indicator_actions_on_benchmark_indicator_id"
   end
 
   create_table "benchmark_indicators", force: :cascade do |t|
@@ -111,14 +111,14 @@ ActiveRecord::Schema.define(version: 2020_02_02_214510) do
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
-  create_table "plan_activities", force: :cascade do |t|
+  create_table "plan_actions", force: :cascade do |t|
     t.integer "plan_id"
-    t.integer "benchmark_indicator_activity_id"
+    t.integer "benchmark_indicator_action_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "benchmark_indicator_id"
     t.integer "benchmark_technical_area_id"
-    t.index ["plan_id"], name: "index_plan_activities_on_plan_id"
+    t.index ["plan_id"], name: "index_plan_actions_on_plan_id"
   end
 
   create_table "plan_goals", force: :cascade do |t|
@@ -164,12 +164,12 @@ ActiveRecord::Schema.define(version: 2020_02_02_214510) do
   add_foreign_key "assessment_technical_areas", "assessment_publications"
   add_foreign_key "assessments", "assessment_publications"
   add_foreign_key "assessments", "countries", column: "country_alpha3", primary_key: "alpha3"
-  add_foreign_key "benchmark_indicator_activities", "benchmark_indicators"
+  add_foreign_key "benchmark_indicator_actions", "benchmark_indicators"
   add_foreign_key "benchmark_indicators", "benchmark_technical_areas"
-  add_foreign_key "plan_activities", "benchmark_indicator_activities"
-  add_foreign_key "plan_activities", "benchmark_indicators"
-  add_foreign_key "plan_activities", "benchmark_technical_areas"
-  add_foreign_key "plan_activities", "plans"
+  add_foreign_key "plan_actions", "benchmark_indicator_actions"
+  add_foreign_key "plan_actions", "benchmark_indicators"
+  add_foreign_key "plan_actions", "benchmark_technical_areas"
+  add_foreign_key "plan_actions", "plans"
   add_foreign_key "plan_goals", "assessment_indicators"
   add_foreign_key "plan_goals", "benchmark_indicators"
   add_foreign_key "plan_goals", "plans"

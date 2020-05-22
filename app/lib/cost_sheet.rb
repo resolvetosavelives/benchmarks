@@ -38,13 +38,13 @@ class CostSheet
     row_index = index
     benchmark_indicators.each do |benchmark_indicator|
       indicator_display_abbrev = benchmark_indicator.display_abbreviation
-      plan_activities = @plan.activities_for(benchmark_indicator)
-      if plan_activities.length > 0
+      plan_actions = @plan.actions_for(benchmark_indicator)
+      if plan_actions.length > 0
         cell_text = "#{indicator_display_abbrev}: #{benchmark_indicator.text}"
         SpreadsheetCell.new(worksheet, row_index, 0, text: cell_text)
         worksheet.merge_cells row_index,
                               0,
-                              row_index + plan_activities.length - 1,
+                              row_index + plan_actions.length - 1,
                               0
         SpreadsheetCell.new(
           worksheet,
@@ -55,16 +55,16 @@ class CostSheet
 
         worksheet.merge_cells row_index,
                               1,
-                              row_index + plan_activities.length - 1,
+                              row_index + plan_actions.length - 1,
                               1
       end
 
-      plan_activities.each do |plan_activity|
+      plan_actions.each do |plan_action|
         SpreadsheetCell.new worksheet,
                             row_index,
                             2,
                             text:
-                              plan_activity.benchmark_indicator_activity.text
+                              plan_action.benchmark_indicator_action.text
         row_index += 1
       end
       row_index += 1
@@ -132,13 +132,13 @@ class CostSheet
       worksheet,
       5,
       2,
-      text: "Summary of Key Activities (Strategic actions)",
+      text: "Summary of Key Actions (Strategic actions)",
     ).with_alignment(nil, "center").with_fill_color("d6dce5").with_border(:all)
     SpreadsheetCell.new(
       worksheet,
       5,
       3,
-      text: "Detailed activity description (input description for costing)",
+      text: "Detailed action description (input description for costing)",
     ).with_alignment(nil, "center").with_fill_color("d6dce5").with_border(:all)
     SpreadsheetCell.new(
       worksheet,
@@ -179,7 +179,7 @@ class CostSheet
       5,
       9,
       text:
-        "Related existing plan/ framework / Programme or on-going activities",
+        "Related existing plan/ framework / Programme or on-going actions",
     ).with_alignment(nil, "center").with_fill_color("d6dce5").with_border(:all)
     SpreadsheetCell.new(worksheet, 5, 10, text: "Existing budget(y/n)")
       .with_alignment(nil, "center").with_fill_color("d6dce5").with_border(:all)

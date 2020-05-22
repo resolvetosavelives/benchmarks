@@ -23,35 +23,35 @@
 
   <div class="col plan-container" data-controller="plan"
        data-plan-term='<%= @plan.term %>'
-       data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-activity-type"]'
+       data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-action-type"]'
        data-plan-nudge-content-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
        data-plan-nudge-template-selector="#nudge-template"
        data-plan-nudge-content-zero-selector='#nudge-content-zero'
-       data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-activity-type"]'
-       data-plan-chart-labels='<%= [chart_labels_by_technical_area, BenchmarkIndicatorActivity::ACTIVITY_TYPES].to_json %>'
-       data-plan-chart-series='<%= [@count_activities_by_ta, @count_activities_by_type].to_json %>'
+       data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-action-type"]'
+       data-plan-chart-labels='<%= [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>'
+       data-plan-chart-series='<%= [@count_actions_by_ta, @count_actions_by_type].to_json %>'
        data-plan-chart-width="100%"
        data-plan-chart-height="240"
   >
     <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |form| %>
-      <%= form.hidden_field :benchmark_activity_ids,
+      <%= form.hidden_field :benchmark_action_ids,
                             value: nil, # populated later via JS upon form submit event
-                            data: {target: "plan.fieldForActivityIds"},
+                            data: {target: "plan.fieldForActionIds"},
                             autocomplete: "off"
       %>
 
       <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
       <%= render "plan_name_sticky", form: form %>
 
-      <!-- Count of Total Activities -->
+      <!-- Count of Total Actions -->
       <div class="row">
         <div class="col mt-4">
-          <div class="row mx-0 activity-count-header align-items-center">
-            <div class="activity-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
-              <span data-target="plan.activityCountCircle"><%= @plan.plan_activities.size %></span>
+          <div class="row mx-0 action-count-header align-items-center">
+            <div class="action-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
+              <span data-target="plan.actionCountCircle"><%= @plan.plan_actions.size %></span>
             </div>
             <div class="col-auto">
-              <p>Total Activities</p>
+              <p>Total Actions</p>
             </div>
           </div>
         </div>
@@ -70,8 +70,8 @@
                   Technical Area</a>
               </li>
               <li class="nav-item px-2">
-                <a class="nav-link" data-toggle="tab" href="#tabContentForActivityType" id="tabForActivityType" role="tab" aria-controls="activity-type" aria-selected="false">
-                  Activity Type</a>
+                <a class="nav-link" data-toggle="tab" href="#tabContentForActionType" id="tabForActionType" role="tab" aria-controls="action-type" aria-selected="false">
+                  Action Type</a>
               </li>
             </ul>
 
@@ -90,17 +90,17 @@
                 </div>
               </div>
 
-              <div id="tabContentForActivityType" aria-labelledby="tabForActivityType" role="tabpanel" class="col-auto tab-pane fade">
+              <div id="tabContentForActionType" aria-labelledby="tabForActionType" role="tabpanel" class="col-auto tab-pane fade">
                 <div class="row no-gutters">
                   <!-- Left Col -->
                   <div class="chart-pane col-lg d-flex mx-auto flex-column align-items-center">
-                    <h6 class="my-3">Actions per activity type</h6>
-                    <!-- Actual Chart, by Activity Type -->
-                    <div id="bar-chart-by-activity-type" class="chart-container ct-chart-bar"></div>
+                    <h6 class="my-3">Actions per action type</h6>
+                    <!-- Actual Chart, by Action Type -->
+                    <div id="bar-chart-by-action-type" class="chart-container ct-chart-bar"></div>
                   </div>
 
                   <!-- Right Col -->
-                  <%= render "nudge_container", dom_id: "nudge-by-activity-type" %>
+                  <%= render "nudge_container", dom_id: "nudge-by-action-type" %>
                 </div>
               </div>
 
@@ -110,9 +110,9 @@
         </div>
       </div>
 
-      <!-- List of Activities -->
+      <!-- List of Actions -->
       <div class="row my-4">
-        <div id="activity-list-by-tech-container" class="col-auto w-100">
+        <div id="action-list-by-tech-container" class="col-auto w-100">
           <% @benchmark_technical_areas.each_with_index do |benchmark_technical_area, index| %>
             <%= render 'technical_area',
                        benchmark_technical_area: benchmark_technical_area,
@@ -120,7 +120,7 @@
             %>
           <% end %>
         </div>
-        <div id="activity-list-by-type-container" class="col-auto w-100">
+        <div id="action-list-by-type-container" class="col-auto w-100">
           <h2></h2>
           <div class="col"></div>
         </div>
@@ -129,16 +129,16 @@
     <% end %>
   </div>
 
-  <script type="text/template" id="activity-row-template">
-    <%= render "activity",
+  <script type="text/template" id="action-row-template">
+    <%= render "action",
                benchmark_technical_area_id: "{{benchmarkTechnicalAreaId}}",
                bar_segment_index:           "{{barSegmentIndex}}",
                benchmark_indicator_id:      "{{benchmarkIndicatorId}}",
                indicator_display_abbrev:    "{{indicatorDisplayAbbrev}}",
-               benchmark_activity_id:       "{{benchmarkActivityId}}",
-               benchmark_activity_level:    "{{benchmarkActivityLevel}}",
-               benchmark_activity_text:     "{{benchmarkActivityText}}",
-               activity_type_classes:       "{{benchmarkActivityTypes}}"
+               benchmark_action_id:       "{{benchmarkActionId}}",
+               benchmark_action_level:    "{{benchmarkActionLevel}}",
+               benchmark_action_text:     "{{benchmarkActionText}}",
+               action_type_classes:       "{{benchmarkActionTypes}}"
     %>
   </script>
 </div>
@@ -150,7 +150,7 @@
   </p>
   <ul>
     <li>
-      Focus on no more than 2-3 activities per technical area.
+      Focus on no more than 2-3 actions per technical area.
     </li>
     <li>
       Consider reducing the number of technical areas included and focus on the areas that scored low in your capacity assessments or are identified as gaps in the AAR's and simulation reviews.
@@ -168,7 +168,7 @@
       5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic.
     </li>
     <li>
-      Prioritize activities based on the country risk and capacity assessments focused on technical areas that address gaps identified including those in AAR's and simulations.
+      Prioritize actions based on the country risk and capacity assessments focused on technical areas that address gaps identified including those in AAR's and simulations.
     </li>
     <li>
       Remember &mdash; you will still need to create a smaller more focused implementation plan as part of the 5 year plan to ensure implementation.
@@ -179,7 +179,7 @@
 <script type="text/template" id="nudge-template">
   <p>
     <%= render file: Rails.root.join("app", "assets", "images", "ico-lightbulb.svg") %>
-    Tips for {{activity_type}} actions
+    Tips for {{action_type}} actions
   </p>
   <ul>
     {{#listItems}}
@@ -198,9 +198,9 @@
     window.STATE_FROM_SERVER = {
         technicalAreas: <%= raw @benchmark_technical_areas.to_json %>,
         indicators: <%= raw @benchmark_indicators.to_json %>,
-        activities: <%= raw @all_activities.to_json %>,
+        actions: <%= raw @all_actions.to_json %>,
         plan: <%= raw @plan.to_json %>,
-        planActivityIds: <%= @plan.activity_ids %>
+        planActionIds: <%= @plan.action_ids %>
     }
-    window.NUDGES_BY_ACTIVITY_TYPE = <%= raw @nudges_by_activity_type_json %>;
+    window.NUDGES_BY_ACTION_TYPE = <%= raw @nudges_by_action_type_json %>;
 </script>

@@ -1,18 +1,18 @@
-desc "Generate all the JSON data: nu_gen_evaluations nu_gen_benchmarks nu_gen_crosswalk nu_gen_activities"
+desc "Generate all the JSON data: nu_gen_evaluations nu_gen_benchmarks nu_gen_crosswalk nu_gen_actions"
 task nu_gen_all: %i[
        nu_gen_evaluations
        nu_gen_benchmarks
        nu_gen_crosswalk
-       nu_gen_activities
+       nu_gen_actions
      ] do
 end
 
-desc "Generate JSON data for Benchmark Activities from the spreadsheet"
-task nu_gen_activities: %i[environment] do
+desc "Generate JSON data for Benchmark Actions from the spreadsheet"
+task nu_gen_actions: %i[environment] do
   fixture_spreadsheet = File.join Rails.root, "/data/RTSL Fixtures.xlsx"
-  activity_worksheet = RubyXL::Parser.parse(fixture_spreadsheet)["Activities"]
-  benchmark_activities =
-    activity_worksheet.drop(1).map do |row|
+  action_worksheet = RubyXL::Parser.parse(fixture_spreadsheet)["Activities"] # the worksheet is still named "Activities" not "Actions"
+  benchmark_actions =
+    action_worksheet.drop(1).map do |row|
       cells = row.cells
       # +cell+ which has no value will be +nil+ so use +&+ to avoid exceptions
       technical_area_id = cells[0]&.value
@@ -27,13 +27,13 @@ task nu_gen_activities: %i[environment] do
       # there can be trailing rows that contain nothing so skip with +nil+
       next if technical_area_id.nil? && indicator_id.nil?
 
-      # activity_types will be made to be an array or nil
-      activity_types =
+      # action_types will be made to be an array or nil
+      action_types =
         [type_code_1, type_code_2, type_code_3].map do |type_num|
           # there are some string values in the spreadsheet, discard them
           num =
             type_num.to_i
-          (1..15).cover?(num) ? num : nil # activity types are numbered 1-15
+          (1..15).cover?(num) ? num : nil # action types are numbered 1-15
         end.compact
       display_abbreviation = "#{technical_area_id}.#{indicator_id}"
       row = {
@@ -42,19 +42,19 @@ task nu_gen_activities: %i[environment] do
         level: level,
         sequence: sequence,
       }
-      row[:activity_types] = activity_types unless activity_types.empty?
+      row[:action_types] = action_types unless action_types.empty?
       row
     end.compact.uniq
   # we use +compact+ here at the end to ignore +nil+ from blank rows
   # we use +uniq+ here at the here cuz there are some rows that become duplicated
   #   for no apparent reason, e.g. "Create/update the national action plan.."
-  benchmark_activities_file =
-    File.join(Rails.root, "/db/seed-data/benchmark_indicator_activities.json")
-  File.open(benchmark_activities_file, "w") do |f|
-    f.write(JSON.pretty_generate(benchmark_activities))
+  benchmark_actions_file =
+    File.join(Rails.root, "/db/seed-data/benchmark_indicator_actions.json")
+  File.open(benchmark_actions_file, "w") do |f|
+    f.write(JSON.pretty_generate(benchmark_actions))
   end
-  warn "Wrote %s Benchmark Activities data to file: %s" %
-         [benchmark_activities.size, benchmark_activities_file]
+  warn "Wrote %s Benchmark Actions data to file: %s" %
+         [benchmark_actions.size, benchmark_actions_file]
 end
 
 desc "Generate JSON data for Benchmark Technical Areas and Indicators from the spreadsheet"

@@ -26,15 +26,15 @@ FactoryBot.define do
             ),
           ).map { |attrs| PlanGoal.new(attrs) }
 
-        plan.plan_activities =
+        plan.plan_actions =
           JSON.parse(
             File.read(
               File.join(
                 Rails.root,
-                "/test/fixtures/files/plan_for_nigeria_jee1/plan_activities.json",
+                "/test/fixtures/files/plan_for_nigeria_jee1/plan_actions.json",
               ),
             ),
-          ).map { |attrs| PlanActivity.new(attrs) }
+          ).map { |attrs| PlanAction.new(attrs) }
       rescue ActiveRecord::RecordNotSaved => rns
         # try to show the developer some useful feedback for when they forgot to populate seed data
         show_seed_warning rns

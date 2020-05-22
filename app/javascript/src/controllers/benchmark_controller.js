@@ -2,7 +2,7 @@ import { Controller } from "stimulus"
 import Hogan from "hogan.js"
 
 export default class extends Controller {
-  static targets = ["activity", "addActivityField", "confirm", "delete"]
+  static targets = ["action", "addActionField", "confirm", "delete"]
 
   initialize() {
     this.childControllers = []
@@ -21,60 +21,58 @@ export default class extends Controller {
       this.data.get("indicatorDisplayAbbrev")
     )
     this.barSegmentIndex = Number(this.data.get("barSegmentIndex"))
-    this.initAutoCompleteForAddActivity()
+    this.initAutoCompleteForAddAction()
   }
 
-  initAutoCompleteForAddActivity() {
+  initAutoCompleteForAddAction() {
     const self = this // needed for nested callbacks which lose scope of "this"
-    const excludedActivities = this.planPageDataModel.getExcludedActivitiesForIndicator(
+    const excludedActions = this.planPageDataModel.getExcludedActionsForIndicator(
       this.indicatorId
     )
-    if (this.hasAddActivityFieldTarget) {
-      $(this.addActivityFieldTarget).autocomplete({
+    if (this.hasAddActionFieldTarget) {
+      $(this.addActionFieldTarget).autocomplete({
         appendTo: ".plan-container",
         minLength: 0, // this allows the down/up arrows to open the menu even without any chars entered, #171505810
-        source: excludedActivities.map((benchmarkActivity) => {
-          benchmarkActivity.label = benchmarkActivity.text
-          benchmarkActivity.value = benchmarkActivity.text
+        source: excludedActions.map((benchmarkAction) => {
+          benchmarkAction.label = benchmarkAction.text
+          benchmarkAction.value = benchmarkAction.text
           // this is the object that will be at ui.item in autocomplete.select()
-          return benchmarkActivity
+          return benchmarkAction
         }),
         select: function (event, ui) {
-          const benchmarkActivity = ui.item
-          self.addActivityAndRender(benchmarkActivity)
-          self.initAutoCompleteForAddActivity()
+          const benchmarkAction = ui.item
+          self.addActionAndRender(benchmarkAction)
+          self.initAutoCompleteForAddAction()
         },
       })
     }
   }
 
-  addActivityAndRender(benchmarkActivity) {
-    this.addActivityId(benchmarkActivity.id, this.barSegmentIndex)
+  addActionAndRender(benchmarkAction) {
+    this.addActionId(benchmarkAction.id, this.barSegmentIndex)
     const templateData = {
       indicatorDisplayAbbrev: this.indicatorDisplayAbbrev,
-      benchmarkActivityId: benchmarkActivity.id,
-      benchmarkActivityLevel: benchmarkActivity.level,
-      benchmarkActivityText: benchmarkActivity.text,
+      benchmarkActionId: benchmarkAction.id,
+      benchmarkActionLevel: benchmarkAction.level,
+      benchmarkActionText: benchmarkAction.text,
       barSegmentIndex: this.barSegmentIndex,
     }
-    const activityRowTemplateSelector = this.data.get(
-      "activityRowTemplateSelector"
-    )
-    const compiledTemplate = this.getTemplateFor(activityRowTemplateSelector)
+    const actionRowTemplateSelector = this.data.get("actionRowTemplateSelector")
+    const compiledTemplate = this.getTemplateFor(actionRowTemplateSelector)
     const renderedContent = compiledTemplate.render(templateData)
-    $(renderedContent).insertBefore($(this.element).find(".activity-form"))
-    if (this.hasAddActivityFieldTarget) {
+    $(renderedContent).insertBefore($(this.element).find(".action-form"))
+    if (this.hasAddActionFieldTarget) {
       // NB: setTimeout is needed because without it the text field value does not
       // clear, probably due to real time/asynchronous UI stuff happening
       setTimeout(() => {
-        this.addActivityFieldTarget.value = ""
+        this.addActionFieldTarget.value = ""
       }, 100)
     }
   }
 
   showAutocomplete() {
-    if (this.hasAddActivityFieldTarget) {
-      $(this.addActivityFieldTarget).autocomplete("search", " ")
+    if (this.hasAddActionFieldTarget) {
+      $(this.addActionFieldTarget).autocomplete("search", " ")
     }
   }
 
@@ -94,13 +92,13 @@ export default class extends Controller {
     this.confirmTarget.hidden = false
   }
 
-  // Delete a benchmark indicator, which means deleting its child activities
-  deleteActivitiesForIndicator() {
-    const activityIds = this.planPageDataModel.getActivityIdsForIndicator(
+  // Delete a benchmark indicator, which means deleting its child actions
+  deleteActionsForIndicator() {
+    const actionIds = this.planPageDataModel.getActionIdsForIndicator(
       this.indicatorId
     )
-    activityIds.forEach((activityId) => {
-      this.removeActivityId(activityId, this.barSegmentIndex)
+    actionIds.forEach((actionId) => {
+      this.removeActionId(actionId, this.barSegmentIndex)
     })
     this.element.hidden = true
     const siblings = $(this.element).siblings(".benchmark-container:visible")
@@ -109,18 +107,18 @@ export default class extends Controller {
     }
   }
 
-  addActivityId(activityId, barSegmentIndex) {
-    this.planPageDataModel.addActivityById(activityId, barSegmentIndex)
-    this.planPageViewModel.activityAdded(activityId, barSegmentIndex)
+  addActionId(actionId, barSegmentIndex) {
+    this.planPageDataModel.addActionById(actionId, barSegmentIndex)
+    this.planPageViewModel.actionAdded(actionId, barSegmentIndex)
   }
 
-  removeActivityId(activityId, barSegmentIndex) {
-    this.planPageDataModel.removeActivityById(activityId, barSegmentIndex)
-    this.planPageViewModel.activityRemoved(activityId, barSegmentIndex)
+  removeActionId(actionId, barSegmentIndex) {
+    this.planPageDataModel.removeActionById(actionId, barSegmentIndex)
+    this.planPageViewModel.actionRemoved(actionId, barSegmentIndex)
   }
 
-  hasActivities() {
-    if (this.activityTargets.length > 0) {
+  hasActions() {
+    if (this.actionTargets.length > 0) {
       return true
     }
     return false

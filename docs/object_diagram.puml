@@ -32,7 +32,7 @@ object BenchmarkIndicator {
     created_at
     updated_at
 }
-object BenchmarkIndicatorActivity {
+object BenchmarkIndicatorAction {
     id
     benchmark_indicator
     text, e.g. "Identify and convene ... of legislation and policies."
@@ -45,7 +45,7 @@ object Plan {
     evaluation_publication
     name, e.g. "Draft Plan A.2 for Nigeria"
     country, .e.g. "Nigeria"
-    activities []
+    actions []
     scores []
     goals []
     created_at
@@ -71,9 +71,9 @@ object PlanFromSpar2018 {
 AssessmentPublication "1" o-- "many" AssessmentIndicator
 BenchmarkTechnicalArea "1 or more" o-- "1 or more" BenchmarkIndicator
 BenchmarkIndicator "1 or more" o-- "1 or more" AssessmentIndicator
-BenchmarkIndicator "1" o-- "many" BenchmarkIndicatorActivity
+BenchmarkIndicator "1" o-- "many" BenchmarkIndicatorAction
 Plan "1" o-- "many" PlanBenchmarkIndicator
-Plan "1" o-- "many" BenchmarkIndicatorActivity
+Plan "1" o-- "many" BenchmarkIndicatorAction
 PlanBenchmarkIndicator "1" o-- "1" BenchmarkIndicator
 PlanFromJee <|-- Plan
 PlanFromSpar2018 <|-- Plan

@@ -1,14 +1,14 @@
 [
   {
-    "activity_type_name": "advocacy",
+    "action_type_name": "advocacy",
     "threshold_a": 3,
     "threshold_b": 6,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "Consider producing an overall advocacy strategy to link your various advocacy activities together.\nEnsure clear stakeholder analysis and utilize champions at multiple levels (subnational, national, global etc.)",
-    "content_for_c": "To streamline multiple advocacy activities, consider creating an advocacy focal point or team to lead the overall advocacy strategy.\nEnsure clear stakeholder analysis and utilize champions at multiple levels (subnational, national, global etc.)"
+    "content_for_b": "Consider producing an overall advocacy strategy to link your various advocacy actions together.\nEnsure clear stakeholder analysis and utilize champions at multiple levels (subnational, national, global etc.)",
+    "content_for_c": "To streamline multiple advocacy actions, consider creating an advocacy focal point or team to lead the overall advocacy strategy.\nEnsure clear stakeholder analysis and utilize champions at multiple levels (subnational, national, global etc.)"
   },
   {
-    "activity_type_name": "assessment and data use",
+    "action_type_name": "assessment and data use",
     "threshold_a": 5,
     "threshold_b": 10,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
@@ -16,7 +16,7 @@
     "content_for_c": "Conducting multiple assessments can result in redundancy.\nLook at the value of creating a team or working group that coordinates, consolidates and utilizes assessment data for improved planning, preparedness and response.\nEnsure assessment results are shared widely and utilized to inform programming.\nStreamline data collection, analysis and use."
   },
   {
-    "activity_type_name": "coordination",
+    "action_type_name": "coordination",
     "threshold_a": 5,
     "threshold_b": 10,
     "content_for_a": "Coordination is critical. Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
@@ -24,35 +24,35 @@
     "content_for_c": "Given the many workstreams for NAPHS, it may be necessary to create a specialized unit to oversee the various mechanism for implementing epidemic preparedness and response.\nEnsure the unit is connected to Monitoring and Evaluation and strategy planning."
   },
   {
-    "activity_type_name": "designation",
+    "action_type_name": "designation",
     "threshold_a": 3,
-    "content_for_a": "Designating a focal point is important for coordination and quality control of critical activities.\nRefer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "Designating a focal point ensures coordination and quality control for critical activities.\nCreate an organizational chart with clear roles and responsibilities before creating new focal points.\nConsider how the role fits into the current framework and if other adaptations such as new Terms of Reference are needed."
+    "content_for_a": "Designating a focal point is important for coordination and quality control of critical actions.\nRefer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
+    "content_for_b": "Designating a focal point ensures coordination and quality control for critical actions.\nCreate an organizational chart with clear roles and responsibilities before creating new focal points.\nConsider how the role fits into the current framework and if other adaptations such as new Terms of Reference are needed."
   },
   {
-    "activity_type_name": "dissemination",
+    "action_type_name": "dissemination",
     "threshold_a": 5,
-    "content_for_a": "Disseminating new or changed information is a critical final step for many activities.\nRefer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "Dissemination of new or changed information is a critical final step for many activities.\nLook for connections to activities included in advocacy, coordination or training and see how you could be consolidated.\nThink about sustainability of the dissemination mechanism and consider an electronic hub for ongoing access.\nCreate a dissemination plan that outlines specific audiences and channels to reach them."
+    "content_for_a": "Disseminating new or changed information is a critical final step for many actions.\nRefer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
+    "content_for_b": "Dissemination of new or changed information is a critical final step for many actions.\nLook for connections to actions included in advocacy, coordination or training and see how you could be consolidated.\nThink about sustainability of the dissemination mechanism and consider an electronic hub for ongoing access.\nCreate a dissemination plan that outlines specific audiences and channels to reach them."
   },
   {
-    "activity_type_name": "financing",
+    "action_type_name": "financing",
     "threshold_a": 3,
     "threshold_b": 6,
     "content_for_a": "The availability of funds can dictate the success of preparedness and response.\nRefer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "The availability of funds can dictate the success of preparedness and response.\nConsider the need for dedicated financial technical expertise to assist in the review and implementation of your multiple activities.\nIt is important that any new or changed financial processes support speed, availability, transparency and accountability.",
-    "content_for_c": "Consider creating a multi-sector funding and financing plan that spans across departments and includes domestic and international funding sources for preparedness and response.\nDocument relevant budget cycles and understand when and how financing activities fit within those cycles.\nTest any changes and ensure all mechanisms are built for speed, availability, transparency and accountability."
+    "content_for_b": "The availability of funds can dictate the success of preparedness and response.\nConsider the need for dedicated financial technical expertise to assist in the review and implementation of your multiple actions.\nIt is important that any new or changed financial processes support speed, availability, transparency and accountability.",
+    "content_for_c": "Consider creating a multi-sector funding and financing plan that spans across departments and includes domestic and international funding sources for preparedness and response.\nDocument relevant budget cycles and understand when and how financing actions fit within those cycles.\nTest any changes and ensure all mechanisms are built for speed, availability, transparency and accountability."
   },
   {
-    "activity_type_name": "monitoring and evaluation",
+    "action_type_name": "monitoring and evaluation",
     "threshold_a": 5,
     "threshold_b": 8,
-    "content_for_a": "It’s important to establish a clear monitoring and evaluation (M&E) framework.\nMonitor the impact of all activities and use the IHR M&E framework to test impact on improvements for your activities.",
-    "content_for_b": "In order to consolidate multiple activities, an M&E plan can help.\nUse the activity tracker to monitor progress and include it in regular reporting and reviews.\nIt’s important to ensure there is accountability for results; consider establishing a governance group that reviews result regularly.",
-    "content_for_c": "Consider the need for a specialized M&E unit to coordinate and use data to inform better program performance.\nUse the activity tracker to monitor progress.\nIt’s important to ensure there is accountability for results; consider establishing a governance group that reviews result regularly."
+    "content_for_a": "It’s important to establish a clear monitoring and evaluation (M&E) framework.\nMonitor the impact of all actions and use the IHR M&E framework to test impact on improvements for your actions.",
+    "content_for_b": "In order to consolidate multiple actions, an M&E plan can help.\nUse the action tracker to monitor progress and include it in regular reporting and reviews.\nIt’s important to ensure there is accountability for results; consider establishing a governance group that reviews result regularly.",
+    "content_for_c": "Consider the need for a specialized M&E unit to coordinate and use data to inform better program performance.\nUse the action tracker to monitor progress.\nIt’s important to ensure there is accountability for results; consider establishing a governance group that reviews result regularly."
   },
   {
-    "activity_type_name": "planning and strategy",
+    "action_type_name": "planning and strategy",
     "threshold_a": 20,
     "threshold_b": 40,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
@@ -60,31 +60,31 @@
     "content_for_c": "With the inclusion of new plans and strategies, consider the overall governance, approval process and how the various new plans will work together.\nCoordinate the dissemination and implementation of new plans including regular review of effectiveness.\nEnsure new plans or strategies are included in the M&E framework."
   },
   {
-    "activity_type_name": "procurement",
+    "action_type_name": "procurement",
     "threshold_a": 5,
     "threshold_b": 10,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "Review activities and check for duplication in procurement across technical areas.\nConsider using a central procurement mechanism.\nEnsure the processes for procurement are clear, accountable and timely.\nReview for both preparedness and response ensuring speedy mechanism are available when required.",
-    "content_for_c": "Review activities and check for duplication in procurement across technical areas.\nConsider a dedicated procurement unit to support the many logistics or procurement activities.\nSpecialized logistics support maybe required."
+    "content_for_b": "Review actions and check for duplication in procurement across technical areas.\nConsider using a central procurement mechanism.\nEnsure the processes for procurement are clear, accountable and timely.\nReview for both preparedness and response ensuring speedy mechanism are available when required.",
+    "content_for_c": "Review actions and check for duplication in procurement across technical areas.\nConsider a dedicated procurement unit to support the many logistics or procurement actions.\nSpecialized logistics support maybe required."
   },
   {
-    "activity_type_name": "program implementation",
+    "action_type_name": "program implementation",
     "threshold_a": 20,
     "threshold_b": 40,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "Review the number and type of activities and prioritize where possible look for synergies between activities and how they could be implemented together under one objective or program.\nEnsure effective delegation and accountability for tasks across relevant departments and units so the workload is spread out.\nRegularly monitor implementation of activities to track progress and prioritize based on impact for early detection and response.",
-    "content_for_c": "Review the number and type of activities to consolidate and prioritize where possible.\nConsider delaying the implementation of lower priority activities.\nLook for synergies between high-priority activities to see how they could be implemented together under one objective or program.\nEnsure effective delegation and accountability for tasks across relevant departments and units so the workload is spread out.\nRegularly monitor implementation of activities to track progress and reprioritize based on impact for early detection and response."
+    "content_for_b": "Review the number and type of actions and prioritize where possible look for synergies between actions and how they could be implemented together under one objective or program.\nEnsure effective delegation and accountability for tasks across relevant departments and units so the workload is spread out.\nRegularly monitor implementation of actions to track progress and prioritize based on impact for early detection and response.",
+    "content_for_c": "Review the number and type of actions to consolidate and prioritize where possible.\nConsider delaying the implementation of lower priority actions.\nLook for synergies between high-priority actions to see how they could be implemented together under one objective or program.\nEnsure effective delegation and accountability for tasks across relevant departments and units so the workload is spread out.\nRegularly monitor implementation of actions to track progress and reprioritize based on impact for early detection and response."
   },
   {
-    "activity_type_name": "SimEX and AAR",
+    "action_type_name": "SimEX and AAR",
     "threshold_a": 3,
     "threshold_b": 6,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
-    "content_for_b": "Consolidate and prioritize the number and frequency of planned SimEx.\nThink through the types of SimEx included in the plan and consider what could be covered through After-Action Reviews, drills and table top exercise.\nThe results of AAR and SimEx should be used to assess levels of readiness and re-prioritize activities to close gaps.",
-    "content_for_c": "Consolidate and prioritize the number and frequency of planned SimEx.\nThink through the types of SimEx included in the plan and consider what could be covered through After-Action Reviews, drills and table top exercises.\nThe results of AAR and SimEx should be used to assess levels of readiness and re-prioritize activities to close gaps."
+    "content_for_b": "Consolidate and prioritize the number and frequency of planned SimEx.\nThink through the types of SimEx included in the plan and consider what could be covered through After-Action Reviews, drills and table top exercise.\nThe results of AAR and SimEx should be used to assess levels of readiness and re-prioritize actions to close gaps.",
+    "content_for_c": "Consolidate and prioritize the number and frequency of planned SimEx.\nThink through the types of SimEx included in the plan and consider what could be covered through After-Action Reviews, drills and table top exercises.\nThe results of AAR and SimEx should be used to assess levels of readiness and re-prioritize actions to close gaps."
   },
   {
-    "activity_type_name": "SOPs",
+    "action_type_name": "SOPs",
     "threshold_a": 5,
     "threshold_b": 10,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
@@ -92,7 +92,7 @@
     "content_for_c": "SOPs should be developed in coordination with partners.\nDelegate development, testing and rollout responsibility to a singular coordinating unit.\nThe unit can also ensure there are no conflicts within the SOPS."
   },
   {
-    "activity_type_name": "surveillance",
+    "action_type_name": "surveillance",
     "threshold_a": 3,
     "threshold_b": 6,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
@@ -100,7 +100,7 @@
     "content_for_c": "Use a systems-thinking approach to ensure various surveillance systems across technical areas work together.\nConduct an overarching surveillance assessment and develop a master plan or strategy.\nInclude data collection, analysis and utilization of data in planning and training."
   },
   {
-    "activity_type_name": "tool development",
+    "action_type_name": "tool development",
     "threshold_a": 3,
     "threshold_b": 6,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",
@@ -108,7 +108,7 @@
     "content_for_c": "If there are many new tools, coordinate and align their development and roll out.\nConsider a technical working group to review and validate new tools for quality assurance."
   },
   {
-    "activity_type_name": "training",
+    "action_type_name": "training",
     "threshold_a": 3,
     "threshold_b": 6,
     "content_for_a": "Refer to the best practice document and case studies from similar contexts.\nAlways plan using evidence-supported methods.",

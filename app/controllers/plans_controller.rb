@@ -100,24 +100,24 @@ class PlansController < ApplicationController
     benchmark_document = BenchmarkDocument.new
     @benchmark_technical_areas = benchmark_document.technical_areas
     @benchmark_indicators = benchmark_document.indicators
-    @all_activities = benchmark_document.activities
-    @nudges_by_activity_type_json =
+    @all_actions = benchmark_document.actions
+    @nudges_by_action_type_json =
       File.read(
-        Rails.root.join("app", "fixtures", "nudges_for_activity_types.json"),
+        Rails.root.join("app", "fixtures", "nudges_for_action_types.json"),
       )
     @plan = Plan.deep_load(params.fetch(:id))
-    @count_activities_by_ta =
-      @plan.count_activities_by_ta(@benchmark_technical_areas)
-    @count_activities_by_type = @plan.count_activities_by_type
+    @count_actions_by_ta =
+      @plan.count_actions_by_ta(@benchmark_technical_areas)
+    @count_actions_by_type = @plan.count_actions_by_type
   end
 
   # TODO: test coverage for this
   def update
     plan = Plan.find_by_id!(params.fetch(:id))
-    benchmark_activity_ids =
-      JSON.parse(plan_update_params.fetch(:benchmark_activity_ids))
+    benchmark_action_ids =
+      JSON.parse(plan_update_params.fetch(:benchmark_action_ids))
     name = plan_update_params.fetch(:name)
-    plan.update!(name: name, benchmark_activity_ids: benchmark_activity_ids)
+    plan.update!(name: name, benchmark_action_ids: benchmark_action_ids)
     redirect_to plans_path
   end
 
@@ -158,7 +158,7 @@ class PlansController < ApplicationController
   end
 
   def plan_update_params
-    params.require(:plan).permit(:id, :name, :benchmark_activity_ids)
+    params.require(:plan).permit(:id, :name, :benchmark_action_ids)
   end
 
   def goal_params

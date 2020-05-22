@@ -11,7 +11,7 @@ class WorksheetTest < ActiveSupport::TestCase
     sheet = workbook[0]
     assert_not_nil sheet
     assert_equal "Instructions", sheet[0][0].value
-    assert_equal "1. Use these worksheets in your workshop to discuss key items for each activity recommended for stepping up.",
+    assert_equal "1. Use these worksheets in your workshop to discuss key items for each action recommended for stepping up.",
                  sheet[2][0].value
     assert_equal "Budget: This can be an estimate for budget. It's helpful if the detailed description is specific. Budget can also be added in the next stage.",
                  sheet[28][0].value
@@ -23,7 +23,7 @@ class WorksheetTest < ActiveSupport::TestCase
     assert_equal "Benchmark Objective:", sheet[0][0].value
     assert_equal "To establish a multisectoral IHR coordination mechanism to support the implementation of prevention, detection and response activities",
                  sheet[0][2].value
-    assert_equal "Activity required for JEE 1.0 score 3", sheet[6][0].value
+    assert_equal "Action required for JEE 1.0 score 3", sheet[6][0].value
     assert_equal "Create/update the national action plan for improving health security and IHR capacity based on IHR monitoring and evaluation results.",
                  sheet[7][0].value
     assert_equal "To establish a multisectoral IHR coordination mechanism to support the implementation of prevention, detection and response activities",
