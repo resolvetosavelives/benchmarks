@@ -106,9 +106,6 @@ class PlansController < ApplicationController
         Rails.root.join("app", "fixtures", "nudges_for_action_types.json"),
       )
     @plan = Plan.deep_load(params.fetch(:id))
-    @count_actions_by_ta =
-      @plan.count_actions_by_ta(@benchmark_technical_areas)
-    @count_actions_by_type = @plan.count_actions_by_type
   end
 
   # TODO: test coverage for this

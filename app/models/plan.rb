@@ -75,6 +75,7 @@ class Plan < ApplicationRecord
   # element containing an integer that is the count of the actions for that
   # technical area, ordered by +BenchmarkTechnicalArea.sequence+
   # @return Array of Integers
+  # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
   def count_actions_by_ta(benchmark_technical_areas)
     counts_by_ta_id = Array.new(benchmark_technical_areas.size, 0)
     plan_actions.reduce(counts_by_ta_id) do |accumulator_h, action|
@@ -86,6 +87,7 @@ class Plan < ApplicationRecord
     counts_by_ta_id.compact
   end
 
+  # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
   def count_actions_by_type
     counts_by_type = Array.new(
       BenchmarkIndicatorAction::ACTION_TYPES.size, 0

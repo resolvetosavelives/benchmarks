@@ -14,6 +14,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "rake"
 gem "rubyXL"
 gem "webpacker", "~> 5.1.1"
+gem "react-rails"
 gem "devise"
 gem "sentry-raven"
 gem "rack-attack"

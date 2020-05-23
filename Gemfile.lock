@@ -48,6 +48,10 @@ GEM
     arel (9.0.0)
     autoprefixer-rails (9.7.6)
       execjs
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.13)
     bindex (0.8.1)
     bootsnap (1.4.6)
@@ -70,6 +74,7 @@ GEM
     cliver (0.3.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.6)
+    connection_pool (2.2.2)
     crass (1.0.6)
     cuprite (0.6.0)
       capybara (>= 2.1, < 4)
@@ -199,6 +204,12 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
+    react-rails (2.6.1)
+      babel-transpiler (>= 0.7.0)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     regexp_parser (1.6.0)
     responders (3.0.0)
       actionpack (>= 5.0)
@@ -291,6 +302,7 @@ DEPENDENCIES
   rails-controller-testing
   rails-erd
   rake
+  react-rails
   rubyXL
   sentry-raven
   skylight

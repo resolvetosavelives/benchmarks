@@ -36,6 +36,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
       text: nil,
       level: nil,
       sequence: nil,
+      action_types: nil,
     }
   end
 
