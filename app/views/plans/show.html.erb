@@ -1,3 +1,7 @@
+<% content_for :js_head do
+  javascript_pack_tag "application_react", 'data-turbolinks-track': 'reload'
+end %>
+
 <% chart_labels_by_technical_area = [
     "Legislation",
     "IHR coordination",
@@ -19,188 +23,19 @@
     "Radiation",
 ] %>
 
-<div class="row">
-
-  <div class="col plan-container" data-controller="plan"
-       data-plan-term='<%= @plan.term %>'
-       data-plan-nudge-selectors='["#nudge-by-technical-area", "#nudge-by-action-type"]'
-       data-plan-nudge-content-selectors='["#nudge-for-technical-area-1-year", "#nudge-for-technical-area-5-year"]'
-       data-plan-nudge-template-selector="#nudge-template"
-       data-plan-nudge-content-zero-selector='#nudge-content-zero'
-       data-plan-chart-selectors='["#bar-chart-by-technical-area", "#bar-chart-by-action-type"]'
-       data-plan-chart-labels='<%= [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>'
-       data-plan-chart-series='<%= [@count_actions_by_ta, @count_actions_by_type].to_json %>'
-       data-plan-chart-width="100%"
-       data-plan-chart-height="240"
-  >
-    <%= form_for @plan, class: "needs-validation", novalidate: true, data: { target: "plan.form" } do |form| %>
-      <%= form.hidden_field :benchmark_action_ids,
-                            value: nil, # populated later via JS upon form submit event
-                            data: {target: "plan.fieldForActionIds"},
-                            autocomplete: "off"
-      %>
-
-      <!-- Plan Form: Edit Name, Save Button (its a DIV.row) -->
-      <%= render "plan_name_sticky", form: form %>
-
-      <!-- Count of Total Actions -->
-      <div class="row">
-        <div class="col mt-4">
-          <div class="row mx-0 action-count-header align-items-center">
-            <div class="action-count-circle col-auto d-flex flex-column align-items-center justify-content-center">
-              <span data-target="plan.actionCountCircle"><%= @plan.plan_actions.size %></span>
-            </div>
-            <div class="col-auto">
-              <p>Total Actions</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Row for Charts and Nudges -->
-      <div class="row">
-        <div class="col mt-4">
-
-          <!-- Card for Bar Charts and Nudges -->
-          <div class="plan card">
-
-            <ul class="nav nav-tabs pt-3" role="tablist">
-              <li class="nav-item px-2">
-                <a class="nav-link active" data-toggle="tab" href="#tabContentForTechnicalArea" id="tabForTechnicalArea" role="tab" aria-controls="technical-area" aria-selected="true">
-                  Technical Area</a>
-              </li>
-              <li class="nav-item px-2">
-                <a class="nav-link" data-toggle="tab" href="#tabContentForActionType" id="tabForActionType" role="tab" aria-controls="action-type" aria-selected="false">
-                  Action Type</a>
-              </li>
-            </ul>
-
-            <div class="row tab-content">
-              <div id="tabContentForTechnicalArea" aria-labelledby="tabForTechnicalArea" role="tabpanel" class="col-auto tab-pane fade show active">
-                <div class="row no-gutters">
-                  <!-- Left Col -->
-                  <div class="chart-pane col-lg d-flex flex-column align-items-center">
-                    <h6 class="my-3">Actions per benchmark technical area</h6>
-                    <!-- Actual Chart, by Technical Area -->
-                    <div id="bar-chart-by-technical-area" class="chart-container ct-chart-bar"></div>
-                  </div>
-
-                  <!-- Right Col -->
-                  <%= render "nudge_container", dom_id: "nudge-by-technical-area" %>
-                </div>
-              </div>
-
-              <div id="tabContentForActionType" aria-labelledby="tabForActionType" role="tabpanel" class="col-auto tab-pane fade">
-                <div class="row no-gutters">
-                  <!-- Left Col -->
-                  <div class="chart-pane col-lg d-flex mx-auto flex-column align-items-center">
-                    <h6 class="my-3">Actions per action type</h6>
-                    <!-- Actual Chart, by Action Type -->
-                    <div id="bar-chart-by-action-type" class="chart-container ct-chart-bar"></div>
-                  </div>
-
-                  <!-- Right Col -->
-                  <%= render "nudge_container", dom_id: "nudge-by-action-type" %>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- List of Actions -->
-      <div class="row my-4">
-        <div id="action-list-by-tech-container" class="col-auto w-100">
-          <% @benchmark_technical_areas.each_with_index do |benchmark_technical_area, index| %>
-            <%= render 'technical_area',
-                       benchmark_technical_area: benchmark_technical_area,
-                       chart_label: chart_labels_by_technical_area[index]
-            %>
-          <% end %>
-        </div>
-        <div id="action-list-by-type-container" class="col-auto w-100">
-          <h2></h2>
-          <div class="col"></div>
-        </div>
-      </div>
-
-    <% end %>
-  </div>
-
-  <script type="text/template" id="action-row-template">
-    <%= render "action",
-               benchmark_technical_area_id: "{{benchmarkTechnicalAreaId}}",
-               bar_segment_index:           "{{barSegmentIndex}}",
-               benchmark_indicator_id:      "{{benchmarkIndicatorId}}",
-               indicator_display_abbrev:    "{{indicatorDisplayAbbrev}}",
-               benchmark_action_id:       "{{benchmarkActionId}}",
-               benchmark_action_level:    "{{benchmarkActionLevel}}",
-               benchmark_action_text:     "{{benchmarkActionText}}",
-               action_type_classes:       "{{benchmarkActionTypes}}"
-    %>
-  </script>
-</div>
-
-<script type="text/template" id="nudge-for-technical-area-1-year">
-  <p>
-    <%= render file: Rails.root.join("app", "assets", "images", "ico-lightbulb.svg") %>
-    Tips for your draft plan
-  </p>
-  <ul>
-    <li>
-      Focus on no more than 2-3 actions per technical area.
-    </li>
-    <li>
-      Consider reducing the number of technical areas included and focus on the areas that scored low in your capacity assessments or are identified as gaps in the AAR's and simulation reviews.
-    </li>
-  </ul>
-</script>
-
-<script type="text/template" id="nudge-for-technical-area-5-year">
-  <p>
-    <%= render file: Rails.root.join("app", "assets", "images", "ico-lightbulb.svg") %>
-    Tips for your draft plan
-  </p>
-  <ul>
-    <li>
-      5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic.
-    </li>
-    <li>
-      Prioritize actions based on the country risk and capacity assessments focused on technical areas that address gaps identified including those in AAR's and simulations.
-    </li>
-    <li>
-      Remember &mdash; you will still need to create a smaller more focused implementation plan as part of the 5 year plan to ensure implementation.
-    </li>
-  </ul>
-</script>
-
-<script type="text/template" id="nudge-template">
-  <p>
-    <%= render file: Rails.root.join("app", "assets", "images", "ico-lightbulb.svg") %>
-    Tips for {{action_type}} actions
-  </p>
-  <ul>
-    {{#listItems}}
-    <li>
-      {{item}}
-    </li>
-    {{/listItems}}
-  </ul>
-</script>
-
-<script type="text/template" id="nudge-content-zero">
-  <%= render partial: "nudge_content_zero" %>
-</script>
+<%= react_component("PlanEditPage") %>
 
 <script type="application/javascript">
     window.STATE_FROM_SERVER = {
+        formAuthenticityToken: "<%= form_authenticity_token %>",
+        formActionUrl: "<%= url_for(@plan) %>",
         technicalAreas: <%= raw @benchmark_technical_areas.to_json %>,
         indicators: <%= raw @benchmark_indicators.to_json %>,
         actions: <%= raw @all_actions.to_json %>,
         plan: <%= raw @plan.to_json %>,
-        planActionIds: <%= @plan.action_ids %>
-    }
+        planActionIds: <%= @plan.action_ids %>,
+        planGoals: <%= raw @plan.goals.to_json %>,
+        planChartLabels: <%= raw [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>,
+    };
     window.NUDGES_BY_ACTION_TYPE = <%= raw @nudges_by_action_type_json %>;
 </script>
