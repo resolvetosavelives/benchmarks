@@ -4,6 +4,11 @@ import ChartistGraph from "react-chartist"
 import PropTypes from "prop-types"
 import $ from "jquery"
 import { selectTechnicalArea } from "../../config/actions"
+import {
+  getAllActions,
+  getPlanActionIds,
+  countActionsByTechnicalArea,
+} from "../../config/selectors"
 
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
@@ -13,12 +18,8 @@ class BarChartByTechnicalArea extends React.Component {
 
   render() {
     const chartLabels = this.props.chartLabels[0]
-    const countActionsByTechnicalArea = this.constructor.countActionsByTechnicalArea(
-      this.props.planActionIds,
-      this.props.allActions
-    )
     const { data, options } = this.getBarChartOptions(
-      countActionsByTechnicalArea,
+      this.props.countActionsByTechnicalArea,
       chartLabels
     )
     console.debug(
@@ -26,7 +27,7 @@ class BarChartByTechnicalArea extends React.Component {
       chartLabels,
       this.props.planActionIds,
       this.props.allActions,
-      countActionsByTechnicalArea,
+      this.props.countActionsByTechnicalArea,
       data,
       options
     )
@@ -79,10 +80,7 @@ class BarChartByTechnicalArea extends React.Component {
 
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
-    const countActionsByTechnicalArea = this.constructor.countActionsByTechnicalArea(
-      this.props.planActionIds,
-      this.props.allActions
-    )
+    const countActionsByTechnicalArea = this.props.countActionsByTechnicalArea
     const technicalAreas = this.props.technicalAreas
     const chartistGraph = this.chartistGraphInstance
     chartistGraph.chartist.detach()
@@ -128,18 +126,14 @@ class BarChartByTechnicalArea extends React.Component {
   // TODO: there is a bug here i think, where the "Linking public health" technical area (12th via 0-index)
   //   where the chart's tooltip shows 6 actions but the list for that indicator shows 7 actions (both filtered
   //   and unfiltered) which means there is a discrepancy someplace in the action-tallying logic.
-  static countActionsByTechnicalArea(actionIds, actions) {
-    let currentActions = this.getActionsForIds(actions, actionIds)
-    return currentActions.reduce((acc, action) => {
-      const currentindex = action.benchmark_technical_area_id - 1
-      acc[currentindex] += 1
-      return acc
-    }, Array(18).fill(0))
-  }
-
-  static getActionsForIds(actions, actionIds) {
-    return actions.filter((action) => actionIds.indexOf(action.id) > 0)
-  }
+  // static countActionsByTechnicalArea(actionsToCount) {
+  //   console.log(`countActionsByTechnicalArea: actionsToCount: `, actionsToCount)
+  //   return actionsToCount.reduce((acc, action) => {
+  //     const currentIndex = action.benchmark_technical_area_id - 1
+  //     acc[currentIndex] += 1
+  //     return acc
+  //   }, Array(18).fill(0))
+  // }
 }
 
 BarChartByTechnicalArea.propTypes = {
@@ -150,14 +144,16 @@ BarChartByTechnicalArea.propTypes = {
   planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
+  countActionsByTechnicalArea: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
     technicalAreas: state.technicalAreas,
     chartLabels: state.planChartLabels,
-    planActionIds: state.planActionIds,
-    allActions: state.allActions,
+    planActionIds: getPlanActionIds(state),
+    allActions: getAllActions(state),
+    countActionsByTechnicalArea: countActionsByTechnicalArea(state),
   }
 }
 

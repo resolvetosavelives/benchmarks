@@ -14,7 +14,7 @@ const strActions = fs.readFileSync(
 
 it("BarChartByTechnicalArea has the expected 2 divs", () => {
   const renderedComponent = renderForConnect(
-    <BarChartByTechnicalArea width="100%" height="240" />,
+    <BarChartByTechnicalArea width="700" height="240" />,
     {
       initialState: {
         technicalAreas: JSON.parse(strTechnicalAreas),
