@@ -8,9 +8,7 @@ import { selectTechnicalArea } from "../../config/actions"
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
     super(props)
-    if (!this.chartistGraphInstance) {
-      this.chartistGraphInstance = null // will be a ref to the chartist instance
-    }
+    console.debug(`BarChartByTechnicalArea: constructor..`)
   }
 
   render() {
@@ -22,6 +20,15 @@ class BarChartByTechnicalArea extends React.Component {
     const { data, options } = this.getBarChartOptions(
       countActionsByTechnicalArea,
       chartLabels
+    )
+    console.debug(
+      `BarChartByTechnicalArea: render: `,
+      chartLabels,
+      this.props.planActionIds,
+      this.props.allActions,
+      countActionsByTechnicalArea,
+      data,
+      options
     )
     return (
       <div className="chart-container ct-chart-bar">
