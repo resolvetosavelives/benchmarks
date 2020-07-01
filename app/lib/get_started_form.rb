@@ -5,27 +5,33 @@ class GetStartedForm
   attr_accessor :country_id,
                 :assessment_type,
                 :plan_by_technical_ids,
-                :plan_term
+                :plan_term,
+                :diseases
   attr_writer :technical_area_ids
   # object instances that should result from the inputs
-  attr_accessor :country, :assessment
+  attr_accessor :country, :assessment, :diseases
 
   validates :country, :assessment, presence: true
   validates :plan_term, inclusion: [1, 5] # in years
+  validate :valid_diseases?
 
   def initialize(attrs = {})
     super attrs
     init_technical_area_ids
+    init_diseases
     numeric_plan_term
     set_country
     set_assessment
   end
 
   def init_technical_area_ids
-    # when blank, initialize to an array
     @technical_area_ids = [] if @technical_area_ids.blank?
-    # when any values, convert them from string to integer
     @technical_area_ids = @technical_area_ids.map(&:to_i)
+  end
+
+  def init_diseases
+    @diseases = [] if @diseases.blank?
+    @diseases = @diseases.map(&:to_i)
   end
 
   def plan_by_technical_ids?
@@ -69,5 +75,9 @@ class GetStartedForm
   # return IDs only when the corresponding checkbox is selected
   def technical_area_ids
     plan_by_technical_ids? ? @technical_area_ids : []
+  end
+
+  def valid_diseases?
+    errors.add(:diseases, "Invalid disease id") unless diseases.nil? || diseases.inject(true) { |included, disease| included && Plan::DISEASE_TYPES.include?(disease) }
   end
 end

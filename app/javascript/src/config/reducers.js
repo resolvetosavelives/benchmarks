@@ -117,7 +117,9 @@ export default function initReducers(initialState) {
 
   const selectedActionTypeOrdinal = createReducer(null, {
     [SELECT_ACTION_TYPE]: (state, dispatchedAction) => {
-      return dispatchedAction.payload.actionTypeOrdinal
+      // NB: the reason we use "actionTypeIndex + 1" is because actionTypeIndex is
+      //   zero-based but the actual ordinals used as ActionType IDs are 1-based, e.g. 0-14 => 1-15.
+      return dispatchedAction.payload.actionTypeIndex + 1
     },
     // eslint-disable-next-line no-unused-vars
     [DESELECT_ACTION_TYPE]: (state, dispatchedAction) => {
@@ -140,10 +142,6 @@ export default function initReducers(initialState) {
   const planGoalMap = createReducer(initialPlanGoalMap, {})
 
   const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
-  console.log(
-    `Reducer: initialState.nudgesByActionType: `,
-    initialState.nudgesByActionType
-  )
 
   const plan = createReducer(initialState.plan, {
     [UPDATE_PLAN_NAME]: (state, dispatchedAction) => {

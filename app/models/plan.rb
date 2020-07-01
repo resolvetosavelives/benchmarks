@@ -10,6 +10,9 @@ class Plan < ApplicationRecord
   # TODO: update this implementation once the assessments page is modernized
   ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 from-technical-areas].freeze
   TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
+  DISEASE_TYPES = [
+      10, # influenza
+  ].freeze
   include PlanBuilder
 
   belongs_to :assessment

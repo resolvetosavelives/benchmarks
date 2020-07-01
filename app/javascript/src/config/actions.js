@@ -62,11 +62,11 @@ const selectTechnicalArea = (technicalAreaId) => {
   }
 }
 
-const selectActionType = (actionTypeOrdinal) => {
+const selectActionType = (actionTypeIndex) => {
   return (dispatch) => {
     dispatch({
       type: SELECT_ACTION_TYPE,
-      payload: { actionTypeOrdinal: actionTypeOrdinal },
+      payload: { actionTypeIndex: actionTypeIndex },
     })
     dispatch({
       type: SWITCH_LIST_MODE,
