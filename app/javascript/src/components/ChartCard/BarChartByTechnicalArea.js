@@ -122,18 +122,6 @@ class BarChartByTechnicalArea extends React.Component {
       dispatch(selectTechnicalArea(technicalArea.id))
     })
   }
-
-  // TODO: there is a bug here i think, where the "Linking public health" technical area (12th via 0-index)
-  //   where the chart's tooltip shows 6 actions but the list for that indicator shows 7 actions (both filtered
-  //   and unfiltered) which means there is a discrepancy someplace in the action-tallying logic.
-  // static countActionsByTechnicalArea(actionsToCount) {
-  //   console.log(`countActionsByTechnicalArea: actionsToCount: `, actionsToCount)
-  //   return actionsToCount.reduce((acc, action) => {
-  //     const currentIndex = action.benchmark_technical_area_id - 1
-  //     acc[currentIndex] += 1
-  //     return acc
-  //   }, Array(18).fill(0))
-  // }
 }
 
 BarChartByTechnicalArea.propTypes = {

@@ -59,6 +59,11 @@ class AppsTest < ApplicationSystemTestCase
              )
     end
 
+    ##
+    # save the state_from_server to file, for use in jest tests.
+    # uncomment and run this to update the JSON data file periodically or upon STATE_FROM_SERVER structure/format change.
+    # save_state_from_server(page)
+
     # verify bar chart by technical area filter functionality
     find("line[data-original-title*=\"Antimicrobial Resistance\"]").click
     assert_selector("#technical-area-3") # the last one

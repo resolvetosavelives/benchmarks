@@ -8,7 +8,7 @@ class PlanEditPage extends React.Component {
   constructor(props) {
     super(props)
     this.store = configureStore({
-      reducer: initReducers(),
+      reducer: initReducers(window.STATE_FROM_SERVER),
     })
   }
 

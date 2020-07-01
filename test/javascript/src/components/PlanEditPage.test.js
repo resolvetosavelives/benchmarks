@@ -9,7 +9,6 @@ container = document.createElement("div")
 
 beforeEach(() => {
   window.STATE_FROM_SERVER = stubStateFromServer()
-  window.NUDGES_BY_ACTION_TYPE = []
   document.body.appendChild(container)
 })
 
@@ -41,5 +40,6 @@ function stubStateFromServer() {
     selectedTechnicalAreaId: null,
     planGoals: [],
     plan: {},
+    nudgesByActionType: {},
   }
 }

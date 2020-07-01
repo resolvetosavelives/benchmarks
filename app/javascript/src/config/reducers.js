@@ -15,22 +15,11 @@ import {
   UPDATE_PLAN_NAME,
 } from "./constants"
 
-export default function initReducers() {
-  const technicalAreas = createReducer(
-    window.STATE_FROM_SERVER.technicalAreas,
-    {}
-  )
-  const technicalAreaMapInitial = window.STATE_FROM_SERVER.technicalAreas.reduce(
-    (map, technicalArea) => {
-      map[technicalArea.id] = technicalArea
-      return map
-    },
-    {}
-  )
-  const technicalAreaMap = createReducer(technicalAreaMapInitial, {})
+export default function initReducers(initialState) {
+  const technicalAreas = createReducer(initialState.technicalAreas, {})
 
-  const indicators = createReducer(window.STATE_FROM_SERVER.indicators, {})
-  const indicatorMapInitial = window.STATE_FROM_SERVER.indicators.reduce(
+  const indicators = createReducer(initialState.indicators, {})
+  const indicatorMapInitial = initialState.indicators.reduce(
     (map, indicator) => {
       map[indicator.id] = indicator
       return map
@@ -39,13 +28,13 @@ export default function initReducers() {
   )
   const indicatorMap = createReducer(indicatorMapInitial, {})
 
-  const actionMap = window.STATE_FROM_SERVER.actions.reduce((map, action) => {
+  const actionMap = initialState.actions.reduce((map, action) => {
     map[action.id] = action
     return map
   }, {})
   const actions = createReducer(actionMap, {})
 
-  const planActionIds = createReducer(window.STATE_FROM_SERVER.planActionIds, {
+  const planActionIds = createReducer(initialState.planActionIds, {
     [ADD_ACTION_TO_PLAN]: (state, action) => {
       const actionIdToAdd = action.payload.actionId
       state.push(actionIdToAdd)
@@ -59,7 +48,7 @@ export default function initReducers() {
   const initialMapOfPlanActionIdsByIndicator = {}
   const initialMapOfPlanActionIdsNotInIndicator = {}
   let currentIndicatorId
-  window.STATE_FROM_SERVER.actions.forEach((action) => {
+  initialState.actions.forEach((action) => {
     if (action.benchmark_indicator_id !== currentIndicatorId) {
       currentIndicatorId = action.benchmark_indicator_id
     }
@@ -69,7 +58,7 @@ export default function initReducers() {
     if (!initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId]) {
       initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId] = []
     }
-    if (window.STATE_FROM_SERVER.planActionIds.indexOf(action.id) >= 0) {
+    if (initialState.planActionIds.indexOf(action.id) >= 0) {
       initialMapOfPlanActionIdsByIndicator[currentIndicatorId].push(action.id)
     } else {
       initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId].push(
@@ -114,10 +103,7 @@ export default function initReducers() {
     }
   )
 
-  const planChartLabels = createReducer(
-    window.STATE_FROM_SERVER.planChartLabels,
-    {}
-  )
+  const planChartLabels = createReducer(initialState.planChartLabels, {})
 
   const selectedTechnicalAreaId = createReducer(null, {
     [SELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
@@ -139,7 +125,7 @@ export default function initReducers() {
     },
   })
 
-  const allActions = createReducer(window.STATE_FROM_SERVER.actions, {})
+  const allActions = createReducer(initialState.actions, {})
 
   const selectedListMode = createReducer(LIST_MODE_BY_TECHNICAL_AREA, {
     [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
@@ -147,18 +133,15 @@ export default function initReducers() {
     },
   })
 
-  const initialPlanGoalMap = window.STATE_FROM_SERVER.planGoals.reduce(
-    (acc, goal) => {
-      acc[goal.benchmark_indicator_id] = goal
-      return acc
-    },
-    {}
-  )
+  const initialPlanGoalMap = initialState.planGoals.reduce((acc, goal) => {
+    acc[goal.benchmark_indicator_id] = goal
+    return acc
+  }, {})
   const planGoalMap = createReducer(initialPlanGoalMap, {})
 
-  const nudgesByActionType = createReducer(window.NUDGES_BY_ACTION_TYPE, {})
+  const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
 
-  const plan = createReducer(window.STATE_FROM_SERVER.plan, {
+  const plan = createReducer(initialState.plan, {
     [UPDATE_PLAN_NAME]: (state, dispatchedAction) => {
       state.name = dispatchedAction.payload.name
     },
@@ -166,7 +149,6 @@ export default function initReducers() {
 
   return combineReducers({
     technicalAreas,
-    technicalAreaMap,
     indicators,
     indicatorMap,
     actions,
