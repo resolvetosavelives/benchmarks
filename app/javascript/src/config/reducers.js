@@ -140,6 +140,10 @@ export default function initReducers(initialState) {
   const planGoalMap = createReducer(initialPlanGoalMap, {})
 
   const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
+  console.log(
+    `Reducer: initialState.nudgesByActionType: `,
+    initialState.nudgesByActionType
+  )
 
   const plan = createReducer(initialState.plan, {
     [UPDATE_PLAN_NAME]: (state, dispatchedAction) => {
