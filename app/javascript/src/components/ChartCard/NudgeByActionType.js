@@ -4,11 +4,6 @@ import { countActionsByActionType } from "../../config/selectors"
 
 const NudgeByActionType = () => {
   const nudgesByActionType = useSelector((state) => state.nudgesByActionType)
-  console.log(
-    `nudgesByActionType: `,
-    typeof nudgesByActionType,
-    nudgesByActionType
-  )
   const selectedActionTypeOrdinal = useSelector(
     (state) => state.selectedActionTypeOrdinal
   )
@@ -19,7 +14,6 @@ const NudgeByActionType = () => {
   }
 
   const nudgeData = nudgesByActionType[selectedActionTypeIndex]
-  console.log(`nudgeData: `, selectedActionTypeIndex, nudgeData)
   const listItems = getListItemsForNudge(
     countOfActions,
     selectedActionTypeIndex,

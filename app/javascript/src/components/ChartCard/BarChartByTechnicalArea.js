@@ -13,7 +13,6 @@ import {
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
     super(props)
-    console.debug(`BarChartByTechnicalArea: constructor..`)
   }
 
   render() {
@@ -21,15 +20,6 @@ class BarChartByTechnicalArea extends React.Component {
     const { data, options } = this.getBarChartOptions(
       this.props.countActionsByTechnicalArea,
       chartLabels
-    )
-    console.debug(
-      `BarChartByTechnicalArea: render: `,
-      chartLabels,
-      this.props.planActionIds,
-      this.props.allActions,
-      this.props.countActionsByTechnicalArea,
-      data,
-      options
     )
     return (
       <div className="chart-container ct-chart-bar">
