@@ -6,6 +6,9 @@ import {
   getPlanActionIds,
   getNumOfActionTypes,
   getActionsForIds,
+  getTechnicalAreaMap,
+  getIndicatorMap,
+  getPlanGoalMap,
   countActionsByTechnicalArea,
   countActionsByActionType,
 } from "config/selectors"
@@ -23,6 +26,8 @@ beforeAll(() => {
     planActionIds: stateFromServer.planActionIds,
     nudgesByActionType: stateFromServer.nudgesByActionType,
     technicalAreas: stateFromServer.technicalAreas,
+    indicators: stateFromServer.indicators,
+    planGoals: stateFromServer.planGoals,
   }
   store = mockStore(initialState)
 })
@@ -35,6 +40,52 @@ describe("getAllActions", () => {
 
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(876)
+  })
+})
+
+describe("getTechnicalAreaMap", () => {
+  it("returns a hash map of technicalArea.id => technicalArea", () => {
+    const state = store.getState()
+
+    const result = getTechnicalAreaMap(state)
+
+    expect(result).toBeInstanceOf(Object)
+    expect(result[3].id).toEqual(3)
+    expect(result[3].sequence).toEqual(3)
+    expect(result[3].text).toEqual("Antimicrobial Resistance")
+  })
+})
+
+describe("getIndicatorMap", () => {
+  it("returns a hash map of indicator.id => indicator", () => {
+    const state = store.getState()
+
+    const result = getIndicatorMap(state)
+
+    expect(result).toBeInstanceOf(Object)
+    expect(result[2].id).toEqual(2)
+    expect(result[2].sequence).toEqual(2)
+    expect(result[2].text).toEqual(
+      "Financing is available for the implementation of IHR capacities"
+    )
+    expect(result[2].objective).toEqual(
+      "To ensure financing is available for the implementation of IHR capacities"
+    )
+  })
+})
+
+describe("getPlanGoalMap", () => {
+  it("returns a hash map of goal.id => goal", () => {
+    const state = store.getState()
+
+    const result = getPlanGoalMap(state)
+
+    expect(result).toBeInstanceOf(Object)
+    expect(result[1]).toBeInstanceOf(Object)
+    expect(result[1].id).not.toBeNull()
+    expect(result[1].plan_id).not.toBeNull()
+    expect(result[1].value).not.toBeNull()
+    expect(result[1].benchmark_indicator_id).not.toBeNull()
   })
 })
 

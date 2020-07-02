@@ -19,14 +19,6 @@ export default function initReducers(initialState) {
   const technicalAreas = createReducer(initialState.technicalAreas, {})
 
   const indicators = createReducer(initialState.indicators, {})
-  const indicatorMapInitial = initialState.indicators.reduce(
-    (map, indicator) => {
-      map[indicator.id] = indicator
-      return map
-    },
-    {}
-  )
-  const indicatorMap = createReducer(indicatorMapInitial, {})
 
   const actionMap = initialState.actions.reduce((map, action) => {
     map[action.id] = action
@@ -66,7 +58,6 @@ export default function initReducers(initialState) {
       )
     }
   })
-
   const planActionIdsByIndicator = createReducer(
     initialMapOfPlanActionIdsByIndicator,
     {
@@ -84,7 +75,6 @@ export default function initReducers(initialState) {
       },
     }
   )
-
   const planActionIdsNotInIndicator = createReducer(
     initialMapOfPlanActionIdsNotInIndicator,
     {
@@ -135,11 +125,7 @@ export default function initReducers(initialState) {
     },
   })
 
-  const initialPlanGoalMap = initialState.planGoals.reduce((acc, goal) => {
-    acc[goal.benchmark_indicator_id] = goal
-    return acc
-  }, {})
-  const planGoalMap = createReducer(initialPlanGoalMap, {})
+  const planGoals = createReducer(initialState.planGoals, {})
 
   const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
 
@@ -152,9 +138,9 @@ export default function initReducers(initialState) {
   return combineReducers({
     technicalAreas,
     indicators,
-    indicatorMap,
     actions,
     planActionIds,
+    planGoals,
     planActionIdsByIndicator,
     planActionIdsNotInIndicator,
     planChartLabels,
@@ -162,7 +148,6 @@ export default function initReducers(initialState) {
     selectedTechnicalAreaId,
     selectedActionTypeOrdinal,
     selectedListMode,
-    planGoalMap,
     nudgesByActionType,
     plan,
   })

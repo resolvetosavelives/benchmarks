@@ -1,12 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { deleteAnAction } from "../../config/actions"
+import { getIndicatorMap } from "../../config/selectors"
 import { useSelector, useDispatch } from "react-redux"
 
 const Action = (props) => {
   const id = props.id
   const dispatch = useDispatch()
-  const indicatorMap = useSelector((state) => state.indicatorMap)
+  const indicatorMap = useSelector((state) => getIndicatorMap(state))
   const actionMap = useSelector((state) => state.actions)
   const action = actionMap[id]
   const indicator = indicatorMap[action.benchmark_indicator_id]
