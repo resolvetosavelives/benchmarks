@@ -70,31 +70,22 @@ class BarChartByActionType extends React.Component {
 
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
-    const countActionsByTechnicalArea = this.props.countActionsByActionType
-    const technicalAreas = this.props.technicalAreas
+    const countActionsByActionType = this.props.countActionsByActionType
     const chartistGraph = this.chartistGraphInstance
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
     $("line.ct-bar", domNode).each((segmentIndex, el) => {
       let $elBarSegment = $(el)
-      this.initTooltipForSegmentOfChartByTechnicalArea(
+      this.initTooltipForSegmentOfChart(
         $elBarSegment,
         segmentIndex,
-        countActionsByTechnicalArea[segmentIndex]
+        countActionsByActionType[segmentIndex]
       )
-      this.initClickHandlerForChartByTechnicalArea(
-        $elBarSegment,
-        technicalAreas[segmentIndex],
-        dispatch
-      )
+      this.initClickHandlerForChart($elBarSegment, segmentIndex, dispatch)
     })
   }
 
-  initTooltipForSegmentOfChartByTechnicalArea(
-    $elBarSegment,
-    index,
-    countActions
-  ) {
+  initTooltipForSegmentOfChart($elBarSegment, index, countActions) {
     const tooltipTitle = `${this.chartLabels[index]}: ${countActions}`
     $($elBarSegment)
       .attr("title", tooltipTitle)
@@ -103,13 +94,9 @@ class BarChartByActionType extends React.Component {
       .tooltip()
   }
 
-  initClickHandlerForChartByTechnicalArea(
-    $elBarSegment,
-    technicalArea,
-    dispatch
-  ) {
+  initClickHandlerForChart($elBarSegment, segmentIndex, dispatch) {
     $elBarSegment.on("click", () => {
-      dispatch(selectActionType(technicalArea.id))
+      dispatch(selectActionType(segmentIndex))
     })
   }
 }
@@ -117,7 +104,6 @@ class BarChartByActionType extends React.Component {
 BarChartByActionType.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
-  technicalAreas: PropTypes.array.isRequired,
   chartLabels: PropTypes.array.isRequired,
   planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
@@ -127,7 +113,6 @@ BarChartByActionType.propTypes = {
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    technicalAreas: state.technicalAreas,
     chartLabels: state.planChartLabels,
     planActionIds: state.planActionIds,
     allActions: state.allActions,

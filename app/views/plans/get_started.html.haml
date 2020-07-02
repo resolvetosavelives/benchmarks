@@ -102,6 +102,19 @@
             %div{style: "height: 75px"}
 
       .form-row
+        .col
+          %h4{class: heading_disabled_class} 4. Do you want to add disease specific planning?
+          - if @get_started_form.country.present?
+            .form-check
+              = check_box_tag "get_started_form[diseases][]", Plan::DISEASE_TYPES.first, false,
+                {class: "form-check-inline",
+                  id: "diseases_influenza"}
+              %label{for: "diseases_influenza"}
+                Optional: Influenza planning
+          - else
+            %div{style: "height: 75px"}
+
+      .form-row
         .col-2
           = form.submit "Next",
             class: "btn btn-primary",

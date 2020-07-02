@@ -184,7 +184,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # turn up on the plan goal-setting page
-    assert_current_path("/plan/goals/Nigeria/jee1/5-year/2-9")
+    assert_current_path("/plan/goals/Nigeria/jee1/5-year?areas=2-9")
     assert page.has_content?("JEE SCORES")
     assert page.has_content?(
              "P.2.1 A functional mechanism is established for the coordination and integration of relevant sectors in the implementation of IHR",
