@@ -59,6 +59,34 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
       end
     end
 
+    describe "with an ajax request with valid params diseases" do
+      it "responds with success containing the redirect key" do
+        post get_started_url,
+             xhr: true,
+             params: {
+                 get_started_form: {
+                     country_id: "162", assessment_type: "jee1", plan_term: "1", diseases: [10]
+                 },
+             }
+        assert_response :success
+        assert_template nil
+        response_body = response.body
+        response_body.starts_with?(
+            PlansController::GET_STARTED_REDIRECT_KEY,
+        ).must_equal true
+        redirect_url =
+            plan_goals_url(
+                {
+                    country_name: "Nigeria",
+                    assessment_type: "jee1",
+                    plan_term: "1-year",
+                    diseases: "10",
+                },
+            )
+        response_body.end_with?(redirect_url).must_equal true
+      end
+    end
+
     describe "#goals" do
       describe "for a non-existent assessment" do
         it "responds with success" do
