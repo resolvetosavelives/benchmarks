@@ -33,15 +33,14 @@ class PlansController < ApplicationController
     if request.post? && request.xhr?
       if @get_started_form.valid?
         url =
-          plan_goals_url(
-            country_name: @get_started_form.country.name,
-            assessment_type: @get_started_form.assessment_type,
-            plan_term: @get_started_form.plan_term_s,
-            areas: @get_started_form.technical_area_ids.join("-"),
-          )
-        Rails.logger.info "Redirect workaround for an XHR request to URL: #{
-                            url
-                          }"
+            plan_goals_url(
+                country_name: @get_started_form.country.name,
+                assessment_type: @get_started_form.assessment_type,
+                plan_term: @get_started_form.plan_term_s,
+                areas: @get_started_form.technical_area_ids.present? ? @get_started_form.technical_area_ids.join("-") : nil,
+                diseases: @get_started_form.diseases.present? ? @get_started_form.diseases.join("-") : nil,
+            )
+        Rails.logger.info "Redirect workaround for an XHR request to URL: #{url}"
         render plain: "#{GET_STARTED_REDIRECT_KEY}#{url}"
         return
       else
@@ -58,6 +57,7 @@ class PlansController < ApplicationController
     assessment_type = params[:assessment_type]
     country_name = params[:country_name]
     technical_area_ids = params[:areas].to_s.split("-")
+    diseases = params[:diseases].to_s.split("-")
     country = Country.find_by_name country_name
     @publication = AssessmentPublication.find_by_named_id assessment_type
     if country.present? && @publication.present?
