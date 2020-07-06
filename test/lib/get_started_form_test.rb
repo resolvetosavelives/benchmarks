@@ -31,7 +31,7 @@ describe GetStartedForm do
       # 162 is Nigeria
       assessment_type: "jee1",
       plan_term: "5",
-      diseases: [Plan::DISEASE_TYPES.first]
+      diseases: [Disease.influenza.id]
     }
   end
 
@@ -154,7 +154,7 @@ describe GetStartedForm do
     end
 
     it "returns an expected value for diseases" do
-      subject.diseases.must_equal [Plan::DISEASE_TYPES.first]
+      subject.diseases.must_equal [Disease.influenza.id]
     end
   end
 

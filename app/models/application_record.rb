@@ -18,5 +18,6 @@ class ApplicationRecord < ActiveRecord::Base
     BenchmarkTechnicalArea
     BenchmarkIndicator
     BenchmarkIndicatorAction
+    Disease
   ]
 end

@@ -10,9 +10,6 @@ class Plan < ApplicationRecord
   # TODO: update this implementation once the assessments page is modernized
   ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 from-technical-areas].freeze
   TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
-  DISEASE_TYPES = [
-      10, # influenza
-  ].freeze
   include PlanBuilder
 
   belongs_to :assessment
@@ -20,6 +17,8 @@ class Plan < ApplicationRecord
   has_many :goals, class_name: "PlanGoal", dependent: :destroy
   has_many :plan_actions, dependent: :destroy
   has_many :benchmark_indicator_actions, through: :plan_actions
+  has_many :plan_diseases
+  has_many :diseases, through: :plan_diseases
 
   delegate :alpha3, to: :country
   delegate :jee1?, :spar_2018?, :type_description, to: :assessment

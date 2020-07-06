@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_165716) do
+ActiveRecord::Schema.define(version: 2020_07_03_001806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,13 @@ ActiveRecord::Schema.define(version: 2020_05_22_165716) do
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
+  create_table "diseases", force: :cascade do |t|
+    t.string "display"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "plan_actions", force: :cascade do |t|
     t.integer "plan_id"
     t.integer "benchmark_indicator_action_id"
@@ -119,6 +126,12 @@ ActiveRecord::Schema.define(version: 2020_05_22_165716) do
     t.integer "benchmark_indicator_id"
     t.integer "benchmark_technical_area_id"
     t.index ["plan_id"], name: "index_plan_actions_on_plan_id"
+  end
+
+  create_table "plan_diseases", id: false, force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.bigint "disease_id", null: false
+    t.index ["plan_id", "disease_id"], name: "index_plan_diseases_on_plan_id_and_disease_id", unique: true
   end
 
   create_table "plan_goals", force: :cascade do |t|
