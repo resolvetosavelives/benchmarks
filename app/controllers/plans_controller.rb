@@ -28,6 +28,7 @@ class PlansController < ApplicationController
     @countries = Country.all_assessed
     @technical_areas_jee1 = AssessmentTechnicalArea.jee1
     @technical_areas_spar_2018 = AssessmentTechnicalArea.spar_2018
+    @influenza = Disease.influenza
     @get_started_form = GetStartedForm.new get_started_params.to_h
     @redirect_key = GET_STARTED_REDIRECT_KEY
     if request.post? && request.xhr?

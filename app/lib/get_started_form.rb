@@ -78,6 +78,6 @@ class GetStartedForm
   end
 
   def valid_diseases?
-    errors.add(:diseases, "Invalid disease id") unless diseases.empty? || diseases.all? { |disease| Plan::DISEASE_TYPES.include?(disease) }
+    errors.add(:diseases, "Invalid disease id") if Disease.where(id: diseases).count != diseases.length
   end
 end
