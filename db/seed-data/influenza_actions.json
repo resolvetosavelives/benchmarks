@@ -1,0 +1,267 @@
+[
+  {
+    "action_text": "Establish at least one laboratory that can perform routine influenza diagnosis, typing and subtyping using reverse transcription polymerase chain reaction (RT-PCR)",
+    "benchmark_indicator_display_abbreviation": "7.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Ensure that a system is in place to transport referred specimens from health facilities to testing laboratories, taking into consideration possible disruption of the routine transport system during a pandemic.",
+    "benchmark_indicator_display_abbreviation": "7.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Consider licensing all public health laboratories and ensuring adherence to national and international quality standards for influenza testing.",
+    "benchmark_indicator_display_abbreviation": "7.4",
+    "activity_type": "8"
+  },
+  {
+    "action_text": "Establish surveillance systems and capacities to monitor and characterize influenza activity, linking epidemiological and virologic information. WHO recommends that systems include surveillance for influenza-like illness (ILI) and severe acute respiratory infections (SARI), and event-based surveillance.",
+    "benchmark_indicator_display_abbreviation": "9.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Consider establishing or strengthening a national electronic reporting system for pandemic and zoonotic influenza surveillance, shared and used by public health and veterinary surveillance systems.",
+    "benchmark_indicator_display_abbreviation": "9.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Establish or strengthen systems to manage and report surveillance data, including data collection, data cleaning, database management and daily reporting of aggregated data. Ensure that influenza surveillance data are reported regularly (e.g. weekly).",
+    "benchmark_indicator_display_abbreviation": "9.3",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Ensure reporting capacities and coordination with the national IHR focal point to notify WHO of cases of novel influenza virus infection, under the requirements of the IHR (2005).",
+    "benchmark_indicator_display_abbreviation": "2.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Establish clear mechanisms to report signal events to local, subnational and national public health authorities.",
+    "benchmark_indicator_display_abbreviation": "2.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Consider including pandemic response capacities in the national strategy for public health workforce development and training programmes. Review and track progress of strategy annually.",
+    "benchmark_indicator_display_abbreviation": "10.2",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Assess human resource requirements to implement, manage and coordinate pandemic response activities. Ensure that human resources are available for essential routine services and pandemic response.",
+    "benchmark_indicator_display_abbreviation": "10.4",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Ensure that outbreak investigation and rapid response personnel have appropriate capacities and training (e.g. field epidemiology, data collection and analysis, risk assessment, use of PPE), and are familiar with their terms of reference and expected tasks.",
+    "benchmark_indicator_display_abbreviation": "10.4",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Review existing legislation, policies or other government instruments relevant to pandemic influenza risk management, including multihazard emergency risk management, and influenza pandemic preparedness and response. Assess the need for new or adapted instruments to implement or better support pandemic activities (as outlined in the national pandemic or public health emergency response plan). Review compliance with obligations under the IHR (2005). ",
+    "benchmark_indicator_display_abbreviation": "1.1",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Coordinate legal and regulatory frameworks between sectors involved in pandemic influenza preparedness and response (e.g. health, animal health, security, transport and education). ",
+    "benchmark_indicator_display_abbreviation": "1.1",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Apply and strengthen multisectoral coordination mechanisms between government ministries, competent authorities, nongovernmental organizations and nonstate actors involved in pandemic activities, at subnational and local levels ",
+    "benchmark_indicator_display_abbreviation": "2.1",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Apply and strengthen health sector coordination and communication mechanisms with pandemic preparedness, response and recovery partners (e.g. national emergency management agencies and other government agencies, and the healthcare sector at subnational and local levels).",
+    "benchmark_indicator_display_abbreviation": "2.1",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Revise existing IPC guidelines and protocols, and implement in all health-care facilities, including: JEE-P.3.3, IHR-4.3.1  hospitals and health-care clinics;  alternative health-care facilities used as part of pandemic emergency measures;  ambulance services and emergency services in the community;  long-term care facilities; and  clinical laboratories.",
+    "benchmark_indicator_display_abbreviation": "3.3",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Consider establishing IPC-related surveillance, monitoring, audit and feedback systems in health-care facilities.",
+    "benchmark_indicator_display_abbreviation": "3.3",
+    "activity_type": "13"
+  },
+  {
+    "action_text": "Establish or strengthen timely and systematic information exchange between animal or wildlife and human health surveillance units in response to potential zoonotic disease events, including influenza.",
+    "benchmark_indicator_display_abbreviation": "4.2",
+    "activity_type": "13"
+  },
+  {
+    "action_text": "Ensure that laboratory biosafety protocols are properly implemented and assess the need to refine these protocols in a pandemic situation. Provide appropriate biosafety and biosecurity training to staff.",
+    "benchmark_indicator_display_abbreviation": "8.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Ensure availability of annual supplies of seasonal influenza vaccine from domestic or international sources.",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Ensure that capacity is in place to identify and, where required, transport travelers with suspected pandemic influenza infection to appropriate medical facilities.",
+    "benchmark_indicator_display_abbreviation": "16.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Establish facilities to safely assess and isolate travelers or staff with influenza symptoms or signs. Facilities can be onsite, or through liaison with local animal or human health authorities.",
+    "benchmark_indicator_display_abbreviation": "16.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Map existing public and private health-care facilities including level of care offered, number of beds, isolation and intensive care capacity, and mortuary capacity.",
+    "benchmark_indicator_display_abbreviation": "11.2",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Estimate current numbers, expertise or occupation and geographical distribution of health-care workers in both the public and private sectors.",
+    "benchmark_indicator_display_abbreviation": "11.2",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Assess financial and logistical ability to access antiviral drugs from national and international or regional sources (e.g. regional stockpiles) during a pandemic.",
+    "benchmark_indicator_display_abbreviation": "11.2",
+    "activity_type": "9"
+  },
+  {
+    "action_text": "Develop or revise a national pandemic response plan as part of a multihazard public health emergency plan.",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_type": "8"
+  },
+  {
+    "action_text": "Define a time period to regularly review and update the national pandemic preparedness and response plan.",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_type": "8"
+  },
+  {
+    "action_text": "Review and update the national pandemic preparedness and response plan after each pandemic or other relevant public health emergency.",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Conduct regular table-top exercises to test components of the national pandemic preparedness and response plan.",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_type": "11"
+  },
+  {
+    "action_text": "Consider full-scale exercises to test the national preparedness and response plan and operational capacities.",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_type": "11"
+  },
+  {
+    "action_text": "Engage private health sector in national pandemic planning activities. Consider developing arrangements for mutual aid and service continuity during a pandemic response. ",
+    "benchmark_indicator_display_abbreviation": "12.1",
+    "activity_type": "8"
+  },
+  {
+    "action_text": "Apply and strengthen a public health emergency operations center linked to the national emergency management structure, including legal framework, operating procedures, physical infrastructure, information and communications technology (ICT) infrastructure, information systems and data standards, and trained staff.  ",
+    "benchmark_indicator_display_abbreviation": "12.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Develop or adapt clinical management guidelines for patients with suspected or confirmed pandemic influenza infection, addressing:  where patients should be managed (i.e. level of care, and community or hospital setting); triage and admission criteria; a checklist for pandemic influenza risk and impact management treatment protocols including antiviral drugs, antibiotics, ventilation, supportive treatment and treatment for secondary infections; IPC protocols for health-care workers and caregivers; criteria for laboratory testing and advanced diagnostics; and specimen collection.",
+    "benchmark_indicator_display_abbreviation": "12.3",
+    "activity_type": "14"
+  },
+  {
+    "action_text": "Develop bilateral or regional agreements with neighboring countries on public health emergencies. ",
+    "benchmark_indicator_display_abbreviation": "14.1",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Consider securing access to essential and pandemic medicines, supplies and medical devices through measures such as advance purchase agreements and stockpiling arrangements. Integrate arrangements with the national supply chain as far as practical.",
+    "benchmark_indicator_display_abbreviation": "14.1",
+    "activity_type": "9"
+  },
+  {
+    "action_text": "Develop vaccination strategies to reach targets, including outreach, assessment of barriers to vaccination, distribution, administration, funding and the involvement of both public and private stakeholders.",
+    "benchmark_indicator_display_abbreviation": "14.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Ensure that clinical management guidelines are distributed to all health-care facilities that will treat pandemic influenza patients. Provide training resources to update staff, JEE-R4.3, IHR-4.2.1.",
+    "benchmark_indicator_display_abbreviation": "14.3",
+    "activity_type": "15"
+  },
+  {
+    "action_text": "Ensure that formal structures and agreed upon procedures are in place to conduct risk communication and community engagement (RCCE). These include legal and policy frameworks, a national pandemic risk communication plan within a broader multihazard plan and funding.",
+    "benchmark_indicator_display_abbreviation": "15.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Develop mechanisms, including clearance processes, to ensure coordinated and consistent actions, messages and community engagement across partners at national, subnational and local levels (e.g. government agencies, health-care workers, essential service providers, business organizations and community organizations).",
+    "benchmark_indicator_display_abbreviation": "15.2",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Identify and train a public communications unit and individuals who can be pandemic spokespeople. Ensure that this team can conduct proactive public outreach on a mix of social and traditional media platforms, using locally relevant languages and technologies. This includes the ability to communicate uncertainty and to transfer complex science into understandable languages and formats (i.e. translational communication).",
+    "benchmark_indicator_display_abbreviation": "15.1",
+    "activity_type": "15"
+  },
+  {
+    "action_text": "Consider establishing capacity to conduct knowledge, attitude and practice (KAP) surveys and other social science-based research, to help identify and reduce risk during influenza events and other disease outbreaks.",
+    "benchmark_indicator_display_abbreviation": "15.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Coordinate with risk communication authorities to prepare messages and information materials for affected people, the general public and other stakeholders to explain the rationale for non-pharmaceutical interventions and how to implement each intervention. Address issues including intended benefits, limitations, anticipated impact and expected duration, in the context of public health objectives.",
+    "benchmark_indicator_display_abbreviation": "15.1",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Identify influential community leaders, networks, groups and other influencers. Develop mechanisms to involve them in decision-making to ensure that interventions are collaborative and contextually appropriate, and that communication is community owned.",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_type": "1"
+  },
+  {
+    "action_text": "Establish and use systems and networks to monitor and proactively\naddress misinformation.",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_type": "13"
+  },
+  {
+    "action_text": "Develop key messages, information, education and communication (IEC) materials and a communications strategy to promote personal non-pharmaceutical interventions to reduce the risk of transmission in the community, such as staying home when ill, voluntary isolation, respiratory etiquette, hand hygiene, using face masks in community settings and reducing social contact.",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_type": "10"
+  },
+  {
+    "action_text": "Apply and strengthen a common organizational model (e.g. an incident management system) across all sectors of pandemic response to coordinate functions, including management, planning, operations, logistics, finance and administration. ",
+    "benchmark_indicator_display_abbreviation": "12.1",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Commit resources to support capacity development for pandemic prevention, preparedness, response and recovery, building on capacities for health-emergency risk management.",
+    "benchmark_indicator_display_abbreviation": "1.3",
+    "activity_type": "15"
+  },
+  {
+    "action_text": "Identify sources and funding mechanisms for pandemic response activities at national, subnational and local levels.",
+    "benchmark_indicator_display_abbreviation": "1.3",
+    "activity_type": "6"
+  },
+  {
+    "action_text": "Consider securing access to antiviral drugs, pandemic vaccines, diagnostics and other products, through measures such as advance purchase agreements and stockpiling arrangements. ",
+    "benchmark_indicator_display_abbreviation": "14.1",
+    "activity_type": "9"
+  },
+  {
+    "action_text": "Assess the standing policy on, and legal basis for, vaccination of health-care workers, workers in essential services or individuals at high risk. Decide whether this policy needs to be adapted to increase uptake during pandemic alert and pandemic periods. Consider the use of both seasonal and pandemic influenza vaccines for these groups. ",
+    "benchmark_indicator_display_abbreviation": "10.1",
+    "activity_type": "2"
+  },
+  {
+    "action_text": "Apply and strengthen coordination and communication mechanisms with neighboring countries and other international stakeholders.",
+    "benchmark_indicator_display_abbreviation": "2.2",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Establish a national committee, or leverage a similar existing mechanism, to coordinate national pandemic influenza preparedness and response activities. ",
+    "benchmark_indicator_display_abbreviation": "12.1",
+    "activity_type": "3"
+  },
+  {
+    "action_text": "Apply and strengthen surge capacity and deployment mechanisms at all relevant levels.",
+    "benchmark_indicator_display_abbreviation": "14.1",
+    "activity_type": "10"
+  }
+]

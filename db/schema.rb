@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_03_001806) do
+ActiveRecord::Schema.define(version: 2020_07_08_203157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2020_07_03_001806) do
     t.integer "action_types", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "disease_id"
     t.index ["benchmark_indicator_id"], name: "index_benchmark_indicator_actions_on_benchmark_indicator_id"
   end
 
@@ -178,11 +179,14 @@ ActiveRecord::Schema.define(version: 2020_07_03_001806) do
   add_foreign_key "assessments", "assessment_publications"
   add_foreign_key "assessments", "countries", column: "country_alpha3", primary_key: "alpha3"
   add_foreign_key "benchmark_indicator_actions", "benchmark_indicators"
+  add_foreign_key "benchmark_indicator_actions", "diseases"
   add_foreign_key "benchmark_indicators", "benchmark_technical_areas"
   add_foreign_key "plan_actions", "benchmark_indicator_actions"
   add_foreign_key "plan_actions", "benchmark_indicators"
   add_foreign_key "plan_actions", "benchmark_technical_areas"
   add_foreign_key "plan_actions", "plans"
+  add_foreign_key "plan_diseases", "diseases"
+  add_foreign_key "plan_diseases", "plans"
   add_foreign_key "plan_goals", "assessment_indicators"
   add_foreign_key "plan_goals", "benchmark_indicators"
   add_foreign_key "plan_goals", "plans"
