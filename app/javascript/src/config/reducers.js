@@ -10,9 +10,9 @@ import {
   DESELECT_TECHNICAL_AREA,
   SELECT_ACTION_TYPE,
   DESELECT_ACTION_TYPE,
-  LIST_MODE_BY_TECHNICAL_AREA,
   SWITCH_LIST_MODE,
   UPDATE_PLAN_NAME,
+  CLEAR_FILTERS,
 } from "./constants"
 
 export default function initReducers(initialState) {
@@ -95,35 +95,7 @@ export default function initReducers(initialState) {
 
   const planChartLabels = createReducer(initialState.planChartLabels, {})
 
-  const selectedTechnicalAreaId = createReducer(null, {
-    [SELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
-      return dispatchedAction.payload.technicalAreaId
-    },
-    // eslint-disable-next-line no-unused-vars
-    [DESELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
-      return null
-    },
-  })
-
-  const selectedActionTypeOrdinal = createReducer(null, {
-    [SELECT_ACTION_TYPE]: (state, dispatchedAction) => {
-      // NB: the reason we use "actionTypeIndex + 1" is because actionTypeIndex is
-      //   zero-based but the actual ordinals used as ActionType IDs are 1-based, e.g. 0-14 => 1-15.
-      return dispatchedAction.payload.actionTypeIndex + 1
-    },
-    // eslint-disable-next-line no-unused-vars
-    [DESELECT_ACTION_TYPE]: (state, dispatchedAction) => {
-      return null
-    },
-  })
-
   const allActions = createReducer(initialState.actions, {})
-
-  const selectedListMode = createReducer(LIST_MODE_BY_TECHNICAL_AREA, {
-    [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
-      return dispatchedAction.payload.listModeOrdinal
-    },
-  })
 
   const planGoals = createReducer(initialState.planGoals, {})
 
@@ -135,6 +107,46 @@ export default function initReducers(initialState) {
     },
   })
 
+  const ui = createReducer(
+    {
+      selectedListMode: null,
+      selectedTechnicalAreaId: null,
+      selectedActionTypeOrdinal: null,
+    },
+    {
+      [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
+        state.selectedListMode = dispatchedAction.payload.listModeOrdinal
+        return state
+      },
+      [SELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
+        state.selectedTechnicalAreaId = dispatchedAction.payload.technicalAreaId
+        return state
+      },
+      [DESELECT_TECHNICAL_AREA]: (state /*, dispatchedAction*/) => {
+        state.selectedTechnicalAreaId = null
+        return state
+      },
+      [SELECT_ACTION_TYPE]: (state, dispatchedAction) => {
+        // NB: the reason we use "actionTypeIndex + 1" is because actionTypeIndex is
+        //   zero-based but the actual ordinals used as ActionType IDs are 1-based, e.g. 0-14 => 1-15.
+        state.selectedActionTypeOrdinal =
+          dispatchedAction.payload.actionTypeIndex + 1
+        return state
+      },
+      [DESELECT_ACTION_TYPE]: (state /*, dispatchedAction*/) => {
+        state.selectedActionTypeOrdinal = null
+        return state
+      },
+      [CLEAR_FILTERS]: (/*state, dispatchedAction*/) => {
+        return {
+          selectedListMode: null,
+          selectedTechnicalAreaId: null,
+          selectedActionTypeOrdinal: null,
+        }
+      },
+    }
+  )
+
   return combineReducers({
     technicalAreas,
     indicators,
@@ -145,9 +157,7 @@ export default function initReducers(initialState) {
     planActionIdsNotInIndicator,
     planChartLabels,
     allActions,
-    selectedTechnicalAreaId,
-    selectedActionTypeOrdinal,
-    selectedListMode,
+    ui,
     nudgesByActionType,
     plan,
   })
