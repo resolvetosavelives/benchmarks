@@ -3,8 +3,13 @@ import { createSelector } from "reselect"
 const getAllTechnicalAreas = (state) => state.technicalAreas
 const getAllIndicators = (state) => state.indicators
 const getAllActions = (state) => state.allActions
+
 const getActionTypes = (state) => state.nudgesByActionType
+const getNudgesByActionType = (state) => state.nudgesByActionType
 const getNumOfActionTypes = (state) => getActionTypes(state).length
+
+const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
+const getSelectedActionTypeOrdinal = (state) => state.ui.selectedActionTypeOrdinal
 
 const getPlanActionIds = (state) => state.planActionIds
 const getPlanGoals = (state) => state.planGoals
@@ -89,8 +94,12 @@ export {
   getAllIndicators,
   getAllActions,
   getActionTypes,
+  getNudgesByActionType,
   getNumOfActionTypes,
+  getSelectedTechnicalAreaId,
+  getSelectedActionTypeOrdinal,
   getPlanActionIds,
+  getPlanGoals,
   getPlanGoalMap,
   getActionsForIds,
   getTechnicalAreaMap,

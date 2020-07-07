@@ -1,11 +1,17 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import { countActionsByActionType } from "../../config/selectors"
+import {
+  getNudgesByActionType,
+  getSelectedActionTypeOrdinal,
+  countActionsByActionType,
+} from "../../config/selectors"
 
 const NudgeByActionType = () => {
-  const nudgesByActionType = useSelector((state) => state.nudgesByActionType)
-  const selectedActionTypeOrdinal = useSelector(
-    (state) => state.selectedActionTypeOrdinal
+  const nudgesByActionType = useSelector((state) =>
+    getNudgesByActionType(state)
+  )
+  const selectedActionTypeOrdinal = useSelector((state) =>
+    getSelectedActionTypeOrdinal(state)
   )
   const selectedActionTypeIndex = selectedActionTypeOrdinal - 1
   const countOfActions = useSelector((state) => countActionsByActionType(state))

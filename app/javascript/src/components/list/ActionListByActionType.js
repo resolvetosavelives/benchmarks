@@ -1,12 +1,16 @@
 import React from "react"
 import { useSelector } from "react-redux"
+import {
+  getPlanActionIds,
+  getSelectedActionTypeOrdinal,
+} from "../../config/selectors"
 import Action from "./Action"
 
 const ActionListByActionType = () => {
-  const planActionIds = useSelector((state) => state.planActionIds)
+  const planActionIds = useSelector((state) => getPlanActionIds(state))
   const actionMap = useSelector((state) => state.actions)
-  const selectedActionTypeOrdinal = useSelector(
-    (state) => state.selectedActionTypeOrdinal
+  const selectedActionTypeOrdinal = useSelector((state) =>
+    getSelectedActionTypeOrdinal(state)
   )
   const actionIdsToDisplay = planActionIds.filter((actionId) => {
     const currentAction = actionMap[actionId]

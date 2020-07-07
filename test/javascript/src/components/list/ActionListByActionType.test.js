@@ -61,18 +61,14 @@ beforeEach(() => {
     ],
   ]
   useSelector
-    .mockImplementationOnce((callback) =>
-      callback({
-        // action6 intentionally omitted from next line because in this exmaple it does not belong to the plan
-        planActionIds: [
-          action1.id,
-          action2.id,
-          action3.id,
-          action4.id,
-          action5.id,
-        ],
-      })
-    )
+    .mockReturnValueOnce([
+      // action6 intentionally omitted from next line because in this example it does not belong to the plan
+      action1.id,
+      action2.id,
+      action3.id,
+      action4.id,
+      action5.id,
+    ])
     .mockImplementationOnce((callback) => {
       const actions = {}
       actions[action1.id] = action1
@@ -85,11 +81,7 @@ beforeEach(() => {
         actions: actions,
       })
     })
-    .mockImplementationOnce((callback) =>
-      callback({
-        selectedActionTypeOrdinal: selectedActionTypeOrdinal,
-      })
-    )
+    .mockReturnValueOnce(selectedActionTypeOrdinal)
     .mockImplementationOnce((cb) => cb({ planChartLabels: planChartLabels }))
 })
 

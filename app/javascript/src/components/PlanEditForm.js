@@ -128,10 +128,8 @@ const PlanEditForm = () => {
             </div>
           </div>
 
-          <div className="row">
-            <div className="col mt-4">
-              <ActionList />
-            </div>
+          <div className="row mt-4">
+            <ActionList />
           </div>
         </form>
       </div>
