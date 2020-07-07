@@ -1,9 +1,20 @@
 import { createSelector } from "reselect"
 
+const getAllTechnicalAreas = (state) => state.technicalAreas
+const getAllIndicators = (state) => state.indicators
 const getAllActions = (state) => state.allActions
+const getActionTypes = (state) => state.nudgesByActionType
+const getNumOfActionTypes = (state) => getActionTypes(state).length
+
 const getPlanActionIds = (state) => state.planActionIds
-const getNumOfActionTypes = (state) => state.nudgesByActionType.length
-const getTechnicalAreas = (state) => state.technicalAreas
+const getPlanGoals = (state) => state.planGoals
+
+const getPlanGoalMap = createSelector([getPlanGoals], (goals) => {
+  return goals.reduce((acc, goal) => {
+    acc[goal.benchmark_indicator_id] = goal
+    return acc
+  }, {})
+})
 
 const getActionsForIds = createSelector(
   [getPlanActionIds, getAllActions],
@@ -12,8 +23,8 @@ const getActionsForIds = createSelector(
   }
 )
 
-const technicalAreaMap = createSelector(
-  [getTechnicalAreas],
+const getTechnicalAreaMap = createSelector(
+  [getAllTechnicalAreas],
   (technicalAreas) => {
     return technicalAreas.reduce((map, technicalArea) => {
       map[technicalArea.id] = technicalArea
@@ -22,8 +33,15 @@ const technicalAreaMap = createSelector(
   }
 )
 
+const getIndicatorMap = createSelector([getAllIndicators], (indicators) => {
+  return indicators.reduce((map, indicator) => {
+    map[indicator.id] = indicator
+    return map
+  }, {})
+})
+
 const countActionsByTechnicalArea = createSelector(
-  [getActionsForIds, technicalAreaMap],
+  [getActionsForIds, getTechnicalAreaMap],
   (currentActions, technicalAreaMap) => {
     return currentActions.reduce((acc, action) => {
       const technicalArea = technicalAreaMap[action.benchmark_technical_area_id]
@@ -67,10 +85,16 @@ const getFormAuthenticityToken = () =>
 const getFormActionUrl = () => window.STATE_FROM_SERVER.formActionUrl
 
 export {
+  getAllTechnicalAreas,
+  getAllIndicators,
   getAllActions,
-  getPlanActionIds,
+  getActionTypes,
   getNumOfActionTypes,
+  getPlanActionIds,
+  getPlanGoalMap,
   getActionsForIds,
+  getTechnicalAreaMap,
+  getIndicatorMap,
   countActionsByTechnicalArea,
   countActionsByActionType,
   getFormAuthenticityToken,

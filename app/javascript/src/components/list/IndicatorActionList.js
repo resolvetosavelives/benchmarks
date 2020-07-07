@@ -1,13 +1,14 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useSelector } from "react-redux"
+import { getPlanGoalMap } from "../../config/selectors"
 import Action from "./Action"
 import NoGoalForThisIndicator from "./NoGoalForThisIndicator"
 import AddAction from "./AddAction"
 
 const IndicatorActionList = (props) => {
   const indicator = props.indicator
-  const planGoalMap = useSelector((state) => state.planGoalMap)
+  const planGoalMap = useSelector((state) => getPlanGoalMap(state))
   const goalForThisIndicator = planGoalMap[indicator.id]
   const planActionIdsByIndicator = useSelector((state) => {
     return state.planActionIdsByIndicator

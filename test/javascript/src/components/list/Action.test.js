@@ -39,11 +39,7 @@ beforeEach(() => {
       "Domestic legislation, laws, regulations, policy an…rs and effectively enable compliance with the IHR",
   }
   useSelector
-    .mockImplementationOnce((callback) =>
-      callback({
-        indicatorMap: { 13: indicator },
-      })
-    )
+    .mockReturnValueOnce({ 13: indicator })
     .mockImplementationOnce((callback) =>
       callback({
         actions: { 17: action },

@@ -29,11 +29,7 @@ describe("when a goal is present", () => {
   describe("and there are actions present", () => {
     beforeEach(() => {
       useSelector
-        .mockImplementationOnce((callback) =>
-          callback({
-            planGoalMap: { 17: { id: 17 } },
-          })
-        )
+        .mockReturnValueOnce({ 17: { id: 17 } })
         .mockImplementationOnce((callback) =>
           callback({
             planActionIdsByIndicator: { 17: [2, 5, 7, 11, 13] },
@@ -61,11 +57,7 @@ describe("when a goal is present", () => {
   describe("and there are zero actions", () => {
     beforeEach(() => {
       useSelector
-        .mockImplementationOnce((callback) =>
-          callback({
-            planGoalMap: { 17: { id: 17 } },
-          })
-        )
+        .mockReturnValueOnce({ 17: { id: 17 } })
         .mockImplementationOnce((callback) =>
           callback({
             planActionIdsByIndicator: { 17: [] },
@@ -93,17 +85,11 @@ describe("when a goal is present", () => {
 
 describe("when there is no goal", () => {
   beforeEach(() => {
-    useSelector
-      .mockImplementationOnce((callback) =>
-        callback({
-          planGoalMap: {},
-        })
-      )
-      .mockImplementation((callback) =>
-        callback({
-          planActionIdsByIndicator: {},
-        })
-      )
+    useSelector.mockReturnValueOnce({}).mockImplementation((callback) =>
+      callback({
+        planActionIdsByIndicator: {},
+      })
+    )
   })
 
   it("does not render any child AddAction components and instead renders a NoGoalForThisIndicator", () => {
