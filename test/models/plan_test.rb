@@ -324,6 +324,66 @@ describe Plan do
         assert_equal 33, plan.plan_actions.size
       end
     end
+    describe "for Nigeria JEE1 with influenza" do
+      let(:indicator_attrs) do
+        {
+            jee1_ind_p11: "1",
+            jee1_ind_p11_goal: "2",
+        }.with_indifferent_access
+      end
+      let(:plan) do
+        Plan.create_from_goal_form(
+            indicator_attrs: indicator_attrs,
+            assessment: assessment_for_nigeria_jee1,
+            plan_name: "test plan 3854",
+            disease_ids: [Disease.influenza.id]
+            )
+      end
+
+      it "returns a saved plan instance" do
+        assert plan.persisted?, "Plan was not saved"
+      end
+
+      it "has the expected term" do
+        plan.term.must_equal Plan::TERM_TYPES.first
+      end
+
+      it "has the expected name" do
+        assert_equal "test plan 3854", plan.name
+      end
+
+      it "has the expected number of indicators" do
+        assert_equal 1, plan.goals.size
+      end
+
+      it "has the expected number of actions" do
+        assert_equal 6, plan.plan_actions.size
+      end
+
+      it "has associated diseases influenza" do
+        assert_equal plan.diseases, [Disease.influenza]
+      end
+    end
+
+    describe "for Nigeria JEE1 with an invalid disease" do
+      let(:indicator_attrs) do
+        {
+            jee1_ind_p11: "1",
+            jee1_ind_p11_goal: "2",
+        }.with_indifferent_access
+      end
+
+      it "raises an exception" do
+        assert_raise Exceptions::InvalidDiseasesError do
+          Plan.create_from_goal_form(
+              indicator_attrs: indicator_attrs,
+              assessment: assessment_for_nigeria_jee1,
+              plan_name: "test plan 3854",
+              disease_ids: [0] # disease id 0 does not exist
+          )
+        end
+      end
+    end
   end
 
   describe "#count_actions_by_type" do

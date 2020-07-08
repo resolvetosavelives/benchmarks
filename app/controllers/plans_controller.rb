@@ -58,7 +58,7 @@ class PlansController < ApplicationController
     assessment_type = params[:assessment_type]
     country_name = params[:country_name]
     technical_area_ids = params[:areas].to_s.split("-")
-    diseases = params[:diseases].to_s.split("-")
+    @disease_ids = params[:diseases]
     country = Country.find_by_name country_name
     @publication = AssessmentPublication.find_by_named_id assessment_type
     if country.present? && @publication.present?
@@ -80,12 +80,14 @@ class PlansController < ApplicationController
   # TODO: test coverage for this, and include for the session state part
   def create
     assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
+    disease_ids = plan_create_params.fetch(:disease_ids).to_s.split('-')
     @plan =
       Plan.create_from_goal_form(
         indicator_attrs: plan_create_params.fetch(:indicators),
         assessment: assessment,
         is_5_year_plan: plan_create_params.fetch(:term).start_with?("5"),
         plan_name: "#{assessment.country.name} draft plan",
+        disease_ids: disease_ids,
         user: current_user,
       )
     unless @plan.persisted?
@@ -95,6 +97,9 @@ class PlansController < ApplicationController
     end
     session[:plan_id] = @plan.id unless current_user
     redirect_to @plan
+  rescue Exceptions::InvalidDiseasesError => e
+    flash[:notice] = e.message
+    redirect_back fallback_location: root_path
   end
 
   def show
@@ -152,7 +157,7 @@ class PlansController < ApplicationController
   end
 
   def plan_create_params
-    params.require(:plan).permit(:assessment_id, :term, indicators: {})
+    params.require(:plan).permit(:assessment_id, :term, :disease_ids, indicators: {})
   end
 
   def plan_update_params

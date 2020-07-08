@@ -157,7 +157,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           post plans_url,
                params: {
                  plan: {
-                   assessment_id: "123", term: "100", indicators: { abc: "123" }
+                   assessment_id: "123", term: "100", indicators: { abc: "123" }, disease_ids: ""
                  },
                }
           assert_response :redirect
@@ -175,6 +175,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
                      assessment_id: "123",
                      term: "500",
                      indicators: { abc: "123" },
+                     disease_ids: "10",
                    },
                  }
             assert_response :redirect
@@ -189,15 +190,33 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           Plan.stub(:create_from_goal_form, plan) do
             post plans_url,
                  params: {
-                   plan: {
-                     assessment_id: "123",
-                     term: "100",
-                     indicators: { abc: "123" },
-                   },
+                     plan: {
+                         assessment_id: "123",
+                         term: "100",
+                         indicators: {abc: "123"},
+                         disease_ids: ""
+                     },
                  }
             assert_response :redirect
             assert_redirected_to root_path
           end
+        end
+      end
+
+      describe "when the disease_ids have been tampered with" do
+        it "responds with a flash message and redirect" do
+          post plans_url,
+               params: {
+                   plan: {
+                       assessment_id: "123",
+                       term: "100",
+                       indicators: {abc: "123"},
+                       disease_ids: "0", # 0 does not exist as a disease id
+                   },
+               }
+          assert_response :redirect
+          assert_equal Exceptions::InvalidDiseasesError.new.message, flash[:notice]
+          assert_redirected_to root_path
         end
       end
     end

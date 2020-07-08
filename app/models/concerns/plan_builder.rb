@@ -76,6 +76,7 @@ module PlanBuilder
       assessment:,
       plan_name:,
       is_5_year_plan: false,
+      disease_ids: [],
       user: nil
     )
       num_of_underscores = assessment.spar_2018? ? 3 : 2
@@ -146,6 +147,13 @@ module PlanBuilder
           end
         end
       end
+
+      begin
+        plan.disease_ids = disease_ids
+      rescue ActiveRecord::RecordNotFound =>  e
+        raise Exceptions::InvalidDiseasesError
+      end
+
       Plan.transaction do
         plan.goals = plan_goals
         plan.plan_actions = plan_actions
