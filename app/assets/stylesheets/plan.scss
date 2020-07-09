@@ -106,8 +106,16 @@
     color: white;
   }
 
-  .delete {
-    display: none;
+  .action-badge-pill {
+    font-size: 14px;
+    padding: 0.25em 1em;
+    color: color("disease-pill");
+  }
+
+  @include media-breakpoint-up(md) {
+    .delete {
+      display: none;
+    }
   }
 
   &:hover {
@@ -128,6 +136,15 @@
   .color-value-4,
   .color-value-5 {
     background-color: color("success");
+  }
+
+  .badge-disease {
+    height: 0.75em;
+    width: 0.75em;
+  }
+
+  .color-value-disease-influenza {
+    background-color: color("disease-influenza");
   }
 }
 

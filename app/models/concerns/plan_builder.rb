@@ -99,6 +99,16 @@ module PlanBuilder
             name: plan_name, assessment: assessment, term: plan_term, user: user
           },
         )
+      # fetch disease-specific actions for all of the selected IDs in one query
+      disease_actions = BenchmarkIndicatorAction.where(disease_id: disease_ids).all
+      # build a "disease-action" map of benchmarkIndicatorID => Action so that it can be used in the loop of BenchmarkIndicators
+      disease_action_map = disease_actions.reduce({}) do |acc, action|
+        if acc[action.benchmark_indicator_id.to_s].nil?
+          acc[action.benchmark_indicator_id.to_s] = []
+        end
+        acc[action.benchmark_indicator_id.to_s] << action
+        acc
+      end
       plan_goals = []
       plan_actions = []
       assessment_indicators =
@@ -129,6 +139,12 @@ module PlanBuilder
               "level > :score AND level <= :goal",
               score_and_goal,
             ).order(:sequence).all
+          # use disease_action_map to append its Action(s) to the matching Indicator when the disease-specific action.benchmark_indicator_id
+          #   matches the current benchmark_indicator.id
+          disease_actions_for_indicator = disease_action_map[benchmark_indicator.id.to_s]
+          if disease_actions_for_indicator.present?
+            bia += disease_actions_for_indicator
+          end
           bia.each do |benchmark_indicator_action|
             unless plan_actions.any? do |pa|
                      pa.benchmark_indicator_action_id.eql?(

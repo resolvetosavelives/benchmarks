@@ -2,12 +2,12 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { useSelector } from "react-redux"
 import { act } from "react-dom/test-utils"
-import ActionListByTechnicalArea from "components/list/ActionListByTechnicalArea"
+import ActionListByTechnicalArea from "components/List/ActionListByTechnicalArea"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
-jest.mock("components/list/TechnicalArea", () => () => <mock-technicalarea />)
+jest.mock("components/List/TechnicalArea", () => () => <mock-technicalarea />)
 
 let container
 beforeEach(() => {

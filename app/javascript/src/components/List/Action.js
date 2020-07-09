@@ -2,7 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { deleteAnAction } from "../../config/actions"
 import { getIndicatorMap } from "../../config/selectors"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import ActionBadge from "./ActionBadge"
+import ActionBadgeDisease from "./ActionBadgeDisease"
+import ActionBadgePill from "./ActionBadgePill"
 
 const Action = (props) => {
   const id = props.id
@@ -14,19 +17,22 @@ const Action = (props) => {
 
   return (
     <div className="action row p-2">
-      <div className="col-auto d-flex flex-row align-items-center">
-        <span
-          className={`badge badge-pill badge-success badge-rounded-circle color-value-${action.level}`}
-        >
-          <span className="action-level">{action.level}</span>
-        </span>
+      <div className="col-12 col-md-auto d-flex flex-row align-items-center mb-2 mb-md-0">
+        {action.level ? (
+          <ActionBadge action={action} />
+        ) : (
+          <ActionBadgeDisease action={action} />
+        )}
       </div>
-      <div className="col-10">
+      <div className="col-9">
         <strong>{indicator.display_abbreviation}</strong>
         &nbsp;
         <span className="action-text">{action.text}</span>
       </div>
-      <div className="col">
+      <div className="col-12 col-md-auto d-flex flex-row align-items-center py-2 py-md-0 ">
+        <ActionBadgePill action={action} />
+      </div>
+      <div className="col d-flex d-md-block py-2 py-md-0">
         <button
           className="delete close"
           type="button"

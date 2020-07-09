@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
-import Indicator from "components/list/Indicator"
+import Indicator from "components/List/Indicator"
 
 let container
 
@@ -24,7 +24,7 @@ const indicatorJson = {
     "Domestic legislation, laws, regulations, policy an…rs and effectively enable compliance with the IHR",
 }
 
-jest.mock("components/list/IndicatorActionList", () => () => (
+jest.mock("components/List/IndicatorActionList", () => () => (
   <mock-indicator-list />
 ))
 
