@@ -41,5 +41,6 @@ function stubStateFromServer() {
     planGoals: [],
     plan: {},
     nudgesByActionType: {},
+    diseases: [],
   }
 }

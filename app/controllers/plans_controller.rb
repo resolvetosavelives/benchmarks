@@ -77,7 +77,7 @@ class PlansController < ApplicationController
       )
   end
 
-  # TODO: test coverage for this, and include for the session state part
+  # TODO: test coverage for the session state part
   def create
     assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
     disease_ids = plan_create_params.fetch(:disease_ids).to_s.split('-')
@@ -107,6 +107,7 @@ class PlansController < ApplicationController
     @benchmark_technical_areas = benchmark_document.technical_areas
     @benchmark_indicators = benchmark_document.indicators
     @all_actions = benchmark_document.actions
+    @diseases = Disease.all
     @nudges_by_action_type_json =
       File.read(
         Rails.root.join("app", "fixtures", "nudges_for_action_types.json"),

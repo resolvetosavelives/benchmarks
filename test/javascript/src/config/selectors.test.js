@@ -39,7 +39,7 @@ describe("getAllActions", () => {
     const result = getAllActions(state)
 
     expect(result).toBeInstanceOf(Array)
-    expect(result.length).toEqual(876)
+    expect(result.length).toEqual(929)
   })
 })
 

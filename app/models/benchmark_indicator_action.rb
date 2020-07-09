@@ -38,6 +38,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
       level: nil,
       sequence: nil,
       action_types: nil,
+      disease_id: nil,
     }
   end
 
