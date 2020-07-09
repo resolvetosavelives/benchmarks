@@ -11,6 +11,7 @@ import {
   getPlanGoalMap,
   countActionsByTechnicalArea,
   countActionsByActionType,
+  getSortedActionsForIndicator,
 } from "config/selectors"
 
 let store
@@ -40,6 +41,51 @@ describe("getAllActions", () => {
 
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(929)
+  })
+})
+
+describe("getSortedActionsForIndicator", () => {
+  describe("when there are no disease specific actions", () => {
+    const actionsToSort = [
+      { id: 1, level: 2, sequence: 2, disease_id: null },
+      { id: 2, level: 2, sequence: 1, disease_id: null },
+      { id: 3, level: 1, sequence: 2, disease_id: null },
+      { id: 4, level: 1, sequence: 1, disease_id: null },
+    ]
+    it("returns the actions sorted by level then sequence", () => {
+      const sortedActions = getSortedActionsForIndicator(actionsToSort)
+      expect(sortedActions).toEqual([
+        { id: 4, level: 1, sequence: 1, disease_id: null },
+        { id: 3, level: 1, sequence: 2, disease_id: null },
+        { id: 2, level: 2, sequence: 1, disease_id: null },
+        { id: 1, level: 2, sequence: 2, disease_id: null },
+      ])
+    })
+  })
+  describe("when there are disease specific actions", () => {
+    const actionsToSort = [
+      { id: 7, level: null, sequence: 2, disease_id: 2 },
+      { id: 8, level: null, sequence: 1, disease_id: 2 },
+      { id: 5, level: null, sequence: 2, disease_id: 1 },
+      { id: 6, level: null, sequence: 1, disease_id: 1 },
+      { id: 1, level: 2, sequence: 2, disease_id: null },
+      { id: 2, level: 2, sequence: 1, disease_id: null },
+      { id: 3, level: 1, sequence: 2, disease_id: null },
+      { id: 4, level: 1, sequence: 1, disease_id: null },
+    ]
+    it("returns the actions sorted by level then sequence and with disease specific actions last and in disease then sequence order", () => {
+      const sortedActions = getSortedActionsForIndicator(actionsToSort)
+      expect(sortedActions).toEqual([
+        { id: 4, level: 1, sequence: 1, disease_id: null },
+        { id: 3, level: 1, sequence: 2, disease_id: null },
+        { id: 2, level: 2, sequence: 1, disease_id: null },
+        { id: 1, level: 2, sequence: 2, disease_id: null },
+        { id: 6, level: null, sequence: 1, disease_id: 1 },
+        { id: 5, level: null, sequence: 2, disease_id: 1 },
+        { id: 8, level: null, sequence: 1, disease_id: 2 },
+        { id: 7, level: null, sequence: 2, disease_id: 2 },
+      ])
+    })
   })
 })
 
@@ -177,5 +223,15 @@ describe("countActionsByActionType", () => {
       3,
       23,
     ])
+  })
+})
+
+describe("getSortedActionsForIndicator", () => {
+  it("returns an array of integers, one for each Action Type, that sums the actions for each", () => {
+    // const state = store.getState()
+    const arrayOfActionsToBeSorted = []
+    const result = getSortedActionsForIndicator(arrayOfActionsToBeSorted)
+
+    expect(result).toBeInstanceOf(Array)
   })
 })

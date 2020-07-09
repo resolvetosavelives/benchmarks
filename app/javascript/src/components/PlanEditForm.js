@@ -2,7 +2,7 @@ import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import ActionCount from "./ActionCount"
 import ChartCard from "./ChartCard/ChartCard"
-import ActionList from "./list/ActionList"
+import ActionList from "./List/ActionList"
 import {
   getFormAuthenticityToken,
   getFormActionUrl,

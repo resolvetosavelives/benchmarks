@@ -3,13 +3,15 @@ import { createSelector } from "reselect"
 const getAllTechnicalAreas = (state) => state.technicalAreas
 const getAllIndicators = (state) => state.indicators
 const getAllActions = (state) => state.allActions
+const getPlanActionIdsByIndicator = (state) => state.planActionIdsByIndicator
 
 const getActionTypes = (state) => state.nudgesByActionType
 const getNudgesByActionType = (state) => state.nudgesByActionType
 const getNumOfActionTypes = (state) => getActionTypes(state).length
 
 const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
-const getSelectedActionTypeOrdinal = (state) => state.ui.selectedActionTypeOrdinal
+const getSelectedActionTypeOrdinal = (state) =>
+  state.ui.selectedActionTypeOrdinal
 
 const getPlanActionIds = (state) => state.planActionIds
 const getPlanGoals = (state) => state.planGoals
@@ -27,6 +29,30 @@ const getActionsForIds = createSelector(
     return actions.filter((action) => actionIds.indexOf(action.id) >= 0)
   }
 )
+
+const getActionsForIndicator = (actionIdsForIndicator, actions) => {
+  return actions.filter(
+    (action) => actionIdsForIndicator.indexOf(action.id) >= 0
+  )
+}
+
+const getSortedActionsForIndicator = (actionsForIndicator) => {
+  return actionsForIndicator.sort((actionA, actionB) => {
+    const levelA = actionA.disease_id
+      ? actionA.disease_id * 1000
+      : actionA.level
+    const levelB = actionB.disease_id
+      ? actionB.disease_id * 1000
+      : actionB.level
+    const seqA = actionA.sequence
+    const seqB = actionB.sequence
+    if (levelA < levelB) return -1
+    if (levelA > levelB) return 1
+    if (seqA < seqB) return -1
+    if (seqA > seqB) return 1
+    return 0
+  })
+}
 
 const getTechnicalAreaMap = createSelector(
   [getAllTechnicalAreas],
@@ -85,6 +111,15 @@ const countActionsByActionType = createSelector(
   }
 )
 
+// not exported, TODO: get rid of window.STATE_FROM_SERVER
+const getDisease = (diseaseId) =>
+  window.STATE_FROM_SERVER.diseases.find((disease) => disease.id === diseaseId)
+
+const getDisplayForDiseaseId = (diseaseId) => getDisease(diseaseId).display
+
+const getColorForDiseaseId = (diseaseId) =>
+  `color-value-disease-${getDisease(diseaseId).name}`
+
 const getFormAuthenticityToken = () =>
   window.STATE_FROM_SERVER.formAuthenticityToken
 const getFormActionUrl = () => window.STATE_FROM_SERVER.formActionUrl
@@ -94,7 +129,10 @@ export {
   getAllIndicators,
   getAllActions,
   getActionTypes,
+  getPlanActionIdsByIndicator,
   getNudgesByActionType,
+  getActionsForIndicator,
+  getSortedActionsForIndicator,
   getNumOfActionTypes,
   getSelectedTechnicalAreaId,
   getSelectedActionTypeOrdinal,
@@ -108,4 +146,6 @@ export {
   countActionsByActionType,
   getFormAuthenticityToken,
   getFormActionUrl,
+  getDisplayForDiseaseId,
+  getColorForDiseaseId,
 }

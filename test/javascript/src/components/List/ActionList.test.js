@@ -6,12 +6,12 @@ import {
   LIST_MODE_BY_ACTION_TYPE,
   LIST_MODE_BY_TECHNICAL_AREA,
 } from "config/constants"
-import ActionList from "components/list/ActionList"
+import ActionList from "components/List/ActionList"
 
-jest.mock("components/list/ActionListByActionType", () => () => (
+jest.mock("components/List/ActionListByActionType", () => () => (
   <mock-actionlistbyactiontype />
 ))
-jest.mock("components/list/ActionListByTechnicalArea", () => () => (
+jest.mock("components/List/ActionListByTechnicalArea", () => () => (
   <mock-actionlistbytechnicalarea />
 ))
 jest.mock("react-redux", () => ({
