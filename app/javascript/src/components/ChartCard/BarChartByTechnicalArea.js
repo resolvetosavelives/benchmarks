@@ -7,7 +7,7 @@ import { selectTechnicalArea } from "../../config/actions"
 import {
   getAllActions,
   getPlanActionIds,
-  countActionsByTechnicalArea,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
 } from "../../config/selectors"
 
 class BarChartByTechnicalArea extends React.Component {
@@ -18,7 +18,7 @@ class BarChartByTechnicalArea extends React.Component {
   render() {
     const chartLabels = this.props.chartLabels[0]
     const { data, options } = this.getBarChartOptions(
-      this.props.countActionsByTechnicalArea,
+      this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
       chartLabels
     )
     return (
@@ -36,14 +36,17 @@ class BarChartByTechnicalArea extends React.Component {
     )
   }
 
-  // TODO: refactor this and methods like it that perform non-React DOM operations/augmentation/manipulation to a module
-  getBarChartOptions(chartDataSeries, chartLabels) {
-    const dataSet = chartDataSeries
+  getBarChartOptions(
+    matrixOfActionCountsByTechnicalAreaAndDisease,
+    chartLabels
+  ) {
     let data = {
       labels: chartLabels,
-      series: [dataSet],
+      series: matrixOfActionCountsByTechnicalAreaAndDisease,
     }
-    const heightValue = this.getNextMultipleOfTenForSeries(dataSet)
+    const heightValue = this.getNextMultipleOfTenForSeries(
+      matrixOfActionCountsByTechnicalAreaAndDisease[0]
+    )
     let options = {
       high: heightValue,
       low: 0,
@@ -55,6 +58,7 @@ class BarChartByTechnicalArea extends React.Component {
           return value % 10 == 0 ? value : null
         },
       },
+      stackBars: true,
     }
     return {
       data,
@@ -70,45 +74,85 @@ class BarChartByTechnicalArea extends React.Component {
 
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
-    const countActionsByTechnicalArea = this.props.countActionsByTechnicalArea
+    const matrixOfActionCountsByTechnicalAreaAndDisease = this.props
+      .matrixOfActionCountsByTechnicalAreaAndDisease
     const technicalAreas = this.props.technicalAreas
     const chartistGraph = this.chartistGraphInstance
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
-    $("line.ct-bar", domNode).each((segmentIndex, el) => {
-      let $elBarSegment = $(el)
+    const seriesA = $(".ct-series-a .ct-bar", domNode)
+    const seriesB = $(".ct-series-b .ct-bar", domNode)
+    for (let i = 0; i < technicalAreas.length; i++) {
+      const objOfActionCounts = {
+        general: matrixOfActionCountsByTechnicalAreaAndDisease[0][i],
+        influenza: matrixOfActionCountsByTechnicalAreaAndDisease[1][i],
+      }
+      const $elBarSegmentA = $(seriesA[i])
+      const $elBarSegmentB = $(seriesB[i])
       this.initTooltipForSegmentOfChartByTechnicalArea(
-        $elBarSegment,
-        segmentIndex,
-        countActionsByTechnicalArea[segmentIndex]
+        technicalAreas[i],
+        objOfActionCounts,
+        $elBarSegmentA,
+        $elBarSegmentB,
+        i
       )
       this.initClickHandlerForChartByTechnicalArea(
-        $elBarSegment,
-        technicalAreas[segmentIndex],
-        dispatch
+        technicalAreas[i],
+        dispatch,
+        $elBarSegmentA,
+        $elBarSegmentB
       )
-    })
+    }
   }
 
   initTooltipForSegmentOfChartByTechnicalArea(
-    $elBarSegment,
-    index,
-    countActions
+    technicalArea,
+    objOfActionCounts,
+    $elBarSegmentA,
+    $elBarSegmentB
   ) {
-    const tooltipTitle = `${this.props.technicalAreas[index].text}: ${countActions}`
-    $($elBarSegment)
-      .attr("title", tooltipTitle)
-      .attr("data-toggle", "tooltip")
-      .tooltip({ container: ".plan-container" })
-      .tooltip()
+    const tooltipTitle = this.getTooltipHtmlContent(
+      technicalArea,
+      objOfActionCounts
+    )
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    stackedBarEls.forEach((elBarSegment) => {
+      elBarSegment
+        .attr("title", tooltipTitle)
+        .attr("data-html", true)
+        .attr("data-toggle", "tooltip")
+        .tooltip({ container: ".plan-container" })
+        .tooltip()
+    })
+  }
+
+  getTooltipHtmlContent(technicalArea, objOfActionCounts) {
+    const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
+    let tooltipHtml = `
+        <strong>
+          ${technicalArea.text}: ${sumOfCounts}
+        </strong>
+    `
+    if (objOfActionCounts.influenza > 0) {
+      tooltipHtml = `${tooltipHtml}
+        <div>&nbsp;</div>
+        <div>Health System: ${objOfActionCounts.general}</div>
+        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
+      `
+    }
+    return tooltipHtml
   }
 
   initClickHandlerForChartByTechnicalArea(
-    $elBarSegment,
     technicalArea,
-    dispatch
+    dispatch,
+    $elBarSegmentA,
+    $elBarSegmentB
   ) {
-    $elBarSegment.on("click", () => {
+    $elBarSegmentA.on("click", () => {
+      dispatch(selectTechnicalArea(technicalArea.id))
+    })
+    $elBarSegmentB.on("click", () => {
       dispatch(selectTechnicalArea(technicalArea.id))
     })
   }
@@ -122,7 +166,7 @@ BarChartByTechnicalArea.propTypes = {
   planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
-  countActionsByTechnicalArea: PropTypes.array.isRequired,
+  matrixOfActionCountsByTechnicalAreaAndDisease: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -131,7 +175,9 @@ const mapStateToProps = (state /*, ownProps*/) => {
     chartLabels: state.planChartLabels,
     planActionIds: getPlanActionIds(state),
     allActions: getAllActions(state),
-    countActionsByTechnicalArea: countActionsByTechnicalArea(state),
+    matrixOfActionCountsByTechnicalAreaAndDisease: getMatrixOfActionCountsByTechnicalAreaAndDisease(
+      state
+    ),
   }
 }
 

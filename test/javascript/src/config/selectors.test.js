@@ -10,6 +10,7 @@ import {
   getIndicatorMap,
   getPlanGoalMap,
   countActionsByTechnicalArea,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
   countActionsByActionType,
   getSortedActionsForIndicator,
 } from "config/selectors"
@@ -168,7 +169,7 @@ describe("getActionsForIds", () => {
   })
 })
 
-describe("countActionsByTechnicalArea", () => {
+describe("getCountActionsByTechnicalArea", () => {
   it("returns an array of integers, one for each Technical Area, that sums the actions for each", () => {
     const state = store.getState()
     const result = countActionsByTechnicalArea(state)
@@ -196,6 +197,58 @@ describe("countActionsByTechnicalArea", () => {
       4,
     ])
     expect(result.reduce((acc, r) => acc + r, 0)).toEqual(235)
+  })
+})
+
+describe("getMatrixOfActionCountsByTechnicalAreaAndDisease", () => {
+  it("returns a 2-dimensional array of integers of action counts, two rows (general, influeza) by 18 columns (one per Technical Area)", () => {
+    const state = store.getState()
+    const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(2)
+    expect(result[0].length).toEqual(18)
+    expect(result[1].length).toEqual(18)
+    expect(result[0]).toEqual([
+      6,
+      12,
+      19,
+      9,
+      11,
+      13,
+      19,
+      7,
+      15,
+      18,
+      11,
+      15,
+      7,
+      19,
+      20,
+      16,
+      14,
+      4,
+    ])
+    expect(result[1]).toEqual([
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+    ])
   })
 })
 

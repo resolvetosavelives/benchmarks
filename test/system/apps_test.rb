@@ -62,10 +62,10 @@ class AppsTest < ApplicationSystemTestCase
     ##
     # save the state_from_server to file, for use in jest tests.
     # uncomment and run this to update the JSON data file periodically or upon STATE_FROM_SERVER structure/format change.
-    # save_state_from_server(page)
+    save_state_from_server(page)
 
     # verify bar chart by technical area filter functionality
-    find("line[data-original-title*=\"Antimicrobial Resistance\"]").click
+    find("line[data-original-title*=\"Antimicrobial Resistance\"]", match: :first).click
     assert_selector("#technical-area-3") # the last one
     assert_no_selector("#technical-area-1") # the first one
 
@@ -161,7 +161,7 @@ class AppsTest < ApplicationSystemTestCase
     end
 
     # verify bar chart by technical area filter functionality
-    find("line[data-original-title*=\"Antimicrobial Resistance\"]").click
+    find("line[data-original-title*=\"Antimicrobial Resistance\"]", match: :first).click
     assert_selector("#technical-area-3") # the last one
     assert_no_selector("#technical-area-1") # the first one
 
@@ -310,7 +310,7 @@ class AppsTest < ApplicationSystemTestCase
     end
 
     # verify bar chart by technical area filter functionality
-    find("line[data-original-title*=\"Surveillance\"]").click
+    find("line[data-original-title*=\"Surveillance\"]", match: :first).click
     assert_no_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
