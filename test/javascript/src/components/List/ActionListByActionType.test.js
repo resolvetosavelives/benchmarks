@@ -2,9 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import { useSelector } from "react-redux"
-import ActionListByActionType from "components/list/ActionListByActionType"
+import ActionListByActionType from "components/List/ActionListByActionType"
 
-jest.mock("components/list/Action", () => () => <mock-action />)
+jest.mock("components/List/Action", () => () => <mock-action />)
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
