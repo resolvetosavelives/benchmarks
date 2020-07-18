@@ -241,12 +241,25 @@
   }
 
   .ct-series .ct-bar {
-    stroke: #0d4a59;
     stroke-width: 24;
 
     &:hover {
-      stroke: #4d838f;
       cursor: pointer;
+    }
+  }
+
+  .ct-series-a .ct-bar {
+    stroke: #0d4a59;
+
+    &:hover {
+      stroke: #073642;
+    }
+  }
+  .ct-series-b .ct-bar {
+    stroke: #4d838f;
+
+    &:hover {
+      stroke: #3f6d78;
     }
   }
 

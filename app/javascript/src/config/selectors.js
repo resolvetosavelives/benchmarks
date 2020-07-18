@@ -72,8 +72,8 @@ const getIndicatorMap = createSelector([getAllIndicators], (indicators) => {
 })
 
 const countActionsByTechnicalArea = createSelector(
-  [getActionsForIds, getTechnicalAreaMap],
-  (currentActions, technicalAreaMap) => {
+  [getActionsForIds, getTechnicalAreaMap, getAllTechnicalAreas],
+  (currentActions, technicalAreaMap, allTechnicalAreas) => {
     return currentActions.reduce((acc, action) => {
       const technicalArea = technicalAreaMap[action.benchmark_technical_area_id]
       console.assert(
@@ -83,7 +83,35 @@ const countActionsByTechnicalArea = createSelector(
       const currentIndex = technicalArea.sequence - 1
       acc[currentIndex] += 1
       return acc
-    }, Array(18).fill(0))
+    }, Array(allTechnicalAreas.length).fill(0))
+  }
+)
+
+const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
+  [getActionsForIds, getTechnicalAreaMap, getAllTechnicalAreas],
+  (currentActions, technicalAreaMap, allTechnicalAreas) => {
+    const fnBlankArray = () => Array(allTechnicalAreas.length).fill(0)
+    return currentActions.reduce(
+      (acc, action) => {
+        const technicalArea =
+          technicalAreaMap[action.benchmark_technical_area_id]
+        console.assert(
+          technicalArea,
+          `technicalArea expected but found ${technicalArea}`
+        )
+        const currentIndex = technicalArea.sequence - 1
+        if (action.disease_id === 1) {
+          acc[1][currentIndex] += 1
+        } else {
+          acc[0][currentIndex] += 1
+        }
+        return acc
+      },
+      [fnBlankArray(), fnBlankArray()]
+    )
+    // return value:
+    //   an array of arrays that each contains TechnicalAreas.length elements full of integers of counts.
+    //   the first array is for general actions, the second array is for influenza actions.
   }
 )
 
@@ -143,6 +171,7 @@ export {
   getTechnicalAreaMap,
   getIndicatorMap,
   countActionsByTechnicalArea,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
   countActionsByActionType,
   getFormAuthenticityToken,
   getFormActionUrl,
