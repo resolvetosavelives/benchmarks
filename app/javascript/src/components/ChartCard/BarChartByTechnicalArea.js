@@ -6,8 +6,9 @@ import $ from "jquery"
 import { selectTechnicalArea } from "../../config/actions"
 import {
   getAllActions,
-  getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getPlanActionIds,
+  countActionsByTechnicalArea,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
 } from "../../config/selectors"
 import BarChartLegend from "./BarChartLegend"
 
@@ -18,7 +19,9 @@ class BarChartByTechnicalArea extends React.Component {
 
   render() {
     const chartLabels = this.props.chartLabels[0]
+    const countActionsByTechnicalArea = this.props.countActionsByTechnicalArea
     const { data, options } = this.getBarChartOptions(
+      countActionsByTechnicalArea,
       this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
       chartLabels
     )
@@ -39,6 +42,7 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   getBarChartOptions(
+    countActionsByTechnicalArea,
     matrixOfActionCountsByTechnicalAreaAndDisease,
     chartLabels
   ) {
@@ -47,7 +51,7 @@ class BarChartByTechnicalArea extends React.Component {
       series: matrixOfActionCountsByTechnicalAreaAndDisease,
     }
     const heightValue = this.getNextMultipleOfTenForSeries(
-      matrixOfActionCountsByTechnicalAreaAndDisease[0]
+      countActionsByTechnicalArea
     )
     let options = {
       high: heightValue,
@@ -168,6 +172,7 @@ BarChartByTechnicalArea.propTypes = {
   planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
+  countActionsByTechnicalArea: PropTypes.array.isRequired,
   matrixOfActionCountsByTechnicalAreaAndDisease: PropTypes.array.isRequired,
 }
 
@@ -180,6 +185,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     matrixOfActionCountsByTechnicalAreaAndDisease: getMatrixOfActionCountsByTechnicalAreaAndDisease(
       state
     ),
+    countActionsByTechnicalArea: countActionsByTechnicalArea(state),
   }
 }
 
