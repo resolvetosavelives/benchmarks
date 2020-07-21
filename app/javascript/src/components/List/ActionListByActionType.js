@@ -4,6 +4,7 @@ import {
   getActionsForIds,
   getAllActions,
   getIndicatorMap,
+  getActionMap,
   getPlanActionIds,
   getSelectedActionTypeOrdinal,
   getSortedActions,
@@ -13,7 +14,7 @@ import Action from "./Action"
 
 const ActionListByActionType = () => {
   const planActionIds = useSelector((state) => getPlanActionIds(state))
-  const actionMap = useSelector((state) => state.actions)
+  const actionMap = useSelector((state) => getActionMap(state))
   const selectedActionTypeOrdinal = useSelector((state) =>
     getSelectedActionTypeOrdinal(state)
   )

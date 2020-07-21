@@ -36,8 +36,6 @@ beforeEach(() => {
     text:
       "Domestic legislation, laws, regulations, policy an…rs and effectively enable compliance with the IHR",
   }
-  const mockIndicatorMap = { 13: indicator }
-  useSelector.mockReturnValueOnce(mockIndicatorMap)
 })
 
 afterEach(() => {
@@ -57,6 +55,8 @@ describe("when the action is not disease specific", () => {
       level: 5,
       disease_id: null,
     }
+    useSelector
+      .mockReturnValueOnce({ 13: indicator })
   })
 
   it("Action has the expected badge, level, ordinal, title, and pill", () => {
@@ -104,6 +104,8 @@ describe("when the Action is disease specific", () => {
       level: null,
       disease_id: 1,
     }
+    useSelector
+      .mockReturnValueOnce({ 13: indicator })
   })
 
   it("Action has the expected disease badge, ordinal, title and pill", () => {

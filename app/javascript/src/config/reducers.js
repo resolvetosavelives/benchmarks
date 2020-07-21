@@ -20,11 +20,7 @@ export default function initReducers(initialState) {
 
   const indicators = createReducer(initialState.indicators, {})
 
-  const actionMap = initialState.actions.reduce((map, action) => {
-    map[action.id] = action
-    return map
-  }, {})
-  const actions = createReducer(actionMap, {})
+  const actions = createReducer(initialState.actions, {})
 
   const planActionIds = createReducer(initialState.planActionIds, {
     [ADD_ACTION_TO_PLAN]: (state, action) => {
@@ -95,8 +91,6 @@ export default function initReducers(initialState) {
 
   const planChartLabels = createReducer(initialState.planChartLabels, {})
 
-  const allActions = createReducer(initialState.actions, {})
-
   const planGoals = createReducer(initialState.planGoals, {})
 
   const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
@@ -156,7 +150,6 @@ export default function initReducers(initialState) {
     planActionIdsByIndicator,
     planActionIdsNotInIndicator,
     planChartLabels,
-    allActions,
     ui,
     nudgesByActionType,
     plan,

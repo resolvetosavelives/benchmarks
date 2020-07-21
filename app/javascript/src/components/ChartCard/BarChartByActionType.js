@@ -4,22 +4,23 @@ import ChartistGraph from "react-chartist"
 import PropTypes from "prop-types"
 import $ from "jquery"
 import { selectActionType } from "../../config/actions"
-import { countActionsByActionType } from "../../config/selectors"
+import {
+  getAllActions,
+  countActionsByActionType,
+  getMatrixOfActionCountsByActionTypeAndDisease,
+} from "../../config/selectors"
 import BarChartLegend from "./BarChartLegend"
 
 class BarChartByActionType extends React.Component {
   constructor(props) {
     super(props)
-    if (!this.chartistGraphInstance) {
-      this.chartistGraphInstance = null // will be a ref to the chartist instance
-    }
     this.chartLabels = this.props.chartLabels[1]
   }
 
   render() {
-    const countActionsByActionType = this.props.countActionsByActionType
     const { data, options } = this.getBarChartOptions(
-      countActionsByActionType,
+      this.props.countActionsByActionType,
+      this.props.matrixOfActionCountsByActionTypeAndDisease,
       this.chartLabels
     )
     return (
@@ -39,18 +40,24 @@ class BarChartByActionType extends React.Component {
   }
 
   // TODO: refactor this and methods like it that perform non-React DOM operations/augmentation/manipulation to a module
-  getBarChartOptions(chartDataSeries, chartLabels) {
-    const dataSet = chartDataSeries
+  getBarChartOptions(
+    countActionsByActionType,
+    matrixOfActionCountsByActionTypeAndDisease,
+    chartLabels
+  ) {
     let data = {
       labels: chartLabels,
-      series: [dataSet],
+      series: matrixOfActionCountsByActionTypeAndDisease,
     }
-    const heightValue = this.getNextMultipleOfTenForSeries(dataSet)
+    const heightValue = this.getNextMultipleOfTenForSeries(
+      countActionsByActionType
+    )
     let options = {
       high: heightValue,
       low: 0,
       width: this.props.width,
       height: this.props.height,
+      stackBars: true,
       axisY: {
         // show multiples of 10
         labelInterpolationFnc: function (value) {
@@ -73,32 +80,80 @@ class BarChartByActionType extends React.Component {
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
     const countActionsByActionType = this.props.countActionsByActionType
+    const matrixOfActionCountsByActionTypeAndDisease = this.props
+      .matrixOfActionCountsByActionTypeAndDisease
     const chartistGraph = this.chartistGraphInstance
+    const chartLabels = this.chartLabels
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
-    $("line.ct-bar", domNode).each((segmentIndex, el) => {
-      let $elBarSegment = $(el)
+    const seriesA = $(".ct-series-a .ct-bar", domNode)
+    const seriesB = $(".ct-series-b .ct-bar", domNode)
+    for (let i = 0; i < countActionsByActionType.length; i++) {
+      const objOfActionCounts = {
+        general: matrixOfActionCountsByActionTypeAndDisease[0][i],
+        influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
+      }
+      const $elBarSegmentA = $(seriesA[i])
+      const $elBarSegmentB = $(seriesB[i])
       this.initTooltipForSegmentOfChart(
-        $elBarSegment,
-        segmentIndex,
-        countActionsByActionType[segmentIndex]
+        objOfActionCounts,
+        chartLabels[i],
+        $elBarSegmentA,
+        $elBarSegmentB
       )
-      this.initClickHandlerForChart($elBarSegment, segmentIndex, dispatch)
+      this.initClickHandlerForChart(dispatch, i, $elBarSegmentA, $elBarSegmentB)
+    }
+  }
+
+  initTooltipForSegmentOfChart(
+    objOfActionCounts,
+    nameOfActionType,
+    $elBarSegmentA,
+    $elBarSegmentB
+  ) {
+    const tooltipTitle = this.getTooltipHtmlContent(
+      nameOfActionType,
+      objOfActionCounts
+    )
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    stackedBarEls.forEach(($elBarSegment) => {
+      $elBarSegment
+        .attr("title", tooltipTitle)
+        .attr("data-toggle", "tooltip")
+        .attr("data-html", true)
+        .tooltip({ container: ".plan-container" })
+        .tooltip()
     })
   }
 
-  initTooltipForSegmentOfChart($elBarSegment, index, countActions) {
-    const tooltipTitle = `${this.chartLabels[index]}: ${countActions}`
-    $($elBarSegment)
-      .attr("title", tooltipTitle)
-      .attr("data-toggle", "tooltip")
-      .tooltip({ container: ".plan-container" })
-      .tooltip()
+  getTooltipHtmlContent(nameOfActionType, objOfActionCounts) {
+    const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
+    let tooltipHtml = `
+        <strong>
+          ${nameOfActionType}: ${sumOfCounts}
+        </strong>
+    `
+    if (objOfActionCounts.influenza > 0) {
+      tooltipHtml = `${tooltipHtml}
+        <div>&nbsp;</div>
+        <div>Health System: ${objOfActionCounts.general}</div>
+        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
+      `
+    }
+    return tooltipHtml
   }
 
-  initClickHandlerForChart($elBarSegment, segmentIndex, dispatch) {
-    $elBarSegment.on("click", () => {
-      dispatch(selectActionType(segmentIndex))
+  initClickHandlerForChart(
+    dispatch,
+    segmentIndex,
+    $elBarSegmentA,
+    $elBarSegmentB
+  ) {
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    stackedBarEls.forEach(($elBarSegment) => {
+      $elBarSegment.on("click", () => {
+        dispatch(selectActionType(segmentIndex))
+      })
     })
   }
 }
@@ -110,15 +165,19 @@ BarChartByActionType.propTypes = {
   planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
-  countActionsByActionType: PropTypes.array,
+  countActionsByActionType: PropTypes.array.isRequired,
+  matrixOfActionCountsByActionTypeAndDisease: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
     chartLabels: state.planChartLabels,
     planActionIds: state.planActionIds,
-    allActions: state.allActions,
+    allActions: getAllActions(state),
     countActionsByActionType: countActionsByActionType(state),
+    matrixOfActionCountsByActionTypeAndDisease: getMatrixOfActionCountsByActionTypeAndDisease(
+      state
+    ),
   }
 }
 

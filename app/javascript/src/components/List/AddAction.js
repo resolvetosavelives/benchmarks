@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { shallowEqual, useDispatch, useSelector } from "react-redux"
 import Select from "react-select"
 import { addActionToIndicator } from "../../config/actions"
+import { getActionMap } from "../../config/selectors"
 
 const selectAction = (action, indicator, dispatch) => {
   dispatch(addActionToIndicator(action.id, indicator.id))
@@ -11,7 +12,7 @@ const selectAction = (action, indicator, dispatch) => {
 const AddAction = (props) => {
   const indicator = props.indicator
   const dispatch = useDispatch()
-  const actions = useSelector((state) => state.actions, shallowEqual)
+  const actions = useSelector((state) => getActionMap(state), shallowEqual)
   const planActionIdsNotInIndicator = useSelector(
     (state) => state.planActionIdsNotInIndicator
   )

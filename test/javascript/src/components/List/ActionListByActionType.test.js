@@ -98,7 +98,7 @@ beforeEach(() => {
     action3.id,
     action4.id,
     action5.id,
-    // action6 intentionally because in this example it does not belong to the plan
+    // action6 intentionally omitted from next line because in this example it does not belong to the plan
   ]
   const mockActionMap = {
     [action1.id]: action1,

@@ -2,12 +2,11 @@ import { createSelector } from "reselect"
 
 const getAllTechnicalAreas = (state) => state.technicalAreas
 const getAllIndicators = (state) => state.indicators
-const getAllActions = (state) => state.allActions
+const getAllActions = (state) => state.actions
 const getPlanActionIdsByIndicator = (state) => state.planActionIdsByIndicator
 
-const getActionTypes = (state) => state.nudgesByActionType
 const getNudgesByActionType = (state) => state.nudgesByActionType
-const getNumOfActionTypes = (state) => getActionTypes(state).length
+const getNumOfActionTypes = (state) => getNudgesByActionType(state).length
 
 const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
 const getSelectedActionTypeOrdinal = (state) =>
@@ -21,6 +20,13 @@ const getPlanGoalMap = createSelector([getPlanGoals], (goals) => {
   return goals.reduce((acc, goal) => {
     acc[goal.benchmark_indicator_id] = goal
     return acc
+  }, {})
+})
+
+const getActionMap = createSelector([getAllActions], (allActions) => {
+  return allActions.reduce((map, action) => {
+    map[action.id] = action
+    return map
   }, {})
 })
 
@@ -156,7 +162,42 @@ const countActionsByActionType = createSelector(
   }
 )
 
-// not exported, TODO: get rid of window.STATE_FROM_SERVER
+const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
+  [getActionsForPlan, getNumOfActionTypes],
+  (planActions, numOfActionTypes) => {
+    const fnBlankArray = () => Array(numOfActionTypes).fill(0)
+    return planActions.reduce(
+      (acc, action) => {
+        const currentActionTypes = action.action_types
+        console.assert(
+          Array.isArray(currentActionTypes),
+          `currentActionTypes expected to be an array but found ${typeof currentActionTypes}`
+        )
+        if (currentActionTypes && currentActionTypes.length > 0) {
+          currentActionTypes.forEach((intActionType) => {
+            const indexOfActionType = Number(intActionType) - 1
+            console.assert(
+              !isNaN(indexOfActionType),
+              `indexOfActionType expected to be an integer but found ${indexOfActionType}`
+            )
+            if (action.disease_id === 1) {
+              acc[1][indexOfActionType] += 1
+            } else {
+              acc[0][indexOfActionType] += 1
+            }
+          })
+        }
+        return acc
+      },
+      [fnBlankArray(), fnBlankArray()]
+    )
+    // return value:
+    //   an array of arrays that each contains an element per ActionTypes of integers of counts.
+    //   the first array is for general actions, the second array is for influenza actions.
+  }
+)
+
+// not exported
 const getDisease = (diseaseId) =>
   window.STATE_FROM_SERVER.diseases.find((disease) => disease.id === diseaseId)
 
@@ -173,7 +214,6 @@ export {
   getAllTechnicalAreas,
   getAllIndicators,
   getAllActions,
-  getActionTypes,
   getPlanActionIdsByIndicator,
   getNudgesByActionType,
   getSortedActions,
@@ -183,6 +223,7 @@ export {
   getPlan,
   getPlanActionIds,
   getPlanGoals,
+  getActionMap,
   getPlanGoalMap,
   getActionsForPlan,
   getActionsForIds,
@@ -191,6 +232,7 @@ export {
   countActionsByTechnicalArea,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
   countActionsByActionType,
+  getMatrixOfActionCountsByActionTypeAndDisease,
   getFormAuthenticityToken,
   getFormActionUrl,
   getDisplayForDiseaseId,
