@@ -6,9 +6,10 @@ import $ from "jquery"
 import { selectTechnicalArea } from "../../config/actions"
 import {
   getAllActions,
-  getPlanActionIds,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
+  getPlanActionIds,
 } from "../../config/selectors"
+import BarChartLegend from "./BarChartLegend"
 
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class BarChartByTechnicalArea extends React.Component {
           }}
           listener={{ created: this.initInteractivityForChart.bind(this) }}
         />
+        <BarChartLegend />
       </div>
     )
   }
