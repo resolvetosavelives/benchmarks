@@ -3,6 +3,10 @@ import React from "react"
 import { render as renderForConnect } from "../../../test-utils-for-react"
 import BarChartByTechnicalArea from "components/ChartCard/BarChartByTechnicalArea"
 
+jest.mock("components/ChartCard/BarChartLegend", () => () => (
+  <mock-BarChartLegend />
+))
+
 const strTechnicalAreas = fs.readFileSync(
   `${__dirname}/../../../../fixtures/files/all_benchmark_technical_areas.json`,
   "utf-8"

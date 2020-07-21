@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 import $ from "jquery"
 import { selectActionType } from "../../config/actions"
 import { countActionsByActionType } from "../../config/selectors"
+import BarChartLegend from "./BarChartLegend"
 
 class BarChartByActionType extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class BarChartByActionType extends React.Component {
           }}
           listener={{ created: this.initInteractivityForChart.bind(this) }}
         />
+        <BarChartLegend />
       </div>
     )
   }

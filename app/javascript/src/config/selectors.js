@@ -13,6 +13,7 @@ const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
 const getSelectedActionTypeOrdinal = (state) =>
   state.ui.selectedActionTypeOrdinal
 
+const getPlan = (state) => state.plan
 const getPlanActionIds = (state) => state.planActionIds
 const getPlanGoals = (state) => state.planGoals
 
@@ -164,6 +165,7 @@ export {
   getNumOfActionTypes,
   getSelectedTechnicalAreaId,
   getSelectedActionTypeOrdinal,
+  getPlan,
   getPlanActionIds,
   getPlanGoals,
   getPlanGoalMap,

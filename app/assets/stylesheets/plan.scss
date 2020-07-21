@@ -10,7 +10,7 @@
 }
 
 .tips-header {
-  font-family: Pathway Gothic One;
+  font-family: "Pathway Gothic One", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 48px;
@@ -249,17 +249,17 @@
   }
 
   .ct-series-a .ct-bar {
-    stroke: #0d4a59;
+    stroke: color("health-system");
 
     &:hover {
-      stroke: #073642;
+      stroke: color("health-system-hover");
     }
   }
   .ct-series-b .ct-bar {
-    stroke: #4d838f;
+    stroke: color("disease-influenza");
 
     &:hover {
-      stroke: #3f6d78;
+      stroke: color("disease-influenza-hover");
     }
   }
 
@@ -282,6 +282,45 @@
     // needs more bottom margin to allow the angled labels to display w/o cut off
     margin: 0 0 50px 0;
     overflow: visible;
+  }
+
+  .ct-legend {
+    margin-left: -1em !important;
+    margin-bottom: 0;
+    margin-top: 3em;
+    position: relative;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: 1.8em;
+      margin-right: 3em;
+      display: inline-block;
+    }
+
+    li:before {
+      width: 1.25em;
+      height: 1.25em;
+      margin-top: 0.15em;
+      position: absolute;
+      left: 0;
+      content: "";
+    }
+
+    .ct-legend-inside {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .ct-series-a:before {
+      background-color: color("health-system");
+    }
+
+    .ct-series-b:before {
+      background-color: color("disease-influenza");
+      border-color: color("disease-influenza");
+    }
   }
 }
 
