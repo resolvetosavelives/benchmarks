@@ -3,6 +3,7 @@ import { describe, it, expect, beforeAll } from "@jest/globals"
 import configureStore from "redux-mock-store"
 import {
   getAllActions,
+  getPlan,
   getPlanActionIds,
   getNumOfActionTypes,
   getActionsForIds,
@@ -24,6 +25,7 @@ beforeAll(() => {
   )
   const stateFromServer = JSON.parse(strStateFromServer)
   const initialState = {
+    plan: stateFromServer.plan,
     allActions: stateFromServer.actions,
     planActionIds: stateFromServer.planActionIds,
     nudgesByActionType: stateFromServer.nudgesByActionType,
@@ -133,6 +135,20 @@ describe("getPlanGoalMap", () => {
     expect(result[1].plan_id).not.toBeNull()
     expect(result[1].value).not.toBeNull()
     expect(result[1].benchmark_indicator_id).not.toBeNull()
+  })
+})
+
+describe("getPlan", () => {
+  it("returns the plan", () => {
+    const state = store.getState()
+
+    let plan = getPlan(state)
+
+    expect(plan).toBeInstanceOf(Object)
+    expect(typeof plan.id).toEqual("number")
+    expect(typeof plan.name).toEqual("string")
+    expect(typeof plan.term).toEqual("number")
+    expect(plan.disease_ids).toBeInstanceOf(Array)
   })
 })
 

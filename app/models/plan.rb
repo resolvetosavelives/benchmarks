@@ -39,11 +39,7 @@ class Plan < ApplicationRecord
       id: nil,
       name: nil,
       term: nil,
-      assessment_id: nil,
       disease_ids: nil,
-      user_id: nil,
-      created_at: nil,
-      updated_at: nil,
     }
   end
 

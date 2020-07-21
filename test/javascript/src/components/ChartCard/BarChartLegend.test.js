@@ -37,7 +37,7 @@ describe("when a plan has no diseases selected", () => {
     })
   })
 
-  it("no legend is displayed", () => {
+  it("displays no legend", () => {
     expect(container.innerHTML).not.toMatch("ct-legend")
   })
 })
@@ -56,7 +56,7 @@ describe("when a plan has diseases", () => {
     })
   })
 
-  it("a legend is displayed with the correct label", () => {
+  it("displays a legend with the correct label", () => {
     expect(container.innerHTML).toContain("ct-legend")
     expect(container.innerHTML).toContain("Flu specific")
   })
