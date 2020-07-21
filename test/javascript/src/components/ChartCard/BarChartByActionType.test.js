@@ -4,6 +4,10 @@ import { render as renderForConnect } from "../../../test-utils-for-react"
 import BarChartByActionType from "components/ChartCard/BarChartByActionType"
 import { countActionsByActionType } from "config/selectors"
 
+jest.mock("components/ChartCard/BarChartLegend", () => () => (
+  <mock-BarChartLegend />
+))
+
 const strTechnicalAreas = fs.readFileSync(
   `${__dirname}/../../../../fixtures/files/all_benchmark_technical_areas.json`,
   "utf-8"

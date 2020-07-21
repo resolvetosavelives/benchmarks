@@ -152,9 +152,13 @@ class AppsTest < ApplicationSystemTestCase
                "Focus on no more than 2-3 actions per technical area",
              )
     end
-    assert_selector(".ct-legend") do
-      assert page.has_content?("Influenza specific")
-    end
+
+    find("#tabContentForTechnicalArea .ct-legend").has_content?("Influenza specific")
+
+    find("#tabForActionType").click
+    find("#tabContentForActionType .ct-legend").has_content?("Influenza specific")
+
+    find("#tabForTechnicalArea").click
 
     assert_selector("#technical-area-1") do
       assert page.has_content?(
