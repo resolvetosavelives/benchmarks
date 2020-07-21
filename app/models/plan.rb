@@ -34,6 +34,19 @@ class Plan < ApplicationRecord
   validates :name, presence: true
   validates :term, inclusion: TERM_TYPES
 
+  def attributes
+    {
+      id: nil,
+      name: nil,
+      term: nil,
+      assessment_id: nil,
+      disease_ids: nil,
+      user_id: nil,
+      created_at: nil,
+      updated_at: nil,
+    }
+  end
+
   def is_5_year?
     term.eql?(TERM_TYPES.second)
   end

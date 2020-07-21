@@ -99,7 +99,7 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("Saved Nigeria Plan 789") # ugh without this form field(s) dont get filled
   end
 
-  test "happy path for Nigeria JEE 1.0 with influenzas" do
+  test "happy path for Nigeria JEE 1.0 with influenza" do
     ##
     # visit home page
     visit root_url
@@ -151,6 +151,9 @@ class AppsTest < ApplicationSystemTestCase
                # nudge content for 1-year plan
                "Focus on no more than 2-3 actions per technical area",
              )
+    end
+    assert_selector(".ct-legend") do
+      assert page.has_content?("Influenza specific")
     end
 
     assert_selector("#technical-area-1") do
