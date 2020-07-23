@@ -1,19 +1,20 @@
 import fs from "fs"
-import { describe, it, expect, beforeAll } from "@jest/globals"
+import { beforeAll, describe, expect, it } from "@jest/globals"
 import configureStore from "redux-mock-store"
 import {
+  countActionsByActionType,
+  countActionsByTechnicalArea,
+  getActionsForIds,
+  getActionsForPlan,
   getAllActions,
+  getIndicatorMap,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
+  getNumOfActionTypes,
   getPlan,
   getPlanActionIds,
-  getNumOfActionTypes,
-  getActionsForIds,
-  getTechnicalAreaMap,
-  getIndicatorMap,
   getPlanGoalMap,
-  countActionsByTechnicalArea,
-  getMatrixOfActionCountsByTechnicalAreaAndDisease,
-  countActionsByActionType,
-  getSortedActionsForIndicator,
+  getSortedActions,
+  getTechnicalAreaMap,
 } from "config/selectors"
 
 let store
@@ -47,48 +48,123 @@ describe("getAllActions", () => {
   })
 })
 
-describe("getSortedActionsForIndicator", () => {
-  describe("when there are no disease specific actions", () => {
-    const actionsToSort = [
-      { id: 1, level: 2, sequence: 2, disease_id: null },
-      { id: 2, level: 2, sequence: 1, disease_id: null },
-      { id: 3, level: 1, sequence: 2, disease_id: null },
-      { id: 4, level: 1, sequence: 1, disease_id: null },
+describe("getSortedActions", () => {
+  let technicalAreaMap, indicatorMap, actionsToSort, sortedActions
+
+  beforeEach(() => {
+    const state = store.getState()
+    const actionIdsToSort = [
+      // These ids are copied from the actions that are displayed when you go to Action Type tab
+      // and then the Assessment and Data Use bar. These ids will likely change when more Health security actions
+      // or other disease specific actions are added in a later phase, and you will need to update the test
+      888,
+      2,
+      100,
+      892,
+      124,
+      144,
+      146,
+      186,
+      217,
+      218,
+      234,
+      257,
+      297,
+      298,
+      370,
+      371,
+      373,
+      393,
+      926,
+      885,
+      499,
+      886,
+      569,
+      570,
+      904,
+      571,
+      899,
+      900,
+      592,
+      594,
+      636,
+      727,
+      744,
+      769,
+      770,
+      773,
+      785,
+      786,
+      787,
+      788,
+      829,
+      830,
+      831,
+      835,
+      850,
+      854,
     ]
-    it("returns the actions sorted by level then sequence", () => {
-      const sortedActions = getSortedActionsForIndicator(actionsToSort)
-      expect(sortedActions).toEqual([
-        { id: 4, level: 1, sequence: 1, disease_id: null },
-        { id: 3, level: 1, sequence: 2, disease_id: null },
-        { id: 2, level: 2, sequence: 1, disease_id: null },
-        { id: 1, level: 2, sequence: 2, disease_id: null },
-      ])
-    })
+    const actions = getAllActions(state)
+    actionsToSort = getActionsForIds(actionIdsToSort, actions)
+    technicalAreaMap = getTechnicalAreaMap(state)
+    indicatorMap = getIndicatorMap(state)
   })
-  describe("when there are disease specific actions", () => {
-    const actionsToSort = [
-      { id: 7, level: null, sequence: 2, disease_id: 2 },
-      { id: 8, level: null, sequence: 1, disease_id: 2 },
-      { id: 5, level: null, sequence: 2, disease_id: 1 },
-      { id: 6, level: null, sequence: 1, disease_id: 1 },
-      { id: 1, level: 2, sequence: 2, disease_id: null },
-      { id: 2, level: 2, sequence: 1, disease_id: null },
-      { id: 3, level: 1, sequence: 2, disease_id: null },
-      { id: 4, level: 1, sequence: 1, disease_id: null },
+
+  it("returns actions sorted by disease, technical area sequence, indicator sequence, action level, and action sequence", () => {
+    sortedActions = getSortedActions(
+      actionsToSort,
+      technicalAreaMap,
+      indicatorMap
+    )
+    const sortedActionIds = [
+      2,
+      100,
+      124,
+      144,
+      146,
+      186,
+      217,
+      218,
+      234,
+      257,
+      297,
+      298,
+      370,
+      371,
+      373,
+      393,
+      499,
+      569,
+      570,
+      571,
+      592,
+      594,
+      636,
+      727,
+      744,
+      769,
+      770,
+      773,
+      785,
+      786,
+      787,
+      788,
+      829,
+      830,
+      831,
+      835,
+      850,
+      854,
+      888,
+      892,
+      926,
+      885,
+      886,
+      904,
+      899,
+      900,
     ]
-    it("returns the actions sorted by level then sequence and with disease specific actions last and in disease then sequence order", () => {
-      const sortedActions = getSortedActionsForIndicator(actionsToSort)
-      expect(sortedActions).toEqual([
-        { id: 4, level: 1, sequence: 1, disease_id: null },
-        { id: 3, level: 1, sequence: 2, disease_id: null },
-        { id: 2, level: 2, sequence: 1, disease_id: null },
-        { id: 1, level: 2, sequence: 2, disease_id: null },
-        { id: 6, level: null, sequence: 1, disease_id: 1 },
-        { id: 5, level: null, sequence: 2, disease_id: 1 },
-        { id: 8, level: null, sequence: 1, disease_id: 2 },
-        { id: 7, level: null, sequence: 2, disease_id: 2 },
-      ])
-    })
+    expect(sortedActions.map((action) => action.id)).toEqual(sortedActionIds)
   })
 })
 
@@ -173,15 +249,32 @@ describe("getNumOfActionTypes", () => {
   })
 })
 
-describe("getActionsForIds", () => {
-  it("returns an array of action objects for the given action IDs", () => {
+describe("getActionsForPlan", () => {
+  it("returns an array of all action objects for the plan", () => {
     const state = store.getState()
 
-    const result = getActionsForIds(state)
+    const result = getActionsForPlan(state)
 
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(235)
     expect(result[0]).toBeInstanceOf(Object)
+  })
+})
+
+describe("getActionsForIds", () => {
+  it("returns an array of action objects for the given actionIds", () => {
+    const actions = [
+      { id: 1, level: 2, sequence: 2, disease_id: null },
+      { id: 2, level: 2, sequence: 1, disease_id: null },
+      { id: 3, level: 1, sequence: 2, disease_id: null },
+      { id: 4, level: 1, sequence: 1, disease_id: null },
+    ]
+    const actionIds = [1, 3]
+
+    const actionsForIds = getActionsForIds(actionIds, actions)
+
+    expect(actionsForIds.length).toEqual(2)
+    expect(actionsForIds.map((a) => a.id)).toEqual([1, 3])
   })
 })
 
@@ -292,15 +385,5 @@ describe("countActionsByActionType", () => {
       3,
       23,
     ])
-  })
-})
-
-describe("getSortedActionsForIndicator", () => {
-  it("returns an array of integers, one for each Action Type, that sums the actions for each", () => {
-    // const state = store.getState()
-    const arrayOfActionsToBeSorted = []
-    const result = getSortedActionsForIndicator(arrayOfActionsToBeSorted)
-
-    expect(result).toBeInstanceOf(Array)
   })
 })

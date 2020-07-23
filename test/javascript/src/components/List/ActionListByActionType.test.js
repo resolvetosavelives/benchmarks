@@ -3,23 +3,55 @@ import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import { useSelector } from "react-redux"
 import ActionListByActionType from "components/List/ActionListByActionType"
+import * as selectors from "config/selectors"
 
 jest.mock("components/List/Action", () => () => <mock-action />)
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
 
-let container
+let container, spyGetSortedActions
+
 beforeEach(() => {
   container = document.createElement("div")
   document.body.appendChild(container)
   const selectedActionTypeOrdinal = 3
-  const action1 = { id: 17, action_types: null }
-  const action2 = { id: 19, action_types: [selectedActionTypeOrdinal] }
-  const action3 = { id: 37, action_types: [3, selectedActionTypeOrdinal] }
-  const action4 = { id: 41, action_types: [3, 17, selectedActionTypeOrdinal] }
-  const action5 = { id: 47, action_types: [] }
-  const action6 = { id: 53, action_types: [selectedActionTypeOrdinal] }
+  const action1 = {
+    id: 17,
+    action_types: null,
+    benchmark_technical_area_id: 1,
+    benchmark_indicator_id: 1,
+  }
+  const action2 = {
+    id: 19,
+    action_types: [selectedActionTypeOrdinal],
+    benchmark_technical_area_id: 1,
+    benchmark_indicator_id: 1,
+  }
+  const action3 = {
+    id: 37,
+    action_types: [3, selectedActionTypeOrdinal],
+    benchmark_technical_area_id: 1,
+    benchmark_indicator_id: 1,
+  }
+  const action4 = {
+    id: 41,
+    action_types: [3, 17, selectedActionTypeOrdinal],
+    benchmark_technical_area_id: 1,
+    benchmark_indicator_id: 1,
+  }
+  const action5 = {
+    id: 47,
+    action_types: [],
+    benchmark_technical_area_id: 1,
+    benchmark_indicator_id: 1,
+  }
+  const action6 = {
+    id: 53,
+    action_types: [selectedActionTypeOrdinal],
+    benchmark_technical_area_id: 1,
+    benchmark_indicator_id: 1,
+  }
   // TODO: factor out this planChartLabels data to DRY up this and other uses prob into a file instead.
   const planChartLabels = [
     [
@@ -60,29 +92,36 @@ beforeEach(() => {
       "Training",
     ],
   ]
+  let mockPlanActionIds = [
+    action1.id,
+    action2.id,
+    action3.id,
+    action4.id,
+    action5.id,
+    // action6 intentionally because in this example it does not belong to the plan
+  ]
+  const mockActionMap = {
+    [action1.id]: action1,
+    [action2.id]: action2,
+    [action3.id]: action3,
+    [action4.id]: action4,
+    [action5.id]: action5,
+    [action6.id]: action6,
+  }
+  const mockActions = [action1, action2, action3, action4, action5, action6]
+  const mockTechnicalAreaMap = { 1: {} }
+  const indicatorMap = { 1: {} }
+
   useSelector
-    .mockReturnValueOnce([
-      // action6 intentionally omitted from next line because in this example it does not belong to the plan
-      action1.id,
-      action2.id,
-      action3.id,
-      action4.id,
-      action5.id,
-    ])
-    .mockImplementationOnce((callback) => {
-      const actions = {}
-      actions[action1.id] = action1
-      actions[action2.id] = action2
-      actions[action3.id] = action3
-      actions[action4.id] = action4
-      actions[action5.id] = action5
-      actions[action6.id] = action6
-      return callback({
-        actions: actions,
-      })
-    })
+    .mockReturnValueOnce(mockPlanActionIds)
+    .mockReturnValueOnce(mockActionMap)
     .mockReturnValueOnce(selectedActionTypeOrdinal)
-    .mockImplementationOnce((cb) => cb({ planChartLabels: planChartLabels }))
+    .mockReturnValueOnce(mockActions)
+    .mockReturnValueOnce(mockTechnicalAreaMap)
+    .mockReturnValueOnce(indicatorMap)
+    .mockReturnValueOnce(planChartLabels)
+
+  spyGetSortedActions = jest.spyOn(selectors, "getSortedActions")
 })
 
 afterEach(() => {
@@ -90,13 +129,13 @@ afterEach(() => {
   container = null
 })
 
-it("when passed 3 Action Ids it renders 3 Action component children", () => {
+it("it renders 3 sorted Action component children", () => {
   act(() => {
     ReactDOM.render(<ActionListByActionType />, container)
   })
   const foundActionListByActionTypeComponents = container.querySelectorAll(
     "mock-action"
   )
-
   expect(foundActionListByActionTypeComponents.length).toEqual(3)
+  expect(spyGetSortedActions).toHaveBeenCalled()
 })

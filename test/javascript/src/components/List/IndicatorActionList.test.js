@@ -4,6 +4,7 @@ import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import { useSelector } from "react-redux"
 import IndicatorActionList from "components/List/IndicatorActionList"
+import * as selectors from "config/selectors"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
@@ -14,10 +15,12 @@ jest.mock("components/List/NoGoalForThisIndicator", () => () => (
   <mock-NoGoalForThisIndicator />
 ))
 
-let container
+let container, spyGetSortedActions
+
 beforeEach(() => {
   container = document.createElement("div")
   document.body.appendChild(container)
+  spyGetSortedActions = jest.spyOn(selectors, "getSortedActions")
 }),
   afterEach(() => {
     document.body.removeChild(container)
@@ -27,22 +30,26 @@ beforeEach(() => {
 describe("when a goal is present", () => {
   describe("and there are actions present", () => {
     beforeEach(() => {
-      let mockPlanGoalMap = { 17: { id: 1 } }
-      let mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
-      let mockAllActions = [
-        { id: 2 },
-        { id: 5 },
-        { id: 13 },
-        { id: 11 },
-        { i2: 6 },
+      const mockPlanGoalMap = { 17: { id: 1 } }
+      const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
+      const mockAllActions = [
+        { id: 2, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+        { id: 5, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+        { id: 13, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+        { id: 11, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+        { i2: 6, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
       ]
+      const mockTechnicalAreaMap = { 1: {} }
+      const indicatorMap = { 1: {} }
       useSelector
         .mockReturnValueOnce(mockPlanGoalMap)
         .mockReturnValueOnce(mockPlanActionIdsByIndicator)
         .mockReturnValueOnce(mockAllActions)
+        .mockReturnValueOnce(mockTechnicalAreaMap)
+        .mockReturnValueOnce(indicatorMap)
     })
 
-    it("renders 5 child Action components and 1 child AddAction component", () => {
+    it("renders 3 sorted child Action components and 1 child AddAction component", () => {
       act(() => {
         ReactDOM.render(
           <IndicatorActionList indicator={{ id: 17 }} />,
@@ -56,6 +63,7 @@ describe("when a goal is present", () => {
 
       expect(foundActionComponents.length).toEqual(3)
       expect(foundAddActionComponents.length).toEqual(1)
+      expect(spyGetSortedActions).toHaveBeenCalled()
     })
   })
 

@@ -36,13 +36,8 @@ beforeEach(() => {
     text:
       "Domestic legislation, laws, regulations, policy an…rs and effectively enable compliance with the IHR",
   }
-  useSelector
-    .mockReturnValueOnce({ 13: indicator })
-    .mockImplementationOnce((callback) =>
-      callback({
-        actions: { 17: action },
-      })
-    )
+  const mockIndicatorMap = { 13: indicator }
+  useSelector.mockReturnValueOnce(mockIndicatorMap)
 })
 
 afterEach(() => {
@@ -66,7 +61,10 @@ describe("when the action is not disease specific", () => {
 
   it("Action has the expected badge, level, ordinal, title, and pill", () => {
     act(() => {
-      ReactDOM.render(<Action id={action.id} key={action.id} />, container)
+      ReactDOM.render(
+        <Action action={action} key={`action-${action.id}`} />,
+        container
+      )
     })
 
     expect(container.innerHTML).toMatch(action.text)
@@ -82,7 +80,10 @@ describe("when the action is not disease specific", () => {
     useDispatch.mockReturnValueOnce(mockUseDispatch)
 
     act(() => {
-      ReactDOM.render(<Action id={action.id} key={action.id} />, container)
+      ReactDOM.render(
+        <Action action={action} key={`action-${action.id}`} />,
+        container
+      )
     })
     $(".delete.close", container).trigger("click")
 
@@ -107,7 +108,10 @@ describe("when the Action is disease specific", () => {
 
   it("Action has the expected disease badge, ordinal, title and pill", () => {
     act(() => {
-      ReactDOM.render(<Action id={action.id} key={action.id} />, container)
+      ReactDOM.render(
+        <Action action={action} key={`action-${action.id}`} />,
+        container
+      )
     })
 
     expect(container.innerHTML).toMatch(action.text)

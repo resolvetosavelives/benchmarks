@@ -24,33 +24,49 @@ const getPlanGoalMap = createSelector([getPlanGoals], (goals) => {
   }, {})
 })
 
-const getActionsForIds = createSelector(
+const getActionsForPlan = createSelector(
   [getPlanActionIds, getAllActions],
   (actionIds, actions) => {
     return actions.filter((action) => actionIds.indexOf(action.id) >= 0)
   }
 )
 
-const getActionsForIndicator = (actionIdsForIndicator, actions) => {
-  return actions.filter(
-    (action) => actionIdsForIndicator.indexOf(action.id) >= 0
-  )
+const getActionsForIds = (actionIds, actions) => {
+  return actions.filter((action) => actionIds.indexOf(action.id) >= 0)
 }
 
-const getSortedActionsForIndicator = (actionsForIndicator) => {
-  return actionsForIndicator.sort((actionA, actionB) => {
-    const levelA = actionA.disease_id
-      ? actionA.disease_id * 1000
-      : actionA.level
-    const levelB = actionB.disease_id
-      ? actionB.disease_id * 1000
-      : actionB.level
-    const seqA = actionA.sequence
-    const seqB = actionB.sequence
+// Sort by disease_id ASC, technical_area.sequence, indicator.sequence ASC, action.level ASC, action.sequence ASC
+const getSortedActions = (actions, technicalAreaMap, indicatorMap) => {
+  return actions.sort((actionA, actionB) => {
+    const diseaseIdA = actionA.disease_id ? actionA.disease_id : 0
+    const diseaseIdB = actionB.disease_id ? actionB.disease_id : 0
+    if (diseaseIdA < diseaseIdB) return -1
+    if (diseaseIdA > diseaseIdB) return 1
+
+    const technicalAreaA = technicalAreaMap[actionA.benchmark_technical_area_id]
+    const technicalAreaB = technicalAreaMap[actionB.benchmark_technical_area_id]
+    const technicalAreaSeqA = technicalAreaA.sequence
+    const technicalAreaSeqB = technicalAreaB.sequence
+    if (technicalAreaSeqA < technicalAreaSeqB) return -1
+    if (technicalAreaSeqA > technicalAreaSeqB) return 1
+
+    const indicatorA = indicatorMap[actionA.benchmark_indicator_id]
+    const indicatorB = indicatorMap[actionB.benchmark_indicator_id]
+    const indicatorSeqA = indicatorA.sequence
+    const indicatorSeqB = indicatorB.sequence
+    if (indicatorSeqA < indicatorSeqB) return -1
+    if (indicatorSeqA > indicatorSeqB) return 1
+
+    const levelA = actionA.level
+    const levelB = actionB.level
     if (levelA < levelB) return -1
     if (levelA > levelB) return 1
+
+    const seqA = actionA.sequence
+    const seqB = actionB.sequence
     if (seqA < seqB) return -1
     if (seqA > seqB) return 1
+
     return 0
   })
 }
@@ -73,7 +89,7 @@ const getIndicatorMap = createSelector([getAllIndicators], (indicators) => {
 })
 
 const countActionsByTechnicalArea = createSelector(
-  [getActionsForIds, getTechnicalAreaMap, getAllTechnicalAreas],
+  [getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
   (currentActions, technicalAreaMap, allTechnicalAreas) => {
     return currentActions.reduce((acc, action) => {
       const technicalArea = technicalAreaMap[action.benchmark_technical_area_id]
@@ -89,7 +105,7 @@ const countActionsByTechnicalArea = createSelector(
 )
 
 const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
-  [getActionsForIds, getTechnicalAreaMap, getAllTechnicalAreas],
+  [getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
   (currentActions, technicalAreaMap, allTechnicalAreas) => {
     const fnBlankArray = () => Array(allTechnicalAreas.length).fill(0)
     return currentActions.reduce(
@@ -117,7 +133,7 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
 )
 
 const countActionsByActionType = createSelector(
-  [getActionsForIds, getNumOfActionTypes],
+  [getActionsForPlan, getNumOfActionTypes],
   (currentActions, numOfActionTypes) => {
     return currentActions.reduce((acc, action) => {
       const currentActionTypes = action.action_types
@@ -160,8 +176,7 @@ export {
   getActionTypes,
   getPlanActionIdsByIndicator,
   getNudgesByActionType,
-  getActionsForIndicator,
-  getSortedActionsForIndicator,
+  getSortedActions,
   getNumOfActionTypes,
   getSelectedTechnicalAreaId,
   getSelectedActionTypeOrdinal,
@@ -169,6 +184,7 @@ export {
   getPlanActionIds,
   getPlanGoals,
   getPlanGoalMap,
+  getActionsForPlan,
   getActionsForIds,
   getTechnicalAreaMap,
   getIndicatorMap,

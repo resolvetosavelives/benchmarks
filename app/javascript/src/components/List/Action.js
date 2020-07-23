@@ -8,11 +8,9 @@ import ActionBadgeDisease from "./ActionBadgeDisease"
 import ActionBadgePill from "./ActionBadgePill"
 
 const Action = (props) => {
-  const id = props.id
+  const action = props.action
   const dispatch = useDispatch()
   const indicatorMap = useSelector((state) => getIndicatorMap(state))
-  const actionMap = useSelector((state) => state.actions)
-  const action = actionMap[id]
   const indicator = indicatorMap[action.benchmark_indicator_id]
 
   return (
@@ -46,7 +44,7 @@ const Action = (props) => {
 }
 
 Action.propTypes = {
-  id: PropTypes.number.isRequired,
+  action: PropTypes.object.isRequired,
 }
 
 export default Action
