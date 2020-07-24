@@ -12,7 +12,7 @@ const BarChartLegend = () => {
 
   return (
     <ul className="ct-legend">
-      <li className="ct-series-a">Health System</li>
+      <li className="ct-series-a">Health security</li>
       <li className="ct-series-b">{labelSeriesB} specific</li>
     </ul>
   )
