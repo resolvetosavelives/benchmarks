@@ -2,11 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useSelector } from "react-redux"
 import {
-  getPlanGoalMap,
-  getPlanActionIdsByIndicator,
+  getActionsForIds,
   getAllActions,
-  getActionsForIndicator,
-  getSortedActionsForIndicator,
+  getIndicatorMap,
+  getPlanActionIdsByIndicator,
+  getPlanGoalMap,
+  getSortedActions,
+  getTechnicalAreaMap,
 } from "../../config/selectors"
 import Action from "./Action"
 import NoGoalForThisIndicator from "./NoGoalForThisIndicator"
@@ -21,12 +23,13 @@ const IndicatorActionList = (props) => {
   )
   const actionIdsByIndicator = planActionIdsByIndicator[indicator.id]
   const actions = useSelector((state) => getAllActions(state))
-  const actionsForIndicator = getActionsForIndicator(
-    actionIdsByIndicator,
-    actions
-  )
-  const sortedActionsByIndicator = getSortedActionsForIndicator(
-    actionsForIndicator
+  const technicalAreaMap = useSelector((state) => getTechnicalAreaMap(state))
+  const indicatorMap = useSelector((state) => getIndicatorMap(state))
+  const actionsForIndicator = getActionsForIds(actionIdsByIndicator, actions)
+  const sortedActionsByIndicator = getSortedActions(
+    actionsForIndicator,
+    technicalAreaMap,
+    indicatorMap
   )
 
   if (!goalForThisIndicator) {
@@ -34,7 +37,7 @@ const IndicatorActionList = (props) => {
   }
 
   const actionComponents = sortedActionsByIndicator.map((action) => (
-    <Action id={action.id} key={`action-${action.id}`} />
+    <Action action={action} key={`action-${action.id}`} />
   ))
   return (
     <>

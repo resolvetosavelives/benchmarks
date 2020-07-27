@@ -1,8 +1,13 @@
 import React from "react"
 import { useSelector } from "react-redux"
 import {
+  getActionsForIds,
+  getAllActions,
+  getIndicatorMap,
   getPlanActionIds,
   getSelectedActionTypeOrdinal,
+  getSortedActions,
+  getTechnicalAreaMap,
 } from "../../config/selectors"
 import Action from "./Action"
 
@@ -17,13 +22,25 @@ const ActionListByActionType = () => {
     const action_types = currentAction.action_types || []
     return action_types.indexOf(selectedActionTypeOrdinal) >= 0
   })
-  const actionComponents = actionIdsToDisplay.map((actionId) => {
-    return <Action id={actionId} key={actionId} />
+  const actions = useSelector((state) => getAllActions(state))
+  const actionsToDisplay = getActionsForIds(actionIdsToDisplay, actions)
+  const technicalAreaMap = useSelector((state) => getTechnicalAreaMap(state))
+  const indicatorMap = useSelector((state) => getIndicatorMap(state))
+  const sortedActions = getSortedActions(
+    actionsToDisplay,
+    technicalAreaMap,
+    indicatorMap
+  )
+
+  const actionComponents = sortedActions.map((action) => {
+    return <Action action={action} key={`action-${action.id}`} />
   })
+
   const chartLabels = useSelector((state) => state.planChartLabels)
   const chartLabelsByActionType = chartLabels[1]
   const nameOfSelectedActionType =
     chartLabelsByActionType[selectedActionTypeOrdinal - 1]
+
   return (
     <div id="action-list-by-type-container" className="col-auto w-100">
       <h2>{nameOfSelectedActionType} Actions</h2>
