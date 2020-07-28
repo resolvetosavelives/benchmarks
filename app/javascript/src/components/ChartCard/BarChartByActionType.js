@@ -5,9 +5,12 @@ import PropTypes from "prop-types"
 import $ from "jquery"
 import { selectActionType } from "../../config/actions"
 import {
-  getAllActions,
   countActionsByActionType,
+  getAllActions,
   getMatrixOfActionCountsByActionTypeAndDisease,
+  getPlanActionIds,
+  getPlanChartLabels,
+  getSelectedActionTypeOrdinal,
 } from "../../config/selectors"
 import BarChartLegend from "./BarChartLegend"
 
@@ -15,6 +18,7 @@ class BarChartByActionType extends React.Component {
   constructor(props) {
     super(props)
     this.chartLabels = this.props.chartLabels[1]
+    this.tooltipNodesFromPreviousRender = []
   }
 
   render() {
@@ -83,11 +87,17 @@ class BarChartByActionType extends React.Component {
     const matrixOfActionCountsByActionTypeAndDisease = this.props
       .matrixOfActionCountsByActionTypeAndDisease
     const chartistGraph = this.chartistGraphInstance
+    const selectedActionTypeOrdinal = this.props.selectedActionTypeOrdinal
     const chartLabels = this.chartLabels
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
     const seriesA = $(".ct-series-a .ct-bar", domNode)
     const seriesB = $(".ct-series-b .ct-bar", domNode)
+    seriesA.removeClass("ct-deselected")
+    seriesB.removeClass("ct-deselected")
+
+    this.cleanupTooltipsFromPreviousRender()
+
     for (let i = 0; i < countActionsByActionType.length; i++) {
       const objOfActionCounts = {
         general: matrixOfActionCountsByActionTypeAndDisease[0][i],
@@ -95,6 +105,10 @@ class BarChartByActionType extends React.Component {
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
+      if (selectedActionTypeOrdinal && i !== selectedActionTypeOrdinal - 1) {
+        $elBarSegmentA.addClass("ct-deselected")
+        $elBarSegmentB.addClass("ct-deselected")
+      }
       this.initTooltipForSegmentOfChart(
         objOfActionCounts,
         chartLabels[i],
@@ -103,6 +117,13 @@ class BarChartByActionType extends React.Component {
       )
       this.initClickHandlerForChart(dispatch, i, $elBarSegmentA, $elBarSegmentB)
     }
+  }
+
+  cleanupTooltipsFromPreviousRender() {
+    for (const $tooltipEl of this.tooltipNodesFromPreviousRender) {
+      $tooltipEl.tooltip("dispose")
+    }
+    this.tooltipNodesFromPreviousRender = []
   }
 
   initTooltipForSegmentOfChart(
@@ -123,6 +144,8 @@ class BarChartByActionType extends React.Component {
         .attr("data-html", true)
         .tooltip({ container: ".plan-container" })
         .tooltip()
+
+      this.tooltipNodesFromPreviousRender.push($elBarSegment)
     })
   }
 
@@ -167,17 +190,19 @@ BarChartByActionType.propTypes = {
   dispatch: PropTypes.func,
   countActionsByActionType: PropTypes.array.isRequired,
   matrixOfActionCountsByActionTypeAndDisease: PropTypes.array.isRequired,
+  selectedActionTypeOrdinal: PropTypes.number,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    chartLabels: state.planChartLabels,
-    planActionIds: state.planActionIds,
+    chartLabels: getPlanChartLabels(state),
+    planActionIds: getPlanActionIds(state),
     allActions: getAllActions(state),
     countActionsByActionType: countActionsByActionType(state),
     matrixOfActionCountsByActionTypeAndDisease: getMatrixOfActionCountsByActionTypeAndDisease(
       state
     ),
+    selectedActionTypeOrdinal: getSelectedActionTypeOrdinal(state),
   }
 }
 

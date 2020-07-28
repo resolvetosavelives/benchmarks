@@ -1,26 +1,40 @@
-import fs from "fs"
 import React from "react"
 import { render as renderForConnect } from "../../../test-utils-for-react"
 import BarChartByTechnicalArea from "components/ChartCard/BarChartByTechnicalArea"
+import {
+  countActionsByTechnicalArea,
+  getAllActions,
+  getAllTechnicalAreas,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
+  getPlanChartLabels,
+  getSelectedTechnicalAreaId,
+} from "config/selectors"
 
 jest.mock("components/ChartCard/BarChartLegend", () => () => (
   <mock-BarChartLegend />
 ))
 
-// this taken from Nigeria JEE 1.0 1-yr + Influenza
-const stateFromServerForInfluenza = fs.readFileSync(
-  `${__dirname}/../../../../fixtures/files/state_from_server_with_influenza.json`,
-  "utf-8"
-)
+jest.mock("config/selectors", () => ({
+  countActionsByTechnicalArea: jest.fn(),
+  getAllActions: jest.fn(),
+  getAllTechnicalAreas: jest.fn(),
+  getMatrixOfActionCountsByTechnicalAreaAndDisease: jest.fn(),
+  getPlanChartLabels: jest.fn(),
+  getSelectedTechnicalAreaId: jest.fn(),
+}))
 
 it("BarChartByTechnicalArea has the expected 2 divs", () => {
-  const initialState = JSON.parse(stateFromServerForInfluenza)
-  initialState.dispatch = () => {}
+  countActionsByTechnicalArea.mockReturnValueOnce([2, 3, 5])
+  getAllActions.mockReturnValueOnce([{ id: 1 }, { id: 2 }, { id: 3 }])
+  getAllTechnicalAreas.mockReturnValueOnce([{ id: 4 }, { id: 5 }, { id: 6 }])
+  getMatrixOfActionCountsByTechnicalAreaAndDisease.mockReturnValueOnce([
+    [2, 3, 5],
+    [0, 0, 0],
+  ])
+  getPlanChartLabels.mockReturnValueOnce([["label1", "label2", "label3"], []])
+  getSelectedTechnicalAreaId.mockReturnValueOnce(null)
   const renderedComponent = renderForConnect(
-    <BarChartByTechnicalArea width="700" height="240" />,
-    {
-      initialState: initialState,
-    }
+    <BarChartByTechnicalArea width="700" height="240" />
   )
   const container = renderedComponent.container
   const elComponentContainer = container.querySelectorAll(

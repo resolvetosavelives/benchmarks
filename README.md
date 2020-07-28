@@ -69,6 +69,10 @@ and triggers re-compile upon save.
 
 The application should now be available [on localhost](https://localhost:3000/)
 
+## A Note on 3rd party libraries used
+
+Tooltips: We are using bootstrap .tooltip() and not jQuery .tooltip(). It is used the same way `$('.selector').tooltip()`, and has different options.
+
 ## Fixtures
 
 TODO: This needs updated, much of it no longer applies.

@@ -153,11 +153,43 @@ class AppsTest < ApplicationSystemTestCase
              )
     end
 
+    ##
+    # make sure Technical Area tab has a legend
     find("#tabContentForTechnicalArea .ct-legend").has_content?("Influenza specific")
 
+    ##
+    # click on one of the bars and make sure others are deselected
+    all("#tabContentForTechnicalArea .ct-series-a .ct-bar")[1].click
+    count_bars = all("#tabContentForTechnicalArea .ct-series-a .ct-bar").count
+    count_deselected = all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected").count
+    assert(count_deselected == count_bars - 1)
+
+    ##
+    # reset and make sure no bar are deselected
+    find(".action-count-circle").click
+    count_deselected = all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected").count
+    assert(count_deselected == 0)
+
+    ##
+    # make sure Action Type tab has a legend
     find("#tabForActionType").click
     find("#tabContentForActionType .ct-legend").has_content?("Influenza specific")
 
+    ##
+    # click on one of the bars and make sure others are deselected
+    all("#tabContentForActionType .ct-series-b .ct-bar")[1].click
+    count_bars = all("#tabContentForActionType .ct-series-b .ct-bar").count
+    count_deselected = all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
+    assert(count_deselected == count_bars - 1)
+
+    ##
+    # reset and make sure no bar are deselected
+    find(".action-count-circle").click
+    count_deselected = all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
+    assert(count_deselected == 0)
+
+    ##
+    # go back to technical area tab
     find("#tabForTechnicalArea").click
 
     assert_selector("#technical-area-1") do

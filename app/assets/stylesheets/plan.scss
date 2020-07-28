@@ -251,12 +251,20 @@
   .ct-series-a .ct-bar {
     stroke: color("health-system");
 
+    &.ct-deselected {
+      stroke: color("health-system-deselected");
+    }
+
     &:hover {
       stroke: color("health-system-hover");
     }
   }
   .ct-series-b .ct-bar {
     stroke: color("disease-influenza");
+
+    &.ct-deselected {
+      stroke: color("disease-influenza-deselected");
+    }
 
     &:hover {
       stroke: color("disease-influenza-hover");

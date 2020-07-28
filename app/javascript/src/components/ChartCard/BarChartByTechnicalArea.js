@@ -5,15 +5,19 @@ import PropTypes from "prop-types"
 import $ from "jquery"
 import { selectTechnicalArea } from "../../config/actions"
 import {
-  getAllActions,
   countActionsByTechnicalArea,
+  getAllActions,
+  getAllTechnicalAreas,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
+  getPlanChartLabels,
+  getSelectedTechnicalAreaId,
 } from "../../config/selectors"
 import BarChartLegend from "./BarChartLegend"
 
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
     super(props)
+    this.tooltipNodesFromPreviousRender = []
   }
 
   render() {
@@ -83,10 +87,16 @@ class BarChartByTechnicalArea extends React.Component {
       .matrixOfActionCountsByTechnicalAreaAndDisease
     const technicalAreas = this.props.technicalAreas
     const chartistGraph = this.chartistGraphInstance
+    const selectedTechnicalAreaId = this.props.selectedTechnicalAreaId
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
     const seriesA = $(".ct-series-a .ct-bar", domNode)
     const seriesB = $(".ct-series-b .ct-bar", domNode)
+    seriesA.removeClass("ct-deselected")
+    seriesB.removeClass("ct-deselected")
+
+    this.cleanupTooltipsFromPreviousRender()
+
     for (let i = 0; i < technicalAreas.length; i++) {
       const objOfActionCounts = {
         general: matrixOfActionCountsByTechnicalAreaAndDisease[0][i],
@@ -94,6 +104,13 @@ class BarChartByTechnicalArea extends React.Component {
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
+      if (
+        selectedTechnicalAreaId &&
+        technicalAreas[i].id !== selectedTechnicalAreaId
+      ) {
+        $elBarSegmentA.addClass("ct-deselected")
+        $elBarSegmentB.addClass("ct-deselected")
+      }
       this.initTooltipForSegmentOfChartByTechnicalArea(
         technicalAreas[i],
         objOfActionCounts,
@@ -110,6 +127,13 @@ class BarChartByTechnicalArea extends React.Component {
     }
   }
 
+  cleanupTooltipsFromPreviousRender() {
+    for (const $tooltipEl of this.tooltipNodesFromPreviousRender) {
+      $tooltipEl.tooltip("dispose")
+    }
+    this.tooltipNodesFromPreviousRender = []
+  }
+
   initTooltipForSegmentOfChartByTechnicalArea(
     technicalArea,
     objOfActionCounts,
@@ -121,13 +145,15 @@ class BarChartByTechnicalArea extends React.Component {
       objOfActionCounts
     )
     const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
-    stackedBarEls.forEach((elBarSegment) => {
-      elBarSegment
+    stackedBarEls.forEach(($elBarSegment) => {
+      $elBarSegment
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
         .attr("data-html", true)
         .tooltip({ container: ".plan-container" })
         .tooltip()
+
+      this.tooltipNodesFromPreviousRender.push($elBarSegment)
     })
   }
 
@@ -172,17 +198,19 @@ BarChartByTechnicalArea.propTypes = {
   dispatch: PropTypes.func,
   countActionsByTechnicalArea: PropTypes.array.isRequired,
   matrixOfActionCountsByTechnicalAreaAndDisease: PropTypes.array.isRequired,
+  selectedTechnicalAreaId: PropTypes.number,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    technicalAreas: state.technicalAreas,
-    chartLabels: state.planChartLabels,
+    technicalAreas: getAllTechnicalAreas(state),
+    chartLabels: getPlanChartLabels(state),
     allActions: getAllActions(state),
     matrixOfActionCountsByTechnicalAreaAndDisease: getMatrixOfActionCountsByTechnicalAreaAndDisease(
       state
     ),
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
+    selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
   }
 }
 
