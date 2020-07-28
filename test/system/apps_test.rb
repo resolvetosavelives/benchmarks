@@ -200,6 +200,11 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path("/plans")
     assert page.has_content?("Welcome! You have signed up successfully.")
     assert page.has_content?("Saved Nigeria Plan 789") # ugh without this form field(s) dont get filled
+
+    ##
+    # delete the plan
+    click_link("Delete")
+    assert page.has_content?("You haven't started any plans yet")
   end
 
   test "happy path for Armenia SPAR 2018 5-year plan" do

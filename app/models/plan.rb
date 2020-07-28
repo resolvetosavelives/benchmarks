@@ -18,7 +18,7 @@ class Plan < ApplicationRecord
   has_many :plan_actions, dependent: :destroy
   has_many :benchmark_indicator_actions, through: :plan_actions
   has_many :plan_diseases
-  has_many :diseases, through: :plan_diseases
+  has_many :diseases, through: :plan_diseases, dependent: :destroy
 
   delegate :alpha3, to: :country
   delegate :jee1?, :spar_2018?, :type_description, to: :assessment
