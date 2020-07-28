@@ -6,7 +6,6 @@ import $ from "jquery"
 import { selectTechnicalArea } from "../../config/actions"
 import {
   getAllActions,
-  getPlanActionIds,
   countActionsByTechnicalArea,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
 } from "../../config/selectors"
@@ -58,13 +57,13 @@ class BarChartByTechnicalArea extends React.Component {
       low: 0,
       width: this.props.width,
       height: this.props.height,
+      stackBars: true,
       axisY: {
         // show multiples of 10
         labelInterpolationFnc: function (value) {
           return value % 10 == 0 ? value : null
         },
       },
-      stackBars: true,
     }
     return {
       data,
@@ -125,8 +124,8 @@ class BarChartByTechnicalArea extends React.Component {
     stackedBarEls.forEach((elBarSegment) => {
       elBarSegment
         .attr("title", tooltipTitle)
-        .attr("data-html", true)
         .attr("data-toggle", "tooltip")
+        .attr("data-html", true)
         .tooltip({ container: ".plan-container" })
         .tooltip()
     })
@@ -155,11 +154,11 @@ class BarChartByTechnicalArea extends React.Component {
     $elBarSegmentA,
     $elBarSegmentB
   ) {
-    $elBarSegmentA.on("click", () => {
-      dispatch(selectTechnicalArea(technicalArea.id))
-    })
-    $elBarSegmentB.on("click", () => {
-      dispatch(selectTechnicalArea(technicalArea.id))
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    stackedBarEls.forEach(($elBarSegment) => {
+      $elBarSegment.on("click", () => {
+        dispatch(selectTechnicalArea(technicalArea.id))
+      })
     })
   }
 }
@@ -169,7 +168,6 @@ BarChartByTechnicalArea.propTypes = {
   height: PropTypes.string.isRequired,
   technicalAreas: PropTypes.array.isRequired,
   chartLabels: PropTypes.array.isRequired,
-  planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
   countActionsByTechnicalArea: PropTypes.array.isRequired,
@@ -180,7 +178,6 @@ const mapStateToProps = (state /*, ownProps*/) => {
   return {
     technicalAreas: state.technicalAreas,
     chartLabels: state.planChartLabels,
-    planActionIds: getPlanActionIds(state),
     allActions: getAllActions(state),
     matrixOfActionCountsByTechnicalAreaAndDisease: getMatrixOfActionCountsByTechnicalAreaAndDisease(
       state

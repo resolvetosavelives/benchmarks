@@ -2,16 +2,24 @@ import fs from "fs"
 import { beforeAll, describe, expect, it } from "@jest/globals"
 import configureStore from "redux-mock-store"
 import {
+  getAllTechnicalAreas,
+  getAllIndicators,
+  getAllActions,
+  getNudgesByActionType,
+  getSelectedTechnicalAreaId,
+  getSelectedActionTypeOrdinal,
   countActionsByActionType,
   countActionsByTechnicalArea,
   getActionsForIds,
   getActionsForPlan,
-  getAllActions,
   getIndicatorMap,
+  getMatrixOfActionCountsByActionTypeAndDisease,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getNumOfActionTypes,
   getPlan,
+  getActionMap,
   getPlanActionIds,
+  getPlanGoals,
   getPlanGoalMap,
   getSortedActions,
   getTechnicalAreaMap,
@@ -21,20 +29,38 @@ let store
 beforeAll(() => {
   const mockStore = configureStore()
   const strStateFromServer = fs.readFileSync(
-    `${__dirname}/../../../fixtures/files/state_from_server.json`,
+    `${__dirname}/../../../fixtures/files/state_from_server_with_influenza.json`,
     "utf-8"
   )
-  const stateFromServer = JSON.parse(strStateFromServer)
-  const initialState = {
-    plan: stateFromServer.plan,
-    allActions: stateFromServer.actions,
-    planActionIds: stateFromServer.planActionIds,
-    nudgesByActionType: stateFromServer.nudgesByActionType,
-    technicalAreas: stateFromServer.technicalAreas,
-    indicators: stateFromServer.indicators,
-    planGoals: stateFromServer.planGoals,
+  const initialStateFromServer = JSON.parse(strStateFromServer)
+  initialStateFromServer.ui = {
+    selectedListMode: 213,
+    selectedTechnicalAreaId: 11,
+    selectedActionTypeOrdinal: 13,
   }
-  store = mockStore(initialState)
+  store = mockStore(initialStateFromServer)
+})
+
+describe("getAllTechnicalAreas", () => {
+  it("returns the array of all TechnicalAreas", () => {
+    const state = store.getState()
+
+    const result = getAllTechnicalAreas(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(18)
+  })
+})
+
+describe("getAllIndicators", () => {
+  it("returns the array of all indicators", () => {
+    const state = store.getState()
+
+    const result = getAllIndicators(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(44)
+  })
 })
 
 describe("getAllActions", () => {
@@ -45,6 +71,37 @@ describe("getAllActions", () => {
 
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(929)
+  })
+})
+
+describe("getNudgesByActionType", () => {
+  it("returns the array of all actions", () => {
+    const state = store.getState()
+
+    const result = getNudgesByActionType(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(15)
+  })
+})
+
+describe("getSelectedTechnicalAreaId", () => {
+  it("returns the array of all actions", () => {
+    const state = store.getState()
+
+    const result = getSelectedTechnicalAreaId(state)
+
+    expect(result).toEqual(11)
+  })
+})
+
+describe("getSelectedActionTypeOrdinal", () => {
+  it("returns the array of all actions", () => {
+    const state = store.getState()
+
+    const result = getSelectedActionTypeOrdinal(state)
+
+    expect(result).toEqual(13)
   })
 })
 
@@ -235,7 +292,29 @@ describe("getPlanActionIds", () => {
     let result = getPlanActionIds(state)
 
     expect(result).toBeInstanceOf(Array)
-    expect(result.length).toEqual(235)
+    expect(result.length).toEqual(283)
+  })
+})
+
+describe("getPlanGoals", () => {
+  it("returns the array of all plan IDs", () => {
+    const state = store.getState()
+
+    let result = getPlanGoals(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(39)
+  })
+})
+
+describe("getActionMap", () => {
+  it("returns the array of all plan IDs", () => {
+    const state = store.getState()
+
+    let result = getActionMap(state)
+
+    expect(result).toBeInstanceOf(Object)
+    expect(Object.keys(result).length).toEqual(929)
   })
 })
 
@@ -256,7 +335,7 @@ describe("getActionsForPlan", () => {
     const result = getActionsForPlan(state)
 
     expect(result).toBeInstanceOf(Array)
-    expect(result.length).toEqual(235)
+    expect(result.length).toEqual(283)
     expect(result[0]).toBeInstanceOf(Object)
   })
 })
@@ -286,31 +365,31 @@ describe("getCountActionsByTechnicalArea", () => {
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(18)
     expect(result).toEqual([
-      6,
-      12,
-      19,
-      9,
+      8,
+      17,
+      21,
+      10,
       11,
-      13,
-      19,
-      7,
-      15,
+      14,
+      22,
+      8,
       18,
-      11,
-      15,
-      7,
+      22,
       19,
-      20,
-      16,
+      17,
+      7,
+      25,
+      28,
+      18,
       14,
       4,
     ])
-    expect(result.reduce((acc, r) => acc + r, 0)).toEqual(235)
+    expect(result.reduce((acc, r) => acc + r, 0)).toEqual(283)
   })
 })
 
 describe("getMatrixOfActionCountsByTechnicalAreaAndDisease", () => {
-  it("returns a 2-dimensional array of integers of action counts, two rows (general, influeza) by 18 columns (one per Technical Area)", () => {
+  it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 18 columns (one per Technical Area)", () => {
     const state = store.getState()
     const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
@@ -339,22 +418,22 @@ describe("getMatrixOfActionCountsByTechnicalAreaAndDisease", () => {
       4,
     ])
     expect(result[1]).toEqual([
+      2,
+      5,
+      2,
+      1,
       0,
+      1,
+      3,
+      1,
+      3,
+      4,
+      8,
+      2,
       0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
+      6,
+      8,
+      2,
       0,
       0,
     ])
@@ -369,6 +448,35 @@ describe("countActionsByActionType", () => {
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(15)
     expect(result).toEqual([
+      9,
+      48,
+      28,
+      7,
+      9,
+      9,
+      20,
+      48,
+      5,
+      65,
+      15,
+      32,
+      11,
+      4,
+      25,
+    ])
+  })
+})
+
+describe("getMatrixOfActionCountsByActionTypeAndDisease", () => {
+  it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 15 columns (one per Action Type)", () => {
+    const state = store.getState()
+    const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(2)
+    expect(result[0].length).toEqual(15)
+    expect(result[1].length).toEqual(15)
+    expect(result[0]).toEqual([
       8,
       40,
       23,
@@ -385,5 +493,6 @@ describe("countActionsByActionType", () => {
       3,
       23,
     ])
+    expect(result[1]).toEqual([1, 8, 5, 0, 0, 0, 0, 3, 3, 20, 2, 0, 3, 1, 2])
   })
 })

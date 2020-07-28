@@ -1,14 +1,40 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
+import { useSelector } from "react-redux"
 import AddAction from "components/List/AddAction"
 
-let container, indicator
+let container
 
 jest.mock("react-redux", () => ({
   useDispatch: () => jest.fn(),
-  useSelector: jest
-    .fn()
+  useSelector: jest.fn(),
+}))
+
+jest.mock("react-select", () => () => <mock-select />)
+
+beforeEach(() => {
+  container = document.createElement("div")
+  document.body.appendChild(container)
+})
+
+afterEach(() => {
+  document.body.removeChild(container)
+  container = null
+})
+
+it("AddAction renders a Select control", () => {
+  const indicator = {
+    id: 1,
+    benchmark_technical_area_id: 1,
+    sequence: 1,
+    display_abbreviation: "1.1",
+    objective:
+      "To assess, adjust and align domestic legislation, laws, regulations, policy and administrative requirements in all relevant sectors t…",
+    text:
+      "Domestic legislation, laws, regulations, policy an…rs and effectively enable compliance with the IHR",
+  }
+  useSelector
     .mockReturnValueOnce([
       {
         id: 17,
@@ -30,34 +56,9 @@ jest.mock("react-redux", () => ({
       },
     ])
     .mockReturnValue({ 1: [2, 3] }),
-}))
-
-jest.mock("react-select", () => () => <mock-select />)
-
-beforeEach(() => {
-  container = document.createElement("div")
-  document.body.appendChild(container)
-  indicator = {
-    id: 1,
-    benchmark_technical_area_id: 1,
-    sequence: 1,
-    display_abbreviation: "1.1",
-    objective:
-      "To assess, adjust and align domestic legislation, laws, regulations, policy and administrative requirements in all relevant sectors t…",
-    text:
-      "Domestic legislation, laws, regulations, policy an…rs and effectively enable compliance with the IHR",
-  }
-})
-
-afterEach(() => {
-  document.body.removeChild(container)
-  container = null
-})
-
-it("AddAction renders a Select control", () => {
-  act(() => {
-    ReactDOM.render(<AddAction indicator={indicator} />, container)
-  })
+    act(() => {
+      ReactDOM.render(<AddAction indicator={indicator} />, container)
+    })
 
   expect(container.innerHTML).toContain("mock-select")
 })
