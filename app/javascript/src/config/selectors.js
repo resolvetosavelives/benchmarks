@@ -15,6 +15,7 @@ const getSelectedActionTypeOrdinal = (state) =>
 const getPlan = (state) => state.plan
 const getPlanActionIds = (state) => state.planActionIds
 const getPlanGoals = (state) => state.planGoals
+const getPlanChartLabels = (state) => state.planChartLabels
 
 const getPlanGoalMap = createSelector([getPlanGoals], (goals) => {
   return goals.reduce((acc, goal) => {
@@ -223,6 +224,7 @@ export {
   getPlan,
   getPlanActionIds,
   getPlanGoals,
+  getPlanChartLabels,
   getActionMap,
   getPlanGoalMap,
   getActionsForPlan,

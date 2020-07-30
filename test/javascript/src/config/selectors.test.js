@@ -24,6 +24,7 @@ import {
   getSortedActions,
   getTechnicalAreaMap,
 } from "config/selectors"
+import { getPlanChartLabels } from "../../../../app/javascript/src/config/selectors"
 
 let store
 beforeAll(() => {
@@ -304,6 +305,21 @@ describe("getPlanGoals", () => {
 
     expect(result).toBeInstanceOf(Array)
     expect(result.length).toEqual(39)
+  })
+})
+
+describe("getPlanChartLabels", () => {
+  it("returns the array of arrays of chart labels", () => {
+    const state = store.getState()
+
+    let result = getPlanChartLabels(state)
+
+    expect(result).toBeInstanceOf(Array)
+    expect(result.length).toEqual(2)
+    expect(result[0]).toBeInstanceOf(Array)
+    expect(result[1]).toBeInstanceOf(Array)
+    expect(result[0].length).toEqual(18)
+    expect(result[1].length).toEqual(15)
   })
 })
 
