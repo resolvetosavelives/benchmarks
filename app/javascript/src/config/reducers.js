@@ -13,6 +13,7 @@ import {
   SWITCH_LIST_MODE,
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
+  IS_INFLUENZA_SHOWING,
 } from "./constants"
 
 export default function initReducers(initialState) {
@@ -106,6 +107,7 @@ export default function initReducers(initialState) {
       selectedListMode: null,
       selectedTechnicalAreaId: null,
       selectedActionTypeOrdinal: null,
+      isInfluenzaShowing: true,
     },
     {
       [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
@@ -136,10 +138,17 @@ export default function initReducers(initialState) {
           selectedListMode: null,
           selectedTechnicalAreaId: null,
           selectedActionTypeOrdinal: null,
+          isInfluenzaShowing: true,
         }
+      },
+      [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
+        state.isInfluenzaShowing = !state.isInfluenzaShowing
+        return state
       },
     }
   )
+
+  const diseases = createReducer(initialState.diseases, {})
 
   return combineReducers({
     technicalAreas,
@@ -153,5 +162,6 @@ export default function initReducers(initialState) {
     ui,
     nudgesByActionType,
     plan,
+    diseases,
   })
 }

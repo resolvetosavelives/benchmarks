@@ -12,6 +12,7 @@ import {
   LIST_MODE_BY_ACTION_TYPE,
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
+  IS_INFLUENZA_SHOWING,
 } from "./constants"
 
 const deleteAnAction = (actionId, indicatorId) => {
@@ -88,6 +89,12 @@ const updatePlanName = (name) => {
   }
 }
 
+const toggleInfluenzaShowing = () => {
+  return (dispatchedAction) => {
+    dispatchedAction({ type: IS_INFLUENZA_SHOWING })
+  }
+}
+
 export {
   addActionToIndicator,
   deleteAnAction,
@@ -95,4 +102,5 @@ export {
   selectActionType,
   clearFilterCriteria,
   updatePlanName,
+  toggleInfluenzaShowing,
 }

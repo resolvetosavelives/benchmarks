@@ -1,10 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { getColorForDiseaseId } from "../../config/selectors"
+import { useSelector } from "react-redux"
+import { getAllDiseases } from "../../config/selectors"
+import { getColorForDiseaseId } from "../../config/helpers"
 
 const ActionBadgeDisease = (props) => {
   const action = props.action
-  const colorForDisease = getColorForDiseaseId(action.disease_id)
+  const diseases = useSelector((state) => getAllDiseases(state))
+  const colorForDisease = getColorForDiseaseId(diseases, action.disease_id)
   return (
     <span className="d-flex badge badge-rounded-circle justify-content-md-center px-0">
       <span

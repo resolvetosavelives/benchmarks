@@ -15,21 +15,22 @@ jest.mock("components/List/NoGoalForThisIndicator", () => () => (
   <mock-NoGoalForThisIndicator />
 ))
 
-let container, spyGetSortedActions
+let container, spyGetSortedActions, spyFilterOutInfluenzaActions
 
 beforeEach(() => {
   container = document.createElement("div")
   document.body.appendChild(container)
-  spyGetSortedActions = jest.spyOn(selectors, "getSortedActions")
-}),
-  afterEach(() => {
-    document.body.removeChild(container)
-    container = null
-  })
+})
+
+afterEach(() => {
+  document.body.removeChild(container)
+  container = null
+})
 
 describe("when a goal is present", () => {
   describe("and there are actions present", () => {
     beforeEach(() => {
+      spyGetSortedActions = jest.spyOn(selectors, "getSortedActions")
       const mockPlanGoalMap = { 17: { id: 1 } }
       const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
       const mockAllActions = [
@@ -49,21 +50,60 @@ describe("when a goal is present", () => {
         .mockReturnValueOnce(indicatorMap)
     })
 
-    it("renders 3 sorted child Action components and 1 child AddAction component", () => {
-      act(() => {
-        ReactDOM.render(
-          <IndicatorActionList indicator={{ id: 17 }} />,
-          container
+    describe("and influenza actions are currently displayed", () => {
+      beforeEach(() => {
+        spyFilterOutInfluenzaActions = jest.spyOn(
+          selectors,
+          "filterOutInfluenzaActions"
         )
+        useSelector.mockReturnValueOnce(true)
       })
-      const foundActionComponents = container.querySelectorAll("mock-action")
-      const foundAddActionComponents = container.querySelectorAll(
-        "mock-add-action"
-      )
 
-      expect(foundActionComponents.length).toEqual(3)
-      expect(foundAddActionComponents.length).toEqual(1)
-      expect(spyGetSortedActions).toHaveBeenCalled()
+      it("renders 3 sorted child Action components and 1 child AddAction component", () => {
+        act(() => {
+          ReactDOM.render(
+            <IndicatorActionList indicator={{ id: 17 }} />,
+            container
+          )
+        })
+        const foundActionComponents = container.querySelectorAll("mock-action")
+        const foundAddActionComponents = container.querySelectorAll(
+          "mock-add-action"
+        )
+
+        expect(foundActionComponents.length).toEqual(3)
+        expect(foundAddActionComponents.length).toEqual(1)
+        expect(spyGetSortedActions).toHaveBeenCalled()
+        expect(spyFilterOutInfluenzaActions).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe("and influenza actions are currently hidden", () => {
+      beforeEach(() => {
+        spyFilterOutInfluenzaActions = jest.spyOn(
+          selectors,
+          "filterOutInfluenzaActions"
+        )
+        useSelector.mockReturnValueOnce(false)
+      })
+
+      it("renders 3 sorted child Action components and 1 child AddAction component", () => {
+        act(() => {
+          ReactDOM.render(
+            <IndicatorActionList indicator={{ id: 17 }} />,
+            container
+          )
+        })
+        const foundActionComponents = container.querySelectorAll("mock-action")
+        const foundAddActionComponents = container.querySelectorAll(
+          "mock-add-action"
+        )
+
+        expect(foundActionComponents.length).toEqual(3)
+        expect(foundAddActionComponents.length).toEqual(1)
+        expect(spyGetSortedActions).toHaveBeenCalled()
+        expect(spyFilterOutInfluenzaActions).toHaveBeenCalledTimes(1)
+      })
     })
   })
 

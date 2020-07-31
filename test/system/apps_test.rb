@@ -12,6 +12,7 @@ class AppsTest < ApplicationSystemTestCase
     visit root_url
     click_on("Get Started")
 
+    sleep 0.1
     ##
     # navigate to Get Started page and submit its form
     assert_current_path("/get-started")
@@ -105,6 +106,7 @@ class AppsTest < ApplicationSystemTestCase
     visit root_url
     click_on("Get Started")
 
+    sleep 0.1
     ##
     # navigate to Get Started page and submit its form
     assert_current_path("/get-started")
@@ -265,6 +267,7 @@ class AppsTest < ApplicationSystemTestCase
     visit root_url
     click_on("Get Started")
 
+    sleep 0.1
     ##
     # go to the Get Started page and fill the form
     assert_current_path("/get-started")
@@ -326,6 +329,7 @@ class AppsTest < ApplicationSystemTestCase
     visit root_url
     click_on("Get Started")
 
+    sleep 0.1
     ##
     # go to the Get Started page and fill the form
     assert_current_path("/get-started")

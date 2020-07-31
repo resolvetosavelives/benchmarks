@@ -9,6 +9,7 @@ import {
   getPlanActionIds,
 } from "../config/selectors"
 import { updatePlanName } from "../config/actions"
+import InfluenzaToggle from "./InfluenzaToggle"
 
 const formRef = React.createRef()
 const submitButtonRef = React.createRef()
@@ -127,6 +128,8 @@ const PlanEditForm = () => {
               <ChartCard />
             </div>
           </div>
+
+          <InfluenzaToggle />
 
           <div className="row mt-4">
             <ActionList />
