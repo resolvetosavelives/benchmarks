@@ -8,9 +8,9 @@ module ApplicationHelper
   #   to be more "correct".
   def which_js
     if is_homepage?
-      javascript_pack_tag 'basic'
+      javascript_pack_tag 'basic', "data-turbolinks-track": "reload"
     else
-      javascript_pack_tag 'application'
+      javascript_pack_tag 'application', "data-turbolinks-track": "reload"
     end
   end
 
