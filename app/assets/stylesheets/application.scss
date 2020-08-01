@@ -41,8 +41,6 @@ $colors: (
 $theme-colors: $colors;
 
 @import "bootstrap/scss/bootstrap";
-@import "./autocomplete";
-@import "./multiselect";
 @import "./devise";
 @import "./scores";
 @import "./plan";
@@ -191,11 +189,9 @@ td {
 }
 
 .btn {
-  &:not(.multiselect) {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    height: 60px;
-  }
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  height: 60px;
 }
 
 nav.navbar {
@@ -353,4 +349,10 @@ svg.step-up-hero {
 
 .alert {
   margin-top: 1rem;
+}
+
+.dropdown-toggle {
+  &::after {
+    display: none;
+  }
 }

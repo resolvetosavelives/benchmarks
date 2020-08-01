@@ -1,6 +1,3 @@
-<% content_for :js_head do
-  javascript_pack_tag "application_react", 'data-turbolinks-track': 'reload'
-end %>
 
 <% chart_labels_by_technical_area = [
     "Legislation",
@@ -23,7 +20,8 @@ end %>
     "Radiation",
 ] %>
 
-<%= react_component("PlanEditPage") %>
+<%#= react_component("PlanEditPage") %>
+<div data-react-class="PlanEditPage" data-react-props="{}" data-react-cache-id="PlanEditPage-0"></div>
 
 <%# the STATE_FROM_SERVER hash cannot end with ";" or else the JSON parser fails in save_state_from_server() %>
 <script type="application/javascript" id="state_from_server">
