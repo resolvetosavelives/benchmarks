@@ -233,10 +233,25 @@ class AppsTest < ApplicationSystemTestCase
     find("#new_user input[type=submit]").trigger(:click)
 
     ##
-    # wind up on create account page
+    # make sure the plan was saved
     assert_current_path("/plans")
     assert page.has_content?("Welcome! You have signed up successfully.")
     assert page.has_content?("Saved Nigeria Plan 789") # ugh without this form field(s) dont get filled
+
+    ##
+    # make sure Turbolinks and the dropdown menu are working in both react and non-react contexts
+    click_on("WHO BENCHMARKS")
+    assert page.has_content?("BENCHMARKS FOR IHR CAPACITIES")
+    click_on("REFERENCE LIBRARY")
+    assert page.has_content?("Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia")
+    click_on("email@example.com")
+    click_on("My Plans")
+    assert page.has_content?("Saved Nigeria Plan 789")
+    click_on("Saved Nigeria Plan 789")
+    assert page.has_content?("National Legislation, Policy and Financing")
+    click_on("email@example.com")
+    click_on("My Plans")
+    assert page.has_content?("Saved Nigeria Plan 789")
 
     ##
     # delete the plan
