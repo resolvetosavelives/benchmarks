@@ -22,7 +22,7 @@ const Action = (props) => {
           <ActionBadgeDisease action={action} />
         )}
       </div>
-      <div className="col-8 col-lg-9">
+      <div className="col-12 col-lg-9">
         <strong>{indicator.display_abbreviation}</strong>
         &nbsp;
         <span className="action-text">{action.text}</span>
