@@ -3,6 +3,7 @@ import { createSelector } from "reselect"
 const getAllTechnicalAreas = (state) => state.technicalAreas
 const getAllIndicators = (state) => state.indicators
 const getAllActions = (state) => state.actions
+const getAllDiseases = (state) => state.diseases
 const getPlanActionIdsByIndicator = (state) => state.planActionIdsByIndicator
 
 const getNudgesByActionType = (state) => state.nudgesByActionType
@@ -11,6 +12,7 @@ const getNumOfActionTypes = (state) => getNudgesByActionType(state).length
 const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
 const getSelectedActionTypeOrdinal = (state) =>
   state.ui.selectedActionTypeOrdinal
+const getIsInfluenzaShowing = (state) => state.ui.isInfluenzaShowing
 
 const getPlan = (state) => state.plan
 const getPlanActionIds = (state) => state.planActionIds
@@ -42,7 +44,7 @@ const getActionsForIds = (actionIds, actions) => {
   return actions.filter((action) => actionIds.indexOf(action.id) >= 0)
 }
 
-// Sort by disease_id ASC, technical_area.sequence, indicator.sequence ASC, action.level ASC, action.sequence ASC
+// Sort by: disease_id ASC, technical_area.sequence ASC, indicator.sequence ASC, action.level ASC, action.sequence ASC
 const getSortedActions = (actions, technicalAreaMap, indicatorMap) => {
   return actions.sort((actionA, actionB) => {
     const diseaseIdA = actionA.disease_id ? actionA.disease_id : 0
@@ -198,23 +200,42 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
   }
 )
 
-// not exported
-const getDisease = (diseaseId) =>
-  window.STATE_FROM_SERVER.diseases.find((disease) => disease.id === diseaseId)
+const getDisease = (diseases, diseaseId) =>
+  diseases.find((disease) => disease.id === diseaseId)
 
-const getDisplayForDiseaseId = (diseaseId) => getDisease(diseaseId).display
-
-const getColorForDiseaseId = (diseaseId) =>
-  `color-value-disease-${getDisease(diseaseId).name}`
+// NB: the diseaseIdArray[0] is there because right now there is only influenza.
+//   will need improved with next phase of work where there will be several diseases.
+//   a quirk of this is that it accepts an array but plucks out and uses only the first element.
+const makeGetDisplayForDiseaseId = (diseaseIdArray) =>
+  createSelector([getAllDiseases], (diseases) => {
+    const disease = getDisease(diseases, diseaseIdArray[0])
+    return disease ? disease.display : ""
+  })
 
 const getFormAuthenticityToken = () =>
   window.STATE_FROM_SERVER.formAuthenticityToken
 const getFormActionUrl = () => window.STATE_FROM_SERVER.formActionUrl
 
+// NB: this only works for Influenza, will need changed when there are other diseases.
+const isPlanInfluenza = createSelector(
+  [getPlan, getAllDiseases],
+  (plan, diseases) => {
+    const disease = getDisease(diseases, plan.disease_ids[0])
+    return !!(disease && disease.name === "influenza")
+  }
+)
+
+const filterOutInfluenzaActions = (actionsToFilter) => {
+  return actionsToFilter.filter((action) => {
+    return !action.disease_id
+  })
+}
+
 export {
   getAllTechnicalAreas,
   getAllIndicators,
   getAllActions,
+  getAllDiseases,
   getPlanActionIdsByIndicator,
   getNudgesByActionType,
   getSortedActions,
@@ -237,6 +258,9 @@ export {
   getMatrixOfActionCountsByActionTypeAndDisease,
   getFormAuthenticityToken,
   getFormActionUrl,
-  getDisplayForDiseaseId,
-  getColorForDiseaseId,
+  makeGetDisplayForDiseaseId,
+  getDisease,
+  isPlanInfluenza,
+  filterOutInfluenzaActions,
+  getIsInfluenzaShowing,
 }

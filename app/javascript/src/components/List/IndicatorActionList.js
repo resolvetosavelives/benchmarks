@@ -9,6 +9,8 @@ import {
   getPlanGoalMap,
   getSortedActions,
   getTechnicalAreaMap,
+  filterOutInfluenzaActions,
+  getIsInfluenzaShowing,
 } from "../../config/selectors"
 import Action from "./Action"
 import NoGoalForThisIndicator from "./NoGoalForThisIndicator"
@@ -25,13 +27,18 @@ const IndicatorActionList = (props) => {
   const actions = useSelector((state) => getAllActions(state))
   const technicalAreaMap = useSelector((state) => getTechnicalAreaMap(state))
   const indicatorMap = useSelector((state) => getIndicatorMap(state))
-  const actionsForIndicator = getActionsForIds(actionIdsByIndicator, actions)
+  let actionsForIndicator = getActionsForIds(actionIdsByIndicator, actions)
+  const isInfluenzaShowing = useSelector((state) =>
+    getIsInfluenzaShowing(state)
+  )
+  if (!isInfluenzaShowing) {
+    actionsForIndicator = filterOutInfluenzaActions(actionsForIndicator)
+  }
   const sortedActionsByIndicator = getSortedActions(
     actionsForIndicator,
     technicalAreaMap,
     indicatorMap
   )
-
   if (!goalForThisIndicator) {
     return <NoGoalForThisIndicator />
   }

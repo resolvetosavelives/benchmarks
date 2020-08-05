@@ -2,15 +2,15 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import { useSelector } from "react-redux"
-import { getDisplayForDiseaseId } from "config/selectors"
 import BarChartLegend from "components/ChartCard/BarChartLegend"
+import { makeGetDisplayForDiseaseId } from "config/selectors"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
 
 jest.mock("config/selectors", () => ({
-  getDisplayForDiseaseId: jest.fn(),
+  makeGetDisplayForDiseaseId: jest.fn(),
 }))
 
 let container
@@ -27,10 +27,13 @@ afterEach(() => {
 
 describe("when a plan has no diseases selected", () => {
   beforeEach(() => {
-    useSelector.mockReturnValue({
-      id: 1,
-      disease_ids: [],
-    })
+    makeGetDisplayForDiseaseId.mockReturnValueOnce(jest.fn())
+    useSelector
+      .mockReturnValueOnce({
+        id: 1,
+        disease_ids: [],
+      })
+      .mockReturnValueOnce(undefined)
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)
@@ -44,12 +47,15 @@ describe("when a plan has no diseases selected", () => {
 
 describe("when a plan has diseases", () => {
   beforeEach(() => {
-    useSelector.mockReturnValue({
-      id: 1,
-      disease_ids: [1],
-    })
-
-    getDisplayForDiseaseId.mockReturnValue("Flu")
+    makeGetDisplayForDiseaseId.mockReturnValueOnce(
+      jest.fn().mockReturnValueOnce([])
+    )
+    useSelector
+      .mockReturnValueOnce({
+        id: 1,
+        disease_ids: [1],
+      })
+      .mockReturnValueOnce("Influenza")
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)
@@ -58,6 +64,6 @@ describe("when a plan has diseases", () => {
 
   it("displays a legend with the correct label", () => {
     expect(container.innerHTML).toContain("ct-legend")
-    expect(container.innerHTML).toContain("Flu specific")
+    expect(container.innerHTML).toContain("Influenza specific")
   })
 })

@@ -1,14 +1,14 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import { getPlan, getDisplayForDiseaseId } from "../../config/selectors"
+import { getPlan, makeGetDisplayForDiseaseId } from "../../config/selectors"
 
 const BarChartLegend = () => {
   const plan = useSelector((state) => getPlan(state))
-  if (plan.disease_ids.length === 0) {
+  const getDisplayForDiseaseId = makeGetDisplayForDiseaseId(plan.disease_ids)
+  const labelSeriesB = useSelector((state) => getDisplayForDiseaseId(state))
+  if (!labelSeriesB) {
     return null
   }
-
-  const labelSeriesB = getDisplayForDiseaseId(plan.disease_ids[0])
 
   return (
     <ul className="ct-legend">

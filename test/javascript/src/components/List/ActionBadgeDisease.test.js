@@ -2,10 +2,19 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import ActionBadgeDisease from "components/List/ActionBadgeDisease"
-import { getColorForDiseaseId } from "config/selectors"
+import { getColorForDiseaseId } from "config/helpers"
+// import { makeGetDisplayForDiseaseId } from "config/selectors"
+
+jest.mock("config/helpers", () => ({
+  getColorForDiseaseId: jest.fn(),
+}))
 
 jest.mock("config/selectors", () => ({
-  getColorForDiseaseId: jest.fn(),
+  makeGetDisplayForDiseaseId: jest.fn(),
+}))
+
+jest.mock("react-redux", () => ({
+  useSelector: jest.fn(),
 }))
 
 let container, action

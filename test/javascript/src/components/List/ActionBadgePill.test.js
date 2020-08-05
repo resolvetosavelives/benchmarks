@@ -2,10 +2,14 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import ActionBadgePill from "components/List/ActionBadgePill"
-import { getDisplayForDiseaseId } from "config/selectors"
+import { useSelector } from "react-redux"
 
 jest.mock("config/selectors", () => ({
-  getDisplayForDiseaseId: jest.fn(),
+  makeGetDisplayForDiseaseId: jest.fn(),
+}))
+
+jest.mock("react-redux", () => ({
+  useSelector: jest.fn(),
 }))
 
 let container, action
@@ -13,7 +17,6 @@ let container, action
 beforeEach(() => {
   container = document.createElement("div")
   document.body.appendChild(container)
-  getDisplayForDiseaseId.mockReturnValueOnce("mock-disease-display")
 })
 
 afterEach(() => {
@@ -33,6 +36,12 @@ describe("with an action that is not disease specific", () => {
       level: 5,
       disease_id: null,
     }
+    useSelector
+      .mockReturnValueOnce({
+        id: 1,
+        disease_ids: [],
+      })
+      .mockReturnValueOnce(undefined)
 
     act(() => {
       ReactDOM.render(<ActionBadgePill action={action} />, container)
@@ -40,7 +49,7 @@ describe("with an action that is not disease specific", () => {
   })
 
   it("it displays nothing", () => {
-    expect(container.innerHTML).not.toMatch("mock-disease-display")
+    expect(container.innerHTML).toEqual("")
   })
 })
 
@@ -56,6 +65,12 @@ describe("with an action that is disease specific", () => {
       level: null,
       disease_id: 1,
     }
+    useSelector
+      .mockReturnValueOnce({
+        id: 1,
+        disease_ids: [1],
+      })
+      .mockReturnValueOnce("mock-disease-display")
 
     act(() => {
       ReactDOM.render(<ActionBadgePill action={action} />, container)
