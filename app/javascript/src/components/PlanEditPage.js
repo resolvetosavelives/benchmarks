@@ -15,7 +15,7 @@ class PlanEditPage extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <PlanEditForm />
+        <PlanEditForm stateToUpdateLater={window.STATE_FROM_SERVER} />
       </Provider>
     )
   }
