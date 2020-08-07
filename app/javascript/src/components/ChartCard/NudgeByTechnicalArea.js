@@ -12,7 +12,7 @@ const NudgeByTechnicalArea = () => {
     whichNudgeComponent = <NudgeByTechnicalAreaOneYear />
   }
   return (
-    <div className="col nudge-container">
+    <div className="col-12 col-md nudge-container">
       <div className="card">
         <p>
           <svg className="lightbulb" xmlns="http://www.w3.org/2000/svg">

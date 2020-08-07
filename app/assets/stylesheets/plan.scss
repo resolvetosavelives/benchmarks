@@ -10,7 +10,7 @@
 }
 
 .tips-header {
-  font-family: Pathway Gothic One;
+  font-family: "Pathway Gothic One", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 48px;
@@ -106,8 +106,16 @@
     color: white;
   }
 
-  .delete {
-    display: none;
+  .action-badge-pill {
+    font-size: 14px;
+    padding: 0.25em 1em;
+    color: color("disease-pill");
+  }
+
+  @include media-breakpoint-up(lg) {
+    .delete {
+      display: none;
+    }
   }
 
   &:hover {
@@ -128,6 +136,15 @@
   .color-value-4,
   .color-value-5 {
     background-color: color("success");
+  }
+
+  .badge-disease {
+    height: 0.75em;
+    width: 0.75em;
+  }
+
+  .color-value-disease-influenza {
+    background-color: color("disease-influenza");
   }
 }
 
@@ -224,12 +241,33 @@
   }
 
   .ct-series .ct-bar {
-    stroke: #0d4a59;
     stroke-width: 24;
 
     &:hover {
-      stroke: #4d838f;
       cursor: pointer;
+    }
+  }
+
+  .ct-series-a .ct-bar {
+    stroke: color("health-system");
+
+    &.ct-deselected {
+      stroke: color("health-system-deselected");
+    }
+
+    &:hover {
+      stroke: color("health-system-hover");
+    }
+  }
+  .ct-series-b .ct-bar {
+    stroke: color("disease-influenza");
+
+    &.ct-deselected {
+      stroke: color("disease-influenza-deselected");
+    }
+
+    &:hover {
+      stroke: color("disease-influenza-hover");
     }
   }
 
@@ -252,6 +290,45 @@
     // needs more bottom margin to allow the angled labels to display w/o cut off
     margin: 0 0 50px 0;
     overflow: visible;
+  }
+
+  .ct-legend {
+    margin-left: -1em !important;
+    margin-bottom: 0;
+    margin-top: 3em;
+    position: relative;
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: 1.8em;
+      margin-right: 3em;
+      display: inline-block;
+    }
+
+    li:before {
+      width: 1.25em;
+      height: 1.25em;
+      margin-top: 0.15em;
+      position: absolute;
+      left: 0;
+      content: "";
+    }
+
+    .ct-legend-inside {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .ct-series-a:before {
+      background-color: color("health-system");
+    }
+
+    .ct-series-b:before {
+      background-color: color("disease-influenza");
+      border-color: color("disease-influenza");
+    }
   }
 }
 
@@ -316,9 +393,6 @@
       padding: 7px;
       .row {
         margin: 0.5em 0 0.5em 0;
-      }
-      .form-check-inline {
-        margin-right: 4px;
       }
     }
   }

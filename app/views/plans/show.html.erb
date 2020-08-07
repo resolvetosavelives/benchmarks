@@ -1,6 +1,3 @@
-<% content_for :js_head do
-  javascript_pack_tag "application_react", 'data-turbolinks-track': 'reload'
-end %>
 
 <% chart_labels_by_technical_area = [
     "Legislation",
@@ -23,19 +20,26 @@ end %>
     "Radiation",
 ] %>
 
-<%= react_component("PlanEditPage") %>
+<div data-react-class="PlanEditPage" data-react-props="{}" data-react-cache-id="PlanEditPage-0"></div>
 
-<script type="application/javascript">
+<%# the STATE_FROM_SERVER hash cannot end with ";" or else the JSON parser fails in save_state_from_server() %>
+<script type="application/javascript" id="state_from_server">
     window.STATE_FROM_SERVER = {
-        formAuthenticityToken: "<%= form_authenticity_token %>",
-        formActionUrl: "<%= url_for(@plan) %>",
-        technicalAreas: <%= raw @benchmark_technical_areas.to_json %>,
-        indicators: <%= raw @benchmark_indicators.to_json %>,
-        actions: <%= raw @all_actions.to_json %>,
-        plan: <%= raw @plan.to_json %>,
-        planActionIds: <%= @plan.action_ids %>,
-        planGoals: <%= raw @plan.goals.to_json %>,
-        planChartLabels: <%= raw [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>,
+        "formAuthenticityToken": "<%= form_authenticity_token %>",
+        "formActionUrl": "<%= url_for(@plan) %>",
+        "technicalAreas": <%= raw @benchmark_technical_areas.to_json %>,
+        "indicators": <%= raw @benchmark_indicators.to_json %>,
+        "actions": <%= raw @all_actions.to_json %>,
+        "plan": <%= raw @plan.to_json %>,
+        "planActionIds": <%= @plan.action_ids %>,
+        "planGoals": <%= raw @plan.goals.to_json %>,
+        "planChartLabels": <%= raw [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>,
+        "nudgesByActionType": <%= raw @nudges_by_action_type_json %>,
+        "diseases": <%= raw @diseases.to_json %>
     };
-    window.NUDGES_BY_ACTION_TYPE = <%= raw @nudges_by_action_type_json %>;
+</script>
+<script type="application/javascript">
+  document.addEventListener('turbolinks:load', function () {
+    Turbolinks.clearCache()
+  });
 </script>

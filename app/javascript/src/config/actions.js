@@ -6,13 +6,13 @@ import {
   DELETE_ACTION_FROM_INDICATOR,
   DELETE_ACTION_FROM_NOT_IN_INDICATOR,
   SELECT_TECHNICAL_AREA,
-  DESELECT_TECHNICAL_AREA,
   SELECT_ACTION_TYPE,
-  DESELECT_ACTION_TYPE,
   SWITCH_LIST_MODE,
   LIST_MODE_BY_TECHNICAL_AREA,
   LIST_MODE_BY_ACTION_TYPE,
   UPDATE_PLAN_NAME,
+  CLEAR_FILTERS,
+  IS_INFLUENZA_SHOWING,
 } from "./constants"
 
 const deleteAnAction = (actionId, indicatorId) => {
@@ -62,11 +62,11 @@ const selectTechnicalArea = (technicalAreaId) => {
   }
 }
 
-const selectActionType = (actionTypeOrdinal) => {
+const selectActionType = (actionTypeIndex) => {
   return (dispatch) => {
     dispatch({
       type: SELECT_ACTION_TYPE,
-      payload: { actionTypeOrdinal: actionTypeOrdinal },
+      payload: { actionTypeIndex: actionTypeIndex },
     })
     dispatch({
       type: SWITCH_LIST_MODE,
@@ -78,14 +78,7 @@ const selectActionType = (actionTypeOrdinal) => {
 const clearFilterCriteria = () => {
   return (dispatch) => {
     dispatch({
-      type: DESELECT_TECHNICAL_AREA,
-    })
-    dispatch({
-      type: DESELECT_ACTION_TYPE,
-    })
-    dispatch({
-      type: SWITCH_LIST_MODE,
-      payload: { listModeOrdinal: LIST_MODE_BY_TECHNICAL_AREA },
+      type: CLEAR_FILTERS,
     })
   }
 }
@@ -96,6 +89,12 @@ const updatePlanName = (name) => {
   }
 }
 
+const toggleInfluenzaShowing = () => {
+  return (dispatchedAction) => {
+    dispatchedAction({ type: IS_INFLUENZA_SHOWING })
+  }
+}
+
 export {
   addActionToIndicator,
   deleteAnAction,
@@ -103,4 +102,5 @@ export {
   selectActionType,
   clearFilterCriteria,
   updatePlanName,
+  toggleInfluenzaShowing,
 }

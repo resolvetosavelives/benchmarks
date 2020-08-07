@@ -14,12 +14,9 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "rake"
 gem "rubyXL"
 gem "webpacker", "~> 5.1.1"
-gem "react-rails"
 gem "devise"
 gem "sentry-raven"
 gem "rack-attack"
-gem "bootstrap"
-gem "jquery-rails"
 gem "hamlit-rails"
 # skylight.io is a performance analysis tool, our free trial expires on 2020-02-29.
 gem "skylight"

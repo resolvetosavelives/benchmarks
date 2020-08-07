@@ -30,10 +30,8 @@ afterEach(() => {
 describe("when no ActionType is selected", () => {
   it("renders Nudge content zero", () => {
     useSelector
-      .mockImplementationOnce((cb) =>
-        cb({ nudgesByActionType: dataNudgesByActionType })
-      )
-      .mockImplementationOnce((cb) => cb({ selectedActionTypeOrdinal: null }))
+      .mockReturnValueOnce(dataNudgesByActionType)
+      .mockReturnValueOnce(null)
       .mockReturnValueOnce(Array(15).fill(0))
 
     act(() => {
@@ -50,10 +48,8 @@ describe("when an ActionType is selected", () => {
       const a = Array(15).fill(0)
       a[1] = 40
       useSelector
-        .mockImplementationOnce((cb) =>
-          cb({ nudgesByActionType: dataNudgesByActionType })
-        )
-        .mockImplementationOnce((cb) => cb({ selectedActionTypeOrdinal: 2 }))
+        .mockReturnValueOnce(dataNudgesByActionType)
+        .mockReturnValueOnce(2)
         .mockReturnValueOnce(a)
 
       act(() => {
@@ -75,12 +71,8 @@ describe("when an ActionType is selected", () => {
       const selectedActionTypeOrdinal = 4
       a[selectedActionTypeOrdinal - 1] = 7
       useSelector
-        .mockImplementationOnce((cb) =>
-          cb({ nudgesByActionType: dataNudgesByActionType })
-        )
-        .mockImplementationOnce((cb) =>
-          cb({ selectedActionTypeOrdinal: selectedActionTypeOrdinal })
-        )
+        .mockReturnValueOnce(dataNudgesByActionType)
+        .mockReturnValueOnce(selectedActionTypeOrdinal)
         .mockReturnValueOnce(a)
 
       act(() => {

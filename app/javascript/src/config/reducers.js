@@ -10,42 +10,20 @@ import {
   DESELECT_TECHNICAL_AREA,
   SELECT_ACTION_TYPE,
   DESELECT_ACTION_TYPE,
-  LIST_MODE_BY_TECHNICAL_AREA,
   SWITCH_LIST_MODE,
   UPDATE_PLAN_NAME,
+  CLEAR_FILTERS,
+  IS_INFLUENZA_SHOWING,
 } from "./constants"
 
-export default function initReducers() {
-  const technicalAreas = createReducer(
-    window.STATE_FROM_SERVER.technicalAreas,
-    {}
-  )
-  const technicalAreaMapInitial = window.STATE_FROM_SERVER.technicalAreas.reduce(
-    (map, technicalArea) => {
-      map[technicalArea.id] = technicalArea
-      return map
-    },
-    {}
-  )
-  const technicalAreaMap = createReducer(technicalAreaMapInitial, {})
+export default function initReducers(initialState) {
+  const technicalAreas = createReducer(initialState.technicalAreas, {})
 
-  const indicators = createReducer(window.STATE_FROM_SERVER.indicators, {})
-  const indicatorMapInitial = window.STATE_FROM_SERVER.indicators.reduce(
-    (map, indicator) => {
-      map[indicator.id] = indicator
-      return map
-    },
-    {}
-  )
-  const indicatorMap = createReducer(indicatorMapInitial, {})
+  const indicators = createReducer(initialState.indicators, {})
 
-  const actionMap = window.STATE_FROM_SERVER.actions.reduce((map, action) => {
-    map[action.id] = action
-    return map
-  }, {})
-  const actions = createReducer(actionMap, {})
+  const actions = createReducer(initialState.actions, {})
 
-  const planActionIds = createReducer(window.STATE_FROM_SERVER.planActionIds, {
+  const planActionIds = createReducer(initialState.planActionIds, {
     [ADD_ACTION_TO_PLAN]: (state, action) => {
       const actionIdToAdd = action.payload.actionId
       state.push(actionIdToAdd)
@@ -59,7 +37,7 @@ export default function initReducers() {
   const initialMapOfPlanActionIdsByIndicator = {}
   const initialMapOfPlanActionIdsNotInIndicator = {}
   let currentIndicatorId
-  window.STATE_FROM_SERVER.actions.forEach((action) => {
+  initialState.actions.forEach((action) => {
     if (action.benchmark_indicator_id !== currentIndicatorId) {
       currentIndicatorId = action.benchmark_indicator_id
     }
@@ -69,7 +47,7 @@ export default function initReducers() {
     if (!initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId]) {
       initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId] = []
     }
-    if (window.STATE_FROM_SERVER.planActionIds.indexOf(action.id) >= 0) {
+    if (initialState.planActionIds.indexOf(action.id) >= 0) {
       initialMapOfPlanActionIdsByIndicator[currentIndicatorId].push(action.id)
     } else {
       initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId].push(
@@ -77,7 +55,6 @@ export default function initReducers() {
       )
     }
   })
-
   const planActionIdsByIndicator = createReducer(
     initialMapOfPlanActionIdsByIndicator,
     {
@@ -95,7 +72,6 @@ export default function initReducers() {
       },
     }
   )
-
   const planActionIdsNotInIndicator = createReducer(
     initialMapOfPlanActionIdsNotInIndicator,
     {
@@ -114,72 +90,78 @@ export default function initReducers() {
     }
   )
 
-  const planChartLabels = createReducer(
-    window.STATE_FROM_SERVER.planChartLabels,
-    {}
-  )
+  const planChartLabels = createReducer(initialState.planChartLabels, {})
 
-  const selectedTechnicalAreaId = createReducer(null, {
-    [SELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
-      return dispatchedAction.payload.technicalAreaId
-    },
-    // eslint-disable-next-line no-unused-vars
-    [DESELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
-      return null
-    },
-  })
+  const planGoals = createReducer(initialState.planGoals, {})
 
-  const selectedActionTypeOrdinal = createReducer(null, {
-    [SELECT_ACTION_TYPE]: (state, dispatchedAction) => {
-      return dispatchedAction.payload.actionTypeOrdinal
-    },
-    // eslint-disable-next-line no-unused-vars
-    [DESELECT_ACTION_TYPE]: (state, dispatchedAction) => {
-      return null
-    },
-  })
+  const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
 
-  const allActions = createReducer(window.STATE_FROM_SERVER.actions, {})
-
-  const selectedListMode = createReducer(LIST_MODE_BY_TECHNICAL_AREA, {
-    [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
-      return dispatchedAction.payload.listModeOrdinal
-    },
-  })
-
-  const initialPlanGoalMap = window.STATE_FROM_SERVER.planGoals.reduce(
-    (acc, goal) => {
-      acc[goal.benchmark_indicator_id] = goal
-      return acc
-    },
-    {}
-  )
-  const planGoalMap = createReducer(initialPlanGoalMap, {})
-
-  const nudgesByActionType = createReducer(window.NUDGES_BY_ACTION_TYPE, {})
-
-  const plan = createReducer(window.STATE_FROM_SERVER.plan, {
+  const plan = createReducer(initialState.plan, {
     [UPDATE_PLAN_NAME]: (state, dispatchedAction) => {
       state.name = dispatchedAction.payload.name
     },
   })
 
+  const ui = createReducer(
+    {
+      selectedListMode: null,
+      selectedTechnicalAreaId: null,
+      selectedActionTypeOrdinal: null,
+      isInfluenzaShowing: true,
+    },
+    {
+      [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
+        state.selectedListMode = dispatchedAction.payload.listModeOrdinal
+        return state
+      },
+      [SELECT_TECHNICAL_AREA]: (state, dispatchedAction) => {
+        state.selectedTechnicalAreaId = dispatchedAction.payload.technicalAreaId
+        return state
+      },
+      [DESELECT_TECHNICAL_AREA]: (state /*, dispatchedAction*/) => {
+        state.selectedTechnicalAreaId = null
+        return state
+      },
+      [SELECT_ACTION_TYPE]: (state, dispatchedAction) => {
+        // NB: the reason we use "actionTypeIndex + 1" is because actionTypeIndex is
+        //   zero-based but the actual ordinals used as ActionType IDs are 1-based, e.g. 0-14 => 1-15.
+        state.selectedActionTypeOrdinal =
+          dispatchedAction.payload.actionTypeIndex + 1
+        return state
+      },
+      [DESELECT_ACTION_TYPE]: (state /*, dispatchedAction*/) => {
+        state.selectedActionTypeOrdinal = null
+        return state
+      },
+      [CLEAR_FILTERS]: (/*state, dispatchedAction*/) => {
+        return {
+          selectedListMode: null,
+          selectedTechnicalAreaId: null,
+          selectedActionTypeOrdinal: null,
+          isInfluenzaShowing: true,
+        }
+      },
+      [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
+        state.isInfluenzaShowing = !state.isInfluenzaShowing
+        return state
+      },
+    }
+  )
+
+  const diseases = createReducer(initialState.diseases, {})
+
   return combineReducers({
     technicalAreas,
-    technicalAreaMap,
     indicators,
-    indicatorMap,
     actions,
     planActionIds,
+    planGoals,
     planActionIdsByIndicator,
     planActionIdsNotInIndicator,
     planChartLabels,
-    allActions,
-    selectedTechnicalAreaId,
-    selectedActionTypeOrdinal,
-    selectedListMode,
-    planGoalMap,
+    ui,
     nudgesByActionType,
     plan,
+    diseases,
   })
 }

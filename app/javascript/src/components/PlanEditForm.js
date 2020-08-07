@@ -1,14 +1,17 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
+import PropTypes from "prop-types"
 import ActionCount from "./ActionCount"
 import ChartCard from "./ChartCard/ChartCard"
-import ActionList from "./list/ActionList"
+import ActionList from "./List/ActionList"
 import {
+  getPlan,
   getFormAuthenticityToken,
   getFormActionUrl,
   getPlanActionIds,
 } from "../config/selectors"
 import { updatePlanName } from "../config/actions"
+import InfluenzaToggle from "./InfluenzaToggle"
 
 const formRef = React.createRef()
 const submitButtonRef = React.createRef()
@@ -53,13 +56,20 @@ const setFormIsInvalid = function (formDomNode, submitDomNode) {
   formDomNode.classList.add("was-validated")
 }
 
-const PlanEditForm = () => {
+const updateStateFromServer = (stateToUpdateLater, plan, planActionIdsJson) => {
+  stateToUpdateLater.plan = JSON.stringify(plan)
+  stateToUpdateLater.planActionIds = planActionIdsJson
+}
+
+const PlanEditForm = (props) => {
   const formActionUrl = getFormActionUrl()
   const formAuthenticityToken = getFormAuthenticityToken()
   const dispatch = useDispatch()
-  const planNameFromStore = useSelector((state) => state.plan.name)
+  const plan = useSelector((state) => getPlan(state))
+  const planNameFromStore = plan.name
   const planActionIds = useSelector((state) => getPlanActionIds(state))
   const planActionIdsJson = JSON.stringify(planActionIds)
+  updateStateFromServer(props.stateToUpdateLater, plan, planActionIdsJson)
   return (
     <div className="row">
       <div className="col plan-container">
@@ -128,15 +138,19 @@ const PlanEditForm = () => {
             </div>
           </div>
 
-          <div className="row">
-            <div className="col mt-4">
-              <ActionList />
-            </div>
+          <InfluenzaToggle />
+
+          <div className="row mt-4">
+            <ActionList />
           </div>
         </form>
       </div>
     </div>
   )
+}
+
+PlanEditForm.propTypes = {
+  stateToUpdateLater: PropTypes.object.isRequired,
 }
 
 export default PlanEditForm

@@ -24,6 +24,7 @@
                } do |form| %>
     <%= form.hidden_field :assessment_id %>
     <%= form.hidden_field :term %>
+    <%= form.hidden_field :disease_ids, value: @disease_ids %>
 
     <% counter = 0 %>
     <div class="row py-4">

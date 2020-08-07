@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_165716) do
+ActiveRecord::Schema.define(version: 2020_07_08_203157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_165716) do
     t.integer "action_types", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "disease_id"
     t.index ["benchmark_indicator_id"], name: "index_benchmark_indicator_actions_on_benchmark_indicator_id"
   end
 
@@ -111,6 +112,13 @@ ActiveRecord::Schema.define(version: 2020_05_22_165716) do
     t.index ["name"], name: "index_countries_on_name", unique: true
   end
 
+  create_table "diseases", force: :cascade do |t|
+    t.string "display"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "plan_actions", force: :cascade do |t|
     t.integer "plan_id"
     t.integer "benchmark_indicator_action_id"
@@ -119,6 +127,12 @@ ActiveRecord::Schema.define(version: 2020_05_22_165716) do
     t.integer "benchmark_indicator_id"
     t.integer "benchmark_technical_area_id"
     t.index ["plan_id"], name: "index_plan_actions_on_plan_id"
+  end
+
+  create_table "plan_diseases", id: false, force: :cascade do |t|
+    t.bigint "plan_id", null: false
+    t.bigint "disease_id", null: false
+    t.index ["plan_id", "disease_id"], name: "index_plan_diseases_on_plan_id_and_disease_id", unique: true
   end
 
   create_table "plan_goals", force: :cascade do |t|
@@ -165,11 +179,14 @@ ActiveRecord::Schema.define(version: 2020_05_22_165716) do
   add_foreign_key "assessments", "assessment_publications"
   add_foreign_key "assessments", "countries", column: "country_alpha3", primary_key: "alpha3"
   add_foreign_key "benchmark_indicator_actions", "benchmark_indicators"
+  add_foreign_key "benchmark_indicator_actions", "diseases"
   add_foreign_key "benchmark_indicators", "benchmark_technical_areas"
   add_foreign_key "plan_actions", "benchmark_indicator_actions"
   add_foreign_key "plan_actions", "benchmark_indicators"
   add_foreign_key "plan_actions", "benchmark_technical_areas"
   add_foreign_key "plan_actions", "plans"
+  add_foreign_key "plan_diseases", "diseases"
+  add_foreign_key "plan_diseases", "plans"
   add_foreign_key "plan_goals", "assessment_indicators"
   add_foreign_key "plan_goals", "benchmark_indicators"
   add_foreign_key "plan_goals", "plans"

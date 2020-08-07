@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
-import TechnicalArea from "components/list/TechnicalArea"
+import TechnicalArea from "components/List/TechnicalArea"
 
 let container
 
@@ -47,7 +47,7 @@ jest.mock("react-redux", () => ({
     })
   ),
 }))
-jest.mock("components/list/Indicator", () => () => <mock-indicator />)
+jest.mock("components/List/Indicator", () => () => <mock-indicator />)
 
 const technicalArea = { id: 1, sequence: 1, text: "Antimicrobial Resistance" }
 

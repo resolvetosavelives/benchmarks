@@ -6,7 +6,7 @@ import ActionListByTechnicalArea from "./ActionListByTechnicalArea"
 
 const ActionList = () => {
   const listMode = useSelector((state) => {
-    return state.selectedListMode
+    return state.ui.selectedListMode
   })
   let whichListToRender
   if (listMode === LIST_MODE_BY_ACTION_TYPE) {

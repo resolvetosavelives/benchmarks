@@ -17,6 +17,8 @@ class Plan < ApplicationRecord
   has_many :goals, class_name: "PlanGoal", dependent: :destroy
   has_many :plan_actions, dependent: :destroy
   has_many :benchmark_indicator_actions, through: :plan_actions
+  has_many :plan_diseases
+  has_many :diseases, through: :plan_diseases, dependent: :destroy
 
   delegate :alpha3, to: :country
   delegate :jee1?, :spar_2018?, :type_description, to: :assessment
@@ -31,6 +33,15 @@ class Plan < ApplicationRecord
   validates :assessment, presence: true
   validates :name, presence: true
   validates :term, inclusion: TERM_TYPES
+
+  def attributes
+    {
+      id: nil,
+      name: nil,
+      term: nil,
+      disease_ids: nil,
+    }
+  end
 
   def is_5_year?
     term.eql?(TERM_TYPES.second)

@@ -2,7 +2,7 @@ import { expect, it, beforeEach, afterEach } from "@jest/globals"
 import React from "react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
-import NoGoalForThisIndicator from "components/list/NoGoalForThisIndicator"
+import NoGoalForThisIndicator from "components/List/NoGoalForThisIndicator"
 
 let container
 beforeEach(() => {
