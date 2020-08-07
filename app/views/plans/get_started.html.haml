@@ -107,7 +107,7 @@
           - if @get_started_form.country.present?
             .form-check
               = check_box_tag "get_started_form[diseases][]", @influenza.id, false,
-                {class: "form-check-inline",
+                {class: "form-check-input",
                   id: "diseases_influenza"}
               %label{for: "diseases_influenza"}
                 = "Optional: #{@influenza.display} planning"
