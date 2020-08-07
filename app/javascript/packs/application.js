@@ -1,5 +1,12 @@
 import "./base"
 
+// capture any unhandled JS errors/exceptions. for more info: https://docs.sentry.io/platforms/javascript/
+import * as Sentry from "@sentry/browser"
+Sentry.init({
+  dsn:
+    "https://c84eed83155c4190a082ceb3709dd06a@o152587.ingest.sentry.io/1551856",
+})
+
 // stimulus polyfill must be loaded first, also needed for IE 10 to work properly
 import "@stimulus/polyfills"
 import { Application } from "stimulus"
