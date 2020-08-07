@@ -172,63 +172,6 @@
     }
   }
 
-  .nudge-container {
-    padding: 0;
-    flex-grow: 1;
-    .card {
-      max-width: 400px;
-      min-width: 260px;
-      min-height: 238px;
-      margin: 20px auto;
-      padding: 1em;
-      background-color: #f8f9fa;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 5px;
-      ul {
-        padding-left: 30px;
-      }
-      p {
-        margin: 10px 12px 20px 12px;
-        font-weight: bold;
-      }
-      li {
-        font-size: 14px;
-      }
-    }
-    svg.lightbulb {
-      height: 18px;
-      width: 12px;
-      position: relative;
-      top: -2px;
-      left: -7px;
-      path {
-        height: 18px;
-        width: 12px;
-        fill: #ffca1e;
-      }
-    }
-    .nudge-content-0 {
-      text-align: center;
-      svg.bar-chart {
-        height: 51px;
-        width: 51px;
-        margin-top: 35px;
-        margin-bottom: 10px;
-        path {
-          fill: #2c8dc9;
-          transform: scale(2.5);
-        }
-      }
-      svg.cursor {
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        top: 77px;
-        left: 190px;
-      }
-    }
-  }
-
   // ct-* are chartist style class we are overriding
   .ct-vertical {
     stroke: #c3c9d8;
@@ -332,6 +275,49 @@
   }
 }
 
+.nudge-container {
+  .nudge-left {
+    width: 260px;
+    background-color: color("light-gray");
+    border-right: 1px solid #eaeaeb;
+  }
+  .nudge-tip-text {
+    color: color("text-de-emphasized");
+    font-size: smaller;
+    text-transform: uppercase;
+  }
+  ul {
+    margin: 25px 0px;
+    padding-left: 30px;
+  }
+  li {
+    font-size: 14px;
+    margin-bottom: 1em;
+  }
+  .nudge-content-0 {
+    .nudge-svg-box {
+      height: 41px;
+      width: 51px;
+      position: relative;
+    }
+    svg.bar-chart {
+      height: 41px;
+      width: 51px;
+      path {
+        fill: #2c8dc9;
+        transform: scale(2.5);
+      }
+    }
+    svg.cursor {
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      top: 22px;
+      left: 26px;
+    }
+  }
+}
+
 .stick-to-top {
   input.plan-name {
     height: 38px;
@@ -364,7 +350,7 @@
     margin-bottom: 0.7em;
   }
   h4.disabled {
-    color: color("text-disabled");
+    color: color("text-de-emphasized");
   }
   .form-row {
     margin-top: 1em;

@@ -12,6 +12,7 @@ import {
 } from "../config/selectors"
 import { updatePlanName } from "../config/actions"
 import InfluenzaToggle from "./InfluenzaToggle"
+import Nudges from "./Nudges/Nudges"
 
 const formRef = React.createRef()
 const submitButtonRef = React.createRef()
@@ -137,6 +138,8 @@ const PlanEditForm = (props) => {
               <ChartCard />
             </div>
           </div>
+
+          <Nudges />
 
           <InfluenzaToggle />
 

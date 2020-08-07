@@ -3,15 +3,15 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { useSelector } from "react-redux"
 import { act } from "react-dom/test-utils"
-import NudgeByTechnicalArea from "components/ChartCard/NudgeByTechnicalArea"
+import NudgeByTechnicalArea from "components/Nudges/NudgeByTechnicalArea"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
-jest.mock("components/ChartCard/NudgeByTechnicalAreaOneYear", () => () => (
+jest.mock("components/Nudges/NudgeByTechnicalAreaOneYear", () => () => (
   <mock-NudgeByTechnicalAreaOneYear />
 ))
-jest.mock("components/ChartCard/NudgeByTechnicalAreaFiveYear", () => () => (
+jest.mock("components/Nudges/NudgeByTechnicalAreaFiveYear", () => () => (
   <mock-NudgeByTechnicalAreaFiveYear />
 ))
 
@@ -24,19 +24,6 @@ beforeEach(() => {
 afterEach(() => {
   document.body.removeChild(container)
   container = null
-})
-
-it("renders its content", () => {
-  useSelector.mockReturnValue({ term: 100 })
-
-  act(() => {
-    ReactDOM.render(<NudgeByTechnicalArea />, container)
-  })
-
-  expect(container.querySelectorAll(".nudge-container").length).toEqual(1)
-  expect(container.querySelectorAll(".card").length).toEqual(1)
-  expect(container.querySelectorAll("svg").length).toEqual(1)
-  expect(container.textContent).toContain("Tips for your draft plan")
 })
 
 describe("when plan term is 5-year", () => {
