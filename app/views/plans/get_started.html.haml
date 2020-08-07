@@ -94,9 +94,15 @@
             .form-check
               = form.radio_button :plan_term, 1, class: "form-check-input", required: true
               = form.label :plan_term, "1 year plan", value: 1, class: "form-check-label"
+              %p
+                %em
+                  For each indicator, increase scores by 1 level.
             .form-check
               = form.radio_button :plan_term, 5, class: "form-check-input", required: true
               = form.label :plan_term, "5 year plan", value: 5, class: "form-check-label"
+              %p
+                %em
+                  For each indicator, increase scores to demonstrated (4) or sustained (5) capacity.
               .invalid-feedback Please choose a plan.
           - else
             %div{style: "height: 75px"}
