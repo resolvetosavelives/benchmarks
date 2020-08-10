@@ -6,6 +6,7 @@ import ReactDOM from "react-dom"
 
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn(),
+  useEffect: jest.fn(),
 }))
 jest.mock("components/ChartCard/BarChartByTechnicalArea", () => () => (
   <mock-BarChartByTechnicalArea />
@@ -13,6 +14,7 @@ jest.mock("components/ChartCard/BarChartByTechnicalArea", () => () => (
 jest.mock("components/ChartCard/BarChartByActionType", () => () => (
   <mock-BarChartByActionType />
 ))
+jest.mock("components/ChartCard/InfoPane", () => () => <mock-InfoPane />)
 
 let container
 beforeEach(() => {

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { setSelectedChartTabIndex } from "../../config/actions"
 import BarChartByTechnicalArea from "./BarChartByTechnicalArea"
 import BarChartByActionType from "./BarChartByActionType"
+import InfoPane from "./InfoPane"
 
 const tabSelector = 'a[data-toggle="tab"]'
 
@@ -61,7 +62,7 @@ const ChartCard = () => {
             {
               // Left Col
             }
-            <div className="chart-pane col-12 col-lg d-flex flex-column align-items-center">
+            <div className="chart-pane col d-flex flex-column align-items-center">
               <h6 className="my-3">Actions per benchmark technical area</h6>
               {
                 // Actual Chart, by Technical Area
@@ -72,6 +73,7 @@ const ChartCard = () => {
             {
               // Right Col
             }
+            <InfoPane />
           </div>
         </div>
 
@@ -96,6 +98,7 @@ const ChartCard = () => {
             {
               // Right Col
             }
+            <InfoPane />
           </div>
         </div>
       </div>

@@ -28,7 +28,10 @@ import {
   filterOutInfluenzaActions,
   getIsInfluenzaShowing,
 } from "config/selectors"
-import { getPlanChartLabels } from "../../../../app/javascript/src/config/selectors"
+import {
+  getCountOfPlanActionIds,
+  getPlanChartLabels,
+} from "../../../../app/javascript/src/config/selectors"
 
 let store
 
@@ -539,6 +542,16 @@ describe("for a plan without any specific diseases", () => {
       expect(result).toEqual("")
     })
   })
+
+  describe("getCountOfPlanActionIds", () => {
+    it("returns a function that returns the expected string", () => {
+      const state = store.getState()
+
+      const result = getCountOfPlanActionIds(state)
+
+      expect(result).toEqual(235)
+    })
+  })
 })
 
 describe("for a plan that includes influenza", () => {
@@ -747,6 +760,16 @@ describe("for a plan that includes influenza", () => {
       const result = getIsInfluenzaShowing(state)
 
       expect(result).toBeTruthy()
+    })
+  })
+
+  describe("getCountOfPlanActionIds", () => {
+    it("returns a function that returns the expected string", () => {
+      const state = store.getState()
+
+      const result = getCountOfPlanActionIds(state)
+
+      expect(result).toEqual(283)
     })
   })
 })
