@@ -4,7 +4,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { useSelector } from "react-redux"
 import { act } from "react-dom/test-utils"
-import NudgeByActionType from "components/ChartCard/NudgeByActionType"
+import NudgeByActionType from "components/Nudges/NudgeByActionType"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
@@ -56,8 +56,8 @@ describe("when an ActionType is selected", () => {
         ReactDOM.render(<NudgeByActionType />, container)
       })
 
-      expect(container.querySelector("p").textContent).toEqual(
-        "Tips for assessment and data use actions"
+      expect(container.querySelector("h4").textContent).toEqual(
+        "assessment and data use actions"
       )
       expect(container.querySelectorAll("li").length).toEqual(4)
     })
@@ -79,8 +79,8 @@ describe("when an ActionType is selected", () => {
         ReactDOM.render(<NudgeByActionType />, container)
       })
 
-      expect(container.querySelector("p").textContent).toEqual(
-        "Tips for designation actions"
+      expect(container.querySelector("h4").textContent).toEqual(
+        "designation actions"
       )
       expect(container.querySelectorAll("li").length).toEqual(3)
     })

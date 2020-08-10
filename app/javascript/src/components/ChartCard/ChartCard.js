@@ -1,10 +1,24 @@
-import React from "react"
+import React, { useEffect } from "react"
+import $ from "jquery"
+import { useDispatch } from "react-redux"
+import { setSelectedChartTabIndex } from "../../config/actions"
 import BarChartByTechnicalArea from "./BarChartByTechnicalArea"
 import BarChartByActionType from "./BarChartByActionType"
-import NudgeByTechnicalArea from "./NudgeByTechnicalArea"
-import NudgeByActionType from "./NudgeByActionType"
+
+const tabSelector = 'a[data-toggle="tab"]'
 
 const ChartCard = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    $(tabSelector).on("show.bs.tab", function (e) {
+      const selectedTabDomNode = e.target
+      const tabIndex = $(tabSelector).index(selectedTabDomNode)
+      dispatch(setSelectedChartTabIndex(tabIndex))
+    })
+    return function cleanup() {
+      $(tabSelector).off()
+    }
+  })
   return (
     <div className="plan card">
       <ul className="nav nav-tabs pt-3" role="tablist">
@@ -56,9 +70,8 @@ const ChartCard = () => {
             </div>
 
             {
-              // Right Col: Nudge by Technical Area
+              // Right Col
             }
-            <NudgeByTechnicalArea />
           </div>
         </div>
 
@@ -83,7 +96,6 @@ const ChartCard = () => {
             {
               // Right Col
             }
-            {<NudgeByActionType />}
           </div>
         </div>
       </div>

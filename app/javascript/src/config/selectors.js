@@ -13,6 +13,7 @@ const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
 const getSelectedActionTypeOrdinal = (state) =>
   state.ui.selectedActionTypeOrdinal
 const getIsInfluenzaShowing = (state) => state.ui.isInfluenzaShowing
+const getSelectedChartTabIndex = (state) => state.ui.selectedChartTabIndex
 
 const getPlan = (state) => state.plan
 const getPlanActionIds = (state) => state.planActionIds
@@ -263,4 +264,5 @@ export {
   isPlanInfluenza,
   filterOutInfluenzaActions,
   getIsInfluenzaShowing,
+  getSelectedChartTabIndex,
 }

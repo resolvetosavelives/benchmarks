@@ -1,7 +1,7 @@
 import { expect, it, beforeEach, afterEach } from "@jest/globals"
 import React from "react"
 import { act } from "react-dom/test-utils"
-import NudgeByTechnicalAreaFiveYear from "components/ChartCard/NudgeByTechnicalAreaFiveYear"
+import NudgeByTechnicalAreaFiveYear from "components/Nudges/NudgeByTechnicalAreaFiveYear"
 import ReactDOM from "react-dom"
 
 let container

@@ -13,6 +13,7 @@ import {
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
   IS_INFLUENZA_SHOWING,
+  SET_SELECTED_CHART_TAB_INDEX,
 } from "./constants"
 
 const deleteAnAction = (actionId, indicatorId) => {
@@ -95,6 +96,15 @@ const toggleInfluenzaShowing = () => {
   }
 }
 
+const setSelectedChartTabIndex = (tabIndex) => {
+  return (dispatchedAction) => {
+    dispatchedAction({
+      type: SET_SELECTED_CHART_TAB_INDEX,
+      payload: { tabIndex: tabIndex },
+    })
+  }
+}
+
 export {
   addActionToIndicator,
   deleteAnAction,
@@ -103,4 +113,5 @@ export {
   clearFilterCriteria,
   updatePlanName,
   toggleInfluenzaShowing,
+  setSelectedChartTabIndex,
 }

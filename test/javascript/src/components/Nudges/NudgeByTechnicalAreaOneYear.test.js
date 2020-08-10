@@ -1,8 +1,8 @@
 import { expect, it, beforeEach, afterEach } from "@jest/globals"
 import React from "react"
 import { act } from "react-dom/test-utils"
-import NudgeByTechnicalAreaOneYear from "components/ChartCard/NudgeByTechnicalAreaOneYear"
 import ReactDOM from "react-dom"
+import NudgeByTechnicalAreaOneYear from "components/Nudges/NudgeByTechnicalAreaOneYear"
 
 let container
 beforeEach(() => {

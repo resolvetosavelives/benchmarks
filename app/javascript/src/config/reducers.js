@@ -14,6 +14,8 @@ import {
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
   IS_INFLUENZA_SHOWING,
+  SET_SELECTED_CHART_TAB_INDEX,
+  CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
 } from "./constants"
 
 export default function initReducers(initialState) {
@@ -108,6 +110,7 @@ export default function initReducers(initialState) {
       selectedTechnicalAreaId: null,
       selectedActionTypeOrdinal: null,
       isInfluenzaShowing: true,
+      selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
     },
     {
       [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
@@ -143,6 +146,10 @@ export default function initReducers(initialState) {
       },
       [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
         state.isInfluenzaShowing = !state.isInfluenzaShowing
+        return state
+      },
+      [SET_SELECTED_CHART_TAB_INDEX]: (state, dispatchedAction) => {
+        state.selectedChartTabIndex = dispatchedAction.payload.tabIndex
         return state
       },
     }
