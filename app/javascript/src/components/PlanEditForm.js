@@ -1,7 +1,6 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import PropTypes from "prop-types"
-import ActionCount from "./ActionCount"
 import ChartCard from "./ChartCard/ChartCard"
 import ActionList from "./List/ActionList"
 import {
@@ -124,12 +123,6 @@ const PlanEditForm = (props) => {
                   ref={submitButtonRef}
                 />
               </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col mt-4">
-              <ActionCount />
             </div>
           </div>
 

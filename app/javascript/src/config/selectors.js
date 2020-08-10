@@ -19,6 +19,7 @@ const getPlan = (state) => state.plan
 const getPlanActionIds = (state) => state.planActionIds
 const getPlanGoals = (state) => state.planGoals
 const getPlanChartLabels = (state) => state.planChartLabels
+const getCountOfPlanActionIds = (state) => getPlanActionIds(state).length
 
 const getPlanGoalMap = createSelector([getPlanGoals], (goals) => {
   return goals.reduce((acc, goal) => {
@@ -265,4 +266,5 @@ export {
   filterOutInfluenzaActions,
   getIsInfluenzaShowing,
   getSelectedChartTabIndex,
+  getCountOfPlanActionIds,
 }

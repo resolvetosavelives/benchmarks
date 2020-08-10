@@ -18,22 +18,19 @@
   margin-bottom: 40px;
 }
 
-.action-count-header {
-  font-family: "Pathway Gothic One", sans-serif;
-  .action-count-circle {
-    width: 90px;
-    height: 90px;
-    background-color: color("primary");
-    border-radius: 45px;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
-    }
-    span {
-      color: color("light");
-      font-size: 36px;
-      line-height: 41px;
-    }
+.info-pane-component {
+  min-width: 345px;
+}
+
+.action-count-component {
+  .count {
+    font-family: "Pathway Gothic One", sans-serif;
+    font-size: 3em;
+    line-height: 1.2em;
+  }
+  .label {
+    font-family: Karla, sans-serif;
+    line-height: 1.2em;
   }
   p {
     margin: 0;
@@ -41,6 +38,12 @@
     font-size: 24px;
     line-height: 28px;
     color: rgba(45, 45, 53, 0.5);
+  }
+}
+
+.clear-filters-component {
+  a {
+    text-decoration: underline;
   }
 }
 
@@ -149,8 +152,6 @@
 }
 
 .card.plan {
-  overflow: hidden;
-
   ul.nav-tabs {
     background-color: rgba(0, 0, 0, 0.03);
   }
