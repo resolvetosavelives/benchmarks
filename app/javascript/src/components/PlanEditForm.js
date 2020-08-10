@@ -10,7 +10,6 @@ import {
   getPlanActionIds,
 } from "../config/selectors"
 import { updatePlanName } from "../config/actions"
-import InfluenzaToggle from "./InfluenzaToggle"
 import Nudges from "./Nudges/Nudges"
 
 const formRef = React.createRef()
@@ -133,8 +132,6 @@ const PlanEditForm = (props) => {
           </div>
 
           <Nudges />
-
-          <InfluenzaToggle />
 
           <div className="row mt-4">
             <ActionList />

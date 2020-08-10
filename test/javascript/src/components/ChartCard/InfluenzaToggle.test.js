@@ -2,7 +2,7 @@ import { describe } from "@jest/globals"
 import React from "react"
 import { act } from "react-dom/test-utils"
 import ReactDOM from "react-dom"
-import InfluenzaToggle from "components/InfluenzaToggle"
+import InfluenzaToggle from "components/ChartCard/InfluenzaToggle"
 import { useSelector, useDispatch } from "react-redux"
 
 let container
@@ -48,14 +48,14 @@ describe("plan with influenza", () => {
       useSelector.mockReturnValueOnce(true)
     })
 
-    it("renders a button", () => {
+    it("renders the checkbox as checked", () => {
       act(() => {
         ReactDOM.render(<InfluenzaToggle />, container)
       })
-      const button = container.querySelectorAll("button")
+      const checkbox = container.querySelectorAll("input[type=checkbox]")
 
-      expect(button.length).toEqual(1)
-      expect(button[0].innerHTML).toMatch(" with-checkmark ")
+      expect(checkbox.length).toEqual(1)
+      expect(checkbox[0].checked).toEqual(true)
     })
   })
 
@@ -64,14 +64,14 @@ describe("plan with influenza", () => {
       useSelector.mockReturnValueOnce(false)
     })
 
-    it("renders a button", () => {
+    it("renders the checkbox as unchecked", () => {
       act(() => {
         ReactDOM.render(<InfluenzaToggle />, container)
       })
-      const button = container.querySelectorAll("button")
+      const checkbox = container.querySelectorAll("input[type=checkbox]")
 
-      expect(button.length).toEqual(1)
-      expect(button[0].innerHTML).toMatch(" with-circle ")
+      expect(checkbox.length).toEqual(1)
+      expect(checkbox[0].checked).toEqual(false)
     })
   })
 })
