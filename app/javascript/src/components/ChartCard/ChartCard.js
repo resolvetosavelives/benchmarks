@@ -56,18 +56,18 @@ const ChartCard = () => {
           id="tabContentForTechnicalArea"
           aria-labelledby="tabForTechnicalArea"
           role="tabpanel"
-          className="col-auto tab-pane fade show active"
+          className="col-auto tab-pane show active"
         >
           <div className="row no-gutters">
             {
               // Left Col
             }
-            <div className="chart-pane col d-flex flex-column align-items-center">
+            <div className="chart-pane col-12 col-xl-8 d-flex flex-column align-items-center">
               <h6 className="my-3">Actions per benchmark technical area</h6>
               {
                 // Actual Chart, by Technical Area
               }
-              <BarChartByTechnicalArea width="700" height="240" />
+              <BarChartByTechnicalArea width="100%" height="240" />
             </div>
 
             {
@@ -81,18 +81,18 @@ const ChartCard = () => {
           id="tabContentForActionType"
           aria-labelledby="tabForActionType"
           role="tabpanel"
-          className="col-auto tab-pane fade"
+          className="col-auto tab-pane"
         >
           <div className="row no-gutters">
             {
               // Left Col
             }
-            <div className="chart-pane col-12 col-lg d-flex mx-auto flex-column align-items-center">
+            <div className="chart-pane col-12 col-xl-8 d-flex flex-column align-items-center">
               <h6 className="my-3">Actions per action type</h6>
               {
                 // Actual Chart, by Action Type
               }
-              <BarChartByActionType width="700" height="240" />
+              <BarChartByActionType width="100%" height="240" />
             </div>
 
             {

@@ -19,7 +19,9 @@
 }
 
 .info-pane-component {
-  min-width: 345px;
+  .row {
+    margin-bottom: 1em;
+  }
 }
 
 .action-count-component {
@@ -267,9 +269,9 @@
 
 .nudge-container {
   .nudge-left {
-    width: 260px;
     background-color: color("light-gray");
     border-right: 1px solid #eaeaeb;
+    word-break: break-word;
   }
   .nudge-tip-text {
     color: color("text-de-emphasized");

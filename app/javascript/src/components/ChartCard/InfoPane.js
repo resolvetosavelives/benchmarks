@@ -11,8 +11,8 @@ import BarChartLegend from "./BarChartLegend"
 
 const InfoPane = () => {
   return (
-    <div className="info-pane-component col-12 col-xl-auto d-flex flex-column align-self-start">
-      <div className="row d-flex flex-row justify-content-between">
+    <div className="info-pane-component col-12 col-xl-4">
+      <div className="row d-flex justify-content-between">
         <ActionCount />
         <ClearFilters />
       </div>

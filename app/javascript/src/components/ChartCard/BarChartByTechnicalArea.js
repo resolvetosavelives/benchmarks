@@ -10,6 +10,7 @@ import {
   getAllTechnicalAreas,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getPlanChartLabels,
+  getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
 } from "../../config/selectors"
 
@@ -27,6 +28,7 @@ class BarChartByTechnicalArea extends React.Component {
       this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
       chartLabels
     )
+    this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
         <ChartistGraph
@@ -40,6 +42,31 @@ class BarChartByTechnicalArea extends React.Component {
         />
       </div>
     )
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateChartSize.bind(this))
+    window.addEventListener(
+      "orientationchange",
+      this.updateChartSize.bind(this)
+    )
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateChartSize.bind(this))
+    window.removeEventListener(
+      "orientationchange",
+      this.updateChartSize.bind(this)
+    )
+  }
+
+  // NB: the purpose of this method is to assist the chart in fitting into its container by simply calling chartist.update()
+  //   this is needed in these cases:
+  //   1) when selected tab is changed and chart re-renders, it will have been rendered too small due to having been in the hidden in the DOM
+  //   2) when the size of the window is changed (primarily for desktop-style web browsers)
+  //   3) when the orientation of the screen is changed thereby changing the size of the screen (primarily mobile-style web browsers: phones, tables, etc)
+  updateChartSize() {
+    setTimeout(() => this.chartistGraphInstance.chartist.update(), 0)
   }
 
   getBarChartOptions(
@@ -209,6 +236,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     ),
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
     selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
+    selectedChartTabIndex: getSelectedChartTabIndex(state),
   }
 }
 

@@ -5,7 +5,7 @@ import { clearFilterCriteria } from "../../config/actions"
 const ClearFilters = () => {
   const dispatch = useDispatch()
   return (
-    <div className="col clear-filters-component d-flex justify-content-end">
+    <div className="col-auto clear-filters-component">
       <a
         href="#"
         title="Clear any filters applied"

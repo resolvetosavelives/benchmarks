@@ -12,7 +12,7 @@ class AppsTest < ApplicationSystemTestCase
     visit root_url
     click_on("Get Started")
 
-    sleep 0.1
+    sleep 0.2
     ##
     # navigate to Get Started page and submit its form
     assert_current_path("/get-started")
@@ -49,8 +49,8 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on the View Plan page after the plan has been saved, and then make an edit
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIONS")
-    assert_equal "235", find(".action-count-circle span").text
+    assert_equal "Actions", find(".action-count-component .label").text
+    assert_equal "235", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -71,7 +71,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_no_selector("#technical-area-1") # the first one
 
     # un-filter to show all
-    find(".action-count-circle").click
+    find(".clear-filters-component a").click
     assert_selector("#technical-area-1")
     assert_selector("#technical-area-18")
 
@@ -144,8 +144,8 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on the View Plan page after the plan has been saved, and then make an edit
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIONS")
-    assert_equal "283", find(".action-count-circle span").text
+    assert_equal "Actions", find(".action-count-component .label").text
+    assert_equal "283", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -168,7 +168,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # reset and make sure no bar are deselected
-    find(".action-count-circle").click
+    find(".clear-filters-component a").click
     count_deselected = all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected").count
     assert(count_deselected == 0)
 
@@ -186,7 +186,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # reset and make sure no bar are deselected
-    find(".action-count-circle").click
+    find(".clear-filters-component a").click
     count_deselected = all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
     assert(count_deselected == 0)
 
@@ -212,7 +212,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_no_selector("#technical-area-1") # the first one
 
     # un-filter to show all
-    find(".action-count-circle").click
+    find(".clear-filters-component a").click
     assert_selector("#technical-area-1")
     assert_selector("#technical-area-18")
 
@@ -293,9 +293,9 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on the View Plan page, make an edit, and save the plan
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Armenia draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIONS")
+    assert_equal "Actions", find(".action-count-component .label").text
     # action count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
-    assert_equal "107", find(".action-count-circle span").text
+    assert_equal "107", find(".action-count-component .count").text
     assert page.has_content?(
              "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors.",
            )
@@ -365,8 +365,8 @@ class AppsTest < ApplicationSystemTestCase
     # turn up on the View Plan, make an edit, save the plan
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
-    assert page.has_content?("TOTAL ACTIONS")
-    assert_equal "28", find(".action-count-circle span").text
+    assert_equal "Actions", find(".action-count-component .label").text
+    assert_equal "28", find(".action-count-component .count").text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
@@ -383,7 +383,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
     # un-filter to show all
-    find(".action-count-circle").click
+    find(".clear-filters-component a").click
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 

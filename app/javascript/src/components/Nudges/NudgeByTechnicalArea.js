@@ -13,11 +13,11 @@ const NudgeByTechnicalArea = () => {
   }
   return (
     <>
-      <div className="col-auto d-flex flex-column justify-content-center nudge-left">
+      <div className="col-4 col-lg-3 d-flex flex-column justify-content-center nudge-left">
         <div className="nudge-tip-text">Tips for</div>
         <h4 className="my-0">Your draft plan</h4>
       </div>
-      <div className="col">{whichNudgeComponent}</div>
+      <div className="col-8 col-lg-9">{whichNudgeComponent}</div>
     </>
   )
 }
