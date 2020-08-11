@@ -10,10 +10,6 @@ import {
   getSelectedActionTypeOrdinal,
 } from "config/selectors"
 
-jest.mock("components/ChartCard/BarChartLegend", () => () => (
-  <mock-BarChartLegend />
-))
-
 jest.mock("config/selectors", () => ({
   countActionsByActionType: jest.fn(),
   getAllActions: jest.fn(),

@@ -237,17 +237,12 @@
   }
 
   .ct-legend {
-    margin-left: -1em !important;
-    margin-bottom: 0;
-    margin-top: 3em;
-    position: relative;
     list-style: none;
 
     li {
       position: relative;
+      padding-top: 0.25em;
       padding-left: 1.8em;
-      margin-right: 3em;
-      display: inline-block;
     }
 
     li:before {
@@ -257,12 +252,6 @@
       position: absolute;
       left: 0;
       content: "";
-    }
-
-    .ct-legend-inside {
-      position: absolute;
-      top: 0;
-      right: 0;
     }
 
     .ct-series-a:before {

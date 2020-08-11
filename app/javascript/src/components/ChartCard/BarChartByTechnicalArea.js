@@ -12,7 +12,6 @@ import {
   getPlanChartLabels,
   getSelectedTechnicalAreaId,
 } from "../../config/selectors"
-import BarChartLegend from "./BarChartLegend"
 
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
@@ -39,7 +38,6 @@ class BarChartByTechnicalArea extends React.Component {
           }}
           listener={{ created: this.initInteractivityForChart.bind(this) }}
         />
-        <BarChartLegend />
       </div>
     )
   }

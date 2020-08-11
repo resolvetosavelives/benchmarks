@@ -22,6 +22,9 @@ jest.mock("components/ChartCard/ClearFilters", () => () => (
 jest.mock("components/ChartCard/InfluenzaToggle", () => () => (
   <mock-influenzatoggle />
 ))
+jest.mock("components/ChartCard/BarChartLegend", () => () => (
+  <mock-barchartlegend />
+))
 
 describe("InfoPane", () => {
   it("renders with the expected child components", () => {
@@ -33,9 +36,11 @@ describe("InfoPane", () => {
     const mockInfluenzaToggle = container.querySelectorAll(
       "mock-influenzatoggle"
     )
+    const mockBarChartLegend = container.querySelectorAll("mock-barchartlegend")
 
     expect(mockActionCount.length).toEqual(1)
     expect(mockClearFilter.length).toEqual(1)
     expect(mockInfluenzaToggle.length).toEqual(1)
+    expect(mockBarChartLegend.length).toEqual(1)
   })
 })
