@@ -6,6 +6,8 @@ module ApplicationHelper
   #   to Google Lighthouse tools) BUT there is a flash of unstyled
   #   content on those pages. We decided to go with slightly slower (~1s)
   #   to be more "correct".
+  #
+  # NB: please refer to the section in README.md ## A note on js packs and stylesheets
   def which_js
     if is_homepage?
       javascript_pack_tag 'basic', "data-turbolinks-track": "reload"

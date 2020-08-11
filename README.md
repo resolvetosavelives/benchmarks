@@ -129,3 +129,26 @@ for the SPAR scores, there must a single spreadsheet with these columns:
 
 - update docs/object_diagram.png with the current object relationships
 - update this README with the latest, and remove cruft
+
+## A note on js packs and stylesheets
+
+You may notice a couple things that seem wasteful across the following files which reference this note:
+
+- `packs/base.js`
+- `packs/application.js`
+- `layouts/application.html.erb`
+- `helpers/application_helper.rb`
+
+First, there is both an `import "stylesheets/application.scss"` in `packs.base.js`
+and a `<%= stylesheet_pack_tag 'application', media: 'all' %>` in `layouts/application.html.erb`.
+
+If you remove `<%= stylesheet_pack_tag 'application', media: 'all' %>` you will get no styling.
+
+If you remove `import "stylesheets/application.scss"` you will get no tootips due to a JS error `tooltip is not a function`.
+
+Second, you might think you could load `packs/base.js` on every page and remove the `import "./base"` at
+the top of `packs/application.js`, so that you are not effectively loading `base.js` twice.
+
+If you remove this import you will again get the JS error `tooltip is not a function`.
+
+This is as optimized as we have been able to get the packs download sizes at this time and still maintain functionality on all pages.
