@@ -8,7 +8,7 @@ const ActionCount = () => {
   )
 
   return (
-    <div className="row action-count-component d-flex flex-column">
+    <div className="col row action-count-component d-flex flex-column">
       <div className="col-auto count">{countOfPlanActionIds}</div>
       <div className="col-auto label">Actions</div>
     </div>

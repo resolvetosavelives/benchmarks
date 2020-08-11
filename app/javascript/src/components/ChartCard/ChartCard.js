@@ -51,7 +51,7 @@ const ChartCard = () => {
         </li>
       </ul>
 
-      <div className="row tab-content">
+      <div className="row tab-content my-3">
         <div
           id="tabContentForTechnicalArea"
           aria-labelledby="tabForTechnicalArea"
