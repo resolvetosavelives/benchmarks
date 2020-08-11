@@ -40,8 +40,12 @@ describe("when a plan has no diseases selected", () => {
     })
   })
 
-  it("displays no legend", () => {
-    expect(container.innerHTML).not.toMatch("ct-legend")
+  it("displays legend with just Health specific", () => {
+    const ctSeriesAEl = document.querySelectorAll(".ct-series-a")
+    const ctSeriesBEl = document.querySelectorAll(".ct-series-b")
+
+    expect(ctSeriesAEl.length).toEqual(1)
+    expect(ctSeriesBEl.length).toEqual(0)
   })
 })
 
@@ -63,7 +67,10 @@ describe("when a plan has diseases", () => {
   })
 
   it("displays a legend with the correct label", () => {
-    expect(container.innerHTML).toContain("ct-legend")
-    expect(container.innerHTML).toContain("Influenza specific")
+    const ctSeriesAEl = document.querySelectorAll(".ct-series-a")
+    const ctSeriesBEl = document.querySelectorAll(".ct-series-b")
+
+    expect(ctSeriesAEl.length).toEqual(1)
+    expect(ctSeriesBEl.length).toEqual(1)
   })
 })

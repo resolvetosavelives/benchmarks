@@ -10,10 +10,6 @@ import {
   getSelectedTechnicalAreaId,
 } from "config/selectors"
 
-jest.mock("components/ChartCard/BarChartLegend", () => () => (
-  <mock-BarChartLegend />
-))
-
 jest.mock("config/selectors", () => ({
   countActionsByTechnicalArea: jest.fn(),
   getAllActions: jest.fn(),

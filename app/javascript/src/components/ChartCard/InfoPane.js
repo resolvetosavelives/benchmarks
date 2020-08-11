@@ -2,6 +2,7 @@ import React from "react"
 import ActionCount from "./ActionCount"
 import ClearFilters from "./ClearFilters"
 import InfluenzaToggle from "./InfluenzaToggle"
+import BarChartLegend from "./BarChartLegend"
 
 // this is the best we have found so far:
 //   col-12 col-xl-auto
@@ -16,6 +17,7 @@ const InfoPane = () => {
         <ClearFilters />
       </div>
       <InfluenzaToggle />
+      <BarChartLegend />
     </div>
   )
 }

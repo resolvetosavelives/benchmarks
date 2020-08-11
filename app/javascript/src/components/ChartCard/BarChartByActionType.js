@@ -12,7 +12,6 @@ import {
   getPlanChartLabels,
   getSelectedActionTypeOrdinal,
 } from "../../config/selectors"
-import BarChartLegend from "./BarChartLegend"
 
 class BarChartByActionType extends React.Component {
   constructor(props) {
@@ -38,7 +37,6 @@ class BarChartByActionType extends React.Component {
           }}
           listener={{ created: this.initInteractivityForChart.bind(this) }}
         />
-        <BarChartLegend />
       </div>
     )
   }
