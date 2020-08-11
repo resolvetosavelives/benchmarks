@@ -8,6 +8,7 @@ import {
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getPlanChartLabels,
   getSelectedTechnicalAreaId,
+  getSelectedChartTabIndex,
 } from "config/selectors"
 
 jest.mock("config/selectors", () => ({
@@ -17,6 +18,7 @@ jest.mock("config/selectors", () => ({
   getMatrixOfActionCountsByTechnicalAreaAndDisease: jest.fn(),
   getPlanChartLabels: jest.fn(),
   getSelectedTechnicalAreaId: jest.fn(),
+  getSelectedChartTabIndex: jest.fn(),
 }))
 
 it("BarChartByTechnicalArea has the expected 2 divs", () => {
@@ -29,8 +31,9 @@ it("BarChartByTechnicalArea has the expected 2 divs", () => {
   ])
   getPlanChartLabels.mockReturnValueOnce([["label1", "label2", "label3"], []])
   getSelectedTechnicalAreaId.mockReturnValueOnce(null)
+  getSelectedChartTabIndex.mockReturnValueOnce(0)
   const renderedComponent = renderForConnect(
-    <BarChartByTechnicalArea width="700" height="240" />
+    <BarChartByTechnicalArea width="100%" height="240" />
   )
   const container = renderedComponent.container
   const elComponentContainer = container.querySelectorAll(

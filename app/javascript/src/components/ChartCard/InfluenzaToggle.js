@@ -17,7 +17,7 @@ const InfluenzaToggle = () => {
   }
 
   return (
-    <div className="row d-flex flex-column mb-4">
+    <div className="row d-flex flex-column">
       <div className="col">
         <strong>Show diseases</strong>
       </div>
