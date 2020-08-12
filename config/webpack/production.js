@@ -8,7 +8,6 @@ environment.plugins.append(
   new SentryWebpackPlugin({
     include: ".",
     ignore: ["node_modules", "postcss.config.js"],
-    configFile: "sentry.properties",
   })
 )
 
