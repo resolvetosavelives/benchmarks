@@ -37,7 +37,8 @@ The configuration variables this app depends on, NOT inclusive of RAILS_ENV/RACK
 - `SENDGRID_API_KEY`
 - `SENDGRID_PASSWORD`
 - `SENDGRID_USERNAME`
-- `SENTRY_DSN`
+- `SENTRY_DSN` (used for server-side ruby and browser-side javascript to report errors)
+- `SENTRY_AUTH_TOKEN` (used for uploading sourceMaps to Sentry at Heroku build/release time)
 - `SKYLIGHT_AUTHENTICATION`
 - `SECRET_KEY_BASE`
 
