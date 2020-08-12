@@ -13,6 +13,7 @@ import {
   getSelectedActionTypeOrdinal,
   getSelectedChartTabIndex,
 } from "../../config/selectors"
+import { offsetTheChartSegmentLabelsForIE } from "./ChartFixesForIE"
 
 class BarChartByActionType extends React.Component {
   constructor(props) {
@@ -65,10 +66,14 @@ class BarChartByActionType extends React.Component {
   //   2) when the size of the window is changed (primarily for desktop-style web browsers)
   //   3) when the orientation of the screen is changed thereby changing the size of the screen (primarily mobile-style web browsers: phones, tables, etc)
   updateChartSize() {
-    setTimeout(() => this.chartistGraphInstance.chartist.update(), 0)
+    setTimeout(() => {
+      this.chartistGraphInstance.chartist.update()
+      offsetTheChartSegmentLabelsForIE(
+        this.chartistGraphInstance.chartist.container
+      )
+    }, 0)
   }
 
-  // TODO: refactor this and methods like it that perform non-React DOM operations/augmentation/manipulation to a module
   getBarChartOptions(
     countActionsByActionType,
     matrixOfActionCountsByActionTypeAndDisease,
@@ -122,6 +127,7 @@ class BarChartByActionType extends React.Component {
     seriesB.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
+    offsetTheChartSegmentLabelsForIE(domNode)
 
     for (let i = 0; i < countActionsByActionType.length; i++) {
       const objOfActionCounts = {

@@ -5,6 +5,7 @@ import {
   getSelectedActionTypeOrdinal,
   countActionsByActionType,
 } from "../../config/selectors"
+import { sizeTheSvgForIE } from "../ChartCard/ChartFixesForIE"
 
 const NudgeByActionType = () => {
   const nudgesByActionType = useSelector((state) =>
@@ -41,6 +42,7 @@ const NudgeByActionType = () => {
 }
 
 const getNudgeContentZero = function () {
+  setTimeout(sizeTheSvgForIE, 10)
   return (
     <>
       <div className="col-4 col-lg-3 d-flex flex-column justify-content-center align-items-center nudge-left nudge-content-0">
