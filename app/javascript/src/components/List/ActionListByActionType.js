@@ -44,7 +44,7 @@ const ActionListByActionType = () => {
 
   return (
     <div id="action-list-by-type-container" className="col-auto w-100">
-      <h2>{nameOfSelectedActionType} Actions</h2>
+      <h3>{nameOfSelectedActionType} Actions</h3>
       <div className="col">{actionComponents}</div>
     </div>
   )
