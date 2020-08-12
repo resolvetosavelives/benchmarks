@@ -1,3 +1,4 @@
+// NB: please refer to the section in README.md ## A note on js packs and stylesheets
 import "./base"
 
 // stimulus polyfill must be loaded first, also needed for IE 10 to work properly
