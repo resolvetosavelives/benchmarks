@@ -31,7 +31,9 @@ const NudgeByActionType = () => {
     <>
       <div className="col-4 col-lg-3 d-flex flex-column justify-content-center nudge-left">
         <div className="nudge-tip-text">Tips for</div>
-        <h4 className="my-0">{nudgeData["action_type_name"]} actions</h4>
+        <h4 className="nudge-action-type-name my-0">
+          {nudgeData["action_type_name"]} actions
+        </h4>
       </div>
       <div className="col-8 col-lg-9">
         <ul>{listItems}</ul>
@@ -42,8 +44,8 @@ const NudgeByActionType = () => {
 
 const getNudgeContentZero = function () {
   return (
-    <>
-      <div className="col-4 col-lg-3 d-flex flex-column justify-content-center align-items-center nudge-left nudge-content-0">
+    <div className="nudge-content-0 col d-flex flex-row p-0">
+      <div className="col-4 col-lg-3 d-flex flex-column justify-content-center align-items-center nudge-left">
         <div className="d-flex flex-column nudge-svg-box">
           <svg className="bar-chart" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.8333 13.3333C21.1083 13.3333 21.3333 13.5583 21.3333 13.8333V15.5C21.3333 15.775 21.1083 16 20.8333 16H0.5C0.225 16 0 15.775 0 15.5V0.5C0 0.225 0.225 0 0.5 0H2.16667C2.44167 0 2.66667 0.225 2.66667 0.5V13.3333H20.8333ZM8 11.5V8.5C8 8.225 7.775 8 7.5 8H5.83333C5.55833 8 5.33333 8.225 5.33333 8.5V11.5C5.33333 11.775 5.55833 12 5.83333 12H7.5C7.775 12 8 11.775 8 11.5ZM16 11.5V5.83333C16 5.55833 15.775 5.33333 15.5 5.33333H13.8333C13.5583 5.33333 13.3333 5.55833 13.3333 5.83333V11.5C13.3333 11.775 13.5583 12 13.8333 12H15.5C15.775 12 16 11.775 16 11.5ZM12 11.5V3.16667C12 2.89167 11.775 2.66667 11.5 2.66667H9.83333C9.55833 2.66667 9.33333 2.89167 9.33333 3.16667V11.5C9.33333 11.775 9.55833 12 9.83333 12H11.5C11.775 12 12 11.775 12 11.5ZM20 11.5V1.83333C20 1.55833 19.775 1.33333 19.5 1.33333H17.8333C17.5583 1.33333 17.3333 1.55833 17.3333 1.83333V11.5C17.3333 11.775 17.5583 12 17.8333 12H19.5C19.775 12 20 11.775 20 11.5Z"></path>
@@ -58,7 +60,7 @@ const getNudgeContentZero = function () {
           Click on a bar to filter and to get tips for improving your plan.
         </h4>
       </div>
-    </>
+    </div>
   )
 }
 
