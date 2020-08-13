@@ -11,7 +11,7 @@ const Nudges = () => {
   )
   return (
     <div className="row">
-      <div className="col-12 mt-4 mb-5">
+      <div className="col-12 mt-4">
         <div className="card nudge-container d-flex flex-row">
           {whichNudgeToShow(selectedChartTabIndex)}
         </div>

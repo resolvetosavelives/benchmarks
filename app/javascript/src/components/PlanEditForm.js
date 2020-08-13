@@ -133,7 +133,7 @@ const PlanEditForm = (props) => {
 
           <Nudges />
 
-          <div className="row mt-4">
+          <div className="row action-list-component">
             <ActionList />
           </div>
         </form>
