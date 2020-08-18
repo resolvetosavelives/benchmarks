@@ -13,6 +13,7 @@ import {
   getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
 } from "../../config/selectors"
+import { offsetTheChartSegmentLabelsForIE } from "./ChartFixesForIE"
 
 class BarChartByTechnicalArea extends React.Component {
   constructor(props) {
@@ -66,7 +67,12 @@ class BarChartByTechnicalArea extends React.Component {
   //   2) when the size of the window is changed (primarily for desktop-style web browsers)
   //   3) when the orientation of the screen is changed thereby changing the size of the screen (primarily mobile-style web browsers: phones, tables, etc)
   updateChartSize() {
-    setTimeout(() => this.chartistGraphInstance.chartist.update(), 0)
+    setTimeout(() => {
+      this.chartistGraphInstance.chartist.update()
+      offsetTheChartSegmentLabelsForIE(
+        this.chartistGraphInstance.chartist.container
+      )
+    }, 0)
   }
 
   getBarChartOptions(
@@ -121,6 +127,7 @@ class BarChartByTechnicalArea extends React.Component {
     seriesB.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
+    offsetTheChartSegmentLabelsForIE(domNode)
 
     for (let i = 0; i < technicalAreas.length; i++) {
       const objOfActionCounts = {
