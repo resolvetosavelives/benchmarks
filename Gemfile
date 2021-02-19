@@ -10,7 +10,7 @@ gem "bcrypt"
 gem "bootsnap", require: false
 gem "rake"
 gem "rubyXL"
-gem "webpacker", "~> 5.1.1"
+gem "webpacker", "~> 5.2"
 gem "devise"
 gem "sentry-ruby"
 gem "sentry-rails"
