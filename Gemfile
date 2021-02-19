@@ -15,6 +15,7 @@ gem "rake"
 gem "rubyXL"
 gem "webpacker", "~> 5.1.1"
 gem "devise"
+gem "sentry-raven"
 gem "rack-attack"
 gem "hamlit-rails"
 # skylight.io is a performance analysis tool, our free trial expires on 2020-02-29.
