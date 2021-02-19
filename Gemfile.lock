@@ -82,8 +82,6 @@ GEM
     factory_bot_rails (5.1.1)
       factory_bot (~> 5.1.0)
       railties (>= 4.2.0)
-    faraday (0.15.4)
-      multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -135,7 +133,6 @@ GEM
       ruby-progressbar
     mocha (1.11.2)
     msgpack (1.3.3)
-    multipart-post (2.1.1)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -201,8 +198,6 @@ GEM
       sexp_processor (~> 4.9)
     rubyzip (2.0.0)
     semantic_range (2.3.0)
-    sentry-raven (2.11.0)
-      faraday (>= 0.7.6, < 1.0)
     sexp_processor (4.13.0)
     skylight (4.2.1)
       skylight-core (= 4.2.1)
@@ -270,7 +265,6 @@ DEPENDENCIES
   rails-erd
   rake
   rubyXL
-  sentry-raven
   skylight
   spring
   spring-watcher-listen
