@@ -11,29 +11,130 @@ def assessment_nigeria_spar2018
 end
 
 describe Plan do
+  let(:indicator_attrs_for_nigeria_jee1_1yr) do
+    {
+        jee1_ind_p11: "1",
+        jee1_ind_p11_goal: "2",
+        jee1_ind_p12: "1",
+        jee1_ind_p12_goal: "2",
+        jee1_ind_p21: "2",
+        jee1_ind_p21_goal: "3",
+        jee1_ind_p31: "2",
+        jee1_ind_p31_goal: "3",
+        jee1_ind_p32: "2",
+        jee1_ind_p32_goal: "3",
+        jee1_ind_p33: "2",
+        jee1_ind_p33_goal: "3",
+        jee1_ind_p34: "2",
+        jee1_ind_p34_goal: "3",
+        jee1_ind_p41: "2",
+        jee1_ind_p41_goal: "3",
+        jee1_ind_p42: "3",
+        jee1_ind_p42_goal: "4",
+        jee1_ind_p43: "1",
+        jee1_ind_p43_goal: "2",
+        jee1_ind_p51: "2",
+        jee1_ind_p51_goal: "3",
+        jee1_ind_p61: "1",
+        jee1_ind_p61_goal: "2",
+        jee1_ind_p62: "1",
+        jee1_ind_p62_goal: "2",
+        jee1_ind_p71: "3",
+        jee1_ind_p71_goal: "4",
+        jee1_ind_p72: "4",
+        jee1_ind_p72_goal: "5",
+        jee1_ind_d11: "3",
+        jee1_ind_d11_goal: "4",
+        jee1_ind_d12: "1",
+        jee1_ind_d12_goal: "2",
+        jee1_ind_d13: "2",
+        jee1_ind_d13_goal: "3",
+        jee1_ind_d14: "2",
+        jee1_ind_d14_goal: "3",
+        jee1_ind_d21: "3",
+        jee1_ind_d21_goal: "4",
+        jee1_ind_d22: "2",
+        jee1_ind_d22_goal: "3",
+        jee1_ind_d23: "3",
+        jee1_ind_d23_goal: "4",
+        jee1_ind_d24: "3",
+        jee1_ind_d24_goal: "4",
+        jee1_ind_d31: "3",
+        jee1_ind_d31_goal: "4",
+        jee1_ind_d32: "2",
+        jee1_ind_d32_goal: "3",
+        jee1_ind_d41: "3",
+        jee1_ind_d41_goal: "4",
+        jee1_ind_d42: "4",
+        jee1_ind_d42_goal: "5",
+        jee1_ind_d43: "2",
+        jee1_ind_d43_goal: "3",
+        jee1_ind_r11: "1",
+        jee1_ind_r11_goal: "2",
+        jee1_ind_r12: "1",
+        jee1_ind_r12_goal: "2",
+        jee1_ind_r21: "2",
+        jee1_ind_r21_goal: "3",
+        jee1_ind_r22: "2",
+        jee1_ind_r22_goal: "3",
+        jee1_ind_r23: "3",
+        jee1_ind_r23_goal: "4",
+        jee1_ind_r24: "2",
+        jee1_ind_r24_goal: "3",
+        jee1_ind_r31: "1",
+        jee1_ind_r31_goal: "2",
+        jee1_ind_r41: "1",
+        jee1_ind_r41_goal: "2",
+        jee1_ind_r42: "1",
+        jee1_ind_r42_goal: "2",
+        jee1_ind_r51: "1",
+        jee1_ind_r51_goal: "2",
+        jee1_ind_r52: "3",
+        jee1_ind_r52_goal: "4",
+        jee1_ind_r53: "2",
+        jee1_ind_r53_goal: "3",
+        jee1_ind_r54: "3",
+        jee1_ind_r54_goal: "4",
+        jee1_ind_r55: "3",
+        jee1_ind_r55_goal: "4",
+        jee1_ind_poe1: "1",
+        jee1_ind_poe1_goal: "2",
+        jee1_ind_poe2: "1",
+        jee1_ind_poe2_goal: "2",
+        jee1_ind_ce1: "1",
+        jee1_ind_ce1_goal: "2",
+        jee1_ind_ce2: "2",
+        jee1_ind_ce2_goal: "3",
+        jee1_ind_re1: "3",
+        jee1_ind_re1_goal: "4",
+        jee1_ind_re2: "3",
+        jee1_ind_re2_goal: "4",
+    }.with_indifferent_access
+  end
+
   describe "#validation" do
     it "requires an assessment" do
       plan = Plan.new
-      plan.valid?.must_equal false, plan.errors.inspect
-      plan.errors[:assessment].present?.must_equal true
+      _(plan.valid?).must_equal false, plan.errors.inspect
+      _(plan.errors[:assessment].present?).must_equal true
     end
 
     it "requires a name" do
       plan = Plan.new
-      plan.valid?.must_equal false, plan.errors.inspect
-      plan.errors[:name].present?.must_equal true
+      _(plan.valid?).must_equal false, plan.errors.inspect
+      _(plan.errors[:name].present?).must_equal true
     end
 
     it "requires a term" do
       plan = Plan.new
-      plan.valid?.must_equal false, plan.errors.inspect
-      plan.errors[:term].present?.must_equal true
+      _(plan.valid?).must_equal false, plan.errors.inspect
+      _(plan.errors[:term].present?).must_equal true
     end
 
     it "works when valid" do
       assessment = assessment_for_nigeria_jee1
       plan = Plan.new name: "blah plan", assessment: assessment, term: 100
-      plan.valid?.must_equal true, plan.errors.inspect
+      _(plan.valid?).must_equal true, plan.errors.inspect
     end
   end
 
@@ -41,13 +142,13 @@ describe Plan do
     let(:subject) { Plan.new }
 
     it "is false by default" do
-      subject.is_5_year?.must_equal false
+      _(subject.is_5_year?).must_equal false
     end
 
     it "is true when set to 5 year" do
       subject.term = Plan::TERM_TYPES.second
 
-      subject.is_5_year?.must_equal true
+      _(subject.is_5_year?).must_equal true
     end
   end
 
@@ -60,147 +161,47 @@ describe Plan do
       end
 
       it "has the expected assessment" do
-        subject.assessment.must_equal assessment_for_nigeria_jee1
+        _(subject.assessment).must_equal assessment_for_nigeria_jee1
       end
 
       it "has the expected name" do
-        subject.name.must_equal "Nigeria draft plan"
+        _(subject.name).must_equal "Nigeria draft plan"
       end
 
       it "has the expected term" do
-        subject.term.must_equal 500
+        _(subject.term).must_equal 500
       end
     end
   end
 
   describe ".create_from_goal_form" do
     describe "for Nigeria JEE1" do
-      let(:indicator_attrs) do
-        {
-          jee1_ind_p11: "1",
-          jee1_ind_p11_goal: "2",
-          jee1_ind_p12: "1",
-          jee1_ind_p12_goal: "2",
-          jee1_ind_p21: "2",
-          jee1_ind_p21_goal: "3",
-          jee1_ind_p31: "2",
-          jee1_ind_p31_goal: "3",
-          jee1_ind_p32: "2",
-          jee1_ind_p32_goal: "3",
-          jee1_ind_p33: "2",
-          jee1_ind_p33_goal: "3",
-          jee1_ind_p34: "2",
-          jee1_ind_p34_goal: "3",
-          jee1_ind_p41: "2",
-          jee1_ind_p41_goal: "3",
-          jee1_ind_p42: "3",
-          jee1_ind_p42_goal: "4",
-          jee1_ind_p43: "1",
-          jee1_ind_p43_goal: "2",
-          jee1_ind_p51: "2",
-          jee1_ind_p51_goal: "3",
-          jee1_ind_p61: "1",
-          jee1_ind_p61_goal: "2",
-          jee1_ind_p62: "1",
-          jee1_ind_p62_goal: "2",
-          jee1_ind_p71: "3",
-          jee1_ind_p71_goal: "4",
-          jee1_ind_p72: "4",
-          jee1_ind_p72_goal: "5",
-          jee1_ind_d11: "3",
-          jee1_ind_d11_goal: "4",
-          jee1_ind_d12: "1",
-          jee1_ind_d12_goal: "2",
-          jee1_ind_d13: "2",
-          jee1_ind_d13_goal: "3",
-          jee1_ind_d14: "2",
-          jee1_ind_d14_goal: "3",
-          jee1_ind_d21: "3",
-          jee1_ind_d21_goal: "4",
-          jee1_ind_d22: "2",
-          jee1_ind_d22_goal: "3",
-          jee1_ind_d23: "3",
-          jee1_ind_d23_goal: "4",
-          jee1_ind_d24: "3",
-          jee1_ind_d24_goal: "4",
-          jee1_ind_d31: "3",
-          jee1_ind_d31_goal: "4",
-          jee1_ind_d32: "2",
-          jee1_ind_d32_goal: "3",
-          jee1_ind_d41: "3",
-          jee1_ind_d41_goal: "4",
-          jee1_ind_d42: "4",
-          jee1_ind_d42_goal: "5",
-          jee1_ind_d43: "2",
-          jee1_ind_d43_goal: "3",
-          jee1_ind_r11: "1",
-          jee1_ind_r11_goal: "2",
-          jee1_ind_r12: "1",
-          jee1_ind_r12_goal: "2",
-          jee1_ind_r21: "2",
-          jee1_ind_r21_goal: "3",
-          jee1_ind_r22: "2",
-          jee1_ind_r22_goal: "3",
-          jee1_ind_r23: "3",
-          jee1_ind_r23_goal: "4",
-          jee1_ind_r24: "2",
-          jee1_ind_r24_goal: "3",
-          jee1_ind_r31: "1",
-          jee1_ind_r31_goal: "2",
-          jee1_ind_r41: "1",
-          jee1_ind_r41_goal: "2",
-          jee1_ind_r42: "1",
-          jee1_ind_r42_goal: "2",
-          jee1_ind_r51: "1",
-          jee1_ind_r51_goal: "2",
-          jee1_ind_r52: "3",
-          jee1_ind_r52_goal: "4",
-          jee1_ind_r53: "2",
-          jee1_ind_r53_goal: "3",
-          jee1_ind_r54: "3",
-          jee1_ind_r54_goal: "4",
-          jee1_ind_r55: "3",
-          jee1_ind_r55_goal: "4",
-          jee1_ind_poe1: "1",
-          jee1_ind_poe1_goal: "2",
-          jee1_ind_poe2: "1",
-          jee1_ind_poe2_goal: "2",
-          jee1_ind_ce1: "1",
-          jee1_ind_ce1_goal: "2",
-          jee1_ind_ce2: "2",
-          jee1_ind_ce2_goal: "3",
-          jee1_ind_re1: "3",
-          jee1_ind_re1_goal: "4",
-          jee1_ind_re2: "3",
-          jee1_ind_re2_goal: "4",
-        }.with_indifferent_access
-      end
       let(:plan) do
         Plan.create_from_goal_form(
-          indicator_attrs: indicator_attrs,
+          indicator_attrs: indicator_attrs_for_nigeria_jee1_1yr,
           assessment: assessment_for_nigeria_jee1,
           plan_name: "test plan 3854",
         )
       end
 
       it "returns a saved plan instance" do
-        assert plan.persisted?, "Plan was not saved"
+        _(plan.persisted?).must_equal(true, "Plan was not saved")
       end
 
       it "has the expected term" do
-        plan.term.must_equal Plan::TERM_TYPES.first
+        _(plan.term).must_equal(Plan::TERM_TYPES.first)
       end
 
       it "has the expected name" do
-        assert_equal "test plan 3854", plan.name
+        _(plan.name).must_equal("test plan 3854")
       end
 
       it "has the expected number of indicators" do
-        assert_equal 39, plan.goals.size
+        _(plan.goals.size).must_equal(39)
       end
 
       it "has the expected number of actions" do
-        assert_equal 235, plan.plan_actions.size
+        _(plan.plan_actions.size).must_equal(235)
       end
     end
 
@@ -309,7 +310,7 @@ describe Plan do
       end
 
       it "has the expected term" do
-        plan.term.must_equal Plan::TERM_TYPES.second
+        _(plan.term).must_equal Plan::TERM_TYPES.second
       end
 
       it "has the expected name" do
@@ -324,6 +325,67 @@ describe Plan do
         assert_equal 33, plan.plan_actions.size
       end
     end
+
+    describe "for Nigeria JEE1 with influenza" do
+      let(:plan) do
+        Plan.create_from_goal_form(
+            indicator_attrs: indicator_attrs_for_nigeria_jee1_1yr,
+            assessment: assessment_for_nigeria_jee1,
+            plan_name: "test plan 3854",
+            disease_ids: [Disease.influenza.id]
+            )
+      end
+
+      it "returns a saved plan instance" do
+        assert plan.persisted?, "Plan was not saved"
+      end
+
+      it "has the expected term" do
+        _(plan.term).must_equal Plan::TERM_TYPES.first
+      end
+
+      it "has the expected name" do
+        assert_equal "test plan 3854", plan.name
+      end
+
+      it "has the expected number of indicators" do
+        assert_equal 39, plan.goals.size
+      end
+
+      it "has the expected number of actions" do
+        assert_equal (283), plan.plan_actions.size
+      end
+
+      it "influenza actions have been assigned to the appropriate indicator" do
+        indicator = BenchmarkIndicator.first
+        actions_for_indicator_count = BenchmarkIndicatorAction.where(benchmark_indicator_id: indicator.id, disease_id: Disease.influenza).count
+        assert_equal 2, actions_for_indicator_count
+      end
+
+      it "has associated diseases influenza" do
+        assert_equal plan.diseases, [Disease.influenza]
+      end
+    end
+
+    describe "for Nigeria JEE1 with an invalid disease" do
+      let(:indicator_attrs) do
+        {
+            jee1_ind_p11: "1",
+            jee1_ind_p11_goal: "2",
+        }.with_indifferent_access
+      end
+
+      it "raises an exception" do
+        assert_raise Exceptions::InvalidDiseasesError do
+          Plan.create_from_goal_form(
+              indicator_attrs: indicator_attrs,
+              assessment: assessment_for_nigeria_jee1,
+              plan_name: "test plan 3854",
+              disease_ids: [0] # disease id 0 does not exist
+          )
+        end
+      end
+    end
   end
 
   describe "#count_actions_by_type" do
@@ -331,7 +393,7 @@ describe Plan do
 
     it "returns an array of the expected integers" do
       expected = [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]
-      plan.count_actions_by_type.must_equal expected
+      _(plan.count_actions_by_type).must_equal expected
     end
   end
 
@@ -361,9 +423,12 @@ describe Plan do
           14,
           4,
         ]
-        plan.count_actions_by_ta(
+
+        result = plan.count_actions_by_ta(
           benchmark_technical_areas,
-        ).must_equal expected
+        )
+
+        assert_equal expected, result
       end
     end
 
@@ -394,9 +459,12 @@ describe Plan do
 
       it "returns an array of the expected integers" do
         expected = [0, 5, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        plan.count_actions_by_ta(
+
+        result = plan.count_actions_by_ta(
           benchmark_technical_areas,
-        ).must_equal expected
+        )
+
+        assert_equal expected, result
       end
     end
   end
@@ -409,12 +477,13 @@ describe Plan do
         plan.goals.detect do |pg|
           pg.benchmark_indicator.display_abbreviation.eql?("2.1")
         end
-      expected_pg.wont_be_nil
+      _(expected_pg).wont_be_nil
 
       result = plan.actions_for(expected_pg.benchmark_indicator)
-      result.must_be_instance_of Array
-      result.size.must_equal 9
-      result.first.must_be_instance_of PlanAction
+
+      _(result).must_be_instance_of Array
+      _(result.size).must_equal 9
+      _(result.first).must_be_instance_of PlanAction
     end
   end
 
@@ -422,8 +491,8 @@ describe Plan do
     let(:subject) { create(:plan_nigeria_jee1) }
 
     it "works as expected" do
-      subject.persisted?.must_equal true
-      subject.plan_actions.size.must_equal 235
+      _(subject.persisted?).must_equal true
+      _(subject.plan_actions.size).must_equal 235
       # this is keeping the pre-exisitng actions and adding one action of id=15
       result =
         subject.update! name: "changed plan 789",
@@ -666,9 +735,10 @@ describe Plan do
                           15,
                         ]
 
-      result.must_equal true
+      _(result).must_equal true
+
       updated_plan = Plan.find(subject.id)
-      updated_plan.plan_actions.size.must_equal 236
+      _(updated_plan.plan_actions.size).must_equal 236
     end
   end
 end

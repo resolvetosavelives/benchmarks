@@ -13,6 +13,9 @@ import {
   SWITCH_LIST_MODE,
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
+  IS_INFLUENZA_SHOWING,
+  SET_SELECTED_CHART_TAB_INDEX,
+  CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
 } from "./constants"
 
 export default function initReducers(initialState) {
@@ -20,11 +23,7 @@ export default function initReducers(initialState) {
 
   const indicators = createReducer(initialState.indicators, {})
 
-  const actionMap = initialState.actions.reduce((map, action) => {
-    map[action.id] = action
-    return map
-  }, {})
-  const actions = createReducer(actionMap, {})
+  const actions = createReducer(initialState.actions, {})
 
   const planActionIds = createReducer(initialState.planActionIds, {
     [ADD_ACTION_TO_PLAN]: (state, action) => {
@@ -95,8 +94,6 @@ export default function initReducers(initialState) {
 
   const planChartLabels = createReducer(initialState.planChartLabels, {})
 
-  const allActions = createReducer(initialState.actions, {})
-
   const planGoals = createReducer(initialState.planGoals, {})
 
   const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
@@ -112,6 +109,8 @@ export default function initReducers(initialState) {
       selectedListMode: null,
       selectedTechnicalAreaId: null,
       selectedActionTypeOrdinal: null,
+      isInfluenzaShowing: true,
+      selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
     },
     {
       [SWITCH_LIST_MODE]: (state, dispatchedAction) => {
@@ -142,10 +141,21 @@ export default function initReducers(initialState) {
           selectedListMode: null,
           selectedTechnicalAreaId: null,
           selectedActionTypeOrdinal: null,
+          isInfluenzaShowing: true,
         }
+      },
+      [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
+        state.isInfluenzaShowing = !state.isInfluenzaShowing
+        return state
+      },
+      [SET_SELECTED_CHART_TAB_INDEX]: (state, dispatchedAction) => {
+        state.selectedChartTabIndex = dispatchedAction.payload.tabIndex
+        return state
       },
     }
   )
+
+  const diseases = createReducer(initialState.diseases, {})
 
   return combineReducers({
     technicalAreas,
@@ -156,9 +166,9 @@ export default function initReducers(initialState) {
     planActionIdsByIndicator,
     planActionIdsNotInIndicator,
     planChartLabels,
-    allActions,
     ui,
     nudgesByActionType,
     plan,
+    diseases,
   })
 }

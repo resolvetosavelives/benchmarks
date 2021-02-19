@@ -57,6 +57,34 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           response_body.end_with?(redirect_url).must_equal true
         end
       end
+
+      describe "with an ajax request with valid params diseases" do
+        it "responds with success containing the redirect key" do
+          post get_started_url,
+               xhr: true,
+               params: {
+                   get_started_form: {
+                       country_id: "162", assessment_type: "jee1", plan_term: "1", diseases: [Disease.influenza.id]
+                   },
+               }
+          assert_response :success
+          assert_template nil
+          response_body = response.body
+          response_body.starts_with?(
+              PlansController::GET_STARTED_REDIRECT_KEY,
+              ).must_equal true
+          redirect_url =
+              plan_goals_url(
+                  {
+                      country_name: "Nigeria",
+                      assessment_type: "jee1",
+                      plan_term: "1-year",
+                      diseases: Disease.influenza.id.to_s,
+                  },
+                  )
+          response_body.end_with?(redirect_url).must_equal true
+        end
+      end
     end
 
     describe "#goals" do
@@ -129,7 +157,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           post plans_url,
                params: {
                  plan: {
-                   assessment_id: "123", term: "100", indicators: { abc: "123" }
+                   assessment_id: "123", term: "100", indicators: { abc: "123" }, disease_ids: ""
                  },
                }
           assert_response :redirect
@@ -147,6 +175,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
                      assessment_id: "123",
                      term: "500",
                      indicators: { abc: "123" },
+                     disease_ids: "10",
                    },
                  }
             assert_response :redirect
@@ -161,52 +190,83 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           Plan.stub(:create_from_goal_form, plan) do
             post plans_url,
                  params: {
-                   plan: {
-                     assessment_id: "123",
-                     term: "100",
-                     indicators: { abc: "123" },
-                   },
+                     plan: {
+                         assessment_id: "123",
+                         term: "100",
+                         indicators: {abc: "123"},
+                         disease_ids: ""
+                     },
                  }
             assert_response :redirect
             assert_redirected_to root_path
           end
         end
       end
+
+      describe "when the disease_ids have been tampered with" do
+        it "responds with a flash message and redirect" do
+          post plans_url,
+               params: {
+                   plan: {
+                       assessment_id: "123",
+                       term: "100",
+                       indicators: {abc: "123"},
+                       disease_ids: "0", # 0 does not exist as a disease id
+                   },
+               }
+          assert_response :redirect
+          assert_equal Exceptions::InvalidDiseasesError.new.message, flash[:notice]
+          assert_redirected_to root_path
+        end
+      end
+    end
+
+    describe "#show" do
+      let(:plan) { create(:plan) }
+
+      it "is connected as /plans/id" do
+        assert_routing(
+            "/plans/#{plan.id}",
+            { controller: "plans", action: "show", id: plan.id.to_s },
+            )
+      end
+
+      it "redirects for an invalid plan ID" do
+        get plan_url(123)
+
+        assert_response :redirect
+        assert_redirected_to root_path
+      end
+
+      describe "with logged in user" do
+        it "responds with success" do
+          plan = create(:plan_nigeria_jee1, :with_user)
+          sign_in plan.user
+
+          get plan_url(plan)
+
+          assert_response :success
+          assert_template :show
+        end
+      end
+
+      describe "with logged out user" do
+
+        describe "viewing someone else's plan" do
+          it "redirects away" do
+            plan = create(:plan_nigeria_jee1)
+
+            get plan_url(plan)
+
+            assert_response :redirect
+            assert_redirected_to root_path
+          end
+        end
+
+      end
     end
   end
 
-  #test "logged in user can see their plan" do
-  #  plan = create(:plan_nigeria_jee1, :with_user)
-  #  sign_in plan.user
-  #  get plan_path(plan.id)
-  #  assert_response :ok
-  #  assert_select ".technical-area-container", 18
-  #end
-  #
-  #test "logged in user can't see someone else's plan" do
-  #  plan = create(:plan_nigeria_jee1, :with_user)
-  #  other_user = User.new(email: "test@example.com")
-  #  sign_in other_user
-  #  get plan_path(plan.id)
-  #  assert_response :redirect
-  #end
-  #
-  ## TODO: GVT: not working until the add actions form is working again
-  ## test 'plan/show.html.erb wires up plan controller correctly' do
-  ##  plan = create(:plan, :with_user)
-  ##  sign_in plan.user
-  ##  get plan_path(plan.id)
-  ##  #puts "GVT: response: #{response.body}"
-  ##  assert_select '.plan-container[data-controller="plan"]', 1
-  ##  assert_select 'form[data-target="plan.form"]', 1
-  ##  assert_select 'input[data-target="plan.name"][data-action="change->plan#validateName"]',
-  ##                1
-  ##  assert_select 'input[data-target="plan.newAction"][data-action="keypress->plan#addNewAction"][data-benchmark-id="1.1"]',
-  ##                1
-  ##  assert_select 'button[data-action="plan#deleteAction"][data-benchmark-id="1.1"]',
-  ##                2
-  ## end
-  #
   #test "logged in user can update their plan" do
   #  plan = create(:plan_nigeria_jee1, :with_user)
   #  sign_in plan.user

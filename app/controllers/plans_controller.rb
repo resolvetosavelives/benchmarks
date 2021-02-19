@@ -28,20 +28,20 @@ class PlansController < ApplicationController
     @countries = Country.all_assessed
     @technical_areas_jee1 = AssessmentTechnicalArea.jee1
     @technical_areas_spar_2018 = AssessmentTechnicalArea.spar_2018
+    @influenza = Disease.influenza
     @get_started_form = GetStartedForm.new get_started_params.to_h
     @redirect_key = GET_STARTED_REDIRECT_KEY
     if request.post? && request.xhr?
       if @get_started_form.valid?
         url =
-          plan_goals_url(
-            country_name: @get_started_form.country.name,
-            assessment_type: @get_started_form.assessment_type,
-            plan_term: @get_started_form.plan_term_s,
-            areas: @get_started_form.technical_area_ids.join("-"),
-          )
-        Rails.logger.info "Redirect workaround for an XHR request to URL: #{
-                            url
-                          }"
+            plan_goals_url(
+                country_name: @get_started_form.country.name,
+                assessment_type: @get_started_form.assessment_type,
+                plan_term: @get_started_form.plan_term_s,
+                areas: @get_started_form.technical_area_ids.present? ? @get_started_form.technical_area_ids.join("-") : nil,
+                diseases: @get_started_form.diseases.present? ? @get_started_form.diseases.join("-") : nil,
+            )
+        Rails.logger.info "Redirect workaround for an XHR request to URL: #{url}"
         render plain: "#{GET_STARTED_REDIRECT_KEY}#{url}"
         return
       else
@@ -58,6 +58,7 @@ class PlansController < ApplicationController
     assessment_type = params[:assessment_type]
     country_name = params[:country_name]
     technical_area_ids = params[:areas].to_s.split("-")
+    @disease_ids = params[:diseases]
     country = Country.find_by_name country_name
     @publication = AssessmentPublication.find_by_named_id assessment_type
     if country.present? && @publication.present?
@@ -76,15 +77,17 @@ class PlansController < ApplicationController
       )
   end
 
-  # TODO: test coverage for this, and include for the session state part
+  # TODO: test coverage for the session state part
   def create
     assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
+    disease_ids = plan_create_params.fetch(:disease_ids).to_s.split('-')
     @plan =
       Plan.create_from_goal_form(
         indicator_attrs: plan_create_params.fetch(:indicators),
         assessment: assessment,
         is_5_year_plan: plan_create_params.fetch(:term).start_with?("5"),
         plan_name: "#{assessment.country.name} draft plan",
+        disease_ids: disease_ids,
         user: current_user,
       )
     unless @plan.persisted?
@@ -94,6 +97,9 @@ class PlansController < ApplicationController
     end
     session[:plan_id] = @plan.id unless current_user
     redirect_to @plan
+  rescue Exceptions::InvalidDiseasesError => e
+    flash[:notice] = e.message
+    redirect_back fallback_location: root_path
   end
 
   def show
@@ -101,6 +107,7 @@ class PlansController < ApplicationController
     @benchmark_technical_areas = benchmark_document.technical_areas
     @benchmark_indicators = benchmark_document.indicators
     @all_actions = benchmark_document.actions
+    @diseases = Disease.all
     @nudges_by_action_type_json =
       File.read(
         Rails.root.join("app", "fixtures", "nudges_for_action_types.json"),
@@ -151,7 +158,7 @@ class PlansController < ApplicationController
   end
 
   def plan_create_params
-    params.require(:plan).permit(:assessment_id, :term, indicators: {})
+    params.require(:plan).permit(:assessment_id, :term, :disease_ids, indicators: {})
   end
 
   def plan_update_params

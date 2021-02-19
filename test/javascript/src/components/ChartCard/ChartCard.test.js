@@ -4,18 +4,17 @@ import ChartCard from "components/ChartCard/ChartCard"
 import { act } from "react-dom/test-utils"
 import ReactDOM from "react-dom"
 
+jest.mock("react-redux", () => ({
+  useDispatch: jest.fn(),
+  useEffect: jest.fn(),
+}))
 jest.mock("components/ChartCard/BarChartByTechnicalArea", () => () => (
   <mock-BarChartByTechnicalArea />
 ))
 jest.mock("components/ChartCard/BarChartByActionType", () => () => (
   <mock-BarChartByActionType />
 ))
-jest.mock("components/ChartCard/NudgeByTechnicalArea", () => () => (
-  <mock-NudgeByTechnicalArea />
-))
-jest.mock("components/ChartCard/NudgeByActionType", () => () => (
-  <mock-NudgeByActionType />
-))
+jest.mock("components/ChartCard/InfoPane", () => () => <mock-InfoPane />)
 
 let container
 beforeEach(() => {
@@ -47,30 +46,6 @@ it("ChartCard has one child BarChartByActionType component", () => {
 
   const mockBarchartbyactiontype = container.querySelectorAll(
     "mock-barchartbyactiontype"
-  )
-
-  expect(mockBarchartbyactiontype.length).toEqual(1)
-})
-
-it("ChartCard has one child NudgeByTechnicalArea component", () => {
-  act(() => {
-    ReactDOM.render(<ChartCard />, container)
-  })
-
-  const mockBarchartbyactiontype = container.querySelectorAll(
-    "mock-NudgeByTechnicalArea"
-  )
-
-  expect(mockBarchartbyactiontype.length).toEqual(1)
-})
-
-it("ChartCard has one child NudgeByActionType component", () => {
-  act(() => {
-    ReactDOM.render(<ChartCard />, container)
-  })
-
-  const mockBarchartbyactiontype = container.querySelectorAll(
-    "mock-NudgeByActionType"
   )
 
   expect(mockBarchartbyactiontype.length).toEqual(1)

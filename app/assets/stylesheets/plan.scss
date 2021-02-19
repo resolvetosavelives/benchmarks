@@ -10,7 +10,7 @@
 }
 
 .tips-header {
-  font-family: Pathway Gothic One;
+  font-family: "Pathway Gothic One", sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 48px;
@@ -18,22 +18,21 @@
   margin-bottom: 40px;
 }
 
-.action-count-header {
-  font-family: "Pathway Gothic One", sans-serif;
-  .action-count-circle {
-    width: 90px;
-    height: 90px;
-    background-color: color("primary");
-    border-radius: 45px;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.5;
-    }
-    span {
-      color: color("light");
-      font-size: 36px;
-      line-height: 41px;
-    }
+.info-pane-component {
+  .row {
+    margin-bottom: 1em;
+  }
+}
+
+.action-count-component {
+  .count {
+    font-family: "Pathway Gothic One", sans-serif;
+    font-size: 3em;
+    line-height: 1.2em;
+  }
+  .label {
+    font-family: Karla, sans-serif;
+    line-height: 1.2em;
   }
   p {
     margin: 0;
@@ -42,6 +41,16 @@
     line-height: 28px;
     color: rgba(45, 45, 53, 0.5);
   }
+}
+
+.clear-filters-component {
+  a {
+    text-decoration: underline;
+  }
+}
+
+.action-list-component {
+  margin-top: 30px;
 }
 
 .technical-area-container {
@@ -106,8 +115,16 @@
     color: white;
   }
 
-  .delete {
-    display: none;
+  .action-badge-pill {
+    font-size: 14px;
+    padding: 0.25em 1em;
+    color: color("disease-pill");
+  }
+
+  @include media-breakpoint-up(lg) {
+    .delete {
+      display: none;
+    }
   }
 
   &:hover {
@@ -129,11 +146,18 @@
   .color-value-5 {
     background-color: color("success");
   }
+
+  .badge-disease {
+    height: 0.75em;
+    width: 0.75em;
+  }
+
+  .color-value-disease-influenza {
+    background-color: color("disease-influenza");
+  }
 }
 
 .card.plan {
-  overflow: hidden;
-
   ul.nav-tabs {
     background-color: rgba(0, 0, 0, 0.03);
   }
@@ -155,63 +179,6 @@
     }
   }
 
-  .nudge-container {
-    padding: 0;
-    flex-grow: 1;
-    .card {
-      max-width: 400px;
-      min-width: 260px;
-      min-height: 238px;
-      margin: 20px auto;
-      padding: 1em;
-      background-color: #f8f9fa;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      border-radius: 5px;
-      ul {
-        padding-left: 30px;
-      }
-      p {
-        margin: 10px 12px 20px 12px;
-        font-weight: bold;
-      }
-      li {
-        font-size: 14px;
-      }
-    }
-    svg.lightbulb {
-      height: 18px;
-      width: 12px;
-      position: relative;
-      top: -2px;
-      left: -7px;
-      path {
-        height: 18px;
-        width: 12px;
-        fill: #ffca1e;
-      }
-    }
-    .nudge-content-0 {
-      text-align: center;
-      svg.bar-chart {
-        height: 51px;
-        width: 51px;
-        margin-top: 35px;
-        margin-bottom: 10px;
-        path {
-          fill: #2c8dc9;
-          transform: scale(2.5);
-        }
-      }
-      svg.cursor {
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        top: 77px;
-        left: 190px;
-      }
-    }
-  }
-
   // ct-* are chartist style class we are overriding
   .ct-vertical {
     stroke: #c3c9d8;
@@ -224,12 +191,33 @@
   }
 
   .ct-series .ct-bar {
-    stroke: #0d4a59;
     stroke-width: 24;
 
     &:hover {
-      stroke: #4d838f;
       cursor: pointer;
+    }
+  }
+
+  .ct-series-a .ct-bar {
+    stroke: color("health-system");
+
+    &.ct-deselected {
+      stroke: color("health-system-deselected");
+    }
+
+    &:hover {
+      stroke: color("health-system-hover");
+    }
+  }
+  .ct-series-b .ct-bar {
+    stroke: color("disease-influenza");
+
+    &.ct-deselected {
+      stroke: color("disease-influenza-deselected");
+    }
+
+    &:hover {
+      stroke: color("disease-influenza-hover");
     }
   }
 
@@ -252,6 +240,83 @@
     // needs more bottom margin to allow the angled labels to display w/o cut off
     margin: 0 0 50px 0;
     overflow: visible;
+  }
+
+  .ct-legend {
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-top: 0.25em;
+      padding-left: 1.8em;
+    }
+
+    li:before {
+      width: 1.25em;
+      height: 1.25em;
+      margin-top: 0.15em;
+      position: absolute;
+      left: 0;
+      content: "";
+    }
+
+    .ct-series-a:before {
+      background-color: color("health-system");
+    }
+
+    .ct-series-b:before {
+      background-color: color("disease-influenza");
+      border-color: color("disease-influenza");
+    }
+  }
+}
+
+.nudge-container {
+  .nudge-left {
+    background-color: color("light-gray");
+    border-right: 1px solid #eaeaeb;
+    word-break: break-word;
+  }
+  .nudge-tip-text {
+    color: color("text-de-emphasized");
+    font-size: smaller;
+    text-transform: uppercase;
+  }
+  ul {
+    margin: 25px 0px;
+    padding-left: 30px;
+  }
+  li {
+    font-size: 14px;
+    margin-bottom: 1em;
+  }
+  h4 {
+    font-weight: normal;
+  }
+  .nudge-action-type-name {
+    text-transform: capitalize;
+  }
+  .nudge-content-0 {
+    .nudge-svg-box {
+      height: 41px;
+      width: 51px;
+      position: relative;
+    }
+    svg.bar-chart {
+      height: 41px;
+      width: 51px;
+      path {
+        fill: #2c8dc9;
+        transform: scale(2.5);
+      }
+    }
+    svg.cursor {
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      top: 22px;
+      left: 26px;
+    }
   }
 }
 
@@ -287,7 +352,7 @@
     margin-bottom: 0.7em;
   }
   h4.disabled {
-    color: color("text-disabled");
+    color: color("text-de-emphasized");
   }
   .form-row {
     margin-top: 1em;
@@ -316,9 +381,6 @@
       padding: 7px;
       .row {
         margin: 0.5em 0 0.5em 0;
-      }
-      .form-check-inline {
-        margin-right: 4px;
       }
     }
   }

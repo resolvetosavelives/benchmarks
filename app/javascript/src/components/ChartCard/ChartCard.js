@@ -1,10 +1,25 @@
-import React from "react"
+import React, { useEffect } from "react"
+import $ from "jquery"
+import { useDispatch } from "react-redux"
+import { setSelectedChartTabIndex } from "../../config/actions"
 import BarChartByTechnicalArea from "./BarChartByTechnicalArea"
 import BarChartByActionType from "./BarChartByActionType"
-import NudgeByTechnicalArea from "./NudgeByTechnicalArea"
-import NudgeByActionType from "./NudgeByActionType"
+import InfoPane from "./InfoPane"
+
+const tabSelector = 'a[data-toggle="tab"]'
 
 const ChartCard = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    $(tabSelector).on("show.bs.tab", function (e) {
+      const selectedTabDomNode = e.target
+      const tabIndex = $(tabSelector).index(selectedTabDomNode)
+      dispatch(setSelectedChartTabIndex(tabIndex))
+    })
+    return function cleanup() {
+      $(tabSelector).off()
+    }
+  })
   return (
     <div className="plan card">
       <ul className="nav nav-tabs pt-3" role="tablist">
@@ -36,29 +51,29 @@ const ChartCard = () => {
         </li>
       </ul>
 
-      <div className="row tab-content">
+      <div className="row tab-content my-3">
         <div
           id="tabContentForTechnicalArea"
           aria-labelledby="tabForTechnicalArea"
           role="tabpanel"
-          className="col-auto tab-pane fade show active"
+          className="col-auto tab-pane show active"
         >
           <div className="row no-gutters">
             {
               // Left Col
             }
-            <div className="chart-pane col-lg d-flex flex-column align-items-center">
+            <div className="chart-pane col-12 col-xl-8 d-flex flex-column align-items-center">
               <h6 className="my-3">Actions per benchmark technical area</h6>
               {
                 // Actual Chart, by Technical Area
               }
-              <BarChartByTechnicalArea width="700" height="240" />
+              <BarChartByTechnicalArea width="100%" height="240" />
             </div>
 
             {
-              // Right Col: Nudge by Technical Area
+              // Right Col
             }
-            <NudgeByTechnicalArea />
+            <InfoPane />
           </div>
         </div>
 
@@ -66,24 +81,24 @@ const ChartCard = () => {
           id="tabContentForActionType"
           aria-labelledby="tabForActionType"
           role="tabpanel"
-          className="col-auto tab-pane fade"
+          className="col-auto tab-pane"
         >
           <div className="row no-gutters">
             {
               // Left Col
             }
-            <div className="chart-pane col-lg d-flex mx-auto flex-column align-items-center">
+            <div className="chart-pane col-12 col-xl-8 d-flex flex-column align-items-center">
               <h6 className="my-3">Actions per action type</h6>
               {
                 // Actual Chart, by Action Type
               }
-              <BarChartByActionType width="700" height="240" />
+              <BarChartByActionType width="100%" height="240" />
             </div>
 
             {
               // Right Col
             }
-            {<NudgeByActionType />}
+            <InfoPane />
           </div>
         </div>
       </div>

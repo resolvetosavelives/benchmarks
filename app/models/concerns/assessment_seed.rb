@@ -10,11 +10,11 @@ module AssessmentSeed
       warn "Seeding data for Assessments..."
       jee_workbook =
         RubyXL::Parser.parse(
-          File.join(Rails.root, "/db/seed-data/JEE_scores_all-countries.xlsx"),
+          File.join(Rails.root, "/data/JEE_scores_all-countries.xlsx"),
         )
       spar_workbook =
         RubyXL::Parser.parse(
-          File.join(Rails.root, "/db/seed-data/SPAR_2018_2019.xlsx"),
+          File.join(Rails.root, "/data/SPAR_2018_2019.xlsx"),
         )
       seed_jee jee_workbook["Sheet4 (JEE 1.0 Indicators)"], "jee1"
       seed_jee jee_workbook["Sheet5 (JEE 2.0 Indicators)"], "jee2"

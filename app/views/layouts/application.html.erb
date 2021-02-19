@@ -5,9 +5,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><%#= this meta tag is per Bootstrap: https://getbootstrap.com/docs/4.4/getting-started/introduction/  %>
+    <%# NB: please refer to the section in README.md ## A note on js packs and stylesheets %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application', async: true, 'data-turbolinks-track': 'reload' %>
-    <%= yield :js_head %>
+    <%= which_js %>
   </head>
 
   <body>
@@ -26,11 +26,7 @@
       </div>
     </div>
 
-    <% if controller_name.eql?("pages") && action_name.eql?("home") %>
-      <%= render "layouts/home_page_footer" %>
-    <% else %>
-      <%= render "layouts/standard_footer" %>
-    <% end %>
+    <%= which_footer %>
 
   </body>
 </html>

@@ -2,6 +2,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
   include BenchmarkIndicatorActionSeed
 
   belongs_to :benchmark_indicator
+  belongs_to :disease, optional: true
   has_many :plan_action
 
   default_scope { order(:sequence) }
@@ -37,6 +38,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
       level: nil,
       sequence: nil,
       action_types: nil,
+      disease_id: nil,
     }
   end
 

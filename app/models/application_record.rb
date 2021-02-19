@@ -11,6 +11,7 @@ class ApplicationRecord < ActiveRecord::Base
   # other useful things then by all means go ahead and remove it.
   SEEDABLE_MODELS = %w[
     Country
+    Disease
     AssessmentPublication
     AssessmentTechnicalArea
     AssessmentIndicator
