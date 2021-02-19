@@ -291,7 +291,6 @@ DEPENDENCIES
   skylight
   spring
   spring-watcher-listen
-  tzinfo-data
   web-console
   webpacker (~> 5.1.1)
 
