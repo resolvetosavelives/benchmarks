@@ -17,8 +17,8 @@ blocks:
       - name: eslint
         commands:
           - checkout
-          - sem-version ruby 2.6.5
-          - sem-version node 12.16.3
+          - sem-version ruby 2.6.3
+          - sem-version node 14.7.0
           - cache restore
           - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
