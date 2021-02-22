@@ -11,6 +11,8 @@ import {
   getSelectedChartTabIndex,
 } from "config/selectors"
 
+$.fn.tooltip = jest.fn()
+
 jest.mock("config/selectors", () => ({
   countActionsByTechnicalArea: jest.fn(),
   getAllActions: jest.fn(),
