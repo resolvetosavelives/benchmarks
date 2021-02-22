@@ -14,6 +14,16 @@ blocks:
         - name: RAILS_ENV
           value: test
       jobs:
+      - name: eslint
+        commands:
+          - checkout
+          - sem-version ruby 2.6.5
+          - sem-version node 12.16.3
+          - cache restore
+          - bundle install --deployment --path vendor/bundle
+          - yarn install --frozen-lockfile --check-files
+          - cache store
+          - npx eslint app
       - name: Unit tests
         commands:
           - checkout
