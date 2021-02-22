@@ -10,11 +10,11 @@ blocks:
     task:
       env_vars:
         - name: DATABASE_URL
-          value: "postgresql://postgres:@0.0.0.0:5432/myapp_test"
+          value: "postgresql://postgres:@0.0.0.0:5432/benchmarks_test"
         - name: RAILS_ENV
           value: test
       jobs:
-      - name: Test
+      - name: Unit tests
         commands:
           - checkout
           - sem-service start postgres 11
@@ -27,5 +27,29 @@ blocks:
           - bundle exec rake db:setup
           - bundle exec rake db:test:prepare
           - bundle exec rake test
+      - name: JS tests
+        commands:
+          - checkout
+          - sem-service start postgres 11
+          - sem-version ruby 2.6.5
+          - sem-version node 12.16.3
+          - cache restore
+          - bundle install --deployment --path vendor/bundle
+          - yarn install --frozen-lockfile --check-files
+          - cache store
+          - bundle exec rake db:setup
+          - bundle exec rake db:test:prepare
           - bundle exec rake test:js
+      - name: System tests
+        commands:
+          - checkout
+          - sem-service start postgres 11
+          - sem-version ruby 2.6.5
+          - sem-version node 12.16.3
+          - cache restore
+          - bundle install --deployment --path vendor/bundle
+          - yarn install --frozen-lockfile --check-files
+          - cache store
+          - bundle exec rake db:setup
+          - bundle exec rake db:test:prepare
           - bundle exec rake test:system
