@@ -1,5 +1,5 @@
 version: v1.0
-name: Test MyApp
+name: benchmarks
 agent:
   machine:
     type: e1-standard-2
@@ -19,8 +19,13 @@ blocks:
           - checkout
           - sem-service start postgres 11
           - sem-version ruby 2.6.5
+          - sem-version node 12.16.3
           - cache restore
           - bundle install --deployment --path vendor/bundle
+          - yarn install --frozen-lockfile --check-files
           - cache store
           - bundle exec rake db:setup
-          - bundle exec rspec
+          - bundle exec rake db:test:prepare
+          - bundle exec rake test
+          - bundle exec rake test:js
+          - bundle exec rake test:system
