@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "^0.18.2",
-    "@testing-library/react": "^10.2.1",
+    "@testing-library/react": "^11.2.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "eslint": "^7.1.0",
