@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.0"
-gem "rails", "~> 5.2.4.5"
+gem "rails", "~> 6.1"
 
 gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.4", require: false
@@ -20,8 +20,8 @@ gem "webpacker", "~> 5.2"
 group :development, :test do
   gem "colorize", "~> 0.8"
   gem "m", "~> 1.5"
-  gem "minitest-rails", "~> 5.2"
-  gem "pry-byebug", "~> 3.9"
+  gem "minitest-rails"
+    gem "pry-byebug", "~> 3.9"
 end
 
 group :development do
