@@ -64,7 +64,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
                xhr: true,
                params: {
                    get_started_form: {
-                       country_id: "162", assessment_type: "jee1", plan_term: "1", diseases: [Disease.influenza.id]
+                       country_id: "162", assessment_type: "jee1", plan_term: "1", diseases: [Disease.influenza.id, Disease.cholera.id]
                    },
                }
           assert_response :success
@@ -79,7 +79,7 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
                       country_name: "Nigeria",
                       assessment_type: "jee1",
                       plan_term: "1-year",
-                      diseases: Disease.influenza.id.to_s,
+                      diseases: [Disease.influenza.id.to_s, Disease.cholera.id.to_s].join('-')
                   },
                   )
           response_body.end_with?(redirect_url).must_equal true

@@ -1,4 +1,3 @@
-Raven.configure do |config|
-  config.sanitize_fields = Rails.application.config.filter_parameters.map(&:to_s)
-  config.environments = %w[staging production]
+Sentry.init do |config|
+  config.enabled_environments = %w[staging production]
 end

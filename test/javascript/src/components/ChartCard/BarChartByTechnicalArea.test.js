@@ -10,6 +10,7 @@ import {
   getSelectedTechnicalAreaId,
   getSelectedChartTabIndex,
 } from "config/selectors"
+import "bootstrap"
 
 jest.mock("config/selectors", () => ({
   countActionsByTechnicalArea: jest.fn(),

@@ -111,12 +111,13 @@
         .col
           %h4{class: heading_disabled_class} 4. Do you want to add disease specific planning?
           - if @get_started_form.country.present?
-            .form-check
-              = check_box_tag "get_started_form[diseases][]", @influenza.id, false,
-                {class: "form-check-input",
-                  id: "diseases_influenza"}
-              %label{for: "diseases_influenza"}
-                = "Optional: #{@influenza.display} planning"
+            - @diseases.each do |disease|
+              .form-check
+                = check_box_tag "get_started_form[diseases][]", disease.id, false,
+                  {class: "form-check-input",
+                    id: "diseases_#{disease.name}"}
+                %label{for: "diseases_#{disease.name}"}
+                  = "Optional: #{disease.display} planning"
           - else
             %div{style: "height: 75px"}
 
