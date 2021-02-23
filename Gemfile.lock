@@ -131,7 +131,7 @@ GEM
     minitest-rails (5.2.0)
       minitest (~> 5.10)
       railties (~> 5.2.0)
-    minitest-reporters (1.4.2)
+    minitest-reporters (1.4.3)
       ansi
       builder
       minitest (>= 5.0)
@@ -199,7 +199,7 @@ GEM
     rexml (3.2.4)
     ruby-graphviz (1.2.5)
       rexml
-    ruby-progressbar (1.10.1)
+    ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     rubyXL (3.4.5)
       nokogiri (>= 1.4.4)
