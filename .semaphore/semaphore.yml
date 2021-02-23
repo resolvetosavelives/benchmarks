@@ -37,12 +37,10 @@ blocks:
       - name: JS tests
         commands:
           - checkout
-          - sem-version ruby 2.6.5
           - sem-version node 12.16.3
           - cache restore
-          - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
-          - bundle exec rake test:js
+          - yarn test
       - name: System tests
         commands:
           - checkout
