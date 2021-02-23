@@ -37,6 +37,35 @@ task gen_influenza: %i[environment] do
            [influenza_actions_data.size, influenza_actions_file]
 end
 
+desc "Generate JSON data for Cholera Actions from spreadsheet"
+task gen_cholera: %i[environment] do
+  cholera_actions_csv_file =
+      File.join Rails.root, "/data/Cholera_Benchmarks_Crosswalk_20210222.csv"
+  cholera_actions_data = []
+  CSV.read(cholera_actions_csv_file).drop(1).each_with_index do |cols, idx|
+    action_text = cols[9]
+    benchmark_indicator_abbrev = cols[5]
+    activity_types = []
+    activity_types << cols[6] if cols[6].present?
+    activity_types << cols[7] if cols[7].present?
+    # there are some blank rows so skip those
+    if action_text.present? && benchmark_indicator_abbrev.present? && activity_types.length > 0
+      cholera_actions_data << {
+          action_text: action_text,
+          benchmark_indicator_display_abbreviation: benchmark_indicator_abbrev,
+          activity_types: activity_types,
+      }
+    end
+  end
+  cholera_actions_file =
+      File.join(Rails.root, "/db/seed-data/cholera_actions.json")
+  File.open(cholera_actions_file, "w") do |f|
+    f.write(JSON.pretty_generate(cholera_actions_data))
+  end
+  warn "Wrote %s cholera action data to file: %s" %
+           [cholera_actions_data.size, cholera_actions_file]
+end
+
 desc "Generate JSON data for Benchmark Actions from the spreadsheet"
 task gen_actions: %i[environment] do
   fixture_spreadsheet = File.join Rails.root, "/data/RTSL Fixtures.xlsx"

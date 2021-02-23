@@ -80,7 +80,7 @@ describe("for a plan without any specific diseases", () => {
       const result = getAllActions(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(929)
+      expect(result.length).toEqual(978)
     })
   })
 
@@ -339,7 +339,7 @@ describe("for a plan without any specific diseases", () => {
       let result = getActionMap(state)
 
       expect(result).toBeInstanceOf(Object)
-      expect(Object.keys(result).length).toEqual(929)
+      expect(Object.keys(result).length).toEqual(978)
     })
   })
 
@@ -532,17 +532,6 @@ describe("for a plan without any specific diseases", () => {
     })
   })
 
-  describe("makeGetDisplayForDiseaseId", () => {
-    it("returns a function that returns empty string", () => {
-      const state = store.getState()
-
-      const fnResult = makeGetDisplayForDiseaseId([])
-      const result = fnResult(state)
-
-      expect(result).toEqual("")
-    })
-  })
-
   describe("getCountOfPlanActionIds", () => {
     it("returns a function that returns the expected string", () => {
       const state = store.getState()
@@ -727,13 +716,31 @@ describe("for a plan that includes influenza", () => {
   })
 
   describe("makeGetDisplayForDiseaseId", () => {
-    it("returns a function that returns the expected string", () => {
+    it("returns a function that returns the expected string for influenza", () => {
       const state = store.getState()
 
-      const fnResult = makeGetDisplayForDiseaseId([1])
+      const fnResult = makeGetDisplayForDiseaseId(1)
       const result = fnResult(state)
 
       expect(result).toEqual("Influenza")
+    })
+
+    it("returns a function that returns the expected string for cholera", () => {
+      const state = store.getState()
+
+      const fnResult = makeGetDisplayForDiseaseId(2)
+      const result = fnResult(state)
+
+      expect(result).toEqual("Cholera")
+    })
+
+    it("returns a function that returns empty string", () => {
+      const state = store.getState()
+
+      const fnResult = makeGetDisplayForDiseaseId(0)
+      const result = fnResult(state)
+
+      expect(result).toEqual("")
     })
   })
 

@@ -24,6 +24,7 @@ module BenchmarkIndicatorActionSeed
       end
 
       seed_influenza_actions!
+      seed_cholera_actions!
     end
 
     def unseed!
@@ -32,13 +33,13 @@ module BenchmarkIndicatorActionSeed
       )
     end
 
-    def influenza_actions_are_present?(influenza)
+    def disease_actions_are_present?(influenza)
       influenza.benchmark_indicator_actions.count > 0
     end
 
     def seed_influenza_actions!
       influenza = Disease.influenza
-      return if influenza_actions_are_present?(influenza)
+      return if disease_actions_are_present?(influenza)
 
       warn "Seeding data for Influenza Actions..."
 
@@ -64,6 +65,39 @@ module BenchmarkIndicatorActionSeed
           sequence: sequence,
           action_types: [attrs[:activity_type]],
           disease_id: influenza.id
+        )
+        prev_display_abbreviation = display_abbreviation
+      end
+    end
+
+    def seed_cholera_actions!
+      cholera = Disease.cholera
+      return if disease_actions_are_present?(cholera)
+
+      warn "Seeding data for Cholera Actions..."
+
+      cholera_actions_attrs =
+          JSON.parse File.read File.join Rails.root,
+                                         "/db/seed-data/cholera_actions.json"
+      prev_display_abbreviation = nil
+      sequence = 1
+      cholera_actions_attrs.each do |hash_attrs|
+        attrs = hash_attrs.with_indifferent_access
+        display_abbreviation = attrs[:benchmark_indicator_display_abbreviation]
+        benchmark_indicator =
+            BenchmarkIndicator.find_by_display_abbreviation!(display_abbreviation)
+        if prev_display_abbreviation != display_abbreviation
+          sequence = 1
+        else
+          sequence += 1
+        end
+        BenchmarkIndicatorAction.create!(
+          benchmark_indicator: benchmark_indicator,
+          text: attrs[:action_text],
+          level: nil,
+          sequence: sequence,
+          action_types: attrs[:activity_types],
+          disease_id: cholera.id
         )
         prev_display_abbreviation = display_abbreviation
       end

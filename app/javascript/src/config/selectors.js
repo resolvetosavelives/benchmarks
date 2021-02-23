@@ -205,12 +205,9 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
 const getDisease = (diseases, diseaseId) =>
   diseases.find((disease) => disease.id === diseaseId)
 
-// NB: the diseaseIdArray[0] is there because right now there is only influenza.
-//   will need improved with next phase of work where there will be several diseases.
-//   a quirk of this is that it accepts an array but plucks out and uses only the first element.
-const makeGetDisplayForDiseaseId = (diseaseIdArray) =>
+const makeGetDisplayForDiseaseId = (diseaseId) =>
   createSelector([getAllDiseases], (diseases) => {
-    const disease = getDisease(diseases, diseaseIdArray[0])
+    const disease = getDisease(diseases, diseaseId)
     return disease ? disease.display : ""
   })
 

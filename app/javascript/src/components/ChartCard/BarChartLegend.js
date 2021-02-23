@@ -1,10 +1,9 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import { getPlan, makeGetDisplayForDiseaseId } from "../../config/selectors"
+import { makeGetDisplayForDiseaseId } from "../../config/selectors"
 
 const BarChartLegend = () => {
-  const plan = useSelector((state) => getPlan(state))
-  const getDisplayForDiseaseId = makeGetDisplayForDiseaseId(plan.disease_ids)
+  const getDisplayForDiseaseId = makeGetDisplayForDiseaseId(1) // TODO: this will get cleaned up in story #
   const labelSeriesB = useSelector((state) => getDisplayForDiseaseId(state))
   const labelSeriesBHtml = labelSeriesB ? (
     <li className="ct-series-b">{labelSeriesB} specific</li>

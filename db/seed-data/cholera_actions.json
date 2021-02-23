@@ -1,0 +1,370 @@
+[
+  {
+    "action_text": "Consider establishing a national cholera program including development of specific policy on cholera control and written or public commitments to achieve the Global Roadmap goals",
+    "benchmark_indicator_display_abbreviation": "1.1",
+    "activity_types": [
+      "8",
+      "1"
+    ]
+  },
+  {
+    "action_text": "Conduct a mapping of existing funding streams available in cholera hotspots across the Global Roadmap pillars",
+    "benchmark_indicator_display_abbreviation": "1.2",
+    "activity_types": [
+      "6"
+    ]
+  },
+  {
+    "action_text": "Include cholera in the list of epidemic prone diseases for which emergency response funding should be easily mobilized in case of an outbreak",
+    "benchmark_indicator_display_abbreviation": "1.3",
+    "activity_types": [
+      "6"
+    ]
+  },
+  {
+    "action_text": "Identify existing coordination bodies and mechanisms involved in cholera (e.g. National Cholera Task Force, Emergency Operation Center, clusters (Health, WASH), technical working groups, regional platforms, national and international partners and identify their terms of reference, ongoing activities, funding and areas for collaboration and coordination.",
+    "benchmark_indicator_display_abbreviation": "2.2",
+    "activity_types": [
+      "3"
+    ]
+  },
+  {
+    "action_text": "Establish procedures to strengthen international collaboration for cross-border timely communication of cholera alerts and information sharing including reference laboratories and promote coordinated cross-border prevention, preparedness and early response measures.",
+    "benchmark_indicator_display_abbreviation": "2.2",
+    "activity_types": [
+      "3"
+    ]
+  },
+  {
+    "action_text": "Engage with national laboratory authorities to ensure adequate AMR testing on cholera outbreak strains and maintaining a database of resistance patterns for strains linked in time and place to outbreak occurrence.  Sharing of these data in GTFCC partners centralized reporting platform.",
+    "benchmark_indicator_display_abbreviation": "3.2",
+    "activity_types": [
+      "10"
+    ]
+  },
+  {
+    "action_text": "Implement WASH and IPC standards in health care facilities, including separate wards or units to isolate cholera patients from other patients, safe food preparation and safe waste disposal.",
+    "benchmark_indicator_display_abbreviation": "3.3",
+    "activity_types": [
+      "10"
+    ]
+  },
+  {
+    "action_text": "Include cholera within the list of disease for surveillance and monitoring of foodborne diseases ",
+    "benchmark_indicator_display_abbreviation": "5.1",
+    "activity_types": [
+      "7",
+      "13"
+    ]
+  },
+  {
+    "action_text": "Identify and set up a cross-disciplinary oral cholera vaccine (OCV) planning team including immunization, surveillance, case management, wash, community engagement with clear roles and responsibilities. ",
+    "benchmark_indicator_display_abbreviation": "6.1",
+    "activity_types": [
+      "3",
+      "10"
+    ]
+  },
+  {
+    "action_text": "Select hotspots that will be targeted for preventive OCV campaigns and develop requests for preventive vaccination campaigns. Submit GTFCC request per phases to GTFCC secretariat. ",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "2",
+      "10"
+    ]
+  },
+  {
+    "action_text": "Develop medium term vaccination plans (phases for the duration of the NCP) with timelines of activities, key responsible parties, dates for each campaign, training and supervision of front-line workers, community networks to be mobilized, monitoring and evaluation activities including post-campaign evaluations (e.g. OCV and WASH coverage surveys in) and touchpoints to debrief on lessons learned, etc. and develop contingency plans for vaccination campaigns in unexpected locations (e.g. identify decision pathways for determining the use of OCV, preparation of readily available data for applications).",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "8"
+    ]
+  },
+  {
+    "action_text": "Review processes and be prepared to request OCV for a reactive vaccination campaign through the ICG mechanism.  ",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "8"
+    ]
+  },
+  {
+    "action_text": "Once a request is approved, develop a plan to provide OCV and supplies to all relevant levels including calculating quantities by site according to a calendar of implementation, a distribution plan to reach health-care facilities five days prior to planned vaccination date, appropriate cold chain, and a process for monitoring, reporting and requesting additional supplies and vaccines when stocks are running low.",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "8"
+    ]
+  },
+  {
+    "action_text": "Once a request is approved, establish and train vaccination teams, develop a plan for training personnel and for supervision and monitoring of the campaign",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "15",
+      "7"
+    ]
+  },
+  {
+    "action_text": "Before the start of the campaign, develop risk communication and community engagement micro-plans and materials that covers OCV characteristics; address vaccine hesitancy, and the timing and locations of campaigns. Develop and conduct communications around the timing of vaccination campaigns.",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "8",
+      "1"
+    ]
+  },
+  {
+    "action_text": "Conduct monitoring and evaluation activities, monitor and report adverse effect following immunization (AEFI) and conduct a coverage survey that include data collection on WASH conditions in targeted communities.",
+    "benchmark_indicator_display_abbreviation": "6.2",
+    "activity_types": [
+      "7"
+    ]
+  },
+  {
+    "action_text": "Procure and distribute adequate laboratory supplies (i.e. reporting forms, cholera RDTs, specimen collection kits and transport media) to peripheral health-care facilities with clear procedures to ship and process confirmatory laboratory tests in a timely manner.",
+    "benchmark_indicator_display_abbreviation": "7.1",
+    "activity_types": [
+      "9",
+      "5"
+    ]
+  },
+  {
+    "action_text": "Update or develop testing protocol defining SOPs for cholera confirmation by RDT, culture and/or PCR. Include guidance to adapt for specific situations (e.g. during outbreaks, intra-epidemic phase, seasonality, high endemicity or close to elimination) in strategy for laboratory and testing.",
+    "benchmark_indicator_display_abbreviation": "7.1",
+    "activity_types": [
+      "12",
+      "14"
+    ]
+  },
+  {
+    "action_text": "Update or develop and disseminate job aids, standard operating procedures, training material for specimen collection and transportation.",
+    "benchmark_indicator_display_abbreviation": "7.2",
+    "activity_types": [
+      "12",
+      "14"
+    ]
+  },
+  {
+    "action_text": "Procure sufficient supplies (i.e. cholera RDTs, specimen collection kits and transport media) at all peripheral health-care facilities.",
+    "benchmark_indicator_display_abbreviation": "7.2",
+    "activity_types": [
+      "9"
+    ]
+  },
+  {
+    "action_text": "Ensure all hotspots have access to the needed laboratory capacity to screen cholera suspect cases (RDT) and confirm the presence of Vibrio cholerae with culture/PCR (e.g. establish procedures for access to reference laboratory(ies), decentralize laboratories where relevant, adding additional human resources focused on cholera, upgrading equipment, or improving access to central laboratories). ",
+    "benchmark_indicator_display_abbreviation": "7.3",
+    "activity_types": [
+      "8"
+    ]
+  },
+  {
+    "action_text": "Consider pooling resources for a supra-national reference laboratory that integrates cholera and other diarrheal diseases or establish/strengthen a national reference laboratory (e.g. identify location, trained staff, etc.) to reinforce technical and diagnostic capacity.",
+    "benchmark_indicator_display_abbreviation": "7.3",
+    "activity_types": [
+      "9"
+    ]
+  },
+  {
+    "action_text": "Develop and implement a quality assurance programme for cholera laboratory procedures at central and peripheral level.",
+    "benchmark_indicator_display_abbreviation": "7.4",
+    "activity_types": [
+      "14",
+      "10"
+    ]
+  },
+  {
+    "action_text": "Develop or update national cholera surveillance guidelines and tools (e.g. reporting forms, questionnaires, investigation log books, mobile apps) including standardized case definitions, standard operational procedures (SOP) for early signal detection, data collection, analyses and reporting, including community-based and environmental surveillance. ",
+    "benchmark_indicator_display_abbreviation": "9.1",
+    "activity_types": [
+      "13",
+      "5"
+    ]
+  },
+  {
+    "action_text": "Establish a structured community-based surveillance system integrated in the existing national surveillance framework (i.e. event-based and indicator-based) engaging all community-based workers (CHW, volunteers, traditional healers) with a clear process for the reporting of suspected cholera cases and deaths to the health facility.",
+    "benchmark_indicator_display_abbreviation": "9.1",
+    "activity_types": [
+      "12",
+      "13"
+    ]
+  },
+  {
+    "action_text": "Target cholera hotspots for  the delivery of adapted training in early warning procedures to health-care workers (HCW), community health workers (CHW), traditional healer, volunteers and other stakeholders: in understanding and applying the case definitions, and the criteria and procedures for timely reporting a signal to the investigation/response teams.",
+    "benchmark_indicator_display_abbreviation": "9.1",
+    "activity_types": [
+      "15",
+      "13"
+    ]
+  },
+  {
+    "action_text": "Develop a system to standardize data collection and reporting for cholera in a format allowing data integration at country-level and ideally at regional or global level, either by developing or adapting exiting tools to the national context.",
+    "benchmark_indicator_display_abbreviation": "9.2",
+    "activity_types": [
+      "8",
+      "13"
+    ]
+  },
+  {
+    "action_text": "Develop guidance, tools and training (e.g. surveillance officers, data clerks, CHW, other key stakeholders) to integrate all potential sources of information at cholera hotspot administrative level (district or lower) to adequately capture, and report signals e.g. informal sources, non-medical sources such as schools, pharmacy, religious institutions, water supply services.",
+    "benchmark_indicator_display_abbreviation": "9.3",
+    "activity_types": [
+      "13",
+      "14"
+    ]
+  },
+  {
+    "action_text": "Develop a system to regularly analyse data (population at risk, cholera risk factors, estimation of burden, updating cholera hotspots data, etc.), disseminate surveillance data to all levels and multisectoral partners and adapt the support of the feedback to the audience e.g. partners health facilities, community health workers not forgetting the affected communities and report surveillance data globally (including zero reporting) to contribute to the global monitoring of cholera transmission patterns.",
+    "benchmark_indicator_display_abbreviation": "9.3",
+    "activity_types": [
+      "5",
+      "7"
+    ]
+  },
+  {
+    "action_text": "Include cholera prevention, preparedness and response into the curricula of relevant staff at all levels (e.g. health workers including CHW, WASH practitioners, volunteers, traditional healers, teachers) across all of the cholera Pillars.",
+    "benchmark_indicator_display_abbreviation": "10.3",
+    "activity_types": [
+      "15",
+      "5"
+    ]
+  },
+  {
+    "action_text": "Integrate cholera into the existing supervision plans for the assessment of the quality of treatment given in hotspots (health worker supervision, supervision in health care facilities and cholera specific treatment structures during emergencies) prioritising supervision just before and during known cholera seasons, and provide feedback sessions and refresher trainings taking into account the results of supervision.",
+    "benchmark_indicator_display_abbreviation": "10.3",
+    "activity_types": [
+      "15"
+    ]
+  },
+  {
+    "action_text": "Train health-care workers (HCW), community health workers (CHW), WASH practitioners, traditional healers, volunteers and other stakeholders, particularly in cholera hotspots and during outbreaks in in key cholera activities to provide timely and quality services across all the cholera Pillars. ",
+    "benchmark_indicator_display_abbreviation": "10.3",
+    "activity_types": [
+      "15"
+    ]
+  },
+  {
+    "action_text": "Select and train a dedicated FETP / epidemiologist on cholera to oversee activities in cholera hotspots",
+    "benchmark_indicator_display_abbreviation": "10.4",
+    "activity_types": [
+      "4",
+      "15"
+    ]
+  },
+  {
+    "action_text": "Develop a cholera specific emergency response plan at all levels covering each of the cholera pillar including identifying sites where CTCs and ORPs can be established in the event of an outbreak, surge capacity and stock management.",
+    "benchmark_indicator_display_abbreviation": "11.2",
+    "activity_types": [
+      "8"
+    ]
+  },
+  {
+    "action_text": "For each of the Global Roadmap pillars, identify existing initiatives and programs in relevant sectors (e.g. health security, safe water and sanitation projects, diarrheal diseases programme etc.) that contribute to cholera control/elimination and conduct geographic mapping of relevant infrastructure,  resources and activities in cholera hotspots (e.g. WASH, health care facilities, cholera treatment centres, laboratories, cold chain capacity, medical supplies, human resources including community-based and volunteer, implementing partners and actors (state and non-state), key community stakeholders, funding mechanisms, etc.) and assess their functionality, capacity and roles in the elimination/control of cholera present and in the future. ",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_types": [
+      "2",
+      "8"
+    ]
+  },
+  {
+    "action_text": "Conduct a national cholera epidemiology and situational analysis including the identification of specific sites (e.g. religious sites, construction, mining etc.) and vulnerable populations (e.g. refugees, internally displaced population, nomads, ethnic minorities, professions at risk) in cholera hotspots. Based on the analysis of this data, identify the hotspots in the country and their priority ranking for cholera risk. ",
+    "benchmark_indicator_display_abbreviation": "11.1",
+    "activity_types": [
+      "2",
+      "10"
+    ]
+  },
+  {
+    "action_text": "Plan for, stock and manage cholera supplies (e.g. ORS, cholera cots, tents, IPC/WASH) for treatment centers) in sufficient quantities throughout the year including for outbreak response in health care facilities at all levels according to calculated need. Estimate and regularly re-assess the supply and infrastructure needs at all levels; this also includes provision of enough safe water and food, material for sanitation to cover the needs of patients, caregivers and staff.",
+    "benchmark_indicator_display_abbreviation": "14.1",
+    "activity_types": [
+      "9"
+    ]
+  },
+  {
+    "action_text": "Identify, determine the availability of and train additional cholera surge staff; including for WASH and IPC measures. Prioritise capacity building in health centres to which CHW refer for training on triage, diagnosis, case management supplies, IPC and reporting.",
+    "benchmark_indicator_display_abbreviation": "14.2",
+    "activity_types": [
+      "15"
+    ]
+  },
+  {
+    "action_text": "Use surveillance data to identify areas to establish and maintain Cholera Treatment Centres (CTC) and Oral Rehydration Points (ORP) that are accessible to the most affected population; organize appropriate patient flow in health-care facilities and CTCs.",
+    "benchmark_indicator_display_abbreviation": "14.2",
+    "activity_types": [
+      "13",
+      "10"
+    ]
+  },
+  {
+    "action_text": "Develop and update regularly and distribute guidance, job-aids, protocols and SOPs regarding triage, diagnosis, clinical management, Infection Prevention and Control (IPC)/wash including dead body management, referral, etc. ",
+    "benchmark_indicator_display_abbreviation": "14.3",
+    "activity_types": [
+      "5",
+      "14"
+    ]
+  },
+  {
+    "action_text": "Engage with communities to build trust among local health-care service providers and in the use of Oral Rehydration Points (ORP) and Cholera Treatment Centres (CTC) and seeking early treatment. ",
+    "benchmark_indicator_display_abbreviation": "14.3",
+    "activity_types": [
+      "10",
+      "1"
+    ]
+  },
+  {
+    "action_text": "Verify that treatment strategies and protocols are consistent and coherent at all levels of care provision and between all actors (state and non-state)",
+    "benchmark_indicator_display_abbreviation": "14.3",
+    "activity_types": [
+      "12"
+    ]
+  },
+  {
+    "action_text": "Conduct assessments and integrate into planning activities to ensure that the identification and targeting of cholera-affected populations does not generate stigma or discrimination. Use information and dispel myths and rumours to protect more vulnerable populations from harm. ",
+    "benchmark_indicator_display_abbreviation": "15.1",
+    "activity_types": [
+      "2",
+      "8"
+    ]
+  },
+  {
+    "action_text": "Integrate risk communication for cholera in established coordination mechanisms",
+    "benchmark_indicator_display_abbreviation": "15.2",
+    "activity_types": [
+      "3"
+    ]
+  },
+  {
+    "action_text": "Based on contextual analysis, identify at-risk and vulnerable groups and understand the community beliefs and behaviours in cholera hotpots.",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_types": [
+      "2"
+    ]
+  },
+  {
+    "action_text": "Develop locally adapted messaging, programmes and activities to provide real time information to help community members prevent, identify symptoms, seek early treatment for cholera and where to find treatment building on existing programmes where possible and to build trust among local health-care service providers and other cholera control actors. ",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_types": [
+      "14",
+      "5"
+    ]
+  },
+  {
+    "action_text": "Develop or revise and integrate strategies to assess and engage key community stakeholders to deliver cholera specific community engagement messages and materials. The strategy should include regular check-ins with community engagement stakeholders across all pillars and a systematic community feedback mechanism, i.e., collect and analyse the views of communities to regularly adapt strategies and ways of working.",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_types": [
+      "8"
+    ]
+  },
+  {
+    "action_text": "Engage communities, including community leaders and traditional leaders, to develop locally adapted messaging, programmes and activities to help community members, prevent, identify symptoms of and seek early treatment for cholera, building on existing programmes where possible.",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_types": [
+      "10"
+    ]
+  },
+  {
+    "action_text": "Integrate cholera within national and sub-national communication strategies to communicate to the public regularly in a proactive and transparent manner to avoid rumours, using a mix of preferred channels of populations affected by the cholera outbreak (e.g., TV, radio, SMS, internet, social media, mass awareness initiatives and social mobilization). ",
+    "benchmark_indicator_display_abbreviation": "15.3",
+    "activity_types": [
+      "8"
+    ]
+  }
+]

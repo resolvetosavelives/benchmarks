@@ -29,12 +29,22 @@ $colors: (
   "dark": #2d2d35,
   "gray-dark-transparent": rgba(45, 45, 53, 0.8),
   "text-de-emphasized": #ababab,
-  "health-system": #0d4a59,
-  "health-system-hover": #073642,
-  "health-system-deselected": #86a4ac,
-  "disease-influenza": #4e838f,
-  "disease-influenza-hover": #3f6d78,
-  "disease-influenza-deselected": #a6c1c7,
+  "health-system": rgba(0, 86, 139, 1),
+  // #00568B
+  "health-system-hover": #004980,
+  "health-system-deselected": rgba(0, 86, 139, 0.3),
+  "disease-influenza": rgba(26, 126, 187, 1),
+  // #1A7EBB;
+  "disease-influenza-hover": #136bac,
+  "disease-influenza-deselected": rgba(26, 126, 187, 0.3),
+  "disease-cholera": rgba(112, 189, 237, 1),
+  // #70BDED;
+  "disease-cholera-hover": #54a0d9,
+  "disease-cholera-deselected": rgba(112, 189, 237, 0.3),
+  "disease-ebola": rgba(159, 216, 251, 1),
+  // #9FD8FB;
+  "disease-ebola-hover": #77b7e6,
+  "disease-ebola-deselected": rgba(159, 216, 251, 0.3),
   "disease-pill": #57575d,
 ) !default;
 
