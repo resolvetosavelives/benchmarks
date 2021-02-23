@@ -13,7 +13,7 @@
     "@reduxjs/toolkit": "^1.3.6",
     "@sentry/browser": "^5.20.1",
     "@sentry/webpack-plugin": "^1.12.0",
-    "@stimulus/polyfills": "^1.1.1",
+    "@stimulus/polyfills": "^2.0.0",
     "@stimulus/webpack-helpers": "^1.1.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "4.5.0",
