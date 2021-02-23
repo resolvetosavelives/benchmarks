@@ -31,9 +31,7 @@ blocks:
           - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
           - cache store
-          - bundle exec rake db:setup
-          - bundle exec rake db:test:prepare
-          - bundle exec rake test
+          - bin/rake db:prepare test
       - name: JS tests
         commands:
           - checkout
@@ -50,6 +48,4 @@ blocks:
           - cache restore
           - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
-          - bundle exec rake db:setup
-          - bundle exec rake db:test:prepare
-          - bundle exec rake test:system
+          - bin/rake db:prepare test:system
