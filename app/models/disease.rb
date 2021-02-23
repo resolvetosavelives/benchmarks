@@ -4,6 +4,7 @@ class Disease < ApplicationRecord
   has_many :benchmark_indicator_actions
 
   scope :influenza, -> { find_by_name("influenza") }
+  scope :cholera, -> { find_by_name("cholera") }
 
   def attributes
     {

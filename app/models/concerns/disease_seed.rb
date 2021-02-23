@@ -3,10 +3,11 @@ module DiseaseSeed
 
   module ClassMethods
     def seed!
-      return unless Disease.count.zero?
+      return if Disease.count == 2  # Influenza, Cholera
 
       warn "Seeding data for Diseases..."
-      Disease.create!(display: 'Influenza', name: 'influenza')
+      Disease.create!(display: 'Influenza', name: 'influenza') unless Disease.find_by_name('influenza').present?
+      Disease.create!(display: 'Cholera', name: 'cholera') unless Disease.find_by_name('cholera').present?
     end
 
     def unseed!

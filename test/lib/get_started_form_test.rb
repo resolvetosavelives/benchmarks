@@ -35,6 +35,17 @@ describe GetStartedForm do
     }
   end
 
+  let(:attrs_for_nigeria_jee1_5yr_influenza_cholera) do
+    {
+      # all string values so as to repro how received from an ActionController
+      country_id: "162",
+      # 162 is Nigeria
+      assessment_type: "jee1",
+      plan_term: "5",
+      diseases: [Disease.influenza.id, Disease.cholera.id]
+    }
+  end
+
   let(:attrs_for_nigeria_jee1_5yr_bad_disease) do
     {
        # all string values so as to repro how received from an ActionController
@@ -155,6 +166,38 @@ describe GetStartedForm do
 
     it "returns an expected value for diseases" do
       subject.diseases.must_equal [Disease.influenza.id]
+    end
+  end
+
+  describe "for Nigeria JEE1 5-year plan with influenza and cholera" do
+    let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_5yr_influenza_cholera) }
+
+    it "returns an the expected value for country_id" do
+      subject.country_id.must_equal "162"
+    end
+
+    it "returns an the expected value for assessment_type" do
+      subject.assessment_type.must_equal "jee1"
+    end
+
+    it "returns an the expected value for plan_by_technical_ids" do
+      subject.plan_by_technical_ids.must_be_nil
+    end
+
+    it "returns an the expected value for plan_term" do
+      subject.plan_term.must_equal 5
+    end
+
+    it "returns a country instance" do
+      subject.country.must_be_instance_of Country
+    end
+
+    it "returns an assessment instance" do
+      subject.assessment.must_be_instance_of Assessment
+    end
+
+    it "returns an expected value for diseases" do
+      subject.diseases.must_equal [Disease.influenza.id, Disease.cholera.id]
     end
   end
 
