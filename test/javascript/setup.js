@@ -16,3 +16,14 @@ const script = window.document.createElement("script")
 script.textContent = shim
 
 window.document.body.appendChild(script)
+
+// polyfill matchMedia for Jest
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {},
+    }
+  }

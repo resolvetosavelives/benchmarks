@@ -10,6 +10,7 @@ import {
   getSelectedActionTypeOrdinal,
   getSelectedChartTabIndex,
 } from "config/selectors"
+import "bootstrap"
 
 jest.mock("config/selectors", () => ({
   countActionsByActionType: jest.fn(),
