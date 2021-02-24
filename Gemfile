@@ -18,11 +18,9 @@ gem "sentry-ruby", "~> 4.2"
 gem "webpacker", "~> 5.2"
 
 group :development, :test do
-  gem "byebug", "~> 11.1", platforms: %i[mri mingw x64_mingw]
   gem "colorize", "~> 0.8"
   gem "m", "~> 1.5"
   gem "minitest-rails", "~> 5.2"
-  gem "pry", "~> 0.13"
   gem "pry-byebug", "~> 3.9"
 end
 
