@@ -20,8 +20,8 @@ gem "webpacker", "~> 5.2"
 group :development, :test do
   gem "colorize", "~> 0.8"
   gem "m", "~> 1.5"
-  gem "minitest-rails"
-    gem "pry-byebug", "~> 3.9"
+  gem "minitest-rails", "~> 6.1"
+  gem "pry-byebug", "~> 3.9"
 end
 
 group :development do
