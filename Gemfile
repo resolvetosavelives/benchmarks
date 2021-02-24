@@ -7,13 +7,10 @@ gem "rails", "~> 5.2.4.5"
 gem "pg"
 gem "puma"
 gem "bcrypt"
-# Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "rake"
 gem "rubyXL"
-gem "webpacker", "~> 5.1.1"
+gem "webpacker", "~> 5.2"
 gem "devise"
 gem "sentry-ruby"
 gem "sentry-rails"
@@ -23,8 +20,7 @@ gem "hamlit-rails"
 gem "skylight"
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "byebug"
   gem "m"
   gem "colorize"
   gem "minitest-rails"
