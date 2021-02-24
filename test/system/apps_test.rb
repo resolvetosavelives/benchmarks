@@ -1,11 +1,6 @@
 require File.expand_path("./test/application_system_test_case")
 
 class AppsTest < ApplicationSystemTestCase
-  setup do
-    Capybara.current_driver = :cuprite
-    Capybara.javascript_driver = :cuprite
-  end
-
   test "happy path for Nigeria JEE 1.0" do
     ##
     # visit home page

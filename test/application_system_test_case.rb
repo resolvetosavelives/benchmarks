@@ -1,9 +1,29 @@
-require File.expand_path("./test/test_helper")
+require "test_helper"
 require "capybara/cuprite"
 require "minitest/rails/capybara"
 
+Capybara.default_max_wait_time = 2
+Capybara.default_normalize_ws = true
+Capybara.default_driver = Capybara.javascript_driver = :cuprite
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    window_size: [1200, 800],
+    # See additional options for Dockerized environment in the respective section of this article
+    browser_options: {},
+    # Increase Chrome startup wait time (required for stable CI builds)
+    process_timeout: 10,
+    # Enable debugging capabilities
+    inspector: true,
+    # Allow running Chrome in a headful mode by setting HEADLESS env
+    # var to a falsey value
+    headless: !ENV["HEADLESS"].in?(%w[n 0 no false])
+  )
+end
+
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
+  driven_by :cuprite, using: :chrome, screen_size: [1400, 1400]
 
   register_spec_type(self) { |desc, *addl| addl.include? :system }
 
