@@ -267,7 +267,6 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1)
   bootsnap (~> 1.4)
-  byebug (~> 11.1)
   capybara (~> 3.35)
   colorize (~> 0.8)
   cuprite (~> 0.6)
@@ -281,7 +280,6 @@ DEPENDENCIES
   minitest-reporters (~> 1.4)
   mocha (~> 1.12)
   pg (~> 1.2)
-  pry (~> 0.13)
   pry-byebug (~> 3.9)
   puma (~> 5.2)
   rack-attack (~> 6.5)
