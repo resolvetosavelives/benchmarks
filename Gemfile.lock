@@ -285,7 +285,7 @@ DEPENDENCIES
   pry-byebug (~> 3.9)
   puma (~> 5.2)
   rack-attack (~> 6.5)
-  rails (~> 5.2)
+  rails (~> 5.2.4.5)
   rails-controller-testing (~> 1.0)
   rails-erd (~> 1.6)
   rake (~> 13.0)
@@ -298,7 +298,7 @@ DEPENDENCIES
   webpacker (~> 5.2)
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 3.0.0p0
 
 BUNDLED WITH
    2.2.11

@@ -1,9 +1,8 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.6.3"
-
-gem "rails", "~> 5.2"
+ruby "3.0.0"
+gem "rails", "~> 5.2.4.5"
 
 gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.4", require: false
