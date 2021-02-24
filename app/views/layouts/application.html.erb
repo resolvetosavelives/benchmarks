@@ -8,6 +8,7 @@
     <%# NB: please refer to the section in README.md ## A note on js packs and stylesheets %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
     <%= which_js %>
+    <%= javascript_pack_tag('sentry', async: 'true') if Rails.env.production? %>
   </head>
 
   <body>
