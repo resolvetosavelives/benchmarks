@@ -153,3 +153,5 @@ the top of `packs/application.js`, so that you are not effectively loading `base
 If you remove this import you will again get the JS error `tooltip is not a function`.
 
 This is as optimized as we have been able to get the packs download sizes at this time and still maintain functionality on all pages.
+
+Remove this line
