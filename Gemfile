@@ -25,6 +25,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "better_errors", "~> 2.9"
   gem "html2haml", "~> 2.2"
   gem "listen", "~> 3.4"
   gem "rails-erd", "~> 1.6"
