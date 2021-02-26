@@ -1,7 +1,6 @@
 - heading_disabled_class = @get_started_form.country.present? ? "": "disabled"
 .row{id: "get_started",
 "data-controller": "get-started",
-"data-get-started-redirect-key": @redirect_key,
 "data-get-started-named-ids": AssessmentPublication::NAMED_IDS.to_json}
   .col
     %h1 Let's Get Started
