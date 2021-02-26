@@ -3,20 +3,23 @@ import $ from "jquery"
 
 export default class extends Controller {
   static targets = [
-    "form",
-    "planByTechnicalAreasContainerForJee1",
-    "planByTechnicalAreasContainerForSpar2018",
     "cardOfTechnicalAreasForJee1",
     "cardOfTechnicalAreasForSpar2018",
     "checkboxForTechnicalArea",
+    "countrySelect",
+    "form",
+    "planByTechnicalAreasContainerForJee1",
+    "planByTechnicalAreasContainerForSpar2018",
     "submit",
   ]
 
   connect() {
     this.namedIds = this.data.get("namedIds")
-    $(this.countrySelectTarget).chosen({
-      no_results_text: "No countries match",
-    })
+    if (this.hasCountrySelectTarget) {
+      $(this.countrySelectTarget).chosen({
+        no_results_text: "No countries match",
+      })
+    }
   }
 
   validateForm(event) {
