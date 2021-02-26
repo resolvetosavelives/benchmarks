@@ -2213,10 +2213,10 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@prettier/plugin-ruby@^0.18.2":
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-0.18.2.tgz#f4d0b48484fcaa1927922fe34a1f5564de76d412"
-  integrity sha512-TWQZ+B94zYhtp/V0UbP69yNNhdjX1yx4EUI6irgtAz1GpXUVyNhNZTvYTYI/Lg+dCiMa3HFEJAwVfueLTeVmtw==
+"@prettier/plugin-ruby@^1.5.2":
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-1.5.2.tgz#ca18cd7629ef0a3dec18b8dfbe7aba3d33a2e855"
+  integrity sha512-hHX9ooxGQ4PC4FHge6HmK8LLUhLCu3lk1fVt0TJXvV5AlnY47PaBpQgQ58BzyrU9/EfZj3rpcIKiQQdelkvWNA==
   dependencies:
     prettier ">=1.10"
 
@@ -9248,12 +9248,7 @@ prepend-http@^1.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-1.0.4.tgz#d4f4562b0ce3696e41ac52d0e002e57a635dc6dc"
   integrity sha1-1PRWKwzjaW5BrFLQ4ALlemNdxtw=
 
-prettier@>=1.10:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
-  integrity sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
-
-prettier@^2.0.5:
+prettier@>=1.10, prettier@^2.0.5:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
   integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
