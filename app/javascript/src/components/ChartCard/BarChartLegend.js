@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { makeGetDisplayForDiseaseId } from "../../config/selectors"
 
 const BarChartLegend = () => {
-  const getDisplayForDiseaseId = makeGetDisplayForDiseaseId(1) // TODO: this will get cleaned up in story #
+  const getDisplayForDiseaseId = makeGetDisplayForDiseaseId(1) // TODO: this will get cleaned up in story #177069891
   const labelSeriesB = useSelector((state) => getDisplayForDiseaseId(state))
   const labelSeriesBHtml = labelSeriesB ? (
     <li className="ct-series-b">{labelSeriesB} specific</li>
