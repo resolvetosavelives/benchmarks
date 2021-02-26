@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "plan/goals/:country_name/:assessment_type(/:plan_term)",
       to: "plans#goals", as: "plan_goals"
+  get "/get-started", to: "start#index"
   resources :start, path: "get-started", only: %i[index create show update]
   resources :plans, only: %i[show index create update destroy]
   resources :worksheets, only: %i[show]
