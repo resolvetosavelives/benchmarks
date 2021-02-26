@@ -13,6 +13,8 @@ class AppsTest < ApplicationSystemTestCase
     click_on("Get Started") until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
+    click_on("Next")
+
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
 
