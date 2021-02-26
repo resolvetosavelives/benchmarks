@@ -7,8 +7,9 @@ module BenchmarkIndicatorActionSeed
 
       warn "Seeding data for BenchmarkIndicatorActions..."
       benchmark_actions_attrs =
-        JSON.parse File.read File.join Rails.root,
-                                       "/db/seed-data/benchmark_indicator_actions.json"
+        JSON.parse Rails.root.join(
+                     "db/seed-data/benchmark_indicator_actions.json",
+                   ).read
       benchmark_actions_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
         display_abbreviation = attrs[:benchmark_indicator_display_abbreviation]
@@ -44,15 +45,14 @@ module BenchmarkIndicatorActionSeed
       warn "Seeding data for Influenza Actions..."
 
       influenza_actions_attrs =
-          JSON.parse File.read File.join Rails.root,
-                                         "/db/seed-data/influenza_actions.json"
+        JSON.parse Rails.root.join("db/seed-data/influenza_actions.json").read
       prev_display_abbreviation = nil
       sequence = 1
       influenza_actions_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
         display_abbreviation = attrs[:benchmark_indicator_display_abbreviation]
         benchmark_indicator =
-            BenchmarkIndicator.find_by_display_abbreviation!(display_abbreviation)
+          BenchmarkIndicator.find_by_display_abbreviation!(display_abbreviation)
         if prev_display_abbreviation != display_abbreviation
           sequence = 1
         else
@@ -64,7 +64,7 @@ module BenchmarkIndicatorActionSeed
           level: nil,
           sequence: sequence,
           action_types: [attrs[:activity_type]],
-          disease_id: influenza.id
+          disease_id: influenza.id,
         )
         prev_display_abbreviation = display_abbreviation
       end
@@ -77,15 +77,14 @@ module BenchmarkIndicatorActionSeed
       warn "Seeding data for Cholera Actions..."
 
       cholera_actions_attrs =
-          JSON.parse File.read File.join Rails.root,
-                                         "/db/seed-data/cholera_actions.json"
+        JSON.parse Rails.root.join("db/seed-data/cholera_actions.json").read
       prev_display_abbreviation = nil
       sequence = 1
       cholera_actions_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
         display_abbreviation = attrs[:benchmark_indicator_display_abbreviation]
         benchmark_indicator =
-            BenchmarkIndicator.find_by_display_abbreviation!(display_abbreviation)
+          BenchmarkIndicator.find_by_display_abbreviation!(display_abbreviation)
         if prev_display_abbreviation != display_abbreviation
           sequence = 1
         else
@@ -97,7 +96,7 @@ module BenchmarkIndicatorActionSeed
           level: nil,
           sequence: sequence,
           action_types: attrs[:activity_types],
-          disease_id: cholera.id
+          disease_id: cholera.id,
         )
         prev_display_abbreviation = display_abbreviation
       end
