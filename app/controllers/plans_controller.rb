@@ -15,42 +15,11 @@
 # their browser session. They'll be prompted to log in when they try to save
 # the draft plan. After login (even if an account creation is involved), the
 # draft plan will be attached to their account.
-class PlansController < ApplicationController
-  # workaround for XHR being unable to detect a redirect. JS handles this on the client.
+class PlansController < ApplicationController # workaround for XHR being unable to detect a redirect. JS handles this on the client.
   GET_STARTED_REDIRECT_KEY = "Get-Started-Redirect-To:"
 
   before_action :authenticate_user!, only: %i[index]
   before_action :check_ownership, except: %i[get_started goals index create]
-
-  ##
-  # the purpose of this action is to select which assessment upon which to base a plan
-  def get_started
-    @countries = Country.all_assessed
-    @technical_areas_jee1 = AssessmentTechnicalArea.jee1
-    @technical_areas_spar_2018 = AssessmentTechnicalArea.spar_2018
-    @diseases = Disease.all.order(:created_at)
-    @get_started_form = GetStartedForm.new get_started_params.to_h
-    @redirect_key = GET_STARTED_REDIRECT_KEY
-    if request.post? && request.xhr?
-      if @get_started_form.valid?
-        url =
-            plan_goals_url(
-                country_name: @get_started_form.country.name,
-                assessment_type: @get_started_form.assessment_type,
-                plan_term: @get_started_form.plan_term_s,
-                areas: @get_started_form.technical_area_ids.present? ? @get_started_form.technical_area_ids.join("-") : nil,
-                diseases: @get_started_form.diseases.present? ? @get_started_form.diseases.join("-") : nil,
-            )
-        Rails.logger.info "Redirect workaround for an XHR request to URL: #{url}"
-        render plain: "#{GET_STARTED_REDIRECT_KEY}#{url}"
-        return
-      else
-        render layout: false
-        return
-      end
-    end
-    # will just render the view template
-  end
 
   ##
   # the purpose of this action is to edit goal values for a plan's indicators
@@ -80,7 +49,7 @@ class PlansController < ApplicationController
   # TODO: test coverage for the session state part
   def create
     assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
-    disease_ids = plan_create_params.fetch(:disease_ids).to_s.split('-')
+    disease_ids = plan_create_params.fetch(:disease_ids).to_s.split("-")
     @plan =
       Plan.create_from_goal_form(
         indicator_attrs: plan_create_params.fetch(:indicators),
@@ -153,12 +122,13 @@ class PlansController < ApplicationController
     end
   end
 
-  def get_started_params
-    params.fetch(:get_started_form, {}).permit!
-  end
-
   def plan_create_params
-    params.require(:plan).permit(:assessment_id, :term, :disease_ids, indicators: {})
+    params.require(:plan).permit(
+      :assessment_id,
+      :term,
+      :disease_ids,
+      indicators: {},
+    )
   end
 
   def plan_update_params
