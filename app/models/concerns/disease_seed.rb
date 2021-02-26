@@ -11,7 +11,7 @@ module DiseaseSeed
     end
 
     def unseed!
-      ActiveRecord::Base.connection.exec_query("DELETE FROM #{table_name}")
+      Disease.destroy_all
     end
   end
 end
