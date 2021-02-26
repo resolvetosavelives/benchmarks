@@ -211,6 +211,12 @@ const makeGetDisplayForDiseaseId = (diseaseId) =>
     return disease ? disease.display : ""
   })
 
+const makeGetNameForDiseaseId = (diseaseId) =>
+  createSelector([getAllDiseases], (diseases) => {
+    const disease = getDisease(diseases, diseaseId)
+    return disease ? disease.name : ""
+  })
+
 const getFormAuthenticityToken = () =>
   window.STATE_FROM_SERVER.formAuthenticityToken
 const getFormActionUrl = () => window.STATE_FROM_SERVER.formActionUrl
@@ -258,6 +264,7 @@ export {
   getFormAuthenticityToken,
   getFormActionUrl,
   makeGetDisplayForDiseaseId,
+  makeGetNameForDiseaseId,
   getDisease,
   isPlanInfluenza,
   filterOutInfluenzaActions,
