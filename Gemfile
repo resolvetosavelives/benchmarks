@@ -20,7 +20,10 @@ gem "hamlit-rails"
 gem "skylight"
 
 group :development, :test do
-  gem "byebug"
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem "byebug", platforms: %i[mri mingw x64_mingw]
+  gem "pry"
+  gem "pry-byebug"
   gem "m"
   gem "colorize"
   gem "minitest-rails"

@@ -28,12 +28,7 @@ afterEach(() => {
 describe("when a plan has no diseases selected", () => {
   beforeEach(() => {
     makeGetDisplayForDiseaseId.mockReturnValueOnce(jest.fn())
-    useSelector
-      .mockReturnValueOnce({
-        id: 1,
-        disease_ids: [],
-      })
-      .mockReturnValueOnce(undefined)
+    useSelector.mockReturnValue(undefined)
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)
@@ -54,12 +49,7 @@ describe("when a plan has diseases", () => {
     makeGetDisplayForDiseaseId.mockReturnValueOnce(
       jest.fn().mockReturnValueOnce([])
     )
-    useSelector
-      .mockReturnValueOnce({
-        id: 1,
-        disease_ids: [1],
-      })
-      .mockReturnValueOnce("Influenza")
+    useSelector.mockReturnValue("Influenza")
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)

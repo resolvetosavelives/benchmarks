@@ -3,4 +3,8 @@ namespace :diseases do
   task influenza: :environment do
     BenchmarkIndicatorAction.seed_influenza_actions!
   end
+
+  task cholera: :environment do
+    BenchmarkIndicatorAction.seed_cholera_actions!
+  end
 end

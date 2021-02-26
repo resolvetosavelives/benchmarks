@@ -66,7 +66,10 @@ class AppsTest < ApplicationSystemTestCase
     # save_state_from_server(page)
 
     # verify bar chart by technical area filter functionality
-    find("line[data-original-title*=\"Antimicrobial Resistance\"]", match: :first).click
+    find(
+      "line[data-original-title*=\"Antimicrobial Resistance\"]",
+      match: :first,
+    ).click
     assert_selector("#technical-area-3") # the last one
     assert_no_selector("#technical-area-1") # the first one
 
@@ -100,7 +103,7 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("Saved Nigeria Plan 789") # ugh without this form field(s) dont get filled
   end
 
-  test "happy path for Nigeria JEE 1.0 with influenza" do
+  test "happy path for Nigeria JEE 1.0 with influenza and cholera" do
     ##
     # visit home page
     visit root_url
@@ -124,11 +127,12 @@ class AppsTest < ApplicationSystemTestCase
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
     check "Optional: Influenza planning"
+    check "Optional: Cholera planning"
     click_on("Next")
 
     ##
     # turn up on the Goal-setting page for the selected options and hit save
-    assert_current_path("/plan/goals/Nigeria/jee1/1-year?diseases=1")
+    assert_current_path("/plan/goals/Nigeria/jee1/1-year?diseases=1-2")
     assert page.has_content?("JEE SCORES")
     assert page.has_content?(
              "P.1.1 Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)",
@@ -145,7 +149,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "283", find(".action-count-component .count").text
+    assert_equal "327", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -157,37 +161,47 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # make sure Technical Area tab has a legend
-    find("#tabContentForTechnicalArea .ct-legend").has_content?("Influenza specific")
+    find("#tabContentForTechnicalArea .ct-legend").has_content?(
+      "Influenza specific",
+    )
 
     ##
     # click on one of the bars and make sure others are deselected
     all("#tabContentForTechnicalArea .ct-series-a .ct-bar")[1].click
     count_bars = all("#tabContentForTechnicalArea .ct-series-a .ct-bar").count
-    count_deselected = all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected").count
+    count_deselected =
+      all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected")
+        .count
     assert(count_deselected == count_bars - 1)
 
     ##
     # reset and make sure no bar are deselected
     find(".clear-filters-component a").click
-    count_deselected = all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected").count
+    count_deselected =
+      all("#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected")
+        .count
     assert(count_deselected == 0)
 
     ##
     # make sure Action Type tab has a legend
     find("#tabForActionType").click
-    find("#tabContentForActionType .ct-legend").has_content?("Influenza specific")
+    find("#tabContentForActionType .ct-legend").has_content?(
+      "Influenza specific",
+    )
 
     ##
     # click on one of the bars and make sure others are deselected
     all("#tabContentForActionType .ct-series-b .ct-bar")[1].click
     count_bars = all("#tabContentForActionType .ct-series-b .ct-bar").count
-    count_deselected = all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
+    count_deselected =
+      all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
     assert(count_deselected == count_bars - 1)
 
     ##
     # reset and make sure no bar are deselected
     find(".clear-filters-component a").click
-    count_deselected = all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
+    count_deselected =
+      all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
     assert(count_deselected == 0)
 
     ##
@@ -196,9 +210,9 @@ class AppsTest < ApplicationSystemTestCase
 
     assert_selector("#technical-area-1") do
       assert page.has_content?(
-          # nudge content for 1-year plan
-          "government instruments relevant to pandemic influenza",
-          )
+               # nudge content for 1-year plan
+               "government instruments relevant to pandemic influenza",
+             )
     end
 
     ##
@@ -207,7 +221,10 @@ class AppsTest < ApplicationSystemTestCase
     # save_state_influenza(page)
 
     # verify bar chart by technical area filter functionality
-    find("line[data-original-title*=\"Antimicrobial Resistance\"]", match: :first).click
+    find(
+      "line[data-original-title*=\"Antimicrobial Resistance\"]",
+      match: :first,
+    ).click
     assert_selector("#technical-area-3") # the last one
     assert_no_selector("#technical-area-1") # the first one
 
@@ -245,7 +262,9 @@ class AppsTest < ApplicationSystemTestCase
     click_on("WHO BENCHMARKS")
     assert page.has_content?("BENCHMARKS FOR IHR CAPACITIES")
     click_on("REFERENCE LIBRARY")
-    assert page.has_content?("Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia")
+    assert page.has_content?(
+             "Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia",
+           )
     click_on("email@example.com")
     click_on("My Plans")
     assert page.has_content?("Saved Nigeria Plan 789")

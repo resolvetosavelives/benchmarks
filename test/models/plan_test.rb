@@ -13,102 +13,102 @@ end
 describe Plan do
   let(:indicator_attrs_for_nigeria_jee1_1yr) do
     {
-        jee1_ind_p11: "1",
-        jee1_ind_p11_goal: "2",
-        jee1_ind_p12: "1",
-        jee1_ind_p12_goal: "2",
-        jee1_ind_p21: "2",
-        jee1_ind_p21_goal: "3",
-        jee1_ind_p31: "2",
-        jee1_ind_p31_goal: "3",
-        jee1_ind_p32: "2",
-        jee1_ind_p32_goal: "3",
-        jee1_ind_p33: "2",
-        jee1_ind_p33_goal: "3",
-        jee1_ind_p34: "2",
-        jee1_ind_p34_goal: "3",
-        jee1_ind_p41: "2",
-        jee1_ind_p41_goal: "3",
-        jee1_ind_p42: "3",
-        jee1_ind_p42_goal: "4",
-        jee1_ind_p43: "1",
-        jee1_ind_p43_goal: "2",
-        jee1_ind_p51: "2",
-        jee1_ind_p51_goal: "3",
-        jee1_ind_p61: "1",
-        jee1_ind_p61_goal: "2",
-        jee1_ind_p62: "1",
-        jee1_ind_p62_goal: "2",
-        jee1_ind_p71: "3",
-        jee1_ind_p71_goal: "4",
-        jee1_ind_p72: "4",
-        jee1_ind_p72_goal: "5",
-        jee1_ind_d11: "3",
-        jee1_ind_d11_goal: "4",
-        jee1_ind_d12: "1",
-        jee1_ind_d12_goal: "2",
-        jee1_ind_d13: "2",
-        jee1_ind_d13_goal: "3",
-        jee1_ind_d14: "2",
-        jee1_ind_d14_goal: "3",
-        jee1_ind_d21: "3",
-        jee1_ind_d21_goal: "4",
-        jee1_ind_d22: "2",
-        jee1_ind_d22_goal: "3",
-        jee1_ind_d23: "3",
-        jee1_ind_d23_goal: "4",
-        jee1_ind_d24: "3",
-        jee1_ind_d24_goal: "4",
-        jee1_ind_d31: "3",
-        jee1_ind_d31_goal: "4",
-        jee1_ind_d32: "2",
-        jee1_ind_d32_goal: "3",
-        jee1_ind_d41: "3",
-        jee1_ind_d41_goal: "4",
-        jee1_ind_d42: "4",
-        jee1_ind_d42_goal: "5",
-        jee1_ind_d43: "2",
-        jee1_ind_d43_goal: "3",
-        jee1_ind_r11: "1",
-        jee1_ind_r11_goal: "2",
-        jee1_ind_r12: "1",
-        jee1_ind_r12_goal: "2",
-        jee1_ind_r21: "2",
-        jee1_ind_r21_goal: "3",
-        jee1_ind_r22: "2",
-        jee1_ind_r22_goal: "3",
-        jee1_ind_r23: "3",
-        jee1_ind_r23_goal: "4",
-        jee1_ind_r24: "2",
-        jee1_ind_r24_goal: "3",
-        jee1_ind_r31: "1",
-        jee1_ind_r31_goal: "2",
-        jee1_ind_r41: "1",
-        jee1_ind_r41_goal: "2",
-        jee1_ind_r42: "1",
-        jee1_ind_r42_goal: "2",
-        jee1_ind_r51: "1",
-        jee1_ind_r51_goal: "2",
-        jee1_ind_r52: "3",
-        jee1_ind_r52_goal: "4",
-        jee1_ind_r53: "2",
-        jee1_ind_r53_goal: "3",
-        jee1_ind_r54: "3",
-        jee1_ind_r54_goal: "4",
-        jee1_ind_r55: "3",
-        jee1_ind_r55_goal: "4",
-        jee1_ind_poe1: "1",
-        jee1_ind_poe1_goal: "2",
-        jee1_ind_poe2: "1",
-        jee1_ind_poe2_goal: "2",
-        jee1_ind_ce1: "1",
-        jee1_ind_ce1_goal: "2",
-        jee1_ind_ce2: "2",
-        jee1_ind_ce2_goal: "3",
-        jee1_ind_re1: "3",
-        jee1_ind_re1_goal: "4",
-        jee1_ind_re2: "3",
-        jee1_ind_re2_goal: "4",
+      jee1_ind_p11: "1",
+      jee1_ind_p11_goal: "2",
+      jee1_ind_p12: "1",
+      jee1_ind_p12_goal: "2",
+      jee1_ind_p21: "2",
+      jee1_ind_p21_goal: "3",
+      jee1_ind_p31: "2",
+      jee1_ind_p31_goal: "3",
+      jee1_ind_p32: "2",
+      jee1_ind_p32_goal: "3",
+      jee1_ind_p33: "2",
+      jee1_ind_p33_goal: "3",
+      jee1_ind_p34: "2",
+      jee1_ind_p34_goal: "3",
+      jee1_ind_p41: "2",
+      jee1_ind_p41_goal: "3",
+      jee1_ind_p42: "3",
+      jee1_ind_p42_goal: "4",
+      jee1_ind_p43: "1",
+      jee1_ind_p43_goal: "2",
+      jee1_ind_p51: "2",
+      jee1_ind_p51_goal: "3",
+      jee1_ind_p61: "1",
+      jee1_ind_p61_goal: "2",
+      jee1_ind_p62: "1",
+      jee1_ind_p62_goal: "2",
+      jee1_ind_p71: "3",
+      jee1_ind_p71_goal: "4",
+      jee1_ind_p72: "4",
+      jee1_ind_p72_goal: "5",
+      jee1_ind_d11: "3",
+      jee1_ind_d11_goal: "4",
+      jee1_ind_d12: "1",
+      jee1_ind_d12_goal: "2",
+      jee1_ind_d13: "2",
+      jee1_ind_d13_goal: "3",
+      jee1_ind_d14: "2",
+      jee1_ind_d14_goal: "3",
+      jee1_ind_d21: "3",
+      jee1_ind_d21_goal: "4",
+      jee1_ind_d22: "2",
+      jee1_ind_d22_goal: "3",
+      jee1_ind_d23: "3",
+      jee1_ind_d23_goal: "4",
+      jee1_ind_d24: "3",
+      jee1_ind_d24_goal: "4",
+      jee1_ind_d31: "3",
+      jee1_ind_d31_goal: "4",
+      jee1_ind_d32: "2",
+      jee1_ind_d32_goal: "3",
+      jee1_ind_d41: "3",
+      jee1_ind_d41_goal: "4",
+      jee1_ind_d42: "4",
+      jee1_ind_d42_goal: "5",
+      jee1_ind_d43: "2",
+      jee1_ind_d43_goal: "3",
+      jee1_ind_r11: "1",
+      jee1_ind_r11_goal: "2",
+      jee1_ind_r12: "1",
+      jee1_ind_r12_goal: "2",
+      jee1_ind_r21: "2",
+      jee1_ind_r21_goal: "3",
+      jee1_ind_r22: "2",
+      jee1_ind_r22_goal: "3",
+      jee1_ind_r23: "3",
+      jee1_ind_r23_goal: "4",
+      jee1_ind_r24: "2",
+      jee1_ind_r24_goal: "3",
+      jee1_ind_r31: "1",
+      jee1_ind_r31_goal: "2",
+      jee1_ind_r41: "1",
+      jee1_ind_r41_goal: "2",
+      jee1_ind_r42: "1",
+      jee1_ind_r42_goal: "2",
+      jee1_ind_r51: "1",
+      jee1_ind_r51_goal: "2",
+      jee1_ind_r52: "3",
+      jee1_ind_r52_goal: "4",
+      jee1_ind_r53: "2",
+      jee1_ind_r53_goal: "3",
+      jee1_ind_r54: "3",
+      jee1_ind_r54_goal: "4",
+      jee1_ind_r55: "3",
+      jee1_ind_r55_goal: "4",
+      jee1_ind_poe1: "1",
+      jee1_ind_poe1_goal: "2",
+      jee1_ind_poe2: "1",
+      jee1_ind_poe2_goal: "2",
+      jee1_ind_ce1: "1",
+      jee1_ind_ce1_goal: "2",
+      jee1_ind_ce2: "2",
+      jee1_ind_ce2_goal: "3",
+      jee1_ind_re1: "3",
+      jee1_ind_re1_goal: "4",
+      jee1_ind_re2: "3",
+      jee1_ind_re2_goal: "4",
     }.with_indifferent_access
   end
 
@@ -329,11 +329,11 @@ describe Plan do
     describe "for Nigeria JEE1 with influenza" do
       let(:plan) do
         Plan.create_from_goal_form(
-            indicator_attrs: indicator_attrs_for_nigeria_jee1_1yr,
-            assessment: assessment_for_nigeria_jee1,
-            plan_name: "test plan 3854",
-            disease_ids: [Disease.influenza.id]
-            )
+          indicator_attrs: indicator_attrs_for_nigeria_jee1_1yr,
+          assessment: assessment_for_nigeria_jee1,
+          plan_name: "test plan 3854",
+          disease_ids: [Disease.influenza.id],
+        )
       end
 
       it "returns a saved plan instance" do
@@ -358,7 +358,10 @@ describe Plan do
 
       it "influenza actions have been assigned to the appropriate indicator" do
         indicator = BenchmarkIndicator.first
-        actions_for_indicator_count = BenchmarkIndicatorAction.where(benchmark_indicator_id: indicator.id, disease_id: Disease.influenza).count
+        actions_for_indicator_count =
+          BenchmarkIndicatorAction.where(
+            benchmark_indicator_id: indicator.id, disease_id: Disease.influenza,
+          ).count
         assert_equal 2, actions_for_indicator_count
       end
 
@@ -367,21 +370,63 @@ describe Plan do
       end
     end
 
+    describe "for Nigeria JEE1 with influenza and cholera" do
+      let(:plan) do
+        Plan.create_from_goal_form(
+          indicator_attrs: indicator_attrs_for_nigeria_jee1_1yr,
+          assessment: assessment_for_nigeria_jee1,
+          plan_name: "test plan 3854",
+          disease_ids: [Disease.influenza.id, Disease.cholera.id],
+        )
+      end
+
+      it "returns a saved plan instance" do
+        assert plan.persisted?, "Plan was not saved"
+      end
+
+      it "has the expected term" do
+        _(plan.term).must_equal Plan::TERM_TYPES.first
+      end
+
+      it "has the expected name" do
+        assert_equal "test plan 3854", plan.name
+      end
+
+      it "has the expected number of indicators" do
+        assert_equal 39, plan.goals.size
+      end
+
+      it "has the expected number of actions" do
+        assert_equal (327), plan.plan_actions.size
+      end
+
+      it "influenza actions and cholera actions have been assigned to the appropriate indicator" do
+        indicator = BenchmarkIndicator.first
+        actions_for_indicator_count =
+          BenchmarkIndicatorAction.where(
+            benchmark_indicator_id: indicator.id,
+            disease_id: [Disease.influenza, Disease.cholera],
+          ).count
+        assert_equal 3, actions_for_indicator_count
+      end
+
+      it "has associated diseases influenza and cholera" do
+        assert_equal plan.diseases, [Disease.influenza, Disease.cholera]
+      end
+    end
+
     describe "for Nigeria JEE1 with an invalid disease" do
       let(:indicator_attrs) do
-        {
-            jee1_ind_p11: "1",
-            jee1_ind_p11_goal: "2",
-        }.with_indifferent_access
+        { jee1_ind_p11: "1", jee1_ind_p11_goal: "2" }.with_indifferent_access
       end
 
       it "raises an exception" do
         assert_raise Exceptions::InvalidDiseasesError do
           Plan.create_from_goal_form(
-              indicator_attrs: indicator_attrs,
-              assessment: assessment_for_nigeria_jee1,
-              plan_name: "test plan 3854",
-              disease_ids: [0] # disease id 0 does not exist
+            indicator_attrs: indicator_attrs,
+            assessment: assessment_for_nigeria_jee1,
+            plan_name: "test plan 3854",
+            disease_ids: [0], # disease id 0 does not exist
           )
         end
       end
@@ -424,9 +469,7 @@ describe Plan do
           4,
         ]
 
-        result = plan.count_actions_by_ta(
-          benchmark_technical_areas,
-        )
+        result = plan.count_actions_by_ta(benchmark_technical_areas)
 
         assert_equal expected, result
       end
@@ -460,9 +503,7 @@ describe Plan do
       it "returns an array of the expected integers" do
         expected = [0, 5, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        result = plan.count_actions_by_ta(
-          benchmark_technical_areas,
-        )
+        result = plan.count_actions_by_ta(benchmark_technical_areas)
 
         assert_equal expected, result
       end
