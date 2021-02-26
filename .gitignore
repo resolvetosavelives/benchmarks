@@ -19,6 +19,3 @@
 /public/packs-test
 /yarn-error.log
 yarn-debug.log*
-
-.idea
-.DS_Store
