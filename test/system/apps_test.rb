@@ -17,15 +17,6 @@ class AppsTest < ApplicationSystemTestCase
 
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
-
-    # the following selection + assertion is done to verify fix of the
-    # the bug reported here: https://www.pivotaltracker.com/story/show/171721472
-    select_from_chosen("Angola", from: "get_started_form_country_id")
-    assert_current_path("/get-started")
-
-    select_from_chosen("Nigeria", from: "get_started_form_country_id")
-    choose "Joint External Evaluation (JEE)"
-    choose "1 year plan"
     click_on("Next")
 
     ##
@@ -113,15 +104,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
-    choose "Joint External Evaluation (JEE)"
-    choose "1 year plan"
-
-    # the following selection + assertion is done to verify fix of the
-    # the bug reported here: https://www.pivotaltracker.com/story/show/171721472
-    select_from_chosen("Angola", from: "get_started_form_country_id")
-    assert_current_path("/get-started")
-
-    select_from_chosen("Nigeria", from: "get_started_form_country_id")
+    click_on("Next")
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
     check "Optional: Influenza planning"
@@ -296,6 +279,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Armenia", from: "get_started_form_country_id")
+    click_on("Next")
     choose "State Party Annual Report (SPAR)"
     choose "5 year plan"
     click_on("Next")
@@ -361,10 +345,8 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path("/get-started")
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
-    choose "Joint External Evaluation (JEE)"
-
-    # kludge: must select "5 year plan" after assessment type, otherwise it wont select and
-    #   fails form validation. extra weird because that same flow works in the other test cases.
+    click_on("Next")
+    choose "Joint External Evaluation (JEE)" #   fails form validation. extra weird because that same flow works in the other test cases.
     check "Optional: Plan by technical area(s)"
     sleep 0.1
     check "IHR coordination, communication and advocacy"
