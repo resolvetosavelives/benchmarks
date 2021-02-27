@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+require "bundler/setup"
+require "capybara/cuprite"
+require "capybara/dsl"
+require "pry"
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    window_size: [1200, 800],
+    browser_options: {},
+    process_timeout: 10,
+    inspector: true,
+    headless: false
+  )
+end
+
+Capybara.default_max_wait_time = 2
+Capybara.default_normalize_ws = true
+Capybara.default_driver = Capybara.javascript_driver = :cuprite
+
+class CapybaraConsole
+  include Capybara::DSL
+
+  def run!
+    visit "http://localhost:3000"
+    binding.pry
+    puts "done"
+  end
+end
+
+CapybaraConsole.new.run!
