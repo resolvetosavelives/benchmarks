@@ -6,7 +6,7 @@ describe AssessmentTechnicalArea do
       assessment_technical_area = AssessmentTechnicalArea.first
       result = assessment_technical_area.assessment_publication
 
-      expect(result).must_be_instance_of AssessmentPublication
+      _(result).must_be_instance_of AssessmentPublication
     end
   end
 
@@ -15,8 +15,8 @@ describe AssessmentTechnicalArea do
       assessment_technical_area = AssessmentTechnicalArea.first
       result = assessment_technical_area.assessment_indicators
 
-      expect(result.size).must_equal 2
-      expect(result.first).must_be_instance_of AssessmentIndicator
+      _(result.size).must_equal 2
+      _(result.first).must_be_instance_of AssessmentIndicator
     end
   end
 end
