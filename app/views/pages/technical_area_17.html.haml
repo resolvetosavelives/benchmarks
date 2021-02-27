@@ -1,30 +1,24 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     17. Chemical events
-  
   %p
-    States Parties have in place surveillance and response capacity for chemical risks or events. This requires effective communication and collaboration among the sectors responsible for chemical safety, including health, industry, transportation, waste disposal, animal health and the environment. 
-    
+    States Parties have in place surveillance and response capacity for chemical risks or events. This requires effective communication and collaboration among the sectors responsible for chemical safety, including health, industry, transportation, waste disposal, animal health and the environment.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
-      Timely detection of and effective response to potential chemical risks and/or events in collaboration with other sectors responsible for chemical safety, industries, transportation and safe waste disposal. 
-      
+      Timely detection of and effective response to potential chemical risks and/or events in collaboration with other sectors responsible for chemical safety, industries, transportation and safe waste disposal.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       Mechanisms and an enabling environment established and functioning for detecting and responding to chemical events or emergencies.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "17.1"}
-
   .indicator-head
     %h3
       Benchmark 17.1
@@ -33,7 +27,6 @@
     %strong
       Objective:
     Establish policies, legislation, plans and capacities for surveillance, alert and response to chemical events or emergencies
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -42,7 +35,6 @@
         No capacity
     .body.col-9
       No mechanism to detect and respond to chemical events, poisonings or emergencies.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -53,28 +45,26 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Assess existing policies, legislation and plans for chemical event surveillance, alert and response. 
-        %li 
+        %li
+          Assess existing policies, legislation and plans for chemical event surveillance, alert and response.
+        %li
           Develop a strategy to fill gaps.
-        %li 
+        %li
           Identify key stakeholders in all sectors and establish focal points for coordination and collaboration for chemical event surveillance, alert and response.
-        %li 
+        %li
           Identify and describe priority chemical
         = raw 'events<sup><a href="#49">49</a></sup>'
           to inform planning, a process which can include conducting an inventory of potentially hazardous chemical sites and manufacturing facilities and a review of past chemical events.
-        %li 
+        %li
           Assess capacities for chemical event surveillance, alert and response at all levels (national, subnational).
-        %li 
+        %li
           Develop a strategy and action plan to increase capacities.
-        %li 
+        %li
           Develop guidelines and SOPs for surveillance, alert and response to chemical events and emergencies including for laboratories, and develop training packages on these guidelines and SOPs.
-        %li 
+        %li
           Develop capacities for diagnosis and treatment of chemical poisonings and establish a poison information service that operates at least during office hours.
-        %li 
-          Assess existing laboratory capacities for the analysis of human and environmental samples to inform the assessment and management investigation of chemical events and poisonings. 
-        
-        
+        %li
+          Assess existing laboratory capacities for the analysis of human and environmental samples to inform the assessment and management investigation of chemical events and poisonings.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -85,9 +75,9 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop all the necessary policies and legislation for chemical event surveillance, alert and response.
-        %li 
+        %li
           Develop event response plans at all levels (national, subnational, local) with the involvement of relevant stakeholders and ensure the following:
           %li
             Map and review all hazardous sites and facilities.
@@ -101,17 +91,16 @@
             Conduct training of personnel at relevant agencies and facilities.
           %li
             Implement SOPs for coordination and collaboration during chemical events.
-        %li 
+        %li
           Establish a surveillance system based on the above strategy and guidelines for surveillance and alert.
-        %li 
-          Provide adequate resources to the national 
+        %li
+          Provide adequate resources to the national
           %a{href: "http://apps.who.int/iris/bitstream/10665/41966/1/9241544872_eng.pdf", target: "_blank"}
             poison information
             = raw 'service<sup><a href="#50">50</a></sup>'
           to operate on a 24/7 basis, and integrate the poisons information service into the public health surveillance system.
-        %li 
+        %li
           Put in place agreements with designated quality assured laboratories (national or laboratories in other countries) for timely analysis of biological and environmental samples with suspected chemical exposure.
-        
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -122,17 +111,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish links with key international chemical/toxicology
           = raw ' networks<sup><a href="#51">51</a></sup>'
           for support in the management of chemical events and poisonings.
-        %li 
+        %li
           Ensure all relevant personnel receive regular training on surveillance, alert and response to chemical events and poisonings.
-        %li 
+        %li
           Share on a routine basis, information on chemical events, chemical event risk assessments and response action with relevant agencies.
-        %li 
+        %li
           Monitor on a routine basis, the timeliness of the information sharing mechanism about events and potential risk.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -143,62 +131,56 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Conduct after-action reviews following detection and response to chemical events, or in the absence of real events, conduct exercises.
-        %li 
-          Document and use the findings to assess, review and strengthen surveillance, alert and response including coordination and communication. 
-        %li 
+        %li
+          Document and use the findings to assess, review and strengthen surveillance, alert and response including coordination and communication.
+        %li
           Allocate adequate resources including funds to poison centre(s).
-        %li 
-          Develop a mechanism to integrate the systems of public health surveillance and environmental monitoring that captures and assesses chemical exposures from different sources. 
-        %li 
+        %li
+          Develop a mechanism to integrate the systems of public health surveillance and environmental monitoring that captures and assesses chemical exposures from different sources.
+        %li
           Sustain a mechanism to ensure response
           = raw 'capacity<sup><a href="#52">52</a></sup>'
           at national, subnational and local levels.
- 
-  %h3 Tools:  
+  %h3 Tools:
   %ul
-    %li 
+    %li
       %a{href: "http://www.who.int/environmental_health_emergencies/publications/Manual_Chemical_Incidents/en/", target: "_blank"}
-        The public health management of chemical incidents. 
-      Geneva: World Health Organization; 2009. 
-    %li 
+        The public health management of chemical incidents.
+      Geneva: World Health Organization; 2009.
+    %li
       %a{href:"http://www.who.int/ipcs/publications/natech/en/", target: "_blank"}
-        Chemical releases caused by natural hazard events and disasters: information for public health authorities. 
+        Chemical releases caused by natural hazard events and disasters: information for public health authorities.
       Geneva: World Health Organization; 2018 accessed 8 October 2018).
     %li
       %a{href:"http://apps.who.int/iris/bitstream/10665/41966/1/9241544872_eng.pdf", target: "_blank"}
-        Guidelines for poisons control. 
+        Guidelines for poisons control.
       Geneva: World Health Organization; 1997.
-    
   %hr.indicator-hr
     %h4 Footnotes:
-
     %a{name: "49"}
       %sup
         49
       This process can include carrying out an inventory of hazardous chemical sites and a review of past chemical events.
-    
     %p
     %a{name: "50"}
       %sup
         50
-      The poisons centre should be sufficiently staffed and resourced to provide a robust and reliable 24/7 service. The poisons centre should be well used by the population it serves (check number of calls per day). Refer to 
+      The poisons centre should be sufficiently staffed and resourced to provide a robust and reliable 24/7 service. The poisons centre should be well used by the population it serves (check number of calls per day). Refer to
       %a{href: "http://apps.who.int/iris/bitstream/10665/41966/1/9241544872_eng.pdf", target: "_blank"}
-        Guidelines for poisons control. 
-      Geneva: World Health Organization; 1997. 
-  
+        Guidelines for poisons control.
+      Geneva: World Health Organization; 1997.
     %p
     %a{name: "51"}
       %sup
         51
       Examples include the WHO global and regional toxicology networks and other regional networks, such as in the European Union, professional toxicology associations.
-    
     %p
     %a{name: "52"}
       %sup
         52
-      This includes setting minimum requirements for: local emergency planning and response activities (i.e. arrangements for scaling up capabilities of local emergency response, national support mechanisms, and infrastructure and alerting mechanisms); inspection of hazardous sites and assessment of emergency plans; and operators to comply and liaison with local governments (see also: WHO manual: 
+      This includes setting minimum requirements for: local emergency planning and response activities (i.e. arrangements for scaling up capabilities of local emergency response, national support mechanisms, and infrastructure and alerting mechanisms); inspection of hazardous sites and assessment of emergency plans; and operators to comply and liaison with local governments (see also: WHO manual:
       %a{href: "http://www.who.int/environmental_health_emergencies/publications/Manual_Chemical_Incidents/en/", target: "_blank"}
-        The public health management of chemical incidents. 
+        The public health management of chemical incidents.
       Geneva: World Health Organization; 2009 (, accessed 30 January 2019)).

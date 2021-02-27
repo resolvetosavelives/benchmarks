@@ -7,6 +7,6 @@
     .col-lg-4.col-md-12.sidebar-right.mt-5
       .print-link.d-flex.justify-content-end
         %a{href: "javascript: print()"}
-          = render file: Rails.root.join("app", "assets", "images", "ico-print.svg")
+          = inline_svg_tag "ico-print.svg"
           Print Page
       = render partial: "benchmark_document_navigation"

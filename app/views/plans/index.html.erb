@@ -37,13 +37,13 @@
               <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
               <td class="py-4 text-secondary">
                 <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
-                  <%= render file: Rails.root.join("app", "assets", "images", "ico-download.svg") %>
+                  <%= inline_svg_tag "ico-download.svg" %>
                   Download XLS
                 <% end %>
               </td>
               <td class="py-4 text-secondary">
                 <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
-                  <%= render file: Rails.root.join("app", "assets", "images", "ico-print.svg") %>
+                  <%= inline_svg_tag "ico-print.svg" %>
                   Print Worksheets
                 <% end %>
               </td>

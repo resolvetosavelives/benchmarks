@@ -1,29 +1,24 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     4. Zoonotic disease
-  
   %p
     Functional multisectoral, multidisciplinary mechanisms, policies, systems and practices are in place to minimize the transmission and spread of zoonotic diseases between animals and humans.
-    
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
       Functional animal health, environment and human health systems work individually and collaboratively through documented mechanisms and operational frameworks, using a multisectoral One Health approach and based on international standards, guidance and best practices, to minimize the transmission of zoonotic diseases to human populations.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       (1) Agreement by the animal health and public health sectors on a common list of zoonotic diseases/pathogens of greatest national public health concern. (2) Existence of functional capacities in the animal health and public health sectors and of collaboration, coordination and communication between them for preparedness, detection, assessment and response to zoonotic diseases.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "4.1"}
-
   .indicator-head
     %h3
       Benchmark 4.1
@@ -32,7 +27,6 @@
     %strong
       Objective:
     Strengthen coordinated surveillance systems for priority zoonotic diseases/pathogens
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -40,9 +34,8 @@
       .level-desc
         No capacity
     .body.col-9
-      No jointly agreed upon list of priority diseases to focus coordinated surveillance efforts. 
+      No jointly agreed upon list of priority diseases to focus coordinated surveillance efforts.
       No organized coordinated surveillance system in place to connect animal and public health system.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -54,22 +47,21 @@
         Actions to achieve this level:
       %ul
         %li
-          Identify key stakeholders and focal points from animal health (domestic animals and wildlife), human health, environmental health and other key sectors. 
+          Identify key stakeholders and focal points from animal health (domestic animals and wildlife), human health, environmental health and other key sectors.
         %li
-          Review and assess surveillance capacity in each sector and any existing coordination or data sharing mechanism between the relevant sectors. 
+          Review and assess surveillance capacity in each sector and any existing coordination or data sharing mechanism between the relevant sectors.
         %li
           Jointly define and prioritize zoonotic diseases of greatest national public health concern for the country through a One Health approach that involves all relevant stakeholders.
         %li
           Develop strategy, guidelines and SOPs for coordinated surveillance and reporting of at least two priority zoonotic diseases of greatest national public health concern.
         %li
-          Develop adequate laboratory capacity and standards within relevant sectors to detect zoonotic diseases. 
+          Develop adequate laboratory capacity and standards within relevant sectors to detect zoonotic diseases.
         %li
           Develop operational plans for the management of at least two priority zoonotic diseases of greatest national public health concern.
         %li
           Develop and disseminate training packages on the operational plan, associated guidelines and SOPs.
         %li
           Designate a focal point or unit within the animal and human health sectors and other relevant sectors and formalize a coordination mechanism for priority zoonotic diseases/pathogens.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -81,14 +73,13 @@
         Actions to achieve this level:
       %ul
         %li
-          Establish animal–human interfaces and procedures to exchange surveillance information on zoonotic diseases among relevant sectors (and wider when needed), ideally through an electronic system. 
+          Establish animal–human interfaces and procedures to exchange surveillance information on zoonotic diseases among relevant sectors (and wider when needed), ideally through an electronic system.
         %li
           Establish an interoperability platform or information sharing mechanism between the relevant sectors to initiate coordinated surveillance activities.
         %li
           Implement the operational plan and allocate resources for the prevention and detection of priority zoonotic diseases of greatest national public health concern.
         %li
           Train responsible staff for specific aspects of the surveillance and management of priority zoonotic diseases at national and subnational levels.
-
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -102,12 +93,11 @@
         %li
           Expand laboratory-enhanced coordinated surveillance to all priority zoonotic diseases/pathogens at all levels (national, intermediate and local levels) in all sectors.
         %li
-          Enhance the interoperability platform or information sharing mechanism between the relevant sectors, ideally through linking existing or establishing new electronic systems where applicable. 
+          Enhance the interoperability platform or information sharing mechanism between the relevant sectors, ideally through linking existing or establishing new electronic systems where applicable.
         %li
           Train additional staff across all relevant sectors in the surveillance and management of zoonotic diseases at subnational levels.
         %li
           Use coordinated surveillance data to inform disease prevention and control efforts across all relevant sectors.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -126,9 +116,7 @@
           Use coordinated surveillance data to inform and evaluate disease prevention and control efforts across all relevant sectors.
         %li
           Based on the results of these exercises or reviews, update the guidelines, SOPs and operational plan where appropriate.
-
   %a{name: "4.2"}
-
   .indicator-head
     %h3
       Benchmark 4.2:
@@ -137,7 +125,6 @@
     %strong
       Objective:
     Strengthen mechanism to respond to zoonotic diseases
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -146,7 +133,6 @@
         No capacity
     .body.col-9
       No coordinated response mechanism for priority zoonotic diseases.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -164,12 +150,11 @@
         %li
           Designate a focal point from each sector (animal (domestic animals and wildlife), human and environmental health) for response coordination.
         %li
-          Develop and disseminate training packages on these guidelines and SOPs. 
+          Develop and disseminate training packages on these guidelines and SOPs.
         %li
           Allocate the budget, either domestic or external funds, to the relevant sectors and their respective ministries to support the implementation of IHR capacities for biological hazards at the national level.
         %li
           •	Publish these policies/strategies and plan.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -187,8 +172,7 @@
         %li
           Establish a communication mechanism for rapidly alerting all relevant sectors to priority zoonotic outbreak events to increase sector awareness and decrease the time to conduct a coordinated outbreak response.
         %li
-          Ensure that access to laboratory capacity to detect pathogens for any priority zoonoses is included in the response plans. 
-
+          Ensure that access to laboratory capacity to detect pathogens for any priority zoonoses is included in the response plans.
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -209,7 +193,6 @@
           Monitor and evaluate the multisectoral coordination mechanism for cresponse regularly.
         %li
           Review and update the operational plan/mechanism based on the results of monitoring and evaluation.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -226,7 +209,6 @@
           Review and update the operational plan/mechanism based on the results.
         %li
           Document and disseminate the results and lessons learned from efforts to minimize animal-to-human spread of disease.
-
   %h3 Tools:
   %ul
     %li
