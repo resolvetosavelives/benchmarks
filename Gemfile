@@ -8,6 +8,7 @@ gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.4", require: false
 gem "devise", "~> 4.7"
 gem "hamlit-rails", "~> 0.2"
+gem "inline_svg", "~> 1.7"
 gem "pg", "~> 1.2"
 gem "puma", "~> 5.2"
 gem "rack-attack", "~> 6.5"
@@ -42,3 +43,4 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
+

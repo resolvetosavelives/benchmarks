@@ -1,29 +1,24 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     6. Immunization
-  
   %p
     A national vaccine delivery system is in place – with nationwide reach, effective distribution, easy access for marginalized populations, adequate cold chain and ongoing quality control – to respond to existing and new disease threats.
-    
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
       Effective protection through achievement and maintenance of immunization against measles and other epidemic-prone vaccine-preventable diseases (VPDs). Measles immunization is emphasized because it is widely recognized as a proxy indicator for overall immunization against VPDs and because measles is a continued cause of substantial avoidable morbidity and mortality. Countries will also identify and target immunization to populations at risk of other epidemic-prone VPDs of national importance (such as cholera, Japanese encephalitis, meningococcal disease, typhoid and yellow fever). Diseases that are transferable from animals to humans, such as anthrax and rabies, are also included.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       90‒95% coverage of the country’s 12-month-old population with at least one dose of measles-containing vaccine (MCV), as demonstrated by coverage surveys.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "6.1"}
-
   .indicator-head
     %h3
       Benchmark 6.1
@@ -32,7 +27,6 @@
     %strong
       Objective:
     Increase vaccine coverage for priority vaccine preventable diseases in the country
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -41,7 +35,6 @@
         No capacity
     .body.col-9
       Less than 50% of the country’s 12-month-old population has received at least one dose of MCV, as demonstrated by coverage surveys or administrative data.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -65,9 +58,7 @@
         %li
           Develop plans to perform catch-up campaigns or supplemental immunization activities, based on epidemiologic and coverage data.
         %li
-          Develop a standardized system of monitoring and reporting of adverse events following immunization. 
-        
-        
+          Develop a standardized system of monitoring and reporting of adverse events following immunization.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -80,21 +71,20 @@
       %ul
         %li
           Use mapping and assessment data to plan targeted activities for routine and supplemental immunization for high-risk areas and populations.
-        %li 
+        %li
           Introduce the national vaccine registry in target jurisdictions.
-        %li 
+        %li
           Finalize and approve a national immunization plan to: improve coverage and introduce vaccine into targeted populations, develop steps to operationalize the plan, and disseminate the immunization plan to key stakeholders.
-        %li 
+        %li
           Disseminate messaging tools to improve knowledge-based capacities (communication and education) of healthcare staff for community socialization.
-        %li 
+        %li
           Develop guidelines, SOPs, training materials and toolkits on pre- and postservice guidance for immunizations; and train healthcare workers.
-        %li 
+        %li
           Conduct activities to achieve 70–89% first-dose measles coverage of the country’s 12-month-old population with at least one dose of MCV.
-        %li 
+        %li
           Develop guidelines and tools for safety and waste management and disseminate to all health facilities.
-        %li 
+        %li
           Operationalize a standardized system of monitoring and reporting of adverse events following immunization (AEFIs) at all health facilities.
-
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -105,21 +95,20 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop and implement strategies to increase immunization coverage in all groups with <90% first-dose MCV coverage.
-        %li 
+        %li
           Implement a national plan, finalized and approved by national and state/district/province authorities, to achieve 95% national level coverage by 2020.
-        %li 
+        %li
           Develop quality assurance standards and mechanisms for immunizations at designated health facilities.
-        %li 
+        %li
           Conduct activities to ensure 90% first-dose measles coverage of the country’s 12-month-old population with at least one dose of MCV.
-        %li 
+        %li
           Implement a routine monitoring and evaluation system for health workers who perform immunization.
-        %li 
+        %li
           Promote immunizations and sensitize communities through routine messaging via traditional/social media, and engaging civil society organizations and religious leaders.
-        %li 
+        %li
           Evaluate and validate the AEFI reporting system.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -130,19 +119,17 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Secure sustainable domestic funding for immunizations. 
-        %li 
+        %li
+          Secure sustainable domestic funding for immunizations.
+        %li
           Establish full functionality and integrate the national vaccine registry with national health information systems, if appropriate to the national context.
-        %li 
+        %li
           Conduct activities to ensure 95% first-dose measles coverage of the country’s 12-month-old population with at least one dose of MCV.
-        %li 
+        %li
           Conduct formal surveys of hard-to-reach areas to ensure that coverage rates among vulnerable populations are >90%.
-        %li 
+        %li
           Conduct an evaluation of surveillance data to ensure that the case-based surveillance system is sufficiently sensitive to detect cases (such as measles immunoglobulin M negative febrile rash incidence rate ≥2 per 100 000 population) at the district/province/state levels.
-
   %a{name: "6.2"}
-
   .indicator-head
     %h3
       Benchmark 6.2:
@@ -151,7 +138,6 @@
     %strong
       Objective:
     Strengthening capacity for vaccine access and delivery to target population
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -160,7 +146,6 @@
         No capacity
     .body.col-9
       No plan is in place for nationwide vaccine delivery, nor have plans been drafted to provide vaccines throughout the country to target populations; or inadequate vaccine procurement and forecasting has led to regular stock-outs at the central or district levels.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -171,19 +156,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Complete a review of plans, policies and procedures for vaccine delivery systems and use results to guide vaccine procurement, access and delivery of targeted vaccines.
-        %li 
+        %li
           Complete a review of cold-chain quality assurance and safety measures within vaccine storage and delivery systems to optimize supply chain management.
-        %li 
+        %li
           Review national laws and regulations for the procurement of vaccines from national and international sources during public health emergencies.
-        %li 
+        %li
           Identify barriers to procuring, receiving, storing and deploying vaccines to targeted populations.
-        %li 
+        %li
           Develop national guidance documents for vaccine stockpile and deployment, and obtain approval from ministry of health (and ministry of agriculture, where applicable).
-        %li 
-          Establish a cold chain for vaccine delivery to at least 40% of districts or 40% of the target population. 
-
+        %li
+          Establish a cold chain for vaccine delivery to at least 40% of districts or 40% of the target population.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -194,17 +178,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Conduct a detailed assessment of existing cold chain equipment, including the functioning of cold chain equipment, and identify bottlenecks to maintaining needed cold chain infrastructure at the district/state/province levels; use assessment data to operationalize a plan to service/procure needed cold chain infrastructure.
-        %li 
+        %li
           Develop national guidelines for vaccine delivery to targeted populations with steps to operationalize the plan.
-        %li 
-          Develop and disseminate protocols, SOPs, technical guidelines and toolkits for storage, transportation and deployment of vaccines to healthcare workers and staff. 
-        %li 
+        %li
+          Develop and disseminate protocols, SOPs, technical guidelines and toolkits for storage, transportation and deployment of vaccines to healthcare workers and staff.
+        %li
           Establish a cold chain for vaccine delivery to at least 40–59% of districts or 40–59% of the target population.
-        %li 
+        %li
           Establish procedures for procurement, storage and transportation of vaccines during public health emergencies.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -215,21 +198,20 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Procure and service cold chain equipment in areas identified by a comprehensive assessment.
-        %li 
+        %li
           Train healthcare workers and other immunization staff on protocols, SOPs, technical guidelines and toolkits for storage, transportation and deployment of vaccines.
-        %li 
+        %li
           Establish a cold chain for vaccine delivery to at least 60–79% of districts or 60–79% of the target population.
-        %li 
+        %li
           Conduct quality assurance of cold chain equipment and delivery systems.
-        %li 
+        %li
           Develop a response document to observe appropriate authorizations, clearances, ethical norms and permissions during vaccine delivery.
-        %li 
+        %li
           Establish an inventory system that monitors and transmits vaccine supply and requirements at all needed levels.
-        %li 
+        %li
           Develop training and exercises for hazard-specific response and management plans with sectors, stakeholders and other agencies.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -240,21 +222,20 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Secure sustainable funding for vaccine delivery systems, including for procurement and routine repair of cold chain equipment.
-        %li 
+        %li
           Establish a cold chain for vaccine delivery to more than 80% of districts or more than 80% of the target population.
-        %li 
+        %li
           Conduct a functional exercise (either a simulation or vaccine campaign) to test vaccine delivery systems in a mass campaign or public health emergency setting.
-        %li 
+        %li
           Routinely analyse the inventory system to monitor vaccine supply needs and forecast requirements, with anticipated procurement.
-        %li 
+        %li
           Assess vaccine delivery assessment in hard-to-reach areas, targeted based on existing coverage/registry/surveillance data, and use results to improve vaccine delivery to these areas.
-        %li 
+        %li
           Develop a national strategic framework to prioritize resources and investments in immunization.
-        %li 
+        %li
           Establish a functional national body to assess and recommend an evidence-based national vaccine policy.
-
   %h3 Tools:
   %ul
     %li
@@ -263,7 +244,7 @@
       — endorsed by all 194 Member States of the World Health Assembly in May 2012; provides a framework to prevent millions of deaths by 2020 through more equitable access to existing vaccines for people in all communities
     %li
       %a{href: "http://www.who.int/immunization/documents/mlm/en/", target: "_blank"}
-        Training for mid-level Managers (MLM) 
+        Training for mid-level Managers (MLM)
       — modular training program on all aspects of immunization delivery, including cold chain, vaccines, safe injection equipment; partnering with the community; immunization safety; supportive supervision; monitoring the immunization system; annual immunization planning and budget; EPI coverage surveys; VPD surveillance
     %li
       %a{href: "http://www.who.int/immunization/diseases/measles/SIA-Field-Guide.pdf", target: "_blank"}

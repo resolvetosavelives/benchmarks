@@ -248,7 +248,7 @@
   .card-body
     .row.flex-nowrap
       .col-1
-        = render file: Rails.root.join("app", "assets", "images", "ico-download.svg")
+        = inline_svg_tag "ico-download.svg"
       .col-11
         %a{href: "http://www.who.int/iris/bitstream/10665/311158/1/9789241515429-eng.pdf?ua=1", target: "_blank"}
           WHO Benchmarks for International Health Regulations (IHR) Capacities
