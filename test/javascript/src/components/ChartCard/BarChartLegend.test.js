@@ -3,15 +3,14 @@ import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import { useSelector } from "react-redux"
 import BarChartLegend from "components/ChartCard/BarChartLegend"
-import { makeGetDisplayForDiseaseId } from "config/selectors"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
 
-jest.mock("config/selectors", () => ({
-  makeGetDisplayForDiseaseId: jest.fn(),
-}))
+jest.mock("components/ChartCard/BarChartLegendDiseaseLabel", () => () => (
+  <div className="mock-bar-chart-legend-disease-label" />
+))
 
 let container
 
@@ -27,40 +26,42 @@ afterEach(() => {
 
 describe("when a plan has no diseases selected", () => {
   beforeEach(() => {
-    makeGetDisplayForDiseaseId.mockReturnValueOnce(jest.fn())
-    useSelector.mockReturnValue(undefined)
+    useSelector.mockReturnValue({ id: 1, disease_ids: [] })
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)
     })
   })
 
-  it("displays legend with just Health specific", () => {
-    const ctSeriesAEl = document.querySelectorAll(".ct-series-a")
-    const ctSeriesBEl = document.querySelectorAll(".ct-series-b")
+  it("displays the default Health Security and one disease legend label", () => {
+    const li = document.querySelectorAll("li")
+    const barChartLegendEl = document.querySelectorAll(
+      "div.mock-bar-chart-legend-disease-label"
+    )
 
-    expect(ctSeriesAEl.length).toEqual(1)
-    expect(ctSeriesBEl.length).toEqual(0)
+    expect(li.length).toEqual(1)
+    expect(li[0].textContent).toEqual("Health security")
+    expect(barChartLegendEl.length).toEqual(0)
   })
 })
 
-describe("when a plan has diseases", () => {
+describe("when a plan has diseases selected", () => {
   beforeEach(() => {
-    makeGetDisplayForDiseaseId.mockReturnValueOnce(
-      jest.fn().mockReturnValueOnce([])
-    )
-    useSelector.mockReturnValue("Influenza")
+    useSelector.mockReturnValue({ id: 1, disease_ids: [1, 2] })
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)
     })
   })
 
-  it("displays a legend with the correct label", () => {
-    const ctSeriesAEl = document.querySelectorAll(".ct-series-a")
-    const ctSeriesBEl = document.querySelectorAll(".ct-series-b")
+  it("displays two legend labels", () => {
+    const li = document.querySelectorAll("li")
+    const barChartLegendEl = document.querySelectorAll(
+      "div.mock-bar-chart-legend-disease-label"
+    )
 
-    expect(ctSeriesAEl.length).toEqual(1)
-    expect(ctSeriesBEl.length).toEqual(1)
+    expect(li.length).toEqual(1)
+    expect(li[0].textContent).toEqual("Health security")
+    expect(barChartLegendEl.length).toEqual(2)
   })
 })

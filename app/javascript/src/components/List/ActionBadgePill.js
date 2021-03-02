@@ -1,18 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useSelector } from "react-redux"
-import { makeGetDisplayForDiseaseId } from "../../config/selectors"
+import { makeGetDiseaseForDiseaseId } from "../../config/selectors"
 
 const ActionBadgePill = (props) => {
   const action = props.action
-  const getDisplayForDiseaseId = makeGetDisplayForDiseaseId(action.disease_id)
-  const diseaseDisplayName = useSelector((state) =>
-    getDisplayForDiseaseId(state)
-  )
+  const getDisease = makeGetDiseaseForDiseaseId(action.disease_id)
+  const disease = useSelector((state) => getDisease(state))
   if (action.disease_id) {
     return (
       <span className="badge-light-gray badge-pill action-badge-pill">
-        {diseaseDisplayName}
+        {disease.display}
       </span>
     )
   } else {
