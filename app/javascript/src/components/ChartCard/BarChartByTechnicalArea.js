@@ -29,6 +29,7 @@ class BarChartByTechnicalArea extends React.Component {
       this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
       chartLabels
     )
+    console.log(data)
     this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
