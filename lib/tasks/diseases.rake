@@ -4,6 +4,7 @@ namespace :diseases do
     BenchmarkIndicatorAction.seed_influenza_actions!
   end
 
+  desc "Insert records for Cholera Actions into the database (for Staging and Production)"
   task cholera: :environment do
     BenchmarkIndicatorAction.seed_cholera_actions!
   end

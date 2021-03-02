@@ -205,10 +205,9 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
 const getDisease = (diseases, diseaseId) =>
   diseases.find((disease) => disease.id === diseaseId)
 
-const makeGetDisplayForDiseaseId = (diseaseId) =>
+const makeGetDiseaseForDiseaseId = (diseaseId) =>
   createSelector([getAllDiseases], (diseases) => {
-    const disease = getDisease(diseases, diseaseId)
-    return disease ? disease.display : ""
+    return getDisease(diseases, diseaseId)
   })
 
 const getFormAuthenticityToken = () =>
@@ -257,7 +256,7 @@ export {
   getMatrixOfActionCountsByActionTypeAndDisease,
   getFormAuthenticityToken,
   getFormActionUrl,
-  makeGetDisplayForDiseaseId,
+  makeGetDiseaseForDiseaseId,
   getDisease,
   isPlanInfluenza,
   filterOutInfluenzaActions,

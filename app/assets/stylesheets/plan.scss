@@ -207,25 +207,68 @@
   }
 
   .ct-series-a .ct-bar {
-    stroke: color("health-system");
+    stroke: color("health-security");
 
     &.ct-deselected {
-      stroke: color("health-system-deselected");
+      stroke: color("health-security-deselected");
     }
 
     &:hover {
-      stroke: color("health-system-hover");
+      stroke: color("health-security-hover");
     }
   }
-  .ct-series-b .ct-bar {
-    stroke: color("disease-influenza");
 
-    &.ct-deselected {
-      stroke: color("disease-influenza-deselected");
+  &.diseases-influenza {
+    .ct-series-b .ct-bar {
+      stroke: color("disease-influenza");
+
+      &.ct-deselected {
+        stroke: color("disease-influenza-deselected");
+      }
+
+      &:hover {
+        stroke: color("disease-influenza-hover");
+      }
+    }
+  }
+
+  &.diseases-cholera {
+    .ct-series-b .ct-bar {
+      stroke: color("disease-cholera");
+
+      &.ct-deselected {
+        stroke: color("disease-cholera-deselected");
+      }
+
+      &:hover {
+        stroke: color("disease-cholera-hover");
+      }
+    }
+  }
+
+  &.diseases-influenza-cholera {
+    .ct-series-b .ct-bar {
+      stroke: color("disease-influenza") !important;
+
+      &.ct-deselected {
+        stroke: color("disease-influenza-deselected");
+      }
+
+      &:hover {
+        stroke: color("disease-influenza-hover");
+      }
     }
 
-    &:hover {
-      stroke: color("disease-influenza-hover");
+    .ct-series-c .ct-bar {
+      stroke: color("disease-cholera");
+
+      &.ct-deselected {
+        stroke: color("disease-cholera-deselected");
+      }
+
+      &:hover {
+        stroke: color("disease-cholera-hover");
+      }
     }
   }
 
@@ -268,13 +311,18 @@
       content: "";
     }
 
-    .ct-series-a:before {
-      background-color: color("health-system");
+    .ct-series-health-security:before {
+      background-color: color("health-security");
     }
 
-    .ct-series-b:before {
+    .ct-series-influenza:before {
       background-color: color("disease-influenza");
       border-color: color("disease-influenza");
+    }
+
+    .ct-series-cholera:before {
+      background-color: color("disease-cholera");
+      border-color: color("disease-cholera");
     }
   }
 }

@@ -9,7 +9,7 @@ jest.mock("react-redux", () => ({
 }))
 
 jest.mock("config/selectors", () => ({
-  makeGetDisplayForDiseaseId: jest.fn(),
+  makeGetDiseaseForDiseaseId: jest.fn(),
 }))
 
 let container, action
@@ -49,6 +49,7 @@ describe("with an action that is not disease specific", () => {
 })
 
 describe("with an action that is disease specific", () => {
+  const diseaseId = 1
   beforeEach(() => {
     action = {
       id: 17,
@@ -58,9 +59,13 @@ describe("with an action that is disease specific", () => {
       text:
         "Confirm that relevant legislation, laws, regulatio… of IHR implementation based on the risk profile.",
       level: null,
-      disease_id: 1,
+      disease_id: diseaseId,
     }
-    useSelector.mockReturnValue("mock-disease-display")
+    useSelector.mockReturnValue({
+      id: diseaseId,
+      name: "mock-disease-name",
+      display: "Mock-Disease-Display",
+    })
 
     act(() => {
       ReactDOM.render(<ActionBadgePill action={action} />, container)
@@ -68,6 +73,6 @@ describe("with an action that is disease specific", () => {
   })
 
   it("it displays the badge pill", () => {
-    expect(container.innerHTML).toMatch("mock-disease-display")
+    expect(container.innerHTML).toMatch("Mock-Disease-Display")
   })
 })

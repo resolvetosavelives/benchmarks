@@ -2,35 +2,35 @@ import fs from "fs"
 import { beforeAll, describe, expect, it } from "@jest/globals"
 import configureStore from "redux-mock-store"
 import {
-  getAllTechnicalAreas,
-  getAllIndicators,
-  getAllActions,
-  getNudgesByActionType,
-  getSelectedTechnicalAreaId,
-  getSelectedActionTypeOrdinal,
   countActionsByActionType,
   countActionsByTechnicalArea,
+  filterOutInfluenzaActions,
+  getActionMap,
   getActionsForIds,
   getActionsForPlan,
+  getAllActions,
+  getAllIndicators,
+  getAllTechnicalAreas,
   getIndicatorMap,
+  getIsInfluenzaShowing,
   getMatrixOfActionCountsByActionTypeAndDisease,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
+  getNudgesByActionType,
   getNumOfActionTypes,
   getPlan,
-  getActionMap,
   getPlanActionIds,
-  getPlanGoals,
   getPlanGoalMap,
+  getPlanGoals,
+  getSelectedActionTypeOrdinal,
+  getSelectedTechnicalAreaId,
   getSortedActions,
   getTechnicalAreaMap,
   isPlanInfluenza,
-  makeGetDisplayForDiseaseId,
-  filterOutInfluenzaActions,
-  getIsInfluenzaShowing,
 } from "config/selectors"
 import {
   getCountOfPlanActionIds,
   getPlanChartLabels,
+  makeGetDiseaseForDiseaseId,
 } from "../../../../app/javascript/src/config/selectors"
 
 let store
@@ -715,32 +715,32 @@ describe("for a plan that includes influenza", () => {
     })
   })
 
-  describe("makeGetDisplayForDiseaseId", () => {
+  describe("makeGetDiseaseForDiseaseId", () => {
     it("returns a function that returns the expected string for influenza", () => {
       const state = store.getState()
 
-      const fnResult = makeGetDisplayForDiseaseId(1)
+      const fnResult = makeGetDiseaseForDiseaseId(1)
       const result = fnResult(state)
 
-      expect(result).toEqual("Influenza")
+      expect(result.display).toEqual("Influenza")
     })
 
     it("returns a function that returns the expected string for cholera", () => {
       const state = store.getState()
 
-      const fnResult = makeGetDisplayForDiseaseId(2)
+      const fnResult = makeGetDiseaseForDiseaseId(2)
       const result = fnResult(state)
 
-      expect(result).toEqual("Cholera")
+      expect(result.display).toEqual("Cholera")
     })
 
-    it("returns a function that returns empty string", () => {
+    it("returns a function that returns undefined", () => {
       const state = store.getState()
 
-      const fnResult = makeGetDisplayForDiseaseId(0)
+      const fnResult = makeGetDiseaseForDiseaseId(0)
       const result = fnResult(state)
 
-      expect(result).toEqual("")
+      expect(result).toEqual(undefined)
     })
   })
 
