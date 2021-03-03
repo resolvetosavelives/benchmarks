@@ -1,34 +1,15 @@
 import React, { useEffect } from "react"
 import $ from "jquery"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { setSelectedChartTabIndex } from "../../config/actions"
 import BarChartByTechnicalArea from "./BarChartByTechnicalArea"
 import BarChartByActionType from "./BarChartByActionType"
 import InfoPane from "./InfoPane"
-import { getPlan, makeGetDiseaseForDiseaseId } from "../../config/selectors"
 
 const tabSelector = 'a[data-toggle="tab"]'
 
 const ChartCard = () => {
   const dispatch = useDispatch()
-  const plan = useSelector((state) => getPlan(state))
-  const getDiseaseForDiseaseId0 = makeGetDiseaseForDiseaseId(
-    plan.disease_ids.length > 0 ? plan.disease_ids[0] : -1
-  )
-  const disease0 = useSelector((state) => getDiseaseForDiseaseId0(state))
-  const getDiseaseForDiseaseId1 = makeGetDiseaseForDiseaseId(
-    plan.disease_ids.length > 1 ? plan.disease_ids[1] : -1
-  )
-  const disease1 = useSelector((state) => getDiseaseForDiseaseId1(state))
-  let diseaseSeriesClass = "diseases"
-  if (plan.disease_ids.length === 0) {
-    diseaseSeriesClass += "-none"
-  } else {
-    diseaseSeriesClass += `-${disease0.name}`
-    if (plan.disease_ids.length > 1) {
-      diseaseSeriesClass += `-${disease1.name}`
-    }
-  }
 
   useEffect(() => {
     $(tabSelector).on("show.bs.tab", function (e) {
@@ -40,8 +21,9 @@ const ChartCard = () => {
       $(tabSelector).off()
     }
   })
+
   return (
-    <div className={`plan card ${diseaseSeriesClass}`}>
+    <div className="plan card">
       <ul className="nav nav-tabs pt-3" role="tablist">
         <li className="nav-item px-2">
           <a

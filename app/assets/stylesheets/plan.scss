@@ -218,57 +218,27 @@
     }
   }
 
-  &.diseases-influenza {
-    .ct-series-b .ct-bar {
-      stroke: color("disease-influenza");
+  .ct-series-b .ct-bar {
+    stroke: color("disease-influenza");
 
-      &.ct-deselected {
-        stroke: color("disease-influenza-deselected");
-      }
+    &.ct-deselected {
+      stroke: color("disease-influenza-deselected");
+    }
 
-      &:hover {
-        stroke: color("disease-influenza-hover");
-      }
+    &:hover {
+      stroke: color("disease-influenza-hover");
     }
   }
 
-  &.diseases-cholera {
-    .ct-series-b .ct-bar {
-      stroke: color("disease-cholera");
+  .ct-series-c .ct-bar {
+    stroke: color("disease-cholera");
 
-      &.ct-deselected {
-        stroke: color("disease-cholera-deselected");
-      }
-
-      &:hover {
-        stroke: color("disease-cholera-hover");
-      }
-    }
-  }
-
-  &.diseases-influenza-cholera {
-    .ct-series-b .ct-bar {
-      stroke: color("disease-influenza");
-
-      &.ct-deselected {
-        stroke: color("disease-influenza-deselected");
-      }
-
-      &:hover {
-        stroke: color("disease-influenza-hover");
-      }
+    &.ct-deselected {
+      stroke: color("disease-cholera-deselected");
     }
 
-    .ct-series-c .ct-bar {
-      stroke: color("disease-cholera");
-
-      &.ct-deselected {
-        stroke: color("disease-cholera-deselected");
-      }
-
-      &:hover {
-        stroke: color("disease-cholera-hover");
-      }
+    &:hover {
+      stroke: color("disease-cholera-hover");
     }
   }
 
