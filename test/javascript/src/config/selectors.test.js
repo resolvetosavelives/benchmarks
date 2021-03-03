@@ -519,7 +519,7 @@ describe("for a plan without any specific diseases", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -723,7 +723,7 @@ describe("for a plan that includes influenza", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -982,25 +982,25 @@ describe("for a plan that includes influenza and cholera", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
-        11,
-        45,
-        27,
         8,
-        14,
+        40,
+        23,
+        7,
         9,
-        24,
-        57,
-        6,
-        54,
+        9,
+        20,
+        45,
+        2,
+        45,
         13,
-        36,
-        15,
-        9,
-        27,
+        32,
+        8,
+        3,
+        23,
       ])
       expect(result[1]).toEqual([1, 8, 5, 0, 0, 0, 0, 3, 3, 20, 2, 0, 3, 1, 2])
     })
