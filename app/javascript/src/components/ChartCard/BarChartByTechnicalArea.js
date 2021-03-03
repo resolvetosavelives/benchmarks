@@ -29,6 +29,7 @@ class BarChartByTechnicalArea extends React.Component {
       this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
       chartLabels
     )
+    console.log(data)
     this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
@@ -123,8 +124,10 @@ class BarChartByTechnicalArea extends React.Component {
     const domNode = chartistGraph.chart
     const seriesA = $(".ct-series-a .ct-bar", domNode)
     const seriesB = $(".ct-series-b .ct-bar", domNode)
+    const seriesC = $(".ct-series-c .ct-bar", domNode)
     seriesA.removeClass("ct-deselected")
     seriesB.removeClass("ct-deselected")
+    seriesC.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
@@ -133,28 +136,33 @@ class BarChartByTechnicalArea extends React.Component {
       const objOfActionCounts = {
         general: matrixOfActionCountsByTechnicalAreaAndDisease[0][i],
         influenza: matrixOfActionCountsByTechnicalAreaAndDisease[1][i],
+        cholera: matrixOfActionCountsByTechnicalAreaAndDisease[2][i],
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
+      const $elBarSegmentC = $(seriesC[i])
       if (
         selectedTechnicalAreaId &&
         technicalAreas[i].id !== selectedTechnicalAreaId
       ) {
         $elBarSegmentA.addClass("ct-deselected")
         $elBarSegmentB.addClass("ct-deselected")
+        $elBarSegmentC.addClass("ct-deselected")
       }
       this.initTooltipForSegmentOfChartByTechnicalArea(
         technicalAreas[i],
         objOfActionCounts,
         $elBarSegmentA,
         $elBarSegmentB,
+        $elBarSegmentC,
         i
       )
       this.initClickHandlerForChartByTechnicalArea(
         technicalAreas[i],
         dispatch,
         $elBarSegmentA,
-        $elBarSegmentB
+        $elBarSegmentB,
+        $elBarSegmentC
       )
     }
   }
@@ -210,9 +218,10 @@ class BarChartByTechnicalArea extends React.Component {
     technicalArea,
     dispatch,
     $elBarSegmentA,
-    $elBarSegmentB
+    $elBarSegmentB,
+    $elBarSegmentC
   ) {
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment.on("click", () => {
         dispatch(selectTechnicalArea(technicalArea.id))

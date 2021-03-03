@@ -130,16 +130,19 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
         const currentIndex = technicalArea.sequence - 1
         if (action.disease_id === 1) {
           acc[1][currentIndex] += 1
+        } else if (action.disease_id === 2) {
+          acc[2][currentIndex] += 1
         } else {
           acc[0][currentIndex] += 1
         }
         return acc
       },
-      [fnBlankArray(), fnBlankArray()]
+      [fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
     // return value:
     //   an array of arrays that each contains TechnicalAreas.length elements full of integers of counts.
-    //   the first array is for general actions, the second array is for influenza actions.
+    //   the first array is for general actions, the second array is for influenza
+    //   actions, the third array is for cholera actions
   }
 )
 
@@ -187,6 +190,8 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
             )
             if (action.disease_id === 1) {
               acc[1][indexOfActionType] += 1
+            } else if (action.disease_id === 2) {
+              acc[2][indexOfActionType] += 1
             } else {
               acc[0][indexOfActionType] += 1
             }
@@ -194,7 +199,7 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
         }
         return acc
       },
-      [fnBlankArray(), fnBlankArray()]
+      [fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
     // return value:
     //   an array of arrays that each contains an element per ActionTypes of integers of counts.

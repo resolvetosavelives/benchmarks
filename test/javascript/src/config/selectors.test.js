@@ -419,9 +419,10 @@ describe("for a plan without any specific diseases", () => {
       const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(18)
       expect(result[1].length).toEqual(18)
+      expect(result[2].length).toEqual(18)
       expect(result[0]).toEqual([
         6,
         12,
@@ -443,6 +444,26 @@ describe("for a plan without any specific diseases", () => {
         4,
       ])
       expect(result[1]).toEqual([
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ])
+      expect(result[2]).toEqual([
         0,
         0,
         0,
@@ -498,7 +519,7 @@ describe("for a plan without any specific diseases", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -602,9 +623,10 @@ describe("for a plan that includes influenza", () => {
       const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(18)
       expect(result[1].length).toEqual(18)
+      expect(result[2].length).toEqual(18)
       expect(result[0]).toEqual([
         6,
         12,
@@ -645,6 +667,26 @@ describe("for a plan that includes influenza", () => {
         0,
         0,
       ])
+      expect(result[2]).toEqual([
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+      ])
     })
   })
 
@@ -681,7 +723,7 @@ describe("for a plan that includes influenza", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(2)
+      expect(result.length).toEqual(3)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -777,6 +819,265 @@ describe("for a plan that includes influenza", () => {
       const result = getCountOfPlanActionIds(state)
 
       expect(result).toEqual(283)
+    })
+  })
+})
+
+describe("for a plan that includes influenza and cholera", () => {
+  beforeAll(() => {
+    const mockStore = configureStore()
+    const strStateFromServer = fs.readFileSync(
+      `${__dirname}/../../../fixtures/files/state_from_server_with_influenza_and_cholera.json`,
+      "utf-8"
+    )
+    const initialStateFromServer = JSON.parse(strStateFromServer)
+    store = mockStore(initialStateFromServer)
+  })
+
+  describe("getPlanActionIds", () => {
+    it("returns the array of all plan IDs", () => {
+      const state = store.getState()
+
+      let result = getPlanActionIds(state)
+
+      expect(result).toBeInstanceOf(Array)
+      expect(result.length).toEqual(327)
+    })
+  })
+
+  describe("getCountActionsByTechnicalArea", () => {
+    it("returns an array of integers, one for each Technical Area, that sums the actions for each", () => {
+      const state = store.getState()
+      const result = countActionsByTechnicalArea(state)
+
+      expect(result).toBeInstanceOf(Array)
+      expect(result.length).toEqual(18)
+      expect(result).toEqual([
+        9,
+        19,
+        23,
+        10,
+        12,
+        22,
+        29,
+        8,
+        24,
+        23,
+        22,
+        17,
+        7,
+        31,
+        35,
+        18,
+        14,
+        4,
+      ])
+      expect(result.reduce((acc, r) => acc + r, 0)).toEqual(327)
+    })
+  })
+
+  describe("getMatrixOfActionCountsByTechnicalAreaAndDisease", () => {
+    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 18 columns (one per Technical Area)", () => {
+      const state = store.getState()
+      const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
+
+      expect(result).toBeInstanceOf(Array)
+      expect(result.length).toEqual(3)
+      expect(result[0].length).toEqual(18)
+      expect(result[1].length).toEqual(18)
+      expect(result[2].length).toEqual(18)
+      expect(result[0]).toEqual([
+        6,
+        12,
+        19,
+        9,
+        11,
+        13,
+        19,
+        7,
+        15,
+        18,
+        11,
+        15,
+        7,
+        19,
+        20,
+        16,
+        14,
+        4,
+      ])
+      expect(result[1]).toEqual([
+        2,
+        5,
+        2,
+        1,
+        0,
+        1,
+        3,
+        1,
+        3,
+        4,
+        8,
+        2,
+        0,
+        6,
+        8,
+        2,
+        0,
+        0,
+      ])
+      expect(result[2]).toEqual([
+        1,
+        2,
+        2,
+        0,
+        1,
+        8,
+        7,
+        0,
+        6,
+        1,
+        3,
+        0,
+        0,
+        6,
+        7,
+        0,
+        0,
+        0,
+      ])
+    })
+  })
+
+  describe("countActionsByActionType", () => {
+    it("returns an array of integers, one for each Action Type, that sums the actions for each", () => {
+      const state = store.getState()
+      const result = countActionsByActionType(state)
+
+      expect(result).toBeInstanceOf(Array)
+      expect(result.length).toEqual(15)
+      expect(result).toEqual([
+        12,
+        53,
+        32,
+        8,
+        14,
+        9,
+        24,
+        60,
+        9,
+        74,
+        15,
+        36,
+        18,
+        10,
+        29,
+      ])
+    })
+  })
+
+  describe("getMatrixOfActionCountsByActionTypeAndDisease", () => {
+    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 15 columns (one per Action Type)", () => {
+      const state = store.getState()
+      const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
+
+      expect(result).toBeInstanceOf(Array)
+      expect(result.length).toEqual(3)
+      expect(result[0].length).toEqual(15)
+      expect(result[1].length).toEqual(15)
+      expect(result[0]).toEqual([
+        8,
+        40,
+        23,
+        7,
+        9,
+        9,
+        20,
+        45,
+        2,
+        45,
+        13,
+        32,
+        8,
+        3,
+        23,
+      ])
+      expect(result[1]).toEqual([1, 8, 5, 0, 0, 0, 0, 3, 3, 20, 2, 0, 3, 1, 2])
+    })
+  })
+
+  describe("isPlanInfluenza", () => {
+    it("returns true", () => {
+      const state = store.getState()
+
+      let result = isPlanInfluenza(state)
+
+      expect(result).toEqual(true)
+    })
+  })
+
+  describe("makeGetDiseaseForDiseaseId", () => {
+    it("returns a function that returns the expected string for influenza", () => {
+      const state = store.getState()
+
+      const fnResult = makeGetDiseaseForDiseaseId(1)
+      const result = fnResult(state)
+
+      expect(result.display).toEqual("Influenza")
+    })
+
+    it("returns a function that returns the expected string for cholera", () => {
+      const state = store.getState()
+
+      const fnResult = makeGetDiseaseForDiseaseId(2)
+      const result = fnResult(state)
+
+      expect(result.display).toEqual("Cholera")
+    })
+
+    it("returns a function that returns undefined", () => {
+      const state = store.getState()
+
+      const fnResult = makeGetDiseaseForDiseaseId(0)
+      const result = fnResult(state)
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe("filterOutInfluenzaActions", () => {
+    it("returns a function that returns the expected string", () => {
+      const actionsToFilter = [
+        { id: 1, disease_id: 12 },
+        { id: 2, disease_id: undefined },
+        { id: 3, disease_id: 17 },
+        { id: 4, disease_id: null },
+      ]
+      const result = filterOutInfluenzaActions(actionsToFilter)
+
+      expect(result.length).toEqual(2)
+    })
+  })
+
+  describe("getIsInfluenzaShowing", () => {
+    it("returns a function that returns the expected string", () => {
+      const state = store.getState()
+      state.ui = {}
+      state.ui.isInfluenzaShowing = true
+
+      const result = getIsInfluenzaShowing(state)
+
+      expect(result).toBeTruthy()
+    })
+  })
+
+  describe("getCountOfPlanActionIds", () => {
+    it("returns a function that returns the expected string", () => {
+      const state = store.getState()
+
+      const result = getCountOfPlanActionIds(state)
+
+      expect(result).toEqual(327)
     })
   })
 })

@@ -123,8 +123,10 @@ class BarChartByActionType extends React.Component {
     const domNode = chartistGraph.chart
     const seriesA = $(".ct-series-a .ct-bar", domNode)
     const seriesB = $(".ct-series-b .ct-bar", domNode)
+    const seriesC = $(".ct-series-c .ct-bar", domNode)
     seriesA.removeClass("ct-deselected")
     seriesB.removeClass("ct-deselected")
+    seriesC.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
@@ -133,20 +135,30 @@ class BarChartByActionType extends React.Component {
       const objOfActionCounts = {
         general: matrixOfActionCountsByActionTypeAndDisease[0][i],
         influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
+        cholera: matrixOfActionCountsByActionTypeAndDisease[2][i],
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
+      const $elBarSegmentC = $(seriesC[i])
       if (selectedActionTypeOrdinal && i !== selectedActionTypeOrdinal - 1) {
         $elBarSegmentA.addClass("ct-deselected")
         $elBarSegmentB.addClass("ct-deselected")
+        $elBarSegmentC.addClass("ct-deselected")
       }
       this.initTooltipForSegmentOfChart(
         objOfActionCounts,
         chartLabels[i],
         $elBarSegmentA,
-        $elBarSegmentB
+        $elBarSegmentB,
+        $elBarSegmentC
       )
-      this.initClickHandlerForChart(dispatch, i, $elBarSegmentA, $elBarSegmentB)
+      this.initClickHandlerForChart(
+        dispatch,
+        i,
+        $elBarSegmentA,
+        $elBarSegmentB,
+        $elBarSegmentC
+      )
     }
   }
 
@@ -181,7 +193,10 @@ class BarChartByActionType extends React.Component {
   }
 
   getTooltipHtmlContent(nameOfActionType, objOfActionCounts) {
-    const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
+    const sumOfCounts =
+      objOfActionCounts.general +
+      objOfActionCounts.influenza +
+      objOfActionCounts.cholera
     let tooltipHtml = `
         <strong>
           ${nameOfActionType}: ${sumOfCounts}
@@ -201,9 +216,10 @@ class BarChartByActionType extends React.Component {
     dispatch,
     segmentIndex,
     $elBarSegmentA,
-    $elBarSegmentB
+    $elBarSegmentB,
+    $elBarSegmentC
   ) {
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment.on("click", () => {
         dispatch(selectActionType(segmentIndex))
