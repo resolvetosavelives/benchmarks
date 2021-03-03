@@ -248,7 +248,7 @@
 
   &.diseases-influenza-cholera {
     .ct-series-b .ct-bar {
-      stroke: color("disease-influenza") !important;
+      stroke: color("disease-influenza");
 
       &.ct-deselected {
         stroke: color("disease-influenza-deselected");
