@@ -173,13 +173,14 @@ class BarChartByActionType extends React.Component {
     objOfActionCounts,
     nameOfActionType,
     $elBarSegmentA,
-    $elBarSegmentB
+    $elBarSegmentB,
+    $elBarSegmentC
   ) {
     const tooltipTitle = this.getTooltipHtmlContent(
       nameOfActionType,
       objOfActionCounts
     )
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment
         .attr("title", tooltipTitle)
@@ -202,13 +203,27 @@ class BarChartByActionType extends React.Component {
           ${nameOfActionType}: ${sumOfCounts}
         </strong>
     `
-    if (objOfActionCounts.influenza > 0) {
+    if (objOfActionCounts.influenza > 0 && objOfActionCounts.cholera > 0) {
+      tooltipHtml = `${tooltipHtml}
+        <div>&nbsp;</div>
+        <div>Health System: ${objOfActionCounts.general}</div>
+        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
+        <div>Cholera-specific: ${objOfActionCounts.cholera}</div>
+      `
+    } else if (objOfActionCounts.influenza > 0) {
       tooltipHtml = `${tooltipHtml}
         <div>&nbsp;</div>
         <div>Health System: ${objOfActionCounts.general}</div>
         <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
       `
+    } else if (objOfActionCounts.cholera > 0) {
+      tooltipHtml = `${tooltipHtml}
+        <div>&nbsp;</div>
+        <div>Health System: ${objOfActionCounts.general}</div>
+        <div>Cholera-specific: ${objOfActionCounts.cholera}</div>
+      `
     }
+
     return tooltipHtml
   }
 
