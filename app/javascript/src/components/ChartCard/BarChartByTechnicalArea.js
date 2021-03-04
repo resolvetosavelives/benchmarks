@@ -9,6 +9,7 @@ import {
   getAllActions,
   getAllTechnicalAreas,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
+  getPlan,
   getPlanChartLabels,
   getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
@@ -29,7 +30,6 @@ class BarChartByTechnicalArea extends React.Component {
       this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
       chartLabels
     )
-    console.log(data)
     this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
@@ -178,13 +178,14 @@ class BarChartByTechnicalArea extends React.Component {
     technicalArea,
     objOfActionCounts,
     $elBarSegmentA,
-    $elBarSegmentB
+    $elBarSegmentB,
+    $elBarSegmentC
   ) {
     const tooltipTitle = this.getTooltipHtmlContent(
       technicalArea,
       objOfActionCounts
     )
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB]
+    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment
         .attr("title", tooltipTitle)
@@ -197,20 +198,54 @@ class BarChartByTechnicalArea extends React.Component {
     })
   }
 
+  getTooltipCategoryDisplayName(category) {
+    let displayName = ""
+
+    if (category === "general") {
+      displayName = "Health System"
+    } else {
+      displayName = "${category}-specific"
+    }
+
+    console.log(displayName)
+    return displayName
+  }
+
+  // TODO: break this down to accomodate more diseases in the future
   getTooltipHtmlContent(technicalArea, objOfActionCounts) {
+    const tooltipCategoryDisplayName = (category) => {
+      let displayName = ""
+
+      if (category === "general") {
+        displayName = "Health System"
+      } else {
+        displayName = `${
+          category.charAt(0).toUpperCase() + category.substring(1)
+        }-specific`
+      }
+
+      return displayName
+    }
+
     const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
     let tooltipHtml = `
         <strong>
           ${technicalArea.text}: ${sumOfCounts}
         </strong>
     `
-    if (objOfActionCounts.influenza > 0) {
+
+    if (sumOfCounts > objOfActionCounts.general) {
       tooltipHtml = `${tooltipHtml}
         <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
-      `
+	`
+
+      for (const category in objOfActionCounts) {
+        tooltipHtml += `<div>${tooltipCategoryDisplayName(category)}: ${
+          objOfActionCounts[category]
+        }</div>`
+      }
     }
+
     return tooltipHtml
   }
 
@@ -253,6 +288,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
     selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
+    plan: getPlan(state),
   }
 }
 
