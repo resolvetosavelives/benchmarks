@@ -31,6 +31,7 @@ import {
   makeGetDiseaseForDiseaseId,
   makeGetDiseaseIsShowingForDisease,
 } from "../../../../app/javascript/src/config/selectors"
+import { CHART_TAB_INDEX_FOR_TECHNICAL_AREA } from "../../../../app/javascript/src/config/constants"
 
 let store
 
@@ -46,6 +47,9 @@ describe("for a plan without any specific diseases", () => {
       selectedListMode: 213,
       selectedTechnicalAreaId: 11,
       selectedActionTypeOrdinal: 13,
+      isInfluenzaShowing: true,
+      isCholeraShowing: true,
+      selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
     }
     store = mockStore(initialStateFromServer)
   })
@@ -561,6 +565,14 @@ describe("for a plan that includes influenza", () => {
       "utf-8"
     )
     const initialStateFromServer = JSON.parse(strStateFromServer)
+    initialStateFromServer.ui = {
+      selectedListMode: 213,
+      selectedTechnicalAreaId: 11,
+      selectedActionTypeOrdinal: 13,
+      isInfluenzaShowing: true,
+      isCholeraShowing: true,
+      selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
+    }
     store = mockStore(initialStateFromServer)
   })
 
@@ -763,7 +775,7 @@ describe("for a plan that includes influenza", () => {
         const fnResult = makeGetDiseaseIsShowingForDisease(influenza)
         const result = fnResult(state)
 
-        expect(result).toEqual(false)
+        expect(result).toEqual(true)
       })
 
       it("returns a function that returns the current display value", () => {
@@ -784,7 +796,7 @@ describe("for a plan that includes influenza", () => {
         const fnResult = makeGetDiseaseIsShowingForDisease(cholera)
         const result = fnResult(state)
 
-        expect(result.display).toEqual(true)
+        expect(result).toEqual(true)
       })
 
       it("returns a function that returns the current display value", () => {
@@ -842,6 +854,14 @@ describe("for a plan that includes influenza and cholera", () => {
       "utf-8"
     )
     const initialStateFromServer = JSON.parse(strStateFromServer)
+    initialStateFromServer.ui = {
+      selectedListMode: 213,
+      selectedTechnicalAreaId: 11,
+      selectedActionTypeOrdinal: 13,
+      isInfluenzaShowing: true,
+      isCholeraShowing: true,
+      selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
+    }
     store = mockStore(initialStateFromServer)
   })
 
