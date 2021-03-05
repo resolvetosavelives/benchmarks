@@ -6,7 +6,6 @@ import {
   filterActionsForDiseaseId,
 } from "../../config/selectors"
 import Action from "./Action"
-import FilteredGeneralActions from "./FilteredGeneralActions"
 
 const FilteredDiseaseActions = (props) => {
   const actions = props.actions
@@ -25,7 +24,7 @@ const FilteredDiseaseActions = (props) => {
   ))
 }
 
-FilteredGeneralActions.propTypes = {
+FilteredDiseaseActions.propTypes = {
   actions: PropTypes.array.isRequired,
   disease: PropTypes.object.isRequired,
 }
