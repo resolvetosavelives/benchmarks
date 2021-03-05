@@ -16,6 +16,7 @@ import {
   IS_INFLUENZA_SHOWING,
   SET_SELECTED_CHART_TAB_INDEX,
   CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
+  IS_CHOLERA_SHOWING,
 } from "./constants"
 
 export default function initReducers(initialState) {
@@ -110,6 +111,7 @@ export default function initReducers(initialState) {
       selectedTechnicalAreaId: null,
       selectedActionTypeOrdinal: null,
       isInfluenzaShowing: true,
+      isCholeraShowing: true,
       selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
     },
     {
@@ -142,10 +144,15 @@ export default function initReducers(initialState) {
           selectedTechnicalAreaId: null,
           selectedActionTypeOrdinal: null,
           isInfluenzaShowing: true,
+          isCholeraShowing: true,
         }
       },
       [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
         state.isInfluenzaShowing = !state.isInfluenzaShowing
+        return state
+      },
+      [IS_CHOLERA_SHOWING]: (state /*, dispatchedAction*/) => {
+        state.isCholeraShowing = !state.isCholeraShowing
         return state
       },
       [SET_SELECTED_CHART_TAB_INDEX]: (state, dispatchedAction) => {
