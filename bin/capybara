@@ -11,7 +11,8 @@ Capybara.register_driver(:cuprite) do |app|
     browser_options: {},
     process_timeout: 10,
     inspector: true,
-    headless: false
+    headless: false,
+    timeout: 10
   )
 end
 
