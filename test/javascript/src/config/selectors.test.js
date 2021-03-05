@@ -28,6 +28,7 @@ import {
 import {
   getCountOfPlanActionIds,
   getPlanChartLabels,
+  getPlanDiseases,
   makeGetDiseaseForDiseaseId,
   makeGetDiseaseIsShowingForDisease,
 } from "../../../../app/javascript/src/config/selectors"
@@ -266,6 +267,16 @@ describe("for a plan without any specific diseases", () => {
       expect(result[2].objective).toEqual(
         "To ensure financing is available for the implementation of IHR capacities"
       )
+    })
+  })
+
+  describe("getPlanDiseases", () => {
+    it("returns an empty array of diseases for a plan with no diseases", () => {
+      const state = store.getState()
+
+      const result = getPlanDiseases(state)
+
+      expect(result).toEqual([])
     })
   })
 
@@ -863,6 +874,27 @@ describe("for a plan that includes influenza and cholera", () => {
       selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
     }
     store = mockStore(initialStateFromServer)
+  })
+
+  describe("getPlanDiseases", () => {
+    it("returns an empty array of diseases for a plan with no diseases", () => {
+      const state = store.getState()
+
+      const result = getPlanDiseases(state)
+
+      expect(result).toEqual([
+        {
+          display: "Influenza",
+          id: 1,
+          name: "influenza",
+        },
+        {
+          display: "Cholera",
+          id: 2,
+          name: "cholera",
+        },
+      ])
+    })
   })
 
   describe("getPlanActionIds", () => {
