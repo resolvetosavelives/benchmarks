@@ -2,10 +2,16 @@ import { describe } from "@jest/globals"
 import React from "react"
 import { act } from "react-dom/test-utils"
 import ReactDOM from "react-dom"
-import InfluenzaToggle from "components/ChartCard/InfluenzaToggle"
+import DiseaseToggle from "components/ChartCard/DiseaseToggle"
 import { useSelector, useDispatch } from "react-redux"
 
 let container
+
+jest.mock("react-redux", () => ({
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
+
 beforeEach(() => {
   container = document.createElement("div")
   document.body.appendChild(container)
@@ -16,41 +22,21 @@ afterEach(() => {
   container = null
 })
 
-jest.mock("react-redux", () => ({
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}))
+describe("toggle with a disease", () => {
+  const disease = { id: 1, name: "influenza", display: "Influenza" }
 
-describe("plan without influenza", () => {
   beforeEach(() => {
-    useSelector.mockReturnValueOnce(false).mockReturnValueOnce(true)
     useDispatch.mockReturnValueOnce(jest.fn())
   })
 
-  it("renders nothing", () => {
-    act(() => {
-      ReactDOM.render(<InfluenzaToggle />, container)
-    })
-    const div = container.querySelectorAll("div")
-
-    expect(div.length).toEqual(0)
-  })
-})
-
-describe("plan with influenza", () => {
-  beforeEach(() => {
-    useSelector.mockReturnValueOnce(true)
-    useDispatch.mockReturnValueOnce(jest.fn())
-  })
-
-  describe("and with influenza currently displayed", () => {
+  describe("with the disease displayed", () => {
     beforeEach(() => {
-      useSelector.mockReturnValueOnce(true)
+      useSelector.mockReturnValue(true)
     })
 
     it("renders the checkbox as checked", () => {
       act(() => {
-        ReactDOM.render(<InfluenzaToggle />, container)
+        ReactDOM.render(<DiseaseToggle disease={disease} />, container)
       })
       const checkbox = container.querySelectorAll("input[type=checkbox]")
 
@@ -59,14 +45,14 @@ describe("plan with influenza", () => {
     })
   })
 
-  describe("and with influenza currently hidden", () => {
+  describe("with the disease hidden", () => {
     beforeEach(() => {
-      useSelector.mockReturnValueOnce(false)
+      useSelector.mockReturnValue(false)
     })
 
     it("renders the checkbox as unchecked", () => {
       act(() => {
-        ReactDOM.render(<InfluenzaToggle />, container)
+        ReactDOM.render(<DiseaseToggle disease={disease} />, container)
       })
       const checkbox = container.querySelectorAll("input[type=checkbox]")
 

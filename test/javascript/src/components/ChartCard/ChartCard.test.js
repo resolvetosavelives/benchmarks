@@ -5,6 +5,12 @@ import { act } from "react-dom/test-utils"
 import ReactDOM from "react-dom"
 import { useSelector } from "react-redux"
 
+jest.mock("react-redux", () => ({
+  useDispatch: jest.fn(),
+  useEffect: jest.fn(),
+  useSelector: jest.fn(),
+}))
+
 jest.mock("components/ChartCard/BarChartByTechnicalArea", () => () => (
   <mock-BarChartByTechnicalArea />
 ))
@@ -13,13 +19,8 @@ jest.mock("components/ChartCard/BarChartByActionType", () => () => (
 ))
 jest.mock("components/ChartCard/InfoPane", () => () => <mock-InfoPane />)
 
-jest.mock("react-redux", () => ({
-  useDispatch: jest.fn(),
-  useEffect: jest.fn(),
-  useSelector: jest.fn(),
-}))
-
 let container
+
 beforeEach(() => {
   container = document.createElement("div")
   document.body.appendChild(container)
@@ -41,44 +42,6 @@ it("ChartCard has one child BarChartByTechnicalArea component", () => {
   )
 
   expect(mockBarchartbytechnicalarea.length).toEqual(1)
-})
-
-it("ChartCard has the correct class when there are no diseases", () => {
-  useSelector.mockReturnValueOnce({ id: 1, disease_ids: [] })
-  act(() => {
-    ReactDOM.render(<ChartCard />, container)
-  })
-
-  const cardEl = container.querySelector(".plan.card")
-
-  expect(cardEl.className).toMatch("diseases-none")
-})
-
-it("ChartCard has the correct class when there is one disease", () => {
-  useSelector
-    .mockReturnValueOnce({ id: 1, disease_ids: [1] })
-    .mockReturnValueOnce({ id: 1, name: "influenza", display: "Influenza" })
-  act(() => {
-    ReactDOM.render(<ChartCard />, container)
-  })
-
-  const cardEl = container.querySelector(".plan.card")
-
-  expect(cardEl.className).toMatch("diseases-influenza")
-})
-
-it("ChartCard has the correct class when there is two diseases", () => {
-  useSelector
-    .mockReturnValueOnce({ id: 1, disease_ids: [1, 2] })
-    .mockReturnValueOnce({ id: 1, name: "influenza", display: "Influenza" })
-    .mockReturnValueOnce({ id: 2, name: "cholera", display: "Cholera" })
-  act(() => {
-    ReactDOM.render(<ChartCard />, container)
-  })
-
-  const cardEl = container.querySelector(".plan.card")
-
-  expect(cardEl.className).toMatch("diseases-influenza-cholera")
 })
 
 it("ChartCard has one child BarChartByActionType component", () => {

@@ -6,15 +6,15 @@ import {
   getAllActions,
   getIndicatorMap,
   getPlanActionIdsByIndicator,
+  getPlanDiseases,
   getPlanGoalMap,
   getSortedActions,
   getTechnicalAreaMap,
-  filterOutInfluenzaActions,
-  getIsInfluenzaShowing,
 } from "../../config/selectors"
-import Action from "./Action"
 import NoGoalForThisIndicator from "./NoGoalForThisIndicator"
 import AddAction from "./AddAction"
+import FilteredGeneralActions from "./FilteredGeneralActions"
+import FilteredDiseaseActions from "./FilteredDiseaseActions"
 
 const IndicatorActionList = (props) => {
   const indicator = props.indicator
@@ -27,28 +27,35 @@ const IndicatorActionList = (props) => {
   const actions = useSelector((state) => getAllActions(state))
   const technicalAreaMap = useSelector((state) => getTechnicalAreaMap(state))
   const indicatorMap = useSelector((state) => getIndicatorMap(state))
+  const planDiseases = useSelector((state) => getPlanDiseases(state))
   let actionsForIndicator = getActionsForIds(actionIdsByIndicator, actions)
-  const isInfluenzaShowing = useSelector((state) =>
-    getIsInfluenzaShowing(state)
-  )
-  if (!isInfluenzaShowing) {
-    actionsForIndicator = filterOutInfluenzaActions(actionsForIndicator)
+
+  if (!goalForThisIndicator) {
+    return <NoGoalForThisIndicator />
   }
+
   const sortedActionsByIndicator = getSortedActions(
     actionsForIndicator,
     technicalAreaMap,
     indicatorMap
   )
-  if (!goalForThisIndicator) {
-    return <NoGoalForThisIndicator />
-  }
 
-  const actionComponents = sortedActionsByIndicator.map((action) => (
-    <Action action={action} key={`action-${action.id}`} />
+  const actionGeneralComponents = (
+    <FilteredGeneralActions actions={sortedActionsByIndicator} />
+  )
+
+  const actionDiseaseComponents = planDiseases.map((disease) => (
+    <FilteredDiseaseActions
+      actions={sortedActionsByIndicator}
+      disease={disease}
+      key={`action-component-${disease.name}`}
+    />
   ))
+
   return (
     <>
-      {actionComponents}
+      {actionGeneralComponents}
+      {actionDiseaseComponents}
       <AddAction indicator={indicator} />
     </>
   )

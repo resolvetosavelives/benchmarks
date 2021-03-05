@@ -1,7 +1,7 @@
 import React from "react"
 import ActionCount from "./ActionCount"
 import ClearFilters from "./ClearFilters"
-import InfluenzaToggle from "./InfluenzaToggle"
+import DiseaseToggles from "./DiseaseToggles"
 import BarChartLegend from "./BarChartLegend"
 
 // this is the best we have found so far:
@@ -16,7 +16,7 @@ const InfoPane = () => {
         <ActionCount />
         <ClearFilters />
       </div>
-      <InfluenzaToggle />
+      <DiseaseToggles />
       <BarChartLegend />
     </div>
   )

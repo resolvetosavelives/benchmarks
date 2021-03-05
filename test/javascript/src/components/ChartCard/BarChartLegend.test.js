@@ -26,7 +26,7 @@ afterEach(() => {
 
 describe("when a plan has no diseases selected", () => {
   beforeEach(() => {
-    useSelector.mockReturnValue({ id: 1, disease_ids: [] })
+    useSelector.mockReturnValue([])
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)
@@ -34,7 +34,7 @@ describe("when a plan has no diseases selected", () => {
   })
 
   it("displays the default Health Security and one disease legend label", () => {
-    const li = document.querySelectorAll("li")
+    const li = document.querySelectorAll("li.ct-series-health-security")
     const barChartLegendEl = document.querySelectorAll(
       "div.mock-bar-chart-legend-disease-label"
     )
@@ -47,7 +47,10 @@ describe("when a plan has no diseases selected", () => {
 
 describe("when a plan has diseases selected", () => {
   beforeEach(() => {
-    useSelector.mockReturnValue({ id: 1, disease_ids: [1, 2] })
+    useSelector.mockReturnValue([
+      { id: 1, name: "influenza", display: "Influenza" },
+      { id: 2, name: "cholera", display: "Cholera" },
+    ])
 
     act(() => {
       ReactDOM.render(<BarChartLegend />, container)

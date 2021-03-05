@@ -9,13 +9,18 @@ import * as selectors from "config/selectors"
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }))
-jest.mock("components/List/Action", () => () => <mock-action />)
-jest.mock("components/List/AddAction", () => () => <mock-add-action />)
+jest.mock("components/List/AddAction", () => () => <mock-AddAction />)
 jest.mock("components/List/NoGoalForThisIndicator", () => () => (
   <mock-NoGoalForThisIndicator />
 ))
+jest.mock("components/List/FilteredGeneralActions", () => () => (
+  <mock-FilteredGeneralActions />
+))
+jest.mock("components/List/FilteredDiseaseActions", () => () => (
+  <mock-FilteredDiseaseActions />
+))
 
-let container, spyGetSortedActions, spyFilterOutInfluenzaActions
+let container, spyGetSortedActions
 
 beforeEach(() => {
   container = document.createElement("div")
@@ -28,81 +33,102 @@ afterEach(() => {
 })
 
 describe("when a goal is present", () => {
+  const mockTechnicalAreaMap = { 1: {} }
+  const mockIndicatorMap = { 1: {} }
+
   describe("and there are actions present", () => {
+    const mockPlanGoalMap = { 17: { id: 1 } }
+    const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
+    const mockAllActions = [
+      { id: 2, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+      { id: 5, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+      { id: 13, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+      { id: 11, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+      { i2: 6, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+    ]
+
     beforeEach(() => {
       spyGetSortedActions = jest.spyOn(selectors, "getSortedActions")
-      const mockPlanGoalMap = { 17: { id: 1 } }
-      const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
-      const mockAllActions = [
-        { id: 2, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-        { id: 5, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-        { id: 13, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-        { id: 11, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-        { i2: 6, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-      ]
-      const mockTechnicalAreaMap = { 1: {} }
-      const indicatorMap = { 1: {} }
-      useSelector
-        .mockReturnValueOnce(mockPlanGoalMap)
-        .mockReturnValueOnce(mockPlanActionIdsByIndicator)
-        .mockReturnValueOnce(mockAllActions)
-        .mockReturnValueOnce(mockTechnicalAreaMap)
-        .mockReturnValueOnce(indicatorMap)
     })
 
-    describe("and influenza actions are currently displayed", () => {
+    describe("and the plan has diseases", () => {
       beforeEach(() => {
-        spyFilterOutInfluenzaActions = jest.spyOn(
-          selectors,
-          "filterOutInfluenzaActions"
-        )
-        useSelector.mockReturnValueOnce(true)
+        const mockPlanDiseases = [
+          { id: 1, name: "influenza", display: "Influenza" },
+          { id: 1, name: "cholera", display: "Cholera" },
+        ]
+        useSelector
+          .mockReturnValueOnce(mockPlanGoalMap)
+          .mockReturnValueOnce(mockPlanActionIdsByIndicator)
+          .mockReturnValueOnce(mockAllActions)
+          .mockReturnValueOnce(mockTechnicalAreaMap)
+          .mockReturnValueOnce(mockIndicatorMap)
+          .mockReturnValueOnce(mockPlanDiseases)
       })
 
-      it("renders 3 sorted child Action components and 1 child AddAction component", () => {
+      it("renders a General Action component, 2 Disease Action components, and an Add Action components and 1 child AddAction component", () => {
         act(() => {
           ReactDOM.render(
             <IndicatorActionList indicator={{ id: 17 }} />,
             container
           )
         })
-        const foundActionComponents = container.querySelectorAll("mock-action")
-        const foundAddActionComponents = container.querySelectorAll(
-          "mock-add-action"
-        )
-
-        expect(foundActionComponents.length).toEqual(3)
-        expect(foundAddActionComponents.length).toEqual(1)
         expect(spyGetSortedActions).toHaveBeenCalled()
-        expect(spyFilterOutInfluenzaActions).toHaveBeenCalledTimes(0)
+        const foundGeneralActionsComponents = container.querySelectorAll(
+          "mock-FilteredGeneralActions"
+        )
+        const foundDiseaseActionsComponents = container.querySelectorAll(
+          "mock-FilteredDiseaseActions"
+        )
+        const foundAddActionComponents = container.querySelectorAll(
+          "mock-AddAction"
+        )
+        const foundNoGoalComponent = container.querySelectorAll(
+          "mock-NoGoalForThisIndicator"
+        )
+        expect(foundGeneralActionsComponents.length).toEqual(1)
+        expect(foundDiseaseActionsComponents.length).toEqual(2)
+        expect(foundAddActionComponents.length).toEqual(1)
+        expect(foundNoGoalComponent.length).toEqual(0)
       })
     })
 
-    describe("and influenza actions are currently hidden", () => {
+    describe("and the plan has no diseases", () => {
       beforeEach(() => {
-        spyFilterOutInfluenzaActions = jest.spyOn(
-          selectors,
-          "filterOutInfluenzaActions"
-        )
-        useSelector.mockReturnValueOnce(false)
+        const mockPlanDiseases = []
+        useSelector
+          .mockReturnValueOnce(mockPlanGoalMap)
+          .mockReturnValueOnce(mockPlanActionIdsByIndicator)
+          .mockReturnValueOnce(mockAllActions)
+          .mockReturnValueOnce(mockTechnicalAreaMap)
+          .mockReturnValueOnce(mockIndicatorMap)
+          .mockReturnValueOnce(mockPlanDiseases)
       })
 
-      it("renders 3 sorted child Action components and 1 child AddAction component", () => {
+      it("renders a General Action component, no Disease Action components, and an Add Action components and 1 child AddAction component", () => {
         act(() => {
           ReactDOM.render(
             <IndicatorActionList indicator={{ id: 17 }} />,
             container
           )
         })
-        const foundActionComponents = container.querySelectorAll("mock-action")
-        const foundAddActionComponents = container.querySelectorAll(
-          "mock-add-action"
-        )
 
-        expect(foundActionComponents.length).toEqual(3)
+        const foundGeneralActionsComponents = container.querySelectorAll(
+          "mock-FilteredGeneralActions"
+        )
+        const foundDiseaseActionsComponents = container.querySelectorAll(
+          "mock-FilteredDiseaseActions"
+        )
+        const foundAddActionComponents = container.querySelectorAll(
+          "mock-AddAction"
+        )
+        const foundNoGoalComponent = container.querySelectorAll(
+          "mock-NoGoalForThisIndicator"
+        )
+        expect(foundGeneralActionsComponents.length).toEqual(1)
+        expect(foundDiseaseActionsComponents.length).toEqual(0)
         expect(foundAddActionComponents.length).toEqual(1)
-        expect(spyGetSortedActions).toHaveBeenCalled()
-        expect(spyFilterOutInfluenzaActions).toHaveBeenCalledTimes(1)
+        expect(foundNoGoalComponent.length).toEqual(0)
       })
     })
   })
@@ -112,54 +138,80 @@ describe("when a goal is present", () => {
       let mockPlanGoalMap = { 17: { id: 1 } }
       let mockPlanActionIdsByIndicator = []
       let mockAllActions = []
+      const mockPlanDiseases = []
       useSelector
         .mockReturnValueOnce(mockPlanGoalMap)
         .mockReturnValueOnce(mockPlanActionIdsByIndicator)
         .mockReturnValueOnce(mockAllActions)
+        .mockReturnValueOnce(mockTechnicalAreaMap)
+        .mockReturnValueOnce(mockIndicatorMap)
+        .mockReturnValueOnce(mockPlanDiseases)
     })
 
-    it("renders zero child Action components but 1 child AddAction component", () => {
+    it("renders a General Action component, no Disease Action Components, and 1 child AddAction component", () => {
       act(() => {
         ReactDOM.render(
           <IndicatorActionList indicator={{ id: 17 }} />,
           container
         )
-      })
-      const foundActionComponents = container.querySelectorAll("mock-action")
-      const foundAddActionComponents = container.querySelectorAll(
-        "mock-add-action"
-      )
 
-      expect(foundActionComponents.length).toEqual(0)
-      expect(foundAddActionComponents.length).toEqual(1)
+        const foundGeneralActionsComponents = container.querySelectorAll(
+          "mock-FilteredGeneralActions"
+        )
+        const foundDiseaseActionsComponents = container.querySelectorAll(
+          "mock-FilteredDiseaseActions"
+        )
+        const foundAddActionComponents = container.querySelectorAll(
+          "mock-AddAction"
+        )
+        const foundNoGoalComponent = container.querySelectorAll(
+          "mock-NoGoalForThisIndicator"
+        )
+        expect(foundGeneralActionsComponents.length).toEqual(1)
+        expect(foundDiseaseActionsComponents.length).toEqual(0)
+        expect(foundAddActionComponents.length).toEqual(1)
+        expect(foundNoGoalComponent.length).toEqual(0)
+      })
     })
   })
 })
 
 describe("when there is no goal", () => {
   beforeEach(() => {
-    let mockPlanGoalMap = { 17: null }
-    let mockPlanActionIdsByIndicator = []
-    let mockAllActions = []
+    const mockTechnicalAreaMap = { 1: {} }
+    const mockIndicatorMap = { 1: {} }
+    const mockPlanGoalMap = { 17: null }
+    const mockPlanActionIdsByIndicator = []
+    const mockAllActions = []
+    const mockPlanDiseases = []
     useSelector
       .mockReturnValueOnce(mockPlanGoalMap)
       .mockReturnValueOnce(mockPlanActionIdsByIndicator)
       .mockReturnValueOnce(mockAllActions)
+      .mockReturnValueOnce(mockTechnicalAreaMap)
+      .mockReturnValueOnce(mockIndicatorMap)
+      .mockReturnValueOnce(mockPlanDiseases)
   })
 
-  it("does not render any child AddAction components and instead renders a NoGoalForThisIndicator", () => {
+  it("renders only a NoGoalForThisIndicator", () => {
     act(() => {
       ReactDOM.render(<IndicatorActionList indicator={{ id: 17 }} />, container)
     })
-    const foundActionComponents = container.querySelectorAll("mock-action")
+    const foundGeneralActionsComponents = container.querySelectorAll(
+      "mock-FilteredGeneralActions"
+    )
+    const foundDiseaseActionsComponents = container.querySelectorAll(
+      "mock-FilteredDiseaseActions"
+    )
     const foundAddActionComponents = container.querySelectorAll(
-      "mock-add-action"
+      "mock-AddAction"
     )
     const foundNoGoalComponent = container.querySelectorAll(
       "mock-NoGoalForThisIndicator"
     )
-
-    expect(foundActionComponents.length).toEqual(0)
+    expect(foundGeneralActionsComponents.length).toEqual(0)
+    expect(foundDiseaseActionsComponents.length).toEqual(0)
+    expect(foundAddActionComponents.length).toEqual(0)
     expect(foundAddActionComponents.length).toEqual(0)
     expect(foundNoGoalComponent.length).toEqual(1)
   })
