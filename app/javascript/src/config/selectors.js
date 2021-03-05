@@ -12,7 +12,6 @@ const getNumOfActionTypes = (state) => getNudgesByActionType(state).length
 const getSelectedTechnicalAreaId = (state) => state.ui.selectedTechnicalAreaId
 const getSelectedActionTypeOrdinal = (state) =>
   state.ui.selectedActionTypeOrdinal
-const getIsInfluenzaShowing = (state) => state.ui.isInfluenzaShowing
 const getSelectedChartTabIndex = (state) => state.ui.selectedChartTabIndex
 
 const getPlan = (state) => state.plan
@@ -20,6 +19,13 @@ const getPlanActionIds = (state) => state.planActionIds
 const getPlanGoals = (state) => state.planGoals
 const getPlanChartLabels = (state) => state.planChartLabels
 const getCountOfPlanActionIds = (state) => getPlanActionIds(state).length
+const getUi = (state) => state.ui
+
+const getPlanDiseases = createSelector(
+  [getPlan, getAllDiseases],
+  (plan, diseases) =>
+    plan.disease_ids.map((diseaseId) => getDisease(diseases, diseaseId))
+)
 
 const getPlanGoalMap = createSelector([getPlanGoals], (goals) => {
   return goals.reduce((acc, goal) => {
@@ -215,57 +221,53 @@ const makeGetDiseaseForDiseaseId = (diseaseId) =>
     return getDisease(diseases, diseaseId)
   })
 
+const makeGetDiseaseIsShowingForDisease = (disease) =>
+  createSelector([getUi], (ui) => {
+    const propertyName = `is${disease.display}Showing`
+    return ui[propertyName]
+  })
+
 const getFormAuthenticityToken = () =>
   window.STATE_FROM_SERVER.formAuthenticityToken
 const getFormActionUrl = () => window.STATE_FROM_SERVER.formActionUrl
 
-// NB: this only works for Influenza, will need changed when there are other diseases.
-const isPlanInfluenza = createSelector(
-  [getPlan, getAllDiseases],
-  (plan, diseases) => {
-    const disease = getDisease(diseases, plan.disease_ids[0])
-    return !!(disease && disease.name === "influenza")
-  }
-)
-
-const filterOutInfluenzaActions = (actionsToFilter) => {
-  return actionsToFilter.filter((action) => {
-    return !action.disease_id
-  })
+const filterActionsForDiseaseId = (actions, diseaseId) => {
+  return actions.filter((action) => action.disease_id === diseaseId)
 }
 
 export {
-  getAllTechnicalAreas,
-  getAllIndicators,
+  countActionsByActionType,
+  countActionsByTechnicalArea,
+  filterActionsForDiseaseId,
+  getActionMap,
+  getActionsForIds,
+  getActionsForPlan,
   getAllActions,
   getAllDiseases,
-  getPlanActionIdsByIndicator,
+  getAllIndicators,
+  getAllTechnicalAreas,
+  getCountOfPlanActionIds,
+  getDisease,
+  getFormActionUrl,
+  getFormAuthenticityToken,
+  getIndicatorMap,
+  getMatrixOfActionCountsByActionTypeAndDisease,
+  getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getNudgesByActionType,
-  getSortedActions,
   getNumOfActionTypes,
-  getSelectedTechnicalAreaId,
-  getSelectedActionTypeOrdinal,
   getPlan,
   getPlanActionIds,
-  getPlanGoals,
+  getPlanActionIdsByIndicator,
   getPlanChartLabels,
-  getActionMap,
+  getPlanDiseases,
   getPlanGoalMap,
-  getActionsForPlan,
-  getActionsForIds,
-  getTechnicalAreaMap,
-  getIndicatorMap,
-  countActionsByTechnicalArea,
-  getMatrixOfActionCountsByTechnicalAreaAndDisease,
-  countActionsByActionType,
-  getMatrixOfActionCountsByActionTypeAndDisease,
-  getFormAuthenticityToken,
-  getFormActionUrl,
-  makeGetDiseaseForDiseaseId,
-  getDisease,
-  isPlanInfluenza,
-  filterOutInfluenzaActions,
-  getIsInfluenzaShowing,
+  getPlanGoals,
+  getSelectedActionTypeOrdinal,
   getSelectedChartTabIndex,
-  getCountOfPlanActionIds,
+  getSelectedTechnicalAreaId,
+  getSortedActions,
+  getTechnicalAreaMap,
+  getUi,
+  makeGetDiseaseForDiseaseId,
+  makeGetDiseaseIsShowingForDisease,
 }

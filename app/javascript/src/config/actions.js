@@ -12,7 +12,6 @@ import {
   LIST_MODE_BY_ACTION_TYPE,
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
-  IS_INFLUENZA_SHOWING,
   SET_SELECTED_CHART_TAB_INDEX,
 } from "./constants"
 
@@ -90,9 +89,10 @@ const updatePlanName = (name) => {
   }
 }
 
-const toggleInfluenzaShowing = () => {
+const toggleDiseaseShowing = (disease) => {
+  const action = `IS_${disease.name.toUpperCase()}_SHOWING`
   return (dispatchedAction) => {
-    dispatchedAction({ type: IS_INFLUENZA_SHOWING })
+    dispatchedAction({ type: action })
   }
 }
 
@@ -112,6 +112,6 @@ export {
   selectActionType,
   clearFilterCriteria,
   updatePlanName,
-  toggleInfluenzaShowing,
+  toggleDiseaseShowing,
   setSelectedChartTabIndex,
 }

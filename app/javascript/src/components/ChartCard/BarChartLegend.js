@@ -1,16 +1,16 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import { getPlan } from "../../config/selectors"
+import { getPlanDiseases } from "../../config/selectors"
 import BarChartLegendDiseaseLabel from "./BarChartLegendDiseaseLabel"
 
 const BarChartLegend = () => {
-  const plan = useSelector((state) => getPlan(state))
+  const planDiseases = useSelector((state) => getPlanDiseases(state))
 
-  const diseaseLabelsHTML = plan.disease_ids.map((diseaseId) => {
+  const diseaseLabelsHTML = planDiseases.map((disease) => {
     return (
       <BarChartLegendDiseaseLabel
-        diseaseId={diseaseId}
-        key={`disease-label-${diseaseId}`}
+        disease={disease}
+        key={`disease-label-${disease.name}`}
       />
     )
   })
@@ -21,9 +21,7 @@ const BarChartLegend = () => {
         <strong>Key</strong>
       </div>
       <ul className="ct-legend col m-0">
-        <li className="ct-series-health-security ct-series-health-security">
-          Health security
-        </li>
+        <li className="ct-series-health-security">Health security</li>
         {diseaseLabelsHTML}
       </ul>
     </div>

@@ -4,7 +4,7 @@ import configureStore from "redux-mock-store"
 import {
   countActionsByActionType,
   countActionsByTechnicalArea,
-  filterOutInfluenzaActions,
+  filterActionsForDiseaseId,
   getActionMap,
   getActionsForIds,
   getActionsForPlan,
@@ -12,7 +12,6 @@ import {
   getAllIndicators,
   getAllTechnicalAreas,
   getIndicatorMap,
-  getIsInfluenzaShowing,
   getMatrixOfActionCountsByActionTypeAndDisease,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getNudgesByActionType,
@@ -25,12 +24,12 @@ import {
   getSelectedTechnicalAreaId,
   getSortedActions,
   getTechnicalAreaMap,
-  isPlanInfluenza,
 } from "config/selectors"
 import {
   getCountOfPlanActionIds,
   getPlanChartLabels,
   makeGetDiseaseForDiseaseId,
+  makeGetDiseaseIsShowingForDisease,
 } from "../../../../app/javascript/src/config/selectors"
 
 let store
@@ -543,16 +542,6 @@ describe("for a plan without any specific diseases", () => {
     })
   })
 
-  describe("isPlanInfluenza", () => {
-    it("returns false", () => {
-      const state = store.getState()
-
-      let result = isPlanInfluenza(state)
-
-      expect(result).toEqual(false)
-    })
-  })
-
   describe("getCountOfPlanActionIds", () => {
     it("returns a function that returns the expected string", () => {
       const state = store.getState()
@@ -747,20 +736,9 @@ describe("for a plan that includes influenza", () => {
     })
   })
 
-  describe("isPlanInfluenza", () => {
-    it("returns true", () => {
-      const state = store.getState()
-
-      let result = isPlanInfluenza(state)
-
-      expect(result).toEqual(true)
-    })
-  })
-
   describe("makeGetDiseaseForDiseaseId", () => {
     it("returns a function that returns the expected string for influenza", () => {
       const state = store.getState()
-
       const fnResult = makeGetDiseaseForDiseaseId(1)
       const result = fnResult(state)
 
@@ -769,46 +747,79 @@ describe("for a plan that includes influenza", () => {
 
     it("returns a function that returns the expected string for cholera", () => {
       const state = store.getState()
-
       const fnResult = makeGetDiseaseForDiseaseId(2)
       const result = fnResult(state)
 
       expect(result.display).toEqual("Cholera")
     })
+  })
 
-    it("returns a function that returns undefined", () => {
-      const state = store.getState()
+  describe("makeGetDiseaseIsShowingForDisease", () => {
+    describe("for influenza", () => {
+      const influenza = { id: 1, name: "influenza", display: "Influenza" }
 
-      const fnResult = makeGetDiseaseForDiseaseId(0)
-      const result = fnResult(state)
+      it("returns a function that returns the default display value", () => {
+        const state = store.getState()
+        const fnResult = makeGetDiseaseIsShowingForDisease(influenza)
+        const result = fnResult(state)
 
-      expect(result).toEqual(undefined)
+        expect(result).toEqual(false)
+      })
+
+      it("returns a function that returns the current display value", () => {
+        const state = store.getState()
+        state.ui.isInfluenzaShowing = false
+        const fnResult = makeGetDiseaseIsShowingForDisease(influenza)
+        const result = fnResult(state)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe("for cholera", () => {
+      const cholera = { id: 1, name: "cholera", display: "Cholera" }
+
+      it("returns a function that returns the default display value for cholera", () => {
+        const state = store.getState()
+        const fnResult = makeGetDiseaseIsShowingForDisease(cholera)
+        const result = fnResult(state)
+
+        expect(result.display).toEqual(true)
+      })
+
+      it("returns a function that returns the current display value", () => {
+        const state = store.getState()
+        state.ui = { isCholeraShowing: false }
+        const fnResult = makeGetDiseaseIsShowingForDisease(cholera)
+        const result = fnResult(state)
+
+        expect(result).toEqual(false)
+      })
     })
   })
 
-  describe("filterOutInfluenzaActions", () => {
-    it("returns a function that returns the expected string", () => {
-      const actionsToFilter = [
-        { id: 1, disease_id: 12 },
-        { id: 2, disease_id: undefined },
-        { id: 3, disease_id: 17 },
-        { id: 4, disease_id: null },
+  describe("filterActionsForDiseaseId", () => {
+    it("returns actions filtered by disease id", () => {
+      const actions = [
+        { id: 1, disease_id: 1 },
+        { id: 2, disease_id: null },
+        { id: 3, disease_id: 2 },
+        { id: 4, disease_id: 2 },
+        { id: 3, disease_id: 3 },
+        { id: 4, disease_id: 3 },
+        { id: 3, disease_id: 3 },
       ]
-      const result = filterOutInfluenzaActions(actionsToFilter)
 
-      expect(result.length).toEqual(2)
-    })
-  })
-
-  describe("getIsInfluenzaShowing", () => {
-    it("returns a function that returns the expected string", () => {
-      const state = store.getState()
-      state.ui = {}
-      state.ui.isInfluenzaShowing = true
-
-      const result = getIsInfluenzaShowing(state)
-
-      expect(result).toBeTruthy()
+      expect(filterActionsForDiseaseId(actions, null)).toEqual([
+        {
+          id: 2,
+          disease_id: null,
+        },
+      ])
+      expect(filterActionsForDiseaseId(actions, 2)).toEqual([
+        { id: 3, disease_id: 2 },
+        { id: 4, disease_id: 2 },
+      ])
     })
   })
 
@@ -1003,71 +1014,6 @@ describe("for a plan that includes influenza and cholera", () => {
         23,
       ])
       expect(result[1]).toEqual([1, 8, 5, 0, 0, 0, 0, 3, 3, 20, 2, 0, 3, 1, 2])
-    })
-  })
-
-  describe("isPlanInfluenza", () => {
-    it("returns true", () => {
-      const state = store.getState()
-
-      let result = isPlanInfluenza(state)
-
-      expect(result).toEqual(true)
-    })
-  })
-
-  describe("makeGetDiseaseForDiseaseId", () => {
-    it("returns a function that returns the expected string for influenza", () => {
-      const state = store.getState()
-
-      const fnResult = makeGetDiseaseForDiseaseId(1)
-      const result = fnResult(state)
-
-      expect(result.display).toEqual("Influenza")
-    })
-
-    it("returns a function that returns the expected string for cholera", () => {
-      const state = store.getState()
-
-      const fnResult = makeGetDiseaseForDiseaseId(2)
-      const result = fnResult(state)
-
-      expect(result.display).toEqual("Cholera")
-    })
-
-    it("returns a function that returns undefined", () => {
-      const state = store.getState()
-
-      const fnResult = makeGetDiseaseForDiseaseId(0)
-      const result = fnResult(state)
-
-      expect(result).toEqual(undefined)
-    })
-  })
-
-  describe("filterOutInfluenzaActions", () => {
-    it("returns a function that returns the expected string", () => {
-      const actionsToFilter = [
-        { id: 1, disease_id: 12 },
-        { id: 2, disease_id: undefined },
-        { id: 3, disease_id: 17 },
-        { id: 4, disease_id: null },
-      ]
-      const result = filterOutInfluenzaActions(actionsToFilter)
-
-      expect(result.length).toEqual(2)
-    })
-  })
-
-  describe("getIsInfluenzaShowing", () => {
-    it("returns a function that returns the expected string", () => {
-      const state = store.getState()
-      state.ui = {}
-      state.ui.isInfluenzaShowing = true
-
-      const result = getIsInfluenzaShowing(state)
-
-      expect(result).toBeTruthy()
     })
   })
 
