@@ -10,6 +10,7 @@ import {
   getMatrixOfActionCountsByActionTypeAndDisease,
   getPlanActionIds,
   getPlanChartLabels,
+  getPlanDiseases,
   getSelectedActionTypeOrdinal,
   getSelectedChartTabIndex,
 } from "../../config/selectors"
@@ -112,6 +113,7 @@ class BarChartByActionType extends React.Component {
   }
 
   initInteractivityForChart() {
+    const planDiseases = this.props.planDiseases
     const dispatch = this.props.dispatch
     const countActionsByActionType = this.props.countActionsByActionType
     const matrixOfActionCountsByActionTypeAndDisease = this.props
@@ -121,44 +123,52 @@ class BarChartByActionType extends React.Component {
     const chartLabels = this.chartLabels
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
-    const seriesA = $(".ct-series-a .ct-bar", domNode)
-    const seriesB = $(".ct-series-b .ct-bar", domNode)
-    const seriesC = $(".ct-series-c .ct-bar", domNode)
-    seriesA.removeClass("ct-deselected")
-    seriesB.removeClass("ct-deselected")
-    seriesC.removeClass("ct-deselected")
+    const series = [$(".ct-series-a .ct-bar", domNode)]
+
+    planDiseases.forEach((disease, i) => {
+      const seriesLetter = String.fromCharCode("b".charCodeAt(0) + i)
+      series.push($(`.ct-series-${seriesLetter} .ct-bar`, domNode))
+    })
+
+    series.forEach((series) => {
+      series.removeClass("ct-deselected")
+    })
 
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
 
-    for (let i = 0; i < countActionsByActionType.length; i++) {
-      const objOfActionCounts = {
-        general: matrixOfActionCountsByActionTypeAndDisease[0][i],
-        influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
-        cholera: matrixOfActionCountsByActionTypeAndDisease[2][i],
+    for (
+      let actionIndex = 0;
+      actionIndex < countActionsByActionType.length;
+      actionIndex++
+    ) {
+      // const objOfActionCounts = {
+      // general: matrixOfActionCountsByActionTypeAndDisease[0][i],
+      // influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
+      // cholera: matrixOfActionCountsByActionTypeAndDisease[2][i],
+      // }
+      // const $elBarSegmentA = $(seriesA[i])
+      // const $elBarSegmentB = $(seriesB[i])
+      // const $elBarSegmentC = $(seriesC[i])
+      if (
+        selectedActionTypeOrdinal &&
+        actionIndex !== selectedActionTypeOrdinal - 1
+      ) {
+        series.forEach((barSegments, seriesIndex) => {
+          $(series[seriesIndex][actionIndex]).addClass("ct-deselected")
+          //   $elBarSegmentA.addClass("ct-deselected")
+          //   $elBarSegmentB.addClass("ct-deselected")
+          //   $elBarSegmentC.addClass("ct-deselected")
+        })
       }
-      const $elBarSegmentA = $(seriesA[i])
-      const $elBarSegmentB = $(seriesB[i])
-      const $elBarSegmentC = $(seriesC[i])
-      if (selectedActionTypeOrdinal && i !== selectedActionTypeOrdinal - 1) {
-        $elBarSegmentA.addClass("ct-deselected")
-        $elBarSegmentB.addClass("ct-deselected")
-        $elBarSegmentC.addClass("ct-deselected")
-      }
+
       this.initTooltipForSegmentOfChart(
-        objOfActionCounts,
-        chartLabels[i],
-        $elBarSegmentA,
-        $elBarSegmentB,
-        $elBarSegmentC
+        matrixOfActionCountsByActionTypeAndDisease,
+        actionIndex,
+        chartLabels,
+        series
       )
-      this.initClickHandlerForChart(
-        dispatch,
-        i,
-        $elBarSegmentA,
-        $elBarSegmentB,
-        $elBarSegmentC
-      )
+      this.initClickHandlerForChart(dispatch, actionIndex, series)
     }
   }
 
@@ -170,74 +180,69 @@ class BarChartByActionType extends React.Component {
   }
 
   initTooltipForSegmentOfChart(
-    objOfActionCounts,
-    nameOfActionType,
-    $elBarSegmentA,
-    $elBarSegmentB,
-    $elBarSegmentC
+    matrixOfActionCountsByActionTypeAndDisease,
+    actionIndex,
+    chartLabels,
+    series
   ) {
+    const nameOfActionType = chartLabels[actionIndex]
     const tooltipTitle = this.getTooltipHtmlContent(
       nameOfActionType,
-      objOfActionCounts
+      matrixOfActionCountsByActionTypeAndDisease,
+      actionIndex
     )
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
-    stackedBarEls.forEach(($elBarSegment) => {
-      $elBarSegment
+    series.forEach((barSegments, seriesIndex) => {
+      $(barSegments[seriesIndex][actionIndex])
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
         .attr("data-html", true)
         .tooltip({ container: ".plan-container" })
         .tooltip()
 
-      this.tooltipNodesFromPreviousRender.push($elBarSegment)
+      this.tooltipNodesFromPreviousRender.push(
+        $(barSegments[seriesIndex][actionIndex])
+      )
     })
   }
 
-  getTooltipHtmlContent(nameOfActionType, objOfActionCounts) {
-    const sumOfCounts =
-      objOfActionCounts.general +
-      objOfActionCounts.influenza +
-      objOfActionCounts.cholera
+  getTooltipHtmlContent(
+    nameOfActionType,
+    matrixOfActionCountsByActionTypeAndDisease,
+    actionIndex,
+    series,
+    planDiseases
+  ) {
+    const healthSystemCount =
+      matrixOfActionCountsByActionTypeAndDisease[0][actionIndex]
+
+    let sumOfCounts = healthSystemCount
+
+    planDiseases.forEach((disease, i) => {
+      sumOfCounts +=
+        matrixOfActionCountsByActionTypeAndDisease[i + 1][actionIndex]
+    })
+
     let tooltipHtml = `
         <strong>
           ${nameOfActionType}: ${sumOfCounts}
         </strong>
+        <div>&nbsp;</div>
+        <div>Health System: ${healthSystemCount}</div>
     `
-    if (objOfActionCounts.influenza > 0 && objOfActionCounts.cholera > 0) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
-        <div>Cholera-specific: ${objOfActionCounts.cholera}</div>
-      `
-    } else if (objOfActionCounts.influenza > 0) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
-      `
-    } else if (objOfActionCounts.cholera > 0) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Cholera-specific: ${objOfActionCounts.cholera}</div>
-      `
-    }
+
+    planDiseases.forEach((disease, i) => {
+      const diseaseCount =
+        matrixOfActionCountsByActionTypeAndDisease[i + 1][actionIndex]
+      tooltipHtml += `<div>${disease.display}-specific: ${diseaseCount}</div>`
+    })
 
     return tooltipHtml
   }
 
-  initClickHandlerForChart(
-    dispatch,
-    segmentIndex,
-    $elBarSegmentA,
-    $elBarSegmentB,
-    $elBarSegmentC
-  ) {
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
-    stackedBarEls.forEach(($elBarSegment) => {
-      $elBarSegment.on("click", () => {
-        dispatch(selectActionType(segmentIndex))
+  initClickHandlerForChart(dispatch, actionIndex, series) {
+    series.forEach((barSegments, seriesIndex) => {
+      $(barSegments[seriesIndex][actionIndex]).on("click", () => {
+        dispatch(selectActionType(actionIndex))
       })
     })
   }
@@ -253,6 +258,7 @@ BarChartByActionType.propTypes = {
   countActionsByActionType: PropTypes.array.isRequired,
   matrixOfActionCountsByActionTypeAndDisease: PropTypes.array.isRequired,
   selectedActionTypeOrdinal: PropTypes.number,
+  planDiseases: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -266,6 +272,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     ),
     selectedActionTypeOrdinal: getSelectedActionTypeOrdinal(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
+    planDiseases: getPlanDiseases(state),
   }
 }
 
