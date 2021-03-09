@@ -135,13 +135,6 @@ class BarChartByTechnicalArea extends React.Component {
       series.removeClass("ct-deselected")
     })
 
-    // const seriesA = $(".ct-series-a .ct-bar", domNode)
-    // const seriesB = $(".ct-series-b .ct-bar", domNode)
-    // const seriesC = $(".ct-series-c .ct-bar", domNode)
-    // seriesA.removeClass("ct-deselected")
-    // seriesB.removeClass("ct-deselected")
-    // seriesC.removeClass("ct-deselected")
-
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
 
@@ -230,11 +223,9 @@ class BarChartByTechnicalArea extends React.Component {
       displayName = "${category}-specific"
     }
 
-    console.log(displayName)
     return displayName
   }
 
-  // TODO: break this down to accomodate more diseases in the future
   getTooltipHtmlContent(
     nameOfTechnicalArea,
     matrixOfActionCountsByTechnicalAreaAndDisease,
@@ -270,7 +261,6 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   initClickHandlerForChartByTechnicalArea(dispatch, technicalIndex, series) {
-    // const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
     series.forEach((barSegments, seriesIndex) => {
       $(barSegments[seriesIndex][technicalIndex]).on("click", () => {
         dispatch(selectTechnicalArea(technicalIndex))
