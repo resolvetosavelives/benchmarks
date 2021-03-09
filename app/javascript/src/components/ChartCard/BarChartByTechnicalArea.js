@@ -9,7 +9,7 @@ import {
   getAllActions,
   getAllTechnicalAreas,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
-  getPlan,
+  getPlanDiseases,
   getPlanChartLabels,
   getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
@@ -114,7 +114,9 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   initInteractivityForChart() {
+    const planDiseases = this.props.planDiseases
     const dispatch = this.props.dispatch
+    const countActionsByTechnicalArea = this.props.countActionsByTechnicalArea
     const matrixOfActionCountsByTechnicalAreaAndDisease = this.props
       .matrixOfActionCountsByTechnicalAreaAndDisease
     const technicalAreas = this.props.technicalAreas
@@ -122,47 +124,52 @@ class BarChartByTechnicalArea extends React.Component {
     const selectedTechnicalAreaId = this.props.selectedTechnicalAreaId
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
-    const seriesA = $(".ct-series-a .ct-bar", domNode)
-    const seriesB = $(".ct-series-b .ct-bar", domNode)
-    const seriesC = $(".ct-series-c .ct-bar", domNode)
-    seriesA.removeClass("ct-deselected")
-    seriesB.removeClass("ct-deselected")
-    seriesC.removeClass("ct-deselected")
+    const series = [$(".ct-series-a .ct-bar", domNode)]
+
+    planDiseases.forEach((disease, i) => {
+      const seriesLetter = String.fromCharCode("b".charCodeAt(0) + i)
+      series.push($(`.ct-series-${seriesLetter} .ct-bar`, domNode))
+    })
+
+    series.forEach((series) => {
+      series.removeClass("ct-deselected")
+    })
+
+    // const seriesA = $(".ct-series-a .ct-bar", domNode)
+    // const seriesB = $(".ct-series-b .ct-bar", domNode)
+    // const seriesC = $(".ct-series-c .ct-bar", domNode)
+    // seriesA.removeClass("ct-deselected")
+    // seriesB.removeClass("ct-deselected")
+    // seriesC.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
 
-    for (let i = 0; i < technicalAreas.length; i++) {
-      const objOfActionCounts = {
-        general: matrixOfActionCountsByTechnicalAreaAndDisease[0][i],
-        influenza: matrixOfActionCountsByTechnicalAreaAndDisease[1][i],
-        cholera: matrixOfActionCountsByTechnicalAreaAndDisease[2][i],
-      }
-      const $elBarSegmentA = $(seriesA[i])
-      const $elBarSegmentB = $(seriesB[i])
-      const $elBarSegmentC = $(seriesC[i])
+    for (
+      let technicalIndex = 0;
+      technicalIndex < countActionsByTechnicalArea.length;
+      technicalIndex++
+    ) {
       if (
         selectedTechnicalAreaId &&
-        technicalAreas[i].id !== selectedTechnicalAreaId
+        technicalIndex !== selectedTechnicalAreaId
       ) {
-        $elBarSegmentA.addClass("ct-deselected")
-        $elBarSegmentB.addClass("ct-deselected")
-        $elBarSegmentC.addClass("ct-deselected")
+        series.forEach((barSegments, seriesIndex) => {
+          $(series[seriesIndex][technicalIndex]).addClass("ct-deselected")
+        })
       }
+
       this.initTooltipForSegmentOfChartByTechnicalArea(
-        technicalAreas[i],
-        objOfActionCounts,
-        $elBarSegmentA,
-        $elBarSegmentB,
-        $elBarSegmentC,
-        i
+        matrixOfActionCountsByTechnicalAreaAndDisease,
+        technicalIndex,
+        technicalAreas,
+        series,
+        planDiseases
       )
       this.initClickHandlerForChartByTechnicalArea(
-        technicalAreas[i],
         dispatch,
-        $elBarSegmentA,
-        $elBarSegmentB,
-        $elBarSegmentC
+        technicalIndex,
+        series
       )
     }
   }
@@ -175,27 +182,43 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   initTooltipForSegmentOfChartByTechnicalArea(
-    technicalArea,
-    objOfActionCounts,
-    $elBarSegmentA,
-    $elBarSegmentB,
-    $elBarSegmentC
+    matrixOfActionCountsByTechnicalAreaAndDisease,
+    technicalIndex,
+    technicalAreas,
+    series,
+    planDiseases
   ) {
+    const nameOfTechnicalArea = technicalAreas[technicalIndex]
     const tooltipTitle = this.getTooltipHtmlContent(
-      technicalArea,
-      objOfActionCounts
+      nameOfTechnicalArea,
+      matrixOfActionCountsByTechnicalAreaAndDisease,
+      technicalIndex,
+      series,
+      planDiseases
     )
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
-    stackedBarEls.forEach(($elBarSegment) => {
-      $elBarSegment
+    // const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
+    series.forEach((_barSegments, seriesIndex) => {
+      $(series[seriesIndex][technicalIndex])
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
         .attr("data-html", true)
         .tooltip({ container: ".plan-container" })
         .tooltip()
 
-      this.tooltipNodesFromPreviousRender.push($elBarSegment)
+      this.tooltipNodesFromPreviousRender.push(
+        $(series[seriesIndex][technicalIndex])
+      )
     })
+    // series.forEach(($elBarSegment) => {
+    //   $elBarSegment
+    //     .attr("title", tooltipTitle)
+    //     .attr("data-toggle", "tooltip")
+    //     .attr("data-html", true)
+    //     .tooltip({ container: ".plan-container" })
+    //     .tooltip()
+
+    //   this.tooltipNodesFromPreviousRender.push($elBarSegment)
+    // })
   }
 
   getTooltipCategoryDisplayName(category) {
@@ -212,54 +235,45 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   // TODO: break this down to accomodate more diseases in the future
-  getTooltipHtmlContent(technicalArea, objOfActionCounts) {
-    const tooltipCategoryDisplayName = (category) => {
-      let displayName = ""
+  getTooltipHtmlContent(
+    nameOfTechnicalArea,
+    matrixOfActionCountsByTechnicalAreaAndDisease,
+    technicalIndex,
+    series,
+    planDiseases
+  ) {
+    const healthSystemCount =
+      matrixOfActionCountsByTechnicalAreaAndDisease[0][technicalIndex]
 
-      if (category === "general") {
-        displayName = "Health System"
-      } else {
-        displayName = `${
-          category.charAt(0).toUpperCase() + category.substring(1)
-        }-specific`
-      }
+    let sumOfCounts = healthSystemCount
 
-      return displayName
-    }
+    planDiseases.forEach((disease, i) => {
+      sumOfCounts +=
+        matrixOfActionCountsByTechnicalAreaAndDisease[i + 1][technicalIndex]
+    })
 
-    const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
     let tooltipHtml = `
         <strong>
-          ${technicalArea.text}: ${sumOfCounts}
+          ${nameOfTechnicalArea.text}: ${sumOfCounts}
         </strong>
+        <div>&nbsp;</div>
+        <div>Health System: ${healthSystemCount}</div>
     `
 
-    if (sumOfCounts > objOfActionCounts.general) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-	`
-
-      for (const category in objOfActionCounts) {
-        tooltipHtml += `<div>${tooltipCategoryDisplayName(category)}: ${
-          objOfActionCounts[category]
-        }</div>`
-      }
-    }
+    planDiseases.forEach((disease, i) => {
+      const diseaseCount =
+        matrixOfActionCountsByTechnicalAreaAndDisease[i + 1][technicalIndex]
+      tooltipHtml += `<div>${disease.display}-specific: ${diseaseCount}</div>`
+    })
 
     return tooltipHtml
   }
 
-  initClickHandlerForChartByTechnicalArea(
-    technicalArea,
-    dispatch,
-    $elBarSegmentA,
-    $elBarSegmentB,
-    $elBarSegmentC
-  ) {
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
-    stackedBarEls.forEach(($elBarSegment) => {
-      $elBarSegment.on("click", () => {
-        dispatch(selectTechnicalArea(technicalArea.id))
+  initClickHandlerForChartByTechnicalArea(dispatch, technicalIndex, series) {
+    // const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
+    series.forEach((barSegments, seriesIndex) => {
+      $(barSegments[seriesIndex][technicalIndex]).on("click", () => {
+        dispatch(selectTechnicalArea(technicalIndex))
       })
     })
   }
@@ -275,6 +289,7 @@ BarChartByTechnicalArea.propTypes = {
   countActionsByTechnicalArea: PropTypes.array.isRequired,
   matrixOfActionCountsByTechnicalAreaAndDisease: PropTypes.array.isRequired,
   selectedTechnicalAreaId: PropTypes.number,
+  planDiseases: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -288,7 +303,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
     selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
-    plan: getPlan(state),
+    planDiseases: getPlanDiseases(state),
   }
 }
 

@@ -142,23 +142,12 @@ class BarChartByActionType extends React.Component {
       actionIndex < countActionsByActionType.length;
       actionIndex++
     ) {
-      // const objOfActionCounts = {
-      // general: matrixOfActionCountsByActionTypeAndDisease[0][i],
-      // influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
-      // cholera: matrixOfActionCountsByActionTypeAndDisease[2][i],
-      // }
-      // const $elBarSegmentA = $(seriesA[i])
-      // const $elBarSegmentB = $(seriesB[i])
-      // const $elBarSegmentC = $(seriesC[i])
       if (
         selectedActionTypeOrdinal &&
         actionIndex !== selectedActionTypeOrdinal - 1
       ) {
         series.forEach((barSegments, seriesIndex) => {
           $(series[seriesIndex][actionIndex]).addClass("ct-deselected")
-          //   $elBarSegmentA.addClass("ct-deselected")
-          //   $elBarSegmentB.addClass("ct-deselected")
-          //   $elBarSegmentC.addClass("ct-deselected")
         })
       }
 
@@ -166,7 +155,8 @@ class BarChartByActionType extends React.Component {
         matrixOfActionCountsByActionTypeAndDisease,
         actionIndex,
         chartLabels,
-        series
+        series,
+        planDiseases
       )
       this.initClickHandlerForChart(dispatch, actionIndex, series)
     }
@@ -183,16 +173,19 @@ class BarChartByActionType extends React.Component {
     matrixOfActionCountsByActionTypeAndDisease,
     actionIndex,
     chartLabels,
-    series
+    series,
+    planDiseases
   ) {
     const nameOfActionType = chartLabels[actionIndex]
     const tooltipTitle = this.getTooltipHtmlContent(
       nameOfActionType,
       matrixOfActionCountsByActionTypeAndDisease,
-      actionIndex
+      actionIndex,
+      series,
+      planDiseases
     )
-    series.forEach((barSegments, seriesIndex) => {
-      $(barSegments[seriesIndex][actionIndex])
+    series.forEach((_barSegments, seriesIndex) => {
+      $(series[seriesIndex][actionIndex])
         .attr("title", tooltipTitle)
         .attr("data-toggle", "tooltip")
         .attr("data-html", true)
@@ -200,7 +193,7 @@ class BarChartByActionType extends React.Component {
         .tooltip()
 
       this.tooltipNodesFromPreviousRender.push(
-        $(barSegments[seriesIndex][actionIndex])
+        $(series[seriesIndex][actionIndex])
       )
     })
   }
