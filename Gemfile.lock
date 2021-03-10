@@ -265,36 +265,36 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bcrypt
-  bootsnap
-  byebug
-  capybara
-  colorize
-  cuprite
-  devise
-  factory_bot_rails
-  hamlit-rails
-  html2haml
-  listen
-  m
-  minitest-rails
-  minitest-reporters
-  mocha
-  pg
-  pry
-  pry-byebug
-  puma
-  rack-attack
-  rails (~> 5.2.4.5)
-  rails-controller-testing
-  rails-erd
-  rake
-  rubyXL
-  sentry-rails
-  sentry-ruby
-  spring
-  spring-watcher-listen
-  web-console
+  bcrypt (~> 3.1)
+  bootsnap (~> 1.4)
+  byebug (~> 11.1)
+  capybara (~> 3.35)
+  colorize (~> 0.8)
+  cuprite (~> 0.6)
+  devise (~> 4.7)
+  factory_bot_rails (~> 6.1)
+  hamlit-rails (~> 0.2)
+  html2haml (~> 2.2)
+  listen (~> 3.4)
+  m (~> 1.5)
+  minitest-rails (~> 5.2)
+  minitest-reporters (~> 1.4)
+  mocha (~> 1.12)
+  pg (~> 1.2)
+  pry (~> 0.14)
+  pry-byebug (~> 3.8)
+  puma (~> 5.2)
+  rack-attack (~> 6.5)
+  rails (~> 5.2)
+  rails-controller-testing (~> 1.0)
+  rails-erd (~> 1.6)
+  rake (~> 13.0)
+  rubyXL (~> 3.4)
+  sentry-rails (~> 4.2)
+  sentry-ruby (~> 4.2)
+  spring (~> 2.1)
+  spring-watcher-listen (~> 2.0)
+  web-console (~> 3.7)
   webpacker (~> 5.2)
 
 RUBY VERSION
