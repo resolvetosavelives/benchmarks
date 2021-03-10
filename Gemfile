@@ -23,8 +23,8 @@ group :development, :test do
   gem "colorize", "~> 0.8"
   gem "m", "~> 1.5"
   gem "minitest-rails", "~> 5.2"
-  gem "pry", "~> 0.14"
-  gem "pry-byebug", "~> 3.8"
+  gem "pry", "~> 0.13"
+  gem "pry-byebug", "~> 3.9"
 end
 
 group :development do
