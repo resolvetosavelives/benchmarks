@@ -226,10 +226,6 @@ GEM
       concurrent-ruby
       faraday
     sexp_processor (4.13.0)
-    skylight (4.2.1)
-      skylight-core (= 4.2.1)
-    skylight-core (4.2.1)
-      activesupport (>= 4.2.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -296,7 +292,6 @@ DEPENDENCIES
   rubyXL
   sentry-rails
   sentry-ruby
-  skylight
   spring
   spring-watcher-listen
   web-console
