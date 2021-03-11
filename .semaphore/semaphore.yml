@@ -49,5 +49,7 @@ blocks:
           - sem-version node 12.16.3
           - cache restore
           - bundle install --deployment --path vendor/bundle
-          - yarn install --frozen-lockfile --check-files
-          - bin/rake db:test:prepare assets:precompile test:system
+          - cache restore webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA,webpack-$SEMAPHORE_GIT_BRANCH,webpack
+          - bin/webpack -e test
+          - cache store webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA public/packs-test
+          - bin/rake db:test:prepare test:system
