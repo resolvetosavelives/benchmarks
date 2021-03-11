@@ -30,9 +30,8 @@ const IndicatorActionList = (props) => {
   const planDiseases = useSelector((state) => getPlanDiseases(state))
   let actionsForIndicator = getActionsForIds(actionIdsByIndicator, actions)
 
-  if (!goalForThisIndicator) {
-    return <NoGoalForThisIndicator />
-  }
+  const noGoalForThisIndicator =
+    goalForThisIndicator.value === null ? <NoGoalForThisIndicator /> : null
 
   const sortedActionsByIndicator = getSortedActions(
     actionsForIndicator,
@@ -54,6 +53,7 @@ const IndicatorActionList = (props) => {
 
   return (
     <>
+      {noGoalForThisIndicator}
       {actionGeneralComponents}
       {actionDiseaseComponents}
       <AddAction indicator={indicator} />

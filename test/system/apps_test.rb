@@ -31,7 +31,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal 'Nigeria draft plan', find('#plan_name').value
     assert_equal 'Actions', find('.action-count-component .label').text
-    assert_equal '235', find('.action-count-component .count').text
+    assert_equal '337', find('.action-count-component .count').text
     assert_selector('#technical-area-1') # the first one
     assert_selector('#technical-area-3') # the last one
     assert_selector('.nudge-container') do
@@ -118,7 +118,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal 'Nigeria draft plan', find('#plan_name').value
     assert_equal 'Actions', find('.action-count-component .label').text
-    assert_equal '327', find('.action-count-component .count').text
+    assert_equal '337', find('.action-count-component .count').text
     assert_selector('#technical-area-1') # the first one
     assert_selector('#technical-area-3') # the last one
     assert_selector('.nudge-container') do
@@ -127,6 +127,31 @@ class AppsTest < ApplicationSystemTestCase
                'Focus on no more than 2-3 actions per technical area'
              )
     end
+
+    ##
+    # Make sure there are the correct number of indicators with no capacity gap
+    indicators_no_capacity_gap = all('.benchmark-container .no-capacity-gap')
+    indicator_headings =
+      indicators_no_capacity_gap.map do |indicator|
+        indicator.ancestor('.benchmark-container').find('.header').text
+      end
+    assert_equal(
+      indicator_headings,
+      [
+        'Benchmark 1.2: Financing is available for the implementation of IHR capacities',
+        'Benchmark 1.3: Financing available for timely response to public health emergencies',
+        'Benchmark 3.1: Effective multisectoral coordination on AMR',
+        'Benchmark 10.3: In-service trainings are available',
+        'Benchmark 12.1: Functional emergency response coordination is in place'
+      ]
+    )
+
+    # and make sure there are Add Action components for each of these indicators
+    add_actions =
+      indicators_no_capacity_gap.map do |indicator|
+        indicator.ancestor('.benchmark-container').find('.action-form')
+      end
+    assert(add_actions.count == indicators_no_capacity_gap.count)
 
     ##
     # make sure Technical Area tab has a legend
@@ -241,10 +266,9 @@ class AppsTest < ApplicationSystemTestCase
            )
     click_on('email@example.com')
     click_on('My Plans')
-    sleep 0.2
-
     assert page.has_content?('Saved Nigeria Plan 789')
     click_on('Saved Nigeria Plan 789')
+    sleep 0.2
     assert page.has_content?('National Legislation, Policy and Financing')
     click_on('email@example.com')
     click_on('My Plans')
@@ -286,7 +310,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal 'Actions', find('.action-count-component .label').text
 
     # action count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
-    assert_equal '107', find('.action-count-component .count').text
+    assert_equal '209', find('.action-count-component .count').text
     assert page.has_content?(
              'Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors.'
            )
@@ -351,7 +375,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal 'Nigeria draft plan', find('#plan_name').value
     assert_equal 'Actions', find('.action-count-component .label').text
-    assert_equal '28', find('.action-count-component .count').text
+    assert_equal '130', find('.action-count-component .count').text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
