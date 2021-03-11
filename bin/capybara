@@ -32,8 +32,12 @@ class CapybaraConsole
     @assertions = 0
   end
 
+  def root_url
+    ARGV.fetch(0, "http://localhost:3000")
+  end
+
   def run!
-    visit ARGV.fetch(0, "http://localhost:3000")
+    visit root_url
     binding.pry
     puts "done"
   end
