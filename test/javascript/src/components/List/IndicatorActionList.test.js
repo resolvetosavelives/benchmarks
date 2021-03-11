@@ -37,14 +37,39 @@ describe("when a goal is present", () => {
   const mockIndicatorMap = { 1: {} }
 
   describe("and there are actions present", () => {
-    const mockPlanGoalMap = { 17: { id: 1 } }
+    const mockPlanGoalMap = { 17: { id: 2, value: 3 } }
     const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
     const mockAllActions = [
-      { id: 2, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-      { id: 5, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-      { id: 13, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-      { id: 11, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
-      { i2: 6, benchmark_technical_area_id: 1, benchmark_indicator_id: 1 },
+      {
+        id: 2,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: 1,
+      },
+      {
+        id: 5,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
+      {
+        id: 13,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
+      {
+        id: 11,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: 2,
+      },
+      {
+        id: 6,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
     ]
 
     beforeEach(() => {
@@ -55,7 +80,7 @@ describe("when a goal is present", () => {
       beforeEach(() => {
         const mockPlanDiseases = [
           { id: 1, name: "influenza", display: "Influenza" },
-          { id: 1, name: "cholera", display: "Cholera" },
+          { id: 2, name: "cholera", display: "Cholera" },
         ]
         useSelector
           .mockReturnValueOnce(mockPlanGoalMap)
@@ -135,7 +160,7 @@ describe("when a goal is present", () => {
 
   describe("and there are zero actions", () => {
     beforeEach(() => {
-      let mockPlanGoalMap = { 17: { id: 1 } }
+      let mockPlanGoalMap = { 17: { id: 2, value: null } }
       let mockPlanActionIdsByIndicator = []
       let mockAllActions = []
       const mockPlanDiseases = []
@@ -170,7 +195,7 @@ describe("when a goal is present", () => {
         expect(foundGeneralActionsComponents.length).toEqual(1)
         expect(foundDiseaseActionsComponents.length).toEqual(0)
         expect(foundAddActionComponents.length).toEqual(1)
-        expect(foundNoGoalComponent.length).toEqual(0)
+        expect(foundNoGoalComponent.length).toEqual(1)
       })
     })
   })
@@ -179,11 +204,45 @@ describe("when a goal is present", () => {
 describe("when there is no goal", () => {
   beforeEach(() => {
     const mockTechnicalAreaMap = { 1: {} }
-    const mockIndicatorMap = { 1: {} }
-    const mockPlanGoalMap = { 17: null }
-    const mockPlanActionIdsByIndicator = []
-    const mockAllActions = []
-    const mockPlanDiseases = []
+    const mockIndicatorMap = { 1: { id: 2, value: null } }
+    const mockPlanGoalMap = { 17: { id: 2, value: null } }
+    const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
+    const mockPlanDiseases = [
+      { id: 1, name: "influenza", display: "Influenza" },
+      { id: 2, name: "cholera", display: "Cholera" },
+    ]
+    const mockAllActions = [
+      {
+        id: 2,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: 1,
+      },
+      {
+        id: 5,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
+      {
+        id: 13,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
+      {
+        id: 11,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
+      {
+        id: 6,
+        benchmark_technical_area_id: 1,
+        benchmark_indicator_id: 1,
+        disease_id: null,
+      },
+    ]
     useSelector
       .mockReturnValueOnce(mockPlanGoalMap)
       .mockReturnValueOnce(mockPlanActionIdsByIndicator)
@@ -193,7 +252,7 @@ describe("when there is no goal", () => {
       .mockReturnValueOnce(mockPlanDiseases)
   })
 
-  it("renders only a NoGoalForThisIndicator", () => {
+  it("renders NoGoalForThisIndicator, any Actions, and Add Action", () => {
     act(() => {
       ReactDOM.render(<IndicatorActionList indicator={{ id: 17 }} />, container)
     })
@@ -209,10 +268,10 @@ describe("when there is no goal", () => {
     const foundNoGoalComponent = container.querySelectorAll(
       "mock-NoGoalForThisIndicator"
     )
-    expect(foundGeneralActionsComponents.length).toEqual(0)
-    expect(foundDiseaseActionsComponents.length).toEqual(0)
-    expect(foundAddActionComponents.length).toEqual(0)
-    expect(foundAddActionComponents.length).toEqual(0)
+    expect(foundGeneralActionsComponents.length).toEqual(1)
+    expect(foundDiseaseActionsComponents.length).toEqual(2)
+    expect(foundAddActionComponents.length).toEqual(1)
+    expect(foundAddActionComponents.length).toEqual(1)
     expect(foundNoGoalComponent.length).toEqual(1)
   })
 })
