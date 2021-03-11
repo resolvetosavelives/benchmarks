@@ -400,13 +400,4 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?('Welcome! You have signed up successfully.')
     assert page.has_content?('Saved Nigeria Plan by Areas 789') # ugh without this form field(s) dont get filled
   end
-
-  ##
-  # usage: select_from_chosen('Option', from: 'id_of_field')
-  #   example, Get Started form: select_from_chosen('Armenia', from: 'get_started_form_country_id')
-  def select_from_chosen(item_text, options)
-    field = find_field(options[:from], visible: false)
-    find("##{field[:id]}_chosen").click
-    find("##{field[:id]}_chosen ul.chosen-results li", text: item_text).click
-  end
 end
