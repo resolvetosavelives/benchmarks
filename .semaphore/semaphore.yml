@@ -48,5 +48,4 @@ blocks:
           - cache restore
           - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
-          - bin/rake db:test:prepare
-          - bin/rake test:system
+          - bin/rake db:test:prepare assets:precompile test:system
