@@ -21,10 +21,12 @@ Capybara.default_normalize_ws = true
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
 require "minitest"
+require_relative "../test/capybara_helper"
 
 class CapybaraConsole
   include Capybara::DSL
   include Minitest::Assertions
+  include CapybaraHelper
 
   attr_accessor :assertions
 
