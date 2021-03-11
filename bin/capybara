@@ -20,11 +20,20 @@ Capybara.default_max_wait_time = 2
 Capybara.default_normalize_ws = true
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
+require "minitest"
+
 class CapybaraConsole
   include Capybara::DSL
+  include Minitest::Assertions
+
+  attr_accessor :assertions
+
+  def initialize
+    @assertions = 0
+  end
 
   def run!
-    visit "http://localhost:3000"
+    visit ARGV.fetch(0, "http://localhost:3000")
     binding.pry
     puts "done"
   end
