@@ -315,17 +315,10 @@ class AppsTest < ApplicationSystemTestCase
   end
 
   test 'happy path for Nigeria JEE 1.0 plan by technical areas 5-year' do
-    ##
-    # start on the home page
     visit root_url
-    click_on('Get Started')
-
-    sleep 0.1
-
-    ##
-    # go to the Get Started page and fill the form
-    assert_current_path('/get-started')
+    click_on('Get Started') until current_path == '/get-started'
     assert page.has_content?("LET'S GET STARTED")
+
     select_from_chosen('Nigeria', from: 'get_started_form_country_id')
     click_on('Next')
     choose 'Joint External Evaluation (JEE)' #   fails form validation. extra weird because that same flow works in the other test cases.
