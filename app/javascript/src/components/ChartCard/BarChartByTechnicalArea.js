@@ -247,9 +247,14 @@ class BarChartByTechnicalArea extends React.Component {
         <strong>
           ${nameOfTechnicalArea.text}: ${sumOfCounts}
         </strong>
+    `
+
+    if (planDiseases.length > 0) {
+      tooltipHtml += `
         <div>&nbsp;</div>
         <div>Health System: ${healthSystemCount}</div>
-    `
+      `
+    }
 
     planDiseases.forEach((disease, i) => {
       const diseaseCount =

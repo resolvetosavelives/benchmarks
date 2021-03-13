@@ -219,9 +219,14 @@ class BarChartByActionType extends React.Component {
         <strong>
           ${nameOfActionType}: ${sumOfCounts}
         </strong>
+    `
+
+    if (planDiseases.length > 0) {
+      tooltipHtml += `
         <div>&nbsp;</div>
         <div>Health System: ${healthSystemCount}</div>
-    `
+      `
+    }
 
     planDiseases.forEach((disease, i) => {
       const diseaseCount =
