@@ -5,7 +5,7 @@ ruby "3.0.0"
 gem "rails", "~> 6.1"
 
 gem "bcrypt", "~> 3.1"
-gem "bootsnap", "~> 1.4", require: false
+gem "bootsnap", "~> 1.7", require: false
 gem "devise", "~> 4.7"
 gem "hamlit-rails", "~> 0.2"
 gem "inline_svg", "~> 1.7"
