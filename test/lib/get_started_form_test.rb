@@ -31,7 +31,7 @@ describe GetStartedForm do
       # 162 is Nigeria
       assessment_type: "jee1",
       plan_term: "5",
-      diseases: [Disease.influenza.id]
+      diseases: [Disease.influenza.id],
     }
   end
 
@@ -42,18 +42,18 @@ describe GetStartedForm do
       # 162 is Nigeria
       assessment_type: "jee1",
       plan_term: "5",
-      diseases: [Disease.influenza.id, Disease.cholera.id]
+      diseases: [Disease.influenza.id, Disease.cholera.id],
     }
   end
 
   let(:attrs_for_nigeria_jee1_5yr_bad_disease) do
     {
-       # all string values so as to repro how received from an ActionController
-       country_id: "162",
-       # 162 is Nigeria
-       assessment_type: "jee1",
-       plan_term: "5",
-       diseases: [0]
+      # all string values so as to repro how received from an ActionController
+      country_id: "162",
+      # 162 is Nigeria
+      assessment_type: "jee1",
+      plan_term: "5",
+      diseases: [0],
     }
   end
 
@@ -69,14 +69,13 @@ describe GetStartedForm do
           plan_term
           country
           assessment
-        ].each { |mth| subject.send(mth).must_be_nil }
+        ].each { |mth| _(subject.send(mth)).must_be_nil }
       end
 
       it "returns [] for members" do
-        %i[
-          technical_area_ids
-          diseases
-        ].each { |mth| subject.send(mth).must_equal [] }
+        %i[technical_area_ids diseases].each do |mth|
+          _(subject.send(mth)).must_equal []
+        end
       end
     end
 
@@ -84,27 +83,27 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_2areas) }
 
       it "returns an the expected value for country_id" do
-        subject.country_id.must_equal "162"
+        _(subject.country_id).must_equal "162"
       end
 
       it "returns an the expected value for assessment_type" do
-        subject.assessment_type.must_equal "jee1"
+        _(subject.assessment_type).must_equal "jee1"
       end
 
       it "returns an the expected value for plan_by_technical_ids" do
-        subject.plan_by_technical_ids.must_equal "1"
+        _(subject.plan_by_technical_ids).must_equal "1"
       end
 
       it "returns an the expected value for plan_term" do
-        subject.plan_term.must_equal 1
+        _(subject.plan_term).must_equal 1
       end
 
       it "returns a country instance" do
-        subject.country.must_be_instance_of Country
+        _(subject.country).must_be_instance_of Country
       end
 
       it "returns an assessment instance" do
-        subject.assessment.must_be_instance_of Assessment
+        _(subject.assessment).must_be_instance_of Assessment
       end
     end
 
@@ -112,27 +111,27 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_5yr) }
 
       it "returns an the expected value for country_id" do
-        subject.country_id.must_equal "162"
+        _(subject.country_id).must_equal "162"
       end
 
       it "returns an the expected value for assessment_type" do
-        subject.assessment_type.must_equal "jee1"
+        _(subject.assessment_type).must_equal "jee1"
       end
 
       it "returns an the expected value for plan_by_technical_ids" do
-        subject.plan_by_technical_ids.must_be_nil
+        _(subject.plan_by_technical_ids).must_be_nil
       end
 
       it "returns an the expected value for plan_term" do
-        subject.plan_term.must_equal 5
+        _(subject.plan_term).must_equal 5
       end
 
       it "returns a country instance" do
-        subject.country.must_be_instance_of Country
+        _(subject.country).must_be_instance_of Country
       end
 
       it "returns an assessment instance" do
-        subject.assessment.must_be_instance_of Assessment
+        _(subject.assessment).must_be_instance_of Assessment
       end
     end
   end
@@ -141,63 +140,65 @@ describe GetStartedForm do
     let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_5yr_influenza) }
 
     it "returns an the expected value for country_id" do
-      subject.country_id.must_equal "162"
+      _(subject.country_id).must_equal "162"
     end
 
     it "returns an the expected value for assessment_type" do
-      subject.assessment_type.must_equal "jee1"
+      _(subject.assessment_type).must_equal "jee1"
     end
 
     it "returns an the expected value for plan_by_technical_ids" do
-      subject.plan_by_technical_ids.must_be_nil
+      _(subject.plan_by_technical_ids).must_be_nil
     end
 
     it "returns an the expected value for plan_term" do
-      subject.plan_term.must_equal 5
+      _(subject.plan_term).must_equal 5
     end
 
     it "returns a country instance" do
-      subject.country.must_be_instance_of Country
+      _(subject.country).must_be_instance_of Country
     end
 
     it "returns an assessment instance" do
-      subject.assessment.must_be_instance_of Assessment
+      _(subject.assessment).must_be_instance_of Assessment
     end
 
     it "returns an expected value for diseases" do
-      subject.diseases.must_equal [Disease.influenza.id]
+      _(subject.diseases).must_equal [Disease.influenza.id]
     end
   end
 
   describe "for Nigeria JEE1 5-year plan with influenza and cholera" do
-    let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_5yr_influenza_cholera) }
+    let(:subject) do
+      GetStartedForm.new(attrs_for_nigeria_jee1_5yr_influenza_cholera)
+    end
 
     it "returns an the expected value for country_id" do
-      subject.country_id.must_equal "162"
+      _(subject.country_id).must_equal "162"
     end
 
     it "returns an the expected value for assessment_type" do
-      subject.assessment_type.must_equal "jee1"
+      _(subject.assessment_type).must_equal "jee1"
     end
 
     it "returns an the expected value for plan_by_technical_ids" do
-      subject.plan_by_technical_ids.must_be_nil
+      _(subject.plan_by_technical_ids).must_be_nil
     end
 
     it "returns an the expected value for plan_term" do
-      subject.plan_term.must_equal 5
+      _(subject.plan_term).must_equal 5
     end
 
     it "returns a country instance" do
-      subject.country.must_be_instance_of Country
+      _(subject.country).must_be_instance_of Country
     end
 
     it "returns an assessment instance" do
-      subject.assessment.must_be_instance_of Assessment
+      _(subject.assessment).must_be_instance_of Assessment
     end
 
     it "returns an expected value for diseases" do
-      subject.diseases.must_equal [Disease.influenza.id, Disease.cholera.id]
+      _(subject.diseases).must_equal [Disease.influenza.id, Disease.cholera.id]
     end
   end
 
@@ -205,9 +206,9 @@ describe GetStartedForm do
     let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_2areas) }
 
     it "returns an array of technical area IDs" do
-      subject.technical_area_ids.must_be_instance_of Array
-      subject.technical_area_ids.size.must_equal 2
-      subject.technical_area_ids.must_equal [1, 2]
+      _(subject.technical_area_ids).must_be_instance_of Array
+      _(subject.technical_area_ids.size).must_equal 2
+      _(subject.technical_area_ids).must_equal [1, 2]
     end
   end
 
@@ -216,7 +217,7 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_2areas) }
 
       it "returns the expected string value" do
-        subject.plan_term_s.must_equal "1-year"
+        _(subject.plan_term_s).must_equal "1-year"
       end
     end
 
@@ -224,7 +225,7 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_5yr) }
 
       it "returns the expected string value" do
-        subject.plan_term_s.must_equal "5-year"
+        _(subject.plan_term_s).must_equal "5-year"
       end
     end
 
@@ -232,7 +233,7 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new }
 
       it "returns the expected string value" do
-        subject.plan_term_s.must_be_nil
+        _(subject.plan_term_s).must_be_nil
       end
     end
   end
@@ -242,32 +243,34 @@ describe GetStartedForm do
       let(:subject) { GetStartedForm.new }
 
       it "has errors on country" do
-        subject.valid?.must_equal false
-        subject.errors.include?(:country).must_equal true
+        _(subject.valid?).must_equal false
+        _(subject.errors.include?(:country)).must_equal true
       end
 
       it "has errors on assessment" do
-        subject.valid?.must_equal false
-        subject.errors.include?(:assessment).must_equal true
+        _(subject.valid?).must_equal false
+        _(subject.errors.include?(:assessment)).must_equal true
       end
 
       it "has errors on plan_term" do
-        subject.valid?.must_equal false
-        subject.errors.include?(:plan_term).must_equal true
+        _(subject.valid?).must_equal false
+        _(subject.errors.include?(:plan_term)).must_equal true
       end
 
       it "has no errors on optional diseases" do
-        subject.valid?.must_equal false
-        subject.errors.include?(:diseases).must_equal false
+        _(subject.valid?).must_equal false
+        _(subject.errors.include?(:diseases)).must_equal false
       end
     end
 
     describe "with invalid disease" do
-      let (:subject) {GetStartedForm.new(attrs_for_nigeria_jee1_5yr_bad_disease)}
+      let (:subject) do
+        GetStartedForm.new(attrs_for_nigeria_jee1_5yr_bad_disease)
+      end
 
       it "has errors" do
-        subject.valid?.must_equal false
-        subject.errors.include?(:diseases).must_equal true
+        _(subject.valid?).must_equal false
+        _(subject.errors.include?(:diseases)).must_equal true
       end
     end
 
@@ -276,7 +279,7 @@ describe GetStartedForm do
         let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_2areas) }
 
         it "returns true" do
-          subject.valid?.must_equal true
+          _(subject.valid?).must_equal true
         end
       end
 
@@ -284,7 +287,7 @@ describe GetStartedForm do
         let(:subject) { GetStartedForm.new(attrs_for_nigeria_jee1_5yr) }
 
         it "returns true" do
-          subject.valid?.must_equal true
+          _(subject.valid?).must_equal true
         end
       end
     end

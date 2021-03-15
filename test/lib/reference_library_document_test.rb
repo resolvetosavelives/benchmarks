@@ -12,8 +12,8 @@ describe ReferenceLibraryDocument do
     end
 
     it "returns the expected URL" do
-      ReferenceLibraryDocument.extract_download_url(
-        attachment_field,
+      _(
+        ReferenceLibraryDocument.extract_download_url(attachment_field),
       ).must_equal "https://dl.airtable.com/.attachments/a78a3c2b524ddac30133b6aa882817aa/15400a04/OnehealthzoonoticdiseaseprioroitizationforMultisectoralEngagementinBurkinaFaso.pdf"
     end
   end
@@ -23,10 +23,10 @@ describe ReferenceLibraryDocument do
     let(:result) { ReferenceLibraryDocument.all_from_csv }
 
     it "returns an array of ReferenceLibraryDocuments" do
-      result.must_be_instance_of Array
-      result.size.must_equal(csv_data.size - 1)
-      result.first.must_be_instance_of ReferenceLibraryDocument
-      result.last.must_be_instance_of ReferenceLibraryDocument
+      _(result).must_be_instance_of Array
+      _(result.size).must_equal(csv_data.size - 1)
+      _(result.first).must_be_instance_of ReferenceLibraryDocument
+      _(result.last).must_be_instance_of ReferenceLibraryDocument
     end
   end
 
@@ -54,37 +54,37 @@ describe ReferenceLibraryDocument do
     end
 
     it "returns an instance of ReferenceLibraryDocument with its members set" do
-      result.must_be_instance_of ReferenceLibraryDocument
-      result.title.must_equal "title xyz"
-      result.description.must_equal "desc xyz"
-      result.author.must_equal "author xyz"
-      result.date.must_equal "date xyz"
-      result.relevant_pages.must_equal "page xyz"
-      result.download_url.must_equal "test download URL"
-      result.thumbnail_url.must_equal "test thumbnail URL"
-      result.technical_area.must_equal "Antimicrobial Resistance"
-      result.reference_type.must_equal "Case Study"
+      _(result).must_be_instance_of ReferenceLibraryDocument
+      _(result.title).must_equal "title xyz"
+      _(result.description).must_equal "desc xyz"
+      _(result.author).must_equal "author xyz"
+      _(result.date).must_equal "date xyz"
+      _(result.relevant_pages).must_equal "page xyz"
+      _(result.download_url).must_equal "test download URL"
+      _(result.thumbnail_url).must_equal "test thumbnail URL"
+      _(result.technical_area).must_equal "Antimicrobial Resistance"
+      _(result.reference_type).must_equal "Case Study"
     end
   end
 
   describe ".reference_type_ordinal" do
     describe "for a known type" do
       it "returns the expected integer" do
-        ReferenceLibraryDocument.reference_type_ordinal(
-          "Briefing Note",
+        _(
+          ReferenceLibraryDocument.reference_type_ordinal("Briefing Note"),
         ).must_equal 1
-        ReferenceLibraryDocument.reference_type_ordinal(
-          "Case Study",
+        _(
+          ReferenceLibraryDocument.reference_type_ordinal("Case Study"),
         ).must_equal 2
-        ReferenceLibraryDocument.reference_type_ordinal(
-          "Training Package",
+        _(
+          ReferenceLibraryDocument.reference_type_ordinal("Training Package"),
         ).must_equal 8
       end
     end
 
     describe "for nil" do
       it "returns nil" do
-        ReferenceLibraryDocument.reference_type_ordinal(nil).must_be_nil
+        _(ReferenceLibraryDocument.reference_type_ordinal(nil)).must_be_nil
       end
     end
 

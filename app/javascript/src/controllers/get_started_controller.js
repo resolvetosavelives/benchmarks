@@ -3,74 +3,23 @@ import $ from "jquery"
 
 export default class extends Controller {
   static targets = [
-    "form",
-    "countrySelect",
-    "planByTechnicalAreasContainerForJee1",
-    "planByTechnicalAreasContainerForSpar2018",
     "cardOfTechnicalAreasForJee1",
     "cardOfTechnicalAreasForSpar2018",
     "checkboxForTechnicalArea",
+    "countrySelect",
+    "form",
+    "planByTechnicalAreasContainerForJee1",
+    "planByTechnicalAreasContainerForSpar2018",
     "submit",
   ]
 
   connect() {
-    this.redirectKey = this.data.get("redirectKey")
     this.namedIds = this.data.get("namedIds")
-    $(this.countrySelectTarget).chosen({
-      no_results_text: "No countries match",
-    })
-    $(this.countrySelectTarget).on(
-      "change",
-      this.presubmitFormToLoadOtherFields.bind(this)
-    )
-    $(this.element).on(
-      "ajax:success",
-      this.updateFormControlsFromServerResponse.bind(this)
-    )
-    $(this.element).on("ajax:error", this.handleAjaxError.bind(this))
-    const selectedCountryCode = this.countrySelectTarget.value
-    // the purpose of this conditional and the variable submittedGetStartedAtLeastOnce is
-    // to handle when we end up on this page via Back Button usage, because in this
-    // case the select menu will have a value but no events have fired. So here we
-    // trigger an event in order to populate form options for the pre-selected value.
-    if (selectedCountryCode && !window.submittedGetStartedAtLeastOnce) {
-      $(this.countrySelectTarget).trigger("change")
+    if (this.hasCountrySelectTarget) {
+      $(this.countrySelectTarget).chosen({
+        no_results_text: "No countries match",
+      })
     }
-  }
-
-  presubmitFormToLoadOtherFields() {
-    // the following reset/set flow is done to fix
-    // the bug reported here: https://www.pivotaltracker.com/story/show/171721472
-    const countryValue = this.countrySelectTarget.value
-    this.formTarget.reset()
-    this.countrySelectTarget.value = countryValue
-
-    window.submittedGetStartedAtLeastOnce = true
-    $(this.formTarget).submit()
-  }
-
-  // the API arguments here come from jQuery Ajax
-  updateFormControlsFromServerResponse(jqEvent, responseData) {
-    // match at the beginning only because its elsewhere in the response
-    const regex = new RegExp("^" + this.redirectKey)
-    const isRedirect = regex.test(responseData)
-    // when the form is filled completely the server responds with a redirect
-    // the handling here is to workaround XHR being unable to detect a redirect.
-    if (isRedirect) {
-      const url = responseData.split(this.redirectKey)[1]
-      window.location.href = url
-    } else {
-      // this is when the form is not yet filled and responses fill form options.
-      // responseData is expected to be an HTML fragment of the template without a layout
-      $(this.element).replaceWith(responseData)
-    }
-  }
-
-  handleAjaxError(jqEvent, xhr, status, errMsg) {
-    console.log(
-      "An error occurred while submitting the form via Ajax: ",
-      errMsg
-    )
   }
 
   validateForm(event) {

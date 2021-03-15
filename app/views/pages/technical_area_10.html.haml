@@ -1,41 +1,34 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     10. Human resources
-  
   %p
-    States Parties with competent and well-motivated health personnel for sustainable and functional public health surveillance and response are available at all levels of the health system for effective implementation of IHR. Human resources include nurses and midwives, physicians, epidemiologists and other public health and environmental specialists, social scientists, communications personnel, occupational health personnel, laboratory scientists/technicians, biostatisticians, information technology (IT) specialists and biomedical technicians. There is a corresponding workforce in the animal sector of veterinarians, animal health professionals, para-veterinarians, epidemiologists and IT specialists. 
+    States Parties with competent and well-motivated health personnel for sustainable and functional public health surveillance and response are available at all levels of the health system for effective implementation of IHR. Human resources include nurses and midwives, physicians, epidemiologists and other public health and environmental specialists, social scientists, communications personnel, occupational health personnel, laboratory scientists/technicians, biostatisticians, information technology (IT) specialists and biomedical technicians. There is a corresponding workforce in the animal sector of veterinarians, animal health professionals, para-veterinarians, epidemiologists and IT specialists.
   %p
-    The recommended density of doctors, nurses and midwives per 1000 population for operational routine services is 4.45 plus 30% surge capacity. The optimal target for surveillance is one trained (field) epidemiologist (or equivalent) per 200 000 population who can systematically cooperate to meet relevant IHR and PVS core competencies. One trained epidemiologist is needed per rapid response team. 
-    
+    The recommended density of doctors, nurses and midwives per 1000 population for operational routine services is 4.45 plus 30% surge capacity. The optimal target for surveillance is one trained (field) epidemiologist (or equivalent) per 200 000 population who can systematically cooperate to meet relevant IHR and PVS core competencies. One trained epidemiologist is needed per rapid response team.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
       Prevention, detection and response activities (including health promotion, occupational health safety and security, and appropriate care of those affected) conducted effectively and sustainably by a fully competent, coordinated, evaluated and occupationally diverse multisectoral workforce.
-
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       (1) A trained health workforce that includes nurses and midwives, physicians, epidemiologists and other public health and environmental specialists, social scientists, laboratory scientists/technicians, biostatisticians, IT specialists and biomedical technicians. (2) Existence of a corresponding workforce in the animal sector of veterinarians, para-veterinarians, animal health professionals, epidemiologists, IT specialists and others.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "10.1"}
-
   .indicator-head
     %h3
       Benchmark 10.1
-    An up-to-date, multisectoral workforce strategy is in place 
+    An up-to-date, multisectoral workforce strategy is in place
   %p
     %strong
       Objective:
     To develop and implement an up-to-date workforce strategy for a functional multisectoral health workforce
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -44,7 +37,6 @@
         No capacity
     .body.col-9
       The country has to develop and implement all activities that are listed in level 2 to achieve the limited capacity for the surveillance system.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -60,15 +52,14 @@
           and
           = raw 'develop/document<sup><a href="#46">46</a></sup>'
           country’s current health workforce strategy.
-        %li 
-          Build planning capacity to develop or improve human resources for health policy and strategies that quantify health workforce needs, demands and supply under varied future scenarios. 
-        %li 
+        %li
+          Build planning capacity to develop or improve human resources for health policy and strategies that quantify health workforce needs, demands and supply under varied future scenarios.
+        %li
           Develop a mechanism for multisectoral action on health workforce issues to generate required support from all relevant health sectors, ministries of finance, education and labour (or equivalent), collaborating partners and stakeholders.
-        %li 
-          Develop a plan to fund and implement the health workforce strategy (animal and human health sector), and donor contributions. 
-        %li 
+        %li
+          Develop a plan to fund and implement the health workforce strategy (animal and human health sector), and donor contributions.
+        %li
           Document and disseminate the public health workforce/human resource strategy.
-        
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -79,23 +70,21 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop protocols, SOPs, and technical guidelines to ensure regular review and update of the multisectoral workforce strategy with final approval from other relevant sectors or other relevant government agencies.
-        %li 
+        %li
           Develop minimum standards for animal (domestic and wildlife), environmental and human health staffing levels.
-        %li 
+        %li
           Document a separate workforce strategy for human resources for the animal and environmental health sectors, if not already included as part of the public health workforce strategy.
-        %li 
+        %li
           Create appropriate job classification and job description for health workers at all levels of the relevant ministries, and clear career ladder.
-        %li 
+        %li
           Establish a national case for investment in human resources for health as a vital component of the Sustainable Development Goals, Universal Health Coverage and universal access to healthcare (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj3.59).
-        %li 
+        %li
           Conduct advocacy to implement the strategy to relevant stakeholders, including ministries of health, finance, planning and administration/civil service.
-        
-        
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -106,24 +95,22 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Monitor and evaluate the implementation of the multisectoral workforce strategy to track progress and barriers. 
-        %li 
+        %li
+          Monitor and evaluate the implementation of the multisectoral workforce strategy to track progress and barriers.
+        %li
           Document how the national public health workforce is financed within the country (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj2.38).
-        %li 
+        %li
           Develop a strategic framework to nationally prioritize resources and investments in One Health workforce development.
-        %li 
+        %li
           Map and align investment in human resources for health with the current and future needs of the population and health systems to address shortages and enhance distribution of health workers, to enable maximum improvements in health outcomes, social welfare, employment creation and economic growth (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj2).
-        %li 
+        %li
           Document and disseminate annual reports of the multisectoral workforce strategic plan which is completed and has been implemented consistently.
-        
-       
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -134,36 +121,32 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Adopt, review and revise strategy regularly, regarding sustainability of workforce, staffing and incentive models, staff recruitment, development/training and retention mechanisms, planning and monitoring of human resources, and implementation of a career ladder.
-        %li 
+        %li
           Establish national health workforce registries of competent and practicing staff, and collect key performance indicators on health worker stock, distribution, flow, demand, supply capacity and remuneration, in both the public and private sectors, disaggregated by age, sex, ethnic or linguistic group, and place of employment (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj4.75)
-        %li 
+        %li
           Incorporate within the workforce strategy appropriate incentive packages and strategies to attract, train and retain experts for any workforce specialties (may include physicians, nurses, veterinarians, biostatisticians laboratory assistants and specialists, or animal health professionals) to meet national and subnational needs through domestically trained health workers (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj1.25).
-        %li 
+        %li
           Establish a national (and subnational where relevant) continuing professional education programme for professionals (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj1.24).
-        
-
   %a{name: "10.2"}
-
   .indicator-head
     %h3
       Benchmark 10.2:
-    Human resources are available to effectively implement IHR  
+    Human resources are available to effectively implement IHR
   %p
     %strong
       Objective:
-    To develop a public health workforce that is available and trained to prevent, detect, assess, notify, report and respond to public health risks and acute events of domestic and international concern and health service provision (i.e. epidemic preparedness and control) at all levels of health systems to effectively implement IHR 
-
+    To develop a public health workforce that is available and trained to prevent, detect, assess, notify, report and respond to public health risks and acute events of domestic and international concern and health service provision (i.e. epidemic preparedness and control) at all levels of health systems to effectively implement IHR
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -172,7 +155,6 @@
         No capacity
     .body.col-9
       Country does not have appropriate human resources capacity in relevant sectors required for epidemic preparedness and control.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -183,24 +165,24 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Identify a responsible unit and advisory committee for the development of human resource capacity to meet IHR capacity needs.
-        %li 
+        %li
           Conduct engagement meetings with the human, animal and environmental health sector workforce and other stakeholders to expand the multisectoral public health workforce strategy to include IHR capacity needs, such as public health training programmes, human resource infrastructure, existing and required professional staffing levels, administrative support and funding requirements.
-        %li 
+        %li
           Identify the needs as well as current availability and distribution of human resources for health capacities: (
           %a{href:"https://apps.who.int/iris/bitstream/handle/10665/250368/9789241511131-eng.pdf?sequence=1", target: "_blank"}
-            Global Strategy on HRH 2030 
+            Global Strategy on HRH 2030
           Obj4.75)
-          %li 
+          %li
             Surveillance officers (including field epidemiology short-course trained and longer course trained) and biostatisticians
           %li
             Clinicians and clinical assistants
-          %li 
+          %li
             Nurses
-          %li 
+          %li
             Laboratory specialists and technicians
-          %li 
+          %li
             Veterinarians, veterinary technicians and para-veterinarians
           %li
             Information specialists and assistants
@@ -208,9 +190,8 @@
             Social scientists
           %li
             Other relevant public health personnel.
-        %li 
+        %li
           Establish or strengthen national rapid response teams so that it is multidisciplinary and multilevel.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -221,19 +202,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop a human resources for health unit in the human and animal health sectors that can monitor policies and plans to increase the multisector animal and human health workforce, and to promote the recruitment and retention of qualified multidisciplinary staff.
-        %li 
-          Develop a database of in-country multidisciplinary subject matter experts relevant to IHR. 
-        %li 
+        %li
+          Develop a database of in-country multidisciplinary subject matter experts relevant to IHR.
+        %li
           Map relevant public health multidisciplinary workforce and review curriculum, with universities and partners, for all IHR human resource requirements (such as for the field epidemiology training programme curriculum, training materials, mentors, evaluation procedures, accreditation).
-        %li 
+        %li
           Develop continuing professional education programmes, in priority One Health disciplines, at the national, and sub-nationallevels within the strategic framework that also tracks workforce retention and performance.
-        %li 
+        %li
           Establish terms of reference and job descriptions for intermediate level (provincial, district) rapid response teams and public health officer in-charge of outbreak preparedness and response.
-        %li 
+        %li
           Train or recruit human resources for the implementation of IHR capacities for all relevant sectors at the national level.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -244,17 +224,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Expand the multisectoral strategic workforce plan nationwide to the sub-national level. 
-        %li 
+        %li
+          Expand the multisectoral strategic workforce plan nationwide to the sub-national level.
+        %li
           Implement the multisectoral strategic workforce plan consistently at the national, and sub-national levels, with regular reviews to track progress and barriers, and at least annual updates.
-        %li 
-          Mobilize resources to ensure each local level has some capacity for epidemiology, case management, laboratory services, One Health, and others as needed. 
-        %li 
-          Develop and implement SOPs on how professionals at the national, and sub-national levels communicate during an infectious disease outbreak. 
-        %li 
+        %li
+          Mobilize resources to ensure each local level has some capacity for epidemiology, case management, laboratory services, One Health, and others as needed.
+        %li
+          Develop and implement SOPs on how professionals at the national, and sub-national levels communicate during an infectious disease outbreak.
+        %li
           Establish a database of human resources in all relevant sectors and levels of the public health system that can provide multidisciplinary health personnel during public health emergencies with SOPs for updating and maintaining it.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -265,24 +244,21 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Review national preparedness and response plans as well as legal and regulatory frameworks and establish protocols, SOPs, technical guidelines and toolkits to send and receive multidisciplinary health personnel during public health emergencies.
-        %li 
-          Review the implementation plan of sending and receiving multidisciplinary health personnel in at least one event response. If there is no response in the previous year, then develop and conduct a simulation exercise to test the capacity. 
-        %li 
+        %li
+          Review the implementation plan of sending and receiving multidisciplinary health personnel in at least one event response. If there is no response in the previous year, then develop and conduct a simulation exercise to test the capacity.
+        %li
           Identify regional and international (such as Global Outbreak Alert and Response Network) partners for multidisciplinary health personnel and establish partnerships or formal agreements with them.
-        
   %a{name: "10.3"}
-
   .indicator-head
     %h3
       Benchmark 10.3:
-    In-service trainings are available 
+    In-service trainings are available
   %p
     %strong
       Objective:
     To develop a functioning and accredited continuing professional education programme through in-service trainings at national and subnational levels
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -290,8 +266,7 @@
       .level-desc
         No capacity
     .body.col-9
-      No continuing professional education programme through in-service training course is in place. 
-
+      No continuing professional education programme through in-service training course is in place.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -302,15 +277,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Identify and address training needs for various professions/cadres.
-        %li 
+        %li
           Identify and document training programmes specific to professions within each preservice training curricula and joint training programmes.
-        %li 
+        %li
           Publish a national list of in-service training available in the country including national training institutes, professional bodies, schools of public health, nursing, midwifery, veterinary medical colleges and universities that provide in-service training courses.
-        %li 
+        %li
           Identify and document all trainings related to contingency planning, management of emergency situations, risk communications, and joint exercises for multidisciplinary teams.
-        
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -321,11 +295,10 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop and implement a continuing professional education programme that includes outbreak preparedness and control, for at least one group of professionals, such as public health officers, surveillance officers, nurses, midwives, general medical practitioners, veterinarians, para-veterinarians.
-        %li 
+        %li
           Develop and implement at least at the national level short in-service trainings on surveillance, outbreak preparedness and response for specific cadres.
-       
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -336,7 +309,7 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Implement at national and subnational levels short-/long-term in-service training programmes to help expand the number of qualified public health professionals within the country, i.e.
           %li
             Physicians (public health and/or clinical care)
@@ -352,13 +325,12 @@
             Laboratory assistants and specialists
           %li
             Livestock professionals.
-        %li 
+        %li
           Implement at national and subnational levels short in-service trainings on surveillance, outbreak preparedness, response, incident command system and risk communication for specific cadres.
-        %li 
-          Recruit specialists as part of IHR implementation at the next recruitment to strengthen human resources. 
-        %li 
+        %li
+          Recruit specialists as part of IHR implementation at the next recruitment to strengthen human resources.
+        %li
           Explore and implement measures to organize and finance specialization and continuous professional education in public health, including epidemiology, laboratory, animal and environmental health.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -369,28 +341,25 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Document the review of implementation of short-/long-term in-service training programmes.
-        %li 
+        %li
           Guarantee trained staff and resources for all IHR relevant emergencies/hazards.
-        %li 
+        %li
           Continue and expand in-service training and retention programmes for specialized health personnel involved in IHR implementation in difficult to access areas.
-        %li 
+        %li
           Monitor the median number of years that public health personnel have been on staff rolls within the ministry and/or national institutes and post a list of current staff (if available), staff turnover and number of staff attending in-service training.
-        %li 
+        %li
           Expand current public health and field epidemiology training programmes to include: refresher courses; an induction programme for field epidemiologists; regular in-service programmes and continuous professional development programmes for animal health staff; and a sustainable methodology and process to provide continuous and regular education for field epidemiology staff from both human and animal health sectors.
-
   %a{name: "10.4"}
-
   .indicator-head
     %h3
       Benchmark 10.4:
-    Field epidemiology training programme or other applied epidemiology training programme is in place  
+    Field epidemiology training programme or other applied epidemiology training programme is in place
   %p
     %strong
       Objective:
     To establish a sustainable field epidemiology training programme or other applied epidemiology training programme
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -399,7 +368,6 @@
         No capacity
     .body.col-9
       No field epidemiology training programme or applied epidemiology training programme is established
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -410,23 +378,22 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Condcut engagement meeting with the health ministry, agriculture ministry and other relevant stakeholders to determine readiness for a field or applied epidemiology programme and potential career paths for its graduates.
-        %li 
+        %li
           Document the need for applied epidemiology competencies by reviewing the educational system, public health training programmes, workforce gaps and stakeholder interests.
-        %li 
+        %li
           Review and document current field epidemiology capacity in the country.
-        %li 
+        %li
           Evaluate existing field or applied epidemiology programmes in the regional context and identify the host country where national public health professionals can be sent for training.
-        %li 
+        %li
           Secure an agreement with another country to host participants and establish funding mechanisms to support the training.
-        %li 
+        %li
           Conduct recruitment and selection of participants for field or applied epidemiology training in host country.
-        %li 
+        %li
           Track the training and rostering of field or applied epidemiology participants and graduates in host country.
-        %li 
+        %li
           Ensure availability of at least one trained epidemiologist per two million population.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -437,35 +404,34 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Convene a field or applied epidemiology technical working group and establish goals for programme staffing (both technical and administrative), with roles and responsibilities including leadership roles and mentorship of trainees.
-        %li 
-          Develop a strategic plan for development of field or applied epidemiology program that includes an advisory group and governance structure with stakeholders, that allows the development of goals and objectives of national (or participation in regional) applied epidemiologists. 
-        %li 
-          Establish an advisory committee to maintain broad-based support from stakeholders and partners. 
-        %li 
+        %li
+          Develop a strategic plan for development of field or applied epidemiology program that includes an advisory group and governance structure with stakeholders, that allows the development of goals and objectives of national (or participation in regional) applied epidemiologists.
+        %li
+          Establish an advisory committee to maintain broad-based support from stakeholders and partners.
+        %li
           Secure an acceptable location for field or applied epidemiology management.
-        %li 
+        %li
           Identify a sustainable funding mechanism for field or applied epidemiology; consider basic level field or applied epidemiology with a plan for expansion into intermediate and advanced levels of field or applied epidemiology, as determined by country needs.
-        %li 
-          Develop course curriculum, maintain scientific excellence in training, monitoring and evaluating trainees, and consult on epidemiological methods. 
-        %li 
+        %li
+          Develop course curriculum, maintain scientific excellence in training, monitoring and evaluating trainees, and consult on epidemiological methods.
+        %li
           Designate field supervisors and mentors for field or applied epidemiology and prepare guidelines for mentorship designated to monitor trainee activity, development of projects, barriers to training, among others.
-        %li 
-          Develop training and SOPs for mentors and supervisors. 
-        %li 
+        %li
+          Develop training and SOPs for mentors and supervisors.
+        %li
           Disseminate field or applied epidemiology training materials, protocols, SOPs and toolkits.
-        %li 
+        %li
           Establish accreditation mechanisms for health training institutes.
-        %li 
+        %li
           Conduct recruitment and selection of candidates for training including consideration for participation of veterinarians in the epidemiology training programme.
-        %li 
+        %li
           Track field or applied epidemiology capacity in the country including graduates and positions after training.
-        %li 
+        %li
           Establish a partnership with other countries in the region to share epidemiology training programme graduates during emergency events.
-        %li 
+        %li
           Ensure availability of at least one trained epidemiologist per one million population.
-       
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -476,15 +442,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Implement two levels of field or applied epidemiology including the basic, intermediate and/or advanced level at designated sites that comprise trainees from human and animal health professionals.
-        %li  
-          Integrate a trained epidemiologist into core public health competencies (frontline surveillance, epidemiology, biostatistics, laboratory and biosafety, veterinary, communication). 
-        %li 
+        %li
+          Integrate a trained epidemiologist into core public health competencies (frontline surveillance, epidemiology, biostatistics, laboratory and biosafety, veterinary, communication).
+        %li
           Map field or applied epidemiology capacity at intermediate level/district (or other similar administrative division) and track to inform updates to the national public health workforce strategy.
-        %li 
+        %li
           Ensure availability of at least one trained epidemiologist per 500 000 population.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -495,44 +460,40 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Monitor and evaluate the performance of the epidemiology workforce within healthcare systems including veterinary services.
-        %li 
+        %li
           Conduct engagement meetings with the health ministry, agriculture ministry, partners and stakeholders to strengthen options for field placements, and to sustain funding for epidemiology training programme management.
-        %li 
+        %li
           Implement epidemiology training tracks for relevant career tracks.
-        %li 
+        %li
           Expand epidemiology training programmes into three levels of training programmes with career tracks established for graduates in additional jurisdictions.
-        %li 
+        %li
           Secure sustainable funding for epidemiology training programmes and career tracks and pursue accreditation.
-        %li 
+        %li
           Ensure availability of at least one trained epidemiologist per 200 000 population.
-        %li 
+        %li
           Establish alumni association for epidemiology graduates (all levels).
-      
-        
-  %h3 Tools:  
+  %h3 Tools:
   %ul
-    %li 
-      WHO global strategy on human resources for health: 
+    %li
+      WHO global strategy on human resources for health:
       %a{href: "http://www.who.int/hrh/resources/pub_globstrathrh-2030/en/", target: "_blank"}
-        workforce 2030 
-    %li 
-      TEPHINET 
+        workforce 2030
+    %li
+      TEPHINET
       %a{href: "http://www.tephinet.org/", target: "_blank"}
         Accreditation
       of FETPs and resources for FETPs.
-    %li 
+    %li
       %a{href: "https://www.cdc.gov/globalhealth/healthprotection/fetp/index.htm", target:"_blank"}
         US CDC Field Epidemiology Training Program
-
   %hr.indicator-hr
     %h4 Footnotes:
-
     %a{name: "45"}
       %sup
         45
-      This assessment must describe which categories of health workers are included in the workforce strategy (such as epidemiologists, veterinarians, laboratory assistants and specialists, doctors, nurses and community health workers).    
+      This assessment must describe which categories of health workers are included in the workforce strategy (such as epidemiologists, veterinarians, laboratory assistants and specialists, doctors, nurses and community health workers).
     %p
     %a{name: "46"}
       %sup

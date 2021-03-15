@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+require "bundler/setup"
+require "capybara/cuprite"
+require "capybara/dsl"
+require "pry"
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    window_size: [1200, 800],
+    browser_options: {},
+    process_timeout: 10,
+    inspector: true,
+    headless: false,
+    timeout: 10
+  )
+end
+
+Capybara.default_max_wait_time = 2
+Capybara.default_normalize_ws = true
+Capybara.default_driver = Capybara.javascript_driver = :cuprite
+
+require "minitest"
+require_relative "../test/capybara_helper"
+
+class CapybaraConsole
+  include Capybara::DSL
+  include Minitest::Assertions
+  include CapybaraHelper
+
+  attr_accessor :assertions
+
+  def initialize
+    @assertions = 0
+  end
+
+  def root_url
+    ARGV.fetch(0, "http://localhost:3000")
+  end
+
+  def run!
+    visit root_url
+    binding.pry
+    puts "done"
+  end
+end
+
+CapybaraConsole.new.run!

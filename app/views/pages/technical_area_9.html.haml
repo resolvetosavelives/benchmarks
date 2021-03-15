@@ -1,18 +1,15 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     9. Surveillance
-  
   %p
     Strengthened
     = raw 'surveillance<sup><a href="#38">38</a></sup>'
     systems are able to detect events of significance for public health and health security; improve communication and collaboration across sectors and between subnational (local and intermediate), national and international levels of authority regarding surveillance of events of public health significance; and improve national and intermediate level regional capacity to analyse and link data from and between, strengthened early-warning surveillance, including
     = raw 'interoperable,<sup><a href="#39">39</a></sup>'
     interconnected electronic tools. This would incorporate epidemiological, clinical, laboratory, environmental testing, product safety and quality, and bioinformatics data; and advances in fulfilling core capacity requirements for surveillance in accordance with the IHR and OIE guidelines.
-    
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
@@ -22,26 +19,23 @@
       = raw 'security.<sup><a href="#41">41</a></sup>'
       (2) Enhanced national and intermediate level regional capacity to analyse and link data from and between the different levels of the strengthened early-warning surveillance
       = raw 'system.<sup><a href="#42">42</a></sup>'
-
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       (1) Surveillance for at least three core
       = raw 'syndromes<sup><a href="#43">43</a></sup>'
       indicative of potential public health emergencies conducted according to international standards. (2) Regular analysis and reporting of surveillance data.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "9.1"}
-
   .indicator-head
     %h3
       Benchmark 9.1
     Functional surveillance system to identify potential events of concern for public health and health security is in place
     %p
-    The surveillance system should include the: 
+    The surveillance system should include the:
     %ul
       %li
         ability to conduct surveillance for at least three core syndromes indicative of a public health emergency and ongoing, regular, systematic and accurate surveillance for diseases and conditions of actual or potential epidemiological importance in the country;
@@ -49,12 +43,10 @@
         ability to provide systematic/routine reports and data to high-level public health decision-makers in the country, and feedback to lower levels implementing the control programmes; and
       %li
         linkages to laboratory and other information systems to provide representative, timely and accurate surveillance information.
-    
   %p
     %strong
       Objective:
     Strengthen surveillance system
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -63,7 +55,6 @@
         No capacity
     .body.col-9
       The country has to develop and implement all activities that are listed in level 2 to achieve the limited capacity for the surveillance system.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -74,47 +65,46 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          %strong 
-            Develop national communicable disease surveillance strategy 
+        %li
+          %strong
+            Develop national communicable disease surveillance strategy
           based on IHR requirements, which includes a list of priority/epidemic-prone diseases and syndromes most relevant to the country.
-        %li 
+        %li
           Establish a disease surveillance unit or department and finalize the operational plan  and process.
-        %li 
+        %li
           Designate surveillance focal persons at subnational levels.
-        %li 
+        %li
           Identify resources for control of priority diseases.
-        %li 
-          Develop training materials for disease surveillance for national and subnational levels. 
-        %li 
+        %li
+          Develop training materials for disease surveillance for national and subnational levels.
+        %li
           Disseminate case definitions and process of detection, assessment, and reporting of cases (user manual or guidelines) at national and intermediate levels.
-        %li 
+        %li
           Develop and implement indicator-based surveillance or event-based surveillance (refer to respective column for their benchmarks)
-        %li 
+        %li
           %strong
             Establish indicator-based surveillance
-        %li 
-          Develop guidelines and SOPs for indicator-based surveillance. 
-        %li 
+        %li
+          Develop guidelines and SOPs for indicator-based surveillance.
+        %li
           Establish a designated unit at all levels, with operational plan and procedures.
-        %li 
+        %li
           Include country priority diseases in indicator-based surveillance.
-        %li 
+        %li
           Disseminate case definitions and ensure that process of detection, assessment and reporting of cases (user manual or guidelines) are in place at national and subnational levels.
-        %li 
+        %li
           %strong
             Establish event-based surveillance
-        %li 
+        %li
           Develop guidelines and standard operating procedures for event-based surveillance.
-        %li 
+        %li
           Establish a designated unit at all needed levels, with operational plan and procedures.
-        %li 
+        %li
           Develop and put in place case definitions and the process of detection, assessment and reporting of the event (clusters or outbreaks) for country priority diseases and disseminate to national and subnational levels.
-        %li 
+        %li
           Establish a process to identify potential events from community-based reporting (people identified from the community, verification teams at facilities identified, SOP and flow of information available) and make the data available at all needed levels.
-        %li 
+        %li
           Establish systems to identify potential events from various other sources (such as media, social media, private sector).
-       
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -125,17 +115,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Implement actions (described above) for both indicator- and event-based surveillance systems at national and intermediate levels (district, province, region or state).
-        %li 
+        %li
           Train 70% of health workers (clinicians, laboratorians, surveillance officers) in detection, monitoring and evaluation of events and cases, with clear guidance for follow-up disseminated at national and intermediate levels; document that health workers have received training.
-        %li 
+        %li
           Establish a process of immediate and weekly reporting from every reporting unit, although reports may not be available for every week.
-        %li 
+        %li
           Establish a process to ensure that reported cases or events with outbreak potential are investigated and assessed for public health response and linked to the laboratory results, and that data from the investigation are managed in a standardized timeframe and manner.
-        %li 
-          Conduct regular training for surveillance staff on SOPs, guidelines, procedures and best practices at national and intermediate levels. 
-        
+        %li
+          Conduct regular training for surveillance staff on SOPs, guidelines, procedures and best practices at national and intermediate levels.
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -146,17 +135,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Train more than 90% local health workers, volunteers or both on detection and reporting of cases, clusters, outbreaks or events, and document that health workers are trained.
-        %li 
+        %li
           Implement the immediate and weekly reporting mechanism in all health facilities (public and private) from all levels, and ensure that weekly reports are received.
-        %li 
+        %li
           Train surveillance staff at all levels on monitoring and evaluating events, and develop and implement a clear follow-up of the process at national, intermediate and local levels.
-        %li 
-          Develop a mechanism for cross-border surveillance by means of an agreed cross-border surveillance system at points of entry, or some other mechanism of regularly sharing data and information between neighbouring countries. 
-        %li 
+        %li
+          Develop a mechanism for cross-border surveillance by means of an agreed cross-border surveillance system at points of entry, or some other mechanism of regularly sharing data and information between neighbouring countries.
+        %li
           Conduct regular training on SOPs, guidelines, procedures and best practices at all levels, including at the local/health facility level, for surveillance staff.
-       
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -167,21 +155,19 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop and implement an operational plan for ongoing evaluation of the surveillance system at all levels.
-        %li 
+        %li
           Establish a mechanism to update the surveillance system based on evaluation findings at all levels.
-        %li 
-          Secure sustained funding for personnel and materials for the surveillance system. 
-        %li 
+        %li
+          Secure sustained funding for personnel and materials for the surveillance system.
+        %li
           Develop a plan and process to support efforts of other countries to develop/enhance surveillance systems, including contributing to regional and/or international surveillance networks.
-        %li 
+        %li
           Monitor implementation of cross-border surveillance and demonstrate that information-sharing protocol is effective.
-        %li 
-          Establish a mechanism to contribute to regional or international surveillance networks. 
-
+        %li
+          Establish a mechanism to contribute to regional or international surveillance networks.
   %a{name: "9.2"}
-
   .indicator-head
     %h3
       Benchmark 9.2:
@@ -190,7 +176,6 @@
     %strong
       Objective:
     Application of eletronic tools for surveillance system
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -199,7 +184,6 @@
         No capacity
     .body.col-9
       No system developed; an assessment of the electronic system is planned or is being conducted.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -210,17 +194,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Use ad hoc electronic tools (such as Excel spreadsheets) to report and analyse surveillance data, while a more sophisticated system is under development.
-        %li 
+        %li
           Pilot available electronic tools.
-        %li 
+        %li
           Develop a strategy for integrated electronic real-time reporting system for public health surveillance with the involvement of multisectoral stakeholders and partners.
-        %li 
-          Develop operational plan, standards for data, and plans for interoperability and data sharing. 
-        %li 
+        %li
+          Develop operational plan, standards for data, and plans for interoperability and data sharing.
+        %li
           Establish a link of the electronic system under development to the existing health information management system.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -231,17 +214,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Implement an electronic surveillance system at the national level for both indicator- and event-based surveillance.
-        %li 
+        %li
           Develop an electronic event management system at the national level.
-        %li 
+        %li
           Link electronic tools with the laboratory information management system at the national level.
-        %li 
+        %li
           Develop and disseminate SOPs, procedures and guidelines at all levels.
-        %li 
-          Train 80% of national- and intermediate-level surveillance staff on application/software for surveillance. 
-        
+        %li
+          Train 80% of national- and intermediate-level surveillance staff on application/software for surveillance.
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -252,15 +234,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Implement the electronic system in 80% levels of the health system. 
-        %li 
+        %li
+          Implement the electronic system in 80% levels of the health system.
+        %li
           Develop an electronic event management system at all levels of the health system.
-        %li 
+        %li
           Link electronic tools with the laboratory information management system at all levels.
-        %li 
+        %li
           Conduct routine training on application or software for surveillance staff at all levels, including 100% of national- and intermediate-level surveillance staff.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -271,21 +252,19 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Implement the electronic system at all levels of the health system, including from private healthcare providers and private laboratories.
-        %li 
-          Secure resources for operation of the system, including human resources, hardware, software and network infrastructure to run the system at all levels. 
-        %li 
+        %li
+          Secure resources for operation of the system, including human resources, hardware, software and network infrastructure to run the system at all levels.
+        %li
           Monitor and evaluate the electronic surveillance system for updation as needed.
-        %li   
+        %li
           Test interoperability of the electronic system with other relevant electronic tools of other sectors.
-        %li 
+        %li
           Develop and disseminate guidance to all sectors (such as animal health, food safety) on data sharing and interoperability.
-        %li 
+        %li
           Train staff and develop protocols to share data with regional or international actors (such as sharing influenza data in Global Influenza Surveillance and Response System and/or FluNET (a global web-based tool for influenza virological surveillance)
-
   %a{name: "9.3"}
-
   .indicator-head
     %h3
       Benchmark 9.3:
@@ -294,7 +273,6 @@
     %strong
       Objective:
     Conduct analysis of data for action
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -303,7 +281,6 @@
         No capacity
     .body.col-9
       No capacity to analyse data.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -314,17 +291,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop standards and expectations for analysis of surveillance data, with an operational plan.
-        %li 
-          Develop a training package for data management (data collation, analysis, trend analysis and developing reports or summaries). 
-        %li 
+        %li
+          Develop a training package for data management (data collation, analysis, trend analysis and developing reports or summaries).
+        %li
           Develop and disseminate guidelines and procedures to assess the risk of unusual case reports and surveillance signals at all levels.
-        %li 
+        %li
           Produce ad hoc reports of analysed surveillance data for outbreaks or other public health events and disseminate from the national level.
-        %li 
+        %li
           Develop a tool and standards for data quality assessment.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -335,19 +311,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Conduct training on data analysis at national and intermediate levels.
-        %li 
+        %li
           Produce and disseminate annual and monthly reports based on some analysis (i.e. not only numerical case information) from the national surveillance team.
-        %li 
+        %li
           Develop a training package and train staff on the assessment of risk of unusual case reports and surveillance signals at national and intermediate levels.
-        %li 
+        %li
           Develop a process and publish routine reports of epidemiological information for priority diseases at the national level.
-        %li 
-          Develop standards, content and format of an epidemiological bulletin for national, intermediate and local levels. 
-        %li 
+        %li
+          Develop standards, content and format of an epidemiological bulletin for national, intermediate and local levels.
+        %li
           Develop capacity to conduct periodic assessment of data quality at the national level.
-       
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -358,17 +333,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Conduct training on data analysis for surveillance staff at all levels.
-        %li 
+        %li
           Produce weekly epidemiological reports with analysed data on priority diseases and disseminate to all levels.
-        %li 
-          Conduct a training assessment of the risk of unusual case reports and surveillance signals at all levels. 
-        %li 
-          Produce analyses and disseminate epidemiologic interpretation of all major events at all levels. 
-        %li 
+        %li
+          Conduct a training assessment of the risk of unusual case reports and surveillance signals at all levels.
+        %li
+          Produce analyses and disseminate epidemiologic interpretation of all major events at all levels.
+        %li
           Operationalize a mechanism for monitoring data quality and analysis at national and intermediate levels.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -379,62 +353,54 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish a dedicated team for data analysis, risk assessment and reporting at national and intermediate levels.
-        %li 
+        %li
           Develop a mechanism and train staff to share data with other tools that are used at regional or international levels (such as sharing influenza data in GISRS).
-        %li 
+        %li
           Secure sustainable funding and resources for data analysis staff and weekly reporting system.
-        %li 
+        %li
           Demonstrate continuous improvement of data quality at all levels, using assessment results.
-
-  %h3 Tools:  
+  %h3 Tools:
   %ul
-    %li 
-      Public Health Surveillance – 
+    %li
+      Public Health Surveillance –
       %a{href: "https://www.who.int/topics/public_health_surveillance/en/", target: "_blank"}
         WHO Resources
-    %li 
-      Integrated Disease Surveillance – 
+    %li
+      Integrated Disease Surveillance –
       %a{href: "https://www.who.int/csr/labepidemiology/projects/diseasesurv/en/", target: "_blank"}
         Resources
-    %li 
-      WHO recommends surveillance standards – 
+    %li
+      WHO recommends surveillance standards –
       %a{href: "https://www.who.int/csr/resources/publications/surveillance/WHO_CDS_CSR_ISR_99_2_EN/en/", target: "_blank"}
         Second Edition
-
   %hr.indicator-hr
     %h4 Footnotes:
-
     %a{name: "38"}
       %sup
         38
       Surveillance means the systematic ongoing collection, collation and analysis of data for public health purposes and the timely dissemination of public health information for assessment and public health response as necessary.
-    
     %p
     %a{name: "39"}
       %sup
         39
       Interoperable, describes the extent to which systems and devices can exchange data, and interpret that shared data. For two systems to be interoperable, they must be able to exchange data and subsequently present that data in a manner that can be understood by the user (definition by Healthcare Information and Management Systems Society).
-
     %p
     %a{name: "40"}
       %sup
         40
       Strong surveillance will support the timely recognition of the emergence of relatively rare or previously undescribed pathogens in specific countries.
-
     %p
     %a{name: "41"}
       %sup
         41
       Each country has to define a “potential risk to public health,” perform risk mapping and identify priority diseases.
-  
     %p
     %a{name: "42"}
       %sup
         42
       Countries will support the use of interoperable, interconnected systems capable of linking and integrating multisectoral surveillance data and using the resulting information to enhance the capacity to quickly detect and respond to developing biological threats. Foundational capacity is necessary for both indicator- and evidence-based surveillance, to support prevention and control activities, and intervention targeting for both established infectious diseases and new and emerging public health threats.
-
     %p
     %a{name: "43"}
       %sup

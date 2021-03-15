@@ -6,8 +6,9 @@ import "@stimulus/polyfills"
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
-// jquery-ujs is used by some rails form helpers
-import "jquery-ujs" //eslint-disable-line
+import Rails from "@rails/ujs"
+Rails.start()
+
 import "chosen-js"
 import "chosen-js/chosen.css"
 

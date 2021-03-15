@@ -1,37 +1,23 @@
 - heading_disabled_class = @get_started_form.country.present? ? "": "disabled"
 .row{id: "get_started",
-  "data-controller": "get-started",
-  "data-get-started-redirect-key": @redirect_key,
-  "data-get-started-named-ids": AssessmentPublication::NAMED_IDS.to_json}
+"data-controller": "get-started",
+"data-get-started-named-ids": AssessmentPublication::NAMED_IDS.to_json}
   .col
-
     %h1 Let's Get Started
-
-    = form_with model: @get_started_form,
-      url: get_started_url, method: :POST,
-      data: {target: "get-started.form", action: "submit->get-started#validateForm"},
-      html: {novalidate: true} do |form|
+    = form_with model: @get_started_form, url: start_path(id: params[:id]), method: :patch, data: {target: "get-started.form", action: "submit->get-started#validateForm"}, html: {novalidate: true} do |form|
       .form-row
         .col-6
           %h4 1. Select your country
-          = form.select :country_id,
-            options_from_collection_for_select(@countries, :id, :name, @get_started_form.country_id),
-            {include_blank: true, prompt: "Type or select an option"},
-            {class: "custom-select", "data-target": "get-started.countrySelect", required: true}
-          .invalid-feedback.my-3 Please choose a country.
-
+          %label= @country.name
       .form-row
         .col
-          %h4{class: heading_disabled_class} 2. Choose your most recent assessment
+          %h4{class: heading_disabled_class}
+            2. Choose your most recent assessment
           - if @get_started_form.country.present?
-
             - if @get_started_form.country.has_jee1?
               .form-check
-                = form.radio_button :assessment_type, AssessmentPublication::NAMED_IDS.first,
-                  class: "form-check-input", required: true,
-                  "data-action": "get-started#selectAssessmentJee1"
-                = form.label :assessment_type, "Joint External Evaluation (JEE)", value: AssessmentPublication::NAMED_IDS.first,
-                  class: "form-check-label"
+                = form.radio_button :assessment_type, AssessmentPublication::NAMED_IDS.first, class: "form-check-input", required: true, "data-action": "get-started#selectAssessmentJee1"
+                = form.label :assessment_type, "Joint External Evaluation (JEE)", value: AssessmentPublication::NAMED_IDS.first, class: "form-check-label"
                 .invalid-feedback Please choose an assessment.
               .plan-by-technical-area-container{"data-target": "get-started.planByTechnicalAreasContainerForJee1", style: "display: none"}
                 %label
@@ -42,9 +28,11 @@
                   .col.card
                     .row
                       .col
-                        %a{href: "#", "data-action": "get-started#selectAllTechnicalAreasForJee1"} Select all
+                        %a{href: "#", "data-action": "get-started#selectAllTechnicalAreasForJee1"}
+                          Select all
                         |
-                        %a{href: "#", "data-action": "get-started#deselectAllTechnicalAreasForJee1"} Deselect all
+                        %a{href: "#", "data-action": "get-started#deselectAllTechnicalAreasForJee1"}
+                          Deselect all
                     .row
                       - col1_count_for_jee1 = ((@technical_areas_jee1.size + 1) / 2).floor
                       .col
@@ -53,15 +41,10 @@
                       .col
                         - @technical_areas_jee1.drop(col1_count_for_jee1).each do |technical_area|
                           = render "checkbox_for_technical_area", technical_area: technical_area, form: form
-
-
             - if @get_started_form.country.has_spar_2018?
               .form-check
-                = form.radio_button :assessment_type, AssessmentPublication::NAMED_IDS.second,
-                  class: "form-check-input", required: true,
-                  "data-action": "get-started#selectAssessmentSpar2018"
-                = form.label :assessment_type, "State Party Annual Report (SPAR)", value: AssessmentPublication::NAMED_IDS.second,
-                  class: "form-check-label"
+                = form.radio_button :assessment_type, AssessmentPublication::NAMED_IDS.second, class: "form-check-input", required: true, "data-action": "get-started#selectAssessmentSpar2018"
+                = form.label :assessment_type, "State Party Annual Report (SPAR)", value: AssessmentPublication::NAMED_IDS.second, class: "form-check-label"
                 .invalid-feedback Please choose an assessment.
               .plan-by-technical-area-container{"data-target": "get-started.planByTechnicalAreasContainerForSpar2018", style: "display: none"}
                 %label
@@ -72,9 +55,11 @@
                   .col.card
                     .row
                       .col
-                        %a{href: "#", "data-action": "get-started#selectAllTechnicalAreasForSpar2018"} Select all
+                        %a{href: "#", "data-action": "get-started#selectAllTechnicalAreasForSpar2018"}
+                          Select all
                         |
-                        %a{href: "#", "data-action": "get-started#deselectAllTechnicalAreasForSpar2018"} Deselect all
+                        %a{href: "#", "data-action": "get-started#deselectAllTechnicalAreasForSpar2018"}
+                          Deselect all
                     .row
                       - col1_count_for_spar2018 = ((@technical_areas_spar_2018.size + 1) / 2).floor
                       .col
@@ -83,13 +68,12 @@
                       .col
                         - @technical_areas_spar_2018.drop(col1_count_for_spar2018).each do |technical_area|
                           = render "checkbox_for_technical_area", technical_area: technical_area, form: form
-
           - else
             %div{style: "height: 75px"}
-
       .form-row
         .col
-          %h4{class: heading_disabled_class} 3. What kind of plan are you making?
+          %h4{class: heading_disabled_class}
+            3. What kind of plan are you making?
           - if @get_started_form.country.present?
             .form-check
               = form.radio_button :plan_term, 1, class: "form-check-input", required: true
@@ -106,23 +90,18 @@
               .invalid-feedback Please choose a plan.
           - else
             %div{style: "height: 75px"}
-
       .form-row
         .col
-          %h4{class: heading_disabled_class} 4. Do you want to add disease specific planning?
+          %h4{class: heading_disabled_class}
+            4. Do you want to add disease specific planning?
           - if @get_started_form.country.present?
             - @diseases.each do |disease|
               .form-check
-                = check_box_tag "get_started_form[diseases][]", disease.id, false,
-                  {class: "form-check-input",
-                    id: "diseases_#{disease.name}"}
+                = check_box_tag "get_started_form[diseases][]", disease.id, false, {class: "form-check-input", id: "diseases_#{disease.name}"}
                 %label{for: "diseases_#{disease.name}"}
                   = "Optional: #{disease.display} planning"
           - else
             %div{style: "height: 75px"}
-
       .form-row
         .col-2
-          = form.submit "Next",
-            class: "btn btn-primary",
-            "data-target": "get-started.submit"
+          = form.submit "Next", class: "btn btn-primary", "data-target": "get-started.submit"

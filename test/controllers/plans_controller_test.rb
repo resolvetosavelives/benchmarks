@@ -4,89 +4,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   describe PlansController do
-    describe "#get_started" do
-      it "is connected as /privacy_policy" do
-        assert_routing(
-          "/get-started",
-          { controller: "plans", action: "get_started" },
-        )
-      end
-
-      it "responds with success" do
-        get get_started_url
-        assert_response :success
-        assert_template :get_started
-      end
-
-      describe "with an ajax request with partial params for Nigeria" do
-        it "responds with success containing the redirect key" do
-          post get_started_url,
-               xhr: true, params: { get_started_form: { country_id: "162" } }
-          assert_response :success
-          response_body = response.body
-          response_body.starts_with?(
-            PlansController::GET_STARTED_REDIRECT_KEY,
-          ).must_equal false
-          assert_template :get_started
-        end
-      end
-
-      describe "with an ajax request with valid params for Nigeria JEE1 1-year" do
-        it "responds with success containing the redirect key" do
-          post get_started_url,
-               xhr: true,
-               params: {
-                 get_started_form: {
-                   country_id: "162", assessment_type: "jee1", plan_term: "1"
-                 },
-               }
-          assert_response :success
-          assert_template nil
-          response_body = response.body
-          response_body.starts_with?(
-            PlansController::GET_STARTED_REDIRECT_KEY,
-          ).must_equal true
-          redirect_url =
-            plan_goals_url(
-              {
-                country_name: "Nigeria",
-                assessment_type: "jee1",
-                plan_term: "1-year",
-              },
-            )
-          response_body.end_with?(redirect_url).must_equal true
-        end
-      end
-
-      describe "with an ajax request with valid params diseases" do
-        it "responds with success containing the redirect key" do
-          post get_started_url,
-               xhr: true,
-               params: {
-                   get_started_form: {
-                       country_id: "162", assessment_type: "jee1", plan_term: "1", diseases: [Disease.influenza.id, Disease.cholera.id]
-                   },
-               }
-          assert_response :success
-          assert_template nil
-          response_body = response.body
-          response_body.starts_with?(
-              PlansController::GET_STARTED_REDIRECT_KEY,
-              ).must_equal true
-          redirect_url =
-              plan_goals_url(
-                  {
-                      country_name: "Nigeria",
-                      assessment_type: "jee1",
-                      plan_term: "1-year",
-                      diseases: [Disease.influenza.id.to_s, Disease.cholera.id.to_s].join('-')
-                  },
-                  )
-          response_body.end_with?(redirect_url).must_equal true
-        end
-      end
-    end
-
     describe "#goals" do
       describe "for a non-existent assessment" do
         it "responds with success" do
@@ -157,7 +74,10 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           post plans_url,
                params: {
                  plan: {
-                   assessment_id: "123", term: "100", indicators: { abc: "123" }, disease_ids: ""
+                   assessment_id: "123",
+                   term: "100",
+                   indicators: { abc: "123" },
+                   disease_ids: "",
                  },
                }
           assert_response :redirect
@@ -190,12 +110,12 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
           Plan.stub(:create_from_goal_form, plan) do
             post plans_url,
                  params: {
-                     plan: {
-                         assessment_id: "123",
-                         term: "100",
-                         indicators: {abc: "123"},
-                         disease_ids: ""
-                     },
+                   plan: {
+                     assessment_id: "123",
+                     term: "100",
+                     indicators: { abc: "123" },
+                     disease_ids: "",
+                   },
                  }
             assert_response :redirect
             assert_redirected_to root_path
@@ -207,15 +127,17 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
         it "responds with a flash message and redirect" do
           post plans_url,
                params: {
-                   plan: {
-                       assessment_id: "123",
-                       term: "100",
-                       indicators: {abc: "123"},
-                       disease_ids: "0", # 0 does not exist as a disease id
-                   },
+                 plan: {
+                   # 0 does not exist as a disease id
+                   assessment_id: "123",
+                   term: "100",
+                   indicators: { abc: "123" },
+                   disease_ids: "0",
+                 },
                }
           assert_response :redirect
-          assert_equal Exceptions::InvalidDiseasesError.new.message, flash[:notice]
+          assert_equal Exceptions::InvalidDiseasesError.new.message,
+                       flash[:notice]
           assert_redirected_to root_path
         end
       end
@@ -226,9 +148,9 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
 
       it "is connected as /plans/id" do
         assert_routing(
-            "/plans/#{plan.id}",
-            { controller: "plans", action: "show", id: plan.id.to_s },
-            )
+          "/plans/#{plan.id}",
+          { controller: "plans", action: "show", id: plan.id.to_s },
+        )
       end
 
       it "redirects for an invalid plan ID" do
@@ -251,7 +173,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
       end
 
       describe "with logged out user" do
-
         describe "viewing someone else's plan" do
           it "redirects away" do
             plan = create(:plan_nigeria_jee1)
@@ -262,7 +183,6 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
             assert_redirected_to root_path
           end
         end
-
       end
     end
   end

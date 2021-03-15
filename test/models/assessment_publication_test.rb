@@ -7,8 +7,8 @@ describe AssessmentPublication do
     it "returns the expected instance" do
       result = AssessmentPublication.jee1
 
-      expect(result).must_be_instance_of AssessmentPublication
-      expect(result.title).must_equal "Joint External Evaluation"
+      _(result).must_be_instance_of AssessmentPublication
+      _(result.title).must_equal "Joint External Evaluation"
     end
   end
 
@@ -16,7 +16,7 @@ describe AssessmentPublication do
     it "returns the expected instance" do
       result = AssessmentPublication.jee1
 
-      expect(result.jee1?).must_equal true
+      _(result.jee1?).must_equal true
     end
   end
 
@@ -24,8 +24,8 @@ describe AssessmentPublication do
     it "returns the expected instance" do
       result = AssessmentPublication.spar_2018
 
-      expect(result).must_be_instance_of AssessmentPublication
-      expect(result.title).must_equal "State Party Annual Report"
+      _(result).must_be_instance_of AssessmentPublication
+      _(result.title).must_equal "State Party Annual Report"
     end
   end
 
@@ -33,16 +33,15 @@ describe AssessmentPublication do
     it "returns the expected instance" do
       result = AssessmentPublication.spar_2018
 
-      expect(result.spar_2018?).must_equal true
+      _(result.spar_2018?).must_equal true
     end
   end
 
   describe "#assessment_technical_areas" do
     it "returns the expected array of instances" do
-      result = AssessmentPublication.jee1.assessment_technical_areas
-      # having data for this relies on seed data being present
-      expect(result.size).must_equal 19
-      expect(result.first).must_be_instance_of AssessmentTechnicalArea
+      result = AssessmentPublication.jee1.assessment_technical_areas # having data for this relies on seed data being present
+      _(result.size).must_equal 19
+      _(result.first).must_be_instance_of AssessmentTechnicalArea
     end
   end
 
@@ -50,7 +49,7 @@ describe AssessmentPublication do
     it "returns the expected string" do
       result = AssessmentPublication.jee1.type_description
 
-      result.must_equal "JEE 1.0"
+      _(result).must_equal "JEE 1.0"
     end
   end
 end

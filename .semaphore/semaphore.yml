@@ -25,7 +25,7 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres 11
-          - sem-version ruby 2.6.5
+          - sem-version ruby 3.0.0
           - sem-version node 12.16.3
           - cache restore
           - bundle install --deployment --path vendor/bundle
@@ -43,9 +43,11 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres 11
-          - sem-version ruby 2.6.5
+          - sem-version ruby 3.0.0
           - sem-version node 12.16.3
           - cache restore
           - bundle install --deployment --path vendor/bundle
-          - yarn install --frozen-lockfile --check-files
+          - cache restore webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA,webpack-$SEMAPHORE_GIT_BRANCH,webpack
+          - bin/webpack -e test
+          - cache store webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA public/packs-test
           - bin/rake db:test:prepare test:system

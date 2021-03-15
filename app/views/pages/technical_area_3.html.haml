@@ -1,8 +1,6 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     3. Antimicrobial resistance
-    
   %p
     A functional system in place for the national response to prevent and combat antimicrobial resistance (AMR) with a One Health approach, including:
     %ul
@@ -14,25 +12,22 @@
         Prevention of AMR in healthcare facilities, food production and the community, through infection prevention and control measures.
       %li
         Ensuring appropriate use of antimicrobials, including assuring quality of available medicines, conservation of existing treatments and access to appropriate antimicrobials when needed, while reducing inappropriate use.
-
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
       Decisive and comprehensive action to prevent the emergence and reduce the spread of AMR. Countries will (in line with the global action plan) increase awareness of AMR risks and how to respond to them; strengthen surveillance and laboratory capacity; enhance infection prevention and control activities; ensure uninterrupted access to essential antimicrobials of assured quality; regulate and promote the appropriate use of antimicrobials in human medicine, veterinary medicine, food production and other fields as appropriate; and support initiatives to foster the development and appropriate use of new antimicrobial agents, vaccines and diagnostic tools.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       (1) Multisectoral national action plan to combat AMR has been produced and made public. (2) Implementation of the AMR national action plan/sector plans, with monitoring and yearly reporting on progress (including reporting to the international level) is in place. (The JEE tool reviews the country’s self-assessed response to the global monitoring survey on AMR.)
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "3.1"}
-
   .indicator-head
     %h3
       Benchmark 3.1
@@ -41,7 +36,6 @@
     %strong
       Objective:
     To develop and implement a multisectoral national action plan on AMR
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -50,7 +44,6 @@
         No capacity
     .body.col-9
       No national action plan for AMR.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -69,7 +62,6 @@
           Identify programmes and activities relating to key AMR objectives that need to be developed or scaled up.
         %li
           Identify a health ministry lead for AMR, develop a clear terms of reference and coordinate activities of the relevant ministries on AMR and stewardship.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -81,17 +73,16 @@
         Actions to achieve this level:
       %ul
         %li
-          Develop a plan of action to address AMR in line with the 
+          Develop a plan of action to address AMR in line with the
           %a{href: "http://www.who.int/antimicrobial-resistance/global-action-plan/en/", target: "_blank"}
             Global Action Plan (GAP) on AMR.
         %li
           Submit a plan for approval through relevant governance mechanisms (such as office of head of state, cabinet, or ministries of health and agriculture).
         %li
-          Organize 
+          Organize
           %a{href: "http://www.who.int/antimicrobial-resistance/publications/workingpaper1multisectoralcoordinationAMR/en/", target: "_blank"}
             effective coordination
           through regular meetings.
-
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -107,10 +98,9 @@
         %li
           Develop and implement an AMR national action plan monitoring framework.
         %li
-          Review plans and progress through regular meetings of the AMR governance committee. 
+          Review plans and progress through regular meetings of the AMR governance committee.
         %li
           Identify and map sustained funding for planned activities in the AMR national action plan.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -131,9 +121,7 @@
           Define clearly specified actions within planning and governance mechanisms for all key sectors involved.
         %li
           Identify potential barriers and/or challenges to implementing the national action plan and approaches to overcome these barriers.
-
   %a{name: "3.2"}
-
   .indicator-head
     %h3
       Benchmark 3.2:
@@ -142,7 +130,6 @@
     %strong
       Objective:
     To develop a national AMR surveillance system that integrates surveillance of AMR in pathogens of concern to human and animal health and agriculture
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -151,7 +138,6 @@
         No capacity
     .body.col-9
       None of the laboratories that conduct antibiotic susceptibility testing are generating data (antibiotic susceptibility and accompanying clinical and epidemiological data) and there is no surveillance system reporting on AMR.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -163,11 +149,11 @@
         Actions to achieve this level:
       %ul
         %li
-          Designate a national coordinating centre to oversee the development and functioning of the national AMR surveillance system. 
+          Designate a national coordinating centre to oversee the development and functioning of the national AMR surveillance system.
         %li
-          Complete an assessment of existing laboratory capacities for identification and antibiotic susceptibility testing of common bacteria including 
+          Complete an assessment of existing laboratory capacities for identification and antibiotic susceptibility testing of common bacteria including
           %em
-            Mycobacterium tuberculosis. 
+            Mycobacterium tuberculosis.
         %li
           Define priority specimens, pathogens and drug–bug combinations for national reporting.
         %li
@@ -180,7 +166,6 @@
           Develop and initiate training programmes for data collection and reporting of AMR at national and regional levels.
         %li
           Initiate AMR surveillance at pilot or representative regional and referral hospitals.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -194,9 +179,9 @@
         %li
           Define laboratory standards and capacity requirements that laboratories must meet to participate in national surveillance.
         %li
-          Develop steps to strengthen laboratory capacity to sustainably identify and perform identification and antibiotic susceptibility testing of common bacteria including 
+          Develop steps to strengthen laboratory capacity to sustainably identify and perform identification and antibiotic susceptibility testing of common bacteria including
           %em
-            M. tuberculosis. 
+            M. tuberculosis.
         %li
           Establish an external quality assessment programme for the national reference laboratory and ensure that the national reference laboratory can conduct confirmatory or additional testing.
         %li
@@ -207,7 +192,6 @@
           Develop a national surveillance protocol including: surveillance targets, laboratory standards, priority specimens, pathogens and drug–bug combinations, defined datasets, metrics, data production, analysis and reporting, quality management, monitoring and evaluation).
         %li
           Designate functional AMR surveillance sites.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -230,7 +214,6 @@
           Collect population-based denominators, such as those recommended by WHO GLASS.
         %li
           Develop and implement strategies for monitoring national AMR and drug-resistant TB.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -244,12 +227,10 @@
         %li
           Enhance monitoring of antibiotic-resistance patterns and genotyping, as well antibiotic usage and management practices at multiple points in the production chain for food animals and retail meat.
         %li
-          Disseminate reports relating to measuring the proportion of AMR pathogens among specimens or isolates, results from participation in international external quality assessment rounds of the national reference laboratory, and incidence of infections caused by AMR pathogens at sentinel sites (community and hospital acquired) 
+          Disseminate reports relating to measuring the proportion of AMR pathogens among specimens or isolates, results from participation in international external quality assessment rounds of the national reference laboratory, and incidence of infections caused by AMR pathogens at sentinel sites (community and hospital acquired)
         %li
           Demonstrate the use of this information for policy changes, improving facilities and adapting prevention and control strategies.
-
   %a{name: "3.3"}
-
   .indicator-head
     %h3
       Benchmark 3.3:
@@ -258,7 +239,6 @@
     %strong
       Objective:
     To develop a functioning infection prevention and control system for healthcare facilities and farms
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -269,7 +249,6 @@
       %ul
         %li
           Systematic efforts, national infection prevention and control (IPC) programmes and “water, sanitation and hygiene” (WASH) standards, or responsible persons for infection prevention and control in human healthcare facilities to promote infection prevention and prevent transmission of resistant bacteria in the animal food production sector either do not exist or are at the development stage.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -281,25 +260,24 @@
         Actions to achieve this level:
       %ul
         %li
-          Review WHO recommendations on core components for effective 
+          Review WHO recommendations on core components for effective
           %a{href: "http://www.who.int/infection-prevention/publications/core-components/en/", target: "_blank"}
-            IPC programmes 
-          and the national and facility 
+            IPC programmes
+          and the national and facility
           %a{href: "http://www.who.int/infection-prevention/tools/core-components/en/", target: "_blank"}
-            practical manuals 
+            practical manuals
           supporting their implementation.
         %li
           Use IPC assessment tools (IPCAT) to assess the core components of IPC programmes at the national (IPCAT2; tool 2) and facility (IPCAF; facility level) levels and identify precise areas/
           %a{href: "http://www.who.int/infection-prevention/tools/core-components/en", target:"_blank"}
-            core components 
+            core components
           requiring action.
         %li
-          Develop and implement an action plan, informed by assessment results and following the five-step cycle described in the practical manuals, that addresses the identified priority core components at the national and facility levels (at least at major hospital centres), core component one (IPC programme) and core component eight (WASH), according to the WHO requirements/action checklists. 
+          Develop and implement an action plan, informed by assessment results and following the five-step cycle described in the practical manuals, that addresses the identified priority core components at the national and facility levels (at least at major hospital centres), core component one (IPC programme) and core component eight (WASH), according to the WHO requirements/action checklists.
         %li
           Establish a National IPC Committee and develop National IPC Committee terms of reference and local IPC committees at district and/or facility level, if an action plan is not in place.
         %li
           Develop a national IPC policy and plan for animal health.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -315,22 +293,21 @@
         %li
           Identify and allocate adequate resources to support selected healthcare facilities/farms to implement IPC action plans, including IPC guidelines.
         %li
-          Use IPC assessment tools at national (IPCAT2) and facility (IPCAF) levels to identify precise areas requiring additional activities to improve or put in place additional IPC 
+          Use IPC assessment tools at national (IPCAT2) and facility (IPCAF) levels to identify precise areas requiring additional activities to improve or put in place additional IPC
           %a{href: "http://www.who.int/infection-prevention/tools/core-components/en/)", target: "_blank"}
-            core components 
+            core components
           and to guide the development of a detailed improvement plan of action.
         %li
           Implement the action plan, informed by assessment results and following the five-step cycle described in the practical manuals, according to the WHO requirements/action checklists for the priority
           %a{href:"http://www.who.int/infection-prevention/tools/core-components/en/)", target: "_blank"}
-            core components 
+            core components
           identified.
         %li
           Refer to the recommendations and requirements for IPC guidelines, and train adequate healthcare workers on issued guidelines.
         %li
-          Monitor IPC and WASH implementation in selected healthcare facilities using IPCAF, hand hygiene self-assessment framework, 
+          Monitor IPC and WASH implementation in selected healthcare facilities using IPCAF, hand hygiene self-assessment framework,
           %a{href: "http://www.who.int/water_sanitation_health/publications/water-and-sanitation-for-health-facility-improvement-tool/en/", target: "_blank"}
             hand hygiene compliance observation tools WASH FIT tool.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -342,25 +319,24 @@
         Actions to achieve this level:
       %ul
         %li
-          Use the national 
+          Use the national
           %a{href: "http://www.who.int/infection-prevention/tools/core-components/en/", target: "_blank"}
-            IPC assessment tool 
+            IPC assessment tool
           (IPCAT2) to identify precise areas still requiring action and update the plan of action.
         %li
           Mandate and support IPC improvement at all healthcare facilities, recommending the use of the infection prevention and control assessment framework (
           %a{href: "http://www.who.int/infection-prevention/tools/core-components/IPCAF-facility.PDF?ua=1", target: "_blank"}
             IPCAF
-          ) and the 
+          ) and the
           %a{href:"http://www.who.int/water_sanitation_health/publications/water-and-sanitation-for-health-facility-improvement-tool/en/", target: "_blank"}
-            WASH fit tool 
-          and 
+            WASH fit tool
+          and
           %a{href:"https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.cdc.gov%2Fantibiotic-use%2Fhealthcare%2Fpdfs%2F18-295875-A-ASP-CE-Web-508.pdf&data=02%7C01%7Ctrfrieden%40resolvetosavelives.org%7C25aae861935147a00b8908d62560dea8%7Cdcb8a8f481b349b79bc29cca6af0eebf%7C0%7C0%7C636737495320267524&sdata=vT9uLf%2FnPeu52Q7f9W6Pmas0AMh9H15GvXHnG7muzjI%3D&reserved=0", target: "_blank"}
             antibiotic stewardship programs.
         %li
           Include specific interventions for AMR prevention tailored to the local epidemiological situation in these plans.
         %li
-          Share the plans with national, subnational and local IPC committees and incorporate guidance from them. 
-
+          Share the plans with national, subnational and local IPC committees and incorporate guidance from them.
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -374,16 +350,14 @@
         %li
           Provide effective support to healthcare facility IPC programmes nationwide.
         %li
-          Ensure that healthcare facilities undertake annual IPCAF and WASH fit assessments as part of their review cycle to address long-term sustainability. 
+          Ensure that healthcare facilities undertake annual IPCAF and WASH fit assessments as part of their review cycle to address long-term sustainability.
         %li
           Establish a national system for continuous monitoring of progress in fulfilling the IPC core components (i.e. repeat assessments at least annually) and keep track of changes and scores and develop a long-term improvement plan.
         %li
           Analyse and regularly report national IPC and WASH data and support discussions on actions to incorporate lessons learned in the long-term improvement plan.
         %li
           Document the incidence of patient and healthcare worker infections, including M. tuberculosis, and the effectiveness of measures to reduce their occurrence.
-
   %a{name: "3.4"}
-
   .indicator-head
     %h3
       Benchmark 3.4:
@@ -391,8 +365,7 @@
   %p
     %strong
       Objective:
-    To ensure appropriate use of all antimicrobials in human and animal health and agriculture 
-
+    To ensure appropriate use of all antimicrobials in human and animal health and agriculture
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -403,7 +376,6 @@
       %ul
         %li
           No or weak policy and regulations on appropriate use, availability and quality of antimicrobials.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -422,7 +394,6 @@
           Assess existing monitoring of antimicrobial use and consumption.
         %li
           Develop a draft national antimicrobial stewardship plan or strategy and national legislation that regulate use, availability and quality of antimicrobials.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -434,11 +405,11 @@
         Actions to achieve this level:
       %ul
         %li
-          Develop/update and disseminate national stewardship and clinical/treatment guidelines that include the Essential Medicines List AWaRe (Access, Watch, Reserve) categorization for antibiotics promoting appropriate use of antimicrobials. 
+          Develop/update and disseminate national stewardship and clinical/treatment guidelines that include the Essential Medicines List AWaRe (Access, Watch, Reserve) categorization for antibiotics promoting appropriate use of antimicrobials.
         %li
-          Implement 
+          Implement
           %a{href: "https://na01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fwww.cdc.gov%2Fantibiotic-use%2Fhealthcare%2Fpdfs%2F18-295875-A-ASP-CE-Web-508.pdf&data=02%7C01%7Ctrfrieden%40resolvetosavelives.org%7C25aae861935147a00b8908d62560dea8%7Cdcb8a8f481b349b79bc29cca6af0eebf%7C0%7C0%7C636737495320267524&sdata=vT9uLf%2FnPeu52Q7f9W6Pmas0AMh9H15GvXHnG7muzjI%3D&reserved=0", target: "_blank"}
-            stewardship practices 
+            stewardship practices
           at designated healthcare facilities.
         %li
           Establish SOPs, protocols and databases for monitoring antimicrobial use in humans and animals.
@@ -448,7 +419,6 @@
           Develop or review the national regulatory framework for appropriate use of antimicrobials in humans.
         %li
           Approve and enact legislation and regulations on import, marketing authorization, production and use of antimicrobials.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -460,7 +430,7 @@
         Actions to achieve this level:
       %ul
         %li
-          Monitor and evaluate stewardship programmes conducted, including the analysis of antimicrobial use data. 
+          Monitor and evaluate stewardship programmes conducted, including the analysis of antimicrobial use data.
         %li
           Develop and disseminate information, education and communication materials on drug resistance and drug use across both human and animal sectors. These include the use of evidence generated from AMR and antimicrobial use surveillance to inform antibiotic-use practices.
         %li
@@ -468,12 +438,11 @@
         %li
           Expand antimicrobial stewardship activities to all healthcare facilities.
         %li
-          Recommend and implement the phasing out of antimicrobials used as animal growth promotion. 
+          Recommend and implement the phasing out of antimicrobials used as animal growth promotion.
         %li
           Map existing relevant legislation and begin the review process for coherence.
         %li
           Develop and implement legislation on “prescription only” sales of key antibiotics.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -498,7 +467,6 @@
           Monitor “prescription only” sales of key antibiotics.
         %li
           Complete the review of relevant legislation and enact amendments to make legislation coherent.
-
   %h3 Tools:
   %ul
     %li
@@ -512,20 +480,20 @@
       %a{href: "http://www.who.int/infection-prevention/tools/core-components/en/", target: "_blank"}
         National and facility practical manuals supporting their implementation
     %li
-      IPCAF, 
+      IPCAF,
       %a{href: "http://www.who.int/gpsc/country_work/hhsa_framework_October_2010.pdf?ua=", target: "_blank"}
         hand hygiene self-assessment framework
-      , 
+      ,
       %a{href: "http://www.who.int/infection-prevention/tools/hand-hygiene/evaluation_feedback/en/", target: "_blank"}
         hand hygiene compliance observation tools
-      , 
+      ,
       %a{href: "http://www.who.int/water_sanitation_health/publications/water-and-sanitation-for-health-facility-improvement-tool/en/", target: "_blank"}
         WASH FIT tool
     %li
       %a{href:"http://www.fao.org/ag/againfo/programmes/en/ empres/news_231216b.html", target:"_blank"}
         Sharing FAO tools for veterinary laboratory assessment. Food and Agriculture Organization
     %li
-      National antimicrobial resistance surveillance systems and participation in the Global Antimicrobial Resistance Surveillance System (GLASS): 
+      National antimicrobial resistance surveillance systems and participation in the Global Antimicrobial Resistance Surveillance System (GLASS):
       %a{href:"http://apps.who.int/iris/bitstream/10665/251554/1/WHODGO- AMR-2016.4-eng.pdf", target:"_blank"}
         A guide to planning, implementation and monitoring and evaluation.
       World Health Organization; 2016.
@@ -539,9 +507,9 @@
       Geneva: World Health Organization; 2015.
     %li
       %a{href:"http://www.who.int/gpsc/core-components.pdf", target:"_blank"}
-        Guidelines on core components of infection prevention and control programmes at the national and acute health care facility. 
+        Guidelines on core components of infection prevention and control programmes at the national and acute health care facility.
       Geneva: World Health Organization; 2016.
-    %li     
+    %li
       %a{href:"https://www.cdc.gov/drugresistance/pdf/national_action_plan_for_combating_antibotic-resistant_bacteria.pdf", target:"_blank"}
         National action plan for combating antibiotic-resistant bacteria. Atlanta: Centers for Disease Control and Prevention
       ; 2015.

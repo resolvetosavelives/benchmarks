@@ -1,30 +1,24 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     15. Risk communication
-  
   %p
-    Risk communication capacity at the national and subnational levels should ensure timely and effective two-way communication between concerned authorities and the population at risk. This includes both proactive dissemination of information and active listening. The exchange of information, advice and opinion should be done through channels and platforms that are accessed and most trusted by the at-risk population (such as the media, social media, mass awareness campaigns, health promotion, social mobilization, stakeholder or via trusted community leaders). 
-    
+    Risk communication capacity at the national and subnational levels should ensure timely and effective two-way communication between concerned authorities and the population at risk. This includes both proactive dissemination of information and active listening. The exchange of information, advice and opinion should be done through channels and platforms that are accessed and most trusted by the at-risk population (such as the media, social media, mass awareness campaigns, health promotion, social mobilization, stakeholder or via trusted community leaders).
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
       Effective risk communication allows people at risk to understand and adopt protective behaviours. It allows authorities and experts to listen to and address people’s concerns and needs so that the advice they provide is relevant and trusted. Feedback from at-risk community members is used to tweak broader response measures, making them more likely to be accepted.
-      
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       (1) Formal government risk communications plans, arrangements and systems in place. (2) Existence of risk communication coordination mechanisms for internal and partner communication. (3) Evidence that the public communication unit or team operates efficiently and effectively. (4) Evidence that risk communication units systematically engage populations at the community level during emergencies. (5) Existence of a system to gather information on perceptions, risky behaviours and misinformation to analyse public concerns and fears.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "15.1"}
-
   .indicator-head
     %h3
       Benchmark 15.1
@@ -33,7 +27,6 @@
     %strong
       Objective:
     To develop a system for risk communicaiton for unusual events and emergencies
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -42,7 +35,6 @@
         No capacity
     .body.col-9
       Country has not yet developed a system for risk communication for unusual events and emergencies.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -53,19 +45,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Identify people or units responsible for risk communication within each relevant ministry and relevant sectors, with defined terms of reference to work together during a public health emergency. 
-        %li 
+        %li
+          Identify people or units responsible for risk communication within each relevant ministry and relevant sectors, with defined terms of reference to work together during a public health emergency.
+        %li
           Identify and assign spokespersons (holding a certain job position) for public health emergency.
-        %li 
+        %li
           Establish a list of key stakeholders in government ministries and among implementing partners. Identify points of contact for communication including different means for internal information sharing (such as by email, SMS or phone or closed group social media platforms).
-        %li 
+        %li
           Establish a dedicated risk communication unit or team to work on two-way communication with the public (including affected at-risk communities) using SOPs, priority tasks and dedicated responsibilities for communication and decision-making authority during a public health event at the national level.
-        %li 
-          Develop a national multihazard, multisectoral emergency risk communication plan. 
-        %li 
+        %li
+          Develop a national multihazard, multisectoral emergency risk communication plan.
+        %li
           Assess existing capacities and needs within government ministries and key partner agencies, and develop training plans for priority skills identified for carrying out effective risk communication.
-        
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -76,19 +67,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Test the existing system and plan through actual experience and/or table-top or simulation exercises.
-        %li 
-          Develop risk communication capacities through cascade training and/or mentorship at the subnational level on information sharing among key stakeholders, including through the media, social media and direct interaction with affected communities. 
-        %li 
+        %li
+          Develop risk communication capacities through cascade training and/or mentorship at the subnational level on information sharing among key stakeholders, including through the media, social media and direct interaction with affected communities.
+        %li
           Communicate in local languages and use appropriate technology for information exchange (dissemination and receiving feedback from the public).
-        %li 
+        %li
           Develop a mechanism for systematically collecting feedback from the community (such as through telephone hotline, social media forums, direct engagement).
-        %li 
+        %li
           Develop a mechanism to conduct baseline surveys on knowledge, attitudes and practices on priority health threats and on health seeking practices.
-        %li 
+        %li
           Establish a mechanism to ensure regular collaboration among staff responsible for surveillance, risk assessment and risk communication.
-        
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -99,21 +89,20 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Establish a dedicated, adequately resourced core risk communication team and a surge mechanism to ensure that human resources capacity for risk communication is available before, during and after an event/emergency. 
-        %li 
+        %li
+          Establish a dedicated, adequately resourced core risk communication team and a surge mechanism to ensure that human resources capacity for risk communication is available before, during and after an event/emergency.
+        %li
           Allocate required resources to support the core risk communication team before, during and after an emergency.
-        %li 
+        %li
           Conduct an after-action review of risk communication following a real event or a simulation exercise.
-        %li 
+        %li
           Implement risk communication training across sectors and at subnational levels.
-        %li 
+        %li
           Develop a mechanism for systematic exchange of information among different functions of an emergency response (such as surveillance, laboratory, patient care, infection prevention and control, logistics, risk communication, human resources, planning, budget and finance).
-        %li 
+        %li
           Establish monitoring and evaluation tools to evaluate the implementation of risk communication activities during public health emergencies.
-        %li 
+        %li
           Train frontline healthcare staff on effective risk communication.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -124,15 +113,13 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Revise the risk communication plan based on findings or results from evaluation of the real event.
-        %li 
+        %li
           Establish a mechanism with dedicated resources for the functioning of an effective risk communication system, including human and financial resources for a dedicated team with budget for implementing activities at the national and subnational levels.
-        %li 
+        %li
           Document, incorporate findings, and disseminate lessons learned from risk communication activities of an event or exercise.
-        
   %a{name: "15.2"}
-
   .indicator-head
     %h3
       Benchmark 15.2:
@@ -140,8 +127,7 @@
   %p
     %strong
       Objective:
-    Strengthen coordination for risk communication 
-
+    Strengthen coordination for risk communication
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -150,7 +136,6 @@
         No capacity
     .body.col-9
       Country does not have effective coordination for risk communication.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -161,13 +146,12 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Identify ministries, organizations and key stakeholders involved in risk communication and community engagement.
-        %li 
+        %li
           Consult with and conduct initial meeting with identified organizations and ministries to define coordination mechanisms and platforms at national and subnational levels.
-        %li 
-          Establish objectives, communication flow charts, SOPs and ways of working between units, agencies/organizations, for risk communication and community engagement. 
-        
+        %li
+          Establish objectives, communication flow charts, SOPs and ways of working between units, agencies/organizations, for risk communication and community engagement.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -178,13 +162,12 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop a platform or mechanism for regular information sharing with relevant sectors including ministries, partners and other stakeholders.
-        %li 
-          Establish a regular risk communication coordination mechanism between relevant key stakeholders at national and subnational levels. 
-        %li 
+        %li
+          Establish a regular risk communication coordination mechanism between relevant key stakeholders at national and subnational levels.
+        %li
           Develop appropriate action plans that identify priority interventions, languages and communication of preference to key populations at risk.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -195,15 +178,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Expand information sharing mechanism with other sectors including media, civil society and the private sector. 
-        %li 
+        %li
+          Expand information sharing mechanism with other sectors including media, civil society and the private sector.
+        %li
           Conduct regular risk communication coordination meetings at national and subnational levels. Document and share outcomes of the meetings.
-        %li 
+        %li
           Implement regular risk communication coordination among relevant key stakeholders at national and subnational levels.
-        %li 
-          Evaluate the effectiveness of the coordination mechanism among all partners either through a real event or simulation exercise. 
-        
+        %li
+          Evaluate the effectiveness of the coordination mechanism among all partners either through a real event or simulation exercise.
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -214,15 +196,13 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Maintain a regular coordination mechanism. 
-        %li 
+        %li
+          Maintain a regular coordination mechanism.
+        %li
           Assess performance of the coordination mechanism regularly through simulation exercises or after-action reviews and share results with partners.
-        %li 
-          Update action plans with relevant stakeholders with clearly defined roles and provision of resources. 
-        
+        %li
+          Update action plans with relevant stakeholders with clearly defined roles and provision of resources.
   %a{name: "15.3"}
-
   .indicator-head
     %h3
       Benchmark 15.3:
@@ -230,8 +210,7 @@
   %p
     %strong
       Objective:
-    Strengthen communication engagement with communities 
-
+    Strengthen communication engagement with communities
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -239,8 +218,7 @@
       .level-desc
         No capacity
     .body.col-9
-      Country does not have effective communication with communities. 
-
+      Country does not have effective communication with communities.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -251,20 +229,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish a list of key stakeholders – civil society groups, key nongovernmental organizations, key religious and traditional leaders – at the national level.
-        %li 
+        %li
           Conduct a needs analysis for effectively engaging with civil society groups and key nongovernmental organizations (including female-oriented organizations), and religious and traditional leaders at the national level.
-        %li 
+        %li
           Identify key internal resources within all relevant ministries to help engage with key stakeholders at the national level.
-        %li 
+        %li
           Develop a plan to engage key stakeholders at the national level.
-        %li 
+        %li
           Identify focal points for community engagement at the national and subnational levels.
-        %li 
+        %li
           Develop and disseminate training on community engagement at the national and subnational levels.
-        
-      
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -275,18 +251,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Identify trusted community leaders and champions at the subnational level to support community engagement (such as religious leaders, traditional healers, community networks).
-        %li 
+        %li
           Identify focal points from the ministry and partners for community engagement at the subnational level.
-        %li 
+        %li
           Develop and disseminate training on community engagement at the subnational level.
-        %li 
+        %li
           Develop tools, procedures and methods for community engagement to obtain community feedback through surveys, hotlines, community dialogue or other means.
-        %li 
+        %li
           Identify and train community outreach groups, including volunteers.
-        
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -297,13 +271,12 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish mechanisms for systematically receiving community feedback through multiple channels including social media and direct dialogue.
-        %li 
+        %li
           Conduct regular refresher training, briefing, supervision and engagement of social mobilizers and community engagers.
-        %li 
+        %li
           Develop mechanisms to systematically integrate feedback on community concerns and issues of interest into community engagement activities.
-        
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -314,25 +287,22 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish dedicated human and financial resources for community engagement including core staff and implementation budget at national and subnational levels.
-        %li 
+        %li
           Regularly assess performance of community engagement and share results obtained through after-action reviews or simulation exercises.
-        
-        
-  %h3 Tools:  
+  %h3 Tools:
   %ul
     %li
       %a{href: "https://www.who.int/risk-communication/guidance/en/", target: "_blank"}
-        WHO guidance on Risk Communication 
-    %li 
+        WHO guidance on Risk Communication
+    %li
       %a{href: "https://www.who.int/risk-communication/guidance/download/en/", target: "_blank"}
         Communicating Risk in Public Health Emergencies
-    %li 
+    %li
       %a{href: "https://openwho.org/", target: "_blank"}
         Risk communication training courses
-    %li 
-      Risk communication resources – 
+    %li
+      Risk communication resources –
       %a{href: "https://www.who.int/risk-communication/en/", target: "_blank"}
-        WHO website 
-    
+        WHO website

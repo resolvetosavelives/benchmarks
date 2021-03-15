@@ -1,33 +1,28 @@
 = render layout: "layouts/benchmark_document" do
-
   %h1
     7. National Laboratory System
-  
   %p
     Surveillance with a national laboratory
     = raw 'system,<sup><a href="#29">29</a></sup>'
     including all relevant sectors, particularly in human and animal (domestic animals and wildlife) health, and effective modern point-of-care and laboratory-based diagnostics is in place.
-    
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "star.svg")
+      = inline_svg_tag "star.svg"
     .col
       %h3
         Impact
       Effective use of a nationwide laboratory system, including all relevant sectors, capable of safely and accurately detecting and characterizing pathogens causing epidemic disease, including both known and unknown threats, from all parts of the country. Expanded deployment, utilization and sustainment of modern, safe, secure, affordable and appropriate diagnostics tests or devices established.
   .callout-with-icon
     .col-1.mx-auto.px-0
-      = render file: Rails.root.join("app", "assets", "images", "ico-bar-chart.svg")
+      = inline_svg_tag "ico-bar-chart.svg"
     .col
       %h3
         Monitoring and evaluation
       (1) A nationwide laboratory system able to reliably conduct
       = raw 'tests<sup><a href="#30">30</a></sup>'
       at least for priority diseases of the country on appropriately identified and collected, and suspected or confirmed outbreak specimens transported safely and securely to accredited laboratories from at least 80% of intermediate levels/districts in the country. (2) Existence of national quality laboratory standards and system for licensing laboratories.
-
-  %hr.indicator-hr
+  %hr.indicator-hr/
   %a{name: "7.1"}
-
   .indicator-head
     %h3
       Benchmark 7.1
@@ -36,7 +31,6 @@
     %strong
       Objective:
     Strengthening laboratory testing for detection of priority diseases
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -44,8 +38,7 @@
       .level-desc
         No capacity
     .body.col-9
-      Country has not taken a risk-based approach to determine testing for priority diseases. 
-
+      Country has not taken a risk-based approach to determine testing for priority diseases.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -56,33 +49,32 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish clear SOPs and necessary agreements with international laboratories to perform diagnostic and confirmatory testing of specimens and support outbreak detection and responses when local capacity is not available.
-        %li 
+        %li
           Define 10 core tests based on the priority diseases list (link this with the surveillance benchmark).
-        %li 
-          Select at least five priority diseases for testing using the results of risk analysis, surveillance data and 
+        %li
+          Select at least five priority diseases for testing using the results of risk analysis, surveillance data and
           %a{href: "http://www.who.int/csr/resources/publications/surveillance/whocdscsrisr992.pdf", target: "_blank"}
-            prioritization methodologies. 
-        %li 
+            prioritization methodologies.
+        %li
           Assess laboratory algorithms, standards and testing capacity including equipment inventory for the 10 priority diseases.
-        %li 
+        %li
           Assessment the capacity and essential functioning of target human and animal health laboratories to meet diagnostic and confirmatory requirements for priority diseases.
-        %li 
+        %li
           Develop plan based on assessment, to target human and animal health laboratories for capacity building and essential functioning to meet diagnostic and confirmatory requirements for priority diseases, ensuring that proficiency is demonstrable for bacteriology, serology, polymerase chain reaction and others.
-        %li 
+        %li
           Establish domestic external quality assessment programmes for all priority tests or cover them with international external quality assessment schemes.
-        %li 
+        %li
           Develop a national laboratory policy that identifies expected capacities at each level of the national laboratory system.
-        %li 
+        %li
           Develop a hands-on-training curriculum for all laboratory staff that includes task-based training, refresher training and mentoring in their appropriate technical and administrative areas.
-        %li 
+        %li
           Conduct a hands-on training or refresher training session for public health laboratory staff on techniques to diagnose the country’s priority diseases.
-        %li 
+        %li
           Develop and disseminate testing SOPs and quality control SOPs for all core tests for priority diseases; and establish supply and procurement chains.
-        %li 
+        %li
           Train relevant laboratory staff on techniques used for core testing and document quality control results.
-        
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -93,15 +85,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop and disseminate testing SOPs and procurement chains to conduct testing for at least 10 priority diseases.
-        %li 
+        %li
           Make available external quality assessment for at least three/four core tests for priority diseases at national or central laboratories.
-        %li 
-          Begin establishing a comprehensive quality management system in laboratories that conduct core tests for priority diseases. 
-        %li 
+        %li
+          Begin establishing a comprehensive quality management system in laboratories that conduct core tests for priority diseases.
+        %li
           Regularly train staff on the testing, and document quality control results.
-
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -112,17 +103,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop and disseminate testing SOPs; procurement chains should conduct testing for at least 15 priority diseases.
-        %li 
+        %li
           Conduct quality assurance for all core tests.
-        %li 
+        %li
           Develop a strategic framework to prioritize national investments into laboratory system sustainability.
-        %li 
-          Conduct monitoring and evaluation to document diagnostics, data quality and staff performance, and incorporate recommendations into the national laboratory strategic plan. 
-        %li 
+        %li
+          Conduct monitoring and evaluation to document diagnostics, data quality and staff performance, and incorporate recommendations into the national laboratory strategic plan.
+        %li
           Establish a national external quality assessment programme for public health laboratories.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -133,13 +123,11 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Expand external quality assessment programmes to include testing in the private sector and animal health laboratories.
-        %li 
+        %li
           Secure sustainable financing for the laboratory system to support ongoing testing of priority diseases.
-
   %a{name: "7.2"}
-
   .indicator-head
     %h3
       Benchmark 7.2:
@@ -148,7 +136,6 @@
     %strong
       Objective:
     Strengthen specimen referral and transport system
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -157,7 +144,6 @@
         No capacity
     .body.col-9
       No system in place for transporting specimens from intermediate levels/districts to national laboratories; or only ad hoc transportation is available.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -168,23 +154,22 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Review existing specimen referral and transportation networks for priority diseases, map existing laboratory capacity for priority
           = raw 'diseases,<sup><a href="#31">31</a></sup>'
           and establish referral networks for each pathogen.
-        %li 
+        %li
           Convene human and animal health sectors and other stakeholders to assess referral mechanisms and linkages among various levels of health facilities, including international networks with guidance and tools for dissemination.
-        %li 
+        %li
           Develop SOPs (as part of disease outbreak investigation protocols) for specimen collection, management and transportation and share with all levels.
-        %li 
+        %li
           Train staff of courier company and health facility on appropriate management of specimens from suspected cases of priority diseases.
-        %li 
+        %li
           Establish a service agreement with a courier company (public or private) for specimen transportation from at least 50% of health facilities in the public sector throughout all major subdivisions of the country.
-        %li 
-          Establish a mechanism to ensure transportation of specimens from 50% of all health facilities to national laboratories. 
-        %li 
+        %li
+          Establish a mechanism to ensure transportation of specimens from 50% of all health facilities to national laboratories.
+        %li
           Provide preposition outbreak investigation kits (sample collection and transportation kits) in at least 50% of health facilities.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -195,15 +180,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Expand a service agreement with a courier company (public or private) for specimen transportation from at least 80% of the health facilities.
-        %li 
-          Establish a mechanism to ensure transportation of specimens from 50–80% of all health facilities to national laboratories. 
-        %li 
+        %li
+          Establish a mechanism to ensure transportation of specimens from 50–80% of all health facilities to national laboratories.
+        %li
           Implement staff training programmes and standards at the national level for the safe shipment of infectious substances following available WHO guidance.
-        %li 
+        %li
           Provide preposition outbreak investigation kits (sample collection and transportation kits) at 80% or more health facilities.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -214,17 +198,16 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Establish a mechanism to ensure transportation of specimens from at least 80% of all health facilities to national laboratories covering all geographic areas of the country.
-        %li 
+        %li
           Provide preposition outbreak investigation kits (sample collection and transportation kits) at all the health facilities.
-        %li 
+        %li
           Conduct regular reviews of specimen transportation systems to confirm that specimens are being transported promptly and in a manner that maintains safety and specimen quality.
-        %li 
+        %li
           Establish a system to collect and test specimens from hard-to-reach areas.
-        %li 
+        %li
           Develop a mechanism to ensure that staff at the national level have internationally recognized certification to ship potentially infectious specimens.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -235,13 +218,11 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Conduct evaluation or simulation exercises to confirm functionality of specimen referral systems in all health facilities.
-        %li 
+        %li
           Ensure committed sustainable funding for the national standard of specimen collection, handling, preservation, protection, transportation, disposal, packaging and import/export procedures.
-
   %a{name: "7.3"}
-
   .indicator-head
     %h3
       Benchmark 7.3
@@ -250,7 +231,6 @@
     %strong
       Objective:
     Establish effective national diagnostic network
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -259,7 +239,6 @@
         No capacity
     .body.col-9
       No evidence of use of rapid and accurate point-of-care and farm-based diagnostics and laboratory-based diagnostics, and no tier-specific diagnostic testing strategies are documented.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -270,19 +249,18 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Identify international laboratories with testing capacity for confirmatory laboratory diagnostics when they are not currently available in the country. 
-        %li 
+        %li
+          Identify international laboratories with testing capacity for confirmatory laboratory diagnostics when they are not currently available in the country.
+        %li
           Develop a national laboratory policy that identifies the expected capacities at each level of the national laboratory system.
-        %li 
+        %li
           Assess national diagnostic capability, and based on the findings, develop a national plan for achieving goals stated in the policy.
-        %li 
+        %li
           Conduct a review of existing point-of-care/rapid diagnostic tests that are available to the country for detection of priority diseases.
-        %li 
+        %li
           Conduct a laboratory and field validation of the use of point-of-care/rapid diagnostic tests for some priority diseases.
-        %li 
+        %li
           Develop and implement point-of-care diagnostic testing strategies for priority diseases.
-        
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -293,13 +271,12 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop and disseminate SOPs for tiered testing, including point-of-care/rapid diagnosis and specimen referral systems to the appropriate laboratory ideally within the framework of a national laboratory policy, for each priority disease.
-        %li 
+        %li
           Develop in-service training plans for all staff that include task-based training, refresher training and mentoring in their appropriate technical and administrative areas.
-        %li 
+        %li
           Allocate resources (human and material) to conduct appropriate diagnostic testing at the subnational level in line with the national laboratory policy.
-
   .indicator-capacity-row
     .col.head.bg-success
       .level-num
@@ -310,15 +287,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Monitor implementation of the tiered testing approach, including validation/quality assurance of point-of-care testing.
-        %li 
+        %li
           Train laboratory staff on relevant novel diagnostic procedures to detect priority diseases.
-        %li 
-          Use point-of-care diagnostic testing for some of the priority diseases and further confirm by tiered testing approach from referral laboratories. 
-        %li 
+        %li
+          Use point-of-care diagnostic testing for some of the priority diseases and further confirm by tiered testing approach from referral laboratories.
+        %li
           Obtain sustainable funding for laboratory procurement, capacity building and point-of care diagnostics.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -329,15 +305,13 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Develop capacity to conduct advanced molecular and serological testing for confirmation of priority diseases including the ability to conduct molecular subtyping.
-        %li 
+        %li
           Develop and implement a plan to increase national testing capacity for all priority diseases, including cross-training of national laboratory staff in different testing methodologies.
-        %li 
+        %li
           Develop quality management system mechanism for point-of-care testing, including quality indicators.
-       
   %a{name: "7.4"}
-
   .indicator-head
     %h3
       Benchmark 7.4:
@@ -346,7 +320,6 @@
     %strong
       Objective:
     To ensure laboratory quality
-
   .indicator-capacity-row.first
     .head.col.bg-danger
       .level-num
@@ -355,7 +328,6 @@
         No capacity
     .body.col-9
       There are no national laboratory quality standards.
-
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -366,13 +338,12 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Establish an independent unit at the central level with a specific budget line and personnel to oversee laboratory services and develop national laboratory quality standards. 
-        %li 
+        %li
+          Establish an independent unit at the central level with a specific budget line and personnel to oversee laboratory services and develop national laboratory quality standards.
+        %li
           Establish a quality assessment programme for national or central laboratories for diagnostics of diseases with epidemic potential.
-        %li 
-          Develop a roadmap for laboratory inspections, licensing and accreditation, in line with the national laboratory strategy. 
-
+        %li
+          Develop a roadmap for laboratory inspections, licensing and accreditation, in line with the national laboratory strategy.
   .indicator-capacity-row
     .head.col.bg-warning
       .level-num
@@ -383,15 +354,14 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Establish a national quality assessment programme for peripheral laboratories for diagnosis of diseases with epidemic potential. 
-        %li 
+        %li
+          Establish a national quality assessment programme for peripheral laboratories for diagnosis of diseases with epidemic potential.
+        %li
           Develop minimum standards for certification or licensing, as a part of the system for regulation of laboratories.
-        %li 
-          Implement a system of inspecting and licensing laboratories, including using local adaptations of international standards and norms and obtaining required funding and human resources. 
-        %li 
+        %li
+          Implement a system of inspecting and licensing laboratories, including using local adaptations of international standards and norms and obtaining required funding and human resources.
+        %li
           Develop expertise by training selected laboratory staff in the inspection of laboratories based on the standards.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -402,11 +372,10 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
+        %li
           Implement a mandatory licensing programme for national and subnational public health laboratories.
-        %li 
+        %li
           Establish national quality standards that follow international norms and standards.
-
   .indicator-capacity-row
     .head.col.bg-success
       .level-num
@@ -417,13 +386,12 @@
       %strong
         Actions to achieve this level:
       %ul
-        %li 
-          Implement a national external quality assurance programme across microbiology, virology, serology and parasitology. 
-        %li 
+        %li
+          Implement a national external quality assurance programme across microbiology, virology, serology and parasitology.
+        %li
           Accredit all national reference laboratories to international standards (such as using ISO 15189).
-        %li 
+        %li
           Strengthen the national plan for quality management system compliance at the subnational and national levels through continuous quality improvement based on analysis of actual experience in the country.
-
   %h3 Tools:
   %ul
     %li
@@ -436,40 +404,35 @@
       — WHO guidance to identify global disease threats; methods can be applied to identifying priority diseases for laboratory testing in countries.
     %li
       %a{href: "https://www.slmta.org/", target: "_blank"}
-        Strengthening Laboratory Management Toward Accreditation 
+        Strengthening Laboratory Management Toward Accreditation
       – A structured quality improvement program that teaches laboratory managers how to implement practical quality management systems in resource-limited settings.
     %li
       %a{href: "http://www.who.int/ihr/training/laboratory_quality/en/", target: "_blank"}
         Laboratory Quality Management System Training Toolkit
       WHO toolkit to train laboratory managers, senior biologists and technologists in quality management systems.
     %li
-      Stepwise implementation of a quality management system for a health laboratory. WHO EMRO publication adapting the ISO 15189 standard to the context and realities of resource-limited countries, where the requirements of the ISO standard may be too stringent to implement. 
+      Stepwise implementation of a quality management system for a health laboratory. WHO EMRO publication adapting the ISO 15189 standard to the context and realities of resource-limited countries, where the requirements of the ISO standard may be too stringent to implement.
       %a{href: "http://apps.who.int/iris/handle/10665/249570", target: "_blank"}
         http://apps.who.int/iris/handle/10665/249570
-
   %hr.indicator-hr
     %h4 Footnotes:
-
     %a{name: "29"}
       %sup
         29
       National laboratory system is a collaborative community of clinical laboratories, public health laboratories and many individual partners who initiate tests and/or use test results.
-    
     %p
     %a{name: "30"}
       %sup
         30
-      Tests list in each country includes six testing methods selected according to IHR’s immediately notifiable list and the WHO top 10 causes of death in low-income countries: polymerase chain reaction testing for influenza virus; virus culture for poliovirus; serology for HIV; microscopy for M. tuberculosis; rapid diagnostic testing for Plasmodium spp.; and bacterial culture for 
+      Tests list in each country includes six testing methods selected according to IHR’s immediately notifiable list and the WHO top 10 causes of death in low-income countries: polymerase chain reaction testing for influenza virus; virus culture for poliovirus; serology for HIV; microscopy for M. tuberculosis; rapid diagnostic testing for Plasmodium spp.; and bacterial culture for
       %em
-        Salmonella enteritidis 
-      serotype 
+        Salmonella enteritidis
+      serotype
       %em
-        typhi. 
+        typhi.
       These six methods are critical to the detection of epidemic-prone emerging diseases. Competency in these methods is indicated by successful testing for the specific pathogens listed. The remaining four tests should be selected by the country based on major national public health concerns.
-
     %p
     %a{name: "31"}
       %sup
         31
       These are the priority diseases defined in the technical areas of surveillance, zoonosis and food safety.
-  
