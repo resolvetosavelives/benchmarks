@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
-  root to: "pages#home"
-  get "plan/goals/:country_name/:assessment_type(/:plan_term)",
-      to: "plans#goals", as: "plan_goals"
+  devise_for :users, controllers: {
+    sessions: "users/sessions", registrations: "users/registrations"
+  }
+
   get "/get-started", to: "start#index"
   resources :start, path: "get-started", only: %i[index create show update]
   resources :plans, only: %i[show index create update destroy]
   resources :worksheets, only: %i[show]
   resources :costsheets, only: %i[show]
-  devise_for :users,
-             controllers: {
-               sessions: "users/sessions", registrations: "users/registrations"
-             }
+  get "plan/goals/:country_name/:assessment_type(/:plan_term)",
+      to: "plans#goals", as: "plan_goals"
 
   ##
   # static pages
@@ -58,4 +57,6 @@ Rails.application.routes.draw do
   get "/document/glossary", to: "pages#glossary", as: "glossary"
   get "/document/acknowledgement",
       to: "pages#acknowledgement", as: "acknowledgement"
+
+  root to: "pages#home"
 end
