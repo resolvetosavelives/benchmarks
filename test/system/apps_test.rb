@@ -146,6 +146,10 @@ class AppsTest < ApplicationSystemTestCase
         .count
     assert(count_deselected == count_bars - 1)
 
+    # make sure the filter dropdown has the correct value
+    dropdown_toggle = find('#dropdown-filter-technical-area .dropdown-toggle')
+    assert_equal 'IHR coordination', dropdown_toggle.text
+
     ##
     # reset and make sure no bar are deselected
     find('.clear-filters-component a').click
@@ -153,6 +157,10 @@ class AppsTest < ApplicationSystemTestCase
       all('#tabContentForTechnicalArea .ct-series-a .ct-bar.ct-deselected')
         .count
     assert(count_deselected == 0)
+
+    # make sure the filter dropdown has the correct value
+    dropdown_toggle = find('#dropdown-filter-technical-area .dropdown-toggle')
+    assert_equal 'All', dropdown_toggle.text
 
     ##
     # make sure Action Type tab has a legend
@@ -170,9 +178,14 @@ class AppsTest < ApplicationSystemTestCase
       all('#tabContentForActionType .ct-series-b .ct-bar.ct-deselected').count
     assert(count_deselected == count_bars - 1)
 
+    # make sure the filter dropdown has the correct value
+    dropdown_toggle = find('#dropdown-filter-action-type .dropdown-toggle')
+    assert_equal 'Assessment and Data Use', dropdown_toggle.text
+
     ##
-    # reset and make sure no bar are deselected
-    find('.clear-filters-component a').click
+    # click on 'All' in the dropdown toggle
+    find('#dropdown-filter-action-type').click
+    find('a', text: 'All').click
     count_deselected =
       all('#tabContentForActionType .ct-series-b .ct-bar.ct-deselected').count
     assert(count_deselected == 0)

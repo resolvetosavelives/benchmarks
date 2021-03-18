@@ -136,16 +136,16 @@ export default function initReducers(initialState) {
       },
       [DESELECT_ACTION_TYPE]: (state /*, dispatchedAction*/) => {
         state.selectedActionTypeOrdinal = null
+        state.selectedListMode = null
         return state
       },
-      [CLEAR_FILTERS]: (/*state, dispatchedAction*/) => {
-        return {
-          selectedListMode: null,
-          selectedTechnicalAreaId: null,
-          selectedActionTypeOrdinal: null,
-          isInfluenzaShowing: true,
-          isCholeraShowing: true,
-        }
+      [CLEAR_FILTERS]: (state) => {
+        state.selectedListMode = null
+        state.selectedTechnicalAreaId = null
+        state.selectedActionTypeOrdinal = null
+        state.isInfluenzaShowing = true
+        state.isCholeraShowing = true
+        return state
       },
       [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
         state.isInfluenzaShowing = !state.isInfluenzaShowing

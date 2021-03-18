@@ -6,14 +6,12 @@ import InfoPane from "components/ChartCard/InfoPane"
 let container
 
 jest.mock("components/ChartCard/ActionCount", () => () => <mock-actioncount />)
-jest.mock("components/ChartCard/ClearFilters", () => () => (
-  <mock-clearfilters />
-))
+jest.mock("components/ChartCard/Filters", () => () => <mock-Filters />)
 jest.mock("components/ChartCard/DiseaseToggles", () => () => (
-  <mock-diseasetoggles />
+  <mock-DiseaseToggles />
 ))
 jest.mock("components/ChartCard/BarChartLegend", () => () => (
-  <mock-barchartlegend />
+  <mock-BarChartLegend />
 ))
 
 beforeEach(() => {
@@ -32,10 +30,10 @@ describe("InfoPane", () => {
       ReactDOM.render(<InfoPane />, container)
     })
 
-    const mockActionCount = container.querySelectorAll("mock-actioncount")
-    const mockClearFilter = container.querySelectorAll("mock-clearfilters")
-    const mockDiseaseToggles = container.querySelectorAll("mock-diseasetoggles")
-    const mockBarChartLegend = container.querySelectorAll("mock-barchartlegend")
+    const mockActionCount = container.querySelectorAll("mock-ActionCount")
+    const mockClearFilter = container.querySelectorAll("mock-Filters")
+    const mockDiseaseToggles = container.querySelectorAll("mock-DiseaseToggles")
+    const mockBarChartLegend = container.querySelectorAll("mock-BarChartLegend")
 
     expect(mockActionCount.length).toEqual(1)
     expect(mockClearFilter.length).toEqual(1)
