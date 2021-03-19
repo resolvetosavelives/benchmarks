@@ -1,6 +1,7 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import {
+  getAllTechnicalAreas,
   getPlanChartLabels,
   getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
@@ -19,6 +20,7 @@ const FilterTechnicalArea = () => {
   const selectedTechnicalAreaId = useSelector((state) =>
     getSelectedTechnicalAreaId(state)
   )
+  const technicalAreas = useSelector((state) => getAllTechnicalAreas(state))
   const barChartLabels = useSelector((state) => getPlanChartLabels(state))[
     selectedChartTabIndex
   ]
@@ -28,14 +30,19 @@ const FilterTechnicalArea = () => {
     if (eventKey === "ALL") {
       dispatch(deselectTechnicalArea())
     } else {
-      dispatch(selectTechnicalArea(parseInt(eventKey, 10)))
+      const technicalAreaId = technicalAreas[parseInt(eventKey, 10)].id
+      dispatch(selectTechnicalArea(technicalAreaId))
     }
   }
 
   const allItem = makeDropdownItem("All", "ALL")
   const items = barChartLabels.map((label, i) => makeDropdownItem(label, i + 1))
   const selectedText = selectedTechnicalAreaId
-    ? barChartLabels[selectedTechnicalAreaId - 1]
+    ? barChartLabels[
+        technicalAreas.findIndex(
+          (technicalArea) => technicalArea.id === selectedTechnicalAreaId
+        )
+      ]
     : "All"
 
   return (
