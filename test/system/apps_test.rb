@@ -214,6 +214,10 @@ class AppsTest < ApplicationSystemTestCase
     tooltip = find('.tooltip.show')
     assert_equal "Assessment and Data Use: 53\n\nHealth System: 40\nInfluenza-specific: 8\nCholera-specific: 5",
                  tooltip.text
+    #
+    # make sure the filter dropdown has the correct value
+    dropdown_toggle = find('#dropdown-filter-action-type .dropdown-toggle')
+    assert_equal 'Assessment and Data Use', dropdown_toggle.text
 
     ##
     # click on 'All' in the dropdown toggle
