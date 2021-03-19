@@ -1,8 +1,8 @@
 import React from "react"
 import ActionCount from "./ActionCount"
-import ClearFilters from "./ClearFilters"
 import DiseaseToggles from "./DiseaseToggles"
 import BarChartLegend from "./BarChartLegend"
+import Filters from "./Filters"
 
 // this is the best we have found so far:
 //   col-12 col-xl-auto
@@ -12,12 +12,10 @@ import BarChartLegend from "./BarChartLegend"
 const InfoPane = () => {
   return (
     <div className="info-pane-component col-12 col-xl-4">
-      <div className="row d-flex justify-content-between">
-        <ActionCount />
-        <ClearFilters />
-      </div>
+      <Filters />
       <DiseaseToggles />
       <BarChartLegend />
+      <ActionCount />
     </div>
   )
 }

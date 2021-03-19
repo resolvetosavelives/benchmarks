@@ -13,6 +13,8 @@ import {
   UPDATE_PLAN_NAME,
   CLEAR_FILTERS,
   SET_SELECTED_CHART_TAB_INDEX,
+  DESELECT_ACTION_TYPE,
+  DESELECT_TECHNICAL_AREA,
 } from "./constants"
 
 const deleteAnAction = (actionId, indicatorId) => {
@@ -62,6 +64,14 @@ const selectTechnicalArea = (technicalAreaId) => {
   }
 }
 
+const deselectTechnicalArea = () => {
+  return (dispatch) => {
+    dispatch({
+      type: DESELECT_TECHNICAL_AREA,
+    })
+  }
+}
+
 const selectActionType = (actionTypeIndex) => {
   return (dispatch) => {
     dispatch({
@@ -71,6 +81,14 @@ const selectActionType = (actionTypeIndex) => {
     dispatch({
       type: SWITCH_LIST_MODE,
       payload: { listModeOrdinal: LIST_MODE_BY_ACTION_TYPE },
+    })
+  }
+}
+
+const deselectActionType = () => {
+  return (dispatch) => {
+    dispatch({
+      type: DESELECT_ACTION_TYPE,
     })
   }
 }
@@ -108,6 +126,8 @@ const setSelectedChartTabIndex = (tabIndex) => {
 export {
   addActionToIndicator,
   deleteAnAction,
+  deselectActionType,
+  deselectTechnicalArea,
   selectTechnicalArea,
   selectActionType,
   clearFilterCriteria,
