@@ -14,7 +14,7 @@ const ClearFilters = () => {
           dispatch(clearFilterCriteria())
         }}
       >
-        Clear Filters
+        Reset Filters
       </a>
     </div>
   )
