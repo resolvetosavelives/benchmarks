@@ -195,6 +195,10 @@ class AppsTest < ApplicationSystemTestCase
       all('#tabContentForActionType .ct-series-b .ct-bar.ct-deselected').count
     assert(count_deselected == count_bars - 1)
 
+    tooltip = find('.tooltip.show')
+    assert_equal "Assessment and Data Use: 53\n\nHealth System: 40\nInfluenza-specific: 8\nCholera-specific: 5",
+                 tooltip.text
+
     ##
     # reset and make sure no bar are deselected
     find('.clear-filters-component a').click
