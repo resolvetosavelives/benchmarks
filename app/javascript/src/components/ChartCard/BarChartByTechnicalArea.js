@@ -97,7 +97,7 @@ class BarChartByTechnicalArea extends React.Component {
       axisY: {
         // show multiples of 10
         labelInterpolationFnc: function (value) {
-          return value % 10 == 0 ? value : null
+          return value % 10 === 0 ? value : null
         },
       },
     }

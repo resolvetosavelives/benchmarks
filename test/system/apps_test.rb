@@ -284,6 +284,7 @@ class AppsTest < ApplicationSystemTestCase
     click_on('email@example.com')
     click_on('My Plans')
     assert page.has_content?('Saved Nigeria Plan 789')
+    sleep 0.2
     click_on('Saved Nigeria Plan 789')
     sleep 0.2
     assert page.has_content?('National Legislation, Policy and Financing')
