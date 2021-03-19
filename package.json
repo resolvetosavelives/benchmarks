@@ -33,7 +33,7 @@
     "react-chartist": "^0.14.4",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "react-select": "^3.1.0",
+    "react-select": "^4.3.0",
     "react_ujs": "^2.6.1",
     "stimulus": "^2.0.0",
     "turbolinks": "^5.2.0"
