@@ -16,7 +16,7 @@
     "@sentry/browser": "^6.2.0",
     "@sentry/webpack-plugin": "^1.14.1",
     "@stimulus/polyfills": "^2.0.0",
-    "@stimulus/webpack-helpers": "^1.1.1",
+    "@stimulus/webpack-helpers": "^2.0.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "4.6.0",
@@ -35,7 +35,7 @@
     "react-redux": "^7.2.0",
     "react-select": "^3.1.0",
     "react_ujs": "^2.6.1",
-    "stimulus": "^1.1.1",
+    "stimulus": "^2.0.0",
     "turbolinks": "^5.2.0"
   },
   "prettier": {
