@@ -2039,12 +2039,12 @@
     webpack-cli "^3.3.12"
     webpack-sources "^1.4.3"
 
-"@reduxjs/toolkit@^1.3.6":
-  version "1.3.6"
-  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.3.6.tgz#306171fce2ab7423931736c34fa82190959dcd62"
-  integrity sha512-eNYURfoJa6mRNU5YtBVbmE5+nDoc4lpjZ181PBwRC6nIFYZdNR3GcoQ4uomFt8eHpXAUAdpCdxBlDsmwyXOt9Q==
+"@reduxjs/toolkit@^1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@reduxjs/toolkit/-/toolkit-1.5.0.tgz#1025c1ccb224d1fc06d8d98a61f6717d57e6d477"
+  integrity sha512-E/FUraRx+8guw9Hlg/Ja8jI/hwCrmIKed8Annt9YsZw3BQp+F24t5I5b2OWR6pkEHY4hn1BgP08FrTZFRKsdaQ==
   dependencies:
-    immer "^6.0.1"
+    immer "^8.0.0"
     redux "^4.0.0"
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
@@ -5960,10 +5960,10 @@ ignore@^4.0.6:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
   integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
 
-immer@^6.0.1:
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-6.0.6.tgz#ffd46c1976548fe3df0be671b7f8aaf620166623"
-  integrity sha512-KAo8XDbDcF59lDlKEFOhyssB/z6805ZvH/S3wqMPaTzLMFDUUu1Lq647LrUyuXzI36wMpzwZ83mMxwOXM961aA==
+immer@^8.0.0:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.4.tgz#3a21605a4e2dded852fb2afd208ad50969737b7a"
+  integrity sha512-jMfL18P+/6P6epANRvRk6q8t+3gGhqsJ9EuJ25AXE+9bNTYtssvzeYbEd0mXRYWCmmXSIbnlpz6vd6iJlmGGGQ==
 
 import-cwd@^2.0.0:
   version "2.1.0"
