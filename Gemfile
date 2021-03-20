@@ -14,8 +14,8 @@ gem "puma", "~> 5.2"
 gem "rack-attack", "~> 6.5"
 gem "rake", "~> 13.0"
 gem "rubyXL", "~> 3.4"
-gem "sentry-rails", "~> 4.2"
-gem "sentry-ruby", "~> 4.2"
+gem "sentry-rails", "~> 4.3"
+gem "sentry-ruby", "~> 4.3"
 gem "webpacker", "~> 5.2"
 
 group :development, :test do
