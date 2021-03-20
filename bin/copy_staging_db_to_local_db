@@ -1,0 +1,32 @@
+#!/bin/zsh
+
+HEROKU_APP_NAME=rtsl-benchmarks-staging
+LOCAL_DB_NAME=benchmarks_development
+LOCAL_DB_USER=postgres
+
+do_copy() {
+  echo
+  echo "capturing new db backup on staging"
+  heroku pg:backups:capture --app $HEROKU_APP_NAME
+
+  echo "downloading db backup to latest.dump"
+  heroku pg:backups:download --app $HEROKU_APP_NAME
+
+  echo "dropping local db and creating local db"
+  DISABLE_DATABASE_ENVIRONMENT_CHECK=1 rails db:drop
+  rails db:create
+
+  echo "restoring latest.dump to local db"
+  pg_restore -h localhost -p 5432 -U $LOCAL_DB_USER --no-owner --role=postgres -d $LOCAL_DB_NAME -v latest.dump
+}
+
+copy_latest_staging_db_to_local_db() {
+  if read -q "choice?Press Y/y to copy backup of latest staging db to your local db "; then
+    do_copy
+  else
+      echo
+      echo "Exiting..."
+  fi
+}
+
+copy_latest_staging_db_to_local_db
