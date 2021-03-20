@@ -139,53 +139,13 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
         console.log("indexOfActionDiseaseId: ${indexOfActionDiseaseId}")
         // 	  acc[indexOfActionDiseaseId + 1] += 1
         acc[1][currentIndex] += 1
-      } else if (action.disease_id === 2) {
-        acc[2][currentIndex] += 1
       } else {
         acc[0][currentIndex] += 1
       }
       return acc
     }, accInit)
-    // return value:
-    //   an array of arrays that each contains TechnicalAreas.length elements full of integers of counts.
-    //   the first array is for general actions, the second array is for influenza
-    //   actions, the third array is for cholera actions
   }
 )
-
-//NOTE: carl's version
-// const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
-//   [getPlan, getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
-//   (plan, currentActions, technicalAreaMap, allTechnicalAreas) => {
-//     const fnBlankArray = () => Array(allTechnicalAreas.length).fill(0)
-//     console.log(fnBlankArray)
-//     const accInit = [fnBlankArray()]
-//     plan.disease_ids.forEach(() => accInit.push(fnBlankArray()))
-//     return currentActions.reduce(
-//       (acc, action) => {
-//         const technicalArea =
-//           technicalAreaMap[action.benchmark_technical_area_id]
-//         console.assert(
-//           technicalArea,
-//           `technicalArea expected but found ${technicalArea}`
-//         )
-//         const currentIndex = technicalArea.sequence - 1
-//         const indexOfActionDiseaseId = plan.disease_ids.indexOf(action.disease_id)
-// 	if (indexOfActionDiseaseId > -1) {
-// 	  acc[indexOfActionDiseaseId + 1] += 1
-//         } else {
-//           acc[0][currentIndex] += 1
-//         }
-//         return acc
-//       },
-//       accInit
-//     )
-//     // return value:
-//     //   an array of arrays that each contains TechnicalAreas.length elements full of integers of counts.
-//     //   the first array is for general actions, the second array is for influenza
-//     //   actions, the third array is for cholera actions
-//   }
-// )
 
 const countActionsByActionType = createSelector(
   [getActionsForPlan, getNumOfActionTypes],
@@ -242,9 +202,6 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
       },
       [fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
-    // return value:
-    //   an array of arrays that each contains an element per ActionTypes of integers of counts.
-    //   the first array is for general actions, the second array is for influenza actions.
   }
 )
 
