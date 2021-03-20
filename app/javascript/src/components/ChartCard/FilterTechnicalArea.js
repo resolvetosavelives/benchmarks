@@ -30,7 +30,7 @@ const FilterTechnicalArea = () => {
     if (eventKey === "ALL") {
       dispatch(deselectTechnicalArea())
     } else {
-      const technicalAreaId = technicalAreas[parseInt(eventKey, 10)].id
+      const technicalAreaId = technicalAreas[parseInt(eventKey, 10) - 1].id
       dispatch(selectTechnicalArea(technicalAreaId))
     }
   }
