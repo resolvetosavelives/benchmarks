@@ -3,9 +3,7 @@ import PropTypes from "prop-types"
 
 const BarChartLegendDiseaseLabel = (props) => {
   const disease = props.disease
-  return (
-    <li className={`ct-series-${disease.name}`}>{disease.display} specific</li>
-  )
+  return <li className={`ct-series-${disease.name}`}>{disease.display}</li>
 }
 
 BarChartLegendDiseaseLabel.propTypes = {
