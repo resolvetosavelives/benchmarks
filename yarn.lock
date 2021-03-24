@@ -1886,10 +1886,10 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.9.1.tgz#7f554e7368c9ab679a11f4a042ca17149d70cf12"
   integrity sha512-DvJbbn3dUgMxDnJLH+RZQPnXak1h4ZVYQ7CWiFWjQwBFkVajT4rfw2PdpHLTSTwxrYfnoEXkuBiwkDm6tPMQeA==
 
-"@prettier/plugin-ruby@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-1.5.2.tgz#ca18cd7629ef0a3dec18b8dfbe7aba3d33a2e855"
-  integrity sha512-hHX9ooxGQ4PC4FHge6HmK8LLUhLCu3lk1fVt0TJXvV5AlnY47PaBpQgQ58BzyrU9/EfZj3rpcIKiQQdelkvWNA==
+"@prettier/plugin-ruby@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@prettier/plugin-ruby/-/plugin-ruby-1.5.4.tgz#2a46dadfb845534324923184cfe42f3181892fce"
+  integrity sha512-HSMEuhKcU7utIb8kZuiMr3qm9NXsWSaxi4DaJDsBy0u5VC7hprq0fSYJwE5EQr7ajmygrl2dB3i4av6Ek+TfAA==
   dependencies:
     prettier ">=1.10"
 
@@ -6817,10 +6817,10 @@ jest@^26.6.3:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
-jquery@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
-  integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
+jquery@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.0.tgz#c72a09f15c1bdce142f49dbf1170bdf8adac2470"
+  integrity sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw==
 
 js-base64@^2.1.8:
   version "2.5.2"
