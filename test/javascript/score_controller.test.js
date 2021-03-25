@@ -1,4 +1,4 @@
-import { Application, Controller } from "stimulus"
+import { Application } from "stimulus"
 import ScoreController from "score_controller"
 
 describe("ScoreController", () => {
@@ -25,8 +25,8 @@ describe("ScoreController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
-          <input id="submit" type="submit" data-target="score.submitButton" />
+        <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+          <input id="submit" type="submit" data-score-target="submitButton" />
         </form>
       </div>
       `

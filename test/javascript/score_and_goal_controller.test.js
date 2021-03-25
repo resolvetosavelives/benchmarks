@@ -1,4 +1,4 @@
-import { Application, Controller } from "stimulus"
+import { Application } from "stimulus"
 import ScoreController from "score_controller"
 import ScoreAndGoalController from "score_and_goal_controller"
 import $ from "jquery"
@@ -14,10 +14,10 @@ describe("ScoreAndGoalController", () => {
       document.body.innerHTML = `
       <div data-controller="score">
         <div data-controller="score-and-goal">
-          <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
+          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
             <input type="number" data-action="change->score-and-goal#validatePair" id="score1" />
             <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-target="score.submitButton" />
+            <input id="submit" type="submit" data-score-target="submitButton" />
           </form>
         </div>
       </div>
@@ -46,10 +46,10 @@ describe("ScoreAndGoalController", () => {
       document.body.innerHTML = `
       <div data-controller="score">
         <div data-controller="score-and-goal">
-          <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
+          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
             <input type="number" data-action="change->score-and-goal#validatePair" id="score1" />
             <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-target="score.submitButton" />
+            <input id="submit" type="submit" data-score-target="submitButton" />
           </form>
         </div>
       </div>
@@ -114,10 +114,10 @@ describe("ScoreAndGoalController", () => {
       document.body.innerHTML = `
       <div data-controller="score">
         <div data-controller="score-and-goal">
-          <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" data-target="score-and-goal.score" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" data-target="score-and-goal.goal"  id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-target="score.submitButton" />
+          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="score" id="score1" />
+            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="goal"  id="score1_goal" data-goal="true" />
+            <input id="submit" type="submit" data-score-target="submitButton" />
           </form>
         </div>
       </div>
@@ -167,10 +167,10 @@ describe("ScoreAndGoalController", () => {
       document.body.innerHTML = `
       <div data-controller="score">
         <div data-controller="score-and-goal">
-          <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" data-target="score-and-goal.score" data-toggle="tooltip" placement="top" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" data-target="score-and-goal.goal"  data-toggle="tooltip" placement="top" id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-target="score.submitButton" />
+          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="score" data-toggle="tooltip" placement="top" id="score1" />
+            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="goal"  data-toggle="tooltip" placement="top" id="score1_goal" data-goal="true" />
+            <input id="submit" type="submit" data-score-target="submitButton" />
           </form>
         </div>
       </div>
@@ -266,10 +266,10 @@ describe("ScoreAndGoalController", () => {
       document.body.innerHTML = `
       <div data-controller="score">
         <div data-controller="score-and-goal">
-          <form data-target="score.form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" data-target="score-and-goal.score" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" data-target="score-and-goal.goal"  id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-target="score.submitButton" />
+          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="score" id="score1" />
+            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="goal"  id="score1_goal" data-goal="true" />
+            <input id="submit" type="submit" data-score-target="submitButton" />
           </form>
         </div>
       </div>

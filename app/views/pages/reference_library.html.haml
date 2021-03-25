@@ -1,6 +1,9 @@
-- require 'csv'
+- require "csv"
 
-.reference-library{"data-controller": "reference-library", "data-reference-library-technical-areas": @technical_areas.to_json, "data-reference-library-template-selector": "#templateForFilterCirterionBadgePill"}
+.reference-library{"data-controller": "reference-library",
+  "data-reference-library-technical-areas": @technical_areas.to_json,
+  "data-reference-library-template-selector": "#templateForFilterCirterionBadgePill",
+}
   %h1 Reference Library
   .row.flex-wrap-reverse
     .col-lg-4.col-md-12
@@ -14,18 +17,17 @@
             |
           %strong
             Selections:
-          %span#filterCriteriaDisplay{"data-target": "reference-library.filterCriteriaDisplay"}
-
+          %span#filterCriteriaDisplay{"data-reference-library-target": "filterCriteriaDisplay"}
         %p
           %strong
             Showing:
-          %span{"data-target": "reference-library.documentCount"}
+          %span{"data-reference-library-target": "documentCount"}
       - @documents.each do |document|
         = render partial: "reference_document", locals: {document: document}
-
 %script#templateForFilterCirterionBadgePill{type: "text/html"}
   %span.badge.badge-pill
     {{text}}
-    %svg.x-close{"data-action": "click->reference-library\#{{methodName}}", xmlns: "http://www.w3.org/2000/svg"}
+    %svg.x-close{xmlns: "http://www.w3.org/2000/svg",
+      "data-action": "click->reference-library\#{{methodName}}"}
       %path{d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"}
       %path{d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"}
