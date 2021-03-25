@@ -17,7 +17,7 @@ const BarChartLegend = () => {
 
   return (
     <div className="row py-2 px-4">
-      <ul className="ct-legend list-group list-group-horizontal col px-1">
+      <ul className="ct-legend list-group list-group-horizontal-md col px-1">
         <li className="ct-series-health-security">Health security</li>
         {diseaseLabelsHTML}
       </ul>
