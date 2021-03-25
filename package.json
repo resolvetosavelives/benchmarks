@@ -31,7 +31,7 @@
     "react": "^16.14.0",
     "react-bootstrap": "^1.5.2",
     "react-chartist": "^0.14.4",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-redux": "^7.2.3",
     "react-select": "^4.3.0",
     "react_ujs": "^2.6.1",
