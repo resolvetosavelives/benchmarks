@@ -40,8 +40,8 @@
   },
   "prettier": {
     "semi": false,
-    "preferSingleQuotes": false,
-    "addTrailingCommas": true
+    "singleQuote": false,
+    "rubySingleQuote": false
   },
   "scripts": {
     "postinstall": "husky install",
