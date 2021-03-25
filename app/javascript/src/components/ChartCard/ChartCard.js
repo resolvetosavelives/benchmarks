@@ -25,7 +25,6 @@ const ChartCard = () => {
 
   return (
     <div className="plan card">
-      <InfoPane />
       <ul className="nav nav-tabs pt-3" role="tablist">
         <li className="nav-item px-2">
           <a
