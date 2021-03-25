@@ -20,7 +20,7 @@ afterEach(() => {
 })
 
 describe("with a disease", () => {
-  const disease = { id: 1, name: "influenza", display: "Influenza" }
+  const disease = { id: 1, name: "influenza", display: "Influenza specific" }
   beforeEach(() => {
     act(() => {
       ReactDOM.render(

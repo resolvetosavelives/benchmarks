@@ -18,6 +18,9 @@ jest.mock("components/ChartCard/BarChartByActionType", () => () => (
   <mock-BarChartByActionType />
 ))
 jest.mock("components/ChartCard/InfoPane", () => () => <mock-InfoPane />)
+jest.mock("components/ChartCard/BarChartLegend", () => () => (
+  <mock-BarChartLegend />
+))
 
 let container
 
