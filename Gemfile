@@ -43,4 +43,3 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
-

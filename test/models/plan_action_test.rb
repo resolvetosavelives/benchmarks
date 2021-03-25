@@ -1,10 +1,10 @@
-require File.expand_path("./test/test_helper")
-require "minitest/spec"
-require "minitest/autorun"
+require File.expand_path('./test/test_helper')
+require 'minitest/spec'
+require 'minitest/autorun'
 
 describe PlanAction do
-  describe ".new_for_benchmark_action" do
-    it "returns a hash of the expected structure" do
+  describe '.new_for_benchmark_action' do
+    it 'returns a hash of the expected structure' do
       bia = BenchmarkIndicatorAction.first
       bia.wont_be_nil
       bia.benchmark_indicator.wont_be_nil
