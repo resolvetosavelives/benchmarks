@@ -1,4 +1,4 @@
-import { Application, Controller } from "stimulus"
+import { Application } from "stimulus"
 import CheckboxListController from "checkbox_list_controller"
 import $ from "jquery"
 jest.mock("jquery")
@@ -27,7 +27,7 @@ describe("CheckboxListController", () => {
             id="item-1"
             value="item-1"
             data-action="click->checkbox-list#updateState"
-            data-target="checkbox-list.listItem" />
+            data-checkbox-list-target="listItem" />
           <label for="item-1">Item 1</label>
         </li>
         <li>
@@ -35,7 +35,7 @@ describe("CheckboxListController", () => {
             name="selection"
             id="item-2"
             data-action="click->checkbox-list#updateState"
-            data-target="checkbox-list.listItem" />
+            data-checkbox-list-target="listItem" />
             value="item-2" />
           <label for="item-2">Item 2</label>
         </li>
@@ -44,12 +44,12 @@ describe("CheckboxListController", () => {
             name="selection"
             id="item-3"
             data-action="click->checkbox-list#updateState"
-            data-target="checkbox-list.listItem" />
+            data-checkbox-list-target="listItem" />
             value="item-3" />
           <label for="item-3">Item 3</label>
         </li>
         <input type="button" id="submit"
-          data-target="checkbox-list.submitForm" />
+          data-checkbox-list-target="submitForm" />
         </ul>
       </div>
     `

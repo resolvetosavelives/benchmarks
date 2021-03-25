@@ -3,48 +3,94 @@
     .tab
       Filter by
   .card-body
-    %form{"data-target": "reference-library.filterForm"}
+    %form{"data-reference-library-target": "filterForm"}
       .form-row.flex-column
         .col
           %strong
             Technical Area
         .col
-          = select_tag :technical_area_id,
-              options_from_collection_for_select(@technical_areas, :id, :text),
-              {include_blank: true, prompt: "Type or select an option", class: "custom-select", "data-target": "reference-library.technicalAreaSelect"}
+          = select_tag :technical_area_id, options_from_collection_for_select(@technical_areas, :id, :text), {include_blank: true, prompt: "Type or select an option", class: "custom-select", "data-reference-library-target": "technicalAreaSelect"}
       .form-row.flex-column
         .col
           %strong
             Reference Type
         .col
-          %input{type: "checkbox", name: "briefing_notes", id: "briefing_notes", value: 1, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "briefing_notes",
+            id: "briefing_notes",
+            value: 1,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "briefing_notes"}
             Briefing Notes
           .w-100
-          %input{type: "checkbox", name: "case_studies", id: "case_studies", value: 2, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "case_studies",
+            id: "case_studies",
+            value: 2,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "case_studies"}
             Case Studies
           .w-100
-          %input{type: "checkbox", name: "examples", id: "examples", value: 3, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "examples",
+            id: "examples",
+            value: 3,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "examples"}
             Examples
           .w-100
-          %input{type: "checkbox", name: "guidelines", id: "guidelines", value: 4, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "guidelines",
+            id: "guidelines",
+            value: 4,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "guidelines"}
             Guidelines
           .w-100
-          %input{type: "checkbox", name: "manuals", id: "manuals", value: 5, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "manuals",
+            id: "manuals",
+            value: 5,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "manuals"}
             Manuals
           .w-100
-          %input{type: "checkbox", name: "templates", id: "templates", value: 6, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "templates",
+            id: "templates",
+            value: 6,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "templates"}
             Templates
           .w-100
-          %input{type: "checkbox", name: "tools", id: "tools", value: 7, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "tools",
+            id: "tools",
+            value: 7,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "tools"}
             Tools
           .w-100
-          %input{type: "checkbox", name: "training_packages", id: "training_packages", value: 8, "data-action": "reference-library#handleCheckboxToggle", "data-target": "reference-library.checkboxForReferenceType"}
+          %input{type: "checkbox",
+            name: "training_packages",
+            id: "training_packages",
+            value: 8,
+            "data-action": "reference-library#handleCheckboxToggle",
+            "data-reference-library-target": "checkboxForReferenceType",
+          }/
           %label{for: "training_packages"}
             Training Packages

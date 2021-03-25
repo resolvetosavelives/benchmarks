@@ -20,7 +20,7 @@ const Filters = () => {
 
   return (
     <>
-      <div className="row d-flex justify-content-between mb-1">
+      <div className="row d-flex justify-content-between mb-2">
         <div className="col">
           <strong>{title}</strong>
         </div>

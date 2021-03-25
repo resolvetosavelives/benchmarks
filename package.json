@@ -40,8 +40,8 @@
   },
   "prettier": {
     "semi": false,
-    "preferSingleQuotes": false,
-    "addTrailingCommas": true
+    "singleQuote": false,
+    "rubySingleQuote": false
   },
   "scripts": {
     "postinstall": "husky install",
@@ -78,6 +78,6 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix",
-    "*.{js,jsx,css,scss,md,rb,haml}": "prettier --write"
+    "*.{js,jsx,css,scss,md,rb}": "prettier --write"
   }
 }

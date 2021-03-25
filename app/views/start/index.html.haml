@@ -5,7 +5,7 @@
       .form-row
         .col-6
           %h4 1. Select your country
-          = form.select :country_id, options_from_collection_for_select(@countries, :id, :name, @get_started_form.country_id), {include_blank: true, prompt: "Type or select an option"}, {class: "custom-select", "data-target": "get-started.countrySelect", required: true}
+          = form.select :country_id, options_from_collection_for_select(@countries, :id, :name, @get_started_form.country_id), {include_blank: true, prompt: "Type or select an option"}, {class: "custom-select", "data-get-started-target": "countrySelect", required: true}
           .invalid-feedback.my-3 Please choose a country.
       .form-row
         .col-2

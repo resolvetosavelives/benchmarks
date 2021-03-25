@@ -4,7 +4,7 @@
 
 <div
   data-controller="benchmark"
-  data-target="benchmark.self"
+  data-benchmark-target="self"
   data-benchmark-indicator-id="<%= benchmark_indicator.id %>"
   data-benchmark-indicator-display-abbrev="<%= benchmark_indicator.display_abbreviation %>"
   data-benchmark-action-row-template-selector="#action-row-template"
@@ -21,7 +21,7 @@
         class="close confirm-delete"
         type="button"
         data-action="benchmark#confirm"
-        data-target="benchmark.confirm"
+        data-benchmark-target="confirm"
       >
         <img src="/delete-button.svg" alt="Delete actions for this section" />
       </button>
@@ -29,7 +29,7 @@
       <button class="close delete"
               type="button"
               data-action="benchmark#deleteActionsForIndicator"
-              data-target="benchmark.delete"
+              data-benchmark-target="delete"
       >
         Really delete?
       </button>

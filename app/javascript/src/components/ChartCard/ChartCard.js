@@ -5,6 +5,7 @@ import { setSelectedChartTabIndex } from "../../config/actions"
 import BarChartByTechnicalArea from "./BarChartByTechnicalArea"
 import BarChartByActionType from "./BarChartByActionType"
 import InfoPane from "./InfoPane"
+import BarChartLegend from "./BarChartLegend"
 
 const tabSelector = 'a[data-toggle="tab"]'
 
@@ -103,6 +104,7 @@ const ChartCard = () => {
             <InfoPane />
           </div>
         </div>
+        <BarChartLegend />
       </div>
     </div>
   )
