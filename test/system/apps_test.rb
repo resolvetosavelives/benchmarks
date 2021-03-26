@@ -202,7 +202,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "Assessment and Data Use", dropdown_toggle.text
 
     tooltip = find(".tooltip.show")
-    assert_equal "Assessment and Data Use: 53\n\nHealth System: 40\nInfluenza-specific: 8\nCholera-specific: 5",
+    assert_equal "Assessment and Data Use: 53\nHealth System: 40\nInfluenza-specific: 8\nCholera-specific: 5",
                  tooltip.text
 
     ##

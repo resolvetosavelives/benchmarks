@@ -198,30 +198,16 @@ class BarChartByActionType extends React.Component {
       objOfActionCounts.general +
       objOfActionCounts.influenza +
       objOfActionCounts.cholera
-    let tooltipHtml = `
-        <strong>
-          ${nameOfActionType}: ${sumOfCounts}
-        </strong>
-    `
-    if (objOfActionCounts.influenza > 0 && objOfActionCounts.cholera > 0) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
-        <div>Cholera-specific: ${objOfActionCounts.cholera}</div>
-      `
-    } else if (objOfActionCounts.influenza > 0) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Influenza-specific: ${objOfActionCounts.influenza}</div>
-      `
-    } else if (objOfActionCounts.cholera > 0) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-        <div>Health System: ${objOfActionCounts.general}</div>
-        <div>Cholera-specific: ${objOfActionCounts.cholera}</div>
-      `
+
+    let tooltipHtml = `<strong> ${nameOfActionType}: ${sumOfCounts} </strong>`
+    if (sumOfCounts > objOfActionCounts.general) {
+      tooltipHtml += `<div>&nbsp;</div><div>Health System: ${objOfActionCounts.general}</div>`
+    }
+    if (objOfActionCounts.influenza > 0) {
+      tooltipHtml += `<div>Influenza-specific: ${objOfActionCounts.influenza}</div>`
+    }
+    if (objOfActionCounts.cholera > 0) {
+      tooltipHtml += `<div>Cholera-specific: ${objOfActionCounts.cholera}</div>`
     }
 
     return tooltipHtml
