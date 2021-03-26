@@ -38,15 +38,6 @@
     "stimulus": "^2.0.0",
     "turbolinks": "^5.2.0"
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": false,
-    "rubySingleQuote": false
-  },
-  "scripts": {
-    "postinstall": "husky install",
-    "test": "jest"
-  },
   "devDependencies": {
     "@prettier/plugin-ruby": "^1.5.4",
     "@testing-library/react": "^11.2.5",
@@ -62,6 +53,14 @@
     "react-test-renderer": "^16.14.0",
     "redux-mock-store": "^1.5.4",
     "webpack-dev-server": "^3.11.2"
+  },
+  "resolutions": {
+    "is-svg": ">=4.2.2",
+    "serialize-javascript": ">=3.1.0"
+  },
+  "scripts": {
+    "postinstall": "husky install",
+    "test": "jest"
   },
   "jest": {
     "setupFiles": [
@@ -79,5 +78,10 @@
   "lint-staged": {
     "*.js": "eslint --cache --fix",
     "*.{js,jsx,css,scss,md,haml,rb}": "prettier --write"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": false,
+    "rubySingleQuote": false
   }
 }
