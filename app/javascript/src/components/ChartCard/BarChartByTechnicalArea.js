@@ -207,11 +207,9 @@ class BarChartByTechnicalArea extends React.Component {
       displayName = "${category}-specific"
     }
 
-    console.log(displayName)
     return displayName
   }
 
-  // TODO: break this down to accomodate more diseases in the future
   getTooltipHtmlContent(technicalArea, objOfActionCounts) {
     const tooltipCategoryDisplayName = (category) => {
       let displayName = ""
