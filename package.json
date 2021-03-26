@@ -39,7 +39,7 @@
     "turbolinks": "^5.2.0"
   },
   "devDependencies": {
-    "@prettier/plugin-ruby": "^1.5.4",
+    "@prettier/plugin-ruby": "^1.5.5",
     "@testing-library/react": "^11.2.5",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
