@@ -12,6 +12,7 @@ import {
   getPlanChartLabels,
   getSelectedActionTypeOrdinal,
   getSelectedChartTabIndex,
+  getUi,
 } from "../../config/selectors"
 import { offsetTheChartSegmentLabelsForIE } from "./ChartFixesForIE"
 
@@ -26,7 +27,8 @@ class BarChartByActionType extends React.Component {
     const { data, options } = this.getBarChartOptions(
       this.props.countActionsByActionType,
       this.props.matrixOfActionCountsByActionTypeAndDisease,
-      this.chartLabels
+      this.chartLabels,
+      this.props.ui
     )
     this.updateChartSize()
     return (
@@ -81,7 +83,9 @@ class BarChartByActionType extends React.Component {
   ) {
     let data = {
       labels: chartLabels,
-      series: matrixOfActionCountsByActionTypeAndDisease,
+      series: this.calculateChartSeries(
+        matrixOfActionCountsByActionTypeAndDisease
+      ),
     }
     const heightValue = this.getNextMultipleOfTenForSeries(
       countActionsByActionType
@@ -103,6 +107,17 @@ class BarChartByActionType extends React.Component {
       data,
       options,
     }
+  }
+
+  calculateChartSeries(matrixOfActionCountsByActionTypeAndDisease) {
+    const matrix = [].concat(matrixOfActionCountsByActionTypeAndDisease)
+    if (!this.props.ui.isInfluenzaShowing) {
+      matrix[1] = matrix[1].map(() => 0)
+    }
+    if (!this.props.ui.isCholeraShowing) {
+      matrix[2] = matrix[2].map(() => 0)
+    }
+    return matrix
   }
 
   getNextMultipleOfTenForSeries(seriesArray) {
@@ -203,10 +218,10 @@ class BarChartByActionType extends React.Component {
     if (sumOfCounts > objOfActionCounts.general) {
       tooltipHtml += `<div>&nbsp;</div><div>Health System: ${objOfActionCounts.general}</div>`
     }
-    if (objOfActionCounts.influenza > 0) {
+    if (objOfActionCounts.influenza > 0 && this.props.ui.isInfluenzaShowing) {
       tooltipHtml += `<div>Influenza-specific: ${objOfActionCounts.influenza}</div>`
     }
-    if (objOfActionCounts.cholera > 0) {
+    if (objOfActionCounts.cholera > 0 && this.props.ui.isCholeraShowing) {
       tooltipHtml += `<div>Cholera-specific: ${objOfActionCounts.cholera}</div>`
     }
 
@@ -239,6 +254,7 @@ BarChartByActionType.propTypes = {
   countActionsByActionType: PropTypes.array.isRequired,
   matrixOfActionCountsByActionTypeAndDisease: PropTypes.array.isRequired,
   selectedActionTypeOrdinal: PropTypes.number,
+  ui: PropTypes.object,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -252,6 +268,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     ),
     selectedActionTypeOrdinal: getSelectedActionTypeOrdinal(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
+    ui: getUi(state),
   }
 }
 
