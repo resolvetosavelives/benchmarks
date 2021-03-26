@@ -1263,16 +1263,6 @@ describe("for a plan that includes influenza and cholera", () => {
     })
   })
 
-  describe("isPlanInfluenza", () => {
-    it("returns true", () => {
-      const state = store.getState()
-
-      let result = isPlanInfluenza(state)
-
-      expect(result).toEqual(true)
-    })
-  })
-
   describe("makeGetDiseaseForDiseaseId", () => {
     it("returns a function that returns the expected string for influenza", () => {
       const state = store.getState()
@@ -1299,32 +1289,6 @@ describe("for a plan that includes influenza and cholera", () => {
       const result = fnResult(state)
 
       expect(result).toEqual(undefined)
-    })
-  })
-
-  describe("filterOutInfluenzaActions", () => {
-    it("returns a function that returns the expected string", () => {
-      const actionsToFilter = [
-        { id: 1, disease_id: 12 },
-        { id: 2, disease_id: undefined },
-        { id: 3, disease_id: 17 },
-        { id: 4, disease_id: null },
-      ]
-      const result = filterOutInfluenzaActions(actionsToFilter)
-
-      expect(result.length).toEqual(2)
-    })
-  })
-
-  describe("getIsInfluenzaShowing", () => {
-    it("returns a function that returns the expected string", () => {
-      const state = store.getState()
-      state.ui = {}
-      state.ui.isInfluenzaShowing = true
-
-      const result = getIsInfluenzaShowing(state)
-
-      expect(result).toBeTruthy()
     })
   })
 

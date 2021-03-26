@@ -9,7 +9,6 @@ import {
   getAllActions,
   getAllTechnicalAreas,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
-  getPlan,
   getPlanChartLabels,
   getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
@@ -286,7 +285,6 @@ const mapStateToProps = (state /*, ownProps*/) => {
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
     selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
-    plan: getPlan(state),
   }
 }
 
