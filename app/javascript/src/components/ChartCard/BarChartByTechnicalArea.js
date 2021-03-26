@@ -10,8 +10,8 @@ import {
   getAllTechnicalAreas,
   getMatrixOfActionCountsByTechnicalAreaAndDisease,
   getPlanChartLabels,
-  getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
+  getUi,
 } from "../../config/selectors"
 import { offsetTheChartSegmentLabelsForIE } from "./ChartFixesForIE"
 
@@ -82,7 +82,9 @@ class BarChartByTechnicalArea extends React.Component {
   ) {
     let data = {
       labels: chartLabels,
-      series: matrixOfActionCountsByTechnicalAreaAndDisease,
+      series: this.calculateChartSeries(
+        matrixOfActionCountsByTechnicalAreaAndDisease
+      ),
     }
     const heightValue = this.getNextMultipleOfTenForSeries(
       countActionsByTechnicalArea
@@ -104,6 +106,17 @@ class BarChartByTechnicalArea extends React.Component {
       data,
       options,
     }
+  }
+
+  calculateChartSeries(matrixOfActionCountsByActionTypeAndDisease) {
+    const matrix = [].concat(matrixOfActionCountsByActionTypeAndDisease)
+    if (!this.props.ui.isInfluenzaShowing) {
+      matrix[1] = matrix[1].map(() => 0)
+    }
+    if (!this.props.ui.isCholeraShowing) {
+      matrix[2] = matrix[2].map(() => 0)
+    }
+    return matrix
   }
 
   getNextMultipleOfTenForSeries(seriesArray) {
@@ -232,14 +245,14 @@ class BarChartByTechnicalArea extends React.Component {
     `
 
     if (sumOfCounts > objOfActionCounts.general) {
-      tooltipHtml = `${tooltipHtml}
-        <div>&nbsp;</div>
-	`
+      tooltipHtml += `<div>&nbsp;</div>`
 
       for (const category in objOfActionCounts) {
-        tooltipHtml += `<div>${tooltipCategoryDisplayName(category)}: ${
-          objOfActionCounts[category]
-        }</div>`
+        if (this.props.ui[`is${category}Showing`]) {
+          tooltipHtml += `<div>${tooltipCategoryDisplayName(category)}: ${
+            objOfActionCounts[category]
+          }</div>`
+        }
       }
     }
 
@@ -272,6 +285,7 @@ BarChartByTechnicalArea.propTypes = {
   countActionsByTechnicalArea: PropTypes.array.isRequired,
   matrixOfActionCountsByTechnicalAreaAndDisease: PropTypes.array.isRequired,
   selectedTechnicalAreaId: PropTypes.number,
+  ui: PropTypes.object,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -284,7 +298,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     ),
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
     selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
-    selectedChartTabIndex: getSelectedChartTabIndex(state),
+    ui: getUi(state),
   }
 }
 

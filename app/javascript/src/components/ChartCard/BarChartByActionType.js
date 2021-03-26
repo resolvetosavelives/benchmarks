@@ -12,6 +12,7 @@ import {
   getPlanChartLabels,
   getSelectedActionTypeOrdinal,
   getSelectedChartTabIndex,
+  getUi,
 } from "../../config/selectors"
 import { offsetTheChartSegmentLabelsForIE } from "./ChartFixesForIE"
 
@@ -23,17 +24,12 @@ class BarChartByActionType extends React.Component {
   }
 
   render() {
-    const { data, options } = this.getBarChartOptions(
-      this.props.countActionsByActionType,
-      this.props.matrixOfActionCountsByActionTypeAndDisease,
-      this.chartLabels
-    )
     this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
         <ChartistGraph
-          data={data}
-          options={options}
+          data={this.chartData()}
+          options={this.chartOptions()}
           type="Bar"
           ref={(ref) => {
             if (ref) this.chartistGraphInstance = ref
@@ -74,19 +70,28 @@ class BarChartByActionType extends React.Component {
     }, 0)
   }
 
-  getBarChartOptions(
-    countActionsByActionType,
-    matrixOfActionCountsByActionTypeAndDisease,
-    chartLabels
-  ) {
-    let data = {
-      labels: chartLabels,
-      series: matrixOfActionCountsByActionTypeAndDisease,
-    }
-    const heightValue = this.getNextMultipleOfTenForSeries(
-      countActionsByActionType
+  chartData() {
+    const matrix = [].concat(
+      this.props.matrixOfActionCountsByActionTypeAndDisease
     )
-    let options = {
+    if (!this.props.ui.isInfluenzaShowing) {
+      matrix[1] = matrix[1].map(() => 0)
+    }
+    if (!this.props.ui.isCholeraShowing) {
+      matrix[2] = matrix[2].map(() => 0)
+    }
+
+    return {
+      labels: this.chartLabels,
+      series: matrix,
+    }
+  }
+
+  chartOptions() {
+    const heightValue = this.getNextMultipleOfTenForSeries(
+      this.props.countActionsByActionType
+    )
+    return {
       high: heightValue,
       low: 0,
       width: this.props.width,
@@ -98,10 +103,6 @@ class BarChartByActionType extends React.Component {
           return value % 10 == 0 ? value : null
         },
       },
-    }
-    return {
-      data,
-      options,
     }
   }
 
@@ -203,10 +204,10 @@ class BarChartByActionType extends React.Component {
     if (sumOfCounts > objOfActionCounts.general) {
       tooltipHtml += `<div>&nbsp;</div><div>Health System: ${objOfActionCounts.general}</div>`
     }
-    if (objOfActionCounts.influenza > 0) {
+    if (objOfActionCounts.influenza > 0 && this.props.ui.isInfluenzaShowing) {
       tooltipHtml += `<div>Influenza-specific: ${objOfActionCounts.influenza}</div>`
     }
-    if (objOfActionCounts.cholera > 0) {
+    if (objOfActionCounts.cholera > 0 && this.props.ui.isCholeraShowing) {
       tooltipHtml += `<div>Cholera-specific: ${objOfActionCounts.cholera}</div>`
     }
 
@@ -239,6 +240,7 @@ BarChartByActionType.propTypes = {
   countActionsByActionType: PropTypes.array.isRequired,
   matrixOfActionCountsByActionTypeAndDisease: PropTypes.array.isRequired,
   selectedActionTypeOrdinal: PropTypes.number,
+  ui: PropTypes.object,
 }
 
 const mapStateToProps = (state /*, ownProps*/) => {
@@ -252,6 +254,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     ),
     selectedActionTypeOrdinal: getSelectedActionTypeOrdinal(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
+    ui: getUi(state),
   }
 }
 
