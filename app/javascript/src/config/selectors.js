@@ -122,8 +122,8 @@ const countActionsByTechnicalArea = createSelector(
 )
 
 const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
-  [getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
-  (currentActions, technicalAreaMap, allTechnicalAreas) => {
+  [getPlan, getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
+  (plan, currentActions, technicalAreaMap, allTechnicalAreas) => {
     const fnBlankArray = () => Array(allTechnicalAreas.length).fill(0)
     return currentActions.reduce(
       (acc, action) => {
@@ -134,21 +134,18 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
           `technicalArea expected but found ${technicalArea}`
         )
         const currentIndex = technicalArea.sequence - 1
-        if (action.disease_id === 1) {
-          acc[1][currentIndex] += 1
-        } else if (action.disease_id === 2) {
-          acc[2][currentIndex] += 1
-        } else {
-          acc[0][currentIndex] += 1
+        switch (action.disease_id) {
+          case 1:
+          case 2:
+            acc[action.disease_id][currentIndex] += 1
+            break
+          default:
+            acc[0][currentIndex] += 1
         }
         return acc
       },
       [fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
-    // return value:
-    //   an array of arrays that each contains TechnicalAreas.length elements full of integers of counts.
-    //   the first array is for general actions, the second array is for influenza
-    //   actions, the third array is for cholera actions
   }
 )
 
@@ -207,9 +204,6 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
       },
       [fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
-    // return value:
-    //   an array of arrays that each contains an element per ActionTypes of integers of counts.
-    //   the first array is for general actions, the second array is for influenza actions.
   }
 )
 
