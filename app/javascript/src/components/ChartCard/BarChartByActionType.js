@@ -24,18 +24,12 @@ class BarChartByActionType extends React.Component {
   }
 
   render() {
-    const { data, options } = this.getBarChartOptions(
-      this.props.countActionsByActionType,
-      this.props.matrixOfActionCountsByActionTypeAndDisease,
-      this.chartLabels,
-      this.props.ui
-    )
     this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
         <ChartistGraph
-          data={data}
-          options={options}
+          data={this.chartData()}
+          options={this.chartOptions()}
           type="Bar"
           ref={(ref) => {
             if (ref) this.chartistGraphInstance = ref
@@ -76,21 +70,28 @@ class BarChartByActionType extends React.Component {
     }, 0)
   }
 
-  getBarChartOptions(
-    countActionsByActionType,
-    matrixOfActionCountsByActionTypeAndDisease,
-    chartLabels
-  ) {
-    let data = {
-      labels: chartLabels,
-      series: this.calculateChartSeries(
-        matrixOfActionCountsByActionTypeAndDisease
-      ),
-    }
-    const heightValue = this.getNextMultipleOfTenForSeries(
-      countActionsByActionType
+  chartData() {
+    const matrix = [].concat(
+      this.props.matrixOfActionCountsByActionTypeAndDisease
     )
-    let options = {
+    if (!this.props.ui.isInfluenzaShowing) {
+      matrix[1] = matrix[1].map(() => 0)
+    }
+    if (!this.props.ui.isCholeraShowing) {
+      matrix[2] = matrix[2].map(() => 0)
+    }
+
+    return {
+      labels: this.chartLabels,
+      series: matrix,
+    }
+  }
+
+  chartOptions() {
+    const heightValue = this.getNextMultipleOfTenForSeries(
+      this.props.countActionsByActionType
+    )
+    return {
       high: heightValue,
       low: 0,
       width: this.props.width,
@@ -103,21 +104,6 @@ class BarChartByActionType extends React.Component {
         },
       },
     }
-    return {
-      data,
-      options,
-    }
-  }
-
-  calculateChartSeries(matrixOfActionCountsByActionTypeAndDisease) {
-    const matrix = [].concat(matrixOfActionCountsByActionTypeAndDisease)
-    if (!this.props.ui.isInfluenzaShowing) {
-      matrix[1] = matrix[1].map(() => 0)
-    }
-    if (!this.props.ui.isCholeraShowing) {
-      matrix[2] = matrix[2].map(() => 0)
-    }
-    return matrix
   }
 
   getNextMultipleOfTenForSeries(seriesArray) {

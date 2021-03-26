@@ -9,6 +9,7 @@ import {
   getPlanChartLabels,
   getSelectedTechnicalAreaId,
   getSelectedChartTabIndex,
+  getUi,
 } from "config/selectors"
 import "bootstrap"
 
@@ -20,6 +21,7 @@ jest.mock("config/selectors", () => ({
   getPlanChartLabels: jest.fn(),
   getSelectedTechnicalAreaId: jest.fn(),
   getSelectedChartTabIndex: jest.fn(),
+  getUi: jest.fn(),
 }))
 
 it("BarChartByTechnicalArea has the expected 2 divs", () => {
@@ -33,6 +35,11 @@ it("BarChartByTechnicalArea has the expected 2 divs", () => {
   getPlanChartLabels.mockReturnValueOnce([["label1", "label2", "label3"], []])
   getSelectedTechnicalAreaId.mockReturnValueOnce(null)
   getSelectedChartTabIndex.mockReturnValueOnce(0)
+  getUi.mockReturnValueOnce({
+    isCholeraShowing: true,
+    isInfluenzaShowing: true,
+  })
+
   const renderedComponent = renderForConnect(
     <BarChartByTechnicalArea width="100%" height="240" />
   )
