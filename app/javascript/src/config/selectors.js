@@ -125,25 +125,27 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
   [getPlan, getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
   (plan, currentActions, technicalAreaMap, allTechnicalAreas) => {
     const fnBlankArray = () => Array(allTechnicalAreas.length).fill(0)
-    const accInit = [fnBlankArray()]
-    plan.disease_ids.forEach(() => accInit.push(fnBlankArray()))
-    return currentActions.reduce((acc, action) => {
-      const technicalArea = technicalAreaMap[action.benchmark_technical_area_id]
-      console.assert(
-        technicalArea,
-        `technicalArea expected but found ${technicalArea}`
-      )
-      const currentIndex = technicalArea.sequence - 1
-      const indexOfActionDiseaseId = plan.disease_ids.indexOf(action.disease_id)
-      if (indexOfActionDiseaseId > -1) {
-        console.log("indexOfActionDiseaseId: ${indexOfActionDiseaseId}")
-        // 	  acc[indexOfActionDiseaseId + 1] += 1
-        acc[1][currentIndex] += 1
-      } else {
-        acc[0][currentIndex] += 1
-      }
-      return acc
-    }, accInit)
+    return currentActions.reduce(
+      (acc, action) => {
+        const technicalArea =
+          technicalAreaMap[action.benchmark_technical_area_id]
+        console.assert(
+          technicalArea,
+          `technicalArea expected but found ${technicalArea}`
+        )
+        const currentIndex = technicalArea.sequence - 1
+        switch (action.disease_id) {
+          case 1:
+          case 2:
+            acc[action.disease_id][currentIndex] += 1
+            break
+          default:
+            acc[0][currentIndex] += 1
+        }
+        return acc
+      },
+      [fnBlankArray(), fnBlankArray(), fnBlankArray()]
+    )
   }
 )
 
