@@ -1,1 +1,2 @@
 config/routes.rb
+db/schema.rb
