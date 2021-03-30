@@ -227,11 +227,7 @@ class BarChartByTechnicalArea extends React.Component {
       (sum, key) => sum + objOfActionCounts[key],
       0
     )
-    let tooltipHtml = `
-        <strong>
-          ${technicalArea.text}: ${sumOfCounts}
-        </strong>
-    `
+    let tooltipHtml = `<strong>${technicalArea.text}: ${sumOfCounts}</strong>`
 
     if (sumOfCounts > objOfActionCounts.general) {
       tooltipHtml += `<div>&nbsp;</div>`
