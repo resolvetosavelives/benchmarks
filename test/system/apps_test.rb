@@ -84,7 +84,7 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("Saved Nigeria Plan 789") # ugh without this form field(s) dont get filled
   end
 
-  test "happy path for Nigeria JEE 1.0 with influenza and cholera" do
+  test "happy path for Nigeria JEE 1.0 with influenza, cholera, and ebola" do
     ##
     # visit home page
     visit root_url
@@ -97,11 +97,12 @@ class AppsTest < ApplicationSystemTestCase
     choose "1 year plan"
     check "Optional: Influenza planning"
     check "Optional: Cholera planning"
+    check "Optional: Ebola planning"
     click_on("Next")
 
     ##
     # turn up on the Goal-setting page for the selected options and hit save
-    assert_current_path("/plan/goals/Nigeria/jee1/1-year?diseases=1-2")
+    assert_current_path("/plan/goals/Nigeria/jee1/1-year?diseases=1-2-3")
     assert page.has_content?("JEE SCORES")
     assert page.has_content?(
              "P.1.1 Legislation, laws, regulations, administrative requirements, policies or other government instruments in place are sufficient for implementation of IHR (2005)"
@@ -157,6 +158,7 @@ class AppsTest < ApplicationSystemTestCase
     # make sure Technical Area tab has a legend
     find(".tab-content .ct-legend").has_content?("Influenza")
     find(".tab-content .ct-legend").has_content?("Cholera")
+    find(".tab-content .ct-legend").has_content?("Ebola")
 
     ##
     # click on one of the bars and make sure others are deselected
@@ -188,6 +190,7 @@ class AppsTest < ApplicationSystemTestCase
     find("#tabForActionType").click
     find(".tab-content .ct-legend").has_content?("Influenza")
     find(".tab-content .ct-legend").has_content?("Cholera")
+    find(".tab-content .ct-legend").has_content?("Ebola")
 
     ##
     # click on one of the bars and make sure others are deselected
