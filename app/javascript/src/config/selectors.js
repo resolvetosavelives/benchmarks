@@ -129,15 +129,13 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
       (acc, action) => {
         const technicalArea =
           technicalAreaMap[action.benchmark_technical_area_id]
-        console.assert(
-          technicalArea,
-          `technicalArea expected but found ${technicalArea}`
-        )
         const currentIndex = technicalArea.sequence - 1
         switch (action.disease_id) {
           case 1:
           case 2:
-            acc[action.disease_id][currentIndex] += 1
+            if (plan.disease_ids.includes(action.disease_id)) {
+              acc[action.disease_id][currentIndex] += 1
+            }
             break
           default:
             acc[0][currentIndex] += 1
