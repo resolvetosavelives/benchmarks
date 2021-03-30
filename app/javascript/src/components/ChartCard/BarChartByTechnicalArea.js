@@ -210,46 +210,38 @@ class BarChartByTechnicalArea extends React.Component {
     })
   }
 
-  getTooltipCategoryDisplayName(category) {
+  tooltipCategoryDisplayName(category) {
     let displayName = ""
 
     if (category === "general") {
       displayName = "Health System"
     } else {
-      displayName = "${category}-specific"
+      displayName = `${this.capitalize(category)}-specific`
     }
 
     return displayName
   }
 
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1)
+  }
+
   getTooltipHtmlContent(technicalArea, objOfActionCounts) {
-    const tooltipCategoryDisplayName = (category) => {
-      let displayName = ""
-
-      if (category === "general") {
-        displayName = "Health System"
-      } else {
-        displayName = `${
-          category.charAt(0).toUpperCase() + category.substring(1)
-        }-specific`
-      }
-
-      return displayName
-    }
-
-    const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
-    let tooltipHtml = `
-        <strong>
-          ${technicalArea.text}: ${sumOfCounts}
-        </strong>
-    `
+    const sumOfCounts = Object.keys(objOfActionCounts).reduce(
+      (sum, key) => sum + objOfActionCounts[key],
+      0
+    )
+    let tooltipHtml = `<strong>${technicalArea.text}: ${sumOfCounts}</strong>`
 
     if (sumOfCounts > objOfActionCounts.general) {
       tooltipHtml += `<div>&nbsp;</div>`
 
       for (const category in objOfActionCounts) {
-        if (this.props.ui[`is${category}Showing`]) {
-          tooltipHtml += `<div>${tooltipCategoryDisplayName(category)}: ${
+        if (
+          this.props.ui[`is${this.capitalize(category)}Showing`] &&
+          objOfActionCounts[category] > 0
+        ) {
+          tooltipHtml += `<div>${this.tooltipCategoryDisplayName(category)}: ${
             objOfActionCounts[category]
           }</div>`
         }
