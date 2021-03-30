@@ -237,7 +237,10 @@ class BarChartByTechnicalArea extends React.Component {
       tooltipHtml += `<div>&nbsp;</div>`
 
       for (const category in objOfActionCounts) {
-        if (this.props.ui[`is${this.capitalize(category)}Showing`]) {
+        if (
+          this.props.ui[`is${this.capitalize(category)}Showing`] &&
+          objOfActionCounts[category] > 0
+        ) {
           tooltipHtml += `<div>${this.tooltipCategoryDisplayName(category)}: ${
             objOfActionCounts[category]
           }</div>`
