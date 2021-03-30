@@ -223,7 +223,10 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   getTooltipHtmlContent(technicalArea, objOfActionCounts) {
-    const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
+    const sumOfCounts = Object.keys(objOfActionCounts).reduce(
+      (sum, key) => sum + objOfActionCounts[key],
+      0
+    )
     let tooltipHtml = `
         <strong>
           ${technicalArea.text}: ${sumOfCounts}
