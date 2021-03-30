@@ -11,11 +11,11 @@ class Disease < ApplicationRecord
     find_by(name: "cholera")
   end
 
+  def self.ebola
+    find_by(name: "ebola")
+  end
+
   def attributes
-    {
-        id: nil,
-        name: nil,
-        display: nil,
-    }
+    { id: nil, name: nil, display: nil }
   end
 end
