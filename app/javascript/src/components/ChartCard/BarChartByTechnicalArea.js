@@ -216,10 +216,14 @@ class BarChartByTechnicalArea extends React.Component {
     if (category === "general") {
       displayName = "Health System"
     } else {
-      displayName = "${category}-specific"
+      displayName = `${this.capitalize(category)}-specific`
     }
 
     return displayName
+  }
+
+  capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1)
   }
 
   getTooltipHtmlContent(technicalArea, objOfActionCounts) {
@@ -233,7 +237,7 @@ class BarChartByTechnicalArea extends React.Component {
       tooltipHtml += `<div>&nbsp;</div>`
 
       for (const category in objOfActionCounts) {
-        if (this.props.ui[`is${category}Showing`]) {
+        if (this.props.ui[`is${this.capitalize(category)}Showing`]) {
           tooltipHtml += `<div>${this.tooltipCategoryDisplayName(category)}: ${
             objOfActionCounts[category]
           }</div>`
