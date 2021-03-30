@@ -210,7 +210,7 @@ class BarChartByTechnicalArea extends React.Component {
     })
   }
 
-  getTooltipCategoryDisplayName(category) {
+  tooltipCategoryDisplayName(category) {
     let displayName = ""
 
     if (category === "general") {
@@ -223,20 +223,6 @@ class BarChartByTechnicalArea extends React.Component {
   }
 
   getTooltipHtmlContent(technicalArea, objOfActionCounts) {
-    const tooltipCategoryDisplayName = (category) => {
-      let displayName = ""
-
-      if (category === "general") {
-        displayName = "Health System"
-      } else {
-        displayName = `${
-          category.charAt(0).toUpperCase() + category.substring(1)
-        }-specific`
-      }
-
-      return displayName
-    }
-
     const sumOfCounts = objOfActionCounts.general + objOfActionCounts.influenza
     let tooltipHtml = `
         <strong>
@@ -249,7 +235,7 @@ class BarChartByTechnicalArea extends React.Component {
 
       for (const category in objOfActionCounts) {
         if (this.props.ui[`is${category}Showing`]) {
-          tooltipHtml += `<div>${tooltipCategoryDisplayName(category)}: ${
+          tooltipHtml += `<div>${this.tooltipCategoryDisplayName(category)}: ${
             objOfActionCounts[category]
           }</div>`
         }
