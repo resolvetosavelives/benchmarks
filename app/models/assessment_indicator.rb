@@ -6,20 +6,14 @@ class AssessmentIndicator < ApplicationRecord
 
   default_scope { order(:sequence) }
 
-  def self.find_by_spar_code!(code)
-    find_by_named_id!("spar_2018_ind_#{code}")
+  def self.find_by_code!(name, code)
+    find_by_named_id!("#{name}_ind_#{code}")
   end
 
   ##
   # +indicator_short_code+ int such as p11 or re2
   def self.named_id_for_jee1(indicator_short_code)
     "jee1_ind_#{indicator_short_code}"
-  end
-
-  ##
-  # +indicator_short_code+ int such as
-  def self.named_id_for_spar_2018(indicator_short_code)
-    "spar_2018_ind_#{indicator_short_code}"
   end
 
   ##
