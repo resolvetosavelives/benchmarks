@@ -23,28 +23,37 @@ module AssessmentSeed
 
     def seed_jee(worksheet, assessment_type)
       indicator_names =
-        worksheet[0].cells.drop(4).map do |cell|
+        worksheet[0]
+        .cells
+        .drop(4)
+        .map do |cell|
           next cell.value[3..-1].strip if cell.value.starts_with?("v2_")
           cell.value.strip
         end
-      worksheet.drop(1).each do |row|
+      worksheet
+        .drop(1)
+        .each do |row|
         cells = row.cells
         country_code = cells[0]&.value&.strip
         status = cells[3]&.value&.strip
         data_column_offset = 4
         first_indicator_score = cells[data_column_offset]&.value
         if [country_code, status, first_indicator_score].any?(&:blank?) ||
-             !status.downcase.eql?("completed")
+            !status.downcase.eql?("completed")
           next
         end
 
         scores_with_headers =
-          cells.drop(data_column_offset).map do |cell|
+          cells
+          .drop(data_column_offset)
+          .map do |cell|
             {
               indicator_id:
-                indicator_names[cell.index_in_collection - data_column_offset],
+              indicator_names[
+                cell.index_in_collection - data_column_offset
+              ],
               # need to use +floor+ here to avoid decimal values, e.g. 1.0 and 5.0
-              score: cell.value.floor,
+              score: cell.value.floor
             }
           end
         country = Country.find_by_alpha3!(country_code)
@@ -52,20 +61,21 @@ module AssessmentSeed
           AssessmentPublication.find_by_named_id!(assessment_type)
         assessment =
           Assessment.create!(
-            country: country, assessment_publication: assessment_publication,
-          )
+            country: country,
+            assessment_publication: assessment_publication
+        )
         scores_with_headers.each do |indicator_score_attr|
           indicator_named_id =
             AssessmentIndicator.send(
               "named_id_for_#{assessment_type}",
-              indicator_score_attr[:indicator_id],
-            )
+              indicator_score_attr[:indicator_id]
+          )
           assessment_indicator =
             AssessmentIndicator.find_by_named_id(indicator_named_id)
           AssessmentScore.create!(
             assessment: assessment,
             assessment_indicator: assessment_indicator,
-            value: indicator_score_attr[:score],
+            value: indicator_score_attr[:score]
           )
         end
       end
@@ -115,10 +125,10 @@ module AssessmentSeed
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM assessment_scores CASCADE",
+        "DELETE FROM assessment_scores CASCADE"
       )
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name} CASCADE",
+        "DELETE FROM #{table_name} CASCADE"
       )
     end
   end
