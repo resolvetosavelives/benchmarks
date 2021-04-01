@@ -84,49 +84,52 @@ module AssessmentSeed
       def self.from_row(row, legend:)
         return nil unless row&.cells&.first&.value =~ /yes/i
 
+        values = row.cells.map(&:value)
         attrs =
-          legend.zip(row.cells.map(&:value)).filter_map do |l, v|
+          legend.zip(values).filter_map do |l, v|
             next if v.nil? || v == "" || /C\.\d\.\d/ !~ l
             [l.downcase.tr(".", ""), v / 20]
           end.to_h
 
         name = row.cells[2].value.strip
-        name =
-          {
-            "Democratic Republic of the Congo" =>
-              "Congo, Democratic Republic of the",
-            "United Republic of Tanzania" => "Tanzania, United Republic of",
-            "Micronesia" => "Micronesia (Federated States of)",
-            "Democratic People's Republic of Korea" =>
-              "Korea (Democratic People's Republic of)",
-            "Republic of Korea" => "Korea, Republic of",
-            "Czech Republic" => "Czechia",
-            "Republic of Moldova" => "Moldova, Republic of",
-            "Guinea Bissau" => "Guinea-Bissau",
-            "Saint Vicent and the Grenadines" =>
-              "Saint Vincent and the Grenadines",
-            "Venezuela (Bolivarian Republique of)" =>
-              "Venezuela (Bolivarian Republic of)",
-            "Iran (Islamic Republic of )" => "Iran (Islamic Republic of)"
-          }[
-            name
-          ] || name
-        attrs["name"] = name
+        corrections = {
+          "Democratic Republic of the Congo" =>
+            "Congo, Democratic Republic of the",
+          "United Republic of Tanzania" => "Tanzania, United Republic of",
+          "Micronesia" => "Micronesia (Federated States of)",
+          "Democratic People's Republic of Korea" =>
+            "Korea (Democratic People's Republic of)",
+          "Republic of Korea" => "Korea, Republic of",
+          "Czech Republic" => "Czechia",
+          "Republic of Moldova" => "Moldova, Republic of",
+          "Guinea Bissau" => "Guinea-Bissau",
+          "Saint Vicent and the Grenadines" =>
+            "Saint Vincent and the Grenadines",
+          "Venezuela (Bolivarian Republique of)" =>
+            "Venezuela (Bolivarian Republic of)",
+          "Iran (Islamic Republic of )" => "Iran (Islamic Republic of)"
+        }
+        attrs["name"] = corrections[name] || name
 
         self.new(attrs)
       end
     end
 
-    def seed_spar(spar_id, *spar_files)
+    def seed_spar(spar_id, *paths)
       spar_data = {}
 
-      spar_files.each do |spar_file|
-        sheet =
-          RubyXL::Parser.parse(Rails.root.join(spar_file)).worksheets.first
+      paths.each do |path|
+        file = Rails.root.join(path)
+        sheet = RubyXL::Parser.parse(file).worksheets.first
         legend = sheet[5].cells.map(&:value)
-        spar_data.merge! sheet.filter_map { |r|
-                           SparCountry.from_row(r, legend: legend)
-                         }.map { |c| [c.name, c] }.to_h
+
+        data =
+          sheet.filter_map do |r|
+            r = SparCountry.from_row(r, legend: legend)
+            [r.name, r] if r
+          end.to_h
+
+        spar_data.merge!(data)
       end
 
       spar = AssessmentPublication.find_by_named_id!(spar_id)
@@ -134,18 +137,14 @@ module AssessmentSeed
         country = Country.find_by_name!(country_name)
         assessment = spar.assessments.find_or_create_by!(country: country)
 
-        country_spar
-          .to_h
-          .except(:name)
-          .each do |id, score|
-            assessment
-              .scores
-              .create_with(value: score)
-              .find_or_create_by!(
-                assessment_indicator:
-                  AssessmentIndicator.find_by_code!("spar_2018", id)
-              )
-          end
+        country_info = country_spar.to_h.except(:name)
+        country_info.each do |id, score|
+          ai = AssessmentIndicator.find_by_code!("spar_2018", id)
+          assessment
+            .scores
+            .create_with(value: score)
+            .find_or_create_by!(assessment_indicator: ai)
+        end
       end
     end
 
