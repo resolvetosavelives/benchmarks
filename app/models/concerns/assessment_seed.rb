@@ -115,7 +115,7 @@ module AssessmentSeed
       end
     end
 
-    def seed_spar(spar_id, *paths)
+    def seed_spar(spar_id, *paths, update: false)
       spar_data = {}
 
       paths.each do |path|
@@ -140,10 +140,17 @@ module AssessmentSeed
         country_info = country_spar.to_h.except(:name)
         country_info.each do |id, score|
           ai = AssessmentIndicator.find_by_code!("spar_2018", id)
-          assessment
-            .scores
-            .create_with(value: score)
-            .find_or_create_by!(assessment_indicator: ai)
+          if update
+            assessment
+              .scores
+              .find_or_create_by!(assessment_indicator: ai)
+              .update(value: score)
+          else
+            assessment
+              .scores
+              .create_with(value: score)
+              .find_or_create_by!(assessment_indicator: ai)
+          end
         end
       end
     end
