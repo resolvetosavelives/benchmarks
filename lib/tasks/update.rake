@@ -7,4 +7,10 @@ namespace :update do
       "data/spar/SPAR Data 2019_2021Mar29.xlsx",
       update: true
   end
+
+  desc "Update JEE v1 and v2 values from RTSL master table in data/"
+  task :jee do
+    extend AssessmentSeed::ClassMethods
+    seed_jee "data/JEE scores Mar 2021.xlsx", update: true
+  end
 end

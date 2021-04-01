@@ -8,76 +8,52 @@ module AssessmentSeed
       return unless Assessment.count.zero?
 
       warn "Seeding data for Assessments..."
-      jee_file = Rails.root.join("data/JEE_scores_all-countries.xlsx")
-      jee_workbook = RubyXL::Parser.parse(jee_file)
-      seed_jee jee_workbook["Sheet4 (JEE 1.0 Indicators)"], "jee1"
-      seed_jee jee_workbook["Sheet5 (JEE 2.0 Indicators)"], "jee2"
-
-      seed_spar(
-        "spar_2018",
-        "data/spar/SPAR Data 2018_2019July9.xlsx",
-        "data/spar/SPAR Data 2019_2021Mar29.xlsx"
-      )
+      seed_jee "data/JEE scores Mar 2021.xlsx"
+      seed_spar "spar_2018",
+                "data/spar/SPAR Data 2018_2019July9.xlsx",
+                "data/spar/SPAR Data 2019_2021Mar29.xlsx"
     end
 
-    def seed_jee(worksheet, assessment_type)
-      indicator_names =
-        worksheet[0]
-          .cells
-          .drop(4)
-          .map do |cell|
-            next cell.value[3..-1].strip if cell.value.starts_with?("v2_")
-            cell.value.strip
-          end
-      worksheet
-        .drop(1)
-        .each do |row|
-          cells = row.cells
-          country_code = cells[0]&.value&.strip
-          status = cells[3]&.value&.strip
-          data_column_offset = 4
-          first_indicator_score = cells[data_column_offset]&.value
-          if [country_code, status, first_indicator_score].any?(&:blank?) ||
-               !status.downcase.eql?("completed")
-            next
-          end
+    def seed_jee(path, update: false)
+      file = Rails.root.join(path)
+      sheet = RubyXL::Parser.parse(file).worksheets.first
+      legend = sheet[0].cells.map(&:value)
 
-          scores_with_headers =
-            cells
-              .drop(data_column_offset)
-              .map do |cell|
-                {
-                  indicator_id:
-                    indicator_names[
-                      cell.index_in_collection - data_column_offset
-                    ],
-                  # need to use +floor+ here to avoid decimal values, e.g. 1.0 and 5.0
-                  score: cell.value.floor
-                }
-              end
-          country = Country.find_by_alpha3!(country_code)
-          assessment_publication =
-            AssessmentPublication.find_by_named_id!(assessment_type)
-          assessment =
-            Assessment.create!(
-              country: country,
-              assessment_publication: assessment_publication
-            )
-          scores_with_headers.each do |indicator_score_attr|
-            indicator_named_id =
-              AssessmentIndicator.send(
-                "named_id_for_#{assessment_type}",
-                indicator_score_attr[:indicator_id]
-              )
-            assessment_indicator =
-              AssessmentIndicator.find_by_named_id(indicator_named_id)
-            AssessmentScore.create!(
-              assessment: assessment,
-              assessment_indicator: assessment_indicator,
-              value: indicator_score_attr[:score]
-            )
-          end
+      pubs = { "v1" => (4..51), "v2" => (147..195) }
+      assessment_data =
+        sheet[1..-1].filter_map do |row|
+          version = row.cells[61].value
+          range = pubs[version] || next
+          iso = row.cells[3].value
+          values = row.cells[range].map(&:value)
+          legend[range].zip(values).filter_map do |l, v|
+            v && !v.blank? && [l.gsub("v2_", ""), v]
+          end.to_h.merge("iso" => iso, "version" => version)
         end
+
+      jee1 = AssessmentPublication.find_by_named_id!("jee1")
+      jee2 = AssessmentPublication.find_by_named_id!("jee2")
+      assessment_data.each do |data|
+        pub = data.fetch("version") == "v1" ? jee1 : jee2
+        country = Country.find_by_alpha3!(data.fetch("iso"))
+        assessment = pub.assessments.find_or_create_by!(country: country)
+        data
+          .except("iso", "version")
+          .each do |id, score|
+            ai = AssessmentIndicator.find_by_code!(pub.named_id, id)
+            if update
+              assessment
+                .scores
+                .find_or_create_by!(assessment_indicator: ai)
+                .update(value: score)
+            else
+              assessment
+                .scores
+                .create_with(value: score)
+                .find_or_create_by!(assessment_indicator: ai)
+            end
+          end
+      end
     end
 
     class SparCountry < OpenStruct
