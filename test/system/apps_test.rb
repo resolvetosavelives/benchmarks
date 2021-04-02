@@ -31,7 +31,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "337", find(".action-count-component .count").text
+    assert_equal "407", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -119,7 +119,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "337", find(".action-count-component .count").text
+    assert_equal "407", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -327,7 +327,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "Actions", find(".action-count-component .label").text
 
     # action count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
-    assert_equal "209", find(".action-count-component .count").text
+    assert_equal "279", find(".action-count-component .count").text
     assert page.has_content?(
              "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors."
            )
@@ -392,7 +392,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "130", find(".action-count-component .count").text
+    assert_equal "200", find(".action-count-component .count").text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
