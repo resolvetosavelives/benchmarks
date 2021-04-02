@@ -69,6 +69,9 @@ class BarChart extends React.Component {
     if (!this.props.ui.isCholeraShowing) {
       matrix[2] = matrix[2].map(() => 0)
     }
+    if (!this.props.ui.isEbolaShowing) {
+      matrix[2] = matrix[2].map(() => 0)
+    }
 
     return {
       labels: this.chartLabels,
@@ -126,6 +129,7 @@ class BarChart extends React.Component {
         general: matrixOfActionCountsByActionTypeAndDisease[0][i],
         influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
         cholera: matrixOfActionCountsByActionTypeAndDisease[2][i],
+        ebola: matrixOfActionCountsByActionTypeAndDisease[3][i],
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
@@ -188,6 +192,7 @@ class BarChart extends React.Component {
       objOfActionCounts.general +
       objOfActionCounts.influenza +
       objOfActionCounts.cholera
+    objOfActionCounts.ebola
 
     let tooltipHtml = `<strong> ${nameOfActionType}: ${sumOfCounts} </strong>`
     if (sumOfCounts > objOfActionCounts.general) {
@@ -198,6 +203,9 @@ class BarChart extends React.Component {
     }
     if (objOfActionCounts.cholera > 0 && this.props.ui.isCholeraShowing) {
       tooltipHtml += `<div>Cholera-specific: ${objOfActionCounts.cholera}</div>`
+    }
+    if (objOfActionCounts.ebola > 0 && this.props.ui.isEbolaShowing) {
+      tooltipHtml += `<div>Ebola-specific: ${objOfActionCounts.ebola}</div>`
     }
 
     return tooltipHtml

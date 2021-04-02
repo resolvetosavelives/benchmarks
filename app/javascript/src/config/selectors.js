@@ -189,10 +189,8 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
               !isNaN(indexOfActionType),
               `indexOfActionType expected to be an integer but found ${indexOfActionType}`
             )
-            if (action.disease_id === 1) {
-              acc[1][indexOfActionType] += 1
-            } else if (action.disease_id === 2) {
-              acc[2][indexOfActionType] += 1
+            if (acc[action.disease_id]) {
+              acc[action.disease_id][indexOfActionType] += 1
             } else {
               acc[0][indexOfActionType] += 1
             }
@@ -200,7 +198,7 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
         }
         return acc
       },
-      [fnBlankArray(), fnBlankArray(), fnBlankArray()]
+      [fnBlankArray(), fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
   }
 )
