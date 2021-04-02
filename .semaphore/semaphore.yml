@@ -52,3 +52,7 @@ blocks:
           - bin/webpack -e test
           - cache store webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA public/packs-test
           - bin/rake db:test:prepare test:system
+      epilogue:
+        on_fail:
+          commands:
+            - artifact push job tmp/screenshots/*.png
