@@ -9,8 +9,7 @@ module AssessmentSeed
 
       warn "Seeding data for Assessments..."
       seed_jee "data/JEE scores Mar 2021.xlsx"
-      seed_spar "spar_2018",
-                "data/spar/SPAR Data 2018_2019July9.xlsx",
+      seed_spar "data/spar/SPAR Data 2018_2019July9.xlsx",
                 "data/spar/SPAR Data 2019_2021Mar29.xlsx"
     end
 
@@ -91,7 +90,7 @@ module AssessmentSeed
       end
     end
 
-    def seed_spar(spar_id, *paths, update: false)
+    def seed_spar(*paths, update: false)
       spar_data = {}
 
       paths.each do |path|
@@ -108,7 +107,7 @@ module AssessmentSeed
         spar_data.merge!(data)
       end
 
-      spar = AssessmentPublication.find_by_named_id!(spar_id)
+      spar = AssessmentPublication.find_by_named_id!("spar_2018")
       spar_data.each do |country_name, country_spar|
         country = Country.find_by_name!(country_name)
         assessment = spar.assessments.find_or_create_by!(country: country)
