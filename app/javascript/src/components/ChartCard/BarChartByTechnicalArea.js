@@ -140,9 +140,11 @@ class BarChartByTechnicalArea extends React.Component {
     const seriesA = $(".ct-series-a .ct-bar", domNode)
     const seriesB = $(".ct-series-b .ct-bar", domNode)
     const seriesC = $(".ct-series-c .ct-bar", domNode)
+    const seriesD = $(".ct-series-d .ct-bar", domNode)
     seriesA.removeClass("ct-deselected")
     seriesB.removeClass("ct-deselected")
     seriesC.removeClass("ct-deselected")
+    seriesD.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
@@ -157,6 +159,7 @@ class BarChartByTechnicalArea extends React.Component {
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
       const $elBarSegmentC = $(seriesC[i])
+      const $elBarSegmentD = $(seriesD[i])
       if (
         selectedTechnicalAreaId &&
         technicalAreas[i].id !== selectedTechnicalAreaId
@@ -164,6 +167,7 @@ class BarChartByTechnicalArea extends React.Component {
         $elBarSegmentA.addClass("ct-deselected")
         $elBarSegmentB.addClass("ct-deselected")
         $elBarSegmentC.addClass("ct-deselected")
+        $elBarSegmentD.addClass("ct-deselected")
       }
       this.initTooltipForSegmentOfChartByTechnicalArea(
         technicalAreas[i],
@@ -171,6 +175,7 @@ class BarChartByTechnicalArea extends React.Component {
         $elBarSegmentA,
         $elBarSegmentB,
         $elBarSegmentC,
+        $elBarSegmentD,
         i
       )
       this.initClickHandlerForChartByTechnicalArea(
@@ -178,7 +183,8 @@ class BarChartByTechnicalArea extends React.Component {
         dispatch,
         $elBarSegmentA,
         $elBarSegmentB,
-        $elBarSegmentC
+        $elBarSegmentC,
+        $elBarSegmentD
       )
     }
   }
@@ -195,13 +201,19 @@ class BarChartByTechnicalArea extends React.Component {
     objOfActionCounts,
     $elBarSegmentA,
     $elBarSegmentB,
-    $elBarSegmentC
+    $elBarSegmentC,
+    $elBarSegmentD
   ) {
     const tooltipTitle = this.getTooltipHtmlContent(
       technicalArea,
       objOfActionCounts
     )
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
+    const stackedBarEls = [
+      $elBarSegmentA,
+      $elBarSegmentB,
+      $elBarSegmentC,
+      $elBarSegmentD,
+    ]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment
         .attr("title", tooltipTitle)
@@ -260,9 +272,15 @@ class BarChartByTechnicalArea extends React.Component {
     dispatch,
     $elBarSegmentA,
     $elBarSegmentB,
-    $elBarSegmentC
+    $elBarSegmentC,
+    $elBarSegmentD
   ) {
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
+    const stackedBarEls = [
+      $elBarSegmentA,
+      $elBarSegmentB,
+      $elBarSegmentC,
+      $elBarSegmentD,
+    ]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment.on("click", () => {
         dispatch(selectTechnicalArea(technicalArea.id))

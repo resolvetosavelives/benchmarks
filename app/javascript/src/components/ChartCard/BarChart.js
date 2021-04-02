@@ -117,9 +117,11 @@ class BarChart extends React.Component {
     const seriesA = $(".ct-series-a .ct-bar", domNode)
     const seriesB = $(".ct-series-b .ct-bar", domNode)
     const seriesC = $(".ct-series-c .ct-bar", domNode)
+    const seriesD = $(".ct-series-d .ct-bar", domNode)
     seriesA.removeClass("ct-deselected")
     seriesB.removeClass("ct-deselected")
     seriesC.removeClass("ct-deselected")
+    seriesD.removeClass("ct-deselected")
 
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
@@ -134,24 +136,28 @@ class BarChart extends React.Component {
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
       const $elBarSegmentC = $(seriesC[i])
+      const $elBarSegmentD = $(seriesD[i])
       if (selectedActionTypeOrdinal && i !== selectedActionTypeOrdinal - 1) {
         $elBarSegmentA.addClass("ct-deselected")
         $elBarSegmentB.addClass("ct-deselected")
         $elBarSegmentC.addClass("ct-deselected")
+        $elBarSegmentD.addClass("ct-deselected")
       }
       this.initTooltipForSegmentOfChart(
         objOfActionCounts,
         chartLabels[i],
         $elBarSegmentA,
         $elBarSegmentB,
-        $elBarSegmentC
+        $elBarSegmentC,
+        $elBarSegmentD
       )
       this.initClickHandlerForChart(
         dispatch,
         i,
         $elBarSegmentA,
         $elBarSegmentB,
-        $elBarSegmentC
+        $elBarSegmentC,
+        $elBarSegmentD
       )
     }
   }
@@ -168,13 +174,19 @@ class BarChart extends React.Component {
     nameOfActionType,
     $elBarSegmentA,
     $elBarSegmentB,
-    $elBarSegmentC
+    $elBarSegmentC,
+    $elBarSegmentD
   ) {
     const tooltipTitle = this.getTooltipHtmlContent(
       nameOfActionType,
       objOfActionCounts
     )
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
+    const stackedBarEls = [
+      $elBarSegmentA,
+      $elBarSegmentB,
+      $elBarSegmentC,
+      $elBarSegmentD,
+    ]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment
         .attr("title", tooltipTitle)
@@ -216,9 +228,15 @@ class BarChart extends React.Component {
     segmentIndex,
     $elBarSegmentA,
     $elBarSegmentB,
-    $elBarSegmentC
+    $elBarSegmentC,
+    $elBarSegmentD
   ) {
-    const stackedBarEls = [$elBarSegmentA, $elBarSegmentB, $elBarSegmentC]
+    const stackedBarEls = [
+      $elBarSegmentA,
+      $elBarSegmentB,
+      $elBarSegmentC,
+      $elBarSegmentD,
+    ]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment.on("click", () => {
         dispatch(selectActionType(segmentIndex))
