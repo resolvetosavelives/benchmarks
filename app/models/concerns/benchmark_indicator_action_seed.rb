@@ -39,7 +39,7 @@ module BenchmarkIndicatorActionSeed
     end
 
     def seed_disease_actions!
-      diseases = Disease.all.map(&:name).to_sym
+      diseases = Disease.all.map(&:name)
       diseases.each { |d| seed_actions_for_disease!(d) }
     end
 
