@@ -433,7 +433,7 @@ describe("for a plan without any specific diseases", () => {
       const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(18)
       expect(result[1].length).toEqual(18)
       expect(result[2].length).toEqual(18)
@@ -533,7 +533,7 @@ describe("for a plan without any specific diseases", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -635,7 +635,7 @@ describe("for a plan that includes influenza", () => {
       const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(18)
       expect(result[1].length).toEqual(18)
       expect(result[2].length).toEqual(18)
@@ -735,7 +735,7 @@ describe("for a plan that includes influenza", () => {
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -940,12 +940,12 @@ describe("for a plan that includes influenza and cholera", () => {
   })
 
   describe("getMatrixOfActionCountsByTechnicalAreaAndDisease", () => {
-    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 18 columns (one per Technical Area)", () => {
+    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza, cholera, ebola) by 18 columns (one per Technical Area)", () => {
       const state = store.getState()
       const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(18)
       expect(result[1].length).toEqual(18)
       expect(result[2].length).toEqual(18)
@@ -1040,12 +1040,12 @@ describe("for a plan that includes influenza and cholera", () => {
   })
 
   describe("getMatrixOfActionCountsByActionTypeAndDisease", () => {
-    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 15 columns (one per Action Type)", () => {
+    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza, cholera, ebola) by 15 columns (one per Action Type)", () => {
       const state = store.getState()
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([
@@ -1134,12 +1134,12 @@ describe("for a plan that includes influenza and cholera", () => {
   })
 
   describe("getMatrixOfActionCountsByTechnicalAreaAndDisease", () => {
-    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 18 columns (one per Technical Area)", () => {
+    it("returns a 2-dimensional array of integers of action counts, 4 rows (general, influenza, cholera, ebola) by 18 columns (one per Technical Area)", () => {
       const state = store.getState()
       const result = getMatrixOfActionCountsByTechnicalAreaAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(18)
       expect(result[1].length).toEqual(18)
       expect(result[2].length).toEqual(18)
@@ -1234,12 +1234,12 @@ describe("for a plan that includes influenza and cholera", () => {
   })
 
   describe("getMatrixOfActionCountsByActionTypeAndDisease", () => {
-    it("returns a 2-dimensional array of integers of action counts, two rows (general, influenza) by 15 columns (one per Action Type)", () => {
+    it("returns a 2-dimensional array of integers of action counts, 4 rows (general, influenza, cholera, ebola) by 15 columns (one per Action Type)", () => {
       const state = store.getState()
       const result = getMatrixOfActionCountsByActionTypeAndDisease(state)
 
       expect(result).toBeInstanceOf(Array)
-      expect(result.length).toEqual(3)
+      expect(result.length).toEqual(4)
       expect(result[0].length).toEqual(15)
       expect(result[1].length).toEqual(15)
       expect(result[0]).toEqual([

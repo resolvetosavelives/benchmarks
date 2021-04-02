@@ -31,6 +31,8 @@ it("BarChartByTechnicalArea has the expected 2 divs", () => {
   getMatrixOfActionCountsByTechnicalAreaAndDisease.mockReturnValueOnce([
     [2, 3, 5],
     [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
   ])
   getPlanChartLabels.mockReturnValueOnce([["label1", "label2", "label3"], []])
   getSelectedTechnicalAreaId.mockReturnValueOnce(null)
