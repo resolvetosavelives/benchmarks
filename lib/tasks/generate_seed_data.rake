@@ -66,6 +66,37 @@ task gen_cholera: %i[environment] do
            [cholera_actions_data.size, cholera_actions_file]
 end
 
+desc "Generate JSON data for Ebola Actions from spreadsheet"
+task gen_ebola: %i[environment] do
+  ebola_actions_spreadsheet_file =
+      File.join Rails.root, "/data/Ebola_Benchmarks_Crosswalk_03052021.xlsx"
+  ebola_actions_worksheet =
+      RubyXL::Parser.parse(ebola_actions_spreadsheet_file)
+
+  ebola_actions_data = []
+
+   ebola_actions_worksheet["Database"].drop(1).map do |row|
+     cells =  row.cells
+     action_text                = cells[8]&.value
+     benchmark_indicator_abbrev = cells[5]&.value
+     activity_types             = [cells[6]&.value]
+
+     ebola_actions_data << {
+          action_text: action_text,
+          benchmark_indicator_display_abbreviation: benchmark_indicator_abbrev,
+          activity_types: activity_types,
+      }
+   end
+
+  ebola_actions_file =
+      File.join(Rails.root, "/db/seed-data/ebola_actions.json")
+  File.open(ebola_actions_file, "w") do |f|
+    f.write(JSON.pretty_generate(ebola_actions_data))
+  end
+  warn "Wrote %s ebola action data to file: %s" %
+           [ebola_actions_data.size, ebola_actions_file]
+end
+
 desc "Generate JSON data for Benchmark Actions from the spreadsheet"
 task gen_actions: %i[environment] do
   fixture_spreadsheet = File.join Rails.root, "/data/RTSL Fixtures.xlsx"

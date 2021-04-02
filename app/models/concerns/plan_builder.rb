@@ -7,9 +7,7 @@ module PlanBuilder
   # this method is in this module because it deals with assessment_indicator which
   # are populated in this module before the Plan is persisted.
   def score_value_for(assessment_indicator:)
-    assessment.scores.detect do |score|
-      score.assessment_indicator.id.eql?(assessment_indicator.id)
-    end&.value
+    assessment.scores.find_by(assessment_indicator: assessment_indicator)&.value
   end
 
   # this method is in this module because it deals with assessment_indicator which
@@ -161,7 +159,7 @@ module PlanBuilder
     def create_named_ids(assessment, indicator_attrs)
       num_of_underscores = assessment.spar_2018? ? 3 : 2
       indicator_attrs.select do |k, _|
-        k.count('_').eql?(num_of_underscores)
+        k.count("_").eql?(num_of_underscores)
       end.keys
     end
 
@@ -170,7 +168,7 @@ module PlanBuilder
       named_ids.each do |named_id|
         scores_and_goals_by_named_id[named_id] = {
           score: indicator_attrs[named_id].to_i,
-          goal: indicator_attrs[named_id + '_goal'].to_i
+          goal: indicator_attrs[named_id + "_goal"].to_i
         }
       end
       scores_and_goals_by_named_id
@@ -205,7 +203,7 @@ module PlanBuilder
         bia =
           benchmark_indicator
             .actions
-            .where('level > :score AND level <= :goal', score_and_goal)
+            .where("level > :score AND level <= :goal", score_and_goal)
             .order(:sequence)
             .all
 
@@ -219,7 +217,7 @@ module PlanBuilder
         bia =
           benchmark_indicator
             .actions
-            .where('disease_id IS NOT NULL')
+            .where("disease_id IS NOT NULL")
             .order(:sequence)
             .all
       end

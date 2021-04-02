@@ -130,19 +130,14 @@ const getMatrixOfActionCountsByTechnicalAreaAndDisease = createSelector(
         const technicalArea =
           technicalAreaMap[action.benchmark_technical_area_id]
         const currentIndex = technicalArea.sequence - 1
-        switch (action.disease_id) {
-          case 1:
-          case 2:
-            if (plan.disease_ids.includes(action.disease_id)) {
-              acc[action.disease_id][currentIndex] += 1
-            }
-            break
-          default:
-            acc[0][currentIndex] += 1
+        if (acc[action.disease_id]) {
+          acc[action.disease_id][currentIndex] += 1
+        } else {
+          acc[0][currentIndex] += 1
         }
         return acc
       },
-      [fnBlankArray(), fnBlankArray(), fnBlankArray()]
+      [fnBlankArray(), fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
   }
 )
@@ -189,10 +184,8 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
               !isNaN(indexOfActionType),
               `indexOfActionType expected to be an integer but found ${indexOfActionType}`
             )
-            if (action.disease_id === 1) {
-              acc[1][indexOfActionType] += 1
-            } else if (action.disease_id === 2) {
-              acc[2][indexOfActionType] += 1
+            if (acc[action.disease_id]) {
+              acc[action.disease_id][indexOfActionType] += 1
             } else {
               acc[0][indexOfActionType] += 1
             }
@@ -200,7 +193,7 @@ const getMatrixOfActionCountsByActionTypeAndDisease = createSelector(
         }
         return acc
       },
-      [fnBlankArray(), fnBlankArray(), fnBlankArray()]
+      [fnBlankArray(), fnBlankArray(), fnBlankArray(), fnBlankArray()]
     )
   }
 )

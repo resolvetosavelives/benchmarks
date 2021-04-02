@@ -40,17 +40,12 @@ module AssessmentSeed
           .except("iso", "version")
           .each do |id, score|
             ai = AssessmentIndicator.find_by_code!(pub.named_id, id)
-            if update
-              assessment
-                .scores
-                .find_or_create_by!(assessment_indicator: ai)
-                .update(value: score)
-            else
+            score =
               assessment
                 .scores
                 .create_with(value: score)
                 .find_or_create_by!(assessment_indicator: ai)
-            end
+            score.update(value: score) if update
           end
       end
     end
@@ -115,17 +110,12 @@ module AssessmentSeed
         country_info = country_spar.to_h.except(:name)
         country_info.each do |id, score|
           ai = AssessmentIndicator.find_by_code!("spar_2018", id)
-          if update
-            assessment
-              .scores
-              .find_or_create_by!(assessment_indicator: ai)
-              .update(value: score)
-          else
+          score =
             assessment
               .scores
               .create_with(value: score)
               .find_or_create_by!(assessment_indicator: ai)
-          end
+          score.update(value: score) if update
         end
       end
     end

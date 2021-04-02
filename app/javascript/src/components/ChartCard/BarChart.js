@@ -1,40 +1,24 @@
 import React from "react"
-import { connect } from "react-redux"
 import ChartistGraph from "react-chartist"
 import PropTypes from "prop-types"
 import $ from "jquery"
-import { selectTechnicalArea } from "../../config/actions"
-import {
-  countActionsByTechnicalArea,
-  getAllActions,
-  getAllTechnicalAreas,
-  getMatrixOfActionCountsByTechnicalAreaAndDisease,
-  getPlanChartLabels,
-  getSelectedTechnicalAreaId,
-  getUi,
-} from "../../config/selectors"
+import { selectActionType } from "../../config/actions"
 import { offsetTheChartSegmentLabelsForIE } from "./ChartFixesForIE"
 
-class BarChartByTechnicalArea extends React.Component {
+class BarChart extends React.Component {
   constructor(props) {
     super(props)
+    this.chartLabels = this.props.chartLabels[1]
     this.tooltipNodesFromPreviousRender = []
   }
 
   render() {
-    const chartLabels = this.props.chartLabels[0]
-    const countActionsByTechnicalArea = this.props.countActionsByTechnicalArea
-    const { data, options } = this.getBarChartOptions(
-      countActionsByTechnicalArea,
-      this.props.matrixOfActionCountsByTechnicalAreaAndDisease,
-      chartLabels
-    )
     this.updateChartSize()
     return (
       <div className="chart-container ct-chart-bar">
         <ChartistGraph
-          data={data}
-          options={options}
+          data={this.chartData()}
+          options={this.chartOptions()}
           type="Bar"
           ref={(ref) => {
             if (ref) this.chartistGraphInstance = ref
@@ -75,41 +59,10 @@ class BarChartByTechnicalArea extends React.Component {
     }, 0)
   }
 
-  getBarChartOptions(
-    countActionsByTechnicalArea,
-    matrixOfActionCountsByTechnicalAreaAndDisease,
-    chartLabels
-  ) {
-    let data = {
-      labels: chartLabels,
-      series: this.calculateChartSeries(
-        matrixOfActionCountsByTechnicalAreaAndDisease
-      ),
-    }
-    const heightValue = this.getNextMultipleOfTenForSeries(
-      countActionsByTechnicalArea
+  chartData() {
+    const matrix = [].concat(
+      this.props.matrixOfActionCountsByActionTypeAndDisease
     )
-    let options = {
-      high: heightValue,
-      low: 0,
-      width: this.props.width,
-      height: this.props.height,
-      stackBars: true,
-      axisY: {
-        // show multiples of 10
-        labelInterpolationFnc: function (value) {
-          return value % 10 === 0 ? value : null
-        },
-      },
-    }
-    return {
-      data,
-      options,
-    }
-  }
-
-  calculateChartSeries(matrixOfActionCountsByActionTypeAndDisease) {
-    const matrix = [].concat(matrixOfActionCountsByActionTypeAndDisease)
     if (!this.props.ui.isInfluenzaShowing) {
       matrix[1] = matrix[1].map(() => 0)
     }
@@ -119,7 +72,30 @@ class BarChartByTechnicalArea extends React.Component {
     if (!this.props.ui.isEbolaShowing) {
       matrix[3] = matrix[3].map(() => 0)
     }
-    return matrix
+
+    return {
+      labels: this.chartLabels,
+      series: matrix,
+    }
+  }
+
+  chartOptions() {
+    const heightValue = this.getNextMultipleOfTenForSeries(
+      this.props.countActionsByActionType
+    )
+    return {
+      high: heightValue,
+      low: 0,
+      width: this.props.width,
+      height: this.props.height,
+      stackBars: true,
+      axisY: {
+        // show multiples of 10
+        labelInterpolationFnc: function (value) {
+          return value % 10 == 0 ? value : null
+        },
+      },
+    }
   }
 
   getNextMultipleOfTenForSeries(seriesArray) {
@@ -130,11 +106,12 @@ class BarChartByTechnicalArea extends React.Component {
 
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
-    const matrixOfActionCountsByTechnicalAreaAndDisease = this.props
-      .matrixOfActionCountsByTechnicalAreaAndDisease
-    const technicalAreas = this.props.technicalAreas
+    const countActionsByActionType = this.props.countActionsByActionType
+    const matrixOfActionCountsByActionTypeAndDisease = this.props
+      .matrixOfActionCountsByActionTypeAndDisease
     const chartistGraph = this.chartistGraphInstance
-    const selectedTechnicalAreaId = this.props.selectedTechnicalAreaId
+    const selectedActionTypeOrdinal = this.props.selectedActionTypeOrdinal
+    const chartLabels = this.chartLabels
     chartistGraph.chartist.detach()
     const domNode = chartistGraph.chart
     const seriesA = $(".ct-series-a .ct-bar", domNode)
@@ -149,38 +126,34 @@ class BarChartByTechnicalArea extends React.Component {
     this.cleanupTooltipsFromPreviousRender()
     offsetTheChartSegmentLabelsForIE(domNode)
 
-    for (let i = 0; i < technicalAreas.length; i++) {
+    for (let i = 0; i < countActionsByActionType.length; i++) {
       const objOfActionCounts = {
-        general: matrixOfActionCountsByTechnicalAreaAndDisease[0][i],
-        influenza: matrixOfActionCountsByTechnicalAreaAndDisease[1][i],
-        cholera: matrixOfActionCountsByTechnicalAreaAndDisease[2][i],
-        ebola: matrixOfActionCountsByTechnicalAreaAndDisease[3][i],
+        general: matrixOfActionCountsByActionTypeAndDisease[0][i],
+        influenza: matrixOfActionCountsByActionTypeAndDisease[1][i],
+        cholera: matrixOfActionCountsByActionTypeAndDisease[2][i],
+        ebola: matrixOfActionCountsByActionTypeAndDisease[3][i],
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])
       const $elBarSegmentC = $(seriesC[i])
       const $elBarSegmentD = $(seriesD[i])
-      if (
-        selectedTechnicalAreaId &&
-        technicalAreas[i].id !== selectedTechnicalAreaId
-      ) {
+      if (selectedActionTypeOrdinal && i !== selectedActionTypeOrdinal - 1) {
         $elBarSegmentA.addClass("ct-deselected")
         $elBarSegmentB.addClass("ct-deselected")
         $elBarSegmentC.addClass("ct-deselected")
         $elBarSegmentD.addClass("ct-deselected")
       }
-      this.initTooltipForSegmentOfChartByTechnicalArea(
-        technicalAreas[i],
+      this.initTooltipForSegmentOfChart(
         objOfActionCounts,
+        chartLabels[i],
         $elBarSegmentA,
         $elBarSegmentB,
         $elBarSegmentC,
-        $elBarSegmentD,
-        i
+        $elBarSegmentD
       )
-      this.initClickHandlerForChartByTechnicalArea(
-        technicalAreas[i],
+      this.initClickHandlerForChart(
         dispatch,
+        i,
         $elBarSegmentA,
         $elBarSegmentB,
         $elBarSegmentC,
@@ -196,16 +169,16 @@ class BarChartByTechnicalArea extends React.Component {
     this.tooltipNodesFromPreviousRender = []
   }
 
-  initTooltipForSegmentOfChartByTechnicalArea(
-    technicalArea,
+  initTooltipForSegmentOfChart(
     objOfActionCounts,
+    nameOfActionType,
     $elBarSegmentA,
     $elBarSegmentB,
     $elBarSegmentC,
     $elBarSegmentD
   ) {
     const tooltipTitle = this.getTooltipHtmlContent(
-      technicalArea,
+      nameOfActionType,
       objOfActionCounts
     )
     const stackedBarEls = [
@@ -226,50 +199,33 @@ class BarChartByTechnicalArea extends React.Component {
     })
   }
 
-  tooltipCategoryDisplayName(category) {
-    let displayName = ""
+  getTooltipHtmlContent(nameOfActionType, objOfActionCounts) {
+    const sumOfCounts =
+      objOfActionCounts.general +
+      objOfActionCounts.influenza +
+      objOfActionCounts.cholera
+    objOfActionCounts.ebola
 
-    if (category === "general") {
-      displayName = "Health System"
-    } else {
-      displayName = `${this.capitalize(category)}-specific`
-    }
-
-    return displayName
-  }
-
-  capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.substring(1)
-  }
-
-  getTooltipHtmlContent(technicalArea, objOfActionCounts) {
-    const sumOfCounts = Object.keys(objOfActionCounts).reduce(
-      (sum, key) => sum + objOfActionCounts[key],
-      0
-    )
-    let tooltipHtml = `<strong>${technicalArea.text}: ${sumOfCounts}</strong>`
-
+    let tooltipHtml = `<strong> ${nameOfActionType}: ${sumOfCounts} </strong>`
     if (sumOfCounts > objOfActionCounts.general) {
-      tooltipHtml += `<div>&nbsp;</div>`
-
-      for (const category in objOfActionCounts) {
-        if (
-          this.props.ui[`is${this.capitalize(category)}Showing`] &&
-          objOfActionCounts[category] > 0
-        ) {
-          tooltipHtml += `<div>${this.tooltipCategoryDisplayName(category)}: ${
-            objOfActionCounts[category]
-          }</div>`
-        }
-      }
+      tooltipHtml += `<div>&nbsp;</div><div>Health System: ${objOfActionCounts.general}</div>`
+    }
+    if (objOfActionCounts.influenza > 0 && this.props.ui.isInfluenzaShowing) {
+      tooltipHtml += `<div>Influenza-specific: ${objOfActionCounts.influenza}</div>`
+    }
+    if (objOfActionCounts.cholera > 0 && this.props.ui.isCholeraShowing) {
+      tooltipHtml += `<div>Cholera-specific: ${objOfActionCounts.cholera}</div>`
+    }
+    if (objOfActionCounts.ebola > 0 && this.props.ui.isEbolaShowing) {
+      tooltipHtml += `<div>Ebola-specific: ${objOfActionCounts.ebola}</div>`
     }
 
     return tooltipHtml
   }
 
-  initClickHandlerForChartByTechnicalArea(
-    technicalArea,
+  initClickHandlerForChart(
     dispatch,
+    segmentIndex,
     $elBarSegmentA,
     $elBarSegmentB,
     $elBarSegmentC,
@@ -283,37 +239,23 @@ class BarChartByTechnicalArea extends React.Component {
     ]
     stackedBarEls.forEach(($elBarSegment) => {
       $elBarSegment.on("click", () => {
-        dispatch(selectTechnicalArea(technicalArea.id))
+        dispatch(selectActionType(segmentIndex))
       })
     })
   }
 }
 
-BarChartByTechnicalArea.propTypes = {
+BarChart.propTypes = {
   width: PropTypes.string.isRequired,
   height: PropTypes.string.isRequired,
-  technicalAreas: PropTypes.array.isRequired,
   chartLabels: PropTypes.array.isRequired,
+  planActionIds: PropTypes.array.isRequired,
   allActions: PropTypes.array.isRequired,
   dispatch: PropTypes.func,
-  countActionsByTechnicalArea: PropTypes.array.isRequired,
-  matrixOfActionCountsByTechnicalAreaAndDisease: PropTypes.array.isRequired,
-  selectedTechnicalAreaId: PropTypes.number,
+  countActionsByActionType: PropTypes.array.isRequired,
+  matrixOfActionCountsByActionTypeAndDisease: PropTypes.array.isRequired,
+  selectedActionTypeOrdinal: PropTypes.number,
   ui: PropTypes.object,
 }
 
-const mapStateToProps = (state /*, ownProps*/) => {
-  return {
-    technicalAreas: getAllTechnicalAreas(state),
-    chartLabels: getPlanChartLabels(state),
-    allActions: getAllActions(state),
-    matrixOfActionCountsByTechnicalAreaAndDisease: getMatrixOfActionCountsByTechnicalAreaAndDisease(
-      state
-    ),
-    countActionsByTechnicalArea: countActionsByTechnicalArea(state),
-    selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
-    ui: getUi(state),
-  }
-}
-
-export default connect(mapStateToProps)(BarChartByTechnicalArea)
+export default BarChart

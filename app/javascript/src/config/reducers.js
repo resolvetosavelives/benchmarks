@@ -17,6 +17,7 @@ import {
   SET_SELECTED_CHART_TAB_INDEX,
   CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
   IS_CHOLERA_SHOWING,
+  IS_EBOLA_SHOWING,
 } from "./constants"
 
 export default function initReducers(initialState) {
@@ -112,6 +113,7 @@ export default function initReducers(initialState) {
       selectedActionTypeOrdinal: null,
       isInfluenzaShowing: true,
       isCholeraShowing: true,
+      isEbolaShowing: true,
       selectedChartTabIndex: CHART_TAB_INDEX_FOR_TECHNICAL_AREA,
     },
     {
@@ -145,6 +147,7 @@ export default function initReducers(initialState) {
         state.selectedActionTypeOrdinal = null
         state.isInfluenzaShowing = true
         state.isCholeraShowing = true
+        state.isEbolaShowing = true
         return state
       },
       [IS_INFLUENZA_SHOWING]: (state /*, dispatchedAction*/) => {
@@ -153,6 +156,10 @@ export default function initReducers(initialState) {
       },
       [IS_CHOLERA_SHOWING]: (state /*, dispatchedAction*/) => {
         state.isCholeraShowing = !state.isCholeraShowing
+        return state
+      },
+      [IS_EBOLA_SHOWING]: (state /*, dispatchedAction*/) => {
+        state.isEbolaShowing = !state.isEbolaShowing
         return state
       },
       [SET_SELECTED_CHART_TAB_INDEX]: (state, dispatchedAction) => {

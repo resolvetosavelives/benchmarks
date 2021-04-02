@@ -1,0 +1,492 @@
+[
+  {
+    "action_text": "Establish a national referral lab responsible for analysis or specimen handling of biological samples and ensure that referral procedures are known at sub-national level.",
+    "benchmark_indicator_display_abbreviation": 7.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Develop protocols for specimen collection and shipment from potential EVD cases to a designated reference lab for confirmation at national or international level. Ensure distribution and replenishment of triple packaging.",
+    "benchmark_indicator_display_abbreviation": 7.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Establish stand-by arrangements and ensure agreements are in place with WHO Collaborating Centers for confirmatory testing and with relevant airlines to ship samples internationally.",
+    "benchmark_indicator_display_abbreviation": 7.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Evaluate if the existing sample transport mechanism is reliable and operational and, if not, identify and establish an adequate and reliable sample transport system at both national and international levels from the point of origin to the reference lab, including the financial resources for such activities.",
+    "benchmark_indicator_display_abbreviation": 7.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Ensure lab personnel are trained on safety procedures and IPC for specimen collection, packaging, labelling, referral and shipment, including certification for the handling of infectious substances.",
+    "benchmark_indicator_display_abbreviation": 7.4,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Establish a 24/7 hotline or ensure existing emergency numbers can manage alerts. Train staff on alert processes and requests for information related to EVD. Ensure appropriate staffing allowing for shift working and a plan for escalation if needed.",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Provide guidance (guidelines, case definitions and investigation forms) to all levels of the healthcare system adapted to the respective level as needed.",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Ensure that an event-based surveillance system is in place and enable timely follow-up of info/rumors from all sources including community, media, etc.",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Test existing surveillance systems for EVD, identify gaps and implement corrective actions where necessary.",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Identify HR for community surveillance (community HCWs, volunteers, NGOs, traditional healers, community leaders, etc.).",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Disseminate simplified case definitions for community use.",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Provide specific training on the use of EVD case definitions and completing the investigation forms.",
+    "benchmark_indicator_display_abbreviation": 9.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Establish immediate lines of reporting for potential EVD cases (dead or alive) with clear authority for such actions.",
+    "benchmark_indicator_display_abbreviation": 9.3,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Contact tracing guidelines and SOPs available and disseminated to the national and subnational level.",
+    "benchmark_indicator_display_abbreviation": 9.3,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Train at least one team at the national level on contract tracing and data management.",
+    "benchmark_indicator_display_abbreviation": 9.3,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Establish/strengthen the data management system for EVD contact tracing at the national and subnational levels.",
+    "benchmark_indicator_display_abbreviation": 9.3,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Establish a compensation and benefits package for all high-risk workers covering remuneration and motivation for high-risk assignments and compensation in case of infection or death.",
+    "benchmark_indicator_display_abbreviation": 10.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Review of current policy and legislative frameworks to ensure that they will provide the authorization for the preparedness measures that are proposed.",
+    "benchmark_indicator_display_abbreviation": 1.1,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Identify legal framework that allows for spending of emergency funds and the transfer of emergency funds from the central level to all identified locations for emergency use.",
+    "benchmark_indicator_display_abbreviation": 1.1,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Define an operational budget for activities (comms, enhanced surveillance, investigation, etc.), pre-epidemic detection and for the preliminary response.",
+    "benchmark_indicator_display_abbreviation": 1.2,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Establish/render an easily accessible contingency fund for immediate response to an outbreak at national and other appropriate sites.",
+    "benchmark_indicator_display_abbreviation": 1.2,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Identify funding sources, including allocation of domestic resources and mechanisms to raise additional resources if necessary, and ensure mechanisms for accessing funding sources are known",
+    "benchmark_indicator_display_abbreviation": 1.2,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Develop templates for resource mobilization and for country and donor reporting, including mechanisms to monitor and track implementation.",
+    "benchmark_indicator_display_abbreviation": 1.2,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Ensure identified medical structures are functioning according to infection control guidelines, with adequate isolation, waste management, water and power supply, with ensure consumables replenishment, and maintenance support.",
+    "benchmark_indicator_display_abbreviation": 3.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Identify and equip health facilities in setting up basic isolation units (2 beds) for potential EVD cases in regional and district hospitals and all designated POEs.",
+    "benchmark_indicator_display_abbreviation": 3.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Strengthen IPC guidelines and SOPs in all health facilities.",
+    "benchmark_indicator_display_abbreviation": 3.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Identify trained teams, proportional to the volume and frequency of travelers, to detect, assess and correctly manage any potential EVD cases, applying proper IPC procedures.",
+    "benchmark_indicator_display_abbreviation": 16.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Ensure each POE has immediate access to equipment and supplies (PPE, infrared thermometers, cleaning and disinfecting products, observation/isolation facilities and an ambulance, depending on location).",
+    "benchmark_indicator_display_abbreviation": 16.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Ensure that a contingency plan is in place at designated PoE (airports, ports and ground crossings).",
+    "benchmark_indicator_display_abbreviation": 16.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Identify referral healthcare facilities for each PoE and develop an SOP to safely identify, manage and refer potential EVD cases from PoE to a designated hospitals or isolation facility, including the identification of ambulance services.",
+    "benchmark_indicator_display_abbreviation": 16.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Develop SOP for implementing exit screening in the event of a confirmed EVD case.",
+    "benchmark_indicator_display_abbreviation": 16.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Review and test current comm systems between POE health authorities and conveyance operators, and between POE health authorities and national health surveillance systems.",
+    "benchmark_indicator_display_abbreviation": 16.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Sensitize public health authorities and relevant stakeholders at POE to EVD, review their roles and processes for handling potential EVD cases, and emphasize the need of conveyance operators to immediately notify POE health authorities of suspect EVD cases. ",
+    "benchmark_indicator_display_abbreviation": 16.2,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Map potential health facilities at district level that are ready for potential EVD cases.",
+    "benchmark_indicator_display_abbreviation": 11.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Evaluate storage capacities and the stock management system in place, identify stockpile needs across all components, and implement an efficient stockpile management system if required, at national level and at district levels.",
+    "benchmark_indicator_display_abbreviation": 11.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Identify and ensure all transport requirements for both goods and persons, according to needs and security requirements, across all components. At least one ambulance should be identified and adequately prepared for the transport of Ebola patients.",
+    "benchmark_indicator_display_abbreviation": 11.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Identify and assess potential isolation structures in respect to: infection control and adequate isolation possibilities, waste management, water and power supply.",
+    "benchmark_indicator_display_abbreviation": 11.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Map out all available resources including locations of potential for use in the Ebola response with capacity for warehousing and other logistics uses. ",
+    "benchmark_indicator_display_abbreviation": 11.2,
+    "activity_types": [
+      2
+    ]
+  },
+  {
+    "action_text": "Test coordination and operations through simulation exercises and drills.",
+    "benchmark_indicator_display_abbreviation": 11.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Contingency or emergency plans exist and are fully budgeted for fund identification.",
+    "benchmark_indicator_display_abbreviation": 11.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Establish EOC/IMS personnel at the subnational/district level for localized EOC/IMS coordination and management.",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Identify and assign TL and multidisciplinary members. Equip team including ambulance that can deploy within 24 hours.",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "In the absence of an EVD case in the country after 60 days, conduct at least one SimEx to maintain the capacity of RRTs to respond quickly.",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Identify and train HR required to ensure all activities can be implemented (logs, drivers, SDB teams, security, admin, procurement, storekeeper, etc.)",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Establish coherent plans and procedures for coordination and incident management to include liaison between Health EOC and National Disaster Management Structures (TORs & organigram for strategic, operational and tactical levels of coordination and management; communication channels within EOC/IMS and between EOC/IMS, partners and the public; coordination of donor support at the country level).",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Ensure clear lines of responsibilities for the activation and coordination of RRT in response to potential EVD cases.",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Identify a physical location for Health EOC.",
+    "benchmark_indicator_display_abbreviation": 12.1,
+    "activity_types": [
+      8
+    ]
+  },
+  {
+    "action_text": "Provide required training for RRTs including case management, specimen acquisition and transport, contact tracing, decontamination, outbreak, investigation, and social mob.",
+    "benchmark_indicator_display_abbreviation": 12.3,
+    "activity_types": [
+      14
+    ]
+  },
+  {
+    "action_text": "Training sub-national RRT in surveillance and contact tracing.",
+    "benchmark_indicator_display_abbreviation": 12.3,
+    "activity_types": [
+      14
+    ]
+  },
+  {
+    "action_text": "Define and implement all SOPs related to logs component (procurement, stockpile mobilization, sample transport, telecoms uses, structures support and maintenance, transport resources mobilization, security management).",
+    "benchmark_indicator_display_abbreviation": 12.3,
+    "activity_types": [
+      14
+    ]
+  },
+  {
+    "action_text": "Identify suppliers of standard essential items for emergency response locally/internationally. Assess their delivery capacity/time. Explore possibilities for pre-supply agreements.",
+    "benchmark_indicator_display_abbreviation": 14.1,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Identify supply needs (23 essential items), optimize supply chains, define and implement supply SOPs, to reduce delivery time and improve replenishment processes.",
+    "benchmark_indicator_display_abbreviation": 14.1,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Evaluate the communication network capacity and if required establish a telecommunication system to ensure all operations.",
+    "benchmark_indicator_display_abbreviation": 14.1,
+    "activity_types": [
+      3
+    ]
+  },
+  {
+    "action_text": "Define and implementation all SOPS related to logistic components (procurement, stockpile mobilization, sample transport, telecommunications uses, structures support and maintenance, transport resources mobilization, and security management).",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Identify and train clinical staff on EVD case management and on additional IPC measures, if possible by using experienced clinicians as mentoring staff.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Equip and train ambulance teams to transport suspect EVD cases.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Identify health facilities at district level that can be turned into an ETC at short notice.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Establish SOPs for SDB and decontamination.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Equip and train at least one burial team.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Ensure a dedicated transportation process is in place to bury human remains safely.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Ensure burials teams have access to grave diggers and potential security support during the burial process.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Identify appropriate secured burial ground with agreement of community.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Provide health facilities with basic hygiene, sanitation, disinfection, PPE, and services including running water and electricity. Priority should be given to hospitals; then health centers in priority districts.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Equip and adequately train HCWs including environmental health personnel, hygienists/cleaners on additional IPC measures and waste management processes, with priority for those in first contact with patients and at all isolation units and treatment centers.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Train district level staff on contract tracing.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Train sub-district and community level staff on contact tracing and identify a local source of contact tracers for all areas.",
+    "benchmark_indicator_display_abbreviation": 14.3,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Develop a risk communication strategy and plan. Map out and identify communication capacities and expertise with the public health and other sectors.",
+    "benchmark_indicator_display_abbreviation": 15.1,
+    "activity_types": [
+      10
+    ]
+  },
+  {
+    "action_text": "Develop a comprehensive strategy, plan and budget for engaging with the media and public (including a scaled-up approach). Map out, identify and monitor critical communication networks and rumors.",
+    "benchmark_indicator_display_abbreviation": 15.1,
+    "activity_types": [
+      15
+    ]
+  },
+  {
+    "action_text": "Establish a functional communication coordination mechanism to engage all stakeholders, including civil society organizations, NGOs, and the community. Map out, ID and train spokespersons/key actors/mobilizers, such as religious leaders, politicians, traditional healers and media in urban and rural areas.",
+    "benchmark_indicator_display_abbreviation": 15.3,
+    "activity_types": [
+      1
+    ]
+  },
+  {
+    "action_text": "Develop or adapt, review, translate into local languages, and disseminate, targeted messages for the media, HCWs, local and traditional leaders, churches, schools, trad healers and other community stakeholders.",
+    "benchmark_indicator_display_abbreviation": 15.3,
+    "activity_types": [
+      1
+    ]
+  }
+]

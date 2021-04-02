@@ -8,4 +8,9 @@ namespace :diseases do
   task cholera: :environment do
     BenchmarkIndicatorAction.seed_cholera_actions!
   end
+
+  desc "Insert records for Ebola Actions into the database (for Staging and Production)"
+  task ebola: :environment do
+    BenchmarkIndicatorAction.seed_ebola_actions!
+  end
 end
