@@ -62,7 +62,7 @@ module AssessmentSeed
         values = row.cells.map(&:value)
         attrs =
           legend.zip(values).filter_map do |l, v|
-            next if v.nil? || v == "" || /^C\.\d+/ !~ l
+            next if v.nil? || v == "" || /^C\.\d+\./ !~ l
             [l.downcase.tr(".", ""), v / 20]
           end.to_h
 
