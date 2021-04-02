@@ -116,6 +116,9 @@ class BarChartByTechnicalArea extends React.Component {
     if (!this.props.ui.isCholeraShowing) {
       matrix[2] = matrix[2].map(() => 0)
     }
+    if (!this.props.ui.isEbolaShowing) {
+      matrix[3] = matrix[3].map(() => 0)
+    }
     return matrix
   }
 
@@ -149,6 +152,7 @@ class BarChartByTechnicalArea extends React.Component {
         general: matrixOfActionCountsByTechnicalAreaAndDisease[0][i],
         influenza: matrixOfActionCountsByTechnicalAreaAndDisease[1][i],
         cholera: matrixOfActionCountsByTechnicalAreaAndDisease[2][i],
+        ebola: matrixOfActionCountsByTechnicalAreaAndDisease[3][i],
       }
       const $elBarSegmentA = $(seriesA[i])
       const $elBarSegmentB = $(seriesB[i])

@@ -243,6 +243,18 @@
     }
   }
 
+  .ct-series-d .ct-bar {
+    stroke: color("disease-ebola");
+
+    &.ct-deselected {
+      stroke: color("disease-ebola-deselected");
+    }
+
+    &:hover {
+      stroke: color("disease-ebola-hover");
+    }
+  }
+
   .ct-label {
     font-size: 11px;
     color: #545b62;
@@ -295,6 +307,11 @@
     .ct-series-cholera:before {
       background-color: color("disease-cholera");
       border-color: color("disease-cholera");
+    }
+
+    .ct-series-ebola:before {
+      background-color: color("disease-ebola");
+      border-color: color("disease-ebola");
     }
   }
 }

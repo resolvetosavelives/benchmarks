@@ -70,7 +70,7 @@ class BarChart extends React.Component {
       matrix[2] = matrix[2].map(() => 0)
     }
     if (!this.props.ui.isEbolaShowing) {
-      matrix[2] = matrix[2].map(() => 0)
+      matrix[3] = matrix[3].map(() => 0)
     }
 
     return {
