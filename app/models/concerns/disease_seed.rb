@@ -3,6 +3,8 @@ module DiseaseSeed
 
   module ClassMethods
     def seed!
+      return if Disease.count == 3
+
       warn "Seeding data for Diseases..."
       Disease.find_or_create_by!(display: "Influenza", name: "influenza")
       Disease.find_or_create_by!(display: "Cholera", name: "cholera")

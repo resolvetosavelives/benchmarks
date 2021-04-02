@@ -29,6 +29,7 @@ group :development do
   gem "better_errors", "~> 2.9"
   gem "html2haml", "~> 2.2"
   gem "listen", "~> 3.5"
+  gem "pry-rails", "~> 0.3.9"
   gem "rails-erd", "~> 1.6"
   gem "spring", "~> 2.1"
   gem "spring-watcher-listen", "~> 2.0"
@@ -43,3 +44,4 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
+
