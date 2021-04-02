@@ -194,7 +194,7 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # click on one of the bars and make sure others are deselected
-    all("#tabContentForActionType .ct-series-b .ct-bar")[1].click
+    all("#tabContentForActionType .ct-series-b .ct-bar")[1].trigger("click")
     count_bars = all("#tabContentForActionType .ct-series-b .ct-bar").count
     count_deselected =
       all("#tabContentForActionType .ct-series-b .ct-bar.ct-deselected").count
