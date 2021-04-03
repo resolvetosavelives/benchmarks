@@ -10,7 +10,7 @@ module AssessmentSeed
       warn "Seeding data for Assessments..."
       seed_jee "data/JEE scores Mar 2021.xlsx"
       seed_spar "data/spar/SPAR Data 2018_2019July9.xlsx",
-                "data/spar/SPAR Data 2019_2021Mar29.xlsx"
+        "data/spar/SPAR Data 2019_2021Mar29.xlsx"
     end
 
     def seed_jee(path, update: false)
@@ -38,15 +38,15 @@ module AssessmentSeed
         assessment = pub.assessments.find_or_create_by!(country: country)
         data
           .except("iso", "version")
-          .each do |id, score|
-            ai = AssessmentIndicator.find_by_code!(pub.named_id, id)
-            score =
-              assessment
-                .scores
-                .create_with(value: score)
-                .find_or_create_by!(assessment_indicator: ai)
-            score.update(value: score) if update
-          end
+          .each do |id, value|
+          ai = AssessmentIndicator.find_by_code!(pub.named_id, id)
+          score =
+            assessment
+            .scores
+            .create_with(value: value)
+            .find_or_create_by!(assessment_indicator: ai)
+          score.update(value: value) if update
+        end
       end
     end
 
@@ -61,27 +61,27 @@ module AssessmentSeed
             [l.downcase.tr(".", ""), v / 20]
           end.to_h
 
-        name = row.cells[2].value.strip
-        corrections = {
-          "Democratic Republic of the Congo" =>
+          name = row.cells[2].value.strip
+          corrections = {
+            "Democratic Republic of the Congo" =>
             "Congo, Democratic Republic of the",
-          "United Republic of Tanzania" => "Tanzania, United Republic of",
-          "Micronesia" => "Micronesia (Federated States of)",
-          "Democratic People's Republic of Korea" =>
+              "United Republic of Tanzania" => "Tanzania, United Republic of",
+              "Micronesia" => "Micronesia (Federated States of)",
+              "Democratic People's Republic of Korea" =>
             "Korea (Democratic People's Republic of)",
-          "Republic of Korea" => "Korea, Republic of",
-          "Czech Republic" => "Czechia",
-          "Republic of Moldova" => "Moldova, Republic of",
-          "Guinea Bissau" => "Guinea-Bissau",
-          "Saint Vicent and the Grenadines" =>
+              "Republic of Korea" => "Korea, Republic of",
+              "Czech Republic" => "Czechia",
+              "Republic of Moldova" => "Moldova, Republic of",
+              "Guinea Bissau" => "Guinea-Bissau",
+              "Saint Vicent and the Grenadines" =>
             "Saint Vincent and the Grenadines",
-          "Venezuela (Bolivarian Republique of)" =>
+              "Venezuela (Bolivarian Republique of)" =>
             "Venezuela (Bolivarian Republic of)",
-          "Iran (Islamic Republic of )" => "Iran (Islamic Republic of)"
-        }
-        attrs["name"] = corrections[name] || name
+              "Iran (Islamic Republic of )" => "Iran (Islamic Republic of)"
+          }
+          attrs["name"] = corrections[name] || name
 
-        self.new(attrs)
+          self.new(attrs)
       end
     end
 
@@ -99,7 +99,7 @@ module AssessmentSeed
             [r.name, r] if r
           end.to_h
 
-        spar_data.merge!(data)
+          spar_data.merge!(data)
       end
 
       spar = AssessmentPublication.find_by_named_id!("spar_2018")
@@ -108,14 +108,14 @@ module AssessmentSeed
         assessment = spar.assessments.find_or_create_by!(country: country)
 
         country_info = country_spar.to_h.except(:name)
-        country_info.each do |id, score|
+        country_info.each do |id, value|
           ai = AssessmentIndicator.find_by_code!("spar_2018", id)
           score =
             assessment
-              .scores
-              .create_with(value: score)
-              .find_or_create_by!(assessment_indicator: ai)
-          score.update(value: score) if update
+            .scores
+            .create_with(value: value)
+            .find_or_create_by!(assessment_indicator: ai)
+          score.update(value: value) if update
         end
       end
     end
