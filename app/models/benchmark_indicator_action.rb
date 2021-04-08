@@ -4,6 +4,8 @@ class BenchmarkIndicatorAction < ApplicationRecord
   belongs_to :benchmark_indicator
   belongs_to :disease, optional: true
   has_many :plan_action
+  has_and_belongs_to_many :reference_library_documents,
+                          join_table: :actions_and_documents
 
   default_scope { order(:sequence) }
 
@@ -25,7 +27,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
     "SOPs",
     "Surveillance",
     "Tool Development",
-    "Training",
+    "Training"
   ].freeze
 
   # defines how JSON will be formed with +to_json+ and +as_json+
@@ -38,7 +40,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
       level: nil,
       sequence: nil,
       action_types: nil,
-      disease_id: nil,
+      disease_id: nil
     }
   end
 
