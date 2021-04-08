@@ -18,15 +18,21 @@ describe ReferenceLibraryDocument do
     end
   end
 
-  describe ".all_from_csv" do
-    let(:csv_data) { CSV.read(ReferenceLibraryDocument::PATH_TO_CSV_FILE) }
-    let(:result) { ReferenceLibraryDocument.all_from_csv }
+  describe ".import" do
+    let(:csv_filename) do
+      "test/fixtures/files/reference_library_documents_test.csv"
+    end
+    let(:result) { ReferenceLibraryDocument.all }
+    before { ReferenceLibraryDocument.import!(csv_filename) }
 
-    it "returns an array of ReferenceLibraryDocuments" do
-      _(result).must_be_instance_of Array
-      _(result.size).must_equal(csv_data.size - 1)
-      _(result.first).must_be_instance_of ReferenceLibraryDocument
-      _(result.last).must_be_instance_of ReferenceLibraryDocument
+    it "returns the expected set of ReferenceLibraryDocuments" do
+      _(result.size).must_equal(1)
+      _(result.first.title).must_equal(
+        "Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia"
+      )
+      _(result.first.download_url).must_equal(
+        "https://dl.airtable.com/.attachments/7db0812500c513bb055fe551030f0d84/b9d0e9bb/HazimEthiopiaAMRSurveillance.pdf"
+      )
     end
   end
 

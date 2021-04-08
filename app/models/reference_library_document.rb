@@ -23,9 +23,8 @@ class ReferenceLibraryDocument < ApplicationRecord
     "Training Package"
   ].freeze
 
-  def self.all_from_csv
-    array_of_rows = CSV.read(PATH_TO_CSV_FILE)
-    array_of_rows.drop(1).map { |row| new_from_csv_row(row) }
+  def self.import!(csv = PATH_TO_CSV_FILE)
+    CSV.read(csv).drop(1).map { |row| new_from_csv_row(row).save }
   end
 
   def self.new_from_csv_row(row)
