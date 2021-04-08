@@ -26,11 +26,16 @@ class ReferenceLibraryDocument < ApplicationRecord
   ].freeze
 
   def self.import!(csv = PATH_TO_CSV_FILE)
-    CSV.read(csv).drop(1).map { |row| new_from_csv_row(row).save }
+    record_hashes_from_csv(csv).each { |r| ReferenceLibraryDocument.create(r) }
   end
 
-  def self.new_from_csv_row(row)
-    new(
+  def self.record_hashes_from_csv(csv)
+    CSV.read(csv).drop(1) # drop header row
+      .map { |row| record_hash_from_row(row) }
+  end
+
+  def self.record_hash_from_row(row)
+    {
       download_url: extract_download_url(row[1]&.strip),
       title: row[2]&.strip,
       description: row[3]&.strip,
@@ -40,7 +45,7 @@ class ReferenceLibraryDocument < ApplicationRecord
       date: row[8]&.strip,
       relevant_pages: row[11]&.strip,
       thumbnail_url: extract_download_url(row[13]&.strip)
-    )
+    }
   end
 
   def self.extract_download_url(attachments_field)

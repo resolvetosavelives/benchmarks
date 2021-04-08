@@ -18,23 +18,23 @@ describe ReferenceLibraryDocument do
     end
   end
 
-  describe ".import" do
-    let(:csv_filename) do
-      "test/fixtures/files/reference_library_documents_test.csv"
-    end
-    let(:result) { ReferenceLibraryDocument.all }
-    before { ReferenceLibraryDocument.import!(csv_filename) }
+  # describe ".import!" do
+  #   let(:csv_filename) do
+  #     "test/fixtures/files/reference_library_documents_test.csv"
+  #   end
+  #   let(:result) { ReferenceLibraryDocument.all }
+  #   before { ReferenceLibraryDocument.import!(csv_filename) }
 
-    it "returns the expected set of ReferenceLibraryDocuments" do
-      _(result.size).must_equal(1)
-      _(result.first.title).must_equal(
-        "Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia"
-      )
-      _(result.first.download_url).must_equal(
-        "https://dl.airtable.com/.attachments/7db0812500c513bb055fe551030f0d84/b9d0e9bb/HazimEthiopiaAMRSurveillance.pdf"
-      )
-    end
-  end
+  #   it "returns the expected set of ReferenceLibraryDocuments" do
+  #     _(result.size).must_equal(1)
+  #     _(result.first.title).must_equal(
+  #       "Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia"
+  #     )
+  #     _(result.first.download_url).must_equal(
+  #       "https://dl.airtable.com/.attachments/7db0812500c513bb055fe551030f0d84/b9d0e9bb/HazimEthiopiaAMRSurveillance.pdf"
+  #     )
+  #   end
+  # end
 
   describe "#new_from_csv_row" do
     let(:row) do
@@ -56,37 +56,35 @@ describe ReferenceLibraryDocument do
       ]
     end
 
-    let(:result) { ReferenceLibraryDocument.new_from_csv_row(row) }
+    let(:result) { ReferenceLibraryDocument.record_hash_from_row(row) }
+
+    let(:expected_hash) do
+      {
+        title: "title xyz",
+        description: "desc xyz",
+        author: "author xyz",
+        date: "date xyz",
+        relevant_pages: "page xyz",
+        download_url: "test download URL",
+        thumbnail_url: "test thumbnail URL",
+        technical_area: "Antimicrobial Resistance",
+        reference_type: "Case Study"
+      }
+    end
 
     before do
       ReferenceLibraryDocument
         .expects(:extract_download_url)
-        .at_least_once
         .with("CSV download URL")
         .returns("test download URL")
       ReferenceLibraryDocument
         .stubs(:extract_download_url)
-        .at_least_once
         .with("CSV thumbnail URL")
         .returns("test thumbnail URL")
     end
 
-    it "returns an instance of ReferenceLibraryDocument with its members set" do
-      _(result).must_be_instance_of ReferenceLibraryDocument
-      _(result.title).must_equal "title xyz"
-      _(result.description).must_equal "desc xyz"
-      _(result.author).must_equal "author xyz"
-      _(result.date).must_equal "date xyz"
-      _(result.relevant_pages).must_equal "page xyz"
-      _(result.download_url).must_equal "test download URL"
-      _(result.thumbnail_url).must_equal "test thumbnail URL"
-      _(result.technical_area).must_equal "Antimicrobial Resistance"
-      _(result.reference_type).must_equal "Case Study"
-    end
-
-    it "won't recreate rows with identical download urls" do
-      _(result.save).must_equal true
-      _(ReferenceLibraryDocument.new_from_csv_row(row).save).must_equal false
+    it "returns a hash with the expected keys and values" do
+      _(result).must_equal expected_hash
     end
   end
 
