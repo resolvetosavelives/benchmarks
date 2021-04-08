@@ -43,6 +43,7 @@ class ReferenceLibraryDocument < ApplicationRecord
       title: row[2]&.strip,
       description: row[3]&.strip,
       technical_area: row[4]&.strip,
+      benchmark_indicator_action_ids: find_indicator_actions(row[5]&.strip),
       reference_type: row[6]&.strip,
       author: row[7]&.strip,
       date: row[8]&.strip,
@@ -70,6 +71,17 @@ class ReferenceLibraryDocument < ApplicationRecord
     return nil if index.nil?
 
     index + 1
+  end
+
+  def self.find_indicator_actions(text)
+    indicator_texts = CSV.parse(text, quote_char: "\"").first # just one row
+    indicator_texts.map do |it|
+      words = it.split(" ")
+      sequence = words.first
+      text = words[1..-1].join(" ")
+      BenchmarkIndicatorAction.find_by_text(text)&.id
+    end
+  rescue StandardError
   end
 
   def reference_type_ordinal

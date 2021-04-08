@@ -18,25 +18,7 @@ describe ReferenceLibraryDocument do
     end
   end
 
-  # describe ".import!" do
-  #   let(:csv_filename) do
-  #     "test/fixtures/files/reference_library_documents_test.csv"
-  #   end
-  #   let(:result) { ReferenceLibraryDocument.all }
-  #   before { ReferenceLibraryDocument.import!(csv_filename) }
-
-  #   it "returns the expected set of ReferenceLibraryDocuments" do
-  #     _(result.size).must_equal(1)
-  #     _(result.first.title).must_equal(
-  #       "Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia"
-  #     )
-  #     _(result.first.download_url).must_equal(
-  #       "https://dl.airtable.com/.attachments/7db0812500c513bb055fe551030f0d84/b9d0e9bb/HazimEthiopiaAMRSurveillance.pdf"
-  #     )
-  #   end
-  # end
-
-  describe "#new_from_csv_row" do
+  describe "#record_hash_from_row" do
     let(:row) do
       [
         nil,
@@ -44,7 +26,7 @@ describe ReferenceLibraryDocument do
         "title xyz", #2
         "desc xyz", #3
         "Antimicrobial Resistance", #4
-        nil, #5
+        "\"1.1 Give cats the vote.\"", #5
         "Case Study", #6
         "author xyz", #7
         "date xyz", #8
@@ -60,14 +42,15 @@ describe ReferenceLibraryDocument do
 
     let(:expected_hash) do
       {
+        download_url: "test download URL",
         title: "title xyz",
         description: "desc xyz",
+        technical_area: "Antimicrobial Resistance",
+        benchmark_indicator_action_ids: [1],
         author: "author xyz",
         date: "date xyz",
         relevant_pages: "page xyz",
-        download_url: "test download URL",
         thumbnail_url: "test thumbnail URL",
-        technical_area: "Antimicrobial Resistance",
         reference_type: "Case Study"
       }
     end
@@ -81,6 +64,10 @@ describe ReferenceLibraryDocument do
         .stubs(:extract_download_url)
         .with("CSV thumbnail URL")
         .returns("test thumbnail URL")
+      ReferenceLibraryDocument
+        .stubs(:find_indicator_actions)
+        .with("\"1.1 Give cats the vote.\"")
+        .returns([1])
     end
 
     it "returns a hash with the expected keys and values" do
@@ -111,10 +98,35 @@ describe ReferenceLibraryDocument do
 
     describe "for an invalid type" do
       it "returns nil" do
-        ReferenceLibraryDocument.reference_type_ordinal("Something Else")
+        _(ReferenceLibraryDocument.reference_type_ordinal("Something Else"))
           .must_be_nil
-        ReferenceLibraryDocument.reference_type_ordinal("Briefing Notes")
+        _(ReferenceLibraryDocument.reference_type_ordinal("Briefing Notes"))
           .must_be_nil
+      end
+    end
+  end
+
+  describe ".find_indicator_actions" do
+    describe "for one indicator text" do
+      let(:query) do
+        "\"1.1 Develop an orientation package to implement the legislation, laws, regulations, policy and administrative requirements.\""
+      end
+      let(:result) { ReferenceLibraryDocument.find_indicator_actions(query) }
+
+      it "returns an array with one indicator action id" do
+        _(result).must_equal [5]
+      end
+    end
+
+    describe "for multiple indicator texts" do
+      let(:query) do
+        "\"1.1 Develop an orientation package to implement the legislation, laws, regulations, policy and administrative requirements.\",\"18.1 Respond to any radiological threats with joint risk assessment, investigation and implementation of the response plan.\",\"18.1 Sustain a mechanism to ensure response capacity at national, subnational and local levels.\""
+      end
+
+      let(:result) { ReferenceLibraryDocument.find_indicator_actions(query) }
+
+      it "returns an array with multiple indicator action ids" do
+        _(result).must_equal [5, 870, 876]
       end
     end
   end
