@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_02_045649) do
+ActiveRecord::Schema.define(version: 2021_04_07_220648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -150,6 +150,20 @@ ActiveRecord::Schema.define(version: 2021_04_02_045649) do
     t.integer "assessment_id"
     t.integer "term"
     t.index ["user_id"], name: "index_plans_on_user_id"
+  end
+
+  create_table "reference_library_documents", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "author"
+    t.string "date"
+    t.string "relevant_pages"
+    t.string "download_url"
+    t.string "thumbnail_url"
+    t.string "technical_area"
+    t.string "reference_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
