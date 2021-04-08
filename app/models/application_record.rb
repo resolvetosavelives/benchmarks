@@ -19,5 +19,6 @@ class ApplicationRecord < ActiveRecord::Base
     BenchmarkTechnicalArea
     BenchmarkIndicator
     BenchmarkIndicatorAction
+    ReferenceLibraryDocument
   ]
 end

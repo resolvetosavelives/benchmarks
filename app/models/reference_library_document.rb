@@ -3,6 +3,8 @@
 require "csv"
 
 class ReferenceLibraryDocument < ApplicationRecord
+  include ReferenceLibraryDocumentSeed
+
   validates :download_url, uniqueness: true
 
   PATH_TO_CSV_FILE =
