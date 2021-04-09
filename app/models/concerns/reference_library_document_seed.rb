@@ -4,7 +4,9 @@ module ReferenceLibraryDocumentSeed
   module ClassMethods
     def seed!
       warn "Seeding data for ReferenceLibraryDocuments..."
-      ReferenceLibraryDocument.import!
+      seed_path = "data/reference_library_documents_from_airtable.json"
+      doc_attrs = JSON.parse Rails.root.join(seed_path).read
+      ReferenceLibraryDocument.insert_all!(doc_attrs).count
     end
 
     def unseed!
