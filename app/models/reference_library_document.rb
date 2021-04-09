@@ -21,6 +21,14 @@ class ReferenceLibraryDocument < ApplicationRecord
     "Training Package"
   ].freeze
 
+  def self.reference_type_scope_name(reference_type_name)
+    reference_type_name.parameterize(separator: "_").pluralize.to_sym
+  end
+
+  REFERENCE_TYPES.each do |rt|
+    scope self.reference_type_scope_name(rt), -> { where(reference_type: rt) }
+  end
+
   def reference_type_ordinal(reference_type_name)
     index = REFERENCE_TYPES.index(reference_type_name)
     return nil if index.nil?
