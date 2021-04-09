@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_220648) do
+ActiveRecord::Schema.define(version: 2021_04_08_224651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "actions_and_documents", id: false, force: :cascade do |t|
+    t.bigint "benchmark_indicator_action_id"
+    t.bigint "reference_library_document_id"
+    t.index ["benchmark_indicator_action_id"], name: "index_actions_and_documents_on_benchmark_indicator_action_id"
+    t.index ["reference_library_document_id"], name: "index_actions_and_documents_on_reference_library_document_id"
+  end
 
   create_table "assessment_indicators", force: :cascade do |t|
     t.integer "assessment_technical_area_id"
