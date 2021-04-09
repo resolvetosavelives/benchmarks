@@ -15,12 +15,12 @@ module Airtable
         author: self["Author"],
         date: self["Publication Date"],
         description: self["Description"],
-        download_url: attachment & ["url"],
+        download_url: attachment&.dig("url"),
         last_modified: self["Last Modified"],
         reference_type: self["Document Type"],
         relevant_pages: self["Relevant Pages"],
         technical_area: self["Technical Area"],
-        thumbnail_url: attachment & ["thumbnails"] & ["large"] & ["url"],
+        thumbnail_url: attachment&.dig("thumbnails", "large", "url"),
         title: self["Document Title"],
         url: self["URL"]
       }
