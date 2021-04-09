@@ -47,4 +47,15 @@ class BenchmarkIndicatorAction < ApplicationRecord
   def action_types
     self[:action_types] || []
   end
+
+  def documents_by_type
+    reference_library_documents.reduce({}) do |type_hash, doc|
+      type_sym =
+        doc.reference_type.parameterize(separator: "_").pluralize.to_sym
+
+      type_hash[type_sym] = [] if type_hash[type_sym].nil?
+      type_hash[type_sym] << doc
+      type_hash
+    end
+  end
 end
