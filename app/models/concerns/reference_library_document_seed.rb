@@ -2,13 +2,28 @@ module ReferenceLibraryDocumentSeed
   extend ActiveSupport::Concern
 
   module ClassMethods
+    SEED_PATH = "data/reference_library_documents_from_airtable.json"
+
     def seed!
       warn "Seeding data for ReferenceLibraryDocuments..."
-      ReferenceLibraryDocumentImporter.new.import!
+      doc_attrs = JSON.parse Rails.root.join(SEED_PATH).read
+      docs = doc_attrs.map { |a| ReferenceLibraryDocument.new(a) }
+      ReferenceLibraryDocument.bulk_import docs
     end
 
     def unseed!
       ReferenceLibraryDocument.destroy_all
+    end
+
+    def dump_seed_file!
+      doc_attrs =
+        ReferenceLibraryDocument.all.map do |doc|
+          doc.attributes.merge(
+            "benchmark_indicator_action_ids" =>
+              doc.benchmark_indicator_action_ids
+          )
+        end
+      File.write SEED_PATH, JSON.dump(doc_attrs)
     end
 
     def update_from_airtable!
