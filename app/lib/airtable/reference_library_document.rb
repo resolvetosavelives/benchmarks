@@ -19,7 +19,7 @@ module Airtable
         last_modified: self["Last Modified"],
         reference_type: self["Document Type"],
         relevant_pages: self["Relevant Pages"],
-        technical_area: self["Technical Area"],
+        technical_area: self["Technical Area"].join(","),
         thumbnail_url: attachment&.dig("thumbnails", "large", "url"),
         title: self["Document Title"],
         url: self["URL"]
