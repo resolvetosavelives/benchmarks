@@ -9,4 +9,22 @@ class ReferenceLibraryDocument < ApplicationRecord
                           join_table: :actions_and_documents
 
   validates :download_url, uniqueness: true
+
+  REFERENCE_TYPES = [
+    "Briefing Note",
+    "Case Study",
+    "Example",
+    "Guideline",
+    "Manual",
+    "Template",
+    "Tool",
+    "Training Package"
+  ].freeze
+
+  def reference_type_ordinal(reference_type_name)
+    index = REFERENCE_TYPES.index(reference_type_name)
+    return nil if index.nil?
+
+    index + 1
+  end
 end

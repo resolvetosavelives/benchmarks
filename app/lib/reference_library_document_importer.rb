@@ -9,17 +9,6 @@ class ReferenceLibraryDocumentImporter
       .join("data", "reference_library_documents_from_airtable.csv")
       .freeze
 
-  REFERENCE_TYPES = [
-    "Briefing Note",
-    "Case Study",
-    "Example",
-    "Guideline",
-    "Manual",
-    "Template",
-    "Tool",
-    "Training Package"
-  ].freeze
-
   attr_reader :csv_path, :rows
 
   def initialize(csv_path = PATH_TO_CSV_FILE)
@@ -59,13 +48,6 @@ class ReferenceLibraryDocumentImporter
     # pluck out the URL from within the parentheses at the end of this string
     match = first_attachment.match(/.*\((.*)\)\Z/)
     return match[1] if match
-  end
-
-  def reference_type_ordinal(reference_type_name)
-    index = REFERENCE_TYPES.index(reference_type_name)
-    return nil if index.nil?
-
-    index + 1
   end
 
   def find_indicator_actions(text)

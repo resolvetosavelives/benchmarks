@@ -78,29 +78,6 @@ describe ReferenceLibraryDocumentImporter do
     end
   end
 
-  describe ".reference_type_ordinal" do
-    describe "for a known type" do
-      it "returns the expected integer" do
-        _(importer.reference_type_ordinal("Briefing Note")).must_equal 1
-        _(importer.reference_type_ordinal("Case Study")).must_equal 2
-        _(importer.reference_type_ordinal("Training Package")).must_equal 8
-      end
-    end
-
-    describe "for nil" do
-      it "returns nil" do
-        _(importer.reference_type_ordinal(nil)).must_be_nil
-      end
-    end
-
-    describe "for an invalid type" do
-      it "returns nil" do
-        _(importer.reference_type_ordinal("Something Else")).must_be_nil
-        _(importer.reference_type_ordinal("Briefing Notes")).must_be_nil
-      end
-    end
-  end
-
   describe ".find_indicator_actions" do
     describe "for one indicator text" do
       before do
