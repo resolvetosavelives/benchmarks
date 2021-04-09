@@ -4,7 +4,7 @@ module ReferenceLibraryDocumentSeed
   module ClassMethods
     def seed!
       warn "Seeding data for ReferenceLibraryDocuments..."
-      ReferenceLibraryDocument.import!
+      ReferenceLibraryDocumentImporter.new.import!
     end
 
     def unseed!
