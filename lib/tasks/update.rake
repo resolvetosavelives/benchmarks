@@ -12,4 +12,9 @@ namespace :update do
     extend AssessmentSeed::ClassMethods
     seed_jee "data/JEE scores Mar 2021.xlsx", update: true
   end
+
+  desc "Update Reference Library Documents from Airtable"
+  task reference_documents: :environment do
+    ReferenceLibraryDocument.update_from_airtable!
+  end
 end
