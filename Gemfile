@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.0.0"
 gem "rails", "~> 6.1"
 
-gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.7", require: false
 gem "devise", "~> 4.7"
@@ -45,3 +44,4 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
+

@@ -36,15 +36,15 @@ class ReferenceLibraryDocument < ApplicationRecord
 
   def self.record_hash_from_row(row)
     {
+      download_url: extract_download_url(row[1]&.strip),
+      title: row[2]&.strip,
+      description: row[3]&.strip,
+      technical_area: row[4]&.strip,
+      reference_type: row[6]&.strip,
       author: row[7]&.strip,
       date: row[8]&.strip,
-      description: row[3]&.strip,
-      download_url: extract_download_url(row[1]&.strip),
-      reference_type: row[6]&.strip,
       relevant_pages: row[11]&.strip,
-      technical_area: row[4]&.strip,
-      thumbnail_url: extract_download_url(row[13]&.strip),
-      title: row[2]&.strip
+      thumbnail_url: extract_download_url(row[13]&.strip)
     }
   end
 
