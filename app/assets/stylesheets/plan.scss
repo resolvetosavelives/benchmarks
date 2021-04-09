@@ -65,8 +65,7 @@
   }
 }
 
-.benchmark-container .row,
-.action.row {
+.benchmark-container > .action {
   border: 1px solid color("light-gray");
 }
 
