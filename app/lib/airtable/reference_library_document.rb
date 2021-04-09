@@ -4,7 +4,7 @@ module Airtable
     self.table_name = "Form"
 
     def self.fetch_approved(since: nil)
-      filter = "IS_AFTER(LAST_MODIFIED_TIME(), #{since.utc.iso8601})" if since
+      filter = "IS_AFTER(LAST_MODIFIED_TIME(), '#{since.utc.iso8601}')" if since
       self.all(view: "Approved", filter: filter)
     end
 
