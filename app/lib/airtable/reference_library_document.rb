@@ -21,6 +21,10 @@ module Airtable
         thumbnail_url:
           self["Attachments"]&.first&.dig("thumbnails", "large", "url"),
         title: self["Document Title"],
+        benchmark_indicator_actions:
+          indicators.map do |i|
+            i["Activity"].tr("\n", " ").gsub("(Flu) ", "").freeze
+          end,
         url: self["URL"]
       }
     end
