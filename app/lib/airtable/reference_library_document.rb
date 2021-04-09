@@ -9,7 +9,7 @@ module Airtable
     end
 
     def to_attrs
-      attachment = self["Attachments"].first
+      attachment = self["Attachments"]&.first
 
       {
         author: self["Author"],
