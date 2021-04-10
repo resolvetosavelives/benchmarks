@@ -58,4 +58,10 @@ class BenchmarkIndicatorAction < ApplicationRecord
       type_hash
     end
   end
+
+  def as_json(*args, **kwargs)
+    super(*args, **kwargs).merge(
+      "reference_library_document_ids" => reference_library_document_ids
+    )
+  end
 end
