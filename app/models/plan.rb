@@ -5,8 +5,9 @@ class Plan < ApplicationRecord
   ASSESSMENT_TYPES = [
     1, # jee1
     2, # spar_2018
-    3, # from-technical-areas
+    3 # from-technical-areas
   ].freeze
+
   # TODO: update this implementation once the assessments page is modernized
   ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 from-technical-areas].freeze
   TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
@@ -19,28 +20,31 @@ class Plan < ApplicationRecord
   has_many :benchmark_indicator_actions, through: :plan_actions
   has_many :plan_diseases
   has_many :diseases, through: :plan_diseases, dependent: :destroy
+  has_many :reference_library_documents, through: :benchmark_indicator_actions
 
   delegate :alpha3, to: :country
   delegate :jee1?, :spar_2018?, :type_description, to: :assessment
 
-  scope :deep_load, ->(id) {
-    includes(:goals,
-      {plan_actions: :benchmark_indicator_action})
-      .where(id: id)
-      .first
-  }
+  scope :deep_load,
+        ->(id) {
+          includes(
+              :goals,
+              {
+                plan_actions: {
+                  benchmark_indicator_action: :reference_library_documents
+                }
+              }
+            )
+            .where(id: id)
+            .first
+        }
 
   validates :assessment, presence: true
   validates :name, presence: true
   validates :term, inclusion: TERM_TYPES
 
   def attributes
-    {
-      id: nil,
-      name: nil,
-      term: nil,
-      disease_ids: nil,
-    }
+    { id: nil, name: nil, term: nil, disease_ids: nil }
   end
 
   def is_5_year?
@@ -53,15 +57,17 @@ class Plan < ApplicationRecord
 
   def update!(name:, benchmark_action_ids:)
     current_action_ids = benchmark_indicator_action_ids
+
     # Use +Set+ to avoid adding duplicates.
     current_action_id_set = current_action_ids.to_set
     benchmark_action_id_set = benchmark_action_ids.to_set
+
     # 1st, remove any needed.
     remove_action_ids = (current_action_id_set - benchmark_action_id_set).to_a
-    remove_actions = plan_actions
-      .where(benchmark_indicator_action_id: remove_action_ids)
-      .all
+    remove_actions =
+      plan_actions.where(benchmark_indicator_action_id: remove_action_ids).all
     remove_actions.each(&:destroy)
+
     # 2nd, add any needed.
     add_action_ids = (benchmark_action_id_set - current_action_id_set).to_a
     add_action_ids.each do |benchmark_action_id|
@@ -70,6 +76,7 @@ class Plan < ApplicationRecord
       plan_action.plan = self
       plan_actions << plan_action
     end
+
     # lastly, now that the associations are handled, perform a basic update
     super name: name
   end
@@ -100,14 +107,13 @@ class Plan < ApplicationRecord
 
   # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
   def count_actions_by_type
-    counts_by_type = Array.new(
-      BenchmarkIndicatorAction::ACTION_TYPES.size, 0
-    )
+    counts_by_type = Array.new(BenchmarkIndicatorAction::ACTION_TYPES.size, 0)
     plan_actions.each do |action|
       # some BIA's have no action types and those are nil, we absorb with +&+
-      action.benchmark_indicator_action.action_types&.each do |type_num|
-        counts_by_type[type_num - 1] += 1
-      end
+      action
+        .benchmark_indicator_action
+        .action_types
+        &.each { |type_num| counts_by_type[type_num - 1] += 1 }
     end
     counts_by_type
   end
@@ -140,9 +146,10 @@ class Plan < ApplicationRecord
   def excluded_actions_for(benchmark_indicator)
     # note that "all possible" is scoped within the given benchmark_indicator
     all_possible_actions = benchmark_indicator.actions
-    included_actions = plan_actions
-      .where(benchmark_indicator_action_id: all_possible_actions)
-      .map(&:benchmark_indicator_action)
+    included_actions =
+      plan_actions
+        .where(benchmark_indicator_action_id: all_possible_actions)
+        .map(&:benchmark_indicator_action)
     (all_possible_actions.to_set - included_actions.to_set).to_a
   end
 end
