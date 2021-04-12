@@ -19,6 +19,9 @@ module ReferenceLibraryDocumentSeed
 
     def unseed!
       ReferenceLibraryDocument.destroy_all
+      ReferenceLibraryDocument.connection.exec_query(
+        "SELECT setval('public.reference_library_documents_id_seq', 1, false);"
+      )
     end
 
     def dump_seed_file!
