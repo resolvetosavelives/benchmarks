@@ -1,11 +1,13 @@
 - if [document.title, document.author, document.description, document.relevant_pages, document.download_url, document.thumbnail_url].any?(&:present?)
   - tid = technical_area_to_id(@technical_areas, document.technical_area)
-  .document.row.no-gutters{class: "technical-area-#{tid} reference-type-#{document.reference_type_ordinal}"}
+  .document.row.no-gutters{
+    class: "technical-area-#{tid} reference-type-#{document.reference_type_ordinal}"
+  }
     .document.col.card.flex-row
       - if document.thumbnail_url.present?
         .cover-image
           %a{href: document.download_url, target: "_blank"}
-            %img{src: image_path(document.thumbnail_url)}
+            %img{src: image_path(document.thumbnail_url), width: 160}/
       .document-about.col
         - if document.download_url.present? && document.title.present?
           %a{href: document.download_url, target: "_blank"}
