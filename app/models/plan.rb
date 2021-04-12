@@ -152,4 +152,11 @@ class Plan < ApplicationRecord
         .map(&:benchmark_indicator_action)
     (all_possible_actions.to_set - included_actions.to_set).to_a
   end
+
+  def as_json(*args, **kwargs)
+    super(*args, **kwargs).merge(
+      "benchmark_indicator_actions" => benchmark_indicator_actions.as_json,
+      "diseases" => diseases.as_json
+    )
+  end
 end

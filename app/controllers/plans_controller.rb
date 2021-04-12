@@ -82,8 +82,6 @@ class PlansController < ApplicationController # workaround for XHR being unable 
         Rails.root.join("app", "fixtures", "nudges_for_action_types.json")
       )
     @plan = Plan.deep_load(params.fetch(:id))
-    @reference_library_documents =
-      ReferenceLibraryDocument.all.map { |d| [d.id, d] }.to_h
   end
 
   # TODO: test coverage for this
