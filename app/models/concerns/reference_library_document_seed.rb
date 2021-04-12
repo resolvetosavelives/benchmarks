@@ -9,6 +9,12 @@ module ReferenceLibraryDocumentSeed
       doc_attrs = JSON.parse Rails.root.join(SEED_PATH).read
       docs = doc_attrs.map { |a| ReferenceLibraryDocument.new(a) }
       ReferenceLibraryDocument.bulk_import docs
+
+      id = ReferenceLibraryDocument.last.id
+      ReferenceLibraryDocument.connection.exec_query(
+        "SELECT setval('public.reference_library_documents_id_seq', #{id});",
+        "Update generated IDs sequence to match imported data"
+      )
     end
 
     def unseed!
