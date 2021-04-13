@@ -8,7 +8,7 @@ module ReferenceLibraryDocumentSeed
       warn "Seeding data for ReferenceLibraryDocuments..."
       doc_attrs = JSON.parse Rails.root.join(SEED_PATH).read
       docs = doc_attrs.map { |a| ReferenceLibraryDocument.new(a) }
-      ReferenceLibraryDocument.bulk_import docs
+      ReferenceLibraryDocument.bulk_import docs, recursive: true
 
       id = ReferenceLibraryDocument.last.id
       ReferenceLibraryDocument.connection.exec_query(
@@ -24,14 +24,17 @@ module ReferenceLibraryDocumentSeed
       )
     end
 
-    def dump_seed_file!
+    def write_seed!
       doc_attrs =
-        ReferenceLibraryDocument.all.map do |doc|
-          doc.attributes.merge(
-            "benchmark_indicator_action_ids" =>
-              doc.benchmark_indicator_action_ids
-          )
-        end
+        ReferenceLibraryDocument
+          .includes(:benchmark_indicator_actions)
+          .all
+          .map do |doc|
+            doc.attributes.merge(
+              "benchmark_indicator_action_ids" =>
+                doc.benchmark_indicator_action_ids
+            )
+          end
       File.write SEED_PATH, JSON.dump(doc_attrs)
     end
 
@@ -62,7 +65,8 @@ module ReferenceLibraryDocumentSeed
       print "\n"
 
       puts "Adding documents to database..."
-      ReferenceLibraryDocument.bulk_import import_docs
+      ReferenceLibraryDocument.bulk_import import_docs, recursive: true
+      write_seed!
     end
   end
 end
