@@ -5,7 +5,11 @@ require "minitest/spec"
 require "minitest/autorun"
 
 describe ReferenceLibraryDocument do
-  let(:document) { ReferenceLibraryDocument.new }
+  let(:document) { build(:reference_library_document) }
+
+  it "can be created" do
+    document.save!
+  end
 
   describe ".reference_type_ordinal" do
     describe "for a known type" do
