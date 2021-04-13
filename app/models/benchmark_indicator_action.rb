@@ -4,8 +4,8 @@ class BenchmarkIndicatorAction < ApplicationRecord
   belongs_to :benchmark_indicator
   belongs_to :disease, optional: true
   has_many :plan_action
-  has_and_belongs_to_many :reference_library_documents,
-                          join_table: :actions_and_documents
+  has_many :action_documents, dependent: :destroy
+  has_many :reference_library_documents, through: :action_documents
 
   default_scope { order(:sequence) }
 
