@@ -13,36 +13,7 @@ const Action = (props) => {
   const indicatorMap = useSelector((state) => getIndicatorMap(state))
   const indicator = indicatorMap[action.benchmark_indicator_id]
   let [expanded, setExpanded] = useState(true)
-  const documents = [
-    {
-      title:
-        "Develop and Conduct a Water Resilience Tabletop Exercise with Water Utilities",
-      description:
-        "The Tabletop Exercise Tool for Drinking Water and Wastewater Utilities (TTX Tool) provides users with the resources to plan, conduct and evaluate tabletop exercises that focus on Water Sector-related incidents and challenges.",
-      author: "United States Environmental Protection Agency",
-      date: "2018, 2016",
-      relevant_pages: "All",
-      download_url:
-        "https://dl.airtable.com/.attachments/bf4dd7ce96970e04591a1de8ec2ab251/d5c39c6e/final_2016_prep_guidelines.pdf",
-      thumbnail_url: "",
-      technical_area: "Chemical Events,Emergency Preparedness",
-      reference_type: "Training Package",
-    },
-    {
-      title: "WHO simulation exercise manual, guidance & tools",
-      description:
-        "This exercise manual has been designed to meet the needs of WHO, its Member States and its partners to support and develop exercise practitioners’ competency to plan, implement and evaluate simulation exercises. The manual complements existing WHO exercise methodologies, helping ensure common understandings\nand approaches across the organization. It describes how exercise teams work, and can supplement future training courses for WHO staff, ministries of health, governments, and preparedness and response partners.",
-      author: "World Health Organization",
-      date: "2017, 2018",
-      relevant_pages: "All",
-      download_url:
-        "https://dl.airtable.com/.attachments/87ea5ee577cb686841c1558b46406ba4/e6448b04/WHO-WHE-CPI-2018_48-eng.pdf",
-      thumbnail_url: "",
-      technical_area:
-        '"IHR Coordination, Communication and Advocacy, and Reporting",Zoonotic Disease,Food Safety,Immunization,National Laboratory System,Human Resources,Emergency Preparedness,Medical Countermeasures and Personnel Deployment',
-      reference_type: "Guideline",
-    },
-  ]
+  const documents = action.reference_library_documents
 
   function documentList() {
     if (documents.length === 0) {
