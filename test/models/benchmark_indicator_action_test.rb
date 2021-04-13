@@ -3,15 +3,10 @@ require "minitest/spec"
 require "minitest/autorun"
 
 describe BenchmarkIndicatorAction do
-  let(:bia) { BenchmarkIndicatorAction.new(params) }
-  let(:params) do
-    {
-      benchmark_indicator_id: 1,
-      text: "Give cats the vote.",
-      level: 4,
-      sequence: 1,
-      action_types: [7]
-    }
+  let(:bia) { build(:benchmark_indicator_action) }
+
+  it "can be created" do
+    bia.save!
   end
 
   describe "#documents_by_type" do
