@@ -43,10 +43,6 @@ class Plan < ApplicationRecord
   validates :name, presence: true
   validates :term, inclusion: TERM_TYPES
 
-  def attributes
-    { id: nil, name: nil, term: nil, disease_ids: nil }
-  end
-
   def is_5_year?
     term.eql?(TERM_TYPES.second)
   end
@@ -153,10 +149,30 @@ class Plan < ApplicationRecord
     (all_possible_actions.to_set - included_actions.to_set).to_a
   end
 
-  def as_json(*args, **kwargs)
-    super(*args, **kwargs).merge(
-      "benchmark_indicator_actions" => benchmark_indicator_actions.as_json,
-      "diseases" => diseases.as_json
+  def as_json(options = {})
+    super(
+      options.reverse_merge(
+        only: %i[id name term],
+        include: [
+          {
+            benchmark_indicator_actions: {
+              only: %i[
+                id
+                benchmark_indicator_id
+                text
+                level
+                sequence
+                action_types
+                disease_id
+              ],
+              include: [:reference_library_documents],
+              methods: [:benchmark_technical_area_id]
+            }
+          },
+          :diseases
+        ],
+        methods: :disease_ids
+      )
     )
   end
 end

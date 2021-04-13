@@ -30,20 +30,6 @@ class BenchmarkIndicatorAction < ApplicationRecord
     "Training"
   ].freeze
 
-  # defines how JSON will be formed with +to_json+ and +as_json+
-  def attributes
-    {
-      id: nil,
-      benchmark_indicator_id: nil,
-      benchmark_technical_area_id: nil,
-      text: nil,
-      level: nil,
-      sequence: nil,
-      action_types: nil,
-      disease_id: nil
-    }
-  end
-
   def action_types
     self[:action_types] || []
   end
@@ -59,9 +45,21 @@ class BenchmarkIndicatorAction < ApplicationRecord
     end
   end
 
-  def as_json(*args, **kwargs)
-    super(*args, **kwargs).merge(
-      "reference_library_documents" => reference_library_documents.as_json
+  def as_json(options = {})
+    super(
+      options.reverse_merge(
+        only: %i[
+          id
+          benchmark_indicator_id
+          text
+          level
+          sequence
+          action_types
+          disease_id
+        ],
+        include: [:reference_library_documents],
+        methods: [:benchmark_technical_area_id]
+      )
     )
   end
 end

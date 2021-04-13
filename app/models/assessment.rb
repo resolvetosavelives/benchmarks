@@ -35,8 +35,4 @@ class Assessment < ApplicationRecord
   def self.spar_2018_named_id
     "spar_2018"
   end
-
-  def attributes
-    { id: nil, assessment_type: nil, country_alpha3: nil }
-  end
 end
