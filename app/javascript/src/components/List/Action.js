@@ -57,14 +57,17 @@ const Action = (props) => {
       )
     } else {
       return documents.map((document) => {
+        const referenceTypeClass = `doc-type-${document.reference_type
+          .toLowerCase()
+          .replace(" ", "-")}`
         return (
           <div className="row px-3 my-2" key={document.download_url}>
             <div className="col">
               <p className="font-weight-bold my-1">
                 <a href={document.download_url}> {document.title} </a>
               </p>
-              <p className="text-muted my-1">
-                <span className="badge bg-secondary text-light p-2 mr-3">
+              <p className="my-1">
+                <span className={`badge ${referenceTypeClass} p-2 mr-3`}>
                   {document.reference_type}
                 </span>
                 {document.author}, {document.date}.{" "}
