@@ -2,14 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useSelector } from "react-redux"
 import {
-  getActionsForIds,
-  getAllActions,
-  getIndicatorMap,
-  getPlanActionIdsByIndicator,
+  getActionsForIndicator,
   getPlanDiseases,
   getPlanGoalMap,
-  getSortedActions,
-  getTechnicalAreaMap,
 } from "../../config/selectors"
 import NoGoalForThisIndicator from "./NoGoalForThisIndicator"
 import AddAction from "./AddAction"
@@ -20,24 +15,13 @@ const IndicatorActionList = (props) => {
   const indicator = props.indicator
   const planGoalMap = useSelector((state) => getPlanGoalMap(state))
   const goalForThisIndicator = planGoalMap[indicator.id]
-  const planActionIdsByIndicator = useSelector((state) =>
-    getPlanActionIdsByIndicator(state)
-  )
-  const actionIdsByIndicator = planActionIdsByIndicator[indicator.id]
-  const actions = useSelector((state) => getAllActions(state))
-  const technicalAreaMap = useSelector((state) => getTechnicalAreaMap(state))
-  const indicatorMap = useSelector((state) => getIndicatorMap(state))
   const planDiseases = useSelector((state) => getPlanDiseases(state))
-  let actionsForIndicator = getActionsForIds(actionIdsByIndicator, actions)
+  const sortedActionsByIndicator = useSelector((state) =>
+    getActionsForIndicator(state, indicator)
+  )
 
   const noGoalForThisIndicator =
     goalForThisIndicator.value === null ? <NoGoalForThisIndicator /> : null
-
-  const sortedActionsByIndicator = getSortedActions(
-    actionsForIndicator,
-    technicalAreaMap,
-    indicatorMap
-  )
 
   const actionGeneralComponents = (
     <FilteredGeneralActions actions={sortedActionsByIndicator} />
