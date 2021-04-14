@@ -16,7 +16,7 @@ const Action = (props) => {
   const documents = action.reference_library_documents
 
   function documentList() {
-    if (documents.length === 0) {
+    if (!documents || documents.length === 0) {
       return (
         <div className="row p-3">
           <div className="col font-italic">
