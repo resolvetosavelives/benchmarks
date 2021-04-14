@@ -25,12 +25,14 @@ group :development, :test do
   gem "m", "~> 1.5"
   gem "minitest-rails", "~> 6.1"
   gem "pry-byebug", "~> 3.9"
+  gem "rspec-rails", "~> 5.0"
 end
 
 group :development do
   gem "better_errors", "~> 2.9"
   gem "html2haml", "~> 2.2"
   gem "listen", "~> 3.5"
+  gem "minitest_to_rspec", "~> 0.13.0"
   gem "pry-rails", "~> 0.3.9"
   gem "rails-erd", "~> 1.6"
   gem "spring", "~> 2.1"
@@ -46,4 +48,3 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
-

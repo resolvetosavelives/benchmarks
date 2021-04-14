@@ -1,5 +1,6 @@
 # Ruby things to ignore
 .byebug_history
+.rspec_results
 /.bundle
 
 # Rails things to ignore
