@@ -84,10 +84,10 @@ const Action = (props) => {
             <span className="action-text">{action.text}</span>
           </div>
           <div className="col-1 d-flex flex-row align-items-center justify-content-end py-2 py-md-0 ">
-            {action.level ? (
-              <ActionBadge action={action} />
-            ) : (
+            {action.disease_id ? (
               <ActionBadgePill action={action} />
+            ) : (
+              <ActionBadge action={action} />
             )}
           </div>
           <div className="col-1 d-flex d-md-block py-2 py-md-0">
