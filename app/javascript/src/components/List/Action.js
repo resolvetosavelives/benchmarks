@@ -12,7 +12,7 @@ const Action = (props) => {
   const dispatch = useDispatch()
   const indicatorMap = useSelector((state) => getIndicatorMap(state))
   const indicator = indicatorMap[action.benchmark_indicator_id]
-  let [expanded, setExpanded] = useState(true)
+  let [expanded, setExpanded] = useState(false)
   const documents = action.reference_library_documents
 
   function documentList() {
