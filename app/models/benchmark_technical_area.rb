@@ -5,7 +5,7 @@ class BenchmarkTechnicalArea < ApplicationRecord
 
   default_scope { order(:sequence) }
 
-  def attributes
-    { id: nil, text: nil, sequence: nil }
+  def as_json(options = {})
+    super(options.reverse_merge(only: %i[id text sequence]))
   end
 end

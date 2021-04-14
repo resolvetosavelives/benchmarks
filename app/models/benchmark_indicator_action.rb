@@ -4,8 +4,8 @@ class BenchmarkIndicatorAction < ApplicationRecord
   belongs_to :benchmark_indicator
   belongs_to :disease, optional: true
   has_many :plan_action
-  has_and_belongs_to_many :reference_library_documents,
-                          join_table: :actions_and_documents
+  has_many :action_documents, dependent: :destroy
+  has_many :reference_library_documents, through: :action_documents
 
   default_scope { order(:sequence) }
 
@@ -30,20 +30,6 @@ class BenchmarkIndicatorAction < ApplicationRecord
     "Training"
   ].freeze
 
-  # defines how JSON will be formed with +to_json+ and +as_json+
-  def attributes
-    {
-      id: nil,
-      benchmark_indicator_id: nil,
-      benchmark_technical_area_id: nil,
-      text: nil,
-      level: nil,
-      sequence: nil,
-      action_types: nil,
-      disease_id: nil
-    }
-  end
-
   def action_types
     self[:action_types] || []
   end
@@ -57,5 +43,23 @@ class BenchmarkIndicatorAction < ApplicationRecord
       type_hash[type_sym] << doc
       type_hash
     end
+  end
+
+  def as_json(options = {})
+    super(
+      options.reverse_merge(
+        only: %i[
+          id
+          benchmark_indicator_id
+          text
+          level
+          sequence
+          action_types
+          disease_id
+        ],
+        include: [:reference_library_documents],
+        methods: [:benchmark_technical_area_id]
+      )
+    )
   end
 end

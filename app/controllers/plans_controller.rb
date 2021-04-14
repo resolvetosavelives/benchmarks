@@ -42,7 +42,7 @@ class PlansController < ApplicationController # workaround for XHR being unable 
       Plan.new_from_assessment(
         assessment: @assessment,
         technical_area_ids: technical_area_ids,
-        is_5_year_plan: params[:plan_term].start_with?("5"),
+        is_5_year_plan: params[:plan_term].start_with?("5")
       )
   end
 
@@ -57,7 +57,7 @@ class PlansController < ApplicationController # workaround for XHR being unable 
         is_5_year_plan: plan_create_params.fetch(:term).start_with?("5"),
         plan_name: "#{assessment.country.name} draft plan",
         disease_ids: disease_ids,
-        user: current_user,
+        user: current_user
       )
     unless @plan.persisted?
       flash[:notice] = "Could not save your plan, something went wrong."
@@ -79,7 +79,7 @@ class PlansController < ApplicationController # workaround for XHR being unable 
     @diseases = Disease.all
     @nudges_by_action_type_json =
       File.read(
-        Rails.root.join("app", "fixtures", "nudges_for_action_types.json"),
+        Rails.root.join("app", "fixtures", "nudges_for_action_types.json")
       )
     @plan = Plan.deep_load(params.fetch(:id))
   end
@@ -123,12 +123,9 @@ class PlansController < ApplicationController # workaround for XHR being unable 
   end
 
   def plan_create_params
-    params.require(:plan).permit(
-      :assessment_id,
-      :term,
-      :disease_ids,
-      indicators: {},
-    )
+    params
+      .require(:plan)
+      .permit(:assessment_id, :term, :disease_ids, indicators: {})
   end
 
   def plan_update_params

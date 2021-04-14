@@ -15,7 +15,7 @@ class Disease < ApplicationRecord
     find_by(name: "ebola")
   end
 
-  def attributes
-    { id: nil, name: nil, display: nil }
+  def as_json(options = {})
+    super(options.reverse_merge(only: %i[id name display]))
   end
 end

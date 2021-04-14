@@ -8,7 +8,7 @@ module ReferenceLibraryDocumentSeed
       warn "Seeding data for ReferenceLibraryDocuments..."
       doc_attrs = JSON.parse Rails.root.join(SEED_PATH).read
       docs = doc_attrs.map { |a| ReferenceLibraryDocument.new(a) }
-      ReferenceLibraryDocument.bulk_import docs
+      ReferenceLibraryDocument.bulk_import docs, recursive: true
 
       id = ReferenceLibraryDocument.last.id
       ReferenceLibraryDocument.connection.exec_query(
@@ -19,16 +19,22 @@ module ReferenceLibraryDocumentSeed
 
     def unseed!
       ReferenceLibraryDocument.destroy_all
+      ReferenceLibraryDocument.connection.exec_query(
+        "SELECT setval('public.reference_library_documents_id_seq', 1, false);"
+      )
     end
 
-    def dump_seed_file!
+    def write_seed!
       doc_attrs =
-        ReferenceLibraryDocument.all.map do |doc|
-          doc.attributes.merge(
-            "benchmark_indicator_action_ids" =>
-              doc.benchmark_indicator_action_ids
-          )
-        end
+        ReferenceLibraryDocument
+          .includes(:benchmark_indicator_actions)
+          .all
+          .map do |doc|
+            doc.attributes.merge(
+              "benchmark_indicator_action_ids" =>
+                doc.benchmark_indicator_action_ids
+            )
+          end
       File.write SEED_PATH, JSON.dump(doc_attrs)
     end
 
@@ -43,23 +49,24 @@ module ReferenceLibraryDocumentSeed
 
       puts "Looking up actions for new documents..."
 
-      action_map =
-        BenchmarkIndicatorAction.all.map { |a| [a.text.freeze, a] }.to_h
+      action_map = BenchmarkIndicatorAction.all.map { |a| [a.text, a] }.to_h
 
-      new_docs.map! do |d|
-        attrs = d.to_attrs
-        action_ids =
-          attrs
-            .delete(:benchmark_indicator_actions)
-            .map { |a| action_map.fetch(a.freeze) }
-        attrs[:benchmark_indicator_actions] = action_ids
-        print "."
-        ReferenceLibraryDocument.new(attrs)
-      end
+      import_docs =
+        new_docs.map do |d|
+          attrs = d.to_attrs
+          actions =
+            attrs
+              .delete(:benchmark_indicator_actions)
+              .map { |a| action_map.fetch(a) }
+          attrs[:benchmark_indicator_actions] = actions
+          print "."
+          ReferenceLibraryDocument.new(attrs)
+        end
       print "\n"
 
       puts "Adding documents to database..."
-      ReferenceLibraryDocument.bulk_import new_docs
+      ReferenceLibraryDocument.bulk_import import_docs, recursive: true
+      write_seed!
     end
   end
 end

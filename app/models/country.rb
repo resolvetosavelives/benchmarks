@@ -7,12 +7,13 @@ class Country < ApplicationRecord
   scope :all_assessed, -> { joins(:assessments).distinct.all }
   scope :with_assessments_and_publication,
         lambda { |country_id|
-          includes(assessments: :assessment_publication).where(id: country_id)
+          includes(assessments: :assessment_publication)
+            .where(id: country_id)
             .first
         }
 
-  def attributes
-    { id: nil, name: nil, alpha3: nil }
+  def as_json(options = {})
+    super(options.reverse_merge(only: %i[id name alpha3]))
   end
 
   def has_jee1?

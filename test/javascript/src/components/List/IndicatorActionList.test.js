@@ -4,7 +4,6 @@ import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import { useSelector } from "react-redux"
 import IndicatorActionList from "components/List/IndicatorActionList"
-import * as selectors from "config/selectors"
 
 jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
@@ -20,7 +19,7 @@ jest.mock("components/List/FilteredDiseaseActions", () => () => (
   <mock-FilteredDiseaseActions />
 ))
 
-let container, spyGetSortedActions
+let container
 
 beforeEach(() => {
   container = document.createElement("div")
@@ -33,13 +32,9 @@ afterEach(() => {
 })
 
 describe("when a goal is present", () => {
-  const mockTechnicalAreaMap = { 1: {} }
-  const mockIndicatorMap = { 1: {} }
-
   describe("and there are actions present", () => {
     const mockPlanGoalMap = { 17: { id: 2, value: 3 } }
-    const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
-    const mockAllActions = [
+    const mockActions = [
       {
         id: 2,
         benchmark_technical_area_id: 1,
@@ -52,29 +47,7 @@ describe("when a goal is present", () => {
         benchmark_indicator_id: 1,
         disease_id: null,
       },
-      {
-        id: 13,
-        benchmark_technical_area_id: 1,
-        benchmark_indicator_id: 1,
-        disease_id: null,
-      },
-      {
-        id: 11,
-        benchmark_technical_area_id: 1,
-        benchmark_indicator_id: 1,
-        disease_id: 2,
-      },
-      {
-        id: 6,
-        benchmark_technical_area_id: 1,
-        benchmark_indicator_id: 1,
-        disease_id: null,
-      },
     ]
-
-    beforeEach(() => {
-      spyGetSortedActions = jest.spyOn(selectors, "getSortedActions")
-    })
 
     describe("and the plan has diseases", () => {
       beforeEach(() => {
@@ -84,21 +57,17 @@ describe("when a goal is present", () => {
         ]
         useSelector
           .mockReturnValueOnce(mockPlanGoalMap)
-          .mockReturnValueOnce(mockPlanActionIdsByIndicator)
-          .mockReturnValueOnce(mockAllActions)
-          .mockReturnValueOnce(mockTechnicalAreaMap)
-          .mockReturnValueOnce(mockIndicatorMap)
           .mockReturnValueOnce(mockPlanDiseases)
+          .mockReturnValueOnce(mockActions)
       })
 
-      it("renders a General Action component, 2 Disease Action components, and an Add Action components and 1 child AddAction component", () => {
+      fit("renders a General Action component, 2 Disease Action components, and an Add Action components and 1 child AddAction component", () => {
         act(() => {
           ReactDOM.render(
             <IndicatorActionList indicator={{ id: 17 }} />,
             container
           )
         })
-        expect(spyGetSortedActions).toHaveBeenCalled()
         const foundGeneralActionsComponents = container.querySelectorAll(
           "mock-FilteredGeneralActions"
         )
@@ -123,10 +92,6 @@ describe("when a goal is present", () => {
         const mockPlanDiseases = []
         useSelector
           .mockReturnValueOnce(mockPlanGoalMap)
-          .mockReturnValueOnce(mockPlanActionIdsByIndicator)
-          .mockReturnValueOnce(mockAllActions)
-          .mockReturnValueOnce(mockTechnicalAreaMap)
-          .mockReturnValueOnce(mockIndicatorMap)
           .mockReturnValueOnce(mockPlanDiseases)
       })
 
@@ -161,16 +126,12 @@ describe("when a goal is present", () => {
   describe("and there are zero actions", () => {
     beforeEach(() => {
       let mockPlanGoalMap = { 17: { id: 2, value: null } }
-      let mockPlanActionIdsByIndicator = []
-      let mockAllActions = []
+      let mockActions = []
       const mockPlanDiseases = []
       useSelector
         .mockReturnValueOnce(mockPlanGoalMap)
-        .mockReturnValueOnce(mockPlanActionIdsByIndicator)
-        .mockReturnValueOnce(mockAllActions)
-        .mockReturnValueOnce(mockTechnicalAreaMap)
-        .mockReturnValueOnce(mockIndicatorMap)
         .mockReturnValueOnce(mockPlanDiseases)
+        .mockReturnValueOnce(mockActions)
     })
 
     it("renders a General Action component, no Disease Action Components, and 1 child AddAction component", () => {
@@ -203,15 +164,12 @@ describe("when a goal is present", () => {
 
 describe("when there is no goal", () => {
   beforeEach(() => {
-    const mockTechnicalAreaMap = { 1: {} }
-    const mockIndicatorMap = { 1: { id: 2, value: null } }
     const mockPlanGoalMap = { 17: { id: 2, value: null } }
-    const mockPlanActionIdsByIndicator = { 17: [2, 11, 5] }
     const mockPlanDiseases = [
       { id: 1, name: "influenza", display: "Influenza" },
       { id: 2, name: "cholera", display: "Cholera" },
     ]
-    const mockAllActions = [
+    const mockActions = [
       {
         id: 2,
         benchmark_technical_area_id: 1,
@@ -224,32 +182,11 @@ describe("when there is no goal", () => {
         benchmark_indicator_id: 1,
         disease_id: null,
       },
-      {
-        id: 13,
-        benchmark_technical_area_id: 1,
-        benchmark_indicator_id: 1,
-        disease_id: null,
-      },
-      {
-        id: 11,
-        benchmark_technical_area_id: 1,
-        benchmark_indicator_id: 1,
-        disease_id: null,
-      },
-      {
-        id: 6,
-        benchmark_technical_area_id: 1,
-        benchmark_indicator_id: 1,
-        disease_id: null,
-      },
     ]
     useSelector
       .mockReturnValueOnce(mockPlanGoalMap)
-      .mockReturnValueOnce(mockPlanActionIdsByIndicator)
-      .mockReturnValueOnce(mockAllActions)
-      .mockReturnValueOnce(mockTechnicalAreaMap)
-      .mockReturnValueOnce(mockIndicatorMap)
       .mockReturnValueOnce(mockPlanDiseases)
+      .mockReturnValueOnce(mockActions)
   })
 
   it("renders NoGoalForThisIndicator, any Actions, and Add Action", () => {

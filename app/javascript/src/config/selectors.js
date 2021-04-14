@@ -52,6 +52,33 @@ const getActionsForIds = (actionIds, actions) => {
   return actions.filter((action) => actionIds.indexOf(action.id) >= 0)
 }
 
+const getTechnicalAreaMap = createSelector(
+  [getAllTechnicalAreas],
+  (technicalAreas) => {
+    return technicalAreas.reduce((map, technicalArea) => {
+      map[technicalArea.id] = technicalArea
+      return map
+    }, {})
+  }
+)
+
+const getIndicatorMap = createSelector([getAllIndicators], (indicators) => {
+  return indicators.reduce((map, indicator) => {
+    map[indicator.id] = indicator
+    return map
+  }, {})
+})
+
+const getActionsForIndicator = createSelector(
+  [getPlan, (_, indicator) => indicator, getTechnicalAreaMap, getIndicatorMap],
+  (plan, indicator, technicalAreaMap, indicatorMap) => {
+    const actions = plan.benchmark_indicator_actions.filter(
+      (action) => action.benchmark_indicator_id === indicator.id
+    )
+    return getSortedActions(actions, technicalAreaMap, indicatorMap)
+  }
+)
+
 // Sort by: disease_id ASC, technical_area.sequence ASC, indicator.sequence ASC, action.level ASC, action.sequence ASC
 const getSortedActions = (actions, technicalAreaMap, indicatorMap) => {
   return actions.sort((actionA, actionB) => {
@@ -87,23 +114,6 @@ const getSortedActions = (actions, technicalAreaMap, indicatorMap) => {
     return 0
   })
 }
-
-const getTechnicalAreaMap = createSelector(
-  [getAllTechnicalAreas],
-  (technicalAreas) => {
-    return technicalAreas.reduce((map, technicalArea) => {
-      map[technicalArea.id] = technicalArea
-      return map
-    }, {})
-  }
-)
-
-const getIndicatorMap = createSelector([getAllIndicators], (indicators) => {
-  return indicators.reduce((map, indicator) => {
-    map[indicator.id] = indicator
-    return map
-  }, {})
-})
 
 const countActionsByTechnicalArea = createSelector(
   [getActionsForPlan, getTechnicalAreaMap, getAllTechnicalAreas],
@@ -226,6 +236,7 @@ export {
   filterActionsForDiseaseId,
   getActionMap,
   getActionsForIds,
+  getActionsForIndicator,
   getActionsForPlan,
   getAllActions,
   getAllDiseases,

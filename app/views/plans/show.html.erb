@@ -35,7 +35,7 @@
         "planGoals": <%= raw @plan.goals.to_json %>,
         "planChartLabels": <%= raw [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>,
         "nudgesByActionType": <%= raw @nudges_by_action_type_json %>,
-        "diseases": <%= raw @diseases.to_json %>
+        "diseases": <%= raw @diseases.to_json %>,
     };
 </script>
 <script type="application/javascript">

@@ -4,6 +4,7 @@ class Assessment < ApplicationRecord
   include AssessmentSeed
 
   belongs_to :assessment_publication
+
   # NB: the association is: assessments.country_alpha3 => countries.alpha3
   belongs_to :country, foreign_key: "country_alpha3", primary_key: "alpha3"
   has_many :scores, class_name: "AssessmentScore"
@@ -15,7 +16,7 @@ class Assessment < ApplicationRecord
           includes(:assessment_publication)
             .find_by_country_alpha3_and_assessment_publication_id(
             country_alpha3,
-            assessment_publication_id,
+            assessment_publication_id
           )
         }
 
@@ -23,7 +24,7 @@ class Assessment < ApplicationRecord
         lambda { |country_alpha3, assessment_publication_id|
           includes({ scores: :assessment_indicator }).with_publication(
             country_alpha3,
-            assessment_publication_id,
+            assessment_publication_id
           )
         }
 
@@ -33,9 +34,5 @@ class Assessment < ApplicationRecord
 
   def self.spar_2018_named_id
     "spar_2018"
-  end
-
-  def attributes
-    { id: nil, assessment_type: nil, country_alpha3: nil }
   end
 end
