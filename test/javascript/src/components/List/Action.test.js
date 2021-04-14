@@ -17,9 +17,6 @@ jest.mock("components/List/ActionBadgePill", () => () => (
   <mock-actionbadgepill />
 ))
 jest.mock("components/List/ActionBadge", () => () => <mock-actionbadge />)
-jest.mock("components/List/ActionBadgeDisease", () => () => (
-  <mock-actionbadgedisease />
-))
 
 let container, action, indicator, mockUseDispatch
 
@@ -55,8 +52,7 @@ describe("when the action is not disease specific", () => {
       level: 5,
       disease_id: null,
     }
-    useSelector
-      .mockReturnValueOnce({ 13: indicator })
+    useSelector.mockReturnValue({ 13: indicator })
   })
 
   it("Action has the expected badge, level, ordinal, title, and pill", () => {
@@ -70,7 +66,6 @@ describe("when the action is not disease specific", () => {
     expect(container.innerHTML).toMatch(action.text)
     expect(container.innerHTML).toMatch(indicator.display_abbreviation)
     expect(container.innerHTML).toMatch("mock-actionbadge")
-    expect(container.innerHTML).toMatch("mock-actionbadgepill")
   })
 
   it("calls deleteAnAction when the delete button is clicked", () => {
@@ -104,8 +99,7 @@ describe("when the Action is disease specific", () => {
       level: null,
       disease_id: 1,
     }
-    useSelector
-      .mockReturnValueOnce({ 13: indicator })
+    useSelector.mockReturnValueOnce({ 13: indicator })
   })
 
   it("Action has the expected disease badge, ordinal, title and pill", () => {
@@ -118,7 +112,6 @@ describe("when the Action is disease specific", () => {
 
     expect(container.innerHTML).toMatch(action.text)
     expect(container.innerHTML).toMatch(indicator.display_abbreviation)
-    expect(container.innerHTML).toMatch("mock-actionbadgedisease")
     expect(container.innerHTML).toMatch("mock-actionbadgepill")
   })
 })
