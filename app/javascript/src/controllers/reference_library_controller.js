@@ -30,7 +30,28 @@ export default class extends Controller {
     )
     this.technicalAreas = JSON.parse(this.data.get("technicalAreas"))
     this.templateSelector = this.data.get("templateSelector")
+    this.documents = $(".document.row", this.element).clone(true)
+
+    this.observeScrolling()
     this.updateDocumentCountDisplay()
+    this.appearOnScroll()
+  }
+
+  observeScrolling() {
+    const showMore = this.showMore.bind(this)
+    this.observer = new IntersectionObserver((entries) => {
+      if (entries[0].intersectionRatio >= 0) showMore()
+    })
+    this.observer.observe(document.querySelector(".copyright"))
+  }
+
+  appearOnScroll() {
+    $(".document.row", this.element).hide()
+    this.showMore()
+  }
+
+  showMore() {
+    $(".document.row:hidden").slice(0, 10).show()
   }
 
   handleSelectTechnicalArea(jqEvent, selectedValue) {
@@ -42,7 +63,7 @@ export default class extends Controller {
   updateDocumentCountDisplay() {
     const newCount = $(".document.row:visible", this.element).length
     const referenceWord = newCount === 1 ? "reference" : "references"
-    const countDisplayText = `${newCount} ${referenceWord}`
+    const countDisplayText = `<b>${newCount}</b> ${referenceWord}`
     $(this.documentCountTarget).html(countDisplayText)
   }
 
@@ -58,7 +79,7 @@ export default class extends Controller {
   }
 
   showAllDocuments() {
-    $(".document.row", this.element).show()
+    $(".document-container", this.element).empty().append(this.documents)
   }
 
   handleCheckboxToggle() {
@@ -81,7 +102,7 @@ export default class extends Controller {
     // 2nd, hide technical areas other than the currently selected one
     const taID = this.currentTechnicalAreaId
     if (taID > 0) {
-      $(".document.row", this.element).not(`.technical-area-${taID}`).hide()
+      $(".document.row", this.element).not(`.technical-area-${taID}`).remove()
     }
     // 3rd, hide any rows that are not of any of the currently checked reference types
     const classes = this.currentReferenceTypeOrdinals.map(
@@ -89,10 +110,11 @@ export default class extends Controller {
     )
     if (classes.length > 0) {
       const classes_str = classes.join(", ")
-      $(".document.row", this.element).not(classes_str).hide()
+      $(".document.row", this.element).not(classes_str).remove()
     }
     // lastly, update the other dynamic page elements
     this.updateDocumentCountDisplay()
+    this.appearOnScroll()
     this.updateFilterCriteriaDisplay()
   }
 

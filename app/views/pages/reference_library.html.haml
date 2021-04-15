@@ -1,8 +1,8 @@
 - require "csv"
-
-.reference-library{"data-controller": "reference-library",
+.reference-library{
+  "data-controller": "reference-library",
   "data-reference-library-technical-areas": @technical_areas.to_json,
-  "data-reference-library-template-selector": "#templateForFilterCirterionBadgePill",
+  "data-reference-library-template-selector": "#templateForFilterCirterionBadgePill"
 }
   %h1 Reference Library
   .row.flex-wrap-reverse
@@ -11,23 +11,35 @@
     .col-lg-7.col-md-12
       .result-metadata
         %p
-          %a{href: "#", "data-action": "reference-library#resetForm", "data-turbolinks": "false"}
+          %a{
+            href: "#",
+            "data-action": "reference-library#resetForm",
+            "data-turbolinks": "false"
+          }
             Reset
           %span.pipe-with-space
             |
           %strong
             Selections:
-          %span#filterCriteriaDisplay{"data-reference-library-target": "filterCriteriaDisplay"}
+          %span#filterCriteriaDisplay{
+            "data-reference-library-target": "filterCriteriaDisplay"
+          }
         %p
-          %strong
-            Showing:
+          Showing
           %span{"data-reference-library-target": "documentCount"}
-      - @documents.each do |document|
-        = render partial: "reference_document", locals: {document: document}
+      .document-container
+        - @documents.each do |document|
+          = render partial: "reference_document", locals: {document: document}
 %script#templateForFilterCirterionBadgePill{type: "text/html"}
   %span.badge.badge-pill
     {{text}}
-    %svg.x-close{xmlns: "http://www.w3.org/2000/svg",
-      "data-action": "click->reference-library\#{{methodName}}"}
-      %path{d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"}
-      %path{d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"}
+    %svg.x-close{
+      xmlns: "http://www.w3.org/2000/svg",
+      "data-action": "click->reference-library\#{{methodName}}"
+    }
+      %path{
+        d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"
+      }
+      %path{
+        d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"
+      }
