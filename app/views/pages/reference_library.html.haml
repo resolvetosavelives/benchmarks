@@ -27,8 +27,9 @@
         %p
           Showing
           %span{"data-reference-library-target": "documentCount"}
-      - @documents.each do |document|
-        = render partial: "reference_document", locals: {document: document}
+      .document-container
+        - @documents.each do |document|
+          = render partial: "reference_document", locals: {document: document}
 %script#templateForFilterCirterionBadgePill{type: "text/html"}
   %span.badge.badge-pill
     {{text}}
