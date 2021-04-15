@@ -9,6 +9,7 @@ gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.7", require: false
 gem "devise", "~> 4.7"
+gem "hamlit", "~> 2.15"
 gem "hamlit-rails", "~> 0.2"
 gem "inline_svg", "~> 1.7"
 gem "pg", "~> 1.2"
@@ -46,4 +47,5 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
+
 
