@@ -125,7 +125,7 @@ GEM
     haml (5.2.1)
       temple (>= 0.8.0)
       tilt
-    hamlit (2.11.0)
+    hamlit (2.15.0)
       temple (>= 0.8.2)
       thor
       tilt
@@ -313,6 +313,7 @@ DEPENDENCIES
   cuprite (~> 0.11)
   devise (~> 4.7)
   factory_bot_rails (~> 6.1)
+  hamlit (~> 2.15)
   hamlit-rails (~> 0.2)
   html2haml (~> 2.2)
   inline_svg (~> 1.7)
