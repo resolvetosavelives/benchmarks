@@ -23,12 +23,7 @@ const Indicator = (props) => {
       data-benchmark-indicator-display-abbrev={indicator.display_abbreviation}
     >
       <div className="row bg-light-gray px-2 header">
-        <div className="col-10">
-          <b>Benchmark {indicator.display_abbreviation}:</b>
-          &nbsp;
-          {indicator.text}
-        </div>
-        <div className="col-2">
+        <div className="col-2 d-flex align-items-center justify-content-center">
           <span
             className={`badge badge-pill badge-primary align-middle badge-rounded-circle color-value-${currentScore} mx-1 px-2`}
           >
@@ -40,6 +35,11 @@ const Indicator = (props) => {
           >
             <span>{targetScore}</span>
           </span>
+        </div>
+        <div className="col-10">
+          <b>Benchmark {indicator.display_abbreviation}:</b>
+          &nbsp;
+          {indicator.text}
         </div>
       </div>
       <IndicatorActionList indicator={indicator} />
