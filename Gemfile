@@ -30,6 +30,7 @@ end
 
 group :development do
   gem "better_errors", "~> 2.9"
+  gem "binding_of_caller", "~> 1.0"
   gem "html2haml", "~> 2.2"
   gem "listen", "~> 3.5"
   gem "pry-rails", "~> 0.3.9"
@@ -47,5 +48,3 @@ group :test do
   gem "mocha", "~> 1.12"
   gem "rails-controller-testing", "~> 1.0"
 end
-
-
