@@ -1,12 +1,21 @@
 import React from "react"
 import PropTypes from "prop-types"
+import { useSelector } from "react-redux"
+import {
+  getCurrentScoreForIndicator,
+  getTargetScoreForIndicator,
+} from "../../config/selectors"
 import IndicatorActionList from "./IndicatorActionList"
 import rightArrow from "./right-arrow.svg"
 
 const Indicator = (props) => {
   const indicator = props.indicator
-  const currentScore = "3"
-  const targetScore = "4"
+  const currentScore = useSelector((state) =>
+    getCurrentScoreForIndicator(state, indicator)
+  )
+  const targetScore = useSelector((state) =>
+    getTargetScoreForIndicator(state, indicator)
+  )
 
   return (
     <div

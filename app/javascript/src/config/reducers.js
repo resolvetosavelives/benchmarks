@@ -38,6 +38,10 @@ export default function initReducers(initialState) {
     },
   })
 
+  const currentAndTargetScores = createReducer(
+    initialState.currentAndTargetScores,
+    {}
+  )
   const initialMapOfPlanActionIdsByIndicator = {}
   const initialMapOfPlanActionIdsNotInIndicator = {}
   let currentIndicatorId
@@ -172,17 +176,18 @@ export default function initReducers(initialState) {
   const diseases = createReducer(initialState.diseases, {})
 
   return combineReducers({
-    technicalAreas,
-    indicators,
     actions,
+    currentAndTargetScores,
+    diseases,
+    indicators,
+    nudgesByActionType,
+    plan,
     planActionIds,
-    planGoals,
     planActionIdsByIndicator,
     planActionIdsNotInIndicator,
     planChartLabels,
+    planGoals,
+    technicalAreas,
     ui,
-    nudgesByActionType,
-    plan,
-    diseases,
   })
 }

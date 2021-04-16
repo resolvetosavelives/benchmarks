@@ -4,6 +4,7 @@ const getAllTechnicalAreas = (state) => state.technicalAreas
 const getAllIndicators = (state) => state.indicators
 const getAllActions = (state) => state.actions
 const getAllDiseases = (state) => state.diseases
+const getAllCurrentAndTargetScores = (state) => state.currentAndTargetScores
 const getPlanActionIdsByIndicator = (state) => state.planActionIdsByIndicator
 
 const getNudgesByActionType = (state) => state.nudgesByActionType
@@ -40,6 +41,20 @@ const getActionMap = createSelector([getAllActions], (allActions) => {
     return map
   }, {})
 })
+
+const getCurrentScoreForIndicator = createSelector(
+  [getAllCurrentAndTargetScores, (_, indicator) => indicator],
+  (scoresAndGoals, indicator) => {
+    return scoresAndGoals[indicator.id][0]
+  }
+)
+
+const getTargetScoreForIndicator = createSelector(
+  [getAllCurrentAndTargetScores, (_, indicator) => indicator],
+  (scoresAndGoals, indicator) => {
+    return scoresAndGoals[indicator.id][1]
+  }
+)
 
 const getActionsForPlan = createSelector(
   [getPlanActionIds, getAllActions],
@@ -239,10 +254,12 @@ export {
   getActionsForIndicator,
   getActionsForPlan,
   getAllActions,
+  getAllCurrentAndTargetScores,
   getAllDiseases,
   getAllIndicators,
   getAllTechnicalAreas,
   getCountOfPlanActionIds,
+  getCurrentScoreForIndicator,
   getDisease,
   getFormActionUrl,
   getFormAuthenticityToken,
@@ -262,6 +279,7 @@ export {
   getSelectedChartTabIndex,
   getSelectedTechnicalAreaId,
   getSortedActions,
+  getTargetScoreForIndicator,
   getTechnicalAreaMap,
   getUi,
   makeGetDiseaseForDiseaseId,
