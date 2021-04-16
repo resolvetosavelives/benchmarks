@@ -61,7 +61,7 @@ export default class extends Controller {
   }
 
   updateDocumentCountDisplay() {
-    const newCount = $(".document.row:visible", this.element).length
+    const newCount = $(".document.row", this.element).length
     const referenceWord = newCount === 1 ? "reference" : "references"
     const countDisplayText = `<b>${newCount}</b> ${referenceWord}`
     $(this.documentCountTarget).html(countDisplayText)
