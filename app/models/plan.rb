@@ -152,14 +152,15 @@ class Plan < ApplicationRecord
   def current_and_target_scores
     indicators = BenchmarkIndicator.all.pluck(:id)
 
-    indicators.reduce({}) do |sag, i|
-      score = score_value_for(assessment_indicator: i)
+    indicators.reduce({}) do |scores, indicator_id|
+      current = score_value_for(assessment_indicator: indicator_id)
 
       # If there's not a goal set for a benchmark indicator, lookup returns nil,
       # so we use the existing score.
-      goal = goals.find_by_benchmark_indicator_id(i)&.value || score
-      sag[i.id] = [score, goal]
-      sag
+      target =
+        goals.find_by_benchmark_indicator_id(indicator_id)&.value || current
+      scores[indicator_id] = [current, target]
+      scores
     end
   end
 
