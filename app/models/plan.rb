@@ -161,7 +161,7 @@ class Plan < ApplicationRecord
 
     indicators.reduce({}) do |sag, i|
       score = score_value_for(assessment_indicator: i)
-      goal = goals.find_by_benchmark_indicator_id(i).value || score
+      goal = goals.find_by_benchmark_indicator_id(i)&.value || score
       sag[i.id] = [score, goal]
       sag
     end
