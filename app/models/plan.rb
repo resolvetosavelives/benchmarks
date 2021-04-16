@@ -150,17 +150,13 @@ class Plan < ApplicationRecord
   end
 
   def current_and_target_scores
-    indicators =
-      BenchmarkTechnicalArea
-        .includes(
-          { benchmark_indicators: { actions: :reference_library_documents } }
-        )
-        .all
-        .map(&:benchmark_indicators)
-        .flatten
+    indicators = BenchmarkIndicator.all.pluck(:id)
 
     indicators.reduce({}) do |sag, i|
       score = score_value_for(assessment_indicator: i)
+
+      # If there's not a goal set for a benchmark indicator, lookup returns nil,
+      # so we use the existing score.
       goal = goals.find_by_benchmark_indicator_id(i)&.value || score
       sag[i.id] = [score, goal]
       sag
