@@ -9,8 +9,7 @@
     "Laboratory",
     "Biosafety & biosecurity",
     "Surveillance",
-    "Human resources",
-    "Preparedness",
+    "Human resources", "Preparedness",
     "Rapid response",
     "Linking public health",
     "Medical countermeasures",
@@ -36,6 +35,7 @@
         "planChartLabels": <%= raw [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>,
         "nudgesByActionType": <%= raw @nudges_by_action_type_json %>,
         "diseases": <%= raw @diseases.to_json %>,
+        "currentAndTargetScores": <%= raw @plan.current_and_target_scores.to_json %>,
     };
 </script>
 <script type="application/javascript">

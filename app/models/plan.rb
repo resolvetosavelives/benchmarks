@@ -149,6 +149,24 @@ class Plan < ApplicationRecord
     (all_possible_actions.to_set - included_actions.to_set).to_a
   end
 
+  def current_and_target_scores
+    indicators =
+      BenchmarkTechnicalArea
+        .includes(
+          { benchmark_indicators: { actions: :reference_library_documents } }
+        )
+        .all
+        .map(&:benchmark_indicators)
+        .flatten
+
+    indicators.reduce({}) do |sag, i|
+      score = score_value_for(assessment_indicator: i)
+      goal = goals.find_by_benchmark_indicator_id(i).value || score
+      sag[i.id] = [score, goal]
+      sag
+    end
+  end
+
   def as_json(options = {})
     super(
       options.reverse_merge(
@@ -171,7 +189,7 @@ class Plan < ApplicationRecord
           },
           :diseases
         ],
-        methods: :disease_ids
+        methods: [:disease_ids]
       )
     )
   end
