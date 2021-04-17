@@ -136,14 +136,15 @@ class AppsTest < ApplicationSystemTestCase
       indicators_no_capacity_gap.map do |indicator|
         indicator.ancestor(".benchmark-container").find(".header").text
       end
+    puts indicator_headings.inspect
     assert_equal(
       indicator_headings,
       [
-        "Benchmark 1.2: Financing is available for the implementation of IHR capacities",
-        "Benchmark 1.3: Financing available for timely response to public health emergencies",
-        "Benchmark 3.1: Effective multisectoral coordination on AMR",
-        "Benchmark 10.3: In-service trainings are available",
-        "Benchmark 12.1: Functional emergency response coordination is in place"
+        "1\n1\nBenchmark 1.2: Financing is available for the implementation of IHR capacities",
+        "1\n1\nBenchmark 1.3: Financing available for timely response to public health emergencies",
+        "1\n1\nBenchmark 3.1: Effective multisectoral coordination on AMR",
+        "1\n1\nBenchmark 10.3: In-service trainings are available",
+        "1\n1\nBenchmark 12.1: Functional emergency response coordination is in place"
       ]
     )
 
