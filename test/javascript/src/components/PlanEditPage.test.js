@@ -42,5 +42,6 @@ function stubStateFromServer() {
     plan: {},
     nudgesByActionType: {},
     diseases: [],
+    currentAndTargetScores: {},
   }
 }
