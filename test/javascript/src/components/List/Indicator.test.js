@@ -3,6 +3,14 @@ import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import Indicator from "components/List/Indicator"
 
+jest.mock("react-redux", () => ({
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}))
+jest.mock("config/actions", () => ({
+  deleteAnAction: jest.fn(),
+}))
+
 let container
 
 beforeEach(() => {

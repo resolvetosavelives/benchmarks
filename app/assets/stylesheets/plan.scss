@@ -103,6 +103,38 @@
   }
 }
 
+.benchmark-container {
+  .color-value-0,
+  .color-value-1 {
+    background-color: color("danger");
+  }
+  .color-value-2,
+  .color-value-3 {
+    background-color: color("warning");
+  }
+  .color-value-4,
+  .color-value-5 {
+    background-color: color("success");
+  }
+
+  .badge-rounded-circle {
+    height: 2.25em;
+    width: 2.25em;
+  }
+
+  .badge-rounded-circle span {
+    position: relative;
+    top: 0.4em;
+    color: white;
+  }
+
+  .action-badge-pill {
+    font-size: 14px;
+    padding: 0.25em 1em;
+    color: color("disease-pill");
+  }
+}
+
 .action.row {
   .badge-rounded-circle {
     height: 2.25em;
@@ -132,19 +164,6 @@
     .delete {
       display: inherit;
     }
-  }
-
-  .color-value-0,
-  .color-value-1 {
-    background-color: color("danger");
-  }
-  .color-value-2,
-  .color-value-3 {
-    background-color: color("warning");
-  }
-  .color-value-4,
-  .color-value-5 {
-    background-color: color("success");
   }
 
   .badge-disease {

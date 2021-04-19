@@ -149,6 +149,49 @@ class Plan < ApplicationRecord
     (all_possible_actions.to_set - included_actions.to_set).to_a
   end
 
+  def current_and_target_scores
+    goal_map =
+      goals
+        .order(:assessment_indicator_id)
+        .pluck(:benchmark_indicator_id, :value)
+        .to_h
+
+    score_map =
+      assessment
+        .scores
+        .includes(assessment_indicator: :benchmark_indicators)
+        .flat_map do |score|
+          score
+            .assessment_indicator
+            .benchmark_indicators
+            .map { |benchmark_indicator| [benchmark_indicator.id, score.value] }
+        end
+
+    benchmark_indicators =
+      goal_map.keys.concat(score_map.map { |s| s[0] }).sort.uniq
+
+    benchmark_indicators.reduce({}) do |cats, bi|
+      current_score =
+        score_map.reduce([]) do |scores, (bi, score)|
+          scores << score if bi == 38
+          scores
+        end.min
+
+      target_score = goal_map[bi] || current_score
+
+      cats[bi] = [current_score, target_score]
+      cats
+    end
+
+    # If there's not a goal set for a benchmark indicator, lookup returns nil,
+    # so we use the existing score.
+    # target =
+    #   goals.find_by_benchmark_indicator_id(indicator_id)&.value || current
+    # scores[indicator_id] = [current, target]
+    # scores
+    # end
+  end
+
   def as_json(options = {})
     super(
       options.reverse_merge(
@@ -171,7 +214,7 @@ class Plan < ApplicationRecord
           },
           :diseases
         ],
-        methods: :disease_ids
+        methods: [:disease_ids]
       )
     )
   end
