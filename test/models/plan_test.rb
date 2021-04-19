@@ -855,4 +855,34 @@ describe Plan do
       _(updated_plan.plan_actions.size).must_equal 236
     end
   end
+
+  describe ".purgeable" do
+    describe "with a plan more than 2 weeks old and no user" do
+      it "returns a matching record" do
+        plan = create(:plan_nigeria_jee1, updated_at: 3.weeks.ago)
+        results = Plan.purgeable
+
+        _(results).wont_be_empty
+        _(results.first).must_be_instance_of Plan
+      end
+    end
+
+    describe "with a plan less than 2 weeks old" do
+      it "returns no matching records" do
+        plan = create(:plan, updated_at: 1.weeks.ago)
+        results = Plan.purgeable
+
+        _(results).must_be_empty
+      end
+    end
+
+    describe "with a plan with a user" do
+      it "returns no matching records" do
+        plan = create(:plan, :with_user)
+        results = Plan.purgeable
+
+        _(results).must_be_empty
+      end
+    end
+  end
 end

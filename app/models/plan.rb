@@ -39,9 +39,15 @@ class Plan < ApplicationRecord
             .first
         }
 
+  scope :purgeable, -> { where("updated_at < ?", 2.weeks.ago).where(user: nil) }
+
   validates :assessment, presence: true
   validates :name, presence: true
   validates :term, inclusion: TERM_TYPES
+
+  def self.purge_old_plans!(dry_run: false)
+    dry_run ? purgeable : purgeable.delete_all
+  end
 
   def is_5_year?
     term.eql?(TERM_TYPES.second)

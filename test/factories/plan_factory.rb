@@ -1,12 +1,4 @@
 FactoryBot.define do
-  factory :user do
-    role { "Country Planner" }
-    sequence :email do |n|
-      "user-#{n}@example.com"
-    end
-    password { "password" }
-  end
-
   factory :plan do
     name { "Nigeria Draft Plan" }
     assessment do
@@ -17,24 +9,28 @@ FactoryBot.define do
     factory :plan_nigeria_jee1 do
       after :create do |plan|
         plan.goals =
-          JSON.parse(
-            File.read(
-              File.join(
-                Rails.root,
-                "/test/fixtures/files/plan_for_nigeria_jee1/plan_goals.json",
-              ),
-            ),
-          ).map { |attrs| PlanGoal.new(attrs) }
+          JSON
+            .parse(
+              File.read(
+                File.join(
+                  Rails.root,
+                  "/test/fixtures/files/plan_for_nigeria_jee1/plan_goals.json"
+                )
+              )
+            )
+            .map { |attrs| PlanGoal.new(attrs) }
 
         plan.plan_actions =
-          JSON.parse(
-            File.read(
-              File.join(
-                Rails.root,
-                "/test/fixtures/files/plan_for_nigeria_jee1/plan_actions.json",
-              ),
-            ),
-          ).map { |attrs| PlanAction.new(attrs) }
+          JSON
+            .parse(
+              File.read(
+                File.join(
+                  Rails.root,
+                  "/test/fixtures/files/plan_for_nigeria_jee1/plan_actions.json"
+                )
+              )
+            )
+            .map { |attrs| PlanAction.new(attrs) }
       rescue ActiveRecord::RecordNotSaved => rns
         # try to show the developer some useful feedback for when they forgot to populate seed data
         show_seed_warning rns
