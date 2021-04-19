@@ -1,40 +1,42 @@
 FactoryBot.define do
-  factory :user do
-    role { "Country Planner" }
-    sequence :email do |n|
-      "user-#{n}@example.com"
-    end
-    password { "password" }
-  end
-
   factory :plan do
-    name { "Nigeria Draft Plan" }
-    assessment do
-      Assessment.find_by_country_alpha3_and_assessment_publication_id!("NGA", 1)
-    end
+    name { "#{assessment.country.name} Draft Plan" }
+    assessment
     term { Plan::TERM_TYPES.first }
 
     factory :plan_nigeria_jee1 do
+      name { "Nigeria Draft Plan" }
+      assessment do
+        Assessment.find_by_country_alpha3_and_assessment_publication_id!(
+          "NGA",
+          1
+        )
+      end
+
       after :create do |plan|
         plan.goals =
-          JSON.parse(
-            File.read(
-              File.join(
-                Rails.root,
-                "/test/fixtures/files/plan_for_nigeria_jee1/plan_goals.json",
-              ),
-            ),
-          ).map { |attrs| PlanGoal.new(attrs) }
+          JSON
+            .parse(
+              File.read(
+                File.join(
+                  Rails.root,
+                  "/test/fixtures/files/plan_for_nigeria_jee1/plan_goals.json"
+                )
+              )
+            )
+            .map { |attrs| PlanGoal.new(attrs) }
 
         plan.plan_actions =
-          JSON.parse(
-            File.read(
-              File.join(
-                Rails.root,
-                "/test/fixtures/files/plan_for_nigeria_jee1/plan_actions.json",
-              ),
-            ),
-          ).map { |attrs| PlanAction.new(attrs) }
+          JSON
+            .parse(
+              File.read(
+                File.join(
+                  Rails.root,
+                  "/test/fixtures/files/plan_for_nigeria_jee1/plan_actions.json"
+                )
+              )
+            )
+            .map { |attrs| PlanAction.new(attrs) }
       rescue ActiveRecord::RecordNotSaved => rns
         # try to show the developer some useful feedback for when they forgot to populate seed data
         show_seed_warning rns
