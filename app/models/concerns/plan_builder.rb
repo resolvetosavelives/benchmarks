@@ -13,7 +13,7 @@ module PlanBuilder
   # this method is in this module because it deals with assessment_indicator which
   # are populated in this module before the Plan is persisted.
   def calculate_goal_value_for(assessment_indicator:)
-    score = score_value_for(assessment_indicator: assessment_indicator)
+    score = score_value_for(assessment_indicator: assessment_indicator) || 0
     if is_5_year?
       score <= 3 ? 4 : 5
     elsif score.eql?(5)
