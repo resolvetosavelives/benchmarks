@@ -566,3 +566,47 @@
   background-color: #f0fffb;
   color: #1aa179;
 }
+
+.row.action {
+  position: relative;
+}
+
+.delete-banner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: #DC3545;
+  color: #FFF;
+}
+
+.delete-banner h4 {
+  color: #FFF;
+}
+
+.delete-banner .btn {
+  text-transform: none;
+  height: auto;
+  color: #FFF;
+}
+
+.delete-banner .btn.btn-primary {
+  background-color: #fff;
+  color: #DC3545;
+}
+
+.confirm-delete-enter {
+  clip-path: inset(0 0 0 100%);
+}
+.confirm-delete-enter-active {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 750ms;
+}
+
+.confirm-delete-exit {
+  clip-path: inset(0 0 0 0);
+}
+.confirm-delete-exit-active {
+  clip-path: inset(0 0 0 100%);
+  transition: clip-path 750ms;
+}
