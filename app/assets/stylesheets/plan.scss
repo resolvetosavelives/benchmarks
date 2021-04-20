@@ -76,11 +76,6 @@
     padding-top: 32px;
     padding-bottom: 32px;
 
-    .delete {
-      font-size: 15px;
-      text-align: right;
-    }
-
     .confirm-delete,
     .delete {
       visibility: hidden;
@@ -153,16 +148,20 @@
     color: color("disease-pill");
   }
 
+  .delete img {
+    margin-top: -5px;
+  }
+
   @include media-breakpoint-up(lg) {
     .delete {
-      display: none;
+      visibility: hidden;
     }
   }
 
   &:hover {
     border: 1px solid color("primary");
     .delete {
-      display: inherit;
+      visibility: visible;
     }
   }
 
@@ -576,23 +575,110 @@
   width: 100%;
   height: 100%;
   z-index: 2;
-  background-color: #DC3545;
-  color: #FFF;
+  background-color: #dc3545;
+  color: #fff;
+
+  .btn {
+    text-transform: none;
+    height: auto;
+    color: #fff;
+  }
+
+  h4 {
+    color: #fff;
+  }
 }
 
-.delete-banner h4 {
-  color: #FFF;
+.btn-remove {
+  color: #dc3545 !important;
+  background-color: #ffffff;
+  border-color: #dc3545;
 }
 
-.delete-banner .btn {
-  text-transform: none;
-  height: auto;
-  color: #FFF;
+.btn-remove:hover,
+.btn-remove:focus,
+.btn-remove:active,
+.btn-remove.active,
+.open .dropdown-toggle.btn-remove {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border-color: #dc3545;
 }
 
-.delete-banner .btn.btn-primary {
-  background-color: #fff;
-  color: #DC3545;
+.btn-remove:active,
+.btn-remove.active,
+.open .dropdown-toggle.btn-remove {
+  background-image: none;
+}
+
+.btn-remove.disabled,
+.btn-remove[disabled],
+fieldset[disabled] .btn-remove,
+.btn-remove.disabled:hover,
+.btn-remove[disabled]:hover,
+fieldset[disabled] .btn-remove:hover,
+.btn-remove.disabled:focus,
+.btn-remove[disabled]:focus,
+fieldset[disabled] .btn-remove:focus,
+.btn-remove.disabled:active,
+.btn-remove[disabled]:active,
+fieldset[disabled] .btn-remove:active,
+.btn-remove.disabled.active,
+.btn-remove[disabled].active,
+fieldset[disabled] .btn-remove.active {
+  background-color: #ffffff;
+  border-color: #dc3545;
+}
+
+.btn-remove .badge {
+  color: #ffffff;
+  background-color: #dc3545;
+}
+
+.btn-cancel {
+  color: #ffffff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-cancel:hover,
+.btn-cancel:focus,
+.btn-cancel:active,
+.btn-cancel.active,
+.open .dropdown-toggle.btn-cancel {
+  color: #ffffff;
+  background-color: #b02a37;
+  border-color: #dc3545;
+}
+
+.btn-cancel:active,
+.btn-cancel.active,
+.open .dropdown-toggle.btn-cancel {
+  background-image: none;
+}
+
+.btn-cancel.disabled,
+.btn-cancel[disabled],
+fieldset[disabled] .btn-cancel,
+.btn-cancel.disabled:hover,
+.btn-cancel[disabled]:hover,
+fieldset[disabled] .btn-cancel:hover,
+.btn-cancel.disabled:focus,
+.btn-cancel[disabled]:focus,
+fieldset[disabled] .btn-cancel:focus,
+.btn-cancel.disabled:active,
+.btn-cancel[disabled]:active,
+fieldset[disabled] .btn-cancel:active,
+.btn-cancel.disabled.active,
+.btn-cancel[disabled].active,
+fieldset[disabled] .btn-cancel.active {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-cancel .badge {
+  color: #dc3545;
+  background-color: #ffffff;
 }
 
 .confirm-delete-enter {
