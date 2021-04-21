@@ -36,6 +36,7 @@ class Worksheet
           current_worksheet =
             @workbook.add_worksheet(benchmark_technical_area.text)
           ta_xlsx_worksheets << current_worksheet
+          current_worksheet.row_breaks = RubyXL::BreakList.new
         end
         plan_actions.each do |plan_action|
           assessment_label = @plan.type_description
@@ -46,7 +47,7 @@ class Worksheet
               assessment_label,
               goal_value,
               benchmark_indicator.objective,
-              plan_action.text,
+              plan_action.text
             )
         end
       end
@@ -140,7 +141,12 @@ class Worksheet
   end
 
   def populate_worksheet(
-    worksheet, row_index, assessment_label, goal, objective_text, action_text
+    worksheet,
+    row_index,
+    assessment_label,
+    goal,
+    objective_text,
+    action_text
   )
     goal_level_str = goal.present? ? "score #{goal}" : ""
 
@@ -183,6 +189,16 @@ class Worksheet
     bordered_merge_cells worksheet, row_index + 35, 3, 4, 2
     SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget"
     bordered_merge_cells worksheet, row_index + 38, 3, 4, 2
+
+    # Add page break after Budget section
+    puts "page breaks!"
+    worksheet.row_breaks <<
+      RubyXL::Break.new(
+        id: row_index + SECTION_ROW_OFFSET,
+        man: true,
+        min: 0,
+        max: 16_383
+      )
 
     worksheet.merge_cells row_index, 0, row_index, 1
     worksheet.merge_cells row_index, 2, row_index + 3, 6
