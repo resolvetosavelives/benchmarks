@@ -150,7 +150,11 @@ class Worksheet
   )
     goal_level_str = goal.present? ? "score #{goal}" : ""
 
-    SpreadsheetCell.new worksheet, row_index, 0, text: "Benchmark Objective:"
+    SpreadsheetCell.new worksheet,
+                        row_index,
+                        0,
+                        text: "Benchmark Objective:",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index, 2, text: objective_text
     SpreadsheetCell.new worksheet,
                         row_index + 6,
@@ -158,36 +162,42 @@ class Worksheet
                         text:
                           "Action required for #{assessment_label} #{
                             goal_level_str
-                          }"
+                          }",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index + 7, 0, text: action_text
     SpreadsheetCell.new worksheet,
                         row_index + 11,
                         0,
-                        text: "Detailed Action Description"
+                        text: "Detailed Action Description",
+                        bold: true
     SpreadsheetCell.new worksheet,
                         row_index + 28,
                         0,
-                        text: "Implementation Level (circle one)"
+                        text: "Implementation Level (circle one)",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index + 28, 3, text: "National"
     SpreadsheetCell.new worksheet, row_index + 28, 4, text: "Sub-national"
     SpreadsheetCell.new worksheet,
                         row_index + 30,
                         0,
-                        text: "Priority (circle one)"
+                        text: "Priority (circle one)",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index + 30, 3, text: "Done"
     SpreadsheetCell.new worksheet, row_index + 30, 4, text: "High"
     SpreadsheetCell.new worksheet, row_index + 30, 5, text: "Low"
     SpreadsheetCell.new worksheet,
                         row_index + 32,
                         0,
-                        text: "Responsible for Implementation:"
+                        text: "Responsible for Implementation:",
+                        bold: true
     bordered_merge_cells worksheet, row_index + 32, 3, 4, 2
     SpreadsheetCell.new worksheet,
                         row_index + 35,
                         0,
-                        text: "Estimated Start and End Dates:"
+                        text: "Estimated Start and End Dates:",
+                        bold: true
     bordered_merge_cells worksheet, row_index + 35, 3, 4, 2
-    SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget"
+    SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget", bold: true
     bordered_merge_cells worksheet, row_index + 38, 3, 4, 2
 
     # Add page break after Budget section
