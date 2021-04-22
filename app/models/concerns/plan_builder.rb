@@ -95,32 +95,34 @@ module PlanBuilder
           user: user
         )
 
-      BenchmarkIndicator.find_each do |bi|
-        ai =
-          bi.assessment_indicators.min_by do |ai|
-            scores_and_goals_by_named_id.dig(ai.named_id, :score) || 1_000
-          end
+      BenchmarkIndicator
+        .includes(:assessment_indicators, :benchmark_technical_area)
+        .find_each do |bi|
+          ai =
+            bi.assessment_indicators.min_by do |ai|
+              scores_and_goals_by_named_id.dig(ai.named_id, :score) || 1_000
+            end
 
-        goal = scores_and_goals_by_named_id.dig(ai.named_id, :goal)
-        score = scores_and_goals_by_named_id.dig(ai.named_id, :score)
+          goal = scores_and_goals_by_named_id.dig(ai.named_id, :goal)
+          score = scores_and_goals_by_named_id.dig(ai.named_id, :score)
 
-        plan.goals.build(
-          assessment_indicator: ai,
-          benchmark_indicator: bi,
-          # assessed_value: score, # oops I didn't create a migration for this
-          value: goal
-        )
+          plan.goals.build(
+            assessment_indicator: ai,
+            benchmark_indicator: bi,
+            # assessed_value: score, # oops I didn't create a migration for this
+            value: goal
+          )
 
-        bi
-          .actions_for(score: score, goal: goal, disease_ids: disease_ids)
-          .each do |action|
-            plan.plan_actions.build(
-              benchmark_indicator: bi,
-              benchmark_indicator_action: action,
-              benchmark_technical_area: bi.benchmark_technical_area
-            )
-          end
-      end
+          bi
+            .actions_for(score: score, goal: goal, disease_ids: disease_ids)
+            .each do |action|
+              plan.plan_actions.build(
+                benchmark_indicator: bi,
+                benchmark_indicator_action: action,
+                benchmark_technical_area: bi.benchmark_technical_area
+              )
+            end
+        end
 
       begin
         plan.disease_ids = disease_ids
