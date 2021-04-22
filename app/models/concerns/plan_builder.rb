@@ -98,7 +98,7 @@ module PlanBuilder
       BenchmarkIndicator.find_each do |bi|
         ai =
           bi.assessment_indicators.min_by do |ai|
-            scores_and_goals_by_named_id.dig(ai.named_id, :goal)
+            scores_and_goals_by_named_id.dig(ai.named_id, :score) || 1_000
           end
 
         goal = scores_and_goals_by_named_id.dig(ai.named_id, :goal)
