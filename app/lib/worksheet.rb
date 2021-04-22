@@ -171,12 +171,12 @@ class Worksheet
                         text: "Detailed Action Description",
                         bold: true
     SpreadsheetCell.new worksheet,
-                        row_index + 28,
+                        row_index + 27,
                         0,
                         text: "Implementation Level (circle one)",
                         bold: true
-    SpreadsheetCell.new worksheet, row_index + 28, 3, text: "National"
-    SpreadsheetCell.new worksheet, row_index + 28, 4, text: "Sub-national"
+    SpreadsheetCell.new worksheet, row_index + 27, 3, text: "National"
+    SpreadsheetCell.new worksheet, row_index + 27, 4, text: "Sub-national"
     SpreadsheetCell.new worksheet,
                         row_index + 30,
                         0,
@@ -215,8 +215,9 @@ class Worksheet
     worksheet.merge_cells row_index + 6, 0, row_index + 6, 3
     worksheet.merge_cells row_index + 7, 0, row_index + 9, 6
     worksheet.merge_cells row_index + 11, 0, row_index + 11, 2
-    worksheet.merge_cells row_index + 12, 0, row_index + 26, 6
-    worksheet.merge_cells row_index + 28, 0, row_index + 28, 2
+    worksheet.merge_cells row_index + 12, 0, row_index + 25, 6
+    worksheet.merge_cells row_index + 27, 0, row_index + 28, 2
+    worksheet.merge_cells row_index + 27, 4, row_index + 27, 5
     worksheet.merge_cells row_index + 30, 0, row_index + 30, 2
     worksheet.merge_cells row_index + 32, 0, row_index + 33, 2
     worksheet.merge_cells row_index + 35, 0, row_index + 36, 2
