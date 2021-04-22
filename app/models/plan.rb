@@ -89,37 +89,6 @@ class Plan < ApplicationRecord
     plan_actions.map(&:benchmark_indicator_action).map(&:id).sort
   end
 
-  ##
-  # Constructs an Array containing n elements where n equals
-  # +BenchmarkTechnicalArea.all.size+ (there are 18 as of year 2019) with each
-  # element containing an integer that is the count of the actions for that
-  # technical area, ordered by +BenchmarkTechnicalArea.sequence+
-  # @return Array of Integers
-  # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
-  def count_actions_by_ta(benchmark_technical_areas)
-    counts_by_ta_id = Array.new(benchmark_technical_areas.size, 0)
-    plan_actions.reduce(counts_by_ta_id) do |accumulator_h, action|
-      # sequence is one-based so subtract one to make zero-based
-      ta_sequence = action.benchmark_technical_area.sequence - 1
-      accumulator_h[ta_sequence] += 1
-      accumulator_h
-    end
-    counts_by_ta_id.compact
-  end
-
-  # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
-  def count_actions_by_type
-    counts_by_type = Array.new(BenchmarkIndicatorAction::ACTION_TYPES.size, 0)
-    plan_actions.each do |action|
-      # some BIA's have no action types and those are nil, we absorb with +&+
-      action
-        .benchmark_indicator_action
-        .action_types
-        &.each { |type_num| counts_by_type[type_num - 1] += 1 }
-    end
-    counts_by_type
-  end
-
   def goal_for(benchmark_indicator:)
     goals.detect do |goal|
       goal.benchmark_indicator_id.eql?(benchmark_indicator.id)
