@@ -1,7 +1,7 @@
 {
   "name": "benchmarks",
   "engines": {
-    "node": ">=12"
+    "node": "15.x"
   },
   "private": true,
   "dependencies": {
