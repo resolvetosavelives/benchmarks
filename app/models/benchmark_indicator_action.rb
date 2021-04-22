@@ -8,11 +8,12 @@ class BenchmarkIndicatorAction < ApplicationRecord
   has_many :reference_library_documents, through: :action_documents
 
   scope :for_diseases_and_levels,
-        ->(low:, high:) {
+        ->(low:, high:, disease_ids:) {
           where(
-            "(level >= ? AND level <= ?) OR disease_id IS NOT NULL",
+            "(level >= ? AND level <= ?) OR disease_id IN (?)",
             low,
-            high
+            high,
+            disease_ids
           )
         }
 
