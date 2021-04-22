@@ -3,7 +3,6 @@ import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 import $ from "jquery"
 import Action from "components/List/Action"
-import { deleteAnAction } from "config/actions"
 import { useSelector, useDispatch } from "react-redux"
 
 jest.mock("react-redux", () => ({
@@ -18,7 +17,7 @@ jest.mock("components/List/ActionBadgePill", () => () => (
 ))
 jest.mock("components/List/ActionBadge", () => () => <mock-actionbadge />)
 
-let container, action, indicator, mockUseDispatch
+let container, action, indicator
 
 beforeEach(() => {
   container = document.createElement("div")
@@ -69,10 +68,8 @@ describe("when the action is not disease specific", () => {
   })
 
   it("calls deleteAnAction when the delete button is clicked", () => {
-    const mockDeleteAnAction = jest.fn()
-    mockUseDispatch = jest.fn()
-    deleteAnAction.mockReturnValueOnce(mockDeleteAnAction)
-    useDispatch.mockReturnValueOnce(mockUseDispatch)
+    const mockDispatch = jest.fn()
+    useDispatch.mockReturnValue(mockDispatch)
 
     act(() => {
       ReactDOM.render(
@@ -81,9 +78,9 @@ describe("when the action is not disease specific", () => {
       )
     })
     $(".delete.close", container).trigger("click")
+    $(".btn-remove", container).trigger("click")
 
-    expect(mockUseDispatch).toHaveBeenCalledTimes(1)
-    expect(mockUseDispatch).toHaveBeenLastCalledWith(mockDeleteAnAction)
+    expect(mockDispatch).toHaveBeenCalledTimes(1)
   })
 })
 
