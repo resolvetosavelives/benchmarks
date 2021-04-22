@@ -45,14 +45,22 @@ const getActionMap = createSelector([getAllActions], (allActions) => {
 const getCurrentScoreForIndicator = createSelector(
   [getAllCurrentAndTargetScores, (_, indicator) => indicator],
   (scoresAndGoals, indicator) => {
-    return scoresAndGoals[indicator.id][0]
+    if (scoresAndGoals[indicator.id] && scoresAndGoals[indicator.id][0]) {
+      return scoresAndGoals[indicator.id][0]
+    } else {
+      return null
+    }
   }
 )
 
 const getTargetScoreForIndicator = createSelector(
   [getAllCurrentAndTargetScores, (_, indicator) => indicator],
   (scoresAndGoals, indicator) => {
-    return scoresAndGoals[indicator.id][1]
+    if (scoresAndGoals[indicator.id] && scoresAndGoals[indicator.id][1]) {
+      return scoresAndGoals[indicator.id][1]
+    } else {
+      return null
+    }
   }
 )
 
