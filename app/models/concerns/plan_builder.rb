@@ -112,7 +112,7 @@ module PlanBuilder
         )
 
         bi
-          .actions_for(score: score, goal: goal)
+          .actions_for(score: score, goal: goal, disease_ids: disease_ids)
           .each do |action|
             plan.plan_actions.build(
               benchmark_indicator: bi,

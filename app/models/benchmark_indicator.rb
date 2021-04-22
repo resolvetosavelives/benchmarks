@@ -12,7 +12,11 @@ class BenchmarkIndicator < ApplicationRecord
     actions.select { |a| excluded_ids.include?(a.id) }
   end
 
-  def actions_for(score: 0, goal: 0)
-    actions.for_diseases_and_levels(low: score, high: goal)
+  def actions_for(score: 0, goal: 0, disease_ids: [])
+    actions.for_diseases_and_levels(
+      low: score,
+      high: goal,
+      disease_ids: disease_ids
+    )
   end
 end
