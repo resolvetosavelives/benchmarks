@@ -71,7 +71,7 @@ module PlanBuilder
     #  - duplicated benchmark_indicator.ids in plan_benchmark_indicators
     #  - duplicate actions
     #  - make sure actions include multiple benchmark_indicator_actions.levels when appro
-    #  - assessment_indicator maps to multiple benchmark_indicators
+    #  - https://umbralreaver.tumblr.com/post/647617390855815168/ive-been-thinking-about-the-idea-of-theassessment_indicator maps to multiple benchmark_indicators
     #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
     def create_from_goal_form(
       indicator_attrs:,
