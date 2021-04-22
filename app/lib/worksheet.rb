@@ -210,7 +210,7 @@ class Worksheet
         max: 16_383
       )
 
-    worksheet.merge_cells row_index, 0, row_index, 1
+    worksheet.merge_cells row_index, 0, row_index + 1, 1
     worksheet.merge_cells row_index, 2, row_index + 3, 6
     worksheet.merge_cells row_index + 6, 0, row_index + 6, 3
     worksheet.merge_cells row_index + 7, 0, row_index + 9, 6
