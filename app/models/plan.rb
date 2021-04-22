@@ -54,7 +54,7 @@ class Plan < ApplicationRecord
   end
 
   def action_ids
-    plan_actions.map(&:benchmark_indicator_action).map(&:id)
+    benchmark_indicator_actions.pluck(:id)
   end
 
   def update!(name:, benchmark_action_ids:)
