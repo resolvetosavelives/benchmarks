@@ -7,6 +7,15 @@ class BenchmarkIndicatorAction < ApplicationRecord
   has_many :action_documents, dependent: :destroy
   has_many :reference_library_documents, through: :action_documents
 
+  scope :for_diseases_and_levels,
+        ->(low:, high:) {
+          where(
+            "(level >= ? AND level <= ?) OR disease_id IS NOT NULL",
+            low,
+            high
+          )
+        }
+
   default_scope { order(:sequence) }
 
   delegate :benchmark_technical_area_id, to: :benchmark_indicator

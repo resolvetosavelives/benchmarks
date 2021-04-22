@@ -11,4 +11,8 @@ class BenchmarkIndicator < ApplicationRecord
     excluded_ids = (actions.map(&:id).to_set - action_ids.to_set).to_a
     actions.select { |a| excluded_ids.include?(a.id) }
   end
+
+  def actions_for(score: 0, goal: 0)
+    actions.for_diseases_and_levels(low: score, high: goal)
+  end
 end
