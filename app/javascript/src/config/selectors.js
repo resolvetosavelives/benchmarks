@@ -16,7 +16,7 @@ const getSelectedActionTypeOrdinal = (state) =>
 const getSelectedChartTabIndex = (state) => state.ui.selectedChartTabIndex
 
 const getPlan = (state) => state.plan
-const getPlanActionIds = (state) => state.planActionIds
+const getPlanActionIds = (state) => state.plan.action_ids
 const getPlanGoals = (state) => state.planGoals
 const getPlanChartLabels = (state) => state.planChartLabels
 const getCountOfPlanActionIds = (state) => getPlanActionIds(state).length
@@ -85,9 +85,14 @@ const getIndicatorMap = createSelector([getAllIndicators], (indicators) => {
 })
 
 const getActionsForIndicator = createSelector(
-  [getPlan, (_, indicator) => indicator, getTechnicalAreaMap, getIndicatorMap],
-  (plan, indicator, technicalAreaMap, indicatorMap) => {
-    const actions = plan.benchmark_indicator_actions.filter(
+  [
+    getActionsForPlan,
+    (_, indicator) => indicator,
+    getTechnicalAreaMap,
+    getIndicatorMap,
+  ],
+  (planActions, indicator, technicalAreaMap, indicatorMap) => {
+    const actions = planActions.filter(
       (action) => action.benchmark_indicator_id === indicator.id
     )
     return getSortedActions(actions, technicalAreaMap, indicatorMap)

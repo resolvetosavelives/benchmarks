@@ -27,17 +27,6 @@ export default function initReducers(initialState) {
 
   const actions = createReducer(initialState.actions, {})
 
-  const planActionIds = createReducer(initialState.planActionIds, {
-    [ADD_ACTION_TO_PLAN]: (state, action) => {
-      const actionIdToAdd = action.payload.actionId
-      state.push(actionIdToAdd)
-    },
-    [DELETE_ACTION_FROM_PLAN]: (state, action) => {
-      const actionIdToDelete = action.payload.actionId
-      return state.filter((actionId) => actionId !== actionIdToDelete)
-    },
-  })
-
   const currentAndTargetScores = createReducer(
     initialState.currentAndTargetScores,
     {}
@@ -55,7 +44,7 @@ export default function initReducers(initialState) {
     if (!initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId]) {
       initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId] = []
     }
-    if (initialState.planActionIds.indexOf(action.id) >= 0) {
+    if (initialState.plan.action_ids.indexOf(action.id) >= 0) {
       initialMapOfPlanActionIdsByIndicator[currentIndicatorId].push(action.id)
     } else {
       initialMapOfPlanActionIdsNotInIndicator[currentIndicatorId].push(
@@ -105,8 +94,16 @@ export default function initReducers(initialState) {
   const nudgesByActionType = createReducer(initialState.nudgesByActionType, {})
 
   const plan = createReducer(initialState.plan, {
-    [UPDATE_PLAN_NAME]: (state, dispatchedAction) => {
-      state.name = dispatchedAction.payload.name
+    [UPDATE_PLAN_NAME]: (plan, dispatchedAction) => {
+      plan.name = dispatchedAction.payload.name
+    },
+    [ADD_ACTION_TO_PLAN]: (plan, dispatchedAction) => {
+      plan.action_ids.push(dispatchedAction.payload.actionId)
+    },
+    [DELETE_ACTION_FROM_PLAN]: (plan, dispatchedAction) => {
+      plan.action_ids = plan.action_ids.filter(
+        (id) => id !== dispatchedAction.payload.actionId
+      )
     },
   })
 
@@ -182,7 +179,6 @@ export default function initReducers(initialState) {
     indicators,
     nudgesByActionType,
     plan,
-    planActionIds,
     planActionIdsByIndicator,
     planActionIdsNotInIndicator,
     planChartLabels,
