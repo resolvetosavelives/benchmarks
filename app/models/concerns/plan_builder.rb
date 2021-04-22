@@ -104,7 +104,7 @@ module PlanBuilder
         goal = scores_and_goals_by_named_id.dig(ai.named_id, :goal)
         score = scores_and_goals_by_named_id.dig(ai.named_id, :score)
 
-        plan.plan_goals.build(
+        plan.goals.build(
           assessment_indicator: ai,
           benchmark_indicator: bi,
           assessed_value: score,
