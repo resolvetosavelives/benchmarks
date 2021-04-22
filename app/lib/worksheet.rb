@@ -218,8 +218,8 @@ class Worksheet
     worksheet.merge_cells row_index + 12, 0, row_index + 26, 6
     worksheet.merge_cells row_index + 28, 0, row_index + 28, 2
     worksheet.merge_cells row_index + 30, 0, row_index + 30, 2
-    worksheet.merge_cells row_index + 32, 0, row_index + 32, 2
-    worksheet.merge_cells row_index + 35, 0, row_index + 35, 2
+    worksheet.merge_cells row_index + 32, 0, row_index + 33, 2
+    worksheet.merge_cells row_index + 35, 0, row_index + 36, 2
     worksheet.merge_cells row_index + 38, 0, row_index + 38, 2
 
     row_index + SECTION_ROW_OFFSET
