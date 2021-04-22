@@ -14,7 +14,7 @@ import FilteredDiseaseActions from "./FilteredDiseaseActions"
 const IndicatorActionList = (props) => {
   const indicator = props.indicator
   const planGoalMap = useSelector((state) => getPlanGoalMap(state))
-  const goalForThisIndicator = planGoalMap[indicator.id]
+  const goalForThisIndicator = planGoalMap[indicator.id] || { value: null }
   const planDiseases = useSelector((state) => getPlanDiseases(state))
   const sortedActionsByIndicator = useSelector((state) =>
     getActionsForIndicator(state, indicator)
