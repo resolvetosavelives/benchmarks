@@ -107,7 +107,7 @@ module PlanBuilder
         plan.goals.build(
           assessment_indicator: ai,
           benchmark_indicator: bi,
-          assessed_value: score,
+          # assessed_value: score, # oops I didn't create a migration for this
           value: goal
         )
 
