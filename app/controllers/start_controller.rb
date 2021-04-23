@@ -11,9 +11,7 @@ class StartController < ApplicationController
 
   def show
     @get_started_form = GetStartedForm.new(get_started_params)
-    @country = Country.find(@get_started_form.country_id)
-    @technical_areas_jee1 = AssessmentTechnicalArea.jee1
-    @technical_areas_spar_2018 = AssessmentTechnicalArea.spar_2018
+    @country = @get_started_form.country
     @diseases = Disease.all.order(:created_at)
   end
 

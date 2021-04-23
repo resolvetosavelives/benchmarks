@@ -2,6 +2,7 @@ class Country < ApplicationRecord
   include CountrySeed
 
   has_many :assessments, foreign_key: "country_alpha3", primary_key: "alpha3"
+  has_many :assessment_publications, through: :assessments
 
   default_scope { order(:name) }
   scope :all_assessed, -> { joins(:assessments).distinct.all }

@@ -3,18 +3,19 @@ import $ from "jquery"
 
 export default class extends Controller {
   static targets = [
-    "cardOfTechnicalAreasForJee1",
-    "cardOfTechnicalAreasForSpar2018",
+    "technicalAreaCard",
     "checkboxForTechnicalArea",
     "countrySelect",
     "form",
-    "planByTechnicalAreasContainerForJee1",
-    "planByTechnicalAreasContainerForSpar2018",
+    "planByTechnicalAreasContainer",
     "submit",
   ]
 
+  static values = { namedIds: Array }
+
   connect() {
-    this.namedIds = this.data.get("namedIds")
+    this.$ = $
+
     if (this.hasCountrySelectTarget) {
       $(this.countrySelectTarget).chosen({
         no_results_text: "No countries match",
@@ -30,58 +31,48 @@ export default class extends Controller {
     this.formTarget.classList.add("was-validated")
   }
 
-  selectAssessmentJee1() {
-    if (this.hasPlanByTechnicalAreasContainerForSpar2018Target) {
-      // when the selected country does not have Spar2018 assessment the element wont be there
-      $(this.planByTechnicalAreasContainerForSpar2018Target).hide()
-    }
-    $(this.planByTechnicalAreasContainerForJee1Target).fadeIn()
+  selectAssessment(e) {
+    console.log(e)
+    $(this.planByTechnicalAreasContainerTargets)
+      .hide()
+      .filter('[data-assessment-named-id="' + e.target.value + '"]')
+      .show()
   }
 
-  selectAssessmentSpar2018() {
-    if (this.hasPlanByTechnicalAreasContainerForJee1Target) {
-      // when the selected country does not have JEE1 assessment the element wont be there
-      $(this.planByTechnicalAreasContainerForJee1Target).hide()
-    }
-    $(this.planByTechnicalAreasContainerForSpar2018Target).fadeIn()
+  toggleTechnicalAreas(e) {
+    $(this.technicalAreaCardTargets)
+      .filter(
+        '[data-assessment-named-id="' +
+          e.target.dataset.assessmentNamedId +
+          '"]'
+      )
+      .collapse("toggle")
   }
 
-  toggleTechnicalAreasForJee1() {
-    $(this.cardOfTechnicalAreasForJee1Target).collapse("toggle")
-  }
+  selectAllTechnicalAreas(e) {
+    e.preventDefault()
+    e.stopPropagation()
 
-  toggleTechnicalAreasForSpar2018() {
-    $(this.cardOfTechnicalAreasForSpar2018Target).collapse("toggle")
-  }
-
-  selectAllTechnicalAreasForJee1(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    $(this.cardOfTechnicalAreasForJee1Target)
+    $(this.technicalAreaCardTargets)
+      .filter(
+        '[data-assessment-named-id="' +
+          e.target.dataset.assessmentNamedId +
+          '"]'
+      )
       .find("input[type=checkbox]")
       .prop("checked", true)
   }
 
-  deselectAllTechnicalAreasForJee1(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    $(this.cardOfTechnicalAreasForJee1Target)
-      .find("input[type=checkbox]")
-      .prop("checked", false)
-  }
+  deselectAllTechnicalAreas(e) {
+    e.preventDefault()
+    e.stopPropagation()
 
-  selectAllTechnicalAreasForSpar2018(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    $(this.cardOfTechnicalAreasForSpar2018Target)
-      .find("input[type=checkbox]")
-      .prop("checked", true)
-  }
-
-  deselectAllTechnicalAreasForSpar2018(event) {
-    event.preventDefault()
-    event.stopPropagation()
-    $(this.cardOfTechnicalAreasForSpar2018Target)
+    $(this.technicalAreaCardTargets)
+      .filter(
+        '[data-assessment-named-id="' +
+          e.target.dataset.assessmentNamedId +
+          '"]'
+      )
       .find("input[type=checkbox]")
       .prop("checked", false)
   }
