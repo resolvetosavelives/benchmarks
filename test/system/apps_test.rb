@@ -31,7 +31,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "407", find(".action-count-component .count").text
+    assert_equal "360", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -119,7 +119,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "407", find(".action-count-component .count").text
+    assert_equal "532", find(".action-count-component .count").text
     assert_selector("#technical-area-1") # the first one
     assert_selector("#technical-area-3") # the last one
     assert_selector(".nudge-container") do
@@ -136,15 +136,14 @@ class AppsTest < ApplicationSystemTestCase
       indicators_no_capacity_gap.map do |indicator|
         indicator.ancestor(".benchmark-container").find(".header").text
       end
-    puts indicator_headings.inspect
     assert_equal(
       indicator_headings,
       [
-        "1\n1\nBenchmark 1.2: Financing is available for the implementation of IHR capacities",
-        "1\n1\nBenchmark 1.3: Financing available for timely response to public health emergencies",
-        "1\n1\nBenchmark 3.1: Effective multisectoral coordination on AMR",
-        "1\n1\nBenchmark 10.3: In-service trainings are available",
-        "1\n1\nBenchmark 12.1: Functional emergency response coordination is in place"
+        "Benchmark 1.2: Financing is available for the implementation of IHR capacities",
+        "Benchmark 1.3: Financing available for timely response to public health emergencies",
+        "Benchmark 3.1: Effective multisectoral coordination on AMR",
+        "Benchmark 10.3: In-service trainings are available",
+        "Benchmark 12.1: Functional emergency response coordination is in place"
       ]
     )
 
@@ -206,10 +205,11 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "Assessment and Data Use", dropdown_toggle.text
 
     tooltip = find(".tooltip.show")
-    assert_match "Assessment and Data Use: 53", tooltip.text
-    assert_match "Health System: 40", tooltip.text
+    assert_match "Assessment and Data Use: 71", tooltip.text
+    assert_match "Health System: 58", tooltip.text
     assert_match "Influenza-specific: 8", tooltip.text
     assert_match "Cholera-specific: 5", tooltip.text
+    assert_match "Ebola-specific: 11", tooltip.text
 
     ##
     # click on 'All' in the dropdown toggle
@@ -327,7 +327,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_equal "Actions", find(".action-count-component .label").text
 
     # action count was 103 but became 98 along with refactoring changes, I think due to bug(s) fixed
-    assert_equal "279", find(".action-count-component .count").text
+    assert_equal "274", find(".action-count-component .count").text
     assert page.has_content?(
              "Document and disseminate information on the timely distribution and effective use of funds to increase health security (such as preventing or stopping the spread of disease), at the national and subnational levels in all relevant ministries or sectors."
            )
@@ -392,7 +392,7 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path(%r{^\/plans\/\d+$})
     assert_equal "Nigeria draft plan", find("#plan_name").value
     assert_equal "Actions", find(".action-count-component .label").text
-    assert_equal "200", find(".action-count-component .count").text
+    assert_equal "52", find(".action-count-component .count").text
     assert_selector("div[data-benchmark-indicator-display-abbrev='2.1']")
     assert_selector("div[data-benchmark-indicator-display-abbrev='9.1']")
 
