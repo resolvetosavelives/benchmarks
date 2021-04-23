@@ -5,10 +5,9 @@ class AssessmentTechnicalArea < ApplicationRecord
   has_many :assessment_indicators
 
   default_scope { order(:sequence) }
-  scope :jee1,
-        Proc.new { AssessmentPublication.jee1.assessment_technical_areas }
+  scope :jee1, -> { where(assessment_publication: AssessmentPublication.jee1) }
   scope :spar_2018,
-        Proc.new { AssessmentPublication.spar_2018.assessment_technical_areas }
+        -> { where(assessment_publication: AssessmentPublication.spar_2018) }
 
   # TODO: this method is lacking test coverage
   def self.named_id_for(publication_named_id, indicator_named_id)
