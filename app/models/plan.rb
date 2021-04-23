@@ -54,7 +54,7 @@ class Plan < ApplicationRecord
   end
 
   def action_ids
-    plan_actions.map(&:benchmark_indicator_action).map(&:id)
+    benchmark_indicator_actions.pluck(:id)
   end
 
   def update!(name:, benchmark_action_ids:)
@@ -202,25 +202,8 @@ class Plan < ApplicationRecord
     super(
       options.reverse_merge(
         only: %i[id name term],
-        include: [
-          {
-            benchmark_indicator_actions: {
-              only: %i[
-                id
-                benchmark_indicator_id
-                text
-                level
-                sequence
-                action_types
-                disease_id
-              ],
-              include: [:reference_library_documents],
-              methods: [:benchmark_technical_area_id]
-            }
-          },
-          :diseases
-        ],
-        methods: [:disease_ids]
+        include: [:diseases],
+        methods: %i[action_ids disease_ids]
       )
     )
   end

@@ -30,7 +30,6 @@
         "indicators": <%= raw @benchmark_indicators.to_json %>,
         "actions": <%= raw @all_actions.to_json %>,
         "plan": <%= raw @plan.to_json %>,
-        "planActionIds": <%= @plan.action_ids %>,
         "planGoals": <%= raw @plan.goals.to_json %>,
         "planChartLabels": <%= raw [chart_labels_by_technical_area, BenchmarkIndicatorAction::ACTION_TYPES].to_json %>,
         "nudgesByActionType": <%= raw @nudges_by_action_type_json %>,
