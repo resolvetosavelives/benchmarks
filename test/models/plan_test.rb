@@ -202,7 +202,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        _(plan.plan_actions.size).must_equal(360)
+        assert_equal 219, plan.plan_actions.count
       end
     end
 
@@ -280,7 +280,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal 343, plan.plan_actions.size
+        assert_equal 177, plan.plan_actions.size
       end
     end
 
@@ -354,7 +354,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal (413), plan.plan_actions.size
+        assert_equal 272, plan.plan_actions.size
       end
 
       it "influenza actions have been assigned to the appropriate indicator" do
@@ -399,7 +399,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal (462), plan.plan_actions.size
+        assert_equal 321, plan.plan_actions.size
       end
 
       it "influenza actions and cholera actions have been assigned to the appropriate indicator" do
@@ -448,7 +448,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal (532), plan.plan_actions.size
+        assert_equal 391, plan.plan_actions.size
       end
 
       it "influenza, cholera, and ebola actions have been assigned to the appropriate indicator" do
