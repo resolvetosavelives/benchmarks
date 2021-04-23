@@ -19,7 +19,11 @@ class StartController < ApplicationController
 
   def update
     @get_started_form = GetStartedForm.new(get_started_params)
-    return show unless @get_started_form.valid?
+
+    unless @get_started_form.valid?
+      show
+      return render :show
+    end
 
     redirect_to plan_goals_url(
                   country_name: @get_started_form.country.name,
@@ -36,15 +40,17 @@ class StartController < ApplicationController
                       @get_started_form.diseases.join("-")
                     else
                       nil
-                    end,
+                    end
                 )
   end
 
   private
 
   def get_started_params
-    params.fetch(:get_started_form, {}).permit!.to_h.merge(
-      country_id: params.fetch(:id),
-    )
+    params
+      .fetch(:get_started_form, {})
+      .permit!
+      .to_h
+      .merge(country_id: params.fetch(:id))
   end
 end
