@@ -13,6 +13,7 @@ class SpreadsheetCell
       @cell = worksheet.add_cell(row, col, text)
       @cell.change_text_wrap true
       @cell.change_vertical_alignment "top"
+      @cell.change_font_bold(true) if params[:bold]
     elsif formula
       @cell = worksheet.add_cell(row, col, "", formula)
       @cell.change_text_wrap true

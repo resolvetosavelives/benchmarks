@@ -36,6 +36,7 @@ class Worksheet
           current_worksheet =
             @workbook.add_worksheet(benchmark_technical_area.text)
           ta_xlsx_worksheets << current_worksheet
+          current_worksheet.row_breaks = RubyXL::BreakList.new
         end
         plan_actions.each do |plan_action|
           assessment_label = @plan.type_description
@@ -46,7 +47,7 @@ class Worksheet
               assessment_label,
               goal_value,
               benchmark_indicator.objective,
-              plan_action.text,
+              plan_action.text
             )
         end
       end
@@ -140,11 +141,20 @@ class Worksheet
   end
 
   def populate_worksheet(
-    worksheet, row_index, assessment_label, goal, objective_text, action_text
+    worksheet,
+    row_index,
+    assessment_label,
+    goal,
+    objective_text,
+    action_text
   )
     goal_level_str = goal.present? ? "score #{goal}" : ""
 
-    SpreadsheetCell.new worksheet, row_index, 0, text: "Benchmark Objective:"
+    SpreadsheetCell.new worksheet,
+                        row_index,
+                        0,
+                        text: "Benchmark Objective:",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index, 2, text: objective_text
     SpreadsheetCell.new worksheet,
                         row_index + 6,
@@ -152,48 +162,65 @@ class Worksheet
                         text:
                           "Action required for #{assessment_label} #{
                             goal_level_str
-                          }"
+                          }",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index + 7, 0, text: action_text
     SpreadsheetCell.new worksheet,
                         row_index + 11,
                         0,
-                        text: "Detailed Action Description"
+                        text: "Detailed Action Description",
+                        bold: true
     SpreadsheetCell.new worksheet,
-                        row_index + 28,
+                        row_index + 27,
                         0,
-                        text: "Implementation Level (circle one)"
-    SpreadsheetCell.new worksheet, row_index + 28, 3, text: "National"
-    SpreadsheetCell.new worksheet, row_index + 28, 4, text: "Sub-national"
+                        text: "Implementation Level (circle one)",
+                        bold: true
+    SpreadsheetCell.new worksheet, row_index + 27, 3, text: "National"
+    SpreadsheetCell.new worksheet, row_index + 27, 4, text: "Sub-national"
     SpreadsheetCell.new worksheet,
                         row_index + 30,
                         0,
-                        text: "Priority (circle one)"
+                        text: "Priority (circle one)",
+                        bold: true
     SpreadsheetCell.new worksheet, row_index + 30, 3, text: "Done"
     SpreadsheetCell.new worksheet, row_index + 30, 4, text: "High"
     SpreadsheetCell.new worksheet, row_index + 30, 5, text: "Low"
     SpreadsheetCell.new worksheet,
                         row_index + 32,
                         0,
-                        text: "Responsible for Implementation:"
+                        text: "Responsible for Implementation:",
+                        bold: true
     bordered_merge_cells worksheet, row_index + 32, 3, 4, 2
     SpreadsheetCell.new worksheet,
                         row_index + 35,
                         0,
-                        text: "Estimated Start and End Dates:"
+                        text: "Estimated Start and End Dates:",
+                        bold: true
     bordered_merge_cells worksheet, row_index + 35, 3, 4, 2
-    SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget"
+    SpreadsheetCell.new worksheet, row_index + 38, 0, text: "Budget", bold: true
     bordered_merge_cells worksheet, row_index + 38, 3, 4, 2
 
-    worksheet.merge_cells row_index, 0, row_index, 1
+    # Add page break after Budget section
+    puts "page breaks!"
+    worksheet.row_breaks <<
+      RubyXL::Break.new(
+        id: row_index + SECTION_ROW_OFFSET,
+        man: true,
+        min: 0,
+        max: 16_383
+      )
+
+    worksheet.merge_cells row_index, 0, row_index + 1, 1
     worksheet.merge_cells row_index, 2, row_index + 3, 6
     worksheet.merge_cells row_index + 6, 0, row_index + 6, 3
     worksheet.merge_cells row_index + 7, 0, row_index + 9, 6
     worksheet.merge_cells row_index + 11, 0, row_index + 11, 2
-    worksheet.merge_cells row_index + 12, 0, row_index + 26, 6
-    worksheet.merge_cells row_index + 28, 0, row_index + 28, 2
+    worksheet.merge_cells row_index + 12, 0, row_index + 25, 6
+    worksheet.merge_cells row_index + 27, 0, row_index + 28, 2
+    worksheet.merge_cells row_index + 27, 4, row_index + 27, 5
     worksheet.merge_cells row_index + 30, 0, row_index + 30, 2
-    worksheet.merge_cells row_index + 32, 0, row_index + 32, 2
-    worksheet.merge_cells row_index + 35, 0, row_index + 35, 2
+    worksheet.merge_cells row_index + 32, 0, row_index + 33, 2
+    worksheet.merge_cells row_index + 35, 0, row_index + 36, 2
     worksheet.merge_cells row_index + 38, 0, row_index + 38, 2
 
     row_index + SECTION_ROW_OFFSET
