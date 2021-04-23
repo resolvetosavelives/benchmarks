@@ -197,12 +197,12 @@ describe Plan do
         _(plan.name).must_equal("test plan 3854")
       end
 
-      it "has the expected number of indicators" do
+      it "has the expected number of goals" do
         _(plan.goals.size).must_equal(44)
       end
 
       it "has the expected number of actions" do
-        _(plan.plan_actions.size).must_equal(407)
+        _(plan.plan_actions.size).must_equal(360)
       end
     end
 
@@ -280,7 +280,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal 354, plan.plan_actions.size
+        assert_equal 343, plan.plan_actions.size
       end
     end
 
@@ -323,7 +323,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal 205, plan.plan_actions.size
+        assert_equal 33, plan.plan_actions.size
       end
     end
 
@@ -354,7 +354,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal (407), plan.plan_actions.size
+        assert_equal (413), plan.plan_actions.size
       end
 
       it "influenza actions have been assigned to the appropriate indicator" do
@@ -399,7 +399,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal (407), plan.plan_actions.size
+        assert_equal (462), plan.plan_actions.size
       end
 
       it "influenza actions and cholera actions have been assigned to the appropriate indicator" do
@@ -448,7 +448,7 @@ describe Plan do
       end
 
       it "has the expected number of actions" do
-        assert_equal (407), plan.plan_actions.size
+        assert_equal (532), plan.plan_actions.size
       end
 
       it "influenza, cholera, and ebola actions have been assigned to the appropriate indicator" do
@@ -482,102 +482,6 @@ describe Plan do
             disease_ids: [0] # disease id 0 does not exist
           )
         end
-      end
-    end
-  end
-
-  describe "#count_actions_by_type" do
-    let(:plan) { create(:plan_nigeria_jee1) }
-
-    it "returns an array of the expected integers" do
-      expected = [8, 40, 23, 7, 9, 9, 20, 45, 2, 45, 13, 32, 8, 3, 23]
-      _(plan.count_actions_by_type).must_equal expected
-    end
-  end
-
-  describe "#count_actions_by_ta" do
-    describe "for a full plan" do
-      let(:benchmark_technical_areas) { BenchmarkTechnicalArea.all }
-      let(:plan) { create(:plan_nigeria_jee1) }
-
-      it "returns an array of the expected integers" do
-        expected = [
-          6,
-          12,
-          19,
-          9,
-          11,
-          13,
-          19,
-          7,
-          15,
-          18,
-          11,
-          15,
-          7,
-          19,
-          20,
-          16,
-          14,
-          4
-        ]
-
-        result = plan.count_actions_by_ta(benchmark_technical_areas)
-
-        assert_equal expected, result
-      end
-    end
-
-    describe "for a plan of sparsely populated technical areas" do
-      let(:benchmark_technical_areas) { BenchmarkTechnicalArea.all }
-      let(:indicator_attrs) do
-        {
-          jee1_ind_p21: "2",
-          jee1_ind_p21_goal: "3",
-          jee1_ind_d21: "3",
-          jee1_ind_d21_goal: "4",
-          jee1_ind_d22: "2",
-          jee1_ind_d22_goal: "3",
-          jee1_ind_d23: "3",
-          jee1_ind_d23_goal: "4",
-          jee1_ind_d24: "3",
-          jee1_ind_d24_goal: "4"
-        }.with_indifferent_access
-      end
-      let(:plan) do
-        Plan.create_from_goal_form(
-          indicator_attrs: indicator_attrs,
-          assessment: assessment_for_nigeria_jee1,
-          is_5_year_plan: true,
-          plan_name: "test plan 3737"
-        )
-      end
-
-      it "returns an array of the expected integers" do
-        expected = [
-          13,
-          12,
-          7,
-          1,
-          1,
-          9,
-          15,
-          1,
-          35,
-          9,
-          18,
-          15,
-          0,
-          28,
-          19,
-          9,
-          0,
-          0
-        ]
-
-        result = plan.count_actions_by_ta(benchmark_technical_areas)
-
-        assert_equal expected, result
       end
     end
   end

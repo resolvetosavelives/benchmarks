@@ -71,7 +71,7 @@ module PlanBuilder
     #  - duplicated benchmark_indicator.ids in plan_benchmark_indicators
     #  - duplicate actions
     #  - make sure actions include multiple benchmark_indicator_actions.levels when appro
-    #  - assessment_indicator maps to multiple benchmark_indicators
+    #  - https://umbralreaver.tumblr.com/post/647617390855815168/ive-been-thinking-about-the-idea-of-theassessment_indicator maps to multiple benchmark_indicators
     #  - benchmark_indicator maps to multiple assessment_indicators (yes both happen)
     def create_from_goal_form(
       indicator_attrs:,
@@ -86,61 +86,43 @@ module PlanBuilder
         create_scores_and_goals(named_ids, indicator_attrs)
       plan_term =
         is_5_year_plan ? Plan::TERM_TYPES.second : Plan::TERM_TYPES.first
-      disease_action_map = create_disease_actions_map(disease_ids)
-      plan_goals = []
-      plan_actions = []
 
       plan =
         Plan.new(
-          {
-            name: plan_name,
-            assessment: assessment,
-            term: plan_term,
-            user: user
-          }
+          name: plan_name,
+          assessment: assessment,
+          term: plan_term,
+          user: user
         )
 
-      assessment_indicators =
-        AssessmentIndicator
-          .includes({ benchmark_indicators: :benchmark_technical_area })
-          .distinct
-          .all
+      BenchmarkIndicator
+        .includes(:assessment_indicators, :benchmark_technical_area)
+        .find_each do |bi|
+          ai =
+            bi.assessment_indicators.min_by do |ai|
+              scores_and_goals_by_named_id.dig(ai.named_id, :score) || 1_000
+            end
 
-      assessment_indicators.each do |assessment_indicator|
-        score_and_goal =
-          scores_and_goals_by_named_id[assessment_indicator.named_id]
-        goal_value = score_and_goal.present? ? score_and_goal[:goal] : nil
-        benchmark_indicators = assessment_indicator.benchmark_indicators.uniq
-        benchmark_indicators.each do |benchmark_indicator|
-          unless update_maybe_seen_indicator(
-                   plan_goals,
-                   benchmark_indicator,
-                   goal_value
-                 )
-            plan_goals <<
-              PlanGoal.new(
-                plan: plan,
-                assessment_indicator: assessment_indicator,
-                benchmark_indicator: benchmark_indicator,
-                value: goal_value
+          goal = scores_and_goals_by_named_id.dig(ai.named_id, :goal)
+          score = scores_and_goals_by_named_id.dig(ai.named_id, :score)
+
+          plan.goals.build(
+            assessment_indicator: ai,
+            benchmark_indicator: bi,
+            assessed_score: score, # oops I didn't create a migration for this
+            value: goal
+          )
+
+          bi
+            .actions_for(score: score, goal: goal, disease_ids: disease_ids)
+            .each do |action|
+              plan.plan_actions.build(
+                benchmark_indicator: bi,
+                benchmark_indicator_action: action,
+                benchmark_technical_area: bi.benchmark_technical_area
               )
-          end
-          bia =
-            get_bia_actions(
-              score_and_goal,
-              benchmark_indicator,
-              disease_action_map
-            )
-          bia.each do |benchmark_indicator_action|
-            add_plan_actions_to_indicator(
-              plan_actions,
-              plan,
-              benchmark_indicator,
-              benchmark_indicator_action
-            )
-          end
+            end
         end
-      end
 
       begin
         plan.disease_ids = disease_ids
@@ -148,11 +130,8 @@ module PlanBuilder
         raise Exceptions::InvalidDiseasesError
       end
 
-      Plan.transaction do
-        plan.goals = plan_goals
-        plan.plan_actions = plan_actions
-        plan.save!
-      end
+      Plan.transaction { plan.save! }
+
       plan
     end
 
@@ -172,78 +151,6 @@ module PlanBuilder
         }
       end
       scores_and_goals_by_named_id
-    end
-
-    def create_disease_actions_map(disease_ids)
-      # fetch disease-specific actions for all of the selected IDs in one query
-      disease_actions =
-        BenchmarkIndicatorAction.where(disease_id: disease_ids).all
-
-      # build a "disease-action" map of benchmarkIndicatorID => Action so that it can be used in the loop of BenchmarkIndicators
-      disease_actions.reduce({}) do |acc, action|
-        if acc[action.benchmark_indicator_id.to_s].nil?
-          acc[action.benchmark_indicator_id.to_s] = []
-        end
-        acc[action.benchmark_indicator_id.to_s] << action
-        acc
-      end
-    end
-
-    def update_maybe_seen_indicator(plan_goals, benchmark_indicator, goal_value)
-      plan_goals.any? do |pbi|
-        if pbi.benchmark_indicator.id.eql?(benchmark_indicator.id)
-          pbi.value = goal_value unless goal_value.nil?
-          true
-        end
-      end
-    end
-
-    def get_bia_actions(score_and_goal, benchmark_indicator, disease_action_map)
-      if score_and_goal.present?
-        bia =
-          benchmark_indicator
-            .actions
-            .where("level > :score AND level <= :goal", score_and_goal)
-            .order(:sequence)
-            .all
-
-        # use disease_action_map to append its Action(s) to the matching Indicator when the disease-specific action.benchmark_indicator_id
-        #   matches the current benchmark_indicator.id
-        disease_actions_for_indicator =
-          disease_action_map[benchmark_indicator.id.to_s]
-        bia += disease_actions_for_indicator if disease_actions_for_indicator
-          .present?
-      else
-        bia =
-          benchmark_indicator
-            .actions
-            .where("disease_id IS NOT NULL")
-            .order(:sequence)
-            .all
-      end
-      bia
-    end
-
-    def add_plan_actions_to_indicator(
-      plan_actions,
-      plan,
-      benchmark_indicator,
-      benchmark_indicator_action
-    )
-      unless plan_actions.any? do |pa|
-               pa.benchmark_indicator_action_id.eql?(
-                 benchmark_indicator_action.id
-               )
-             end
-        plan_actions <<
-          PlanAction.new(
-            plan: plan,
-            benchmark_indicator_action: benchmark_indicator_action,
-            benchmark_indicator: benchmark_indicator,
-            benchmark_technical_area:
-              benchmark_indicator.benchmark_technical_area
-          )
-      end
     end
   end
 end

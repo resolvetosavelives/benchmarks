@@ -89,37 +89,6 @@ class Plan < ApplicationRecord
     plan_actions.map(&:benchmark_indicator_action).map(&:id).sort
   end
 
-  ##
-  # Constructs an Array containing n elements where n equals
-  # +BenchmarkTechnicalArea.all.size+ (there are 18 as of year 2019) with each
-  # element containing an integer that is the count of the actions for that
-  # technical area, ordered by +BenchmarkTechnicalArea.sequence+
-  # @return Array of Integers
-  # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
-  def count_actions_by_ta(benchmark_technical_areas)
-    counts_by_ta_id = Array.new(benchmark_technical_areas.size, 0)
-    plan_actions.reduce(counts_by_ta_id) do |accumulator_h, action|
-      # sequence is one-based so subtract one to make zero-based
-      ta_sequence = action.benchmark_technical_area.sequence - 1
-      accumulator_h[ta_sequence] += 1
-      accumulator_h
-    end
-    counts_by_ta_id.compact
-  end
-
-  # @deprecated No longer used as of June 2020 this logic has moved to JS in the browser, may remove.
-  def count_actions_by_type
-    counts_by_type = Array.new(BenchmarkIndicatorAction::ACTION_TYPES.size, 0)
-    plan_actions.each do |action|
-      # some BIA's have no action types and those are nil, we absorb with +&+
-      action
-        .benchmark_indicator_action
-        .action_types
-        &.each { |type_num| counts_by_type[type_num - 1] += 1 }
-    end
-    counts_by_type
-  end
-
   def goal_for(benchmark_indicator:)
     goals.detect do |goal|
       goal.benchmark_indicator_id.eql?(benchmark_indicator.id)
@@ -156,46 +125,10 @@ class Plan < ApplicationRecord
   end
 
   def current_and_target_scores
-    goal_map =
-      goals
-        .order(:assessment_indicator_id)
-        .pluck(:benchmark_indicator_id, :value)
-        .to_h
-
-    score_map =
-      assessment
-        .scores
-        .includes(assessment_indicator: :benchmark_indicators)
-        .flat_map do |score|
-          score
-            .assessment_indicator
-            .benchmark_indicators
-            .map { |benchmark_indicator| [benchmark_indicator.id, score.value] }
-        end
-
-    benchmark_indicators =
-      goal_map.keys.concat(score_map.map { |s| s[0] }).sort.uniq
-
-    benchmark_indicators.reduce({}) do |cats, bi|
-      current_score =
-        score_map.reduce([]) do |scores, (bi, score)|
-          scores << score if bi == 38
-          scores
-        end.min
-
-      target_score = goal_map[bi] || current_score
-
-      cats[bi] = [current_score, target_score]
+    goals.reduce({}) do |cats, goal|
+      cats[goal.benchmark_indicator_id] = [goal.assessed_score, goal.value]
       cats
     end
-
-    # If there's not a goal set for a benchmark indicator, lookup returns nil,
-    # so we use the existing score.
-    # target =
-    #   goals.find_by_benchmark_indicator_id(indicator_id)&.value || current
-    # scores[indicator_id] = [current, target]
-    # scores
-    # end
   end
 
   def as_json(options = {})

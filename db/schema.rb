@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_235042) do
+ActiveRecord::Schema.define(version: 2021_04_21_195229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,6 +149,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_235042) do
     t.integer "assessment_indicator_id", null: false
     t.integer "benchmark_indicator_id", null: false
     t.integer "value"
+    t.integer "assessed_score"
   end
 
   create_table "plans", force: :cascade do |t|
