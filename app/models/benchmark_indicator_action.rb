@@ -10,7 +10,7 @@ class BenchmarkIndicatorAction < ApplicationRecord
   scope :for_diseases_and_levels,
         ->(low:, high:, disease_ids:) {
           where(
-            "(level >= ? AND level <= ?) OR disease_id IN (?)",
+            "(level > ? AND level <= ?) OR disease_id IN (?)",
             low,
             high,
             disease_ids
