@@ -5,11 +5,11 @@ class Plan < ApplicationRecord
   ASSESSMENT_TYPES = [
     1, # jee1
     2, # spar_2018
-    3 # from-technical-areas
+    3 # jee2
   ].freeze
 
   # TODO: update this implementation once the assessments page is modernized
-  ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 from-technical-areas].freeze
+  ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 jee2].freeze
   TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
   include PlanBuilder
 
