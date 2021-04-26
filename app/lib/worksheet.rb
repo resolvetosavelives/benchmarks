@@ -206,7 +206,6 @@ class Worksheet
     bordered_merge_cells worksheet, row_index + 38, 3, 4, 2
 
     # Add page break after Budget section
-    puts "page breaks!"
     worksheet.row_breaks <<
       RubyXL::Break.new(
         id: row_index + SECTION_ROW_OFFSET,
