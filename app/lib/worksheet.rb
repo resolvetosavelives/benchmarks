@@ -52,6 +52,11 @@ class Worksheet
         end
       end
     end
+
+    # Remove duplicate merged cells before writing, Excel hates those
+    @workbook.worksheets.each do |w|
+      w.merged_cells.uniq! { |c| [c.ref.row_range, c.ref.col_range] }
+    end
   end
 
   def create_instructions_sheet(worksheet)
