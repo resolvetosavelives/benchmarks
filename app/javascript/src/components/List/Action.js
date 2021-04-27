@@ -60,7 +60,7 @@ const Action = (props) => {
     <div className="row action">
       {deleteBanner()}
       <div className="col">
-        <div className="row p-4">
+        <div className="row py-4">
           <div className="col-10">
             <strong>{indicator.display_abbreviation}</strong>
             &nbsp;

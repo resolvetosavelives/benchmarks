@@ -18,15 +18,15 @@ const ScoreToGoal = (props) => {
 
   if (currentScore && targetScore) {
     return (
-      <div className="score-to-goal d-flex align-items-center justify-content-center px-1">
+      <div className="d-flex align-items-center justify-content-center pr-2">
         <span
-          className={`badge badge-pill badge-primary align-middle badge-rounded-circle color-value-${currentScore}`}
+          className={`badge badge-pill align-middle badge-rounded-circle color-value-${currentScore}`}
         >
           <span>{currentScore}</span>
         </span>
         <img className="mx-1" src={rightArrow} />
         <span
-          className={`badge badge-pill color-value-${targetScore}  align-middle badge-rounded-circle mx-1 px-2`}
+          className={`badge badge-pill align-middle badge-rounded-circle color-value-${targetScore}`}
         >
           <span>{targetScore}</span>
         </span>
