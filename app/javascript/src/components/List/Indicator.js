@@ -11,7 +11,7 @@ const Indicator = (props) => {
       className="benchmark-container col"
       data-benchmark-indicator-display-abbrev={indicator.display_abbreviation}
     >
-      <div className="row bg-light-gray pl-3 pr-3 header">
+      <div className="row bg-light-gray px-3 header">
         <ScoreToGoal indicator={indicator} />
         <div className="col pl-1">
           <b>Benchmark {indicator.display_abbreviation}:</b>
