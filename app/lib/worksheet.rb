@@ -63,6 +63,7 @@ class Worksheet
   end
 
   def create_instructions_sheet(worksheet)
+    worksheet.sheet_name = "Instructions"
     SpreadsheetCell.new worksheet, 0, 0, text: "Instructions"
     SpreadsheetCell.new worksheet,
                         2,
