@@ -8,7 +8,8 @@ class WorksheetTest < ActiveSupport::TestCase
     assert_equal 19, workbook.worksheets.size
 
     # verify the first worksheet
-    sheet = workbook[0]
+    sheet = workbook["Instructions"]
+    assert_equal sheet, workbook[0]
     assert_not_nil sheet
     assert_equal "Instructions", sheet[0][0].value
     assert_equal "1. Use these worksheets in your workshop to discuss key items for each action recommended for stepping up.",
@@ -18,7 +19,7 @@ class WorksheetTest < ActiveSupport::TestCase
 
     # verify the IHR Coordination.. worksheet, because its in the middle somewhat
     sheet =
-      workbook["IHR Coordination, Communication and Advocacy and Reporting"]
+      workbook["2. IHR Coordination, Communication and Advocacy and Reporting"]
     assert_not_nil sheet
     assert_equal "Benchmark Objective:", sheet[0][0].value
     assert_equal "To establish a multisectoral IHR coordination mechanism to support the implementation of prevention, detection and response activities",
@@ -35,7 +36,7 @@ class WorksheetTest < ActiveSupport::TestCase
     assert_equal "Regularly test the mechanism for multisectoral collaboration and communication through actual experience and/or scenarios for high risk, deliberate or mass gathering events.",
                  sheet[Worksheet::SECTION_ROW_OFFSET * 3 + 7][0].value
 
-    # verify the first worksheet
+    # verify the last worksheet
     sheet = workbook[workbook.worksheets.size - 1]
     assert_not_nil sheet
     assert_equal "Benchmark Objective:", sheet[0][0].value
