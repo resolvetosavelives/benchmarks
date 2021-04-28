@@ -55,7 +55,7 @@ class Worksheet
 
     @workbook.worksheets.each do |w|
       # Remove duplicate merged cells before writing, Excel hates those
-      w.merged_cells.uniq! { |c| [c.ref.row_range, c.ref.col_range] }
+      w.merged_cells&.uniq! { |c| [c.ref.row_range, c.ref.col_range] }
 
       # Manually set `manual_break_count`, it seems like it's not generated?
       w.row_breaks&.manual_break_count = w.row_breaks.select { |b| b.man }.count
