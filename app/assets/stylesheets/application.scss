@@ -201,7 +201,10 @@ td {
 .btn {
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  height: 60px;
+  line-height: 2.2em;
+  a {
+    color: white;
+  }
 }
 
 nav.navbar {

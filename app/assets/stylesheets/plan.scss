@@ -384,10 +384,8 @@
 
 .stick-to-top {
   input.plan-name {
-    height: 38px;
   }
   input.plan-save {
-    height: 38px;
     min-width: 140px;
   }
 }
@@ -433,7 +431,6 @@
   }
   input[type="submit"] {
     width: 8.5em;
-    height: 2.3em;
   }
   .plan-by-technical-area-container {
     margin-top: 0.7em;
@@ -516,7 +513,6 @@
     background-position: 98% 50%;
     background-size: 14px 9px;
 
-    height: 2.2rem;
     width: 100%;
     text-align: left;
     border-radius: 0;
