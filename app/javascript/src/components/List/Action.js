@@ -64,33 +64,23 @@ const Action = (props) => {
         &nbsp;
         <span className="action-text">{action.text}</span>
       </div>
-      <div className="col flex-grow-0 d-flex flex-row align-items-md-center justify-content-end">
+      <div
+        className="col-12 col-md-auto flex-grow-0 mt-2 mt-md-0
+        d-flex flex-row justify-content-between
+        align-items-md-center justify-content-md-end"
+      >
         {action.disease_id ? (
           <ActionBadgePill action={action} />
         ) : (
           <ActionBadge action={action} />
         )}
         <button
-          className="delete close ml-3 d-none d-md-inline"
+          className="delete close ml-md-3"
           type="button"
           onClick={() => setShowDelete(true)}
         >
           <img src="/delete-button.svg" alt="Delete this action" />
-        </button>
-      </div>
-      <div className="w-100 d-md-none"></div>
-      <div className="row no-gutters d-auto d-md-none">
-        <button
-          className="delete close ml-3 mt-2"
-          type="button"
-          onClick={() => setShowDelete(true)}
-        >
-          <img
-            className="mr-1"
-            src="/delete-button.svg"
-            alt="Delete this action"
-          />
-          Remove
+          <span className="d-md-none ml-1">Remove</span>
         </button>
       </div>
     </div>
