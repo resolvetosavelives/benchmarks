@@ -8,67 +8,91 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
+  <div class="row no-gutters">
     <% if @plans.length > 0 %>
-      <table class="table table-fixed">
-        <colgroup>
-          <col width="364px" />
-          <col />
-          <col width="160px" />
-          <col width="180px" />
-          <col width="105px" />
-        </colgroup>
+      <div class="col d-md-none">
+        <% @plans.each do |plan| %>
+          <div class="row py-2 border-bottom">
+            <div class="col-7"><b><%= link_to plan.name, plan %></b></div>
+            <div class="col-5 text-right"><%= plan.updated_at.strftime("%B %d, %Y") %></div>
+            <div class="col-12 mt-1 d-flex justify-content-between">
+              <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
+                <%= inline_svg_tag "ico-download.svg" %>
+                Download 
+              <% end %>
+              <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
+                <%= inline_svg_tag "ico-print.svg" %>
+                Print 
+              <% end %>
+              <%= link_to plan_path(plan.id), method: :delete do %>
+                <img src="/delete-button.svg" alt="Delete this plan" />
+                Delete
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
 
-        <thead>
-          <tr>
-            <th>Saved Plans</th>
-            <th>Last Revised</th>
-            <th> </th>
-            <th> </th>
-            <th> </th>
-          </tr>
-        </thead>
+      <div class="col d-none d-md-block">
+        <table class="table table-fixed">
+          <colgroup>
+            <col width="364px" />
+            <col />
+            <col width="160px" />
+            <col width="180px" />
+            <col width="105px" />
+          </colgroup>
 
-        <tbody>
-          <% @plans.each do |plan| %>
-            <tr class="plan-entry">
-              <td class="py-4"><%= link_to plan.name, plan %></td>
-              <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
-              <td class="py-4 text-secondary">
-                <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
-                  <%= inline_svg_tag "ico-download.svg" %>
-                  Download XLS
-                <% end %>
-              </td>
-              <td class="py-4 text-secondary">
-                <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
-                  <%= inline_svg_tag "ico-print.svg" %>
-                  Print Worksheets
-                <% end %>
-              </td>
-              <td class="py-4 text-secondary">
-                <%= link_to "Delete", plan_path(plan.id), method: :delete %>
-              </td>
+          <thead>
+            <tr>
+              <th>Saved Plans</th>
+              <th>Last Revised</th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
 
-      <div class="row">
-        <div class="col">
-          <h1 class="tips-header">You have your Draft 0.1 NAPHS plan. Now what?</h1>
-          <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
-            <div class="col-1 pr-0"><%= image_tag "pad.svg" %> </div>
-            <div class="col-11 pl-0"><span>Share it with individuals involved in the development and implementation of NAPHS to get their feedback and help consolidate areas where appropriate.</span></div>
-          </div>
-          <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
-            <div class="col-1 pr-0"><%= image_tag "people.svg" %></div>
-            <div class="col-11 pl-0"><span>Then, plan an in-person workshop for discussion and validation with your multi-sectoral group.</span></div>
-          </div>
-          <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
-            <div class="col-1 pr-0"><%= image_tag "book.svg" %></div>
-            <div class="col-11 pl-0"><span>Ready to implement? Check out our Reference Library that has global best practices and case studies to help you plan and implement actions successfully.</span></div>
+          <tbody>
+            <% @plans.each do |plan| %>
+              <tr class="plan-entry">
+                <td class="py-4"><%= link_to plan.name, plan %></td>
+                <td class="py-4"> <%= plan.updated_at.strftime "%B %d, %Y" %> </td>
+                <td class="py-4 text-secondary">
+                  <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
+                    <%= inline_svg_tag "ico-download.svg" %>
+                    Download XLS
+                  <% end %>
+                </td>
+                <td class="py-4 text-secondary">
+                  <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
+                    <%= inline_svg_tag "ico-print.svg" %>
+                    Print Worksheets
+                  <% end %>
+                </td>
+                <td class="py-4 text-secondary">
+                  <%= link_to "Delete", plan_path(plan.id), method: :delete %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div class="row">
+          <div class="col">
+            <h1 class="tips-header">You have your Draft 0.1 NAPHS plan. Now what?</h1>
+            <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
+              <div class="col-1 pr-0"><%= image_tag "pad.svg" %> </div>
+              <div class="col-11 pl-0"><span>Share it with individuals involved in the development and implementation of NAPHS to get their feedback and help consolidate areas where appropriate.</span></div>
+            </div>
+            <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
+              <div class="col-1 pr-0"><%= image_tag "people.svg" %></div>
+              <div class="col-11 pl-0"><span>Then, plan an in-person workshop for discussion and validation with your multi-sectoral group.</span></div>
+            </div>
+            <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
+              <div class="col-1 pr-0"><%= image_tag "book.svg" %></div>
+              <div class="col-11 pl-0"><span>Ready to implement? Check out our Reference Library that has global best practices and case studies to help you plan and implement actions successfully.</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,6 +101,5 @@
         You haven't started any plans yet
       </div>
     <% end %>
-  </div>
   </div>
 </div>
