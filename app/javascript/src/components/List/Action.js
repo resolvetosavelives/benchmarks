@@ -27,15 +27,15 @@ const Action = (props) => {
         classNames="confirm-delete"
         unmountOnExit
       >
-        <div className="delete-banner p-2 d-flex align-items-center">
-          <div className="col-8">
-            <h4 className="my-2">Remove this action?</h4>
-            <p>
+        <div className="delete-banner py-2 mt-n4 d-flex flex-column flex-md-row align-items-center">
+          <div className="col d-flex flex-column align-items-left justify-content-center">
+            <h4 className="m-0">Remove this action?</h4>
+            <p className="m-0">
               You can always add this action back from the &ldquo;Add an
               activity&rdquo; form below.
             </p>
           </div>
-          <div className="col-md-4 d-flex justify-content-end">
+          <div className="col flex-grow-0 d-flex justify-content-end">
             <Button
               variant="remove"
               className="mx-2 px-3 py-2"
