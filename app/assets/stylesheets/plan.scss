@@ -72,23 +72,6 @@
 .benchmark-container {
   margin-bottom: 50px;
 
-  .header {
-    padding-top: 32px;
-    padding-bottom: 32px;
-
-    .confirm-delete,
-    .delete {
-      visibility: hidden;
-    }
-
-    &:hover {
-      .confirm-delete,
-      .delete {
-        visibility: visible;
-      }
-    }
-  }
-
   .action-form {
     padding: 0.5rem 0.5rem 0.5rem 0;
     border-left: 8px solid rgba(216, 100, 34, 0.5);
