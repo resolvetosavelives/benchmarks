@@ -35,7 +35,7 @@ const Action = (props) => {
               activity&rdquo; form below.
             </p>
           </div>
-          <div className="col-4 d-flex justify-content-end">
+          <div className="col-md-4 d-flex justify-content-end">
             <Button
               variant="remove"
               className="mx-2 px-3 py-2"
@@ -57,30 +57,41 @@ const Action = (props) => {
   }
 
   return (
-    <div className="row action">
+    <div className="row action py-4">
       {deleteBanner()}
       <div className="col">
-        <div className="row py-4">
-          <div className="col-10">
-            <strong>{indicator.display_abbreviation}</strong>
-            &nbsp;
-            <span className="action-text">{action.text}</span>
-          </div>
-          <div className="col-2 d-flex flex-row align-items-center justify-content-end py-2 py-md-0 ">
-            {action.disease_id ? (
-              <ActionBadgePill action={action} />
-            ) : (
-              <ActionBadge action={action} />
-            )}
-            <button
-              className="delete close ml-3"
-              type="button"
-              onClick={() => setShowDelete(true)}
-            >
-              <img src="/delete-button.svg" alt="Delete this action" />
-            </button>
-          </div>
-        </div>
+        <strong>{indicator.display_abbreviation}</strong>
+        &nbsp;
+        <span className="action-text">{action.text}</span>
+      </div>
+      <div className="col flex-grow-0 d-flex flex-row align-items-md-center justify-content-end">
+        {action.disease_id ? (
+          <ActionBadgePill action={action} />
+        ) : (
+          <ActionBadge action={action} />
+        )}
+        <button
+          className="delete close ml-3 d-none d-md-inline"
+          type="button"
+          onClick={() => setShowDelete(true)}
+        >
+          <img src="/delete-button.svg" alt="Delete this action" />
+        </button>
+      </div>
+      <div className="w-100 d-md-none"></div>
+      <div className="row no-gutters d-auto d-md-none">
+        <button
+          className="delete close ml-3 mt-2"
+          type="button"
+          onClick={() => setShowDelete(true)}
+        >
+          <img
+            className="mr-1"
+            src="/delete-button.svg"
+            alt="Delete this action"
+          />
+          Remove
+        </button>
       </div>
     </div>
   )

@@ -131,20 +131,16 @@
     color: color("disease-pill");
   }
 
-  .delete img {
-    margin-top: -5px;
-  }
-
-  @include media-breakpoint-up(lg) {
-    .delete {
-      visibility: hidden;
-    }
-  }
-
   &:hover {
     border: 1px solid color("primary");
-    .delete {
-      visibility: visible;
+  }
+
+  .delete {
+    font-size: 1rem;
+    line-height: 1.25rem;
+
+    img {
+      margin-top: -3px;
     }
   }
 
