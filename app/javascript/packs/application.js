@@ -27,3 +27,16 @@ const ReactRailsUJS = require("react_ujs")
 ReactRailsUJS.useContext(componentRequireContext) //eslint-disable-line react-hooks/rules-of-hooks
 
 $(ReactRailsUJS.mountComponents)
+
+// Plan list page delete confirmation animation
+$(() => {
+  $(".plan-delete, .delete-banner .btn-cancel").click((e) => {
+    const banner = $(e.target).parents(".row:first").children(".delete-banner")
+    if (banner.hasClass("confirm-delete-enter")) {
+      banner.toggleClass("confirm-delete-enter confirm-delete-enter-active")
+    } else {
+      banner.toggleClass("confirm-delete-exit confirm-delete-exit-active")
+    }
+    return false
+  })
+})

@@ -12,7 +12,23 @@
     <% if @plans.length > 0 %>
       <div class="col d-md-none">
         <% @plans.each do |plan| %>
-          <div class="row py-2 border-bottom">
+          <div class="row py-2 border-bottom position-relative plan-row">
+            <div class="delete-banner mt-n2 p-2 pb-3 flex-column flex-md-row align-items-center d-flex confirm-delete-enter">
+              <div class="col d-flex flex-column align-items-left justify-content-center">
+                <h4 class="my-2">Remove this plan?</h4>
+                <p>This will permanently remove the plan &ldquo;<%= plan.name %>&rdquo;.</p>
+              </div>
+              <div class="col flex-grow-0 d-flex justify-content-end">
+                <%= button_to plan_path(plan.id), method: :delete, class: "btn btn-remove mx-2 px-3 py-2" do %>
+                  Remove
+                <% end %>
+                </button>
+                <button class="btn btn-cancel x-2 px-3 py-2">
+                  Cancel
+                </button>
+              </div>
+            </div>
+
             <div class="col-7"><b><%= link_to plan.name, plan %></b></div>
             <div class="col-5 text-right"><%= plan.updated_at.strftime("%B %d, %Y") %></div>
             <div class="col-12 mt-1 d-flex justify-content-between">
@@ -24,10 +40,12 @@
                 <%= inline_svg_tag "ico-print.svg" %>
                 Print 
               <% end %>
-              <%= link_to plan_path(plan.id), method: :delete do %>
-                <img src="/delete-button.svg" alt="Delete this plan" />
-                Delete
-              <% end %>
+              <%= link_to plan_path(plan.id), class: "plan-delete", method: :delete, data: {
+                confirm: "Are you sure you want to delete the plan '#{plan.name}'?"
+              } do %>
+              <img src="/delete-button.svg" alt="Delete this plan" />
+              Delete
+            <% end %>
             </div>
           </div>
         <% end %>
@@ -71,7 +89,7 @@
                   <% end %>
                 </td>
                 <td class="py-4 text-secondary">
-                  <%= link_to "Delete", plan_path(plan.id), method: :delete %>
+                  <%= link_to "Delete", plan_path(plan.id), method: :delete, data: {confirm: "Are you sure you want to delete the plan '#{plan.name}'?"} %>
                 </td>
               </tr>
             <% end %>
@@ -79,26 +97,26 @@
         </table>
       </div>
 
-        <div class="col-12">
-          <h1 class="tips-header">You have your Draft 0.1 NAPHS plan. Now what?</h1>
-          <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
-            <div class="col flex-grow-0 pr-3"><%= image_tag "pad.svg" %> </div>
-            <div class="col"><span>Share it with individuals involved in the development and implementation of NAPHS to get their feedback and help consolidate areas where appropriate.</span></div>
-          </div>
-          <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
-            <div class="col flex-grow-0 pr-3"><%= image_tag "people.svg" %></div>
-            <div class="col"><span>Then, plan an in-person workshop for discussion and validation with your multi-sectoral group.</span></div>
-          </div>
-          <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
-            <div class="col flex-grow-0 pr-3"><%= image_tag "book.svg" %></div>
-            <div class="col"><span>Ready to implement? Check out our Reference Library that has global best practices and case studies to help you plan and implement actions successfully.</span></div>
-          </div>
+      <div class="col-12">
+        <h1 class="tips-header">You have your Draft 0.1 NAPHS plan. Now what?</h1>
+        <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
+          <div class="col flex-grow-0 pr-3"><%= image_tag "pad.svg" %> </div>
+          <div class="col"><span>Share it with individuals involved in the development and implementation of NAPHS to get their feedback and help consolidate areas where appropriate.</span></div>
+        </div>
+        <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
+          <div class="col flex-grow-0 pr-3"><%= image_tag "people.svg" %></div>
+          <div class="col"><span>Then, plan an in-person workshop for discussion and validation with your multi-sectoral group.</span></div>
+        </div>
+        <div class="row no-gutters bg-light-gray border border-gray p-4 mb-3">
+          <div class="col flex-grow-0 pr-3"><%= image_tag "book.svg" %></div>
+          <div class="col"><span>Ready to implement? Check out our Reference Library that has global best practices and case studies to help you plan and implement actions successfully.</span></div>
         </div>
       </div>
-    <% else %>
-      <div class="col p-5 border text-center">
-        You haven't started any plans yet
-      </div>
-    <% end %>
   </div>
+<% else %>
+  <div class="col p-5 border text-center">
+    You haven't started any plans yet
+  </div>
+<% end %>
+</div>
 </div>
