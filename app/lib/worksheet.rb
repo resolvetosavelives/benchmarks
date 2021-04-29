@@ -22,22 +22,23 @@ class Worksheet
     create_instructions_sheet @workbook[0]
     ta_xlsx_worksheets = []
     current_worksheet = nil
-    @benchmark_technical_areas
-      .each_with_index do |benchmark_technical_area, ta_index|
-      benchmark_technical_area.benchmark_indicators
-        .each do |benchmark_indicator|
+    @benchmark_technical_areas.each do |benchmark_technical_area|
+      indicator_actions =
+        benchmark_technical_area.benchmark_indicators
+          .map do |benchmark_indicator|
+          [benchmark_indicator, @plan.actions_for(benchmark_indicator)]
+        end.reject { |i, a| a.empty? }.to_h
+      next if indicator_actions.empty?
+
+      current_worksheet =
+        @workbook.add_worksheet(benchmark_technical_area.full_name)
+      ta_xlsx_worksheets << current_worksheet
+      current_worksheet.row_breaks = RubyXL::BreakList.new
+
+      indicator_actions.each do |benchmark_indicator, plan_actions|
         row_index = 0
         goal_value =
           @plan.goal_value_for(benchmark_indicator: benchmark_indicator)
-        plan_actions = @plan.actions_for(benchmark_indicator)
-        next if plan_actions.empty?
-
-        if ta_xlsx_worksheets[ta_index].blank?
-          current_worksheet =
-            @workbook.add_worksheet(benchmark_technical_area.text)
-          ta_xlsx_worksheets << current_worksheet
-          current_worksheet.row_breaks = RubyXL::BreakList.new
-        end
         plan_actions.each do |plan_action|
           assessment_label = @plan.type_description
           row_index =
@@ -55,7 +56,7 @@ class Worksheet
 
     @workbook.worksheets.each do |w|
       # Remove duplicate merged cells before writing, Excel hates those
-      w.merged_cells.uniq! { |c| [c.ref.row_range, c.ref.col_range] }
+      w.merged_cells&.uniq! { |c| [c.ref.row_range, c.ref.col_range] }
 
       # Manually set `manual_break_count`, it seems like it's not generated?
       w.row_breaks&.manual_break_count = w.row_breaks.select { |b| b.man }.count
@@ -63,6 +64,7 @@ class Worksheet
   end
 
   def create_instructions_sheet(worksheet)
+    worksheet.sheet_name = "Instructions"
     SpreadsheetCell.new worksheet, 0, 0, text: "Instructions"
     SpreadsheetCell.new worksheet,
                         2,
