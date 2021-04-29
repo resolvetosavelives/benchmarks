@@ -8,38 +8,38 @@
     %p.large.text-center
       Using a country’s most recent JEE or SPAR assessment, a draft plan is created with the suggested benchmarks to step up health security capacity scores.
     .row.d-flex.justify-content-center.my-4
-      .col-sm
+      .col-sm.my-4
         = image_tag "score_and_goal.png", class: "img-fluid d-block mx-auto mb-4"
         %h5 Scores and benchmarks in one place
         %p
           Benchmark actions are automatically generated from stepping up assessment scores. No longer need to lookup and match data from different PDFs!
-      .col-sm
+      .col-sm.my-4
         = image_tag "document_types.png", class: "img-fluid d-block mx-auto mb-4"
         %h5 Robust resource library for recommended actions
         %p
           Recommended actions have examples, case studies, training packages, and much more to help guide implementation.
-      .col-sm
+      .col-sm.my-4
         = image_tag "xlsx_export.png", class: "img-fluid d-block mx-auto mb-4"
         %h5 Export a draft plan  in one-click
         %p
           Vitae nulla euismod velpretium tellus accumsan nulla nunc euismod ve semper. Vitae nulla euismod velpretium tellus accumsan nulla nunc
 .section--navy
   .container.mx-auto.my-5
-    .d-flex
-      .col.m-auto= render "hero_image"
-      .col
+    .row.d-flex
+      .col-sm.m-auto= render "hero_image"
+      .col-sm.align-middle.my-auto
         %h1 IHR Capacity Building Stages
         %h3 Assess capacity
         %p
           Assessments such as JEE/SPAR to  identify and evaluate a country’s national preparedness capacities, identify risks and prioritize actions for capacity building to prevent, detect, and rapidly respond to public health and threats.
 .section
   .container.mx-auto.my-5
-    .d-flex
-      .col
+    .row.d-flex
+      .col-sm.my-4
         %h1 Step up your planning
         %h3 Go from draft plan to planning  workshop in days, not months
         %p
           Charts show how many actions are in each technical area and categorizes them by type to help consolidate and prioritize.
         = link_to "Learn more", get_started_url, class: "btn btn-orange cta-btn", type: "button"
-      .col
-        = image_tag "video_still.png", class: "img-fluid"
+      .col.m-auto.my-4
+        = image_tag "video_still.png", class: "img-fluid d-block m-auto"
