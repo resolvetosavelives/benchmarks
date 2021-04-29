@@ -19,8 +19,8 @@ const Filters = () => {
   }
 
   return (
-    <>
-      <div className="row d-flex justify-content-between mb-2">
+    <div className="col-12 col-md-6 col-xl-12">
+      <div className="row no-gutters d-flex flex-column flex-md-row justify-content-between mb-0">
         <div className="col">
           <strong>{title}</strong>
         </div>
@@ -28,10 +28,10 @@ const Filters = () => {
           <ClearFilters />
         </div>
       </div>
-      <div className="row">
+      <div className="row mb-0">
         <div className="col">{filterComponent}</div>
       </div>
-    </>
+    </div>
   )
 }
 

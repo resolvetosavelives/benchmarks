@@ -5,7 +5,7 @@ import { clearFilterCriteria } from "../../config/actions"
 const ClearFilters = () => {
   const dispatch = useDispatch()
   return (
-    <div className="col-auto clear-filters-component">
+    <div className="clear-filters-component">
       <a
         href="#"
         title="Clear any filters applied"

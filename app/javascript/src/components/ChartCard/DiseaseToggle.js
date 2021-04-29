@@ -17,7 +17,7 @@ const DiseaseToggle = (props) => {
   const id = `disease-${disease.name}`
 
   return (
-    <div className="col">
+    <div className="disease-toggle">
       <input
         type="checkbox"
         id={id}

@@ -66,7 +66,7 @@ const ChartCard = () => {
               // Left Col
             }
             <div className="chart-pane col-12 col-xl-8 d-flex flex-column align-items-center">
-              <h6 className="my-3">Actions per benchmark technical area</h6>
+              <h6 className="my-2">Actions per benchmark technical area</h6>
               {
                 // Actual Chart, by Technical Area
               }
@@ -91,7 +91,7 @@ const ChartCard = () => {
               // Left Col
             }
             <div className="chart-pane col-12 col-xl-8 d-flex flex-column align-items-center">
-              <h6 className="my-3">Actions per action type</h6>
+              <h6 className="my-2">Actions per action type</h6>
               {
                 // Actual Chart, by Action Type
               }
