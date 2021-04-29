@@ -3,10 +3,10 @@
     %h1 Let's Get Started
     = form_with model: @get_started_form, url: start_index_path, html: {novalidate: true} do |form|
       .form-row
-        .col-6
+        .col-12.col-md-8.col-lg-6
           %h4 1. Select your country
           = form.select :country_id, options_from_collection_for_select(@countries, :id, :name, @get_started_form.country_id), {include_blank: true, prompt: "Type or select an option"}, {class: "custom-select", "data-get-started-target": "countrySelect", required: true}
           .invalid-feedback.my-3 Please choose a country.
       .form-row
-        .col-2
+        .col
           = form.submit "Next", class: "btn btn-primary"
