@@ -10,17 +10,9 @@ module ApplicationHelper
   # NB: please refer to the section in README.md ## A note on js packs and stylesheets
   def which_js
     if is_homepage?
-      javascript_pack_tag 'basic', "data-turbolinks-track": "reload"
+      javascript_pack_tag "basic", "data-turbolinks-track": "reload"
     else
-      javascript_pack_tag 'application', "data-turbolinks-track": "reload"
-    end
-  end
-
-  def which_footer
-    if is_homepage?
-      render "layouts/home_page_footer"
-    else
-      render "layouts/standard_footer"
+      javascript_pack_tag "application", "data-turbolinks-track": "reload"
     end
   end
 
