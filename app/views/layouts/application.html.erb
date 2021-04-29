@@ -13,19 +13,7 @@
 
   <body>
     <%= render "layouts/header" %>
-
-    <div class="container page-container">
-      <%= render partial: "layouts/flash" %>
-      <div class="row">
-        <div class="col-12">
-
-          <div>
-            <%= yield %>
-          </div>
-
-        </div>
-      </div>
-    </div>
+    <%= yield %>
 
     <%= which_footer %>
 

@@ -1,26 +1,45 @@
-.home-page
-  .row
-    .col.left-panel
-      .row
-        .col
-          %h1 Step up to preparedness
-          %h3
-            Accelerating implementation through better planning
-          %p
-            This digital tool supports accelerated planning and implementation of
-            International Health Regulation (IHR) core capacities, specifically
-            focusing on those needed to develop and guide your National Action
-            Plan for Health Security (NAPHS).
-          %p
-            This tool provides a database of key actions—Benchmarks developed by
-            the World Health Organization (WHO) and partners—needed to improve
-            your Joint External Evaluation (JEE) or State Parties Self-Assessment
-            Annual Reporting Tool (SPAR) scores by one or more steps.
-          %p
-            You will have the opportunity to create a draft plan, customize it
-            online or download it, view implementation guidance, and review an
-            analysis of your actions.
-      .row.my-4
-        .col-8
-          = link_to "Get Started", get_started_url, class: "btn btn-success cta-btn", style: "width: 250px", type: "button"
-    .col.right-panel.m-auto= render "hero_image"
+.section--blue.align-items-center
+  .hero-text
+    %h1.text-center Accelerate the planning and implementation of NAPHS
+    = link_to "Get started", get_started_url, class: "btn btn-orange cta-btn", type: "button"
+.section
+  .container.mx-auto.my-5
+    %h1.text-center A new, easy way to start planning
+    %p.large.text-center
+      Using a country’s most recent JEE or SPAR assessment, a draft plan is created with the suggested benchmarks to step up health security capacity scores.
+    .row.d-flex.justify-content-center.my-4
+      .col-sm
+        = image_tag "score_and_goal.png", class: "img-fluid d-block mx-auto mb-4"
+        %h5 Scores and benchmarks in one place
+        %p
+          Benchmark actions are automatically generated from stepping up assessment scores. No longer need to lookup and match data from different PDFs!
+      .col-sm
+        = image_tag "document_types.png", class: "img-fluid d-block mx-auto mb-4"
+        %h5 Robust resource library for recommended actions
+        %p
+          Recommended actions have examples, case studies, training packages, and much more to help guide implementation.
+      .col-sm
+        = image_tag "xlsx_export.png", class: "img-fluid d-block mx-auto mb-4"
+        %h5 Export a draft plan  in one-click
+        %p
+          Vitae nulla euismod velpretium tellus accumsan nulla nunc euismod ve semper. Vitae nulla euismod velpretium tellus accumsan nulla nunc
+.section--navy
+  .container.mx-auto.my-5
+    .d-flex
+      .col.m-auto= render "hero_image"
+      .col
+        %h1 IHR Capacity Building Stages
+        %h3 Assess capacity
+        %p
+          Assessments such as JEE/SPAR to  identify and evaluate a country’s national preparedness capacities, identify risks and prioritize actions for capacity building to prevent, detect, and rapidly respond to public health and threats.
+.section
+  .container.mx-auto.my-5
+    .d-flex
+      .col
+        %h1 Step up your planning
+        %h3 Go from draft plan to planning  workshop in days, not months
+        %p
+          Charts show how many actions are in each technical area and categorizes them by type to help consolidate and prioritize.
+        = link_to "Learn more", get_started_url, class: "btn btn-orange cta-btn", type: "button"
+      .col
+        = image_tag "video_still.png", class: "img-fluid"

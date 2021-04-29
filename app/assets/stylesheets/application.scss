@@ -14,6 +14,7 @@
 $colors: (
   "blue": #2c8dc9,
   "dark-blue": #20313b,
+  "navy": #031934,
   "green": #46b754,
   "orange": #d86422,
   "red": #e93939,
@@ -110,6 +111,16 @@ footer {
 
 p {
   font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+p.large {
+  font-size: 24px;
+  line-height: 31px;
 }
 
 a {
@@ -232,13 +243,45 @@ nav.navbar {
   letter-spacing: 0.1em;
 }
 
-.home-page {
-  .right-panel {
-    max-width: 574px;
+.section {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 0;
+
+  &--blue {
+    @extend .section;
+    background-color: color("blue");
+    h1,
+    h2,
+    h3,
+    h5,
+    p {
+      color: color("white");
+    }
   }
-  a.btn {
-    width: 250px;
+
+  &--navy {
+    @extend .section;
+    background-color: color("navy");
+    h1,
+    h2,
+    h3,
+    h5,
+    p {
+      color: color("white");
+    }
   }
+}
+
+.hero-text {
+  width: 610px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 6rem;
 }
 
 a.cta-btn {
