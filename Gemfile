@@ -19,7 +19,7 @@ gem "rake", "~> 13.0"
 gem "rubyXL", "~> 3.4"
 gem "sentry-rails", "~> 4.3"
 gem "sentry-ruby", "~> 4.3"
-gem "webpacker", "~> 5.2"
+gem "webpacker", "~> 5.3"
 
 group :development, :test do
   gem "colorize", "~> 0.8"
