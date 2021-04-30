@@ -8,6 +8,8 @@ module CapybaraHelper
     find("##{field[:id]}_chosen ul.chosen-results li", text: item_text).click
   end
 
+  # Someday Ferrum will have a better way to handle that pending connection issue.
+  # For now, this prevents system tests from flaking on that particular error.
   def retry_on_pending_connection
     retries = 0
 
@@ -15,7 +17,10 @@ module CapybaraHelper
       yield
     rescue Ferrum::PendingConnectionsError
       retries += 1
-      retry unless retries > 3
+      unless retries > 3
+        puts "Ferrum failed with PendingConnectionsError, retrying. (Retry ##{retries})"
+        retry
+      end
     end
   end
 end
