@@ -13,7 +13,23 @@
 
   <body>
     <%= render "layouts/header" %>
-    <%= yield %>
+
+    <% if content_for?(:homepage) %>
+      <%= content_for :homepage %>
+    <% else %>
+      <div class="container page-container">
+
+        <%= render partial: "layouts/flash" %>
+
+        <div class="row">
+          <div class="col-12">
+            <div>
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
 
     <%= render "layouts/standard_footer" %>
 
