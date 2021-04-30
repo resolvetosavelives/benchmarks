@@ -8,15 +8,17 @@ const Indicator = (props) => {
 
   return (
     <div
-      className="benchmark-container col"
+      className="benchmark-container"
       data-benchmark-indicator-display-abbrev={indicator.display_abbreviation}
     >
-      <div className="row bg-light-gray px-3 header">
-        <ScoreToGoal indicator={indicator} />
-        <div className="col pl-1">
+      <div className="row py-3 bg-light-gray header d-flex flex-column flex-md-row">
+        <div className="col my-1">
           <b>Benchmark {indicator.display_abbreviation}:</b>
           &nbsp;
           {indicator.text}
+        </div>
+        <div className="col-auto my-1 mr-3 pr-0 d-flex justify-content-left align-items-center">
+          <ScoreToGoal indicator={indicator} />
         </div>
       </div>
       <IndicatorActionList indicator={indicator} />

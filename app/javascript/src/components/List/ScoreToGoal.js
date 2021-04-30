@@ -18,7 +18,7 @@ const ScoreToGoal = (props) => {
 
   if (currentScore && targetScore) {
     return (
-      <div className="d-flex align-items-center justify-content-center pr-2">
+      <div>
         <span
           className={`badge badge-pill align-middle badge-rounded-circle color-value-${currentScore}`}
         >

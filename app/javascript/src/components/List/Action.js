@@ -27,15 +27,15 @@ const Action = (props) => {
         classNames="confirm-delete"
         unmountOnExit
       >
-        <div className="delete-banner p-2 d-flex align-items-center">
-          <div className="col-8">
-            <h4 className="my-2">Remove this action?</h4>
-            <p>
+        <div className="delete-banner py-2 mt-n4 d-flex flex-column flex-md-row align-items-center">
+          <div className="col d-flex flex-column align-items-left justify-content-center">
+            <h4 className="m-0">Remove this action?</h4>
+            <p className="m-0">
               You can always add this action back from the &ldquo;Add an
               activity&rdquo; form below.
             </p>
           </div>
-          <div className="col-4 d-flex justify-content-end">
+          <div className="col flex-grow-0 d-flex justify-content-end">
             <Button
               variant="remove"
               className="mx-2 px-3 py-2"
@@ -57,30 +57,31 @@ const Action = (props) => {
   }
 
   return (
-    <div className="row action">
+    <div className="row action py-4">
       {deleteBanner()}
       <div className="col">
-        <div className="row py-4">
-          <div className="col-10">
-            <strong>{indicator.display_abbreviation}</strong>
-            &nbsp;
-            <span className="action-text">{action.text}</span>
-          </div>
-          <div className="col-2 d-flex flex-row align-items-center justify-content-end py-2 py-md-0 ">
-            {action.disease_id ? (
-              <ActionBadgePill action={action} />
-            ) : (
-              <ActionBadge action={action} />
-            )}
-            <button
-              className="delete close ml-3"
-              type="button"
-              onClick={() => setShowDelete(true)}
-            >
-              <img src="/delete-button.svg" alt="Delete this action" />
-            </button>
-          </div>
-        </div>
+        <strong>{indicator.display_abbreviation}</strong>
+        &nbsp;
+        <span className="action-text">{action.text}</span>
+      </div>
+      <div
+        className="col-12 col-md-auto flex-grow-0 mt-2 mt-md-0
+        d-flex flex-row justify-content-between
+        align-items-md-center justify-content-md-end"
+      >
+        {action.disease_id ? (
+          <ActionBadgePill action={action} />
+        ) : (
+          <ActionBadge action={action} />
+        )}
+        <button
+          className="delete close ml-md-3"
+          type="button"
+          onClick={() => setShowDelete(true)}
+        >
+          <img src="/delete-button.svg" alt="Delete this action" />
+          <span className="d-md-none ml-1">Remove</span>
+        </button>
       </div>
     </div>
   )

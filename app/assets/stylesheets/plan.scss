@@ -72,23 +72,6 @@
 .benchmark-container {
   margin-bottom: 50px;
 
-  .header {
-    padding-top: 32px;
-    padding-bottom: 32px;
-
-    .confirm-delete,
-    .delete {
-      visibility: hidden;
-    }
-
-    &:hover {
-      .confirm-delete,
-      .delete {
-        visibility: visible;
-      }
-    }
-  }
-
   .action-form {
     padding: 0.5rem 0.5rem 0.5rem 0;
     border-left: 8px solid rgba(216, 100, 34, 0.5);
@@ -148,20 +131,17 @@
     color: color("disease-pill");
   }
 
-  .delete img {
-    margin-top: -5px;
-  }
-
-  @include media-breakpoint-up(lg) {
-    .delete {
-      visibility: hidden;
-    }
-  }
-
   &:hover {
     border: 1px solid color("primary");
-    .delete {
-      visibility: visible;
+  }
+
+  .delete {
+    color: #bbb;
+    font-size: 1rem;
+
+    img {
+      margin-top: -1px;
+      color: #000;
     }
   }
 
@@ -382,14 +362,6 @@
   }
 }
 
-.stick-to-top {
-  input.plan-name {
-  }
-  input.plan-save {
-    min-width: 140px;
-  }
-}
-
 .plan-container {
   .tooltip.bs-tooltip-top .arrow:before {
     border-top-color: color("gray-dark-transparent");
@@ -454,7 +426,6 @@
   $our-chosen-height: 3em;
   .chosen-container {
     background-image: none;
-    width: 500px !important;
   }
   .chosen-container,
   .chosen-container .chosen-single,
@@ -576,7 +547,8 @@
 
   .btn {
     text-transform: none;
-    height: auto;
+    font-size: 1rem;
+    line-height: 1.5rem;
     color: #fff;
   }
 

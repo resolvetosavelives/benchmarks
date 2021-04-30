@@ -17,10 +17,8 @@ const DiseaseToggles = () => {
   })
 
   return (
-    <div className="col d-flex flex-column">
-      <div className="col">
-        <strong>Show diseases</strong>
-      </div>
+    <div className="col-7 col-md-3 col-xl-12 d-flex flex-column">
+      <strong>Show diseases</strong>
       {diseaseTogglesHTML}
     </div>
   )

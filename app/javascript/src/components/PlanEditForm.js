@@ -94,7 +94,7 @@ const PlanEditForm = (props) => {
             defaultValue={planActionIdsJson}
           />
 
-          <div className="row full-width stick-to-top bg-dark-blue">
+          <div className="row full-width bg-dark-blue">
             <div className="container mx-auto row no-gutters justify-content-between p-2">
               <div className="col-lg-5 m-2 form-group alt-header">
                 <input
