@@ -303,7 +303,7 @@ class AppsTest < ApplicationSystemTestCase
   end
 
   test "happy path for Armenia SPAR 2018 5-year plan" do
-    visit root_url
+    retry_on_pending_connection { visit root_url }
     click_on("Get Started") until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Armenia", from: "get_started_form_country_id")
