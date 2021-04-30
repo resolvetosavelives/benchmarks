@@ -1,9 +1,10 @@
 <footer class="bg-dark-blue pt-4">
-  <div class="container">
-    <div class="row">
-      <div class="col text-center">
-        <%= content_tag :p, "© #{Date.today.year}. World Health Organization. All rights reserved.", class: "py-2 copyright" %>
-      </div>
-    </div>
+  <div class="container mx-auto py-4">
+    <span>
+      <%= link_to "Privacy Policy", privacy_policy_path %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= mail_to "sla@resolvetosavelives.org", "Contact" %>
+    </span>
+    <span>
+      <%= content_tag :p, "© #{Date.today.year}. World Health Organization. All rights reserved.", class: "py-2 copyright text-center" %>
+    </span>
   </div>
 </footer>

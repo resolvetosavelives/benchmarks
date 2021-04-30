@@ -14,6 +14,7 @@
 $colors: (
   "blue": #2c8dc9,
   "dark-blue": #20313b,
+  "navy": #031934,
   "green": #46b754,
   "orange": #d86422,
   "red": #e93939,
@@ -82,34 +83,32 @@ footer {
   margin-top: auto;
   color: white;
   font-family: Karla, sans-serif;
-  font-size: 16px;
-  line-height: 22px;
-
-  .heading {
-    display: inline-block;
-    padding-bottom: 1rem;
-    border-bottom: solid 1px white;
-    font-size: 21px;
-  }
-
-  .copyright {
-    font-family: Karla, sans-serif;
-    font-size: 14px;
-    line-height: 16px;
-  }
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  text-align: center;
 
   a {
     color: color("white");
-  }
-
-  .footer-logo {
-    margin-right: 20px;
-    margin-bottom: 30px;
   }
 }
 
 p {
   font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+p.large {
+  font-size: 24px;
+  line-height: 31px;
 }
 
 a {
@@ -232,20 +231,41 @@ nav.navbar {
   letter-spacing: 0.1em;
 }
 
-.home-page {
-  .right-panel {
-    max-width: 574px;
+.section {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 0;
+
+  &--blue {
+    @extend .section;
+    background-color: color("blue");
+    h1,
+    h2,
+    h3,
+    h5,
+    p {
+      color: color("white");
+    }
   }
-  a.btn {
-    width: 250px;
+
+  &--navy {
+    @extend .section;
+    background-color: color("navy");
+    h1,
+    h2,
+    h3,
+    h5,
+    p {
+      color: color("white");
+    }
   }
 }
 
 a.cta-btn {
   -webkit-appearance: none; // This is so the background-color works on Safari
-  height: 4.5em !important;
-  line-height: 4.5em;
-  padding: 0;
+  padding: 20px 40px 20px 40px;
   margin: 0;
 }
 
@@ -317,7 +337,7 @@ a:hover {
   }
 }
 
-svg.step-up-hero {
+svg.step-up-image {
   path {
     fill-rule: nonzero;
     transition: all 0.2s ease-in-out;
