@@ -2,7 +2,7 @@ require File.expand_path("./test/application_system_test_case")
 
 class AppsTest < ApplicationSystemTestCase
   test "happy path for Nigeria JEE 1.0" do
-    visit root_url
+    retry_on_pending_connection { visit root_url }
     click_on("Get Started") until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
@@ -87,7 +87,7 @@ class AppsTest < ApplicationSystemTestCase
   test "happy path for Nigeria JEE 1.0 with influenza, cholera, and ebola" do
     ##
     # visit home page
-    visit root_url
+    retry_on_pending_connection { visit root_url }
     click_on("Get Started") until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
 
@@ -361,7 +361,7 @@ class AppsTest < ApplicationSystemTestCase
   end
 
   test "happy path for Nigeria JEE 1.0 plan by technical areas 5-year" do
-    visit root_url
+    retry_on_pending_connection { visit root_url }
     click_on("Get Started") until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
 
