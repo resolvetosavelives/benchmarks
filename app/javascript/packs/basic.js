@@ -1,4 +1,5 @@
 import "./base"
+import "particles.js"
 
 const assessText =
   "<h3>Assess capacity</h3><p>Assessments such as JEE/SPAR to  identify and evaluate a country’s national preparedness capacities, identify risks and prioritize actions for capacity building to prevent, detect, and rapidly respond to public health and threats.</p>"
@@ -41,11 +42,6 @@ $(() => {
     .addEventListener("mouseenter", () => {
       document.getElementById("step-up-text").innerHTML = monitorText
     })
-})
 
-// document.getElementById('cost-element').addEventListener('mouseenter',
-//   function() {
-//     document.getElementById('step-up-text')
-//       .innerHTML = "<h5>Estimate costs</h5><p>Identify all available domestic and international resources (financial and technical) that are needed and estimate the costs to support decision making and prioritization.</p>"
-//   }
-// )
+  particlesJS.load("particles-js", "/particles.json") //eslint-disable-line
+})

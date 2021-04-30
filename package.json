@@ -26,6 +26,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "hogan.js": "^3.0.2",
     "jquery": "^3.6.0",
+    "particles.js": "^2.0.0",
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
