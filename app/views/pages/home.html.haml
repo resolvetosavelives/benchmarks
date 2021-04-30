@@ -1,7 +1,10 @@
 = content_for :homepage do
   .section--blue.align-items-center
-    .hero-text
-      %h1.text-center Accelerate the planning and implementation of NAPHS
+    .col-med.d-flex.text-center.flex-column.mb-4.align-items-center
+      %h1.text-center
+        Accelerate the planning and
+        %br/
+        implementation of NAPHS
       = link_to "Get Started", get_started_url, class: "btn btn-orange cta-btn", type: "button"
   .section
     .container.mx-auto.my-5
