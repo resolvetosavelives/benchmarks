@@ -7,4 +7,15 @@ module CapybaraHelper
     find("##{field[:id]}_chosen").click
     find("##{field[:id]}_chosen ul.chosen-results li", text: item_text).click
   end
+
+  def retry_on_pending_connection
+    retries = 0
+
+    begin
+      yield
+    rescue Ferrum::PendingConnectionsError
+      retries += 1
+      retry unless retries > 3
+    end
+  end
 end
