@@ -14,17 +14,17 @@
       <ul class="navbar-nav">
         <li class="nav-item mx-lg-2">
           <a class="nav-link py-1" href="<%= root_path %>">
-            HOME
+            <%= t 'header.home' %>
           </a>
         </li>
         <li class="nav-item mx-lg-2">
           <a class="nav-link py-1" href="<%= introduction_url %>">
-            WHO BENCHMARKS
+            <%= t 'header.who_benchmarks' %>
           </a>
         </li>
         <li class="nav-item mx-lg-2">
           <a class="nav-link py-1" href="<%= reference_library_url %>">
-            REFERENCE LIBRARY
+            <%= t 'header.reference_library' %>
           </a>
         </li>
         <% if current_user %>
@@ -34,15 +34,15 @@
               <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdownMenuLink">
-              <%= link_to "My Plans", plans_path, class: "dropdown-item" %>
+              <%= link_to t('header.my_plans'), plans_path, class: "dropdown-item" %>
               <div class="dropdown-divider"></div>
-              <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+              <%= link_to t('header.log_out'), destroy_user_session_path, method: :delete, class: "dropdown-item" %>
             </div>
           </li>
         <% else %>
           <li class="nav-item ml-lg-2">
             <a class="nav-link py-1" href="<%= new_user_session_path %>">
-              LOG IN
+              <%= t 'header.log_in' %>
             </a>
           </li>
         <% end %>

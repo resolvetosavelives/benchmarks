@@ -9,9 +9,11 @@
     <%= stylesheet_pack_tag 'application', media: 'all' %>
     <%= which_js %>
     <%= javascript_pack_tag('sentry', async: 'true') if Rails.env.production? %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_packs_with_chunks_tag "i18n-language", "i18n/#{I18n.locale}" %>
   </head>
 
-  <body>
+  <body data-locale="<%= I18n.locale %>">
     <%= render "layouts/header" %>
 
     <% if content_for?(:homepage) %>

@@ -30,4 +30,44 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  header:
+    home: "HOME"
+    who_benchmarks: "WHO BENCHMARKS"
+    reference_library: "REFERENCE LIBRARY"
+    log_in: "LOG IN"
+    who_logo_alt_text: "WHO logo"
+    toggle_navigation: "Toggle navigation"
+    my_plans: "My Plans"
+    log_out: "Log Out"
+    down_caret: "Down Caret"
+  footer:
+    privacy_policy: "Privacy Policy"
+    contact: "Contact"
+    copyright: "© %{year}. World Health Organization. All rights reserved."
+  homepage:
+    get_started: "Get Started"
+    learn_more: "Learn More"
+    accelerate_planning: "Accelerate the planning and"
+    implementation_of_naphs: "implementation of NAPHS"
+    a_new_easy_way: "A new, easy way to start planning"
+    using_a_country_s: "Using a country’s most recent JEE or SPAR assessment, a draft plan is created with the suggested benchmarks to step up health security capacity scores."
+    scores_and_benchmarks_in_one_place: "Scores and benchmarks in one place"
+    benchmark_actions_are_automatically: "Benchmark actions are automatically generated from stepping up assessment scores. No longer need to lookup and match data from different PDFs!"
+    robust_resource_library: "Robust resource library for recommended actions"
+    recommended_actions_have_examples: "Recommended actions have examples, case studies, training packages, and much more to help guide implementation."
+    export_a_draft_plan_in_one_click: "Export a draft plan in one-click"
+    after_reviewing_and_refining: "After reviewing and refining Benchmarks actions, export it as an .xls to begin sharing and convening with stakeholders."
+    ihr_capacity_building_stages: "IHR Capacity Building Stages"
+    assess_capacity: "Assess capacity"
+    assessments_such_as_jee: "Assessments such as JEE/SPAR to  identify and evaluate a country’s national preparedness capacities, identify risks and prioritize actions for capacity building to prevent, detect, and rapidly respond to public health and threats."
+    step_up_your_planning: "Step up your planning"
+    go_from_draft_plan: "Go from draft plan to planning workshop in days, not months"
+    charts_show_how_many: "Charts show how many actions are in each technical area and categorizes them by type to help consolidate and prioritize."
+  step_up:
+    assess: "Assess"
+    monitor: "Monitor"
+    implement: "Implement"
+    plan: "Plan"
+    cost: "Cost"
+    assess_capacity_header: "Assess capacity"
+    

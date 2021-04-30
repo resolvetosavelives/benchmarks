@@ -11,6 +11,7 @@ gem "bootsnap", "~> 1.7", require: false
 gem "devise", "~> 4.7"
 gem "hamlit", "~> 2.15"
 gem "hamlit-rails", "~> 0.2"
+gem "i18n-js"
 gem "inline_svg", "~> 1.7"
 gem "pg", "~> 1.2"
 gem "puma", "~> 5.2"

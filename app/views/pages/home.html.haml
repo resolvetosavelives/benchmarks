@@ -2,50 +2,58 @@
   .section--blue.align-items-center
     .col-med.d-flex.text-center.flex-column.mb-4.align-items-center
       %h1.text-center
-        Accelerate the planning and
+        = t 'homepage.accelerate_planning'
         %br.d-none.d-md-inline/
-        implementation of NAPHS
-      = link_to "Get Started", get_started_url, class: "btn btn-orange cta-btn", type: "button"
+        = t 'homepage.implementation_of_naphs'
+      = link_to t('homepage.get_started'), get_started_url, class: "btn btn-orange cta-btn", type: "button"
   .section
     .container.mx-auto.my-5
-      %h1.text-center A new, easy way to start planning
+      %h1.text-center
+        = t 'homepage.a_new_easy_way'
       %p.large.text-center
-        Using a country’s most recent JEE or SPAR assessment, a draft plan is created with the suggested benchmarks to step up health security capacity scores.
+        = t 'homepage.using_a_country_s'
       .row.d-flex.justify-content-center.my-4
         .col-sm.my-4
           = image_tag "score_and_goal.png", class: "img-fluid d-block mx-auto mb-4"
-          %h5 Scores and benchmarks in one place
+          %h5 
+            = t 'homepage.scores_and_benchmarks_in_one_place'
           %p
-            Benchmark actions are automatically generated from stepping up assessment scores. No longer need to lookup and match data from different PDFs!
+            = t 'homepage.benchmark_actions_are_automatically'
         .col-sm.my-4
           = image_tag "document_types.png", class: "img-fluid d-block mx-auto mb-4"
-          %h5 Robust resource library for recommended actions
+          %h5
+            = t 'homepage.robust_resource_library'
           %p
-            Recommended actions have examples, case studies, training packages, and much more to help guide implementation.
+            = t 'homepage.recommended_actions_have_examples'
         .col-sm.my-4
           = image_tag "xlsx_export.png", class: "img-fluid d-block mx-auto mb-4"
-          %h5 Export a draft plan  in one-click
+          %h5
+            = t 'homepage.export_a_draft_plan_in_one_click'
           %p
-            After reviewing and refining Benchmarks actions, export it as an .xls to begin sharing and convening with stakeholders.
+            = t(:after_reviewing_and_refining)
   .section--navy.position-relative.py-5
     .position-absolute.h-100.w-100#particles-js
     .container
       .row.d-flex
         .col-sm.m-auto= render "step_up_image"
         .col-sm.align-middle.my-auto
-          %h1 IHR Capacity Building Stages
+          %h1
+            = t 'homepage.ihr_capacity_building_stages'
           .div#step-up-text
-            %h3 Assess capacity
+            %h3
+              = t 'homepage.assess_capacity'
             %p
-              Assessments such as JEE/SPAR to  identify and evaluate a country’s national preparedness capacities, identify risks and prioritize actions for capacity building to prevent, detect, and rapidly respond to public health and threats.
+              = t 'homepage.assessments_such_as_jee'
   .section
     .container.mx-auto.my-5
       .row.d-flex
         .col-sm.my-4
-          %h1 Step up your planning
-          %h3 Go from draft plan to planning  workshop in days, not months
+          %h1
+            = t 'homepage.step_up_your_planning'
+          %h3
+            = t 'homepage.go_from_draft_plan'
           %p
-            Charts show how many actions are in each technical area and categorizes them by type to help consolidate and prioritize.
-          = link_to "Learn more", get_started_url, class: "btn btn-orange cta-btn", type: "button"
+            = t 'homepage.charts_show_how_many'
+          = link_to t('homepage.learn_more'), get_started_url, class: "btn btn-orange cta-btn", type: "button"
         .col.m-auto.my-4
           = image_tag "video_still.png", class: "img-fluid d-block m-auto"
