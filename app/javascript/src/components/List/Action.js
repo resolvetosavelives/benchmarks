@@ -35,7 +35,7 @@ const Action = (props) => {
               activity&rdquo; form below.
             </p>
           </div>
-          <div className="col flex-grow-0 d-flex justify-content-end">
+          <div className="col flex-grow-0 my-2 my-md-0 d-flex justify-content-end">
             <Button
               variant="remove"
               className="mx-2 px-3 py-2"
