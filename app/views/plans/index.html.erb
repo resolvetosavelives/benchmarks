@@ -38,11 +38,11 @@
             <div class="col-12 col-md-5 ml-md-auto mt-1 mt-md-0 d-flex justify-content-between">
               <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
                 <%= inline_svg_tag "ico-download.svg" %>
-                Download <span class="d-none d-md-inline">XLS</span>
+                Download <span class="d-none d-lg-inline">XLS</span>
               <% end %>
               <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
                 <%= inline_svg_tag "ico-print.svg" %>
-                Print <span class="d-none d-md-inline">Worksheets</span>
+                Print <span class="d-none d-lg-inline">Worksheets</span>
               <% end %>
               <%= link_to plan_path(plan.id), class: "plan-delete", method: :delete, data: {
                 confirm: "Are you sure you want to delete the plan '#{plan.name}'?"
