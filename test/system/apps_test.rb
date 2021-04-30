@@ -286,7 +286,11 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("Saved Nigeria Plan 789")
     sleep 0.2
     click_on("Saved Nigeria Plan 789")
-    assert page.find("h3", text: "National Legislation, Policy and Financing")
+
+    retry_on_pending_connection do
+      assert page.find("h3", text: "National Legislation, Policy and Financing")
+    end
+
     click_on("email@example.com")
     click_on("My Plans")
     assert page.has_content?("Saved Nigeria Plan 789")
