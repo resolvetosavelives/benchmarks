@@ -248,7 +248,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
-    rexml (3.2.4)
+    rexml (3.2.5)
     ruby-graphviz (1.2.5)
       rexml
     ruby-progressbar (1.11.0)
@@ -339,6 +339,7 @@ DEPENDENCIES
   rails-controller-testing (~> 1.0)
   rails-erd (~> 1.6)
   rake (~> 13.0)
+  rexml (>= 3.2.5)
   rubyXL (~> 3.4)
   sentry-rails (~> 4.3)
   sentry-ruby (~> 4.3)
@@ -351,4 +352,4 @@ RUBY VERSION
    ruby 3.0.0p0
 
 BUNDLED WITH
-   2.2.11
+   2.2.13
