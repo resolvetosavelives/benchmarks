@@ -30,6 +30,7 @@ module RtslBenchmarks
     config.assets.enabled = false
     config.add_autoload_paths_to_load_path = false
     config.middleware.use Rack::Attack
+    config.middleware.use I18n::JS::Middleware
 
     # Configuration for the application, engines, and railties goes here.
     #
