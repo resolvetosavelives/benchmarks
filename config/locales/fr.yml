@@ -1,0 +1,71 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+fr:
+  header:
+    home: "HOME"
+    who_benchmarks: "OMS BENCHMARKS"
+    reference_library: "BIBLIOTHEQUE DE REFERENCE"
+    log_in: "CONNEXION"
+    who_logo_alt_text: "Logo de l'OMS"
+    toggle_navigation: "Toggle navigation"
+    my_plans: "Mes plans"
+    log_out: "Déconnexion"
+    down_caret: "Down Caret"
+  footer:
+    privacy_policy: "Politique de confidentialité"
+    contact: "Contacter"
+    copyright: "© %{year}. Organisation mondiale de la santé. Tous les droits sont réservés."
+  homepage:
+    get_started: "Commencer"
+    learn_more: "En savoir plus"
+    accelerate_planning: "Accélérez la planification et"
+    implementation_of_naphs: "implémentation de NAPHS"
+    a_new_easy_way: "Une nouvelle façon simple de commencer à planifier"
+    using_a_country_s: "À l'aide de l'évaluation JEE ou SPAR la plus récente d'un pays, un projet de plan est créé avec les repères suggérés pour augmenter les scores de capacité de sécurité sanitaire."
+    scores_and_benchmarks_in_one_place: "Scores et benchmarks en un seul endroit"
+    benchmark_actions_are_automatically: "Les actions de benchmark sont automatiquement générées à partir de l'augmentation des scores d'évaluation. Plus besoin de rechercher et de faire correspondre les données de différents PDF!"
+    robust_resource_library: "Bibliothèque de ressources robuste pour les actions recommandées"
+    recommended_actions_have_examples: "Les actions recommandées comportent des exemples, des études de cas, des modules de formation et bien plus pour guider la mise en œuvre."
+    export_a_draft_plan_in_one_click: "Exporter un projet de plan en un clic"
+    after_reviewing_and_refining: "Après avoir examiné et affiné les actions Benchmarks, exportez-le au format .xls pour commencer à partager et à vous réunir avec les parties prenantes."
+    ihr_capacity_building_stages: "Étapes du renforcement des capacités du IHR"
+    assess_capacity: "Évaluer la capacité"
+    assessments_such_as_jee: "Des évaluations telles que JEE / SPAR pour identifier et évaluer les capacités nationales de préparation d'un pays, identifier les risques et hiérarchiser les actions de renforcement des capacités pour prévenir, détecter et réagir rapidement à la santé publique et aux menaces."
+    step_up_your_planning: "Améliorez votre planification"
+    go_from_draft_plan: "Passer du projet de plan à l'atelier de planification en quelques jours, pas en mois"
+    charts_show_how_many: "Les graphiques montrent le nombre d'actions dans chaque domaine technique et les catégorise par type pour aider à consolider et à hiérarchiser."
+  step_up:
+    assess: "Évaluer"
+    monitor: "Surveiller"
+    implement: "Implémenter"
+    plan: "Planifier"
+    cost: "Coût"
