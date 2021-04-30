@@ -507,17 +507,21 @@ fieldset[disabled] .btn-cancel.active {
 }
 
 .confirm-delete-enter {
+  visibility: hidden;
   clip-path: inset(0 0 0 100%);
 }
 .confirm-delete-enter-active {
+  visibility: visible;
   clip-path: inset(0 0 0 0);
-  transition: clip-path 750ms;
+  transition: all 750ms;
 }
 
 .confirm-delete-exit {
+  visibility: visible;
   clip-path: inset(0 0 0 0);
 }
 .confirm-delete-exit-active {
+  visibility: hidden;
   clip-path: inset(0 0 0 100%);
-  transition: clip-path 750ms;
+  transition: all 750ms;
 }
