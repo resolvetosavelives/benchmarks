@@ -293,7 +293,8 @@ class AppsTest < ApplicationSystemTestCase
 
     ##
     # delete the plan
-    click_link("Delete")
+    accept_prompt { click_link("Delete") }
+
     assert page.has_content?("You haven't started any plans yet")
   end
 
