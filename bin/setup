@@ -12,8 +12,14 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
-  system! "yarn install"
-  system! "npx browserslist@latest --update-db"
+
+  system! "brew install nodenv nodenv/nodenv/nodenv-package-json-engine"
+  node_version = %x{npm run env | grep -i npm_package_engines_node | cut -d '=' -f 2}.chomp
+  system! "nodenv install #{node_version}"
+
+  system! "nodenv exec npm install -g yarn"
+  system! "nodenv exec yarn install"
+  system! "nodenv exec npx browserslist@latest --update-db"
 
   puts "\n== Preparing database =="
   system! "bin/rails db:prepare"
