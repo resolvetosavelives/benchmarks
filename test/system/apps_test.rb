@@ -95,9 +95,9 @@ class AppsTest < ApplicationSystemTestCase
     click_on("Next")
     choose "Joint External Evaluation (JEE)"
     choose "1 year plan"
-    check "Optional: Influenza planning"
-    check "Optional: Cholera planning"
-    check "Optional: Ebola planning"
+    check "Influenza planning"
+    check "Cholera planning"
+    check "Ebola planning"
     click_on("Next")
 
     ##
