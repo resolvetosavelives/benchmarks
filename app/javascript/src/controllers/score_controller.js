@@ -34,8 +34,10 @@ export default class extends Controller {
     })
     if (allAreValid) {
       this.submitButtonTarget.removeAttribute("disabled")
+      this.submitButtonTarget.value = "Next"
     } else {
       this.submitButtonTarget.setAttribute("disabled", "disabled")
+      this.submitButtonTarget.value = "Invalid data"
     }
   }
 
@@ -46,6 +48,7 @@ export default class extends Controller {
    * `this.form.submit()` directly.
    */
   submit(event) {
+    this.updateFormStateFromChildren()
     const { currentTarget: form } = event
     if (form.checkValidity() === false) {
       event.preventDefault()
