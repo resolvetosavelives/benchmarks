@@ -13,59 +13,66 @@
           %label= @country.name
       .form-row
         .col
-          %h4{class: heading_disabled_class}
-            2. Choose your most recent assessment
-          - @country.assessment_publications.each do |ap|
-            .form-check
-              = form.radio_button :assessment_type, ap.named_id, class: "form-check-input", required: true, "data-action": "get-started#selectAssessment", autocomplete: "off"
-              = form.label :assessment_type, "#{ap.title} (#{ap.abbrev})", value: ap.named_id, class: "form-check-label"
-              .invalid-feedback Please choose an assessment.
-            .plan-by-technical-area-container{
-              style: "display: none",
-              "data-get-started-target": "planByTechnicalAreasContainer",
-              "data-assessment-named-id": ap.named_id
-            }
-              %label
-                %input{
-                  type: "checkbox",
-                  name: "get_started_form[plan_by_technical_ids]",
-                  value: 1,
-                  autocomplete: "off",
-                  "data-action": "get-started#toggleTechnicalAreas",
-                  "data-assessment-named-id": ap.named_id
-                }
-                  %em Optional:
-                  Plan by technical area(s)
-              .collapse{
-                "data-get-started-target": "technicalAreaCard",
+          - if @get_started_form.blank_assessment
+            %h4 2. Select an assessment
+            = form.hidden_field :blank_assessment
+            = form.label :blank_assessment, "New JEE assessment", value: true, class: "form-check-label"
+            %p
+              %small.text-muted Add your own scores
+          - else
+            %h4{class: heading_disabled_class}
+              2. Choose your most recent assessment
+            - @country.assessment_publications.each do |ap|
+              .form-check
+                = form.radio_button :assessment_type, ap.named_id, class: "form-check-input", required: true, "data-action": "get-started#selectAssessment", autocomplete: "off"
+                = form.label :assessment_type, "#{ap.title} (#{ap.abbrev})", value: ap.named_id, class: "form-check-label"
+                .invalid-feedback Please choose an assessment.
+              .plan-by-technical-area-container{
+                style: "display: none",
+                "data-get-started-target": "planByTechnicalAreasContainer",
                 "data-assessment-named-id": ap.named_id
               }
-                .col.card
-                  .row
-                    .col
-                      %a{
-                        href: "#",
-                        "data-action": "get-started#selectAllTechnicalAreas",
-                        "data-assessment-named-id": ap.named_id
-                      }
-                        Select all
-                      |
-                      %a{
-                        href: "#",
-                        "data-action": "get-started#deselectAllTechnicalAreas",
-                        "data-assessment-named-id": ap.named_id
-                      }
-                        Deselect all
-                  .row
-                    - col1_count = ((ap.assessment_technical_areas.size + 1) / 2).floor
-                    .col
-                      - ap.assessment_technical_areas.take(col1_count).each do |technical_area|
-                        = render "checkbox_for_technical_area", technical_area: technical_area, form: form
-                    .col
-                      - ap.assessment_technical_areas.drop(col1_count).each do |technical_area|
-                        = render "checkbox_for_technical_area", technical_area: technical_area, form: form
-          - if @country.assessment_publications.empty?
-            %div{style: "height: 75px"}
+                %label
+                  %input{
+                    type: "checkbox",
+                    name: "get_started_form[plan_by_technical_ids]",
+                    value: 1,
+                    autocomplete: "off",
+                    "data-action": "get-started#toggleTechnicalAreas",
+                    "data-assessment-named-id": ap.named_id
+                  }
+                    %em Optional:
+                    Plan by technical area(s)
+                .collapse{
+                  "data-get-started-target": "technicalAreaCard",
+                  "data-assessment-named-id": ap.named_id
+                }
+                  .col.card
+                    .row
+                      .col
+                        %a{
+                          href: "#",
+                          "data-action": "get-started#selectAllTechnicalAreas",
+                          "data-assessment-named-id": ap.named_id
+                        }
+                          Select all
+                        |
+                        %a{
+                          href: "#",
+                          "data-action": "get-started#deselectAllTechnicalAreas",
+                          "data-assessment-named-id": ap.named_id
+                        }
+                          Deselect all
+                    .row
+                      - col1_count = ((ap.assessment_technical_areas.size + 1) / 2).floor
+                      .col
+                        - ap.assessment_technical_areas.take(col1_count).each do |technical_area|
+                          = render "checkbox_for_technical_area", technical_area: technical_area, form: form
+                      .col
+                        - ap.assessment_technical_areas.drop(col1_count).each do |technical_area|
+                          = render "checkbox_for_technical_area", technical_area: technical_area, form: form
+            - if @country.assessment_publications.empty?
+              %div{style: "height: 75px"}
       .form-row
         .col
           %h4{class: heading_disabled_class}

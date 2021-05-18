@@ -7,7 +7,10 @@ module PlanBuilder
   # this method is in this module because it deals with assessment_indicator which
   # are populated in this module before the Plan is persisted.
   def score_value_for(assessment_indicator:)
-    assessment.scores.find_by(assessment_indicator: assessment_indicator)&.value
+    assessment
+      .scores
+      .find_by(assessment_indicator: assessment_indicator)
+      &.value || 0
   end
 
   # this method is in this module because it deals with assessment_indicator which
@@ -136,7 +139,7 @@ module PlanBuilder
     end
 
     def create_named_ids(assessment, indicator_attrs)
-      num_of_underscores = assessment.spar_2018? ? 3 : 2
+      num_of_underscores = assessment.spar? ? 3 : 2
       indicator_attrs.select do |k, _|
         k.count("_").eql?(num_of_underscores)
       end.keys

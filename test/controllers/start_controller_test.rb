@@ -20,7 +20,11 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
       it "redirects to the country" do
         country_id = 4
         post start_index_url,
-             params: { get_started_form: { country_id: country_id } }
+             params: {
+               get_started_form: {
+                 country_id: country_id
+               }
+             }
         assert_redirected_to start_url(id: country_id)
       end
     end
@@ -37,12 +41,15 @@ class PlansControllerTest < ActionDispatch::IntegrationTest
       it "redirects to plan goals" do
         put start_url(id: 4),
             params: {
-              get_started_form: { assessment_type: "jee1", plan_term: "1-year" }
+              get_started_form: {
+                assessment_type: "spar_2018",
+                plan_term: "1-year"
+              }
             }
         assert_redirected_to plan_goals_url(
                                country_name: "Algeria",
-                               assessment_type: "jee1",
-                               plan_term: "1-year",
+                               assessment_type: "spar_2018",
+                               plan_term: "1-year"
                              )
       end
     end

@@ -13,26 +13,18 @@ class Assessment < ApplicationRecord
 
   scope :with_publication,
         lambda { |country_alpha3, assessment_publication_id|
-          includes(:assessment_publication)
-            .find_by_country_alpha3_and_assessment_publication_id(
-            country_alpha3,
-            assessment_publication_id
+          includes(:assessment_publication).where(
+            country_alpha3: country_alpha3,
+            assessment_publication_id: assessment_publication_id
           )
         }
 
-  scope :deep_load,
-        lambda { |country_alpha3, assessment_publication_id|
-          includes({ scores: :assessment_indicator }).with_publication(
-            country_alpha3,
-            assessment_publication_id
-          )
-        }
-
-  delegate :jee1?, :spar_2018?, :type_description, to: :assessment_publication
+  def self.deep_load(country_alpha3, assessment_publication_id)
+    includes({ scores: :assessment_indicator })
+      .with_publication(country_alpha3, assessment_publication_id)
+      .first
+  end
 
   validates :assessment_publication, :country, presence: true
-
-  def self.spar_2018_named_id
-    "spar_2018"
-  end
+  delegate :jee?, :spar?, :type_description, to: :assessment_publication
 end
