@@ -7,7 +7,10 @@ module PlanBuilder
   # this method is in this module because it deals with assessment_indicator which
   # are populated in this module before the Plan is persisted.
   def score_value_for(assessment_indicator:)
-    assessment.scores.find_by(assessment_indicator: assessment_indicator)&.value
+    assessment
+      .scores
+      .find_by(assessment_indicator: assessment_indicator)
+      &.value || 0
   end
 
   # this method is in this module because it deals with assessment_indicator which
