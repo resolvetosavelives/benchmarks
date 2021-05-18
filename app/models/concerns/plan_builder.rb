@@ -136,7 +136,7 @@ module PlanBuilder
     end
 
     def create_named_ids(assessment, indicator_attrs)
-      num_of_underscores = assessment.spar_2018? ? 3 : 2
+      num_of_underscores = assessment.spar? ? 3 : 2
       indicator_attrs.select do |k, _|
         k.count("_").eql?(num_of_underscores)
       end.keys

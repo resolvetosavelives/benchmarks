@@ -23,7 +23,7 @@ class Plan < ApplicationRecord
   has_many :reference_library_documents, through: :benchmark_indicator_actions
 
   delegate :alpha3, to: :country
-  delegate :jee1?, :spar_2018?, :type_description, to: :assessment
+  delegate :jee?, :spar?, :type_description, to: :assessment
 
   scope :deep_load,
         ->(id) {

@@ -28,11 +28,11 @@ class Assessment < ApplicationRecord
           )
         }
 
-  delegate :jee1?, :spar_2018?, :type_description, to: :assessment_publication
-
-  validates :assessment_publication, :country, presence: true
 
   def self.spar_2018_named_id
     "spar_2018"
   end
+
+  validates :assessment_publication, :country, presence: true
+  delegate :jee?, :spar?, to: :assessment_publication
 end
