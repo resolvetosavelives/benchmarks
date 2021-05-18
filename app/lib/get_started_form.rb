@@ -26,6 +26,10 @@ class GetStartedForm
     set_assessment
   end
 
+  def blank_assessment=(value)
+    @blank_assessment = (value == "true")
+  end
+
   def init_technical_area_ids
     @technical_area_ids = [] if @technical_area_ids.blank?
     @technical_area_ids = @technical_area_ids.map(&:to_i)

@@ -7,10 +7,11 @@ class StartController < ApplicationController
   end
 
   def create
-    redirect_to start_path(
-                  id: @get_started_form.country_id,
-                  blank: @get_started_form.blank_assessment
-                )
+    if @get_started_form.blank_assessment
+      redirect_to start_path(id: @get_started_form.country_id, blank: true)
+    else
+      redirect_to start_path(id: @get_started_form.country_id)
+    end
   end
 
   def show
