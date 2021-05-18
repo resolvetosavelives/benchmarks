@@ -42,7 +42,7 @@ class PlansController < ApplicationController # workaround for XHR being unable 
       Plan.new_from_assessment(
         assessment: @assessment,
         technical_area_ids: technical_area_ids,
-        is_5_year_plan: params[:plan_term].start_with?("5")
+        is_5_year_plan: params[:plan_term]&.start_with?("5")
       )
   end
 

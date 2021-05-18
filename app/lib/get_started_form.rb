@@ -14,7 +14,7 @@ class GetStartedForm
   attr_accessor :country, :assessment, :diseases
 
   validates :country, :assessment, presence: true
-  validates :plan_term, inclusion: [1, 5] # in years
+  validates :plan_term, inclusion: [1, 5], unless: :blank_assessment
   validate :valid_diseases?
 
   def initialize(attrs = {})
