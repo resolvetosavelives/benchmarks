@@ -1,7 +1,7 @@
 import { Controller } from "stimulus"
 import $ from "jquery"
 
-const SCORES = [0, 1, 2, 3, 4, 5]
+const SCORES = [1, 2, 3, 4, 5]
 
 /* This controller continuously validates its score/goal pair in the
  * assessment and goal setting page. It checks first that the score and goal
@@ -30,6 +30,10 @@ export default class extends Controller {
       trigger: "manual",
       container: "form",
     })
+    const goalValid = this.isFieldValid(this.goalTarget)
+    const scoreValid = this.isFieldValid(this.scoreTarget)
+    this.isFullyValid = goalValid && scoreValid
+    this.parentController.updateFormStateFromChildren()
   }
 
   validatePair(event, field) {
@@ -91,7 +95,7 @@ export default class extends Controller {
       field.setCustomValidity("invalid")
       field.setAttribute(
         "data-original-title",
-        "The value must be within range"
+        "The value must be between 1 and 5"
       )
       isValid = false
     } else {
