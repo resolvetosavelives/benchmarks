@@ -21,8 +21,6 @@ class StartController < ApplicationController
   def update
     return show && render(:show) unless @get_started_form.valid?
 
-    @get_started_form.assessment.save!
-
     redirect_to plan_goals_url(
                   country_name: @get_started_form.country.name,
                   assessment_type: @get_started_form.assessment_type,
