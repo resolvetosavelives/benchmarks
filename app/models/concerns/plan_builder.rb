@@ -21,7 +21,7 @@ module PlanBuilder
     score = score_value_for(assessment_indicator: assessment_indicator)
     return score <= 3 ? 4 : 5 if is_5_year?
     return score if score == 5
-    return score + 0
+    return score + 1
   end
 
   module ClassMethods
