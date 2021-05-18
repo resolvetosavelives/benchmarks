@@ -5,18 +5,27 @@ class AssessmentPublication < ApplicationRecord
   has_many :assessment_technical_areas
   has_many :assessments
 
-  scope :jee1, -> { where(named_id: NAMED_IDS.first).first }
-  scope :spar_2018, -> { where(named_id: NAMED_IDS.second).first }
-
-  def jee1?
-    named_id.eql? NAMED_IDS.first
+  def self.jee1
+    self.find_by(named_id: "jee1")
   end
 
-  def spar_2018?
-    named_id.eql? NAMED_IDS.second
+  def self.jee2
+    self.find_by(named_id: "jee2")
+  end
+
+  def self.spar
+    self.find_by(named_id: "spar_2018")
   end
 
   def type_description
     "#{abbrev} #{revision}"
+  end
+
+  def jee?
+    %w[jee1 jee2].include?(named_id)
+  end
+
+  def spar?
+    %w[spar_2018].include?(named_id)
   end
 end

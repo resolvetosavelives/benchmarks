@@ -1,27 +1,27 @@
 class StartController < ApplicationController
+  before_action :require_country_id, only: %i[create show update]
+  before_action :set_get_started_form
+
   def index
     @countries = Country.all_assessed
-    @get_started_form = GetStartedForm.new({})
   end
 
   def create
-    country_id = params.dig(:get_started_form, :country_id)
-    redirect_to country_id ? start_path(id: country_id) : start_index
+    redirect_to start_path(
+                  id: @get_started_form.country_id,
+                  blank: @get_started_form.blank_assessment
+                )
   end
 
   def show
-    @get_started_form = GetStartedForm.new(get_started_params)
     @country = @get_started_form.country
     @diseases = Disease.all.order(:created_at)
   end
 
   def update
-    @get_started_form = GetStartedForm.new(get_started_params)
+    return show && render(:show) unless @get_started_form.valid?
 
-    unless @get_started_form.valid?
-      show
-      return render :show
-    end
+    @get_started_form.assessment.save!
 
     redirect_to plan_goals_url(
                   country_name: @get_started_form.country.name,
@@ -44,11 +44,16 @@ class StartController < ApplicationController
 
   private
 
-  def get_started_params
-    params
-      .fetch(:get_started_form, {})
-      .permit!
-      .to_h
-      .merge(country_id: params.fetch(:id))
+  def set_get_started_form
+    form_params = params.fetch(:get_started_form, {}).permit!.to_h
+    form_params[:country_id] = @country_id if @country_id
+    form_params[:blank_assessment] = params[:blank] if params.key?(:blank)
+    @get_started_form = GetStartedForm.new(form_params)
+  end
+
+  def require_country_id
+    @country_id = params[:id] || params.dig(:get_started_form, :country_id)
+
+    return redirect_to(start_index_path) if @country_id.blank?
   end
 end
