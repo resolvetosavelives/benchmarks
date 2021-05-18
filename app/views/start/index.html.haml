@@ -12,7 +12,7 @@
           %h4
             2. Select an assessment
           .form-check
-            = form.radio_button :blank_assessment, false, class: "form-check-input", required: true, autocomplete: "off"
+            = form.radio_button :blank_assessment, false, class: "form-check-input", required: true, autocomplete: "off", name: "recent_assessment"
             = form.label :blank_assessment, "The most recent assessment", value: false, class: "form-check-label"
             %p
               %small.text-muted
