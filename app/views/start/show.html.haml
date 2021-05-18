@@ -11,15 +11,17 @@
         .col-6
           %h4 1. Select your country
           %label= @country.name
-      .form-row
-        .col
-          - if @get_started_form.blank_assessment
+      - if @get_started_form.blank_assessment
+        .form-row
+          .col
             %h4 2. Select an assessment
             = form.hidden_field :blank_assessment
             = form.label :blank_assessment, "New JEE assessment", value: true, class: "form-check-label"
             %p
               %small.text-muted Add your own scores
-          - else
+      - else
+        .form-row
+          .col
             %h4{class: heading_disabled_class}
               2. Choose your most recent assessment
             - @country.assessment_publications.each do |ap|
@@ -73,30 +75,30 @@
                           = render "checkbox_for_technical_area", technical_area: technical_area, form: form
             - if @country.assessment_publications.empty?
               %div{style: "height: 75px"}
+        .form-row
+          .col
+            %h4{class: heading_disabled_class}
+              3. What kind of plan are you making?
+            - if @get_started_form.country.present?
+              .form-check
+                = form.radio_button :plan_term, 1, class: "form-check-input", required: true, autocomplete: "off"
+                = form.label :plan_term, "1 year plan", value: 1, class: "form-check-label"
+                %p
+                  %em
+                    For each indicator, increase scores by 1 level.
+              .form-check
+                = form.radio_button :plan_term, 5, class: "form-check-input", required: true, autocomplete: "off"
+                = form.label :plan_term, "5 year plan", value: 5, class: "form-check-label"
+                %p
+                  %em
+                    For each indicator, increase scores to demonstrated (4) or sustained (5) capacity.
+                .invalid-feedback Please choose a plan.
+            - else
+              %div{style: "height: 75px"}
       .form-row
         .col
           %h4{class: heading_disabled_class}
-            3. What kind of plan are you making?
-          - if @get_started_form.country.present?
-            .form-check
-              = form.radio_button :plan_term, 1, class: "form-check-input", required: true, autocomplete: "off"
-              = form.label :plan_term, "1 year plan", value: 1, class: "form-check-label"
-              %p
-                %em
-                  For each indicator, increase scores by 1 level.
-            .form-check
-              = form.radio_button :plan_term, 5, class: "form-check-input", required: true, autocomplete: "off"
-              = form.label :plan_term, "5 year plan", value: 5, class: "form-check-label"
-              %p
-                %em
-                  For each indicator, increase scores to demonstrated (4) or sustained (5) capacity.
-              .invalid-feedback Please choose a plan.
-          - else
-            %div{style: "height: 75px"}
-      .form-row
-        .col
-          %h4{class: heading_disabled_class}
-            4. Do you want to add disease specific planning?
+            = "#{@get_started_form.blank_assessment ? 3 : 4}. Do you want to add disease specific planning?"
           - if @country.present?
             - @diseases.each do |disease|
               .form-check
