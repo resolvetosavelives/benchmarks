@@ -25,6 +25,14 @@ class AssessmentPublication < ApplicationRecord
     %w[jee1 jee2].include?(named_id)
   end
 
+  def jee1?
+    named_id == "jee1"
+  end
+
+  def jee2?
+    named_id == "jee2"
+  end
+
   def spar?
     %w[spar_2018].include?(named_id)
   end

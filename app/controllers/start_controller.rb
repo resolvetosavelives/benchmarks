@@ -16,6 +16,7 @@ class StartController < ApplicationController
 
   def show
     @country = @get_started_form.country
+    @publications = @country.publications_for_selection
     @diseases = Disease.all.order(:created_at)
   end
 

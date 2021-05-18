@@ -24,7 +24,7 @@
           .col
             %h4{class: heading_disabled_class}
               2. Choose your most recent assessment
-            - @country.assessment_publications.each do |ap|
+            - @publications.each do |ap|
               .form-check
                 = form.radio_button :assessment_type, ap.named_id, class: "form-check-input", required: true, "data-action": "get-started#selectAssessment", autocomplete: "off"
                 = form.label :assessment_type, "#{ap.title} (#{ap.abbrev})", value: ap.named_id, class: "form-check-label"

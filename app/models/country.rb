@@ -13,6 +13,15 @@ class Country < ApplicationRecord
             .first
         }
 
+  def publications_for_selection
+    assessments
+      .where(clean_slate: false)
+      .includes(:assessment_publication)
+      .map(&:assessment_publication)
+      .to_a
+      .tap { |pubs| pubs.reject!(&:jee1?) if pubs.any?(&:jee2?) }
+  end
+
   def as_json(options = {})
     super(options.reverse_merge(only: %i[id name alpha3]))
   end
