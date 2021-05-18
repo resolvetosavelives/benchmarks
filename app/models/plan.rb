@@ -25,19 +25,18 @@ class Plan < ApplicationRecord
   delegate :alpha3, to: :country
   delegate :jee?, :spar?, :type_description, to: :assessment
 
-  scope :deep_load,
-        ->(id) {
-          includes(
-              :goals,
-              {
-                plan_actions: {
-                  benchmark_indicator_action: :reference_library_documents
-                }
-              }
-            )
-            .where(id: id)
-            .first
+  def self.deep_load(id)
+    includes(
+        :goals,
+        {
+          plan_actions: {
+            benchmark_indicator_action: :reference_library_documents
+          }
         }
+      )
+      .where(id: id)
+      .first
+  end
 
   scope :purgeable, -> { where("updated_at < ?", 2.weeks.ago).where(user: nil) }
 

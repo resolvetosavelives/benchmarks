@@ -6,8 +6,10 @@ class GetStartedForm
                 :assessment_type,
                 :plan_by_technical_ids,
                 :plan_term,
-                :diseases
+                :diseases,
+                :blank_assessment
   attr_writer :technical_area_ids
+
   # object instances that should result from the inputs
   attr_accessor :country, :assessment, :diseases
 
@@ -51,6 +53,16 @@ class GetStartedForm
   end
 
   def set_assessment
+    if country && blank_assessment
+      self.assessment_type = "jee2"
+      self.assessment =
+        Assessment.new(
+          assessment_publication: AssessmentPublication.jee2,
+          country: country
+        )
+      return
+    end
+
     if country.present? && assessment_type.present? &&
          is_known?(assessment_type)
       assessment_publication =
@@ -60,6 +72,7 @@ class GetStartedForm
         # fetch additional data to optimize for which data the view template will use.
         self.assessment =
           Assessment.with_publication(country.alpha3, assessment_publication.id)
+            .first
       end
     end
   end
@@ -78,6 +91,8 @@ class GetStartedForm
   end
 
   def valid_diseases?
-    errors.add(:diseases, "Invalid disease id") if Disease.where(id: diseases).count != diseases.length
+    if Disease.where(id: diseases).count != diseases.length
+      errors.add(:diseases, "Invalid disease id")
+    end
   end
 end
