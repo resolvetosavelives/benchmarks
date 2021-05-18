@@ -23,20 +23,21 @@ class Plan < ApplicationRecord
   has_many :reference_library_documents, through: :benchmark_indicator_actions
 
   delegate :alpha3, to: :country
-  delegate :jee?, :spar?, :type_description, to: :assessment
+  delegate :jee1?, :spar_2018?, :type_description, to: :assessment
 
-  def self.deep_load(id)
-    includes(
-        :goals,
-        {
-          plan_actions: {
-            benchmark_indicator_action: :reference_library_documents
-          }
+  scope :deep_load,
+        ->(id) {
+          includes(
+              :goals,
+              {
+                plan_actions: {
+                  benchmark_indicator_action: :reference_library_documents
+                }
+              }
+            )
+            .where(id: id)
+            .first
         }
-      )
-      .where(id: id)
-      .first
-  end
 
   scope :purgeable, -> { where("updated_at < ?", 2.weeks.ago).where(user: nil) }
 

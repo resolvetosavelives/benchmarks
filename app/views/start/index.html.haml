@@ -9,19 +9,4 @@
           .invalid-feedback.my-3 Please choose a country.
       .form-row
         .col
-          %h4
-            2. Select an assessment
-          .form-check
-            = form.radio_button :blank_assessment, false, class: "form-check-input", required: true, autocomplete: "off"
-            = form.label :blank_assessment, "The most recent assessment", value: false, class: "form-check-label"
-            %p
-              %small.text-muted
-                Your last registered scores are added automatically
-          .form-check
-            = form.radio_button :blank_assessment, true, class: "form-check-input", required: true, autocomplete: "off"
-            = form.label :blank_assessment, "New JEE assessment", value: true, class: "form-check-label"
-            %p
-              %small.text-muted Add your own scores
-      .form-row
-        .col
           = form.submit "Next", class: "btn btn-primary"

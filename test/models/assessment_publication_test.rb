@@ -12,6 +12,31 @@ describe AssessmentPublication do
     end
   end
 
+  describe ".jee1?" do
+    it "returns the expected instance" do
+      result = AssessmentPublication.jee1
+
+      _(result.jee1?).must_equal true
+    end
+  end
+
+  describe ".spar_2018" do
+    it "returns the expected instance" do
+      result = AssessmentPublication.spar_2018
+
+      _(result).must_be_instance_of AssessmentPublication
+      _(result.title).must_equal "State Party Annual Report"
+    end
+  end
+
+  describe ".spar_2018?" do
+    it "returns the expected instance" do
+      result = AssessmentPublication.spar_2018
+
+      _(result.spar_2018?).must_equal true
+    end
+  end
+
   describe "#assessment_technical_areas" do
     it "returns the expected array of instances" do
       result = AssessmentPublication.jee1.assessment_technical_areas # having data for this relies on seed data being present

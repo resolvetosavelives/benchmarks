@@ -16,4 +16,12 @@ class Country < ApplicationRecord
   def as_json(options = {})
     super(options.reverse_merge(only: %i[id name alpha3]))
   end
+
+  def has_jee1?
+    assessments.any?(&:jee1?)
+  end
+
+  def has_spar_2018?
+    assessments.any?(&:spar_2018?)
+  end
 end

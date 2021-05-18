@@ -55,4 +55,4 @@ blocks:
       epilogue:
         on_fail:
           commands:
-            - ls tmp/screenshots/*.png | xargs -L1 artifact push job
+            - find tmp/screenshots/*.png | xargs -L1 artifact push job
