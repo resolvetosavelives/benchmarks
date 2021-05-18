@@ -98,13 +98,13 @@
       .form-row
         .col
           %h4{class: heading_disabled_class}
-            = "#{@get_started_form.blank_assessment ? 3 : 4}. Do you want to add disease specific planning?"
+            = "#{@get_started_form.blank_assessment ? 3 : 4}. Do you want to add disease specific planning? (optional)"
           - if @country.present?
             - @diseases.each do |disease|
               .form-check
                 = check_box_tag "get_started_form[diseases][]", disease.id, false, {class: "form-check-input", id: "diseases_#{disease.name}", autocomplete: "off"}
                 %label{for: "diseases_#{disease.name}"}
-                  = "Optional: #{disease.display} planning"
+                  = "#{disease.display} planning"
           - else
             %div{style: "height: 75px"}
       .form-row
