@@ -43,13 +43,13 @@
           </div>
         </div>
         <% @plan.assessment_technical_areas.each do |assessment_technical_area| %>
-          <div class="row no-gutters technical-area-<%= assessment_technical_area.id %>" data-controller="score-and-goal">
+          <div class="row no-gutters technical-area-<%= assessment_technical_area.id %>">
             <div class="technical-area w-220 col-sm-12 col-md-auto">
               <strong><%= assessment_technical_area.text %></strong>
             </div>
             <div class="col-sm-12 col-md">
               <% assessment_technical_area.assessment_indicators.each do |assessment_indicator| %>
-                <div class="<%= counter % 2 == 0 ? 'odd' : '' %> row no-gutters">
+                <div class="<%= counter % 2 == 0 ? 'odd' : '' %> row no-gutters" data-controller="score-and-goal">
                   <% counter += 1 %>
                   <div class="indicators col-sm-12 col-md">
                     <strong><%= abbrev_from_named_id assessment_indicator.named_id %></strong>
