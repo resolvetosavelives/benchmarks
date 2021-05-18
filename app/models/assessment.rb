@@ -26,5 +26,5 @@ class Assessment < ApplicationRecord
   end
 
   validates :assessment_publication, :country, presence: true
-  delegate :jee?, :spar?, to: :assessment_publication
+  delegate :jee?, :spar?, :type_description, to: :assessment_publication
 end
