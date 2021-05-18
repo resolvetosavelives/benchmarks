@@ -56,9 +56,10 @@ class GetStartedForm
     if country && blank_assessment
       self.assessment_type = "jee2"
       self.assessment =
-        Assessment.new(
+        Assessment.find_or_create_by!(
           assessment_publication: AssessmentPublication.jee2,
-          country: country
+          country: country,
+          clean_slate: true
         )
       return
     end
