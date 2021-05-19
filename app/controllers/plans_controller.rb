@@ -42,7 +42,7 @@ class PlansController < ApplicationController # workaround for XHR being unable 
       Plan.new_from_assessment(
         assessment: @assessment,
         technical_area_ids: technical_area_ids,
-        is_5_year_plan: params[:plan_term].start_with?("5")
+        is_5_year_plan: params[:plan_term]&.start_with?("5")
       )
   end
 
@@ -50,6 +50,12 @@ class PlansController < ApplicationController # workaround for XHR being unable 
   def create
     assessment = Assessment.find(plan_create_params.fetch(:assessment_id))
     disease_ids = plan_create_params.fetch(:disease_ids).to_s.split("-")
+
+    if plan_create_params[:indicators].values.map(&:to_i).any?(&:zero?)
+      flash[:alert] = "Every score and goal must be 1 or higher."
+      return redirect_back fallback_location: root_path
+    end
+
     @plan =
       Plan.create_from_goal_form(
         indicator_attrs: plan_create_params.fetch(:indicators),

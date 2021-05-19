@@ -13,13 +13,13 @@ describe("ScoreAndGoalController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <div data-controller="score-and-goal">
-          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-score-target="submitButton" />
-          </form>
-        </div>
+        <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+          <div data-controller="score-and-goal">
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" data-score-and-goal-target="score" />
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-score-and-goal-target="goal" />
+          </div>
+          <input id="submit" type="submit" data-score-target="submitButton" />
+        </form>
       </div>
       `
       application = Application.start()
@@ -45,13 +45,13 @@ describe("ScoreAndGoalController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <div data-controller="score-and-goal">
-          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-score-target="submitButton" />
-          </form>
-        </div>
+        <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+          <div data-controller="score-and-goal">
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" data-score-and-goal-target="score" />
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-score-and-goal-target="goal" />
+          </div>
+          <input id="submit" type="submit" data-score-target="submitButton" />
+        </form>
       </div>
       `
       application = Application.start()
@@ -88,7 +88,7 @@ describe("ScoreAndGoalController", () => {
       const result = scoreAndGoalController.isFieldValid(field)
       expect(result).toBe(false)
       expect(field.getAttribute("data-original-title")).toBe(
-        "The value must be within range"
+        "The value must be between 1 and 5"
       )
       expect(field.parentElement.classList).toContain("was-validated")
     })
@@ -113,13 +113,13 @@ describe("ScoreAndGoalController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <div data-controller="score-and-goal">
-          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="score" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="goal"  id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-score-target="submitButton" />
-          </form>
-        </div>
+        <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+          <div data-controller="score-and-goal">
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" data-score-and-goal-target="score" />
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-score-and-goal-target="goal" />
+          </div>
+          <input id="submit" type="submit" data-score-target="submitButton" />
+        </form>
       </div>
       `
       application = Application.start()
@@ -166,13 +166,13 @@ describe("ScoreAndGoalController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <div data-controller="score-and-goal">
-          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="score" data-toggle="tooltip" placement="top" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="goal"  data-toggle="tooltip" placement="top" id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-score-target="submitButton" />
-          </form>
-        </div>
+        <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+          <div data-controller="score-and-goal">
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" data-score-and-goal-target="score" />
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-score-and-goal-target="goal" />
+          </div>
+          <input id="submit" type="submit" data-score-target="submitButton" />
+        </form>
       </div>
       `
       application = Application.start()
@@ -265,13 +265,13 @@ describe("ScoreAndGoalController", () => {
     beforeEach(() => {
       document.body.innerHTML = `
       <div data-controller="score">
-        <div data-controller="score-and-goal">
-          <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
-            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="score" id="score1" />
-            <input type="number" data-action="change->score-and-goal#validatePair" data-score-and-goal-target="goal"  id="score1_goal" data-goal="true" />
-            <input id="submit" type="submit" data-score-target="submitButton" />
-          </form>
-        </div>
+        <form data-score-target="form" data-action="submit->score#submit" data-type="jee1">
+          <div data-controller="score-and-goal">
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1" data-score-and-goal-target="score" />
+            <input type="number" data-action="change->score-and-goal#validatePair" id="score1_goal" data-score-and-goal-target="goal" />
+          </div>
+          <input id="submit" type="submit" data-score-target="submitButton" />
+        </form>
       </div>
       `
       application = Application.start()
