@@ -3,7 +3,7 @@ require File.expand_path("./test/application_system_test_case")
 class AppsTest < ApplicationSystemTestCase
   test "happy path for Nigeria JEE 1.0" do
     retry_on_pending_connection { visit root_url }
-    click_on("Get Started") until current_path == "/get-started"
+    click_on("Get Started", match: :first) until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
     click_on("Next")
@@ -88,7 +88,7 @@ class AppsTest < ApplicationSystemTestCase
     ##
     # visit home page
     retry_on_pending_connection { visit root_url }
-    click_on("Get Started") until current_path == "/get-started"
+    click_on("Get Started", match: :first) until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
 
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
@@ -304,7 +304,7 @@ class AppsTest < ApplicationSystemTestCase
 
   test "happy path for Armenia SPAR 2018 5-year plan" do
     retry_on_pending_connection { visit root_url }
-    click_on("Get Started") until current_path == "/get-started"
+    click_on("Get Started", match: :first) until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
     select_from_chosen("Armenia", from: "get_started_form_country_id")
     click_on("Next")
@@ -362,7 +362,7 @@ class AppsTest < ApplicationSystemTestCase
 
   test "happy path for Nigeria JEE 1.0 plan by technical areas 5-year" do
     retry_on_pending_connection { visit root_url }
-    click_on("Get Started") until current_path == "/get-started"
+    click_on("Get Started", match: :first) until current_path == "/get-started"
     assert page.has_content?("LET'S GET STARTED")
 
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
