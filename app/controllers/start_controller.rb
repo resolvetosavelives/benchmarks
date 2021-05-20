@@ -54,7 +54,9 @@ class StartController < ApplicationController
   def require_country_id
     @country_id = params[:id] || params.dig(:get_started_form, :country_id)
 
-    flash[:alert] = "Choose a country to get started"
-    return redirect_to(start_index_path) if @country_id.blank?
+    if @country_id.blank?
+      flash[:alert] = "Choose a country to get started"
+      return redirect_to(start_index_path)
+    end
   end
 end
