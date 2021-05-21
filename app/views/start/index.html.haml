@@ -1,7 +1,7 @@
 .row{id: "get_started", "data-controller": "get-started"}
   .col
     %h1 Let's Get Started
-    = form_with model: @get_started_form, url: start_index_path, html: {novalidate: true} do |form|
+    = form_with model: @get_started_form, url: start_index_path, html: {novalidate: true}, data: {"get-started-target": "form", action: "submit->get-started#validateForm"} do |form|
       .form-row
         .col-12.col-md-8.col-lg-6
           %h4 1. Select your country
