@@ -48,16 +48,16 @@ For development, we only used the master branch and feature branches.
 
 The master branch is constantly deployed to staging. All work done on a feature branch is merged directly into the master branch after a pull request and code review.
 
-Locally, development requires only a working Postgres database and Ruby 2.6.3. We provide a docker-compose file that will launch the database in a docker container. Set up to develop with the following commands:
+Locally, development requires only a working Postgres database and Ruby.
+We provide a docker-compose file that will launch the database in a docker container, which requires the docker service to be running locally.
+Set up to develop with the following commands:
 
 ```
 docker-compose up -d db
-bundle install
-yarn install
-rails db:create
-rails db:migrate
-rails db:seed
-rails server -b 0.0.0.0
+bundle
+yarn
+rails db:create db:schema:load db:seed
+rails s
 ```
 
 Optionally, you may run the webpacker asset compilation process in a separate tab/process which is nice
