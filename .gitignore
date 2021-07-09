@@ -19,3 +19,7 @@
 /public/packs-test
 /yarn-error.log
 yarn-debug.log*
+
+.DS_Store
+
+/config/master.key

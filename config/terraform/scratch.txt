@@ -1,0 +1,18 @@
+az group create --name who-test-01 -l westus
+az acr create --name whotest01 --resource-group who-test-01 --sku standard --admin-enabled true
+
+
+
+
+`yarn azure-console` to bring up a console and then `az acr build --file Dockerfile --registry kfitzdevregistry --image hello-world`. I believe will give you a clean build.
+
+Databases:
+az extension add --name db-up
+az postgres up --resource-group WhoIhrBenchmarks --location westus --server-name WhoIhrBenchmarksDb --database-name benchmarks_production --admin-user PostgresAdminUser --admin-password PEWFCdu2hFqHe34H --ssl-enforcement Enabled
+
+
+
+#az acr build --file Dockerfile --registry WhoIhrBenchmarksRegistry --image benchmarksbase .
+#docker build
+
+az acr build --file Dockerfile.base --registry WhoIhrBenchmarksRegistry -t benchmarksbase:{{.Run.ID}} .
