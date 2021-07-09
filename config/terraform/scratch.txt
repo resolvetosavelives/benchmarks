@@ -1,0 +1,24 @@
+
+az group create --name who-test-01 -l westus
+az acr create --name whotest01 --resource-group who-test-01 --sku standard --admin-enabled true
+az acr build --file Dockerfile --registry kfitzdevregistry --image hello-world`
+
+Databases:
+az extension add --name db-up
+az postgres up --resource-group WhoIhrBenchmarks --location westus --server-name WhoIhrBenchmarksDb --database-name benchmarks_production --admin-user PostgresAdminUser --admin-password PEWFCdu2hFqHe34H --ssl-enforcement Enabled
+
+#az acr build --file Dockerfile --registry WhoIhrBenchmarksRegistry --image benchmarksbase .
+az acr build --file Dockerfile.base --registry WhoIhrBenchmarksRegistry -t benchmarksbase:{{.Run.ID}} .
+
+
+##
+# docker build in Azure environment with ACR
+az configure --defaults acr=whoihrbenchmarksregistry
+az acr build -f builder.Dockerfile -t benchmarks_builder:latest .
+az acr build -f base.Dockerfile -t benchmarks_base:latest .
+az acr build -f Dockerfile -t benchmarks:latest .
+
+
+##
+# bundle snippet for: "`/home/app` is not writable." which is the error seen in Azure (but nowhere else)
+https://github.com/rubygems/rubygems/blob/582a85cc69d0580e0eba4331cdcab83bb55e5825/bundler/lib/bundler.rb#L233
