@@ -1,0 +1,29 @@
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - feature/azure-spike
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UseRubyVersion@0
+    inputs:
+      versionSpec: '>= 3.0'
+      addToPath: true
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
+  - script: bundle install --deployment --path vendor/bundle
+    displayName: 'bundle install'
+  - script: yarn install --frozen-lockfile --check-files
+    displayName: 'yarn install'
+  - script: bin/rake test:prepare test
+    displayName: 'prepare test db and run rake test'
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'

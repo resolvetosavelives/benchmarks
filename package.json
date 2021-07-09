@@ -1,7 +1,7 @@
 {
   "name": "benchmarks",
   "engines": {
-    "node": "15.x"
+    "node": "16.x"
   },
   "private": true,
   "dependencies": {
@@ -57,14 +57,18 @@
   },
   "resolutions": {
     "is-svg": ">=4.2.2",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.0.1",
+    "node-sass": "^6.0.1",
+    "sass-loader": "^10.1.1",
     "serialize-javascript": ">=3.1.0",
     "y18n": ">=4.0.1 <5.0.0"
   },
   "scripts": {
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "azure-console": "docker run --platform linux/amd64 -u $(id -u):$(id -g) -v ${HOME}:/home/az -e HOME=/home/az -v \"$(pwd):/helloworld\" --rm -it mcr.microsoft.com/azure-cli:2.23.0",
+    "build:base": "docker build -f Dockerfile.base -t benchmarksbase:latest .",
+    "build": "docker build -t benchmarks:latest .",
+    "start:local": "docker run --rm -e AIRTABLE_API_KEY=$AIRTABLE_API_KEY -p 3000:3000 -e NO_SSL=true benchmarks"
   },
   "jest": {
     "setupFiles": [
