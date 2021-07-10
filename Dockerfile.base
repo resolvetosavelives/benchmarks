@@ -1,0 +1,33 @@
+# Dockerfile-base
+FROM ruby:alpine
+
+# RUN apk add build-base postgresql-dev git nodejs yarn tzdata file
+RUN apk add build-base postgresql-dev nodejs>15.x yarn
+
+# Install base app gems into the base image
+COPY Gemfile* .ruby-version /app/
+WORKDIR /app
+# TODO: use the modern version
+RUN bundle install --deployment --path /app/vendor/bundle
+RUN yarn install --frozen-lockfile
+# In builds using this as a base, install new gems and remove obsolete gems
+ONBUILD COPY Gemfile* .ruby-version /app/
+ONBUILD RUN bundle install --clean
+
+ONBUILD COPY package.json yarn.lock /app/
+
+#TODO: Cleanup
+# ONBUILD RUN bundle clean --force && \
+#     # Remove unneeded files from installed gems (cached *.gem, *.o, *.c)
+#     rm -rf /usr/local/bundle/cache/*.gem && \
+#     find /usr/local/bundle/gems/ -name "*.c" -delete && \
+#     find /usr/local/bundle/gems/ -name "*.o" -delete
+
+# Remove unnecessary packages
+ONBUILD RUN apk del build-base postgresql-dev yarn nodejs
+
+ONBUILD RUN bundle exec rails assets:precompile
+
+
+# After updating gems for the child image, copy in the latest app code
+ONBUILD COPY . /app

@@ -65,7 +65,9 @@
   "scripts": {
     "test": "jest",
     "prepare": "husky install",
-    "azure-console": "docker run --platform linux/amd64 -u $(id -u):$(id -g) -v ${HOME}:/home/az -e HOME=/home/az -v \"$(pwd):/helloworld\" --rm -it mcr.microsoft.com/azure-cli:2.23.0"
+    "azure-console": "docker run --platform linux/amd64 -u $(id -u):$(id -g) -v ${HOME}:/home/az -e HOME=/home/az -v \"$(pwd):/helloworld\" --rm -it mcr.microsoft.com/azure-cli:2.23.0",
+    "build:base": "docker build -f Dockerfile.base -t benchmarksbase:latest .",
+    "build": "docker build -t benchmarks:latest ."
   },
   "jest": {
     "setupFiles": [
