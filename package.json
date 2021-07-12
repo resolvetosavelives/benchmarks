@@ -1,7 +1,7 @@
 {
   "name": "benchmarks",
   "engines": {
-    "node": "15.x"
+    "node": "16.x"
   },
   "private": true,
   "dependencies": {
@@ -57,8 +57,8 @@
   },
   "resolutions": {
     "is-svg": ">=4.2.2",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.0.1",
+    "node-sass": "^5.1.0",
+    "sass-loader": "^12.1.0",
     "serialize-javascript": ">=3.1.0",
     "y18n": ">=4.0.1 <5.0.0"
   },
