@@ -287,6 +287,8 @@ GEM
     tilt (2.0.10)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2021.1)
+      tzinfo (>= 1.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.1.0)
@@ -317,7 +319,7 @@ DEPENDENCIES
   binding_of_caller (~> 1.0)
   bootsnap (~> 1.7)
   capybara (~> 3.35)
-  colorize (~> 0.8)
+  colorize (~> 0.8.1)
   cuprite (~> 0.11)
   devise (~> 4.8)
   factory_bot_rails (~> 6.1)
@@ -345,11 +347,12 @@ DEPENDENCIES
   sentry-ruby (~> 4.3)
   spring (~> 2.1)
   spring-watcher-listen (~> 2.0)
+  tzinfo-data
   web-console (~> 4.1)
   webpacker (~> 5.3)
 
 RUBY VERSION
-   ruby 3.0.0p0
+   ruby 3.0.2p107
 
 BUNDLED WITH
-   2.2.13
+   2.2.22
