@@ -21,3 +21,5 @@
 yarn-debug.log*
 
 .DS_Store
+
+/config/master.key
