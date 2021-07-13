@@ -5,13 +5,14 @@ FROM ruby:alpine
 RUN apk add build-base postgresql-dev 
 RUN apk add nodejs-current yarn
 RUN apk add python3
+RUN apk add libpq
 
 WORKDIR /app
 # Install base app gems/packages into the base image
 COPY Gemfile* .ruby-version package.json yarn.lock /app/
 
 # TODO: use the modern version
-RUN bundle config without 'development test' 
+RUN bundle config without development test
 RUN bundle config path /app/vendor/bundle
 RUN bundle config set --local deployment 'true'
 RUN bundle install
@@ -19,7 +20,7 @@ RUN bundle install
 RUN yarn install --frozen-lockfile --production true
 
 # In builds using this as a base, install new gems and remove obsolete gems
-ONBUILD RUN bundle config without 'development test' 
+ONBUILD RUN bundle config without development test 
 ONBUILD RUN bundle config path /app/vendor/bundle
 ONBUILD COPY Gemfile* .ruby-version /app/
 ONBUILD RUN bundle install --clean
@@ -32,7 +33,7 @@ ONBUILD RUN yarn install --frozen-lockfile
 ONBUILD COPY . /app
 
 ONBUILD RUN RAILS_ENV=production \
-    SECRET_KEY_BASE=melonmelonmelonmelonmelonmelonmelon \
+    SENTRY_DSN=$SENTRY_DSN \
     ASSET_COMPILATION=true \
     bundle exec rails assets:precompile
 
