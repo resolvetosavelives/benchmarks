@@ -13,6 +13,9 @@ steps:
     inputs:
       versionSpec: '>= 3.0'
       addToPath: true
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '16.x'
   - script: bundle install --deployment --path vendor/bundle
     displayName: 'bundle install'
   - script: yarn install --frozen-lockfile --check-files
