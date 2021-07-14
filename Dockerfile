@@ -1,5 +1,5 @@
 FROM benchmarksbase:latest as base
-FROM ruby:3.0.0-alpine
+FROM ruby:3.0.2-alpine
 COPY --from=base /app /app
 
 WORKDIR /app
