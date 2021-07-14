@@ -32,6 +32,8 @@ ONBUILD RUN yarn install --frozen-lockfile
 # After updating gems for the child image, copy in the latest app code
 ONBUILD COPY . /app
 
+# TODO: figure out why this isn't being cached and building everytime
+# TODO: figure out why the call to Sentry fails some of the time. It's gotta be the credentials.
 ONBUILD RUN RAILS_ENV=production \
     SENTRY_DSN=$SENTRY_DSN \
     ASSET_COMPILATION=true \
