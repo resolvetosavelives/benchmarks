@@ -13,8 +13,6 @@ steps:
     inputs:
       versionSpec: '>= 3.0'
       addToPath: true
-  - script: gem install rails && rails -v
-    displayName: 'gem install rails'
   - script: bundle install --deployment --path vendor/bundle
     displayName: 'bundle install'
   - script: yarn install --frozen-lockfile --check-files
