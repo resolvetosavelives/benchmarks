@@ -11,7 +11,18 @@ pool:
 steps:
   - task: UseRubyVersion@0
     inputs:
-      versionSpec: '= 3.0.2'
-
-  - script: echo Hello, world!
-    displayName: 'Run a one-line script'
+      versionSpec: '= 3.0.0'
+      addToPath: true
+  - script: gem install rails && rails -v
+    displayName: 'gem install rails'
+  - script: bundle install --deployment --path vendor/bundle
+    displayName: 'bundle install'
+  - script: yarn install --frozen-lockfile --check-files
+    displayName: 'yarn install'
+  - script: bin/rake db:test:prepare test
+    displayName: 'prepare test db and run rake test'
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
