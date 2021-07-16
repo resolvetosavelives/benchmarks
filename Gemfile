@@ -18,8 +18,8 @@ gem "rack-attack", "~> 6.5"
 gem "rake", "~> 13.0"
 gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
-gem "sentry-rails", "~> 4.3"
-gem "sentry-ruby", "~> 4.3"
+gem "sentry-rails", "~> 4.4"
+gem "sentry-ruby", "~> 4.4"
 gem "webpacker", "~> 5.3"
 
 group :development, :test do
