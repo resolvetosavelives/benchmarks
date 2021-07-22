@@ -32,7 +32,6 @@ export default class extends Controller {
   }
 
   selectAssessment(e) {
-    console.log(e)
     $(this.planByTechnicalAreasContainerTargets)
       .hide()
       .filter('[data-assessment-named-id="' + e.target.value + '"]')
