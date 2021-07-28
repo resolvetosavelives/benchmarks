@@ -6,9 +6,6 @@ import "@stimulus/polyfills"
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 
-import Rails from "@rails/ujs"
-Rails.start()
-
 import "chosen-js"
 import "chosen-js/chosen.css"
 
