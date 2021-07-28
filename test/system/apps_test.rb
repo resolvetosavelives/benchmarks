@@ -430,7 +430,8 @@ class AppsTest < ApplicationSystemTestCase
     # wind up on create account page
     assert_current_path("/users/sign_up")
     sleep 0.1
-    find("#user_email").fill_in with: "email@example.com"
+    email = "email@example.com"
+    find("#user_email").fill_in with: email
     find("#user_password").fill_in with: "123123"
     find("#user_password_confirmation").fill_in with: "123123"
     find("#new_user input[type=submit]").trigger(:click)
@@ -438,5 +439,12 @@ class AppsTest < ApplicationSystemTestCase
     assert_current_path("/plans")
     assert page.has_content?("Welcome! You have signed up successfully.")
     assert page.has_content?("Saved Nigeria Plan by Areas 789") # ugh without this form field(s) dont get filled
+
+    ##
+    # verify that logout works
+    click_on email
+    click_on "Log Out"
+    assert_current_path("/")
+    assert page.has_content?("LOG IN")
   end
 end
