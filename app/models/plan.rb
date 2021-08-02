@@ -11,6 +11,7 @@ class Plan < ApplicationRecord
   # TODO: update this implementation once the assessments page is modernized
   ASSESSMENT_TYPE_NAMED_IDS = %w[jee1 spar_2018 jee2].freeze
   TERM_TYPES = [100, 500] # 100 is 1-year, 500 is 5-year
+  PURGEABLE_WEEKS = 2.freeze
   include PlanBuilder
 
   belongs_to :assessment
@@ -38,7 +39,10 @@ class Plan < ApplicationRecord
       .first
   end
 
-  scope :purgeable, -> { where("updated_at < ?", 2.weeks.ago).where(user: nil) }
+  scope :purgeable,
+        -> {
+          where("updated_at < ?", PURGEABLE_WEEKS.weeks.ago).where(user: nil)
+        }
 
   validates :assessment, presence: true
   validates :name, presence: true
