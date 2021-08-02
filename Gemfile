@@ -33,7 +33,7 @@ group :development do
   gem "better_errors", "~> 2.9"
   gem "binding_of_caller", "~> 1.0"
   gem "html2haml", "~> 2.2"
-  gem "listen", "~> 3.5"
+  gem "listen", "~> 3.6"
   gem "pry-rails", "~> 0.3.9"
   gem "rails-erd", "~> 1.6"
   gem "spring", "~> 2.1"
