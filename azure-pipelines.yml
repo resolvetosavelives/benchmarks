@@ -3,7 +3,7 @@
 # https://aka.ms/yaml
 
 trigger:
-  - pipeline-create-and-setup--178993699
+  - pipeline-create-and-setup--178993699--build
 
 pool:
   vmImage: ubuntu-latest
