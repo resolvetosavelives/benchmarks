@@ -20,6 +20,11 @@
 /yarn-error.log
 yarn-debug.log*
 
+# Mac things to ignore
 .DS_Store
 
+# Benchmarks-specific things to ignore
 /config/master.key
+
+# ignore .env files recursively
+**/.env
