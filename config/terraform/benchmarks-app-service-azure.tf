@@ -99,7 +99,7 @@ resource "azuredevops_build_definition" "build_definition" {
   repository {
     repo_type   = "TfsGit"
     repo_id     = azuredevops_git_repository.repository.id
-    branch_name = "pipeline-create-and-setup--178993699"
+    branch_name = pipeline-create-and-setup--178993699--build
     yml_path    = "azure-pipelines.yml"
   }
 }
