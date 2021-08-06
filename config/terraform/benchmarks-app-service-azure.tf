@@ -91,15 +91,25 @@ resource "azuredevops_git_repository" "repository" {
   }
 }
 
+resource "azuredevops_serviceendpoint_github" "serviceendpoint_gh_1" {
+  project_id = azuredevops_project.project.id
+  service_endpoint_name = "Benchmarks GitHub repo"
+}
+
 // build_definition this is what devops.azure.com calls a pipeline
 resource "azuredevops_build_definition" "build_definition" {
   project_id = azuredevops_project.project.id
-  name       = "Pipeline for Staging Build, Test, and Deploy"
+  name       = "Pipeline for Staging Build, Test, and Deploy 001"
+
+  ci_trigger {
+    use_yaml = true
+  }
 
   repository {
-    repo_type   = "TfsGit"
-    repo_id     = azuredevops_git_repository.repository.id
-    branch_name = pipeline-create-and-setup--178993699--build
+    repo_type   = "GitHub"
+    repo_id     = "resolvetosavelives/benchmarks"
+    branch_name = "pipeline-create-and-setup--178993699--build"
     yml_path    = "azure-pipelines.yml"
+    service_connection_id = azuredevops_serviceendpoint_github.serviceendpoint_gh_1.id
   }
 }
