@@ -16,9 +16,7 @@ provider "azurerm" {
   features {}
   subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
 }
-provider "azuredevops" {
-  # Configuration options
-}
+provider "azuredevops" {}
 
 # 
 # SECTION: the baseline infrastructure needed
@@ -33,17 +31,6 @@ resource "azurerm_postgresql_server" "WhoIhrBenchmarksDbServer" {
   name                = "who-ihr-benchmarks-db-server"
   location            = azurerm_resource_group.WhoIhrBenchmarks.location
   resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
-//  attempting to use the line "public_network_access_enabled = false" results in:
-//  azurerm_postgresql_server.WhoIhrBenchmarksDbServer: Creating...
-//╷
-//│ Error: creating PostgreSQL Server "who-ihr-benchmarks-db-server" (Resource Group "WhoIhrBenchmarks"): postgresql.ServersClient#Create: Failure sending request: StatusCode=0 -- Original Error: Code="FeatureSwitchNotEnabled" Message="Requested feature is not enabled"
-//│
-//│   with azurerm_postgresql_server.WhoIhrBenchmarksDbServer,
-//│   on benchmarks-app-service-azure.tf line 55, in resource "azurerm_postgresql_server" "WhoIhrBenchmarksDbServer":
-//│   55: resource "azurerm_postgresql_server" "WhoIhrBenchmarksDbServer" {
-//│
-//  public_network_access_enabled = false
-
   sku_name = "B_Gen5_2" // or B_Gen5_1
 
   storage_mb                   = 5120
@@ -107,9 +94,6 @@ resource "azurerm_container_registry" "acr" {
 variable "GITHUB_AUTH_PERSONAL" {
   type = string
 }
-variable "DATABASE_URL" {
-  type = string
-}
 variable "DB_HOST" {
   type = string
 }
@@ -147,7 +131,6 @@ resource "azuredevops_serviceendpoint_github" "serviceendpoint_gh_1" {
   auth_personal {
     personal_access_token = var.GITHUB_AUTH_PERSONAL
   }
-//  auth_personal = "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"
 }
 
 // build_definition this is what devops.azure.com calls a pipeline
@@ -167,13 +150,6 @@ resource "azuredevops_build_definition" "build_definition" {
     service_connection_id = azuredevops_serviceendpoint_github.serviceendpoint_gh_1.id
   }
 
-  variable {
-    name = "DATABASE_URL"
-//    is_secret = true
-//    secret_value = var.DATABASE_URL
-    value = var.DATABASE_URL
-//    allow_override = false
-  }
   variable {
     name = "DB_HOST"
     value = var.DB_HOST
