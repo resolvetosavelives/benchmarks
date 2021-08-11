@@ -20,6 +20,8 @@ steps:
     displayName: 'bundle install'
   - script: yarn install --frozen-lockfile --check-files
     displayName: 'yarn install'
+  - script: env | sort
+    displayName: show env vars
   - script: DATABASE_URL=$(DATABASE_URL) bin/rake test:prepare test
     displayName: 'prepare test db and run rake test'
   - task: PublishCodeCoverageResults@1
