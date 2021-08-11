@@ -20,7 +20,7 @@ steps:
     displayName: 'bundle install'
   - script: yarn install --frozen-lockfile --check-files
     displayName: 'yarn install'
-  - script: DATABASE_URL=$SECRET_DATABASE_URL bin/rake test:prepare test
+  - script: DATABASE_URL=$DATABASE_URL bin/rake test:prepare test
     displayName: 'prepare test db and run rake test'
   - task: PublishCodeCoverageResults@1
     inputs:
