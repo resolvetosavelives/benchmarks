@@ -110,6 +110,18 @@ variable "GITHUB_AUTH_PERSONAL" {
 variable "DATABASE_URL" {
   type = string
 }
+variable "DB_HOST" {
+  type = string
+}
+variable "DB_NAME" {
+  type = string
+}
+variable "DB_USER" {
+  type = string
+}
+variable "DB_PASS" {
+  type = string
+}
 resource "azuredevops_project" "project" {
   name = "WhoIhrBenchmarks001"
   description = "WHO IHR Benchmarks Project"
@@ -155,16 +167,27 @@ resource "azuredevops_build_definition" "build_definition" {
     service_connection_id = azuredevops_serviceendpoint_github.serviceendpoint_gh_1.id
   }
 
-//  variable {
-//    name = "RAILS_ENV"
-//    value = var.RAILS_ENV
-//    allow_override = true
-//  }
   variable {
     name = "DATABASE_URL"
 //    is_secret = true
 //    secret_value = var.DATABASE_URL
     value = var.DATABASE_URL
-    allow_override = false
+//    allow_override = false
+  }
+  variable {
+    name = "DB_HOST"
+    value = var.DB_HOST
+  }
+  variable {
+    name = "DB_NAME"
+    value = var.DB_NAME
+  }
+  variable {
+    name = "DB_USER"
+    value = var.DB_USER
+  }
+  variable {
+    name = "DB_PASS"
+    value = var.DB_PASS
   }
 }
