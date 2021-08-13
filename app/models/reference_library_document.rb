@@ -7,14 +7,10 @@ class ReferenceLibraryDocument < ApplicationRecord
   validates :download_url, uniqueness: true
 
   REFERENCE_TYPES = [
-    "Briefing Note",
-    "Case Study",
-    "Example",
-    "Guideline",
-    "Manual",
-    "Template",
-    "Tool",
-    "Training Package"
+    "Best Practices",
+    "Guidelines",
+    "Tools",
+    "Training Packages"
   ].freeze
 
   def self.reference_type_scope_name(reference_type_name)

@@ -1,7 +1,7 @@
 .reference-library{
   "data-controller": "reference-library",
   "data-reference-library-technical-areas": @technical_areas.to_json,
-  "data-reference-library-template-selector": "#templateForFilterCirterionBadgePill"
+  "data-reference-library-template-selector": "#templateForFilterCriterionBadgePill"
 }
   = link_to "Add Resource", "https://airtable.com/shrGiWYwJV7TSJNMu", class: "btn btn-primary", role: "button", style: "float: right; margin-top: 6px;"
   %h1 Reference Library
@@ -30,7 +30,7 @@
       .document-container
         - @documents.each do |document|
           = render partial: "reference_document", locals: {document: document}
-%script#templateForFilterCirterionBadgePill{type: "text/html"}
+%script#templateForFilterCriterionBadgePill{type: "text/html"}
   %span.badge.badge-pill
     {{text}}
     %svg.x-close{
