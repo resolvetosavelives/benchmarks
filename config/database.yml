@@ -3,20 +3,22 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
-  port: 5432
   username: postgres
   password:
 
 development:
-  url: <%= ENV["DATABASE_URL"] %>
+  <<: *default
+  database: benchmarks_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  database: benchmarks_test
 
 production:
   <<: *default
-  url: <%= ENV["DATABASE_URL"] %>
+  database: benchmarks_production
+  username: src
+  password: <%= ENV['SRC_DATABASE_PASSWORD'] %>

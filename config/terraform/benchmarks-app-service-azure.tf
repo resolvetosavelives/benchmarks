@@ -94,16 +94,7 @@ resource "azurerm_container_registry" "acr" {
 variable "GITHUB_AUTH_PERSONAL" {
   type = string
 }
-variable "DB_HOST" {
-  type = string
-}
-variable "DB_NAME" {
-  type = string
-}
-variable "DB_USER" {
-  type = string
-}
-variable "DB_PASS" {
+variable "DATABASE_URL" {
   type = string
 }
 resource "azuredevops_project" "project" {
@@ -151,19 +142,9 @@ resource "azuredevops_build_definition" "build_definition" {
   }
 
   variable {
-    name = "DB_HOST"
-    value = var.DB_HOST
-  }
-  variable {
-    name = "DB_NAME"
-    value = var.DB_NAME
-  }
-  variable {
-    name = "DB_USER"
-    value = var.DB_USER
-  }
-  variable {
-    name = "DB_PASS"
-    value = var.DB_PASS
+    name = "DATABASE_URL"
+    is_secret = true
+    secret_value = var.DATABASE_URL
+    allow_override = false
   }
 }
