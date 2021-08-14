@@ -24,7 +24,8 @@ steps:
     displayName: show env vars
   - script: DATABASE_URL=$(DATABASE_URL) bin/bundle exec rake test:prepare
     displayName: prepare test db
-  - script: DATABASE_URL=$(DATABASE_URL) bin/bundle exec rspec --no-drb -r rspec_junit_formatter --format RspecJunitFormatter -o TEST-rspec.xml
+    # TODO: may want to break out the different test types to separate tasks like we do in semaphore.yml
+  - script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
     displayName: run test suite
   - task: PublishTestResults@2
     condition: succeededOrFailed()

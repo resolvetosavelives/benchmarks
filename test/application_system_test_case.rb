@@ -1,8 +1,7 @@
-require "test_helper"
-
+require File.expand_path("./test/test_helper")
 require "capybara/cuprite"
-require "capybara_helper"
 require "minitest/rails/capybara"
+require File.expand_path("./test/capybara_helper")
 
 Capybara.default_max_wait_time = 5
 Capybara.default_normalize_ws = true
