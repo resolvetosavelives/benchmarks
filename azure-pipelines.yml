@@ -22,7 +22,7 @@ steps:
     displayName: 'yarn install'
   - script: env | sort
     displayName: show env vars
-  - script: DATABASE_URL=$(DEEBERS_STRIZZLE) bin/rake test:prepare test
+  - script: DATABASE_URL=$(DATABASE_URL) bin/rake test:prepare test
     displayName: 'prepare test db and run rake test'
   - task: PublishCodeCoverageResults@1
     inputs:
