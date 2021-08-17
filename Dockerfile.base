@@ -2,7 +2,7 @@
 FROM ruby:3.0.2-alpine
 
 # RUN apk add build-base postgresql-dev git nodejs yarn tzdata file
-RUN apk add build-base postgresql-dev 
+RUN apk add build-base postgresql-dev postgresql-libs
 RUN apk add nodejs-current yarn
 RUN apk add python3
 RUN apk add libpq
