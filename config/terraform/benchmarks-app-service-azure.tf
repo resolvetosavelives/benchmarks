@@ -23,7 +23,7 @@ provider "azuredevops" {}
 #
 resource "azurerm_resource_group" "WhoIhrBenchmarks" {
   name     = "WhoIhrBenchmarks"
-  location = "westus2"
+  location = azurerm_resource_group.WhoIhrBenchmarks.location
   # later we will use location = "West Europe"
 }
 
@@ -86,6 +86,51 @@ resource "azurerm_container_registry" "acr" {
   sku                      = "Basic"
   admin_enabled            = true
 }
+
+resource "azurerm_app_service_plan" "app_service_plan" {
+  name                = "who-ihr-benchmarks-app-service-plan"
+  location            = azurerm_resource_group.WhoIhrBenchmarks.location
+  resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
+  kind                = "Linux"
+//  reserved            = true # do not need reserved for now
+  sku {
+    tier = "Standard"
+    size = "S1"
+  }
+}
+
+resource "azurerm_app_service" "app_service" {
+  name                = "who-ihr-benchmarks-app"
+  location            = azurerm_resource_group.WhoIhrBenchmarks.location
+  resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
+  app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
+  // https_only = true # no we do not want https_only, we want to allow our app to issue redirects to HTTPS
+//  health_check_path = "/health" # TODO
+  identity {
+    type = "SystemAssigned"
+  }
+//  app_settings = {
+//    "SOME_KEY" = "some-value"
+//    "DATABASE_URL" = "some-value"
+//  }
+  connection_string {
+    name  = "Database"
+    type  = "PostgreSQL"
+    value = var.DATABASE_URL
+  }
+//  site_config {
+//    dotnet_framework_version = "v4.0"
+//    scm_type                 = "LocalGit"
+//  }
+}
+resource "azurerm_app_service_slot" "slotDemo" {
+  name                = "slotAppServiceSlotOne"
+  location            = azurerm_resource_group.WhoIhrBenchmarks.location
+  resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
+  app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
+  app_service_name    = azurerm_app_service.app_service.name
+}
+// TODO: use azurerm_application_insights? as here: https://www.padok.fr/en/blog/terraform-azure-app-docker
 
 
 #

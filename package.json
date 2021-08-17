@@ -14,7 +14,6 @@
     "@rails/webpacker": "5.3.0",
     "@reduxjs/toolkit": "^1.5.1",
     "@sentry/browser": "^6.10.0",
-    "@sentry/webpack-plugin": "^1.15.1",
     "@stimulus/polyfills": "^2.0.0",
     "@stimulus/webpack-helpers": "^2.0.0",
     "babel-loader": "^8.2.2",
@@ -66,7 +65,7 @@
     "test": "jest",
     "prepare": "husky install",
     "azure-console": "docker run --platform linux/amd64 -u $(id -u):$(id -g) -v ${HOME}:/home/az -e HOME=/home/az -v \"$(pwd):/helloworld\" --rm -it mcr.microsoft.com/azure-cli:2.23.0",
-    "build:base": "docker build -f Dockerfile.base -t benchmarksbase:latest .",
+    "build:base": "docker build -f base.Dockerfile -t benchmarksbase:latest .",
     "build": "docker build -t benchmarks:latest .",
     "start:local": "docker run --rm -e AIRTABLE_API_KEY=$AIRTABLE_API_KEY -p 3000:3000 -e NO_SSL=true benchmarks"
   },
