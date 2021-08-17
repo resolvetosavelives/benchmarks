@@ -1,4 +1,3 @@
-# Dockerfile-base
 FROM ruby:3.0.2-alpine
 
 # RUN apk add build-base postgresql-dev git nodejs yarn tzdata file
@@ -36,6 +35,10 @@ ONBUILD COPY . /app
 # TODO: figure out why the call to Sentry fails some of the time. It's gotta be the credentials.
 ONBUILD RUN RAILS_ENV=production \
     SENTRY_DSN=$SENTRY_DSN \
+    SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN \
+    SENTRY_CURRENT_ENV=$SENTRY_CURRENT_ENV \
+    PAPERTRAIL_API_TOKEN=$PAPERTRAIL_API_TOKEN \
+    AIRTABLE_API_KEY=$AIRTABLE_API_KEY \
     ASSET_COMPILATION=true \
     bundle exec rails assets:precompile
 
