@@ -1372,18 +1372,6 @@
     "@sentry/utils" "6.10.0"
     tslib "^1.9.3"
 
-"@sentry/cli@^1.67.1":
-  version "1.68.0"
-  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-1.68.0.tgz#2ced8fac67ee01e746a45e8ee45a518d4526937e"
-  integrity sha512-zc7+cxKDqpHLREGJKRH6KwE8fZW8bnczg3OLibJ0czleXoWPdAuOK1Xm1BTMcOnaXfg3VKAh0rI7S1PTdj+SrQ==
-  dependencies:
-    https-proxy-agent "^5.0.0"
-    mkdirp "^0.5.5"
-    node-fetch "^2.6.0"
-    npmlog "^4.1.2"
-    progress "^2.0.3"
-    proxy-from-env "^1.1.0"
-
 "@sentry/core@6.10.0":
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/@sentry/core/-/core-6.10.0.tgz#70af9dc72bb6a5b59062a31b7de023f7f1878357"
@@ -1425,13 +1413,6 @@
   dependencies:
     "@sentry/types" "6.10.0"
     tslib "^1.9.3"
-
-"@sentry/webpack-plugin@^1.15.1":
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/@sentry/webpack-plugin/-/webpack-plugin-1.16.0.tgz#f9b15b5bb485995e776729b71bcf2d9fad7dca7a"
-  integrity sha512-Ax0QZ3a+LFYU876Si2HElPYSj+mX3vinvzH+o9F1g/5T2Z3HqITnX6gg+zVfLFsE819PN9KeLpmoHtO352dlmQ==
-  dependencies:
-    "@sentry/cli" "^1.67.1"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -6806,11 +6787,6 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-node-fetch@^2.6.0:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
-  integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
-
 node-forge@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.10.0.tgz#32dea2afb3e9926f02ee5ce8794902691a676bf3"
@@ -8186,7 +8162,7 @@ process@^0.11.10:
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
-progress@^2.0.0, progress@^2.0.3:
+progress@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
@@ -8228,11 +8204,6 @@ proxy-addr@~2.0.5:
   dependencies:
     forwarded "0.2.0"
     ipaddr.js "1.9.1"
-
-proxy-from-env@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
-  integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
 
 prr@~1.0.1:
   version "1.0.1"
