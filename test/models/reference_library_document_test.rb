@@ -15,14 +15,15 @@ describe ReferenceLibraryDocument do
     describe "for a known type" do
       it "returns the expected integer" do
         _(
-          ReferenceLibraryDocument.reference_type_ordinal("Briefing Note")
+          ReferenceLibraryDocument.reference_type_ordinal("Best Practices")
         ).must_equal 1
         _(
-          ReferenceLibraryDocument.reference_type_ordinal("Case Study")
+          ReferenceLibraryDocument.reference_type_ordinal("Guidelines")
         ).must_equal 2
+        _(ReferenceLibraryDocument.reference_type_ordinal("Tools")).must_equal 3
         _(
-          ReferenceLibraryDocument.reference_type_ordinal("Training Package")
-        ).must_equal 8
+          ReferenceLibraryDocument.reference_type_ordinal("Training Packages")
+        ).must_equal 4
       end
     end
 
@@ -36,20 +37,30 @@ describe ReferenceLibraryDocument do
       it "returns nil" do
         _(ReferenceLibraryDocument.reference_type_ordinal("Something Else"))
           .must_be_nil
-        _(ReferenceLibraryDocument.reference_type_ordinal("Briefing Notes"))
+        _(ReferenceLibraryDocument.reference_type_ordinal("Guideline"))
           .must_be_nil
       end
     end
   end
 
-  describe ".reference_type_scope_name" do
-    let(:type) { "Cat Video" }
-    let(:scope_name) { :cat_videos }
+  describe ".distinct_types" do
+    describe "when there are zero documents" do
+      before { ReferenceLibraryDocument.destroy_all }
 
-    it "symbolizes, pluralizes, parameterizes reference type string" do
-      _(
-        ReferenceLibraryDocument.reference_type_scope_name(type)
-      ).must_equal scope_name
+      it "returns empty array" do
+        _(ReferenceLibraryDocument.distinct_types).must_equal []
+      end
+    end
+
+    describe "when there are some documents" do
+      it "returns an array of the expected strings" do
+        _(ReferenceLibraryDocument.distinct_types).must_equal [
+                                                                "Best Practices",
+                                                                "Guidelines",
+                                                                "Tools",
+                                                                "Training Packages"
+                                                              ]
+      end
     end
   end
 end

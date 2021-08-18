@@ -158,20 +158,29 @@ export default class extends Controller {
   }
 
   makePillBadgeForTechnicalArea(text) {
-    return this.makePillBadge(text, "removeFilterCriterionOfTechnicalArea")
+    return this.makePillBadge(
+      text,
+      "removeFilterCriterionOfTechnicalArea",
+      null
+    )
   }
 
   makePillBadgeForReferenceType(text, referenceTypeOrdinal) {
     return this.makePillBadge(
       text,
-      `removeFilterCriterionOfReferenceType${referenceTypeOrdinal}`
+      "removeFilterCriterionOfReferenceViaCloseButton",
+      referenceTypeOrdinal
     )
   }
 
-  makePillBadge(text, methodName) {
+  makePillBadge(text, methodName, ordinalOrNull) {
     const templateHtml = $(this.templateSelector).html()
     const compiledTemplate = Hogan.compile(templateHtml)
-    const templateData = { text: text, methodName: methodName }
+    const templateData = {
+      text: text,
+      methodName: methodName,
+      ordinal: ordinalOrNull,
+    }
     return compiledTemplate.render(templateData)
   }
 
@@ -184,6 +193,11 @@ export default class extends Controller {
     $(this.technicalAreaSelectTarget).val(null)
     this.refreshTheChosenMenu()
     this.updateFilterCriteria()
+  }
+
+  removeFilterCriterionOfReferenceViaCloseButton(event) {
+    const referenceTypeOrdinal = $(event.currentTarget).data("ordinal")
+    this.removeFilterCriterionOfReferenceTypeForOrdinal(referenceTypeOrdinal)
   }
 
   removeFilterCriterionOfReferenceTypeForOrdinal(referenceTypeOrdinal) {
@@ -202,37 +216,5 @@ export default class extends Controller {
   refreshTheChosenMenu() {
     // this is needed to update the chosen menu UI
     $(this.technicalAreaSelectTarget).trigger("chosen:updated")
-  }
-
-  removeFilterCriterionOfReferenceType1() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(1)
-  }
-
-  removeFilterCriterionOfReferenceType2() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(2)
-  }
-
-  removeFilterCriterionOfReferenceType3() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(3)
-  }
-
-  removeFilterCriterionOfReferenceType4() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(4)
-  }
-
-  removeFilterCriterionOfReferenceType5() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(5)
-  }
-
-  removeFilterCriterionOfReferenceType6() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(6)
-  }
-
-  removeFilterCriterionOfReferenceType7() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(7)
-  }
-
-  removeFilterCriterionOfReferenceType8() {
-    this.removeFilterCriterionOfReferenceTypeForOrdinal(8)
   }
 }
