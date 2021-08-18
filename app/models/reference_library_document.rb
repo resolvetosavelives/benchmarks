@@ -6,23 +6,13 @@ class ReferenceLibraryDocument < ApplicationRecord
 
   validates :download_url, uniqueness: true
 
-  REFERENCE_TYPES = [
-    "Best Practices",
-    "Guidelines",
-    "Tools",
-    "Training Packages"
-  ].freeze
-
-  def self.reference_type_scope_name(reference_type_name)
-    reference_type_name.parameterize(separator: "_").pluralize.to_sym
-  end
-
-  REFERENCE_TYPES.each do |rt|
-    scope self.reference_type_scope_name(rt), -> { where(reference_type: rt) }
+  # returns an array of reference_type strings sorted alphabetically
+  def self.distinct_types
+    self.select(:reference_type).distinct.pluck(:reference_type).sort
   end
 
   def self.reference_type_ordinal(reference_type_name)
-    index = REFERENCE_TYPES.index(reference_type_name)
+    index = distinct_types.index(reference_type_name)
     return nil if index.nil?
 
     index + 1

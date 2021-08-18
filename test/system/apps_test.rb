@@ -279,7 +279,7 @@ class AppsTest < ApplicationSystemTestCase
     assert page.has_content?("BENCHMARKS FOR IHR CAPACITIES")
     click_on("REFERENCE LIBRARY")
     assert page.has_content?(
-             "Establishment of a Sentinel Laboratory-Based Antimicrobial Resistance Surveillance Network in Ethiopia"
+             "Tackling Antimicrobial Resistance (AMR) Together: Working Paper 1.0 Multisectoral coordination"
            )
     click_on("email@example.com")
     click_on("My Plans")

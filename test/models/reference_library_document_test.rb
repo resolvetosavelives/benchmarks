@@ -43,14 +43,24 @@ describe ReferenceLibraryDocument do
     end
   end
 
-  describe ".reference_type_scope_name" do
-    let(:type) { "Cat Video" }
-    let(:scope_name) { :cat_videos }
+  describe ".distinct_types" do
+    describe "when there are zero documents" do
+      before { ReferenceLibraryDocument.destroy_all }
 
-    it "symbolizes, pluralizes, parameterizes reference type string" do
-      _(
-        ReferenceLibraryDocument.reference_type_scope_name(type)
-      ).must_equal scope_name
+      it "returns empty array" do
+        _(ReferenceLibraryDocument.distinct_types).must_equal []
+      end
+    end
+
+    describe "when there are some documents" do
+      it "returns an array of the expected strings" do
+        _(ReferenceLibraryDocument.distinct_types).must_equal [
+                                                                "Best Practices",
+                                                                "Guidelines",
+                                                                "Tools",
+                                                                "Training Packages"
+                                                              ]
+      end
     end
   end
 end

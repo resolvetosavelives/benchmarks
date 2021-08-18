@@ -39,6 +39,9 @@ module ReferenceLibraryDocumentSeed
     end
 
     def update_from_airtable!
+      puts "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
+      unseed!
+
       last_edit =
         ReferenceLibraryDocument.order(:last_modified).last&.last_modified
       puts "Fetching#{" all" unless last_edit} documents#{" added since #{last_edit}" if last_edit}..."
