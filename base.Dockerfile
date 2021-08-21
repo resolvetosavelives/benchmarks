@@ -31,17 +31,7 @@ ONBUILD RUN yarn install --frozen-lockfile
 # After updating gems for the child image, copy in the latest app code
 ONBUILD COPY . /app
 
-# TODO: figure out why this isn't being cached and building everytime
-# TODO: figure out why the call to Sentry fails some of the time. It's gotta be the credentials.
-ONBUILD RUN RAILS_ENV=production \
-    SENTRY_DSN=$SENTRY_DSN \
-    SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN \
-    SENTRY_CURRENT_ENV=$SENTRY_CURRENT_ENV \
-    PAPERTRAIL_API_TOKEN=$PAPERTRAIL_API_TOKEN \
-    AIRTABLE_API_KEY=$AIRTABLE_API_KEY \
-    ASSET_COMPILATION=true \
-    bundle exec rails assets:precompile
-
+ONBUILD RUN RAILS_ENV=production bundle exec rails assets:precompile
 
 #TODO: Cleanup
 # ONBUILD RUN bundle clean --force && \

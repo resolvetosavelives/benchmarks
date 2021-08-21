@@ -1,2 +1,2 @@
-web: bin/rails server -p ${PORT:-5000} -e $RAILS_ENV
+web: RAILS_ENV=${RAILS_ENV:-development} NO_SSL=true bin/rails server -p $PORT
 release: bin/rails db:migrate
