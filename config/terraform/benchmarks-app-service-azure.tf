@@ -18,12 +18,36 @@ provider "azurerm" {
 }
 provider "azuredevops" {}
 
+
+
+#
+# Variables used
+#
+variable "GITHUB_AUTH_PERSONAL" {
+  type = string
+}
+variable "DATABASE_URL" {
+  type = string
+}
+variable "DOCKER_REGISTRY_SERVER_URL" {
+  type = string
+}
+variable "DOCKER_REGISTRY_SERVER_USERNAME" {
+  type = string
+}
+variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
+  type = string
+}
+
+
+
+
 # 
 # SECTION: the baseline infrastructure needed
 #
 resource "azurerm_resource_group" "WhoIhrBenchmarks" {
   name     = "WhoIhrBenchmarks"
-  location = azurerm_resource_group.WhoIhrBenchmarks.location
+  location = "westus2" # prob should switch to East US 2
   # later we will use location = "West Europe"
 }
 
@@ -91,7 +115,10 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "who-ihr-benchmarks-app-service-plan"
   location            = azurerm_resource_group.WhoIhrBenchmarks.location
   resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
+  // these settings "kind" and "reserved" are required by Azure in order to use app_service's
+  //   config option linux_fx_version which we need to run Linux containers
   kind                = "Linux"
+  reserved            = true
 //  reserved            = true # do not need reserved for now
   sku {
     tier = "Standard"
@@ -100,48 +127,50 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 }
 
 resource "azurerm_app_service" "app_service" {
-  name                = "who-ihr-benchmarks-app"
+  name                = "who-ihr-benchmarks-app-service"
   location            = azurerm_resource_group.WhoIhrBenchmarks.location
   resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
-  // https_only = true # no we do not want https_only, we want to allow our app to issue redirects to HTTPS
 //  health_check_path = "/health" # TODO
   identity {
     type = "SystemAssigned"
   }
-//  app_settings = {
-//    "SOME_KEY" = "some-value"
-//    "DATABASE_URL" = "some-value"
-//  }
+  site_config {
+    linux_fx_version = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+  }
   connection_string {
     name  = "Database"
     type  = "PostgreSQL"
     value = var.DATABASE_URL
   }
-//  site_config {
-//    dotnet_framework_version = "v4.0"
-//    scm_type                 = "LocalGit"
-//  }
+  // not sure if this goes to our app or to App Service layer
+  app_settings = {
+    DATABASE_URL = var.DATABASE_URL
+    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
+  }
+  logs {
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb = 100
+      }
+    }
+  }
 }
-resource "azurerm_app_service_slot" "slotDemo" {
-  name                = "slotAppServiceSlotOne"
+resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
+  name                = "staging"
   location            = azurerm_resource_group.WhoIhrBenchmarks.location
   resource_group_name = azurerm_resource_group.WhoIhrBenchmarks.name
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
 }
-// TODO: use azurerm_application_insights? as here: https://www.padok.fr/en/blog/terraform-azure-app-docker
 
 
 #
 # SECTION: the cloud applications that depend upon the infrastructure
 #
-variable "GITHUB_AUTH_PERSONAL" {
-  type = string
-}
-variable "DATABASE_URL" {
-  type = string
-}
 resource "azuredevops_project" "project" {
   name = "WhoIhrBenchmarks001"
   description = "WHO IHR Benchmarks Project"
