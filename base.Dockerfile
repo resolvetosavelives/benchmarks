@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM ruby:3.0.2-alpine
 
 # RUN apk add build-base postgresql-dev git nodejs yarn tzdata file
