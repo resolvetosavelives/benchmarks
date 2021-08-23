@@ -38,7 +38,9 @@ variable "DOCKER_REGISTRY_SERVER_USERNAME" {
 variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
   type = string
 }
-
+variable "RAILS_MASTER_KEY" {
+  type = string
+}
 
 
 
@@ -138,24 +140,25 @@ resource "azurerm_app_service" "app_service" {
   site_config {
     linux_fx_version = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
   }
-  connection_string {
-    name  = "Database"
-    type  = "PostgreSQL"
-    value = var.DATABASE_URL
-  }
   // not sure if this goes to our app or to App Service layer
   app_settings = {
-    DATABASE_URL = var.DATABASE_URL
     DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    DATABASE_URL = var.DATABASE_URL
+    RAILS_MASTER_KEY = var.RAILS_MASTER_KEY
   }
   logs {
+    // http_logs seems to be the Azure App Service-level logs, external to our app
     http_logs {
       file_system {
         retention_in_days = 7
         retention_in_mb = 100
       }
+    }
+    // application_logs seems to mean logs from our actual app code in its container
+    application_logs {
+      file_system_level = "Verbose"
     }
   }
 }
