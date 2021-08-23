@@ -1,2 +1,2 @@
-web: RAILS_ENV=${RAILS_ENV:-development} NO_SSL=true bin/rails server -p $PORT
+web: RAILS_ENV=${RAILS_ENV:-development} DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY RAILS_LOG_TO_STDOUT=true RAILS_SERVE_STATIC_FILES=true NO_SSL=true WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bin/rails server -p $PORT
 release: bin/rails db:migrate

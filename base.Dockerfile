@@ -31,7 +31,8 @@ ONBUILD RUN yarn install --frozen-lockfile
 # After updating gems for the child image, copy in the latest app code
 ONBUILD COPY . /app
 
-ONBUILD RUN RAILS_ENV=production bundle exec rails assets:precompile
+ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
+    RAILS_ENV=production bundle exec rails assets:precompile
 
 #TODO: Cleanup
 # ONBUILD RUN bundle clean --force && \
