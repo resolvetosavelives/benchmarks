@@ -1,4 +1,6 @@
+config/master.key
+**/.env
 **/*.log
 **/tmp/*
-public/packs
-public/packs-test
+public/packs*
+**/*tfstate*
