@@ -64,9 +64,9 @@
   "scripts": {
     "test": "jest",
     "prepare": "husky install",
-    "build:base": "docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -f base.Dockerfile -t benchmarksbase:latest .",
-    "build": "docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -t benchmarks:latest .",
-    "start:local": "docker run --rm -p 80:5000 -e RAILS_ENV=production -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e WEBSITE_HOSTNAME=local.test benchmarks"
+    "build:base": "DOCKER_BUILDKIT=1 docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -f base.Dockerfile -t benchmarksbase:latest .",
+    "build": "DOCKER_BUILDKIT=1 docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -t benchmarks:latest .",
+    "start:local": "docker run --rm -p 80:5000 -e RAILS_ENV=production -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e WEBSITE_HOSTNAME=local.dev benchmarks"
   },
   "jest": {
     "setupFiles": [
