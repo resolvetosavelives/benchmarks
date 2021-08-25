@@ -9,13 +9,22 @@ terraform {
       version = ">=0.1.0"
     }
   }
+  // terraform state stored securely in azure storage and is encrypted in transit and at rest.
+  backend "azurerm" {
+    resource_group_name = "WhoIhrBenchmarks"
+    storage_account_name = "tfstate5b92c0"
+    container_name = "tfstate"
+    key = "terraform.tfstate"
+  }
 }
 
 
 provider "azurerm" {
   features {}
   subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
+  // tenant_id = "7018baf0-4beb-46d2-a7d1-7679026af9e0
 }
+
 provider "azuredevops" {}
 
 
@@ -51,6 +60,22 @@ resource "azurerm_resource_group" "WhoIhrBenchmarks" {
   name     = "WhoIhrBenchmarks"
   location = "westus2" # prob should switch to East US 2
   # later we will use location = "West Europe"
+}
+
+resource "azurerm_storage_account" "TerraformState" {
+  // the "5b92c0" part of this is a 6-char portion of output of: rake secret
+  name                     = "tfstate5b92c0"
+  resource_group_name      = azurerm_resource_group.WhoIhrBenchmarks.name
+  location                 = azurerm_resource_group.WhoIhrBenchmarks.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  allow_blob_public_access = true
+}
+
+resource "azurerm_storage_container" "TerraformState" {
+  name                  = "tfstate"
+  storage_account_name  = azurerm_storage_account.TerraformState.name
+  container_access_type = "blob"
 }
 
 resource "azurerm_postgresql_server" "WhoIhrBenchmarksDbServer" {
