@@ -1,18 +1,48 @@
 az group create --name who-test-01 -l westus
 az acr create --name whotest01 --resource-group who-test-01 --sku standard --admin-enabled true
-
-
-
-
-`yarn azure-console` to bring up a console and then `az acr build --file Dockerfile --registry kfitzdevregistry --image hello-world`. I believe will give you a clean build.
+az acr build --file Dockerfile --registry kfitzdevregistry --image hello-world`
 
 Databases:
 az extension add --name db-up
 az postgres up --resource-group WhoIhrBenchmarks --location westus --server-name WhoIhrBenchmarksDb --database-name benchmarks_production --admin-user PostgresAdminUser --admin-password PEWFCdu2hFqHe34H --ssl-enforcement Enabled
 
-
-
 #az acr build --file Dockerfile --registry WhoIhrBenchmarksRegistry --image benchmarksbase .
-#docker build
-
 az acr build --file Dockerfile.base --registry WhoIhrBenchmarksRegistry -t benchmarksbase:{{.Run.ID}} .
+
+##
+# this is for VMs. does not work with other cloud resources.
+# https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli#validate-routing-issues
+# "source-resource" is expected to be a VM name.
+az network watcher test-connectivity --resource-group who-ihr-benchmarks-sandbox --source-resource vm-network-tester --dest-address 10.1.3.4 --dest-port 80
+az network watcher test-connectivity --resource-group who-ihr-benchmarks-sandbox --source-resource vm-network-tester --dest-resource who-ihr-benchmarks-app-service --dest-port 80
+az network watcher show-topology --resource-group who-ihr-benchmarks-sandbox
+
+##
+# for ACR private link setup..
+# https://docs.microsoft.com/en-us/azure/container-registry/container-registry-private-link
+REGISTRY_NAME=whoihrbenchmarks
+REGISTRY_LOCATION=eastus2
+RESOURCE_GROUP=who-ihr-benchmarks-sandbox
+NETWORK_NAME=vnet-primary
+SUBNET_NAME=subnet-build-support-services
+NETWORK_INTERFACE_ID=$(az network private-endpoint show \
+  --name pend-acr \
+  --resource-group who-ihr-benchmarks-sandbox \
+  --query 'networkInterfaces[0].id' \
+  --output tsv)
+REGISTRY_PRIVATE_IP=$(az network nic show \
+  --ids $NETWORK_INTERFACE_ID \
+  --query "ipConfigurations[?privateLinkConnectionProperties.requiredMemberName=='registry'].privateIpAddress" \
+  --output tsv)
+DATA_ENDPOINT_PRIVATE_IP=$(az network nic show \
+  --ids $NETWORK_INTERFACE_ID \
+  --query "ipConfigurations[?privateLinkConnectionProperties.requiredMemberName=='registry_data_$REGISTRY_LOCATION'].privateIpAddress" \
+  --output tsv)
+REGISTRY_FQDN=$(az network nic show \
+  --ids $NETWORK_INTERFACE_ID \
+  --query "ipConfigurations[?privateLinkConnectionProperties.requiredMemberName=='registry'].privateLinkConnectionProperties.fqdns" \
+  --output tsv)
+DATA_ENDPOINT_FQDN=$(az network nic show \
+  --ids $NETWORK_INTERFACE_ID \
+  --query "ipConfigurations[?privateLinkConnectionProperties.requiredMemberName=='registry_data_$REGISTRY_LOCATION'].privateLinkConnectionProperties.fqdns" \
+  --output tsv)
