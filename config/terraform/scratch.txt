@@ -16,3 +16,10 @@ az postgres up --resource-group WhoIhrBenchmarks --location westus --server-name
 #docker build
 
 az acr build --file Dockerfile.base --registry WhoIhrBenchmarksRegistry -t benchmarksbase:{{.Run.ID}} .
+
+
+# this is for VMs. does not work with other cloud resources.
+# https://docs.microsoft.com/en-us/azure/network-watcher/network-watcher-connectivity-cli#validate-routing-issues
+# "source-resource" is expected to be a VM name.
+az network watcher test-connectivity --resource-group who-ihr-benchmarks-sandbox --source-resource vm-network-tester --dest-address 10.1.3.4 --dest-port 80
+az network watcher test-connectivity --resource-group who-ihr-benchmarks-sandbox --source-resource vm-network-tester --dest-resource who-ihr-benchmarks-app-service --dest-port 80
