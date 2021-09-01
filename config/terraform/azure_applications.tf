@@ -8,8 +8,8 @@
 //  reserved            = true
 //  //  reserved            = true # do not need reserved for now
 //  sku {
-//    tier = "Standard"
-//    size = "S1"
+//    tier = "Premium v2"
+//    size = "P1v2" or P2v2 or P3v2
 //  }
 //}
 //
@@ -22,32 +22,32 @@
 //  identity {
 //    type = "SystemAssigned"
 //  }
-////  site_config {
-////    linux_fx_version = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
-////  }
+//  site_config {
+//    linux_fx_version = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+//  }
 ////  // not sure if this goes to our app or to App Service layer
-////  app_settings = {
-////    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
-////    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
-////    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
+//  app_settings = {
+//    DOCKER_REGISTRY_SERVER_URL = var.DOCKER_REGISTRY_SERVER_URL
+//    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
+//    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
 ////    DATABASE_URL = var.DATABASE_URL
 ////    RAILS_MASTER_KEY = var.RAILS_MASTER_KEY
-////  }
-////  logs {
-////    // http_logs seems to be the Azure App Service-level logs, external to our app
-////    http_logs {
-////      file_system {
-////        retention_in_days = 7
-////        retention_in_mb = 100
-////      }
-////    }
-////    // application_logs seems to mean logs from our actual app code in its container
-////    application_logs {
-////      file_system_level = "Verbose"
-////    }
-////  }
+//  }
+//  logs {
+//    // http_logs seems to be the Azure App Service-level logs, external to our app
+//    http_logs {
+//      file_system {
+//        retention_in_days = 7
+//        retention_in_mb = 100
+//      }
+//    }
+//    // application_logs seems to mean logs from our actual app code in its container
+//    application_logs {
+//      file_system_level = "Verbose"
+//    }
+//  }
 //}
-
+//
 //resource "azurerm_app_service_virtual_network_swift_connection" "network_peering_from_app_service" {
 //  app_service_id = azurerm_app_service.app_service.id
 //  subnet_id      = azurerm_subnet.app_service_integration.id
