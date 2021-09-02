@@ -3,7 +3,7 @@
 # https://aka.ms/yaml
 
 trigger:
-  - pipeline-create-and-setup--178993699--build
+  - azure--virtual-network-and-subnets--179242298
 
 pool:
   vmImage: ubuntu-latest
