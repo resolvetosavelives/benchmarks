@@ -3,47 +3,19 @@
 # more info on sku Service tier features and limits: https://docs.microsoft.com/en-us/azure/container-registry/container-registry-skus
 #
 resource "azurerm_container_registry" "acr" {
-  // Azure rules for name: alpha numeric characters only are allowed, lower case, must be globally unique
-  name                     = "whoihrbenchmarksregistry"
-  resource_group_name      = azurerm_resource_group.who_ihr_benchmarks.name
-  location                 = azurerm_resource_group.who_ihr_benchmarks.location
-  sku                      = "Premium"
-  admin_enabled            = true
+  // Azure rules for name: alpha numeric characters, lower case, must be globally unique
+  name                          = "whoihrbenchmarksregistry"
+  resource_group_name           = azurerm_resource_group.who_ihr_benchmarks.name
+  location                      = azurerm_resource_group.who_ihr_benchmarks.location
+  sku                           = "Premium"
+  admin_enabled                 = true
   public_network_access_enabled = true
-//  network_rule_set {
-//    default_action = "Allow"
-//    default_action = "Deny"
-//    ip_rule {
-//      action = "Allow"
-//      ip_range = "71.182.150.16/32"
-//    }
-//  }
 }
-//resource "azurerm_private_endpoint" "acr" {
-//  name                = "pend-acr"
-//  location            = azurerm_resource_group.who_ihr_benchmarks.location
-//  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
-//  subnet_id           = azurerm_subnet.build_support_services.id
-//  private_dns_zone_group {
-//    name                 = "pdnsz-acr"
-//    private_dns_zone_ids = [azurerm_private_dns_zone.pdns_acr01.id]
-//  }
-//  private_service_connection {
-//    name                           = "psc-acr"
-//    private_connection_resource_id = azurerm_container_registry.acr.id
-//    is_manual_connection           = false
-//    subresource_names = ["registry"]
-//  }
-//}
-// As of Sunday 3:20pm ET
-// REGISTRY_PRIVATE_IP: 10.1.2.5
-// DATA_ENDPOINT_PRIVATE_IP: 10.1.2.4
-// whoihrbenchmarks.azurecr.io :: whoihrbenchmarks.eastus2.data.azurecr.io
 
 resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
-  name                = "psqldb-who-ihr-benchmarks"
-  location            = azurerm_resource_group.who_ihr_benchmarks.location
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  name                          = "psqldb-who-ihr-benchmarks"
+  location                      = azurerm_resource_group.who_ihr_benchmarks.location
+  resource_group_name           = azurerm_resource_group.who_ihr_benchmarks.name
   public_network_access_enabled = false
   // SKUs
   // - GP_Gen5_2 means "General Purpose (more than Basic), Generation 5 (current), 2 cores.
@@ -58,10 +30,10 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
 
   # these wont be real credentials once this is working but for now these are good enough during development
   # TODO: remove these fake credentials and replace with using a secret store
-  administrator_login          = "fyxzCNQUqNrd"
-  administrator_login_password = "Lo4YdiJcggrN9TfPagCW2AsMtFbQ8R6N"
-  version                      = "11"
-  ssl_enforcement_enabled      = true
+  administrator_login              = "fyxzCNQUqNrd"
+  administrator_login_password     = "Lo4YdiJcggrN9TfPagCW2AsMtFbQ8R6N"
+  version                          = "11"
+  ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }
 resource "azurerm_postgresql_database" "benchmarks_test" {
@@ -95,6 +67,6 @@ resource "azurerm_private_endpoint" "pend_db01" {
     name                           = "psc-db01"
     is_manual_connection           = false
     private_connection_resource_id = azurerm_postgresql_server.who_ihr_benchmarks_db_server.id
-    subresource_names = ["postgresqlServer"]
+    subresource_names              = ["postgresqlServer"]
   }
 }

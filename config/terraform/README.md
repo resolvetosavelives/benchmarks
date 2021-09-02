@@ -4,7 +4,6 @@
 
 - https://www.terraform-best-practices.com/naming
 - https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
--
 
 ### Naming Convention for Azure Resources
 

@@ -2,11 +2,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.65"
+      version = "~> 2.74"
     }
     azuredevops = {
       source  = "microsoft/azuredevops"
-      version = ">=0.1.0"
+      version = ">=0.1.7"
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
@@ -21,20 +21,16 @@ terraform {
 provider "azurerm" {
   features {}
   subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
-  // tenant_id = "7018baf0-4beb-46d2-a7d1-7679026af9e0
+  tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
 }
+// to expose to other tf code: id, tenant_id, subscription_id, display_name..
+data "azurerm_subscription" "current" {}
 
 //
 // See the README.md file for the conventions for naming things and code style.
 //
 locals {
-  env      = terraform.workspace == "production" ? "production" : "sandbox"
-  app_name = "who-ihr-benchmarks"
+  env                 = terraform.workspace == "production" ? "production" : "sandbox"
+  app_name            = "who-ihr-benchmarks"
   resource_group_name = "${local.app_name}-${local.env}"
-//  config_map = {
-//    "sandbox" = {
-//    }
-//    "production" = {
-//    }
-//  }
 }
