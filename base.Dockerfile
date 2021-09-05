@@ -1,49 +1,33 @@
-# syntax=docker/dockerfile:1
 FROM ruby:3.0.2-alpine
 
-##
-# system-level build deps
-RUN apk add \
-    build-base \
-    postgresql-dev \
-    postgresql-libs \
-    libpq \
-    nodejs-current \
-    yarn \
-    python3
+# Add basic packages
+RUN apk add --no-cache \
+      postgresql-client \
+      tzdata \
+      file
 
-WORKDIR /app
+#ARG TARGET_DIR=/home/app
 
-##
-# Install base app gems into the base image
-COPY Gemfile* .ruby-version package.json yarn.lock /app/
-RUN yarn install --frozen-lockfile
-RUN bundle config --local frozen 1 && \
-    bundle install -j4 --retry 3
+# Configure Rails
+ENV RAILS_LOG_TO_STDOUT true
+ENV RAILS_SERVE_STATIC_FILES true
 
-##
-# Install Ruby gems (for production only)
-ONBUILD COPY Gemfile* .ruby-version package.json yarn.lock /app/
-ONBUILD RUN bundle config --local without 'development test' && \
-            bundle install -j4 --retry 3 && \
-            # Remove unneeded gems
-            bundle clean --force && \
-            # Remove unneeded files from installed gems (cached *.gem, *.o, *.c)
-            rm -rf /usr/local/bundle/cache/*.gem && \
-            find /usr/local/bundle/gems/ -name "*.c" -delete && \
-            find /usr/local/bundle/gems/ -name "*.o" -delete
-# After updating gems for the child image, copy in the latest app code
-ONBUILD COPY . /app
+# This image is for production env only
+ENV RAILS_ENV production
 
-##
-# Compile assets with Webpacker taking care to respect the secret RAILS_MASTER_KEY
-# Note that:
-#   1. Executing "assets:precompile" runs "yarn:install" prior
-#   2. Executing "assets:precompile" runs "webpacker:compile", too
-#   3. Rails raises a `MissingKeyError` if the master key is missing.
-ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
-    RAILS_ENV=production bundle exec rails assets:precompile
+# Write GIT meta data from arguments to env vars
+ONBUILD ARG COMMIT_SHA
+ONBUILD ARG COMMIT_TIME
+ONBUILD ARG TAG_OR_BRANCH
 
-##
-# Remove folders not needed in resulting image
-ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
+ONBUILD ENV COMMIT_SHA ${COMMIT_SHA}
+ONBUILD ENV COMMIT_TIME ${COMMIT_TIME}
+ONBUILD ENV TAG_OR_BRANCH ${TAG_OR_BRANCH}
+
+# Add user
+ONBUILD RUN addgroup -g 1000 -S app && \
+            adduser -u 1000 -S app -G app
+
+# Copy app with gems from former build stage
+ONBUILD COPY --from=Builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
+ONBUILD COPY --from=Builder --chown=app:app /home/app /home/app
