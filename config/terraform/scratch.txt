@@ -46,3 +46,25 @@ DATA_ENDPOINT_FQDN=$(az network nic show \
   --ids $NETWORK_INTERFACE_ID \
   --query "ipConfigurations[?privateLinkConnectionProperties.requiredMemberName=='registry_data_$REGISTRY_LOCATION'].privateLinkConnectionProperties.fqdns" \
   --output tsv)
+
+
+##
+# Seen in Azure App Service log stream:
+# Notice that the docker command is targetting a container named "appsvc/msitokenservice:2007200210" which is not our app container.
+# ???
+#
+2021-09-07T00:40:34.692Z INFO  - Starting container for site
+2021-09-07T00:40:34.693Z INFO  - docker run -d -p 8081:8081 --name who-ihr-benchmarks-app-service_1_d1470f6c_msiProxy -e PORT=8081 -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=who-ihr-benchmarks-app-service.azurewebsites.net -e WEBSITE_INSTANCE_ID=31d1571b98413b496b1c198a707d6ffc6a83a2d2559c10492f7bfe83d4fa59c3 -e HTTP_LOGGING_ENABLED=1 appsvc/msitokenservice:2007200210
+
+
+az webapp create --resource-group dockerprojects --plan dockerlinuxprojects --name promiseapptest --deployment-container-image-name promisecicdregistry.azurecr.io/promiseapp
+az webapp config container set --resource-group dockerprojects --name promiseapptest --docker-custom-image-name promisecicdregistry.azurecr.io/promiseapp --docker-registry-server-url https://promisecicdregistry.azurecr.io --docker-registry-server-user test-user --docker-registry-server-password 12345678
+
+
+
+##
+# docker build in Azure environment with ACR
+az configure --defaults acr=whoihrbenchmarksregistry
+az acr build -f builder.Dockerfile -t benchmarks_builder:latest .
+az acr build -f base.Dockerfile -t benchmarks_base:latest .
+az acr build -f Dockerfile -t benchmarks:latest .
