@@ -1,9 +1,11 @@
 # syntax=docker/dockerfile:1
 
-FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_builder:latest AS Builder
-#FROM benchmarks_builder:latest AS Builder # for working locally
-FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_base:latest AS Base
-#FROM benchmarks_base:latest AS Base # for working locally
+#FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_builder:latest AS Builder
+# for working locally
+FROM benchmarks_builder:latest AS Builder
+#FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_base:latest AS Base
+# for working locally
+FROM benchmarks_base:latest AS Base
 
 # Workaround to trigger Builder's ONBUILDs to finish:
 COPY --from=Builder /etc/alpine-release /tmp/dummy

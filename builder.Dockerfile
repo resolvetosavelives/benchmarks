@@ -29,18 +29,13 @@ RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 COPY Gemfile* .ruby-version $APP_HOME
 RUN bundle config set --local path /usr/local/bundle && \
     bundle config set --local deployment true && \
-    bundle config set --local clean false \
     bundle install
 
 ##
 # Subsequent builds check for any gems changes and prunes any unused
 ONBUILD COPY Gemfile* .ruby-version $APP_HOME
-#ONBUILD RUN bundle config set --local clean true \
-#    bundle config set --local deployment true && \
-#    bundle install
 ONBUILD RUN bundle config set --local path /usr/local/bundle && \
-    bundle config set --local deployment true && \
-    bundle config set --local clean false \
+    bundle config set --local clean true \
     bundle install
 
 ##
@@ -54,9 +49,11 @@ ONBUILD COPY . $APP_HOME
 #   1. Executing "assets:precompile" runs "yarn install" prior
 #   2. Executing "assets:precompile" runs "webpacker:compile", too
 #   3. Rails raises a `MissingKeyError` if the master key is missing.
+# TODO: also make use of?: assets:clean
+# TODO: this use of --mount apparently depends on BuildKit, and Azure Container Reg (ACR) says that
+#   BuildKit is not enabled. may need to either enable BuildKit on ACR, or rework how this secret is handled.
 ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
     RAILS_ENV=production bundle exec rails assets:precompile
-# TODO: make use here of?: assets:clean
 
 ##
 # Remove folders not needed in resulting image
