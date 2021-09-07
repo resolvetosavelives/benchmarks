@@ -21,6 +21,7 @@ resource "azurerm_app_service" "app_service" {
   }
   site_config {
     linux_fx_version = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    ftps_state       = "Disabled"
 //    app_command_line = ""
   }
   app_settings = {
