@@ -6,3 +6,5 @@ config/master.key
 !tmp/pids/.keep
 public/packs*
 **/*tfstate*
+**/.terraform/*
+**/.git/*

@@ -1,23 +1,16 @@
 # syntax=docker/dockerfile:1
 
-#ARG TARGET_DIR=/home/app
-
-# Builder stage
-FROM benchmarks_builder:latest AS Builder
-# Base stage
-FROM benchmarks_base:latest AS Base
-
-##
-# set the user and home to avoid mixups with paths and to run as non-root
-USER app
-WORKDIR /home/app
+FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_builder:latest AS Builder
+#FROM benchmarks_builder:latest AS Builder # for working locally
+FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_base:latest AS Base
+#FROM benchmarks_base:latest AS Base # for working locally
 
 # Workaround to trigger Builder's ONBUILDs to finish:
 COPY --from=Builder /etc/alpine-release /tmp/dummy
+WORKDIR $APP_HOME
 
-# take care to NOT bundle foreman as directed by its author
-RUN gem install foreman
-EXPOSE 80
-ENV RAILS_ENV production
+##
+# set USER last cuz most other commanded needed to run as root, but we want to run server as non-root
+USER app:app
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
-CMD ["foreman", "start", "web_prod"]
+CMD echo "WHO: `whoami`, APP_HOME: $APP_HOME" && ls -la /usr/local/bundle && cd $APP_HOME && echo "PWD: `pwd`" && ls -la && foreman start web_prod
