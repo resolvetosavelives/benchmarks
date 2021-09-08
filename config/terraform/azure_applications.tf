@@ -25,13 +25,14 @@ resource "azurerm_app_service" "app_service" {
 //    app_command_line = ""
   }
   app_settings = {
-    DOCKER_REGISTRY_SERVER_URL      = var.DOCKER_REGISTRY_SERVER_URL
-    DOCKER_REGISTRY_SERVER_USERNAME = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD = var.DOCKER_REGISTRY_SERVER_PASSWORD
-    DOCKER_CUSTOM_IMAGE_NAME        = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
-    DATABASE_URL                    = var.DATABASE_URL
-    RAILS_MASTER_KEY                = var.RAILS_MASTER_KEY
+    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    DATABASE_URL                        = var.DATABASE_URL
+    RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+//    WEBSITE_VNET_ROUTE_ALL              = 1
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
