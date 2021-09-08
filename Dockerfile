@@ -15,4 +15,17 @@ WORKDIR $APP_HOME
 # set USER last cuz most other commanded needed to run as root, but we want to run server as non-root
 USER app:app
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
-CMD echo "WHO: `whoami`, APP_HOME: $APP_HOME" && ls -la /usr/local/bundle && cd $APP_HOME && echo "PWD: `pwd`" && ls -la && foreman start web_prod
+CMD set -o && \
+    echo "WHOAMI: `whoami`" && \
+    echo "APP_HOME: $APP_HOME" && \
+    env | sort && \
+    echo "ls -la /usr/local/bundle: " && \
+    ls -la /usr/local/bundle && \
+    echo "ls -la /usr/local: " && \
+    ls -la /usr/local && \
+    cd $APP_HOME && \
+    echo "PWD: `pwd`" && \
+    echo "ls -la PWD: " && \
+    ls -la && \
+    foreman start web_prod
+#CMD echo "WHO: `whoami`, APP_HOME: $APP_HOME" && ls -la /usr/local/bundle && cd $APP_HOME && echo "PWD: `pwd`" && ls -la && foreman start web_prod
