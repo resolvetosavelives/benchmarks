@@ -68,3 +68,9 @@ az configure --defaults acr=whoihrbenchmarksregistry
 az acr build -f builder.Dockerfile -t benchmarks_builder:latest .
 az acr build -f base.Dockerfile -t benchmarks_base:latest .
 az acr build -f Dockerfile -t benchmarks:latest .
+
+
+
+##
+# bundle snippet for: "`/home/app` is not writable." which is the error seen in Azure (but nowhere else)
+https://github.com/rubygems/rubygems/blob/582a85cc69d0580e0eba4331cdcab83bb55e5825/bundler/lib/bundler.rb#L233
