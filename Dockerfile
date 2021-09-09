@@ -12,7 +12,7 @@ COPY --from=Builder /etc/alpine-release /tmp/dummy
 
 WORKDIR $REPO_HOME
 # set USER last cuz most other commanded needed to run as root, but we want to run server as non-root
-USER app:app
+#USER app:app
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
 CMD set -o && \
     echo "WHOAMI: `whoami`" && \

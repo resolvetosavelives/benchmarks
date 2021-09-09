@@ -10,7 +10,8 @@ RUN apk add --no-cache \
 ##
 # NB: because ENV vars are embedded into the container image they
 #   can be used in child Dockerfiles as well as ONBUILD instructions.
-ENV APP_HOME=/home/app
+#ENV APP_HOME=/home/app
+ENV APP_HOME=/root
 ENV REPO_HOME=$APP_HOME/benchmarks
 ENV BUNDLE_PATH=$APP_HOME/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
@@ -45,9 +46,10 @@ ONBUILD RUN addgroup -g 1000 -S app && \
 # Copy app with gems from former build stage
 #ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_PATH $BUNDLE_PATH
 # this is intended to copy /home/app/benchmarks and /home/app/bundle
-ONBUILD COPY --from=Builder --chown=app:app $APP_HOME/ $APP_HOME/
+#ONBUILD COPY --from=Builder --chown=app:app $APP_HOME/ $APP_HOME/
+ONBUILD COPY --from=Builder $APP_HOME/ $APP_HOME/
 
 ONBUILD WORKDIR $REPO_HOME
-ONBUILD USER app:app
+#ONBUILD USER app:app
 # need to be user app for mkdir else root owns it which is a problem at runtime
 ONBUILD RUN mkdir -p tmp/pids
