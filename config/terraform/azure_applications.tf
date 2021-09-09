@@ -33,6 +33,8 @@ resource "azurerm_app_service" "app_service" {
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
 //    WEBSITE_VNET_ROUTE_ALL              = 1
+    // Note that these creds are fake throwaway and so are fine to commit to git.
+    // deploy creds: user / pwd: ccduser / 698497d243
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app

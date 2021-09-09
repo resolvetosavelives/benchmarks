@@ -9,21 +9,16 @@ FROM benchmarks_base:latest AS Base
 
 # Workaround to trigger Builder's ONBUILDs to finish:
 COPY --from=Builder /etc/alpine-release /tmp/dummy
-WORKDIR $APP_HOME
 
-##
+WORKDIR $REPO_HOME
 # set USER last cuz most other commanded needed to run as root, but we want to run server as non-root
 USER app:app
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
 CMD set -o && \
     echo "WHOAMI: `whoami`" && \
-    echo "APP_HOME: $APP_HOME" && \
     env | sort && \
-    echo "ls -la /usr/local/bundle: " && \
-    ls -la /usr/local/bundle && \
-    echo "ls -la /usr/local: " && \
-    ls -la /usr/local && \
-    cd $APP_HOME && \
+    echo "ls -la BUNDLE_PATH ($BUNDLE_PATH):" && \
+    ls -la $BUNDLE_PATH && \
     echo "PWD: `pwd`" && \
     echo "ls -la PWD: " && \
     ls -la && \
