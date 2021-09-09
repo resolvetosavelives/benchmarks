@@ -17,7 +17,8 @@ RUN apk add --no-cache \
 ##
 # NB: because ENV vars are embedded into the container image they
 #   can be used in child Dockerfiles as well as ONBUILD instructions.
-ENV APP_HOME=/home/app
+#ENV APP_HOME=/home/app
+ENV APP_HOME=/root
 ENV REPO_HOME=$APP_HOME/benchmarks
 ENV BUNDLE_PATH=$APP_HOME/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
