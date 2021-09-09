@@ -23,7 +23,7 @@ ENV REPO_HOME=$APP_HOME/benchmarks
 ENV BUNDLE_PATH=$APP_HOME/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
-ENV GIT_BRANCH=troubleshoot-container-launch-in-app-service--179344790
+ENV GIT_BRANCH=another-round-of-troubleshooting-the-container-launch--179500605
 
 WORKDIR $APP_HOME
 # pull down the code from the repo and switch to the specified branch
