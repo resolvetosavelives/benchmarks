@@ -22,6 +22,7 @@ ENV APP_HOME=/root
 ENV REPO_HOME=$APP_HOME/benchmarks
 ENV BUNDLE_PATH=$APP_HOME/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
+#ENV GIT_REPO=git@github.com:resolvetosavelives/benchmarks.git
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
 ENV GIT_BRANCH=another-round-of-troubleshooting-the-container-launch--179500605
 
