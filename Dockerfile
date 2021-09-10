@@ -20,4 +20,5 @@ CMD echo "WHOAMI: `whoami`" && \
     ls -la $BUNDLE_PATH && \
     echo "ls -la PWD (`pwd`): " && \
     ls -la && \
-    foreman run troubleshoot
+    echo "attempting: bundle exec puma.." && \
+    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY NO_SSL=true WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec puma -p 80 -w 0 -t 0:5
