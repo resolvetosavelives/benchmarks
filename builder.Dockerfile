@@ -20,12 +20,15 @@ RUN apk add --no-cache \
 #ENV APP_HOME=/home/app
 ENV APP_HOME=/root
 ENV REPO_HOME=$APP_HOME/benchmarks
-ENV BUNDLE_PATH=$APP_HOME/bundle
+ENV BUNDLE_PATH=/tmp/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
+ENV BUNDLE_CONFIG=/tmp/config
 #ENV GIT_REPO=git@github.com:resolvetosavelives/benchmarks.git
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
 ENV GIT_BRANCH=another-round-of-troubleshooting-the-container-launch--179500605
 
+RUN mkdir -p $BUNDLE_PATH
+RUN touch $BUNDLE_CONFIG
 WORKDIR $APP_HOME
 # pull down the code from the repo and switch to the specified branch
 RUN git clone $GIT_REPO benchmarks && \

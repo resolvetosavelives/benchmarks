@@ -13,11 +13,14 @@ RUN apk add --no-cache \
 #ENV APP_HOME=/home/app
 ENV APP_HOME=/root
 ENV REPO_HOME=$APP_HOME/benchmarks
-ENV BUNDLE_PATH=$APP_HOME/bundle
+ENV BUNDLE_PATH=/tmp/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
+ENV BUNDLE_CONFIG=/tmp/config
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
 ENV GIT_BRANCH=troubleshoot-container-launch-in-app-service--179344790
 
+RUN mkdir -p $BUNDLE_PATH
+RUN touch $BUNDLE_CONFIG
 WORKDIR $APP_HOME
 
 # Configure Rails
@@ -46,7 +49,8 @@ ONBUILD RUN addgroup -g 1000 -S app && \
 # Copy app with gems from former build stage
 #ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_PATH $BUNDLE_PATH
 # this is intended to copy /home/app/benchmarks and /home/app/bundle
-#ONBUILD COPY --from=Builder --chown=app:app $APP_HOME/ $APP_HOME/
+ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_PATH/ $BUNDLE_PATH/
+ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_CONFIG $BUNDLE_CONFIG
 ONBUILD COPY --from=Builder $APP_HOME/ $APP_HOME/
 
 ONBUILD WORKDIR $REPO_HOME
