@@ -18,7 +18,10 @@ CMD echo "WHOAMI: `whoami`" && \
     env | sort && \
     echo "ls -la BUNDLE_PATH ($BUNDLE_PATH):" && \
     ls -la $BUNDLE_PATH && \
+    echo "output of bundle env: " && \
+    bundle env && \
+    echo "output of bundle config: " && \
+    bundle config && \
     echo "ls -la PWD (`pwd`): " && \
     ls -la && \
-    echo "attempting: bundle exec puma.." && \
-    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY NO_SSL=true WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec puma -p 80 -w 0 -t 0:5
+    foreman start web_prod
