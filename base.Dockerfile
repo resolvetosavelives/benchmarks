@@ -16,6 +16,9 @@ ENV REPO_HOME=$APP_HOME/benchmarks
 ENV BUNDLE_PATH=/tmp/bundle
 ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
 ENV BUNDLE_CONFIG=/tmp/config
+ENV GEM_PATH=$BUNDLE_PATH
+ENV GEM_HOME=$BUNDLE_PATH
+#ENV GIT_REPO=git@github.com:resolvetosavelives/benchmarks.git
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
 ENV GIT_BRANCH=troubleshoot-container-launch-in-app-service--179344790
 

@@ -22,6 +22,8 @@ CMD echo "WHOAMI: `whoami`" && \
     bundle env && \
     echo "output of bundle config: " && \
     bundle config && \
+    echo "output of gem env: " && \
+    gme env && \
     echo "ls -la PWD (`pwd`): " && \
     ls -la && \
     foreman start web_prod
