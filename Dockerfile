@@ -16,14 +16,12 @@ WORKDIR $REPO_HOME
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
 CMD echo "WHOAMI: `whoami`" && \
     env | sort && \
-    echo "ls -la BUNDLE_PATH ($BUNDLE_PATH):" && \
-    ls -la $BUNDLE_PATH && \
-    echo "output of bundle env: " && \
-    bundle env && \
+    echo "output of gem env: " && \
+    gem env && \
     echo "output of bundle config: " && \
     bundle config && \
-    echo "output of gem env: " && \
-    gme env && \
+    echo "output of bundle env: " && \
+    bundle env && \
     echo "ls -la PWD (`pwd`): " && \
     ls -la && \
-    foreman start web_prod
+    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY NO_SSL=true WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec puma -p 80 -w 0 -t 0:5

@@ -10,31 +10,22 @@ RUN apk add --no-cache \
 ##
 # NB: because ENV vars are embedded into the container image they
 #   can be used in child Dockerfiles as well as ONBUILD instructions.
-#ENV APP_HOME=/home/app
-ENV APP_HOME=/root
-ENV REPO_HOME=$APP_HOME/benchmarks
-ENV BUNDLE_PATH=/tmp/bundle
-ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
-ENV BUNDLE_CONFIG=/tmp/config
-ENV GEM_PATH=$BUNDLE_PATH
+ENV USER_HOME=/root
+ENV REPO_HOME=$USER_HOME/benchmarks
+# this section of vars for bundler and gems is the hard part of this
+ENV BUNDLE_PATH=$REPO_HOME/vendor/bundle
+ENV BUNDLE_APP_CONFIG=$REPO_HOME/.bundle
+ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
 ENV GEM_HOME=$BUNDLE_PATH
 #ENV GIT_REPO=git@github.com:resolvetosavelives/benchmarks.git
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
-ENV GIT_BRANCH=troubleshoot-container-launch-in-app-service--179344790
-
-RUN mkdir -p $BUNDLE_PATH
-RUN touch $BUNDLE_CONFIG
-WORKDIR $APP_HOME
+ENV GIT_BRANCH=another-round-of-troubleshooting-the-container-launch--179500605
 
 # Configure Rails
 ENV RAILS_LOG_TO_STDOUT true
 ENV RAILS_SERVE_STATIC_FILES true
 ENV RAILS_ENV production
 # TODO: Note from Azure: /home/LogFiles directory, which is used to store the Docker and container logs.
-
-# take care to NOT bundle foreman as directed by its author
-RUN gem install foreman
-EXPOSE 80
 
 ## Someday..
 #ONBUILD ARG COMMIT_SHA
@@ -50,13 +41,17 @@ ONBUILD RUN addgroup -g 1000 -S app && \
             adduser -u 1000 -S app -G app
 
 # Copy app with gems from former build stage
-#ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_PATH $BUNDLE_PATH
-# this is intended to copy /home/app/benchmarks and /home/app/bundle
-ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_PATH/ $BUNDLE_PATH/
-ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_CONFIG $BUNDLE_CONFIG
-ONBUILD COPY --from=Builder $APP_HOME/ $APP_HOME/
+# TODO: update this comment: this is intended to copy /home/app/benchmarks and /home/app/bundle
+#ONBUILD COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
+#ONBUILD COPY --from=Builder /root/.bundle/config /root/.bundle/config
+#ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_CONFIG $BUNDLE_CONFIG
+ONBUILD COPY --from=Builder $USER_HOME/ $USER_HOME/
 
 ONBUILD WORKDIR $REPO_HOME
+# take care to NOT bundle foreman as directed by its author
+ONBUILD RUN bin/bundle exec gem install foreman
+ONBUILD EXPOSE 80
+
 #ONBUILD USER app:app
 # need to be user app for mkdir else root owns it which is a problem at runtime
 ONBUILD RUN mkdir -p tmp/pids
