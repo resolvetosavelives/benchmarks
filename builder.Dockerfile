@@ -17,44 +17,46 @@ RUN apk add --no-cache \
 ##
 # NB: because ENV vars are embedded into the container image they
 #   can be used in child Dockerfiles as well as ONBUILD instructions.
-#ENV APP_HOME=/home/app
-ENV APP_HOME=/root
-ENV REPO_HOME=$APP_HOME/benchmarks
-ENV BUNDLE_PATH=/tmp/bundle
-ENV BUNDLE_APP_CONFIG=$BUNDLE_PATH
-ENV BUNDLE_CONFIG=/tmp/config
-ENV GEM_PATH=$BUNDLE_PATH
+ENV USER_HOME=/root
+ENV REPO_HOME=$USER_HOME/benchmarks
+# this section of vars for bundler and gems is the hard part of this
+ENV BUNDLE_PATH=$REPO_HOME/vendor/bundle
+ENV BUNDLE_APP_CONFIG=$REPO_HOME/.bundle
+ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
 ENV GEM_HOME=$BUNDLE_PATH
 #ENV GIT_REPO=git@github.com:resolvetosavelives/benchmarks.git
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
 ENV GIT_BRANCH=another-round-of-troubleshooting-the-container-launch--179500605
 
-RUN mkdir -p $BUNDLE_PATH
-RUN touch $BUNDLE_CONFIG
-WORKDIR $APP_HOME
+WORKDIR $USER_HOME
 # pull down the code from the repo and switch to the specified branch
 RUN git clone $GIT_REPO benchmarks && \
     cd benchmarks && \
     git checkout $GIT_BRANCH
 WORKDIR $REPO_HOME
+#RUN touch $BUNDLE_CONFIG
 # Install Node modules
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 # install Ruby gems to the default GEM_HOME of /usr/local/bundle from which they must be copied later
 RUN cd $REPO_HOME && \
-        bundle config set --local path $BUNDLE_PATH && \
-        bundle config set --local clean false && \
-        bundle config set --local deployment true && \
-        bundle install
+        bin/bundle config set --local path $BUNDLE_PATH && \
+        bin/bundle config set --local disable_shared_gems true && \
+        bin/bundle config set --local path.system false && \
+        bin/bundle config set --local clean false && \
+        bin/bundle config set --local deployment true && \
+        bin/bundle install
 # Subsequent builds check for any gems changes and prunes any unused
 ONBUILD WORKDIR $REPO_HOME
 ONBUILD RUN cd $REPO_HOME && \
             git pull && \
             git checkout $GIT_BRANCH
 ONBUILD RUN cd $REPO_HOME && \
-            bundle config set --local path $BUNDLE_PATH && \
-            bundle config set --local clean true && \
-            bundle config set --local deployment false && \
-            bundle install
+        bin/bundle config set --local path $BUNDLE_PATH && \
+        bin/bundle config set --local disable_shared_gems true && \
+        bin/bundle config set --local path.system false && \
+        bin/bundle config set --local clean true && \
+        bin/bundle config set --local deployment false && \
+        bin/bundle install
 
 ##
 # Compile assets with Webpacker taking care to respect the secret RAILS_MASTER_KEY
