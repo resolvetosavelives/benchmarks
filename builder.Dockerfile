@@ -44,6 +44,7 @@ RUN cd $REPO_HOME && \
         bin/bundle config set --local path.system false && \
         bin/bundle config set --local clean false && \
         bin/bundle config set --local deployment true && \
+        bin/bundle config set --local bin true && \
         bin/bundle install
 # Subsequent builds check for any gems changes and prunes any unused
 ONBUILD WORKDIR $REPO_HOME
@@ -54,8 +55,9 @@ ONBUILD RUN cd $REPO_HOME && \
         bin/bundle config set --local path $BUNDLE_PATH && \
         bin/bundle config set --local disable_shared_gems true && \
         bin/bundle config set --local path.system false && \
-        bin/bundle config set --local clean true && \
-        bin/bundle config set --local deployment false && \
+        bin/bundle config set --local clean false && \
+        bin/bundle config set --local deployment true && \
+        bin/bundle config set --local bin true && \
         bin/bundle install
 
 ##

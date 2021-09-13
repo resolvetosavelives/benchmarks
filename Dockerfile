@@ -17,11 +17,13 @@ WORKDIR $REPO_HOME
 CMD echo "WHOAMI: `whoami`" && \
     env | sort && \
     echo "output of gem env: " && \
-    gem env && \
+    bin/bundle exec /usr/local/bin/gem env && \
     echo "output of bundle config: " && \
-    bundle config && \
+    bin/bundle config && \
     echo "output of bundle env: " && \
-    bundle env && \
+    bin/bundle env && \
     echo "ls -la PWD (`pwd`): " && \
     ls -la && \
-    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY NO_SSL=true WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec puma -p 80 -w 0 -t 0:5
+    echo "ls -la /root/benchmarks/vendor/bundle/ruby/3.0.0/bin: " && \
+    ls -la /root/benchmarks/vendor/bundle/ruby/3.0.0/bin && \
+    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY NO_SSL=true WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bin/bundle exec /root/benchmarks/vendor/bundle/ruby/3.0.0/bin/puma -p 80 -w 0 -t 0:5

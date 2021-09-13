@@ -49,7 +49,7 @@ ONBUILD COPY --from=Builder $USER_HOME/ $USER_HOME/
 
 ONBUILD WORKDIR $REPO_HOME
 # take care to NOT bundle foreman as directed by its author
-ONBUILD RUN bin/bundle exec gem install foreman
+#ONBUILD RUN bin/bundle exec gem install foreman
 ONBUILD EXPOSE 80
 
 #ONBUILD USER app:app
