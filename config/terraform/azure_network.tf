@@ -6,6 +6,9 @@ resource "azurerm_virtual_network" "primary" { // the primary back-of-house vnet
   address_space       = ["10.0.0.0/16"]
   //  dns_servers         = ["10.0.0.4", "10.0.0.5"]
 }
+// Azure reserves the first four addresses in each subnet address range.
+// The addresses can't be assigned to resources. For example, if the subnet's
+// address range is 10.0.0.0/16, addresses 10.0.0.0-10.0.0.3 and 10.0.255.255 are unavailable.
 resource "azurerm_subnet" "subnet_gateway" {
   name                 = "GatewaySubnet" // NB: must be named "GatewaySubnet" or disallowed from using Azure VNet Gateway
   resource_group_name  = azurerm_resource_group.who_ihr_benchmarks.name
@@ -32,7 +35,6 @@ resource "azurerm_subnet" "app_critical_services" {
   virtual_network_name                           = azurerm_virtual_network.primary.name
   address_prefixes                               = ["10.0.3.0/24"]
   enforce_private_link_endpoint_network_policies = true
-  //  service_endpoints = ["Microsoft.Sql"]
 }
 
 
