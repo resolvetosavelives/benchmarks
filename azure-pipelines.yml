@@ -30,13 +30,17 @@ steps:
     displayName: yarn install
   - script: env | sort
     displayName: show env vars
-  - script: DATABASE_URL=$(DATABASE_URL) bin/bundle exec rake test:prepare
+  - task: CmdLine@2
     displayName: prepare test db
     inputs:
+      script: DATABASE_URL=$(DATABASE_URL) bin/bundle exec rake test:prepare
       azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
     # TODO: may want to break out the different test types to separate tasks like we do in semaphore.yml
-  - script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
+  - task: CmdLine@2
     displayName: run test suite
+    inputs:
+      azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
+      script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
