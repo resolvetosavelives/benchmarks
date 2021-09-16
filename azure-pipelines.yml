@@ -3,7 +3,15 @@
 # https://aka.ms/yaml
 
 trigger:
-  - azure--virtual-network-and-subnets--179242298
+  - pipeline-access-to-db-now-that-its-private--179445514
+
+variables:
+  AzureSubscription: pend-db01
+  ServerName: psqldb-who-ihr-benchmarks
+  DatabaseName: benchmarks_test
+  AdminUser: fyxzCNQUqNrd
+  AdminPassword: Lo4YdiJcggrN9TfPagCW2AsMtFbQ8R6N
+#  SQLFile: '<Location of SQL file in $(Build.SourcesDirectory)>'
 
 pool:
   vmImage: ubuntu-latest
@@ -24,6 +32,8 @@ steps:
     displayName: show env vars
   - script: DATABASE_URL=$(DATABASE_URL) bin/bundle exec rake test:prepare
     displayName: prepare test db
+    inputs:
+      azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
     # TODO: may want to break out the different test types to separate tasks like we do in semaphore.yml
   - script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
     displayName: run test suite
