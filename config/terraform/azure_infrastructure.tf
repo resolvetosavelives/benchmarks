@@ -37,7 +37,14 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }
 resource "azurerm_postgresql_database" "benchmarks_test" {
-  name                = "benchmarks_test"
+  name                = "benchmarks_test" // for build pipeline
+  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
+}
+resource "azurerm_postgresql_database" "benchmarks_staging" {
+  name                = "benchmarks_staging" // for staging instance
   resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
   server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
   charset             = "UTF8"
