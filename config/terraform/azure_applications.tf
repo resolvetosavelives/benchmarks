@@ -31,7 +31,7 @@ resource "azurerm_app_service" "app_service" {
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
     DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
-    DATABASE_URL                        = var.DATABASE_URL
+    DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     // Note that these creds are fake throwaway and so are fine to commit to git.
