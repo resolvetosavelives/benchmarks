@@ -53,7 +53,7 @@ resource "azuredevops_build_definition" "build_definition" {
   variable {
     name           = "DATABASE_URL"
     is_secret      = true
-    secret_value   = var.DATABASE_URL
+    secret_value   = var.DATABASE_URL_FOR_PIPELINE
     allow_override = false
   }
 }

@@ -1,7 +1,11 @@
 #
 # SECTION: Variables used
 #
-variable "DATABASE_URL" {
+variable "DATABASE_URL_FOR_PIPELINE" {
+  type      = string
+  sensitive = true
+}
+variable "DATABASE_URL_FOR_STAGING" {
   type      = string
   sensitive = true
 }
