@@ -12,11 +12,12 @@ variables:
   DbPassword: d24e1f8180
   DbUrl: postgres://'$(DbUser)':'$(DbPassword)'@localhost:5432/'$(DatabaseName)'
 
-#resources:
-#  containers:
-#    - container: ubuntu_postgres
-#      image: ubuntu/postgres
-#      options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
+resources:
+  containers:
+    - container: ubuntu_postgres
+      image: ubuntu/postgres
+      type: docker
+      options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
 
 # the MS-provided ubuntu-20.04 image includes postgres
 # full list of includes software:
@@ -26,6 +27,8 @@ pool:
   options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
 
 steps:
+  - script: env | sort
+    displayName: show env vars
   - task: UseRubyVersion@0
     inputs:
       versionSpec: ">= 3.0"
@@ -37,8 +40,6 @@ steps:
     displayName: bundle install
   - script: yarn install --frozen-lockfile --check-files
     displayName: yarn install
-  - script: env | sort
-    displayName: show env vars
   - task: CmdLine@2
     displayName: prepare test db
     inputs:
