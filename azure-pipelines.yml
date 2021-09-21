@@ -6,6 +6,7 @@ trigger:
   - build-pipeline-installs-postgres-as-a-workaround--179445541
 
 variables:
+  AzureSubscription: pend-db01
   DatabaseName: benchmarks_test
   DbUser: 83edada839
   DbPassword: d24e1f8180
@@ -41,11 +42,13 @@ steps:
   - task: CmdLine@2
     displayName: prepare test db
     inputs:
-      script: DATABASE_URL='$(DbUrl)' RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
+      script: DATABASE_URL=$DATABASE_URL RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
+      azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
   - task: CmdLine@2
     displayName: run test suite
     inputs:
-      script: DATABASE_URL='$(DbUrl)' MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
+      script: DATABASE_URL=$DATABASE_URL MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
+      azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
