@@ -11,7 +11,7 @@ variables:
 #  DbUser: 83edada839
 #  DbPassword: d24e1f8180
 #  DbUrl: postgres://'$(DbUser)':'$(DbPassword)'@localhost:5432/'$(DatabaseName)'
-  DbUrl: postgres://fyxzCNQUqNrd%40psqldb-who-ihr-benchmarks:Lo4YdiJcggrN9TfPagCW2AsMtFbQ8R6N@psqldb-who-ihr-benchmarks.privatelink.postgres.database.azure.com:5432/benchmarks_staging?sslmode=require
+  DbUrl: postgres://fyxzCNQUqNrd%40psqldb-who-ihr-benchmarks:Lo4YdiJcggrN9TfPagCW2AsMtFbQ8R6N@psqldb-who-ihr-benchmarks.postgres.database.azure.com:5432/benchmarks_staging?sslmode=require
 
 #resources:
 #  containers:
