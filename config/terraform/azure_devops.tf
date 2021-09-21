@@ -64,4 +64,5 @@ resource "azuredevops_serviceendpoint_azurerm" "project" {
   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
   azurerm_subscription_name = data.azurerm_subscription.current.display_name
+  resource_group = azurerm_resource_group.who_ihr_benchmarks.name
 }
