@@ -72,7 +72,8 @@ resource "azurerm_private_endpoint" "pend_db01" {
   }
   private_service_connection {
     name                           = "psc-db01"
-    is_manual_connection           = false
+    is_manual_connection           = true
+    request_message                = "PL"
     private_connection_resource_id = azurerm_postgresql_server.who_ihr_benchmarks_db_server.id
     subresource_names              = ["postgresqlServer"]
   }
