@@ -17,9 +17,6 @@ resources:
       image: ubuntu/postgres
       options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
 
-pool:
-  vmImage: ubuntu_postgres
-
 container: ubuntu_postgres
 
 steps:
@@ -39,7 +36,7 @@ steps:
   - task: CmdLine@2
     displayName: prepare test db
     inputs:
-      script: DATABASE_URL='$(DbUrl)' bin/bundle exec rake test:prepare
+      script: DATABASE_URL='$(DbUrl)' RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
   - task: CmdLine@2
     displayName: run test suite
     inputs:
