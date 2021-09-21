@@ -3,18 +3,24 @@
 # https://aka.ms/yaml
 
 trigger:
-  - pipeline-access-to-db-now-that-its-private--179445514
+  - build-pipeline-installs-postgres-as-a-workaround--179445541
 
 variables:
-  AzureSubscription: pend-db01
-  ServerName: psqldb-who-ihr-benchmarks
   DatabaseName: benchmarks_test
-  AdminUser: fyxzCNQUqNrd
-  AdminPassword: Lo4YdiJcggrN9TfPagCW2AsMtFbQ8R6N
-#  SQLFile: '<Location of SQL file in $(Build.SourcesDirectory)>'
+  DbUser: 83edada839
+  DbPassword: d24e1f8180
+  DbUrl: postgres://'$(DbUser)':'$(DbPassword)'@localhost:5432/'$(DatabaseName)'
+
+resources:
+  containers:
+    - container: ubuntu_postgres
+      image: ubuntu/postgres
+      options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu_postgres
+
+container: ubuntu_postgres
 
 steps:
   - task: UseRubyVersion@0
@@ -33,14 +39,11 @@ steps:
   - task: CmdLine@2
     displayName: prepare test db
     inputs:
-      script: DATABASE_URL=$(DATABASE_URL) bin/bundle exec rake test:prepare
-      azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
-    # TODO: may want to break out the different test types to separate tasks like we do in semaphore.yml
+      script: DATABASE_URL='$(DbUrl)' bin/bundle exec rake test:prepare
   - task: CmdLine@2
     displayName: run test suite
     inputs:
-      azureSubscription: '$(AzureSubscription)' # to make it use the service connection to our private DB
-      script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
+      script: DATABASE_URL='$(DbUrl)' MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
