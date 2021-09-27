@@ -57,12 +57,3 @@ resource "azuredevops_build_definition" "build_definition" {
     allow_override = false
   }
 }
-resource "azuredevops_serviceendpoint_azurerm" "project" {
-  project_id                = azuredevops_project.project.id
-  service_endpoint_name     = azurerm_private_endpoint.pend_db01.name
-  description               = "DB conn for Build Pipeline"
-  azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
-  azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
-  azurerm_subscription_name = data.azurerm_subscription.current.display_name
-  resource_group = azurerm_resource_group.who_ihr_benchmarks.name
-}
