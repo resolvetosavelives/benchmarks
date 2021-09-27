@@ -4,7 +4,6 @@ resource "azurerm_virtual_network" "primary" { // the primary back-of-house vnet
   location            = azurerm_resource_group.who_ihr_benchmarks.location
   resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
   address_space       = ["10.0.0.0/16"]
-  //  dns_servers         = ["10.0.0.4", "10.0.0.5"]
 }
 // Azure reserves the first four addresses in each subnet address range.
 // The addresses can't be assigned to resources. For example, if the subnet's
@@ -17,11 +16,11 @@ resource "azurerm_subnet" "subnet_gateway" {
   service_endpoints    = ["Microsoft.Sql"]
 }
 resource "azurerm_subnet" "app_service_integration" {
-  name                                           = "subnet-app-service-integration"
-  resource_group_name                            = azurerm_resource_group.who_ihr_benchmarks.name
-  virtual_network_name                           = azurerm_virtual_network.primary.name
-  address_prefixes                               = ["10.0.2.0/24"]
-  enforce_private_link_endpoint_network_policies = true
+  name                 = "subnet-app-service-integration"
+  resource_group_name  = azurerm_resource_group.who_ihr_benchmarks.name
+  virtual_network_name = azurerm_virtual_network.primary.name
+  address_prefixes     = ["10.0.2.0/24"]
+  service_endpoints    = ["Microsoft.Sql"]
   delegation {
     name = "subnet-delegation-for-app-service-integration"
     service_delegation {
@@ -31,14 +30,12 @@ resource "azurerm_subnet" "app_service_integration" {
   }
 }
 resource "azurerm_subnet" "app_critical_services" {
-  name                                           = "subnet-app-critical-services"
-  resource_group_name                            = azurerm_resource_group.who_ihr_benchmarks.name
-  virtual_network_name                           = azurerm_virtual_network.primary.name
-  address_prefixes                               = ["10.0.3.0/24"]
-  enforce_private_link_endpoint_network_policies = true
+  name                 = "subnet-app-critical-services"
+  resource_group_name  = azurerm_resource_group.who_ihr_benchmarks.name
+  virtual_network_name = azurerm_virtual_network.primary.name
+  address_prefixes     = ["10.0.3.0/24"]
   service_endpoints    = ["Microsoft.Sql"]
 }
-
 
 resource "azurerm_public_ip" "pip_vpn_primary" {
   name                    = "pip-vpn-primary"
