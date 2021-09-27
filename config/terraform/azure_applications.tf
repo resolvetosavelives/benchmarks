@@ -52,6 +52,11 @@ resource "azurerm_app_service" "app_service" {
   }
 }
 
+resource "azurerm_app_service_virtual_network_swift_connection" "network_peering_from_app_service" {
+  app_service_id = azurerm_app_service.app_service.id
+  subnet_id      = azurerm_subnet.app_service_integration.id
+}
+
 resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
   name                = "staging"
   location            = azurerm_resource_group.who_ihr_benchmarks.location
