@@ -16,7 +16,7 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   name                          = "psqldb-who-ihr-benchmarks"
   location                      = azurerm_resource_group.who_ihr_benchmarks.location
   resource_group_name           = azurerm_resource_group.who_ihr_benchmarks.name
-  public_network_access_enabled = false
+  public_network_access_enabled = true
   // SKUs
   // - GP_Gen5_2 means "General Purpose (more than Basic), Generation 5 (current), 2 cores.
   // - B_Gen5_2 means "Basic (lowest tier), Generation 5 (current), 2 cores.
@@ -49,31 +49,4 @@ resource "azurerm_postgresql_database" "benchmarks_staging" {
   server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
-}
-resource "azurerm_private_dns_zone" "pdns_db01" {
-  name                = "privatelink.postgres.database.azure.com"
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
-}
-resource "azurerm_private_dns_zone_virtual_network_link" "pdnslink_db01_primary" {
-  name                  = "pdnslink-db01-primary"
-  resource_group_name   = azurerm_resource_group.who_ihr_benchmarks.name
-  private_dns_zone_name = azurerm_private_dns_zone.pdns_db01.name
-  virtual_network_id    = azurerm_virtual_network.primary.id
-}
-// private endpoint makes a private IP. at 2021-09-01 1:50am ET IP was: 10.0.3.4
-resource "azurerm_private_endpoint" "pend_db01" {
-  name                = "pend-db01"
-  location            = azurerm_resource_group.who_ihr_benchmarks.location
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
-  subnet_id           = azurerm_subnet.app_critical_services.id
-  private_dns_zone_group {
-    name                 = "pdnsz-db01"
-    private_dns_zone_ids = [azurerm_private_dns_zone.pdns_db01.id]
-  }
-  private_service_connection {
-    name                           = "psc-db01"
-    is_manual_connection           = false
-    private_connection_resource_id = azurerm_postgresql_server.who_ihr_benchmarks_db_server.id
-    subresource_names              = ["postgresqlServer"]
-  }
 }
