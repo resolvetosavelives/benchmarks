@@ -42,11 +42,11 @@ steps:
   - task: CmdLine@2
     displayName: prepare test db
     inputs:
-      script: DATABASE_URL=$DATABASE_URL RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
+      script: DATABASE_URL=$(DATABASE_URL) RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
   - task: CmdLine@2
     displayName: run test suite
     inputs:
-      script: DATABASE_URL=$DATABASE_URL MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
+      script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
