@@ -3,7 +3,7 @@
 # https://aka.ms/yaml
 
 trigger:
-  - build-pipeline-installs-postgres-as-a-workaround--179445541
+  - pipeline-access-to-db-now-that-its-private--179445514
 
 variables:
   DatabaseName: benchmarks_test
