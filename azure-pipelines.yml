@@ -3,7 +3,7 @@
 # https://aka.ms/yaml
 
 trigger:
-  - pipeline-access-to-db-now-that-its-private--179445514
+  - automate-docker-image-builds-with-acr-from-the-pipeline--179500509
 
 variables:
   DatabaseName: benchmarks_test

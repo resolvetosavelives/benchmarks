@@ -45,7 +45,7 @@ resource "azuredevops_build_definition" "build_definition" {
   repository {
     repo_type             = "GitHub"
     repo_id               = "resolvetosavelives/benchmarks"
-    branch_name           = "pipeline-access-to-db-now-that-its-private--179445514"
+    branch_name           = "automate-docker-image-builds-with-acr-from-the-pipeline--179500509"
     yml_path              = "azure-pipelines.yml"
     service_connection_id = azuredevops_serviceendpoint_github.serviceendpoint_gh_1.id
   }
