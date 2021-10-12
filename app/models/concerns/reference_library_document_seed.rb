@@ -42,11 +42,8 @@ module ReferenceLibraryDocumentSeed
       puts "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
       unseed!
 
-      last_edit =
-        ReferenceLibraryDocument.order(:last_modified).last&.last_modified
-      puts "Fetching#{" all" unless last_edit} documents#{" added since #{last_edit}" if last_edit}..."
-      new_docs =
-        Airtable::ReferenceLibraryDocument.fetch_approved(since: last_edit)
+      puts "Fetching all documents..."
+      new_docs = Airtable::ReferenceLibraryDocument.fetch_approved
       puts "Found #{new_docs.size} new documents."
       return if new_docs.empty?
 

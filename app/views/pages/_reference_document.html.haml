@@ -1,7 +1,8 @@
-- if [document.title, document.author, document.description, document.relevant_pages, document.download_url, document.thumbnail_url].any?(&:present?)
-  - tid = technical_area_to_id(@technical_areas, document.technical_area)
+- if document_present?(document)
+  - technical_area_ids = technical_area_texts_to_ids(@technical_areas, document.technical_areas)
+  - technical_area_css_classes = ta_ids_to_css_classes(technical_area_ids)
   .document.row.no-gutters{
-    class: "technical-area-#{tid} reference-type-#{document.reference_type_ordinal}"
+    class: "#{technical_area_css_classes} reference-type-#{document.reference_type_ordinal}"
   }
     .document.col.card.flex-row
       - if document.thumbnail_url.present?
