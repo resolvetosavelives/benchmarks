@@ -15,14 +15,14 @@ describe ReferenceLibraryDocument do
     describe "for a known type" do
       it "returns the expected integer" do
         _(
-          ReferenceLibraryDocument.reference_type_ordinal("Best Practices")
+          ReferenceLibraryDocument.reference_type_ordinal("Best Practice")
         ).must_equal 1
         _(
-          ReferenceLibraryDocument.reference_type_ordinal("Guidelines")
+          ReferenceLibraryDocument.reference_type_ordinal("Guideline")
         ).must_equal 2
-        _(ReferenceLibraryDocument.reference_type_ordinal("Tools")).must_equal 3
+        _(ReferenceLibraryDocument.reference_type_ordinal("Tool")).must_equal 3
         _(
-          ReferenceLibraryDocument.reference_type_ordinal("Training Packages")
+          ReferenceLibraryDocument.reference_type_ordinal("Training Package")
         ).must_equal 4
       end
     end
@@ -36,8 +36,6 @@ describe ReferenceLibraryDocument do
     describe "for an invalid type" do
       it "returns nil" do
         _(ReferenceLibraryDocument.reference_type_ordinal("Something Else"))
-          .must_be_nil
-        _(ReferenceLibraryDocument.reference_type_ordinal("Guideline"))
           .must_be_nil
       end
     end
@@ -55,10 +53,10 @@ describe ReferenceLibraryDocument do
     describe "when there are some documents" do
       it "returns an array of the expected strings" do
         _(ReferenceLibraryDocument.distinct_types).must_equal [
-                                                                "Best Practices",
-                                                                "Guidelines",
-                                                                "Tools",
-                                                                "Training Packages"
+                                                                "Best Practice",
+                                                                "Guideline",
+                                                                "Tool",
+                                                                "Training Package"
                                                               ]
       end
     end

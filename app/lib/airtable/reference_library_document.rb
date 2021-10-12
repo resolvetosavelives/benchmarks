@@ -3,9 +3,8 @@ module Airtable
     self.base_key = "appD3gX9b3YbXUlj1"
     self.table_name = "Form"
 
-    def self.fetch_approved(since: nil)
-      filter = "IS_AFTER(LAST_MODIFIED_TIME(), '#{since.utc.iso8601}')" if since
-      self.all(view: "Approved", filter: filter)
+    def self.fetch_approved
+      self.all(view: "Approved")
     end
 
     def to_attrs
@@ -17,7 +16,7 @@ module Airtable
         last_modified: self["Last Modified"],
         reference_type: self["Document Type"],
         relevant_pages: self["Relevant Pages"],
-        technical_area: self["Technical Area"].join(","),
+        technical_areas: self["Technical Areas"],
         thumbnail_url:
           self["Attachments"]&.first&.dig("thumbnails", "large", "url"),
         title: self["Document Title"],

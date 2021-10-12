@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_211511) do
+ActiveRecord::Schema.define(version: 2021_10_08_174037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,12 +171,12 @@ ActiveRecord::Schema.define(version: 2021_05_18_211511) do
     t.string "relevant_pages"
     t.string "download_url"
     t.string "thumbnail_url"
-    t.string "technical_area"
     t.string "reference_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "last_modified"
     t.string "url"
+    t.string "technical_areas", default: [], array: true
   end
 
   create_table "users", force: :cascade do |t|

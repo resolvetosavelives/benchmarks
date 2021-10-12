@@ -1,6 +1,32 @@
 module PagesHelper
-  def technical_area_to_id(technical_areas, technical_area_name)
-    technical_areas.detect { |ta| ta.text.eql?(technical_area_name) }&.id
+  def technical_area_texts_to_ids(all_technical_areas, array_of_ta_texts)
+    return "" if array_of_ta_texts.blank? || !array_of_ta_texts.is_a?(Array)
+
+    array_of_ta_texts
+      .map do |technical_area_text|
+        technical_area_match =
+          all_technical_areas.detect do |technical_area|
+            technical_area.text.eql?(technical_area_text)
+          end
+        technical_area_match.id if technical_area_match.present?
+      end
+      .compact
+      .uniq
+  end
+
+  def ta_ids_to_css_classes(technical_area_ids)
+    technical_area_ids.map { |ta_id| "technical-area-#{ta_id}" }.join(" ")
+  end
+
+  def document_present?(document)
+    [
+      document.title,
+      document.author,
+      document.description,
+      document.relevant_pages,
+      document.download_url,
+      document.thumbnail_url
+    ].any?(&:present?)
   end
 
   ##
