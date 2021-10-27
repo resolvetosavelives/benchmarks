@@ -46,6 +46,8 @@ ONBUILD RUN addgroup -g 1000 -S app && \
 #ONBUILD COPY --from=Builder /root/.bundle/config /root/.bundle/config
 #ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_CONFIG $BUNDLE_CONFIG
 ONBUILD COPY --from=Builder $USER_HOME/ $USER_HOME/
+# try the "magic" path for Azure App Service of /home/site/wwwroot
+ONBUILD COPY --from=Builder $REPO_HOME/public/ /home/site/wwwroot/
 
 ONBUILD WORKDIR $REPO_HOME
 # take care to NOT bundle foreman as directed by its author
