@@ -52,8 +52,29 @@ ONBUILD COPY --from=Builder $REPO_HOME/public/ /home/site/wwwroot/
 ONBUILD WORKDIR $REPO_HOME
 # take care to NOT bundle foreman as directed by its author
 #ONBUILD RUN bin/bundle exec gem install foreman
-ONBUILD EXPOSE 80
+#ONBUILD EXPOSE 80
 
 #ONBUILD USER app:app
 # need to be user app for mkdir else root owns it which is a problem at runtime
 ONBUILD RUN mkdir -p tmp/pids
+
+
+
+##
+# allow inbound SSH connections to our app running in docker container in Azure App Service
+# docs: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container?pivots=container-linux#enable-ssh
+# Install OpenSSH and set the password for root to "Docker!". In this example, "apk add" is the install instruction for an Alpine Linux-based image.
+RUN apk add openssh \
+     && echo "root:Docker!" | chpasswd
+
+# Copy the sshd_config file to the /etc/ssh/ directory
+COPY config/docker/base/sshd_config /etc/ssh/
+
+# Copy and configure the ssh_setup file
+RUN mkdir -p /tmp
+COPY config/docker/base/ssh_setup.sh /tmp
+RUN chmod +x /tmp/ssh_setup.sh \
+    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null)
+
+# Open port 2222 for SSH access
+ONBUILD EXPOSE 80 2222
