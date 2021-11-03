@@ -22,6 +22,10 @@ az acr task create \
 #  -r whoihrbenchmarksregistry \
 #  -n taskToRebuildTheBuilderImage
 
+#az acr task run \
+#  -r whoihrbenchmarksregistry \
+#  -n taskToRebuildTheBuilderImage
+
 ##
 # BASE image
 az acr task create \
@@ -37,3 +41,7 @@ az acr task create \
 #az acr task delete \
 #  -r whoihrbenchmarksregistry \
 #  -n taskToRebuildTheBaseImage
+
+az acr task run \
+  -r whoihrbenchmarksregistry \
+  -n taskToRebuildTheBaseImage
