@@ -17,9 +17,8 @@ ENV BUNDLE_PATH=$REPO_HOME/vendor/bundle
 ENV BUNDLE_APP_CONFIG=$REPO_HOME/.bundle
 ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
 ENV GEM_HOME=$BUNDLE_PATH
-#ENV GIT_REPO=git@github.com:resolvetosavelives/benchmarks.git
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
-ENV GIT_BRANCH=another-round-of-troubleshooting-the-container-launch--179500605
+ENV GIT_BRANCH=automate-docker-image-builds-with-acr-from-the-pipeline--179500509
 
 # Configure Rails
 ENV RAILS_LOG_TO_STDOUT true
