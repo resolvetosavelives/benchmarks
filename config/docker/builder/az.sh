@@ -1,3 +1,8 @@
+##
+# This file contains snippets to create/delete Tasks for our Azure Container Registry (ACR)
+# It is NOT TO BE RUN DIRECTLY. It is named as a ".sh" file to aid with syntqax highlighting
+#   and auto-complete only.
+##
 
 # az acr login -n whoihrbenchmarksregistry
 
