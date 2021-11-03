@@ -53,3 +53,17 @@ steps:
       codeCoverageTool: JUnit
       testRunTitle: Benchmarks ruby rspec test suite with in-browser
       testResultsFiles: "**/TEST-*.xml"
+  - task: Docker@2
+    displayName: Docker Login to ACR
+    inputs:
+      command: login
+      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+  - task: Docker@2
+    displayName: Docker Build and Push to ACR
+    inputs:
+      command: buildAndPush
+      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+      repository: benchmarks
+      Dockerfile: config/docker/Dockerfile
+      tags:
+        - latest

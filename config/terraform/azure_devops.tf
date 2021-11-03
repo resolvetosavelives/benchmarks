@@ -57,3 +57,13 @@ resource "azuredevops_build_definition" "build_definition" {
     allow_override = false
   }
 }
+
+resource "azuredevops_serviceendpoint_azurecr" "serviceendpoint_acr" {
+  project_id            = azuredevops_project.project.id
+  service_endpoint_name = "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+  resource_group = azurerm_resource_group.who_ihr_benchmarks.name
+  azurecr_spn_tenantid = data.azurerm_subscription.current.tenant_id
+  azurecr_name = azurerm_container_registry.acr.name
+  azurecr_subscription_id = data.azurerm_subscription.current.subscription_id
+  azurecr_subscription_name = local.subscription_name
+}

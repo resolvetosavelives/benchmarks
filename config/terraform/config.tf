@@ -33,4 +33,5 @@ locals {
   env                 = terraform.workspace == "production" ? "production" : "sandbox"
   app_name            = "who-ihr-benchmarks"
   resource_group_name = "${local.app_name}-${local.env}"
+  subscription_name    = "Gregs Azure for experimentation on CloudCity work"
 }
