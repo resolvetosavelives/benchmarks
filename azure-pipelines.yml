@@ -65,5 +65,4 @@ steps:
       containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
       repository: benchmarks
       Dockerfile: config/docker/Dockerfile
-      tags:
-        - latest
+      tags: latest
