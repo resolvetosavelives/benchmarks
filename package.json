@@ -66,7 +66,7 @@
     "prepare": "husky install",
     "build:builder": "DOCKER_BUILDKIT=1 docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -f config/docker/builder/Dockerfile -t benchmarks_builder:latest .",
     "build:base": "DOCKER_BUILDKIT=1 docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -f config/docker/base/Dockerfile -t benchmarks_base:latest .",
-    "build": "DOCKER_BUILDKIT=1 docker build --secret id=RAILS_MASTER_KEY,src=config/master.key -f config/docker/Dockerfile -t benchmarks:latest .",
+    "build": "DOCKER_BUILDKIT=1 docker build --secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache -f config/docker/Dockerfile -t benchmarks:latest .",
     "build:all": "set -e; yarn build:builder; yarn build:base; yarn build",
     "start": "docker run --rm -p 80:80 -e RAILS_ENV=production -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e WEBSITE_HOSTNAME=local.dev benchmarks:latest",
     "up": "docker run -i --rm -p 80:80 -e RAILS_ENV=production -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e WEBSITE_HOSTNAME=local.dev benchmarks:latest sh",
