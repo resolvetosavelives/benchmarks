@@ -1,16 +1,18 @@
 # syntax=docker/dockerfile:1
 
-FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_builder:latest AS Builder
+#FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_builder:latest AS Builder
 # for working locally, use this FROM line instead of the one above:
-#FROM benchmarks_builder:latest AS Builder
-FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_base:latest AS Base
+FROM benchmarks_builder:latest AS Builder
+#FROM whoihrbenchmarksregistry.azurecr.io/benchmarks_base:latest AS Base
 # for working locally, use this FROM line instead of the one above:
-#FROM benchmarks_base:latest AS Base
+FROM benchmarks_base:latest AS Base
 
 # Workaround to trigger Builder's ONBUILDs to finish:
 COPY --from=Builder /etc/alpine-release /tmp/dummy
 
 WORKDIR $REPO_HOME
+RUN rm /root/benchmarks/public/packs/css/*.gz
+RUN rm /root/benchmarks/public/packs/css/*.br
 # set USER last cuz most other commanded needed to run as root, but we want to run server as non-root
 #USER app:app
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
