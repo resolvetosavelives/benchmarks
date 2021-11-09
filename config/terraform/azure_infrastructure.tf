@@ -11,6 +11,24 @@ resource "azurerm_container_registry" "acr" {
   public_network_access_enabled = true
   admin_enabled                 = true
 }
+resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
+  name                = "AcrWebhookForAppService"
+  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  location            = azurerm_resource_group.who_ihr_benchmarks.location
+  registry_name       = azurerm_container_registry.acr.name
+  # the service_uri is obtained via command:
+  #   az webapp deployment container config --name <app srv name> --resource-group <rg name> --enable-cd true --query CI_CD_URL --output tsv
+  # example for sandbox staging slot:
+  #   az webapp deployment container config --resource-group who-ihr-benchmarks-sandbox --name who-ihr-benchmarks-app-service --enable-cd true --slot staging
+  # docs on it: https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container#automate-with-cli
+  service_uri = "https://$who-ihr-benchmarks-app-service__staging:5DSpdwnXZK8AkoXnyiqv8PE01dxyAtEZesnSv78edJwv11L5LHQwEXhWPZmi@who-ihr-benchmarks-app-service-staging.scm.azurewebsites.net/docker/hook"
+  status      = "enabled"
+  scope       = "benchmarks:latest"
+  actions     = ["push"]
+  custom_headers = {
+    "Content-Type" = "application/json"
+  }
+}
 
 resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   name                          = "psqldb-who-ihr-benchmarks"
@@ -38,10 +56,10 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
 }
 // now that we are using the Allow Azure Services option (0.0.0.0) this prob isnt needed.
 resource "azurerm_postgresql_virtual_network_rule" "psql_vnet_rule" {
-  name                                 = "psql-vnet-rule"
-  resource_group_name                  = azurerm_resource_group.who_ihr_benchmarks.name
-  server_name                          = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
-  subnet_id                            = azurerm_subnet.app_critical_services.id
+  name                = "psql-vnet-rule"
+  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
+  subnet_id           = azurerm_subnet.app_critical_services.id
 }
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
   name                = "db-firewall-rule-for-greg-home"

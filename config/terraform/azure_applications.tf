@@ -21,12 +21,13 @@ resource "azurerm_app_service" "app_service" {
   }
   site_config {
     vnet_route_all_enabled = true
-    linux_fx_version = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
-    ftps_state       = "Disabled"
-//    app_command_line = ""
+    linux_fx_version       = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    ftps_state             = "Disabled"
+
   }
 
   app_settings = {
+    DOCKER_ENABLE_CI                    = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
@@ -34,8 +35,6 @@ resource "azurerm_app_service" "app_service" {
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-    // Note that these creds are fake throwaway and so are fine to commit to git.
-    // deploy creds: user / pwd: ccduser / 698497d243
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
