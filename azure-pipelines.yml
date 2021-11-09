@@ -18,6 +18,8 @@ pool:
   vmImage: ubuntu-20.04
 
 steps:
+  - script: echo $RAILS_MASTER_KEY
+    displayName: echo RAILS_MASTER_KEY
   - script: env | sort
     displayName: show env vars
 #  - task: UseRubyVersion@0
