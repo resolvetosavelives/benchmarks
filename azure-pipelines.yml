@@ -45,13 +45,13 @@ steps:
 #      codeCoverageTool: JUnit
 #      testRunTitle: Benchmarks ruby rspec test suite with in-browser
 #      testResultsFiles: "**/TEST-*.xml"
-  - script: echo $RAILS_MASTER_KEY > config/master.key
-    displayName: Write RAILS_MASTER_KEY to file config/master.key
   - task: Docker@2
     displayName: Docker Login to ACR
     inputs:
       command: login
       containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+  - script: echo $RAILS_MASTER_KEY > config/master.key
+    displayName: Write RAILS_MASTER_KEY to file config/master.key
   - task: Docker@2
     displayName: Docker build image for benchmarks app
     inputs:
@@ -63,6 +63,8 @@ steps:
       # NB: using "--build-arg" here because it is not saved in the resulting image (unlike "--env" which is persisted)
 #      arguments: "--build-arg RAILS_MASTER_KEY=$(RAILS_MASTER_KEY) --secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
       arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
+  - script: echo $RAILS_MASTER_KEY > config/master.key
+    displayName: Delete RAILS_MASTER_KEY file config/master.key
   - task: Docker@2
     displayName: Docker push image for benchmarks app to ACR
     inputs:
@@ -70,5 +72,3 @@ steps:
       containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
       repository: benchmarks
       tags: latest
-  - script: echo $RAILS_MASTER_KEY > config/master.key
-    displayName: Delete RAILS_MASTER_KEY file config/master.key
