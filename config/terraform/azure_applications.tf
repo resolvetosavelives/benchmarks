@@ -23,7 +23,6 @@ resource "azurerm_app_service" "app_service" {
     vnet_route_all_enabled = true
     linux_fx_version       = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
     ftps_state             = "Disabled"
-
   }
 
   app_settings = {
