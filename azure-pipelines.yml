@@ -1,29 +1,21 @@
+##
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+##
 
 trigger:
   - automate-docker-image-builds-with-acr-from-the-pipeline--179500509
 
 variables:
-  DatabaseName: benchmarks_test
-  DbUser: 83edada839
-  DbPassword: d24e1f8180
-  DbUrl: postgres://'$(DbUser)':'$(DbPassword)'@localhost:5432/'$(DatabaseName)'
+  DOCKER_BUILDKIT: 1
 
-#resources:
-#  containers:
-#    - container: ubuntu_postgres
-#      image: ubuntu/postgres
-#      type: docker
-#      options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
-
+##
 # the MS-provided ubuntu-20.04 image includes postgres
 # full list of includes software:
 # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
 pool:
   vmImage: ubuntu-20.04
-#  options: -e POSTGRES_USER='$(DbUser)' -e POSTGRES_PASSWORD='$(DbPassword)' -e POSTGRES_DB='$(DatabaseName)' -p 5432:5432
 
 steps:
   - script: env | sort
@@ -53,16 +45,31 @@ steps:
       codeCoverageTool: JUnit
       testRunTitle: Benchmarks ruby rspec test suite with in-browser
       testResultsFiles: "**/TEST-*.xml"
+  - script: echo $RAILS_MASTER_KEY > config/master.key
+    displayName: Write RAILS_MASTER_KEY to file config/master.key
   - task: Docker@2
     displayName: Docker Login to ACR
     inputs:
       command: login
       containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
   - task: Docker@2
-    displayName: Docker Build and Push to ACR
+    displayName: Docker build image for benchmarks app
     inputs:
-      command: buildAndPush
+      command: build
       containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
       repository: benchmarks
       Dockerfile: config/docker/Dockerfile
       tags: latest
+      arguments:
+        - -e RAILS_MASTER_KEY=$(RAILS_MASTER_KEY)
+        - --secret id=RAILS_MASTER_KEY,src=config/master.key
+        - --no-cache
+  - task: Docker@2
+    displayName: Docker push image for benchmarks app to ACR
+    inputs:
+      command: push
+      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+      repository: benchmarks
+      tags: latest
+  - script: echo $RAILS_MASTER_KEY > config/master.key
+    displayName: Delete RAILS_MASTER_KEY file config/master.key
