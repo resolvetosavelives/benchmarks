@@ -60,7 +60,7 @@ steps:
       repository: benchmarks
       Dockerfile: config/docker/Dockerfile
       tags: latest
-      arguments: "RAILS_MASTER_KEY=$(RAILS_MASTER_KEY) --secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
+      arguments: "-e RAILS_MASTER_KEY=$(RAILS_MASTER_KEY) --secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
   - task: Docker@2
     displayName: Docker push image for benchmarks app to ACR
     inputs:
