@@ -58,7 +58,7 @@ steps:
     inputs:
       command: login
       containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
-  - script: echo $RAILS_MASTER_KEY > config/master.key
+  - script: echo $(RAILS_MASTER_KEY) > config/master.key
     displayName: Write RAILS_MASTER_KEY to file config/master.key
   - task: Docker@2
     displayName: Docker build image for benchmarks app
