@@ -1,4 +1,9 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.2
+
+##
+# with a Dockerfile that specifies use of a BuildKit frontend docker/dockerfile:1.2, the secret can be accessed when performing a RUN
+# https://docs.docker.com/develop/develop-images/build_enhancements/
+##
 
 ##
 # Prep phase.
@@ -33,7 +38,6 @@ RUN git clone $GIT_REPO benchmarks && \
     cd benchmarks && \
     git checkout $GIT_BRANCH
 WORKDIR $REPO_HOME
-#RUN touch $BUNDLE_CONFIG
 # Install Node modules
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 # install Ruby gems to the default GEM_HOME of /usr/local/bundle from which they must be copied later
@@ -65,8 +69,7 @@ ONBUILD RUN cd $REPO_HOME && \
 #   1. Executing "assets:precompile" runs "yarn install" prior
 #   2. Executing "assets:precompile" runs "webpacker:compile", too
 #   3. Rails raises a `MissingKeyError` if the master key is missing.
-# TODO: this use of --mount apparently depends on BuildKit, and Azure Container Reg (ACR) says that
-#   BuildKit is not enabled. may need to either enable BuildKit on ACR, or rework how this secret is handled.
+# NB: this use of --mount depends on Docker BuildKit being enabled
 ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
     RAILS_ENV=production bundle exec rails assets:precompile
 

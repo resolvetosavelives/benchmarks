@@ -56,6 +56,12 @@ resource "azuredevops_build_definition" "build_definition" {
     secret_value   = var.DATABASE_URL_FOR_PIPELINE
     allow_override = false
   }
+  variable {
+    name           = "RAILS_MASTER_KEY"
+    is_secret      = true
+    secret_value   = var.RAILS_MASTER_KEY
+    allow_override = false
+  }
 }
 
 resource "azuredevops_serviceendpoint_azurecr" "serviceendpoint_acr" {
