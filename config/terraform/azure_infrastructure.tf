@@ -23,7 +23,7 @@ resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
   # docs on it:
   # - https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container#automate-with-cli
   # - https://docs.microsoft.com/en-us/cli/azure/webapp/deployment/container#az_webapp_deployment_container_show_cd_url
-  service_uri = "https://$who-ihr-benchmarks-app-service__staging:5DSpdwnXZK8AkoXnyiqv8PE01dxyAtEZesnSv78edJwv11L5LHQwEXhWPZmi@who-ihr-benchmarks-app-service-staging.scm.azurewebsites.net/docker/hook"
+  service_uri = "https://$who-ihr-benchmarks-app-service__staging:JGxLXj8HmozkqRZT5xti5wEM8inz1q1rqSHeqCZxFosRGyH3hfK1qotgRYFd@who-ihr-benchmarks-app-service-staging.scm.azurewebsites.net/docker/hook"
   status      = "enabled"
   scope       = "benchmarks:latest"
   actions     = ["push"]
