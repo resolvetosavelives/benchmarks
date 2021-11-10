@@ -26,7 +26,7 @@ resource "azurerm_app_service" "app_service" {
   }
 
   app_settings = {
-#    DOCKER_ENABLE_CI                    = true
+    DOCKER_ENABLE_CI                    = true
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
