@@ -61,6 +61,13 @@ resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
   app_settings = {
-    DOCKER_ENABLE_CI = true
+    DOCKER_ENABLE_CI                    = true // special //
+    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
+    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
+    RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
 }
