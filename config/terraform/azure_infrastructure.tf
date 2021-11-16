@@ -56,13 +56,6 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }
-// now that we are using the Allow Azure Services option (0.0.0.0) this prob isnt needed.
-resource "azurerm_postgresql_virtual_network_rule" "psql_vnet_rule" {
-  name                = "psql-vnet-rule"
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
-  server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
-  subnet_id           = azurerm_subnet.app_critical_services.id
-}
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
   name                = "db-firewall-rule-for-greg-home"
   resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
@@ -70,16 +63,6 @@ resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
   start_ip_address    = "71.182.150.16"
   end_ip_address      = "71.182.150.16"
 }
-// this did not work:
-// - the DB saw App Service as coming from IP 52.252.23.246 which is a non-local IP
-// - with service endpoints enabled, the DB saw App Service as coming from 0.0.0.0
-#resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_app_service_vnet_integration" {
-#  name                = "db-firewall-rule-for-app-service-vnet-integration"
-#  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
-#  server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
-#  start_ip_address    = "10.0.2.0"
-#  end_ip_address      = "10.0.2.255"
-#}
 // it works with this. it is more open than i would like, but it allows access from both  App Service and Devops Pipeline.
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services" {
   name                = "db-firewall-rule-for-azure-services"
