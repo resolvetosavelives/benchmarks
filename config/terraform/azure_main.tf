@@ -27,5 +27,6 @@ variable "RAILS_MASTER_KEY" {
 
 resource "azurerm_resource_group" "who_ihr_benchmarks" {
   name     = local.resource_group_name
+  # FIXME: WHO requires use of North or West Europe Azure regions
   location = "eastus2"
 }
