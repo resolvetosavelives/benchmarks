@@ -5,16 +5,16 @@
 resource "azurerm_container_registry" "acr" {
   // Azure rules for name: alpha numeric characters, lower case, must be globally unique
   name                          = "whoihrbenchmarksregistry"
-  resource_group_name           = azurerm_resource_group.who_ihr_benchmarks.name
-  location                      = azurerm_resource_group.who_ihr_benchmarks.location
+  resource_group_name           = local.resource_group_name
+  location                      = local.azure_location
   sku                           = "Premium"
   public_network_access_enabled = true
   admin_enabled                 = true
 }
 resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
   name                = "AcrWebhookForAppService"
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
-  location            = azurerm_resource_group.who_ihr_benchmarks.location
+  resource_group_name = local.resource_group_name
+  location            = local.azure_location
   registry_name       = azurerm_container_registry.acr.name
   # the service_uri is obtained via command:
   #   az webapp deployment container show-cd-url --resource-group <rg name> --name <app name> --slot <slot name>
@@ -34,8 +34,8 @@ resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
 
 resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   name                          = "psqldb-who-ihr-benchmarks"
-  location                      = azurerm_resource_group.who_ihr_benchmarks.location
-  resource_group_name           = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name           = local.resource_group_name
+  location                      = local.azure_location
   public_network_access_enabled = true
   // SKUs
   // - GP_Gen5_2 means "General Purpose (more than Basic), Generation 5 (current), 2 cores.
@@ -58,7 +58,7 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
 }
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
   name                = "db-firewall-rule-for-greg-home"
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
   server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
   start_ip_address    = "96.236.208.225"
   end_ip_address      = "96.236.208.225"
@@ -66,21 +66,21 @@ resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
 // it works with this. it is more open than i would like, but it allows access from both  App Service and Devops Pipeline.
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services" {
   name                = "db-firewall-rule-for-azure-services"
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
   server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 }
 resource "azurerm_postgresql_database" "benchmarks_test" {
   name                = "benchmarks_test" // for build pipeline
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
   server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
 }
 resource "azurerm_postgresql_database" "benchmarks_staging" {
   name                = "benchmarks_staging" // for staging instance
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
   server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
   charset             = "UTF8"
   collation           = "English_United States.1252"
