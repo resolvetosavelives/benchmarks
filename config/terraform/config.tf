@@ -10,12 +10,13 @@ terraform {
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
-  //  backend "azurerm" {
-  //    resource_group_name = "who_ihr_benchmarks"
-  //    storage_account_name = "tfstate5b92c0"
-  //    container_name = "tfstate"
-  //    key = "terraform.tfstate"
-  //  }
+  backend "azurerm" {
+    // Variables not allowed in this block
+    resource_group_name  = "who-ihr-benchmarks-terraform"
+    storage_account_name = "tfstate5b92c0"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -34,4 +35,6 @@ locals {
   app_name            = "who-ihr-benchmarks"
   resource_group_name = "${local.app_name}-${local.env}"
   subscription_name   = "Gregs Azure for experimentation on CloudCity work"
+  # FIXME: WHO requires use of North or West Europe Azure regions
+  azure_location = "eastus2"
 }

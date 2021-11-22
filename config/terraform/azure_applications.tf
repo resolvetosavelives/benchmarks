@@ -1,7 +1,7 @@
 resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "who-ihr-benchmarks-app-service-plan"
-  location            = azurerm_resource_group.who_ihr_benchmarks.location
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
+  location            = local.azure_location
   // must be kind="Linux" and reserved=true in order to run Linux containers
   kind     = "Linux"
   reserved = true
@@ -13,8 +13,8 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 }
 resource "azurerm_app_service" "app_service" {
   name                = "who-ihr-benchmarks-app-service"
-  location            = azurerm_resource_group.who_ihr_benchmarks.location
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
+  location            = local.azure_location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   identity {
     type = "SystemAssigned"
@@ -51,8 +51,8 @@ resource "azurerm_app_service" "app_service" {
 
 resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
   name                = "staging"
-  location            = azurerm_resource_group.who_ihr_benchmarks.location
-  resource_group_name = azurerm_resource_group.who_ihr_benchmarks.name
+  resource_group_name = local.resource_group_name
+  location            = local.azure_location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
   app_settings = {

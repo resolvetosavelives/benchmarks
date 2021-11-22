@@ -25,8 +25,15 @@ variable "RAILS_MASTER_KEY" {
   sensitive = true
 }
 
-resource "azurerm_resource_group" "who_ihr_benchmarks" {
-  name     = local.resource_group_name
-  # FIXME: WHO requires use of North or West Europe Azure regions
-  location = "eastus2"
+resource "azurerm_resource_group" "who_ihr_benchmarks_terraform" {
+  name     = "${local.app_name}-terraform"
+  location = local.azure_location
+}
+resource "azurerm_resource_group" "who_ihr_benchmarks_sandbox" {
+  name     = "${local.app_name}-sandbox"
+  location = local.azure_location
+}
+resource "azurerm_resource_group" "who_ihr_benchmarks_production" {
+  name     = "${local.app_name}-production"
+  location = local.azure_location
 }
