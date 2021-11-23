@@ -19,12 +19,7 @@ ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
 ENV GEM_HOME=$BUNDLE_PATH
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
 ENV GIT_BRANCH=automate-docker-image-builds-with-acr-from-the-pipeline--179500509
-
-# Configure Rails
-ENV RAILS_LOG_TO_STDOUT true
-ENV RAILS_SERVE_STATIC_FILES true
 ENV RAILS_ENV production
-# TODO: Note from Azure: /home/LogFiles directory, which is used to store the Docker and container logs.
 
 ## Someday..
 #ONBUILD ARG COMMIT_SHA
