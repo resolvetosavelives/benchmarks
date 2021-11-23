@@ -6,7 +6,11 @@ terraform {
     }
     azuredevops = {
       source  = "microsoft/azuredevops"
-      version = ">=0.1.7"
+      version = ">= 0.1.7"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.1.0"
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
@@ -37,4 +41,13 @@ locals {
   subscription_name   = "Gregs Azure for experimentation on CloudCity work"
   # FIXME: WHO requires use of North or West Europe Azure regions
   azure_location = "eastus2"
+}
+
+resource "random_string" "db_administrator_login" {
+  length  = 10
+  special = false
+}
+resource "random_password" "db_administrator_password" {
+  length  = 20
+  special = true
 }

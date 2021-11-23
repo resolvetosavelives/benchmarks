@@ -48,10 +48,8 @@ resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   geo_redundant_backup_enabled = false
   auto_grow_enabled            = true
 
-  # these wont be real credentials once this is working but for now these are good enough during development
-  # TODO: remove these fake credentials and replace with using a secret store
-  administrator_login              = "eAb136b1eE"
-  administrator_login_password     = "4eD90c39fCd3cAd26e78"
+  administrator_login              = random_string.db_administrator_login.result
+  administrator_login_password     = random_password.db_administrator_password.result
   version                          = "11"
   ssl_enforcement_enabled          = true
   ssl_minimal_tls_version_enforced = "TLS1_2"
