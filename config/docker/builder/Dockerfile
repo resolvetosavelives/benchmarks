@@ -69,7 +69,7 @@ ONBUILD RUN cd $REPO_HOME && \
 #   1. Executing "assets:precompile" runs "yarn install" prior
 #   2. Executing "assets:precompile" runs "webpacker:compile", too
 #   3. Rails raises a `MissingKeyError` if the master key is missing.
-# NB: this use of --mount depends on Docker BuildKit being enabled
+# NB: this use of "--mount=type=secret" depends on Docker BuildKit being enabled
 ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
     RAILS_ENV=production bundle exec rails assets:precompile
 
