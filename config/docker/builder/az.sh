@@ -1,6 +1,6 @@
 ##
 # This file contains snippets to create/delete Tasks for our Azure Container Registry (ACR)
-# It is NOT TO BE RUN DIRECTLY. It is named as a ".sh" file to aid with syntqax highlighting
+# It is NOT TO BE RUN DIRECTLY. It is named as a ".sh" file to aid with syntax highlighting
 #   and auto-complete only.
 ##
 

@@ -61,7 +61,7 @@ resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
   start_ip_address    = "96.236.208.225"
   end_ip_address      = "96.236.208.225"
 }
-// it works with this. it is more open than i would like, but it allows access from both  App Service and Devops Pipeline.
+// Allow from Azure. it is more open than i would like, but it works for both App Service and Devops Pipeline.
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services" {
   name                = "db-firewall-rule-for-azure-services"
   resource_group_name = local.resource_group_name
