@@ -7,7 +7,7 @@ gem "rails", "~> 6.1"
 gem "activerecord-import", "~> 1.0"
 gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
-gem "bootsnap", "~> 1.7", require: false
+gem "colorize", "~> 0.8.1"
 gem "devise", "~> 4.8"
 gem "hamlit", "~> 2.15"
 gem "hamlit-rails", "~> 0.2"
@@ -20,11 +20,12 @@ gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
 gem "sentry-rails", "~> 4.4"
 gem "sentry-ruby", "~> 4.4"
+gem "tzinfo-data"
+gem "m", "~> 1.5"
 gem "webpacker", "~> 5.3"
 
 group :development, :test do
-  gem "colorize", "~> 0.8"
-  gem "m", "~> 1.5"
+  gem "bootsnap", "~> 1.7", require: false
   gem "minitest-rails", "~> 6.1"
   gem "pry-byebug", "~> 3.9"
 end

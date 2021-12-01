@@ -1,0 +1,16 @@
+@startuml
+nwdiag {
+  internet [shape = cloud];
+  network Azure_App_Service_with_SSL {
+    internet;
+    app_staging [address = "port 80"];
+    app_production [address = "port 80"];
+  }
+  network azure_internal_network {
+    app_staging;
+    app_production;
+    devops_pipeline_with_tests;
+    postgres_db_for_both_app_instances [address = "port 5432"];
+  }
+}
+@enduml

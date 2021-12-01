@@ -19,3 +19,14 @@
 /public/packs-test
 /yarn-error.log
 yarn-debug.log*
+
+# Mac things to ignore
+.DS_Store
+
+# Benchmarks-specific things to ignore
+/config/master.key
+
+# ignore .env files recursively
+**/.env
+# ignore test result JUnitReporter output used with Azure build pipeline
+**/TEST-*.xml
