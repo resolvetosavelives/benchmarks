@@ -5,6 +5,17 @@
 terraform import azuredevops_serviceendpoint_github.serviceendpoint_for_who_github 679f7d50-14c7-4b17-aea0-cc0e0452141b/0d3d26b6-fa89-4314-b91f-dc18e069a176
 ```
 
+### Dealing with Terraform-Generated Secret Values
+
+https://www.terraform.io/upgrade-guides/0-14.html#sensitive-values-in-plan-output
+
+```
+terraform plan -out=tfplan
+terraform show -json tfplan > tfplan.json
+```
+
+Open and view the generates JSON file `tfplan.json` and the secret value(s) there in plain text.
+
 # Things to Know About Terraform on this Project
 
 ## Lets try to follow the conventions defined here:
