@@ -25,15 +25,16 @@ variable "RAILS_MASTER_KEY" {
   sensitive = true
 }
 
+# per WHO Azure project policy, ResourceGroup names are UPPERCASE-WITH-HYPHENS
 resource "azurerm_resource_group" "who_ihr_benchmarks_terraform" {
-  name     = "${local.app_name}-terraform"
+  name     = upper("${local.app_name}-terraform-EUW-RG01")
   location = local.azure_location
 }
 resource "azurerm_resource_group" "who_ihr_benchmarks_sandbox" {
-  name     = "${local.app_name}-sandbox"
+  name     = upper("${local.app_name}-sandbox-EUW-RG01")
   location = local.azure_location
 }
 resource "azurerm_resource_group" "who_ihr_benchmarks_production" {
-  name     = "${local.app_name}-production"
+  name     = upper("${local.app_name}-production-EUW-RG01")
   location = local.azure_location
 }
