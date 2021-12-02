@@ -48,19 +48,19 @@ steps:
 #    inputs:
 #      command: login
 #      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
-  - script: echo $(RAILS_MASTER_KEY) > config/master.key
-    displayName: Write RAILS_MASTER_KEY to file config/master.key
-  - task: Docker@2
-    displayName: Docker build image for benchmarks app
-    inputs:
-      command: build
-      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
-      repository: benchmarks
-      Dockerfile: config/docker/Dockerfile
-      tags: latest
-      arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
-  - script: rm config/master.key
-    displayName: Delete RAILS_MASTER_KEY file config/master.key
+#  - script: echo $(RAILS_MASTER_KEY) > config/master.key
+#    displayName: Write RAILS_MASTER_KEY to file config/master.key
+#  - task: Docker@2
+#    displayName: Docker build image for benchmarks app
+#    inputs:
+#      command: build
+#      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+#      repository: benchmarks
+#      Dockerfile: config/docker/Dockerfile
+#      tags: latest
+#      arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
+#  - script: rm config/master.key
+#    displayName: Delete RAILS_MASTER_KEY file config/master.key
 #  - task: Docker@2
 #    displayName: Docker push image for benchmarks app to ACR
 #    inputs:
