@@ -50,4 +50,12 @@ resource "random_string" "db_administrator_login" {
 resource "random_password" "db_administrator_password" {
   length  = 20
   special = true
+  # this will be used in DATABASE_URL so we want only URL-friendly special chars
+  override_special = "$-_="
+}
+resource "null_resource" "reveal_db_secret" {
+  triggers = {
+    earliestRestoreDate_of_the_db_server = "2021-12-01T22:10:26.00+00:00"
+    db_server_admin_pwd                  = random_password.db_administrator_password.result
+  }
 }
