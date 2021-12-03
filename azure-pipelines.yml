@@ -20,7 +20,7 @@ pool:
 steps:
   - task: UseRubyVersion@0
     inputs:
-      versionSpec: "= 3.0.2"
+      versionSpec: ">= 3.0"
       addToPath: true
   - task: NodeTool@0
     inputs:
