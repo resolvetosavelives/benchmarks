@@ -25,10 +25,6 @@ gem "m", "~> 1.5"
 gem "webpacker", "~> 5.3"
 
 group :development, :test do
-  unless RUBY_PLATFORM.include?("arm")
-    # bootsnap causes errors on ARM arch. do we even need bootsnap at all.
-    gem "bootsnap", "~> 1.7", require: false
-  end
   gem "minitest-rails", "~> 6.1"
   gem "pry-byebug", "~> 3.9"
 end
