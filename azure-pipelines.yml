@@ -39,7 +39,7 @@ steps:
   - task: CmdLine@2
     displayName: run test suite
     inputs:
-      script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:all
+      script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
