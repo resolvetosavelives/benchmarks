@@ -42,7 +42,10 @@ locals {
   env                 = terraform.workspace == "production" ? "production" : "sandbox"
   app_name            = "whoihrbenchmarks"
   resource_group_name = "${local.app_name}-${local.env}"
-  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+#  # WHO sub name
+#  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+  # my personal sub name
+  subscription_name   = "Gregs Azure for experimentation on CloudCity work"
   azure_location      = "westeurope"
   rg_for_workspace    = terraform.workspace == "production" ? upper("${local.app_name}-production-EUW-RG01") : upper("${local.app_name}-sandbox-EUW-RG01")
 }
