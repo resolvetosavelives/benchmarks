@@ -9,7 +9,7 @@
 # Prep phase.
 # Add basic packages. Needs to run as root, before any USER directive.
 # nodejs-current version expected is 16.x, if this version changes app may encounter errs
-FROM ruby:3.0.2-alpine
+FROM ruby:3.0.3-alpine
 RUN apk add --no-cache \
       build-base \
       postgresql-dev \

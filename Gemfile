@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.0.2"
+ruby "3.0.3"
 gem "rails", "~> 6.1"
 
 gem "activerecord-import", "~> 1.0"
@@ -25,7 +25,10 @@ gem "m", "~> 1.5"
 gem "webpacker", "~> 5.3"
 
 group :development, :test do
-  gem "bootsnap", "~> 1.7", require: false
+  unless RUBY_PLATFORM.include?("arm")
+    # bootsnap causes errors on ARM arch. do we even need bootsnap at all.
+    gem "bootsnap", "~> 1.7", require: false
+  end
   gem "minitest-rails", "~> 6.1"
   gem "pry-byebug", "~> 3.9"
 end

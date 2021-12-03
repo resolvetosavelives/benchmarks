@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ruby:3.0.2-alpine
+FROM ruby:3.0.3-alpine
 
 # Add basic packages
 RUN apk add --no-cache \
