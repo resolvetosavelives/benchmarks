@@ -30,7 +30,7 @@ ENV BUNDLE_APP_CONFIG=$REPO_HOME/.bundle
 ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
 ENV GEM_HOME=$BUNDLE_PATH
 ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
-ENV GIT_BRANCH=automate-docker-image-builds-with-acr-from-the-pipeline--179500509
+ENV GIT_BRANCH=main-azure
 
 WORKDIR $USER_HOME
 # pull down the code from the repo and switch to the specified branch
