@@ -25,7 +25,10 @@ steps:
   - task: NodeTool@0
     inputs:
       versionSpec: "16.x"
-  - script: bundle install --deployment --path vendor/bundle
+  - script: |
+      bin/bundle config set --local path vendor/bundle && \
+      bin/bundle config set --local deployment true && \
+      bin/bundle install
     displayName: bundle install
   - script: yarn install --frozen-lockfile --check-files
     displayName: yarn install
