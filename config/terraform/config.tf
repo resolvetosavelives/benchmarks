@@ -59,7 +59,7 @@ resource "random_password" "db_administrator_password" {
 }
 resource "null_resource" "reveal_db_secret" {
   triggers = {
-    earliestRestoreDate_of_the_db_server = "2021-12-01T22:10:26.00+00:00"
+    earliestRestoreDate_of_the_db_server = "2021-12-01T22:10:27.00+00:00"
     db_server_admin_pwd                  = random_password.db_administrator_password.result
   }
 }
