@@ -16,7 +16,7 @@ az acr task create \
   --schedule "0 1 * * *" \
   --commit-trigger-enabled false \
   --base-image-trigger-enabled false \
-  -t benchmarks-builder:latest
+  -t benchmarks_builder:latest
 
 #az acr task delete \
 #  -r whoihrbenchmarksregistry \
@@ -36,7 +36,7 @@ az acr task create \
   --schedule "0 2 * * *" \
   --commit-trigger-enabled false \
   --base-image-trigger-enabled false \
-  -t benchmarks-base:latest
+  -t benchmarks_base:latest
 
 #az acr task delete \
 #  -r whoihrbenchmarksregistry \
