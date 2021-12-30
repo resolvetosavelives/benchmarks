@@ -25,12 +25,12 @@ terraform {
 
 provider "azurerm" {
   features {}
-#  # WHO sub and tenant
-#  subscription_id = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
-#  tenant_id       = "f610c0b7-bd24-4b39-810b-3dc280afb590"
-  # my personal sub and tenant
-  subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
-  tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
+  # WHO sub and tenant
+  subscription_id = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
+  tenant_id       = "f610c0b7-bd24-4b39-810b-3dc280afb590"
+#  # my personal sub and tenant
+#  subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
+#  tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
 }
 // to expose to other tf code: id, tenant_id, subscription_id, display_name..
 data "azurerm_subscription" "current" {}
@@ -40,14 +40,15 @@ data "azurerm_subscription" "current" {}
 //
 locals {
   env                 = terraform.workspace == "production" ? "production" : "sandbox"
-  app_name            = "whoihrbenchmarks"
-  resource_group_name = "${local.app_name}-${local.env}"
-#  # WHO sub name
-#  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
-  # my personal sub name
-  subscription_name   = "Gregs Azure for experimentation on CloudCity work"
+  app_name            = "IHRBENCHMARK"
+#  resource_group_name = "${local.app_name}-${local.env}"
+  # WHO sub name
+  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+#  # my personal sub name
+#  subscription_name   = "Gregs Azure for experimentation on CloudCity work"
   azure_location      = "westeurope"
-  rg_for_workspace    = terraform.workspace == "production" ? upper("${local.app_name}-production-EUW-RG01") : upper("${local.app_name}-sandbox-EUW-RG01")
+  rg_for_workspace    = terraform.workspace == "production" ? "${local.app_name}-P-WEU-RG01" : "${local.app_name}-T-WEU-RG01"
+  rg_for_tf_state     = "${local.app_name}-MAIN-WEU-RG01"
 }
 
 resource "random_string" "db_administrator_login" {
@@ -62,7 +63,7 @@ resource "random_password" "db_administrator_password" {
 }
 resource "null_resource" "reveal_db_secret" {
   triggers = {
-    earliestRestoreDate_of_the_db_server = "2021-12-01T22:10:27.00+00:00"
+    earliestRestoreDate_of_the_db_server = "2021-12-15T10:10:00.00+00:00"
     db_server_admin_pwd                  = random_password.db_administrator_password.result
   }
 }

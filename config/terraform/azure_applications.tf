@@ -12,7 +12,7 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   }
 }
 resource "azurerm_app_service" "app_service" {
-  name                = "who-ihr-benchmarks-app-service"
+  name                = "who-ihr-benchmarks-app-service-2"
   resource_group_name = local.rg_for_workspace
   location            = local.azure_location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
@@ -21,7 +21,7 @@ resource "azurerm_app_service" "app_service" {
   }
   site_config {
     vnet_route_all_enabled = true
-    linux_fx_version       = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    linux_fx_version       = "DOCKER|whoihrbenchmarksregistry2.azurecr.io/benchmarks:latest"
     ftps_state             = "Disabled"
   }
 
@@ -29,7 +29,7 @@ resource "azurerm_app_service" "app_service" {
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
-    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry2.azurecr.io/benchmarks:latest"
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
@@ -60,7 +60,7 @@ resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
     DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
-    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry2.azurecr.io/benchmarks:latest"
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false

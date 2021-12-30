@@ -4,7 +4,7 @@
 #
 resource "azurerm_container_registry" "acr" {
   // Azure rules for name: alpha numeric characters, lower case, must be globally unique
-  name                          = "whoihrbenchmarksregistry"
+  name                          = "whoihrbenchmarksregistry2"
   resource_group_name           = local.rg_for_workspace
   location                      = local.azure_location
   sku                           = "Premium"
@@ -12,18 +12,18 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled                 = true
 }
 resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
-  name                = "AcrWebhookForAppService"
+  name                = "AcrWebhookForAppService2"
   resource_group_name = local.rg_for_workspace
   location            = local.azure_location
   registry_name       = azurerm_container_registry.acr.name
   # the service_uri is obtained via command:
   #   az webapp deployment container show-cd-url --resource-group <rg name> --name <app name> --slot <slot name>
   # example for sandbox staging slot:
-  #   az webapp deployment container show-cd-url --resource-group WHOIHRBENCHMARKS-SANDBOX-EUW-RG01 --name who-ihr-benchmarks-app-service --slot staging
+  #   az webapp deployment container show-cd-url --resource-group IHRBENCHMARK-P-WEU-RG01 --name who-ihr-benchmarks-app-service-2 --slot staging
   # docs on it:
   # - https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container#automate-with-cli
   # - https://docs.microsoft.com/en-us/cli/azure/webapp/deployment/container#az_webapp_deployment_container_show_cd_url
-  service_uri = "https://$who-ihr-benchmarks-app-service__staging:c3eTkaf25wjvnds5LuW2m4WHhQzl1hwCDxwtuW79NYdTlHyxa8ts9e6llZmJ@who-ihr-benchmarks-app-service-staging.scm.azurewebsites.net/docker/hook"
+  service_uri = "https://$who-ihr-benchmarks-app-service-2__staging:P8Az3e5Q9F2DM2dMEz5z1hi6w9Qtk0PJJ6P0jnhygGmD6Fb3aH8pdqid9BtL@who-ihr-benchmarks-app-service-2-staging.scm.azurewebsites.net/docker/hook"
   status      = "enabled"
   scope       = "benchmarks:latest"
   actions     = ["push"]
@@ -33,7 +33,7 @@ resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
 }
 
 resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
-  name                          = "psqldb-who-ihr-benchmarks"
+  name                          = "psqldb-who-ihr-benchmarks-2"
   resource_group_name           = local.rg_for_workspace
   location                      = local.azure_location
   public_network_access_enabled = true
