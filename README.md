@@ -7,7 +7,7 @@ The application is currently developed to heroku in both staging and master rele
 - [Staging](https://rtsl-benchmarks-staging.herokuapps.com/)
 - [Production](https://rtsl-benchmarks-production.herokuapps.com/)
 
-Continuous builds and deployment to staging are handled in [SemaphoreCI](https://semaphoreci.com/resolvetosavelives/benchmarks). The master branch is automaticallly pushed to Staging on a successful deployment. Promote to Production by clicking on the "Promote to Production" button on [the app dashboard](https://dashboard.heroku.com/pipelines/a8edf761-58ea-4ff2-96fc-f2abc8c08097).
+Continuous builds and deployment to staging are handled in [SemaphoreCI](https://semaphoreci.com/resolvetosavelives/benchmarks). The main branch is automaticallly pushed to Staging on a successful deployment. Promote to Production by clicking on the "Promote to Production" button on [the app dashboard](https://dashboard.heroku.com/pipelines/a8edf761-58ea-4ff2-96fc-f2abc8c08097).
 
 Any deployment or promotion to production may require a database migration:
 
@@ -43,9 +43,9 @@ The configuration variables this app depends on, NOT inclusive of RAILS_ENV/RACK
 
 ## Development
 
-For development, we only used the master branch and feature branches.
+For development, we only used the main branch and feature branches.
 
-The master branch is constantly deployed to staging. All work done on a feature branch is merged directly into the master branch after a pull request and code review.
+The main branch is constantly deployed to staging. All work done on a feature branch is merged directly into the main branch after a pull request and code review.
 
 Locally, development requires only a working Postgres database and Ruby.
 We provide a docker-compose file that will launch the database in a docker container, which requires the docker service to be running locally.
@@ -57,6 +57,12 @@ bundle
 yarn
 rails db:create db:schema:load db:seed
 rails s
+```
+
+If you encounter an error seeding, run the following to reset (add `RAILS_ENV=test` to the end to run in the test env):
+
+```
+rails db:drop db:create db:schema:load db:seed
 ```
 
 Optionally, you may run the webpacker asset compilation process in a separate tab/process which is nice
