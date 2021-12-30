@@ -1,9 +1,13 @@
 # How to Use This: Provisioning and Managing This Project's Azure Deployments with Terraform
 
-```
-terraform import azuredevops_project.project "IHRBENCHMARK"
-terraform import azuredevops_serviceendpoint_github.serviceendpoint_for_who_github 679f7d50-14c7-4b17-aea0-cc0e0452141b/0d3d26b6-fa89-4314-b91f-dc18e069a176
-```
+## Prerequisites
+
+- the Azure command-line interface tool known as `az`.
+  - can be installed on MacOS via `brew install az`
+- Login to the `az` CLI via `az login`
+  - You will be prompted to choose which login account and prompted to 2FA if enabled
+  -
+- more steps are TODO..
 
 ## Action Required: Devops
 
