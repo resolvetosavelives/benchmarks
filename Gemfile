@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.0.3"
 gem "rails", "~> 6.1"
 
-gem "activerecord-import", "~> 1.0"
+gem "activerecord-import", "~> 1.3"
 gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.9", require: false
