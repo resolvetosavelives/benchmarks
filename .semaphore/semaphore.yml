@@ -17,7 +17,7 @@ blocks:
       - name: eslint
         commands:
           - checkout
-          - sem-version node 15.14.0
+          - sem-version node 16.13.1
           - cache restore
           - yarn install --frozen-lockfile --check-files
           - npx eslint app
@@ -25,8 +25,8 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres 11
-          - sem-version ruby 3.0.2
-          - sem-version node 15.14.0
+          - sem-version ruby 3.0.3
+          - sem-version node 16.13.1
           - cache restore
           - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
@@ -35,7 +35,7 @@ blocks:
       - name: JS tests
         commands:
           - checkout
-          - sem-version node 15.14.0
+          - sem-version node 16.13.1
           - cache restore
           - yarn install --frozen-lockfile --check-files
           - yarn test
@@ -43,8 +43,8 @@ blocks:
         commands:
           - checkout
           - sem-service start postgres 11
-          - sem-version ruby 3.0.2
-          - sem-version node 15.14.0
+          - sem-version ruby 3.0.3
+          - sem-version node 16.13.1
           - cache restore
           - bundle install --deployment --path vendor/bundle
           - yarn install --frozen-lockfile --check-files
