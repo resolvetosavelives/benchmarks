@@ -24,6 +24,10 @@ Initialize terraform
 
     $ terraform init
 
+Copy .env.sample to .env and update the values according to comments in the file.
+
+    $ cp .env.sample .env
+
 ## How to use it
 
 ### First: Provision
