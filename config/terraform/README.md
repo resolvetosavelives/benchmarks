@@ -1,13 +1,28 @@
 # How to Use This: Provisioning and Managing This Project's Azure Deployments with Terraform
 
-## Prerequisites
+## Setup
 
-- the Azure command-line interface tool known as `az`.
-  - can be installed on MacOS via `brew install az`
-- Login to the `az` CLI via `az login`
-  - You will be prompted to choose which login account and prompted to 2FA if enabled
-  -
-- more steps are TODO..
+Install the Azure command-line interface tool known as `az`.
+
+    $ brew install az # MacOS
+
+Login to the `az` CLI - You may be prompted to choose which login account and prompted to 2FA if enabled
+
+    $ az login
+    $ az account show
+    $ az account set --subscription "Subscription Name/ID"  # to change which subscription you're using
+
+Install terraform
+
+    $ brew install terraform # MacOS
+
+Change to the terraform directory
+
+    $ cd config/terraform
+
+Initialize terraform
+
+    $ terraform init
 
 ## Action Required: Devops
 
@@ -15,6 +30,8 @@ Approval must be granted for the Service Connection for Azure Devops to access t
 There may be a non-interactive way to do this but I have not found one so far. To do this, go to the Azure Devops project portal https://dev.azure.com
 and view the pipeline and you should see a message on the page that says that the pipeline cannot run until you click this button to approve the
 Service Connection.
+
+NOTE: What pipeline? Do you need to create a pipeline?
 
 ### Dealing with Terraform-Generated Secret Values
 
