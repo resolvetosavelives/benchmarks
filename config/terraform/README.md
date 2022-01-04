@@ -2,9 +2,9 @@
 
 ## Setup
 
-Install the Azure command-line interface tool known as `az`.
+Install the Azure command-line interface tool known as `az`. For MacOS:
 
-    $ brew install az # MacOS
+    $ brew install az
 
 Login to the `az` CLI - You may be prompted to choose which login account and prompted to 2FA if enabled
 
@@ -12,9 +12,9 @@ Login to the `az` CLI - You may be prompted to choose which login account and pr
     $ az account show
     $ az account set --subscription "Subscription Name/ID"  # to change which subscription you're using
 
-Install terraform
+Install terraform. For MacOS:
 
-    $ brew install terraform # MacOS
+    $ brew install terraform
 
 Change to the terraform directory
 
@@ -24,14 +24,37 @@ Initialize terraform
 
     $ terraform init
 
-## Action Required: Devops
+## How to use it
 
-Approval must be granted for the Service Connection for Azure Devops to access the Azure Container Registry, even when created/managed via terraform.
+### First: Provision
+
+```
+cd config/terraform
+source .env.gregory
+az login
+az account set --subscription 89789ead-0e38-4e72-8fd9-3cdcbe80b4ef
+terraform workspace select sandbox
+terraform apply
+```
+
+### Last: Destroy
+
+```
+cd config/terraform
+source .env.gregory
+az login
+az account set --subscription 89789ead-0e38-4e72-8fd9-3cdcbe80b4ef
+terraform workspace select sandbox
+terraform destroy
+```
+
+## After Provisioning DevOps, Action is Required
+
+After Azure DevOps resources have been provisioned via Terraform/AzureRM, Approval must be granted for the Service Connection
+for Azure Devops to access the Azure Container Registry, even when created/managed via terraform.
 There may be a non-interactive way to do this but I have not found one so far. To do this, go to the Azure Devops project portal https://dev.azure.com
 and view the pipeline and you should see a message on the page that says that the pipeline cannot run until you click this button to approve the
 Service Connection.
-
-NOTE: What pipeline? Do you need to create a pipeline?
 
 ### Dealing with Terraform-Generated Secret Values
 
@@ -43,6 +66,18 @@ terraform show -json tfplan > tfplan.json
 ```
 
 Open and view the generates JSON file `tfplan.json` and the secret value(s) there in plain text.
+
+# WHO-specific Background Things to know
+
+There are certain resources that are "pets" (long-lived things that should never be destroyed).
+
+AzureRM:
+
+- Resource Group: IHRBENCHMARK-MAIN-WEU-RG01
+- Resource Group: IHRBENCHMARK-P-WEU-RG01
+- Resource Group: IHRBENCHMARK-T-WEU-RG01
+  Azure DevOps:
+- Azure DevOps Project: IHRBENCHMARK
 
 # Things to Know About Terraform on this Project
 

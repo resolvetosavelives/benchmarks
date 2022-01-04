@@ -16,7 +16,7 @@ terraform {
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
   backend "azurerm" {
     // Variables not allowed in this block
-    resource_group_name  = "WHOIHRBENCHMARKS-TERRAFORM-EUW-RG01"
+    resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
     storage_account_name = "tfstate5b92c0"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
@@ -40,14 +40,14 @@ data "azurerm_subscription" "current" {}
 //
 locals {
   env                 = terraform.workspace == "production" ? "production" : "sandbox"
-  app_name            = "whoihrbenchmarks"
+  app_name            = "ihrbenchmark"
   resource_group_name = "${local.app_name}-${local.env}"
 #  # WHO sub name
 #  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
-  # my personal sub name
+  # Gregory's personal sub name
   subscription_name   = "Gregs Azure for experimentation on CloudCity work"
   azure_location      = "westeurope"
-  rg_for_workspace    = terraform.workspace == "production" ? upper("${local.app_name}-production-EUW-RG01") : upper("${local.app_name}-sandbox-EUW-RG01")
+  rg_for_workspace    = terraform.workspace == "production" ? upper("${local.app_name}-P-WEU-RG01") : upper("${local.app_name}-T-WEU-RG01")
 }
 
 resource "random_string" "db_administrator_login" {
