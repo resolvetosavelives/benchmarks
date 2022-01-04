@@ -14,23 +14,23 @@ terraform {
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
-  backend "azurerm" {
-    // Variables not allowed in this block
-    resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
-    storage_account_name = "tfstate5b92c0"
-    container_name       = "tfstate"
-    key                  = "terraform.tfstate"
-  }
+  # backend "azurerm" {
+  #   // Variables not allowed in this block
+  #   resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
+  #   storage_account_name = "tfstate5b92c0"
+  #   container_name       = "tfstate"
+  #   key                  = "terraform.tfstate"
+  # }
 }
 
 provider "azurerm" {
   features {}
-#  # WHO sub and tenant
-#  subscription_id = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
-#  tenant_id       = "f610c0b7-bd24-4b39-810b-3dc280afb590"
+  # WHO sub and tenant
+  # subscription_id = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
+  # tenant_id       = "f610c0b7-bd24-4b39-810b-3dc280afb590"
   # Gregory's Azure subscription and tenant
-  subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
-  tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
+  # subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
+  # tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
 }
 // to expose to other tf code: id, tenant_id, subscription_id, display_name..
 data "azurerm_subscription" "current" {}
@@ -39,15 +39,15 @@ data "azurerm_subscription" "current" {}
 // See the README.md file for the conventions for naming things and code style.
 //
 locals {
-  env                 = terraform.workspace == "production" ? "production" : "sandbox"
-  app_name            = "ihrbenchmark"
-  resource_group_name = "${local.app_name}-${local.env}"
-#  # WHO sub name
-#  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+  env      = terraform.workspace == "production" ? "P" : "T"
+  app_name = "ihrbenchmark"
+  # WHO sub name
+  #  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
   # Gregory's personal sub name
-  subscription_name   = "Gregs Azure for experimentation on CloudCity work"
-  azure_location      = "westeurope"
-  rg_for_workspace    = terraform.workspace == "production" ? upper("${local.app_name}-P-WEU-RG01") : upper("${local.app_name}-T-WEU-RG01")
+  # subscription_name = "Gregs Azure for experimentation on CloudCity work"
+  subscription_name = "Cloud City Azure"
+  azure_location    = "westeurope"
+  rg_for_workspace  = upper("${local.app_name}-${local.env}-WEU-RG01")
 }
 
 resource "random_string" "db_administrator_login" {

@@ -16,8 +16,8 @@ resource "azuredevops_project" "project" {
 
 resource "azuredevops_serviceendpoint_github" "serviceendpoint_for_who_github" {
   project_id            = azuredevops_project.project.id
-  service_endpoint_name = "WorldHealthOrganization"
-  description           = "For GitHub repo WorldHealthOrganization/ihrbenchmark"
+  service_endpoint_name = "git repo for resolvetosavelives/benchmarks"
+  description           = "For GitHub repo resolvetosavelives/benchmarks"
   # this is a real Personal access token to Github that expires in 90 days
   auth_personal {
     personal_access_token = var.GITHUB_AUTH_PERSONAL
@@ -34,8 +34,8 @@ resource "azuredevops_build_definition" "build_definition" {
   }
 
   repository {
+    repo_id               = "resolvetosavelives/benchmarks"
     repo_type             = "GitHub"
-    repo_id               = "WorldHealthOrganization/ihrbenchmark"
     branch_name           = "main-azure"
     yml_path              = "azure-pipelines.yml"
     service_connection_id = azuredevops_serviceendpoint_github.serviceendpoint_for_who_github.id
