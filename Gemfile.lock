@@ -64,9 +64,9 @@ GEM
       zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airrecord (1.0.6)
+    airrecord (1.0.7)
       faraday (>= 0.10, < 2.0)
-      net-http-persistent (>= 2.9)
+      net-http-persistent
     ansi (1.5.0)
     bcrypt (3.1.16)
     better_errors (2.9.1)
