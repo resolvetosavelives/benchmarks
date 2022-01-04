@@ -14,13 +14,13 @@ terraform {
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
-#  backend "azurerm" {
-#    // Variables not allowed in this block
-#    resource_group_name  = "WHOIHRBENCHMARKS-TERRAFORM-EUW-RG01"
-#    storage_account_name = "tfstate5b92c0"
-#    container_name       = "tfstate"
-#    key                  = "terraform.tfstate"
-#  }
+  backend "azurerm" {
+    // Variables not allowed in this block
+    resource_group_name  = "WHOIHRBENCHMARKS-TERRAFORM-EUW-RG01"
+    storage_account_name = "tfstate5b92c0"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
@@ -28,7 +28,7 @@ provider "azurerm" {
 #  # WHO sub and tenant
 #  subscription_id = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
 #  tenant_id       = "f610c0b7-bd24-4b39-810b-3dc280afb590"
-  # my personal sub and tenant
+  # Gregory's Azure subscription and tenant
   subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
   tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
 }
