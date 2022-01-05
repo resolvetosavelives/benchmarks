@@ -14,15 +14,16 @@ variable "GITHUB_AUTH_PERSONAL" {
 #   work_item_template = "Basic"
 # }
 
-resource "azuredevops_serviceendpoint_github" "serviceendpoint_for_github" {
-  project_id            = local.devops_project_id
-  service_endpoint_name = "git repo for resolvetosavelives/benchmarks"
-  description           = "For GitHub repo resolvetosavelives/benchmarks"
-  # this is a real Personal access token to Github that expires in 90 days
-  auth_personal {
-    personal_access_token = var.GITHUB_AUTH_PERSONAL
-  }
-}
+#
+# resource "azuredevops_serviceendpoint_github" "serviceendpoint_for_github" {
+#   project_id            = local.devops_project_id
+#   service_endpoint_name = "resolvetosavelives/benchmarks"
+#   description           = "For GitHub repo resolvetosavelives/benchmarks"
+#   # this is a real Personal access token to Github that expires in 90 days
+#   auth_personal {
+#     personal_access_token = var.GITHUB_AUTH_PERSONAL
+#   }
+# }
 
 // build_definition this is what devops.azure.com calls a pipeline
 resource "azuredevops_build_definition" "build_definition" {
@@ -34,11 +35,11 @@ resource "azuredevops_build_definition" "build_definition" {
   }
 
   repository {
-    repo_id               = "resolvetosavelives/benchmarks"
+    repo_id               = var.GITHUB_REPO
     repo_type             = "GitHub"
-    branch_name           = "main-azure"
+    branch_name           = var.GITHUB_BRANCH
     yml_path              = "azure-pipelines.yml"
-    service_connection_id = azuredevops_serviceendpoint_github.serviceendpoint_for_github.id
+    service_connection_id = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID # FIXME: how do we get this ID if name doesn't work?
   }
 
   variable {
@@ -55,6 +56,7 @@ resource "azuredevops_build_definition" "build_definition" {
   }
 }
 
+# WHO creates this for us manually, so we can't manage it with Terraform
 # resource "azuredevops_serviceendpoint_azurecr" "serviceendpoint_acr" {
 #   project_id                = local.devops_project_id
 #   service_endpoint_name     = "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"

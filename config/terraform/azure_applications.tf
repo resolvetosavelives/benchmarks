@@ -1,5 +1,5 @@
 resource "azurerm_app_service_plan" "app_service_plan" {
-  name                = "who-ihr-benchmarks-app-service-plan"
+  name                = "${local.scope}-${local.app_name}-app-service-plan"
   resource_group_name = local.rg_for_workspace
   location            = local.azure_location
   // must be kind="Linux" and reserved=true in order to run Linux containers
@@ -12,7 +12,7 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   }
 }
 resource "azurerm_app_service" "app_service" {
-  name                = "who-ihr-benchmarks-app-service"
+  name                = "${local.scope}-${local.app_name}-app-service"
   resource_group_name = local.rg_for_workspace
   location            = local.azure_location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
@@ -21,15 +21,15 @@ resource "azurerm_app_service" "app_service" {
   }
   site_config {
     vnet_route_all_enabled = true
-    linux_fx_version       = "DOCKER|whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    linux_fx_version       = "DOCKER|${local.docker_image_name}"
     ftps_state             = "Disabled"
   }
 
   app_settings = {
-    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_URL          = local.registry_url
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
-    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
@@ -57,12 +57,32 @@ resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
   app_service_name    = azurerm_app_service.app_service.name
   app_settings = {
     DOCKER_ENABLE_CI                    = true // special //
-    DOCKER_REGISTRY_SERVER_URL          = var.DOCKER_REGISTRY_SERVER_URL
+    DOCKER_REGISTRY_SERVER_URL          = local.registry_url
     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
-    DOCKER_CUSTOM_IMAGE_NAME            = "whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
+    DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
 }
+
+# TODO: Azure returns the error:
+#    slot is invalid.  Slot name: 'Production' is reserved.
+# resource "azurerm_app_service_slot" "benchmarks_production_slot" {
+#   name                = "production"
+#   resource_group_name = local.rg_for_workspace
+#   location            = local.azure_location
+#   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
+#   app_service_name    = azurerm_app_service.app_service.name
+#   app_settings = {
+#     DOCKER_ENABLE_CI                    = true // special //
+#     DOCKER_REGISTRY_SERVER_URL          = local.registry_url
+#     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
+#     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+#     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
+#     DATABASE_URL                        = var.DATABASE_URL_FOR_PRODUCTION
+#     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
+#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+#   }
+# }

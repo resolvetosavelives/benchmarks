@@ -2,31 +2,35 @@
 
 ## Setup
 
+Change to the terraform directory (the location of this README file)
+
+    cd config/terraform
+
+Get the .env.who file from 1Password (or wherever it's being stored by the WHO).
+If you are creating a .env from scratch, follow the .env setup instructions below.
+
+    source .env.who
+
 Install the Azure command-line interface tool known as `az`. For MacOS:
 
-    $ brew install az
+    brew install az
 
 Login to the `az` CLI - You may be prompted to choose which login account and prompted to 2FA if enabled
 
-    $ az login
-    $ az account show
-    $ az account set --subscription "Subscription Name/ID"  # to change which subscription you're using
+    az login
+
+Set your Azure subscription ID to the correct ID identified in the .env file.
+
+    az account show
+    az account set --subscription $ARM_SUBSCRIPTION_ID
 
 Install terraform. For MacOS:
 
-    $ brew install terraform
-
-Change to the terraform directory
-
-    $ cd config/terraform
+    brew install terraform
 
 Initialize terraform
 
-    $ terraform init
-
-Copy .env.sample to .env and update the values according to comments in the file.
-
-    $ cp .env.sample .env
+    terraform init
 
 ## How to use it
 
@@ -36,10 +40,21 @@ Copy .env.sample to .env and update the values according to comments in the file
 cd config/terraform
 source .env.gregory
 az login
-az account set --subscription 89789ead-0e38-4e72-8fd9-3cdcbe80b4ef
+az account set --subscription $ARM_SUBSCRIPTION_ID
 terraform workspace select sandbox
 terraform apply
 ```
+
+### Switching between accounts and workspaces
+
+In order to switch from, for example, the WHO Azure to the Cloud City Azure for testing (using sandbox workspace).
+
+    cd config/terraform
+    source .env.cloudcity
+    az account set --subscription $ARM_SUBSCRIPTION_ID
+    terraform workspace list
+    terraform workspace select sandbox
+    terraform apply
 
 ### Last: Destroy
 
@@ -54,11 +69,20 @@ terraform destroy
 
 ## After Provisioning DevOps, Action is Required
 
-After Azure DevOps resources have been provisioned via Terraform/AzureRM, Approval must be granted for the Service Connection
-for Azure Devops to access the Azure Container Registry, even when created/managed via terraform.
-There may be a non-interactive way to do this but I have not found one so far. To do this, go to the Azure Devops project portal https://dev.azure.com
-and view the pipeline and you should see a message on the page that says that the pipeline cannot run until you click this button to approve the
+After Azure DevOps is provisioned via Terraform, approval must be granted for the Service Connection
+for Azure Devops to access the Azure Container Registry.
+
+Go to the Azure Devops project portal https://dev.azure.com and view the pipeline.
+You should see a message on the page that says that the pipeline cannot run until you click this button to approve the
 Service Connection.
+
+There may be a non-interactive way to do this but I have not found one so far. To do this,
+
+## .env Setup Instructions for a new Azure subscription
+
+Copy the sample .env from config/terraform/.env.sample to config/terraform/.env.name
+
+Follow instructions in the .env.sample.
 
 ### Dealing with Terraform-Generated Secret Values
 

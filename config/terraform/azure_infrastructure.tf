@@ -4,7 +4,7 @@
 #
 resource "azurerm_container_registry" "acr" {
   // Azure rules for name: alpha numeric characters, lower case, must be globally unique
-  name                          = "whoihrbenchmarksregistry"
+  name                          = local.registry_name
   resource_group_name           = local.rg_for_workspace
   location                      = local.azure_location
   sku                           = "Premium"
@@ -33,7 +33,7 @@ resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
 }
 
 resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
-  name                          = "psqldb-who-ihr-benchmarks"
+  name                          = "psqldb-${local.scope}-${local.app_name}"
   resource_group_name           = local.rg_for_workspace
   location                      = local.azure_location
   public_network_access_enabled = true

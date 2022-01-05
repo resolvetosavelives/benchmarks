@@ -25,9 +25,6 @@ terraform {
 
 provider "azurerm" {
   features {}
-  # WHO sub and tenant
-  # subscription_id = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
-  # tenant_id       = "f610c0b7-bd24-4b39-810b-3dc280afb590"
   # Gregory's Azure subscription and tenant
   # subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
   # tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
@@ -40,6 +37,7 @@ data "azurerm_subscription" "current" {}
 //
 locals {
   env      = terraform.workspace == "production" ? "P" : "T"
+  scope    = "${var.ORGANIZATION}${terraform.workspace}"
   app_name = "ihrbenchmark"
   # WHO sub name
   #  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
@@ -48,11 +46,18 @@ locals {
   subscription_name = "Cloud City Azure"
   azure_location    = "westeurope"
 
+  registry_name     = "${local.app_name}${local.scope}" # ihrbenchmarkwhoproduction
+  registry_domain   = "${local.registry_name}.azurecr.io"
+  registry_url      = "https://${local.registry_domain}"
+  docker_image_name = "${local.registry_domain}/benchmarks:latest"
   # per WHO Azure project policy, ResourceGroup names are UPPERCASE-WITH-HYPHENS
   rg_for_workspace = upper("${local.app_name}-${local.env}-WEU-RG01")
   # Must match exactly the backend above
-  rg_for_terraform  = "IHRBENCHMARK-MAIN-WEU-RG01"
+  rg_for_terraform = "IHRBENCHMARK-MAIN-WEU-RG01"
+  # TODO: Extract the following devops_project_id to environment
+  # Unfortunately we had to grab this from the HTML in the dev.azure.com page. :(
   devops_project_id = "36d18af8-b292-46f5-8254-18bdfdd1a883"
+
 }
 
 resource "random_string" "db_administrator_login" {
