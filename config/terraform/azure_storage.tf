@@ -4,8 +4,8 @@
 resource "azurerm_storage_account" "TerraformState" {
   // the "5b92c0" part of this is a 6-char portion of output of: rake secret
   name                     = "tfstate5b92c0"
-  resource_group_name      = azurerm_resource_group.who_ihr_benchmarks_terraform.name
-  location                 = azurerm_resource_group.who_ihr_benchmarks_terraform.location
+  resource_group_name      = local.rg_for_terraform
+  location                 = local.azure_location
   account_tier             = "Standard"
   account_replication_type = "LRS"
   allow_blob_public_access = true

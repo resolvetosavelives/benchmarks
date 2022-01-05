@@ -47,7 +47,12 @@ locals {
   # subscription_name = "Gregs Azure for experimentation on CloudCity work"
   subscription_name = "Cloud City Azure"
   azure_location    = "westeurope"
-  rg_for_workspace  = upper("${local.app_name}-${local.env}-WEU-RG01")
+
+  # per WHO Azure project policy, ResourceGroup names are UPPERCASE-WITH-HYPHENS
+  rg_for_workspace = upper("${local.app_name}-${local.env}-WEU-RG01")
+  # Must match exactly the backend above
+  rg_for_terraform  = "IHRBENCHMARK-MAIN-WEU-RG01"
+  devops_project_id = "36d18af8-b292-46f5-8254-18bdfdd1a883"
 }
 
 resource "random_string" "db_administrator_login" {

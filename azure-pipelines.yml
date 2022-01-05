@@ -50,14 +50,14 @@ steps:
     displayName: Docker Login to ACR
     inputs:
       command: login
-      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+      containerRegistry: "AzureRM IHRBENCHMARK-P-WEU-RG01"
   - script: echo $(RAILS_MASTER_KEY) > config/master.key
     displayName: Write RAILS_MASTER_KEY to file config/master.key
   - task: Docker@2
     displayName: Docker build image for benchmarks app
     inputs:
       command: build
-      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+      containerRegistry: "AzureRM IHRBENCHMARK-P-WEU-RG01"
       repository: benchmarks
       Dockerfile: config/docker/Dockerfile
       tags: latest
@@ -68,6 +68,6 @@ steps:
     displayName: Docker push image for benchmarks app to ACR
     inputs:
       command: push
-      containerRegistry: "Service Endpoint for WHO IHR Benchmarks Azure Container Registry"
+      containerRegistry: "AzureRM IHRBENCHMARK-P-WEU-RG01"
       repository: benchmarks
       tags: latest
