@@ -27,7 +27,7 @@ variable "GITHUB_AUTH_PERSONAL" {
 
 // build_definition this is what devops.azure.com calls a pipeline
 resource "azuredevops_build_definition" "build_definition" {
-  project_id = local.devops_project_id
+  project_id = var.DEVOPS_PROJECT_ID
   name       = "Build Pipeline for WHO IHR Benchmarks"
 
   ci_trigger {

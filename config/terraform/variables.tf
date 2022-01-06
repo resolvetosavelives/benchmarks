@@ -5,6 +5,10 @@ variable "ORGANIZATION" {
   type      = string
   sensitive = false
 }
+variable "DEVOPS_PROJECT_ID" {
+  type      = string
+  sensitive = false
+}
 variable "DATABASE_URL_FOR_PIPELINE" {
   type      = string
   sensitive = true
@@ -20,9 +24,6 @@ variable "DATABASE_URL_FOR_PRODUCTION" {
 variable "DEVOPS_GITHUB_SERVICE_CONNECTION_ID" {
   type      = string
   sensitive = false
-}
-variable "DOCKER_REGISTRY_SERVER_URL" {
-  type = string
 }
 variable "DOCKER_REGISTRY_SERVER_USERNAME" {
   type      = string

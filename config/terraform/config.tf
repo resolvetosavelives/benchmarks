@@ -14,20 +14,17 @@ terraform {
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
-  # backend "azurerm" {
-  #   // Variables not allowed in this block
-  #   resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
-  #   storage_account_name = "tfstate5b92c0"
-  #   container_name       = "tfstate"
-  #   key                  = "terraform.tfstate"
-  # }
+   backend "azurerm" {
+     // Variables not allowed in this block
+     resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
+     storage_account_name = "whoproductiontfstate"
+     container_name       = "tfstate"
+     key                  = "terraform.tfstate"
+   }
 }
 
 provider "azurerm" {
   features {}
-  # Gregory's Azure subscription and tenant
-  # subscription_id = "89789ead-0e38-4e72-8fd9-3cdcbe80b4ef"
-  # tenant_id       = "7018baf0-4beb-46d2-a7d1-7679026af9e0"
 }
 // to expose to other tf code: id, tenant_id, subscription_id, display_name..
 data "azurerm_subscription" "current" {}
@@ -51,10 +48,6 @@ locals {
   rg_for_workspace = upper("${local.app_name}-${local.env}-WEU-RG01")
   # Must match exactly the backend above
   rg_for_terraform = "IHRBENCHMARK-MAIN-WEU-RG01"
-  # TODO: Extract the following devops_project_id to environment
-  # Unfortunately we had to grab this from the HTML in the dev.azure.com page. :(
-  devops_project_id = "36d18af8-b292-46f5-8254-18bdfdd1a883"
-
 }
 
 resource "random_string" "db_administrator_login" {

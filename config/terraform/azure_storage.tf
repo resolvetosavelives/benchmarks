@@ -3,7 +3,7 @@
 //   Because of this, it is being stored 
 resource "azurerm_storage_account" "TerraformState" {
   // the "5b92c0" part of this is a 6-char portion of output of: rake secret
-  name                     = "tfstate5b92c0"
+  name                     = "${local.scope}tfstate"
   resource_group_name      = local.rg_for_terraform
   location                 = local.azure_location
   account_tier             = "Standard"
