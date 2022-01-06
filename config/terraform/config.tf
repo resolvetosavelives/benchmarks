@@ -39,12 +39,9 @@ locals {
   env      = terraform.workspace == "production" ? "P" : "T"
   scope    = "${var.ORGANIZATION}${terraform.workspace}"
   app_name = "ihrbenchmark"
-  # WHO sub name
-  #  subscription_name   = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
-  # Gregory's personal sub name
-  # subscription_name = "Gregs Azure for experimentation on CloudCity work"
-  subscription_name = "Cloud City Azure"
-  azure_location    = "westeurope"
+  # Used for azuredevops_serviceendpoint_azurecr
+  # subscription_name = "Cloud City Azure"
+  azure_location = "westeurope"
 
   registry_name     = "${local.app_name}${local.scope}" # ihrbenchmarkwhoproduction
   registry_domain   = "${local.registry_name}.azurecr.io"

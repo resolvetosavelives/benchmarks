@@ -64,5 +64,5 @@ resource "azuredevops_build_definition" "build_definition" {
 #   azurecr_spn_tenantid      = data.azurerm_subscription.current.tenant_id
 #   azurecr_name              = azurerm_container_registry.acr.name
 #   azurecr_subscription_id   = data.azurerm_subscription.current.subscription_id
-#   azurecr_subscription_name = local.subscription_name
+#   azurecr_subscription_name = local.subscription_name # removed, add back if we uncomment
 # }
