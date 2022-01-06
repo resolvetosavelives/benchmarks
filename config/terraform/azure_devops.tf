@@ -55,7 +55,7 @@ resource "azuredevops_build_definition" "build_definition" {
     allow_override = false
   }
   variable {
-    name           = "Docker ACR ihrbenchmarkccdproduction"
+    name           = "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_ID"
     is_secret      = false
     secret_value   = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_ID
     allow_override = false

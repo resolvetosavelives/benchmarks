@@ -19,11 +19,11 @@ resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
   # the service_uri is obtained via command:
   #   az webapp deployment container show-cd-url --resource-group <rg name> --name <app name> --slot <slot name>
   # example for sandbox staging slot:
-  #   az webapp deployment container show-cd-url --resource-group WHOIHRBENCHMARKS-SANDBOX-EUW-RG01 --name who-ihr-benchmarks-app-service --slot staging
+  #   az webapp deployment container show-cd-url --resource-group IHRBENCHMARK-P-WEU-RG01 --name whoproduction-ihrbenchmark-app-service --slot staging
   # docs on it:
   # - https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container#automate-with-cli
   # - https://docs.microsoft.com/en-us/cli/azure/webapp/deployment/container#az_webapp_deployment_container_show_cd_url
-  service_uri = "https://$who-ihr-benchmarks-app-service__staging:c3eTkaf25wjvnds5LuW2m4WHhQzl1hwCDxwtuW79NYdTlHyxa8ts9e6llZmJ@who-ihr-benchmarks-app-service-staging.scm.azurewebsites.net/docker/hook"
+  service_uri = "https://$whoproduction-ihrbenchmark-app-service__staging:H2pfrvFqYqEpkuKpFYSM3bRve0rbiL1LJ5LcspW6a0dGClnstgiPc4J7ddql@whoproduction-ihrbenchmark-app-service-staging.scm.azurewebsites.net/docker/hook"
   status      = "enabled"
   scope       = "benchmarks:latest"
   actions     = ["push"]
