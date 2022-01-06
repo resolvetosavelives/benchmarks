@@ -25,7 +25,7 @@ variable "DEVOPS_GITHUB_SERVICE_CONNECTION_ID" {
   type      = string
   sensitive = false
 }
-variable "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_ID" {
+variable "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME" {
   type      = string
   sensitive = false
 }

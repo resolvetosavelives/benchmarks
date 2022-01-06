@@ -55,9 +55,9 @@ resource "azuredevops_build_definition" "build_definition" {
     allow_override = false
   }
   variable {
-    name           = "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_ID"
+    name           = "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME"
     is_secret      = false
-    secret_value   = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_ID
+    secret_value   = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME
     allow_override = false
   }
 }
