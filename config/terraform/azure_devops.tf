@@ -37,7 +37,7 @@ resource "azuredevops_build_definition" "build_definition" {
   repository {
     repo_id               = var.GITHUB_REPO
     repo_type             = "GitHub"
-    branch_name           = var.GITHUB_BRANCH
+    branch_name           = "main"
     yml_path              = "azure-pipelines.yml"
     service_connection_id = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID
   }
