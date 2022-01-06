@@ -17,7 +17,7 @@ variable "DATABASE_URL_FOR_PRODUCTION" {
   type      = string
   sensitive = true
 }
-variable "DEVOPS_GITHUB_SERVICE_CONNECTION_NAME" {
+variable "DEVOPS_GITHUB_SERVICE_CONNECTION_ID" {
   type      = string
   sensitive = false
 }

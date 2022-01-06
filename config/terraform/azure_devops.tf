@@ -39,7 +39,7 @@ resource "azuredevops_build_definition" "build_definition" {
     repo_type             = "GitHub"
     branch_name           = var.GITHUB_BRANCH
     yml_path              = "azure-pipelines.yml"
-    service_connection_id = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID # FIXME: how do we get this ID if name doesn't work?
+    service_connection_id = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID
   }
 
   variable {
