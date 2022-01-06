@@ -27,8 +27,8 @@ resource "azurerm_app_service" "app_service" {
 
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL          = local.registry_url
-    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
+    DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
@@ -58,31 +58,11 @@ resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
   app_settings = {
     DOCKER_ENABLE_CI                    = true // special //
     DOCKER_REGISTRY_SERVER_URL          = local.registry_url
-    DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
-    DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
+    DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
+    DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
     DATABASE_URL                        = var.DATABASE_URL_FOR_STAGING
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
 }
-
-# TODO: Azure returns the error:
-#    slot is invalid.  Slot name: 'Production' is reserved.
-# resource "azurerm_app_service_slot" "benchmarks_production_slot" {
-#   name                = "production"
-#   resource_group_name = local.rg_for_workspace
-#   location            = local.azure_location
-#   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
-#   app_service_name    = azurerm_app_service.app_service.name
-#   app_settings = {
-#     DOCKER_ENABLE_CI                    = true // special //
-#     DOCKER_REGISTRY_SERVER_URL          = local.registry_url
-#     DOCKER_REGISTRY_SERVER_USERNAME     = var.DOCKER_REGISTRY_SERVER_USERNAME
-#     DOCKER_REGISTRY_SERVER_PASSWORD     = var.DOCKER_REGISTRY_SERVER_PASSWORD
-#     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
-#     DATABASE_URL                        = var.DATABASE_URL_FOR_PRODUCTION
-#     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
-#     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
-#   }
-# }

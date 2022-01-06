@@ -97,6 +97,10 @@ terraform show -json tfplan > tfplan.json
 
 Open and view the generates JSON file `tfplan.json` and the secret value(s) there in plain text.
 
+## Useful Commands
+
+    az webapp log tail --resource-group IHRBENCHMARK-P-WEU-RG01 --name whoproduction-ihrbenchmark-app-service --slot staging --subscription "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+
 # WHO-specific Background Things to know
 
 There are certain resources that are "pets" (long-lived things that should never be destroyed).

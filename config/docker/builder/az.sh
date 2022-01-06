@@ -4,12 +4,12 @@
 #   and auto-complete only.
 ##
 
-# az acr login -n whoihrbenchmarksregistry
+# az acr login -n ihrbenchmarkwhoproduction
 
 ##
 # BUILDER image
 az acr task create \
-  -r whoihrbenchmarksregistry \
+  -r ihrbenchmarkwhoproduction \
   -n taskToRebuildTheBuilderImage \
   -c https://github.com/resolvetosavelives/benchmarks.git#main-azure \
   -f config/docker/builder/Dockerfile \
@@ -19,17 +19,17 @@ az acr task create \
   -t benchmarks_builder:latest
 
 #az acr task delete \
-#  -r whoihrbenchmarksregistry \
+#  -r ihrbenchmarkwhoproduction \
 #  -n taskToRebuildTheBuilderImage
 
 az acr task run \
-  -r whoihrbenchmarksregistry \
+  -r ihrbenchmarkwhoproduction \
   -n taskToRebuildTheBuilderImage
 
 ##
 # BASE image
 az acr task create \
-  -r whoihrbenchmarksregistry \
+  -r ihrbenchmarkwhoproduction \
   -n taskToRebuildTheBaseImage \
   -c https://github.com/resolvetosavelives/benchmarks.git#main-azure \
   -f config/docker/base/Dockerfile \
@@ -39,9 +39,9 @@ az acr task create \
   -t benchmarks_base:latest
 
 #az acr task delete \
-#  -r whoihrbenchmarksregistry \
+#  -r ihrbenchmarkwhoproduction \
 #  -n taskToRebuildTheBaseImage
 
 az acr task run \
-  -r whoihrbenchmarksregistry \
+  -r ihrbenchmarkwhoproduction \
   -n taskToRebuildTheBaseImage
