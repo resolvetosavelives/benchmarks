@@ -14,13 +14,20 @@ terraform {
     }
   }
   // terraform state stored securely in azure storage and is encrypted in transit and at rest.
-   backend "azurerm" {
-     // Variables not allowed in this block
-     resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
-     storage_account_name = "whoproductiontfstate"
-     container_name       = "tfstate"
-     key                  = "terraform.tfstate"
-   }
+  backend "azurerm" {
+    // Variables not allowed in this block
+    resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
+    storage_account_name = "whoproductiontfstate"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+  # backend "azurerm" {
+  #   // Variables not allowed in this block
+  #   resource_group_name  = "IHRBENCHMARK-MAIN-WEU-RG01"
+  #   storage_account_name = "tfstate5b92c0"
+  #   container_name       = "tfstate"
+  #   key                  = "terraform.tfstate"
+  # }
 }
 
 provider "azurerm" {
