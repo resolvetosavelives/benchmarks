@@ -54,6 +54,12 @@ resource "azuredevops_build_definition" "build_definition" {
     secret_value   = var.RAILS_MASTER_KEY
     allow_override = false
   }
+  variable {
+    name           = "Docker ACR ihrbenchmarkccdproduction"
+    is_secret      = false
+    secret_value   = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_ID
+    allow_override = false
+  }
 }
 
 # WHO creates this for us manually, so we can't manage it with Terraform
