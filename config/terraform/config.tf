@@ -4,10 +4,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 2.74"
     }
-    azuredevops = {
-      source  = "microsoft/azuredevops"
-      version = ">= 0.1.7"
-    }
     random = {
       source  = "hashicorp/random"
       version = ">= 3.1.0"
@@ -55,6 +51,17 @@ locals {
   rg_for_workspace = upper("${local.app_name}-${local.env}-WEU-RG01")
   # Must match exactly the backend above
   rg_for_terraform = "IHRBENCHMARK-MAIN-WEU-RG01"
+}
+
+module "devops" {
+  source                                    = "./devops"
+  PROJECT_ID                                = var.DEVOPS_PROJECT_ID
+  DATABASE_URL                              = var.DATABASE_URL_FOR_PIPELINE
+  GITHUB_SERVICE_CONNECTION_ID              = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID
+  DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME
+  GITHUB_REPO                               = var.GITHUB_REPO
+  GITHUB_BRANCH                             = var.GITHUB_BRANCH
+  RAILS_MASTER_KEY                          = var.RAILS_MASTER_KEY
 }
 
 resource "random_string" "db_administrator_login" {
