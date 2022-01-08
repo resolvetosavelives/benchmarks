@@ -7,9 +7,13 @@ terraform {
   }
 }
 
+data "azuredevops_project" "p" {
+  name = "IHRBENCHMARK"
+}
+
 // build_definition this is what devops.azure.com calls a pipeline
 resource "azuredevops_build_definition" "build_definition" {
-  project_id = var.PROJECT_ID
+  project_id = data.azuredevops_project.p.id
   name       = "Build Pipeline for WHO IHR Benchmarks"
 
   ci_trigger {
