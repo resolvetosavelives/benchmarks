@@ -1,6 +1,3 @@
-variable "PROJECT_ID" {
-  type = string
-}
 variable "DATABASE_URL" {
   type      = string
   sensitive = true

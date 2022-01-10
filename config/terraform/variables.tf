@@ -5,10 +5,6 @@ variable "ORGANIZATION" {
   type      = string
   sensitive = false
 }
-variable "DEVOPS_PROJECT_ID" {
-  type      = string
-  sensitive = false
-}
 variable "DATABASE_URL_FOR_PIPELINE" {
   type      = string
   sensitive = true

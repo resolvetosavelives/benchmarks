@@ -55,7 +55,6 @@ locals {
 
 module "devops" {
   source                                    = "./devops"
-  PROJECT_ID                                = var.DEVOPS_PROJECT_ID
   DATABASE_URL                              = var.DATABASE_URL_FOR_PIPELINE
   GITHUB_SERVICE_CONNECTION_ID              = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID
   DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME
