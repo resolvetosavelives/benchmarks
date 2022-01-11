@@ -5,13 +5,15 @@
 #
 # There's no state recorded for this particular storage container.
 # You can import if you need to tear down and recreate the state container.
-# These commands reference the following env vars in `.env.who`:
-# * ARM_SUBSCRIPTION_ID - The subscription id also available from `az account show`
-# * TF_VAR_TFSTATE_RESOURCE_GROUP - The manually created resource group ("IHRBENCHMARK-MAIN-WEU-RG01")
-# * TF_VAR_TFSTATE_STORAGE_ACCOUNT - The name of the storage account (generated here)
+
+# These commands reference the following, some of which is in .env.who
 #
-#     terraform import azurerm_storage_account.tfstate_account "/subscriptions/$ARM_SUBSCRIPTION_ID/resourceGroups/$TF_VAR_TFSTATE_RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$TF_VAR_TFSTATE_STORAGE_ACCOUNT"
-#     terraform import azurerm_storage_container.tfstate_container "https://$TF_VAR_TFSTATE_STORAGE_ACCOUNT.blob.core.windows.net/tfstate"
+# * ARM_SUBSCRIPTION_ID - The subscription id also available from `az account show`
+# * TF_VAR_TFSTATE_RESOURCE_GROUP - The existing resource group ("IHRBENCHMARK-MAIN-WEU-RG01")
+# * TFSTATE_STORAGE_ACCOUNT_NAME - The name of the storage account (generated here)
+#
+#     terraform import azurerm_storage_account.tfstate_account "/subscriptions/${ARM_SUBSCRIPTION_ID}/resourceGroups/${TF_VAR_TFSTATE_RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${TFSTATE_STORAGE_ACCOUNT_NAME}"
+#     terraform import azurerm_storage_container.tfstate_container "https://${TFSTATE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/tfstate"
 #
 # IMPORTANT: Don't destroy this unless _everything_ in other terraform builds is already destroyed.
 terraform {
@@ -27,26 +29,33 @@ terraform {
   }
 }
 
+locals {
+  key = "tfstate"
+}
+
 provider "azurerm" {
   features {}
 }
 
-resource "random_id" "account_name" {
+# Using random_password because it's easy to import (unlike random_id)
+resource "random_string" "account_name" {
+  lower   = true
+  special = false
+  upper   = false
+  length  = 8
   keepers = {
-    # Keepers are used to regenerate the random id when this changes.
-    # If we move resource groups, we want the id to change.
+    # Keepers are used to regenerate the random string when this value changes.
+    # If we move resource groups, we want the id to change so we don't conflict.
     resource_group_name = var.TFSTATE_RESOURCE_GROUP
   }
-  prefix = "tfstate"
-
-  byte_length = 4
 }
 data "azurerm_resource_group" "resource_group" {
-  name = random_id.account_name.keepers.resource_group_name
+  # Accessing "through" the random_string ensures we use the same value.
+  name = random_string.account_name.keepers.resource_group_name
 }
 
 resource "azurerm_storage_account" "tfstate_account" {
-  name                     = random_id.account_name.hex
+  name                     = "${local.key}${random_string.account_name.result}"
   resource_group_name      = data.azurerm_resource_group.resource_group.name
   location                 = data.azurerm_resource_group.resource_group.location
   account_tier             = "Standard"
@@ -54,7 +63,7 @@ resource "azurerm_storage_account" "tfstate_account" {
 }
 
 resource "azurerm_storage_container" "tfstate_container" {
-  name                  = "tfstate"
+  name                  = local.key
   storage_account_name  = azurerm_storage_account.tfstate_account.name
   container_access_type = "private"
 }
