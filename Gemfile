@@ -42,7 +42,7 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 3.35"
+  gem "capybara", "~> 3.36"
   gem "cuprite", "~> 0.11"
   gem "factory_bot_rails", "~> 6.2"
   gem "minitest-reporters", "~> 1.4"
