@@ -29,6 +29,7 @@ terraform {
 provider "azurerm" {
   features {}
 }
+
 // to expose to other tf code: id, tenant_id, subscription_id, display_name..
 data "azurerm_subscription" "current" {}
 
