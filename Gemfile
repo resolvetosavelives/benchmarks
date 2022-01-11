@@ -20,10 +20,10 @@ gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
 gem "sentry-rails", "~> 4.4"
 gem "sentry-ruby", "~> 4.4"
+gem "tzinfo-data"
 gem "webpacker", "~> 5.4"
 
 group :development, :test do
-  gem "colorize", "~> 0.8"
   gem "m", "~> 1.6"
   gem "minitest-rails", "~> 6.1"
   gem "pry-byebug", "~> 3.9"

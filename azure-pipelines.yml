@@ -1,0 +1,73 @@
+##
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+##
+
+trigger:
+  - main
+
+variables:
+  DOCKER_BUILDKIT: 1
+
+##
+# the MS-provided ubuntu-20.04 image includes postgres
+# full list of includes software:
+# https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+pool:
+  vmImage: ubuntu-20.04
+
+steps:
+  - task: UseRubyVersion@0
+    inputs:
+      versionSpec: ">= 3.0"
+      addToPath: true
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "16.x"
+  - script: |
+      bin/bundle config set --local path vendor/bundle && \
+      bin/bundle config set --local deployment true && \
+      bin/bundle install
+    displayName: bundle install
+  - script: yarn install --frozen-lockfile --check-files
+    displayName: yarn install
+  - task: CmdLine@2
+    displayName: prepare test db
+    inputs:
+      script: DATABASE_URL=$(DATABASE_URL) RAILS_ENV=test bin/bundle exec rake db:environment:set db:schema:load db:seed
+  - task: CmdLine@2
+    displayName: run test suite
+    inputs:
+      script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      codeCoverageTool: JUnit
+      testRunTitle: Benchmarks ruby rspec test suite with in-browser
+      testResultsFiles: "**/TEST-*.xml"
+  - task: Docker@2
+    displayName: Docker Login to ACR
+    inputs:
+      command: login
+      containerRegistry: SC-IHRBENCHMARK-P-ACR
+  - script: echo $(RAILS_MASTER_KEY) > config/master.key
+    displayName: Write RAILS_MASTER_KEY to file config/master.key
+  - task: Docker@2
+    displayName: Docker build image for benchmarks app
+    inputs:
+      command: build
+      containerRegistry: SC-IHRBENCHMARK-P-ACR
+      repository: benchmarks
+      Dockerfile: config/docker/Dockerfile
+      tags: latest
+      arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
+  - script: rm config/master.key
+    displayName: Delete RAILS_MASTER_KEY file config/master.key
+  - task: Docker@2
+    displayName: Docker push image for benchmarks app to ACR
+    inputs:
+      command: push
+      containerRegistry: SC-IHRBENCHMARK-P-ACR
+      repository: benchmarks
+      tags: latest

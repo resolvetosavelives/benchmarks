@@ -1,0 +1,12 @@
+# influenced by https://github.com/github/gitignore/blob/master/Terraform.gitignore
+
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+
+crash.log
+*.tfvars
+
+# ignore CLI configuration files
+.terraformrc
+terraform.rc
