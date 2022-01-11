@@ -30,27 +30,25 @@ provider "azurerm" {
   features {}
 }
 
-// to expose to other tf code: id, tenant_id, subscription_id, display_name..
-data "azurerm_subscription" "current" {}
-
-//
-// See the README.md file for the conventions for naming things and code style.
-//
 locals {
-  env      = terraform.workspace == "production" ? "P" : "T"
-  scope    = "${var.ORGANIZATION}${terraform.workspace}"
-  app_name = "ihrbenchmark"
-  # Used for azuredevops_serviceendpoint_azurecr
-  # subscription_name = "Cloud City Azure"
-  azure_location = "westeurope"
+  envchar             = terraform.workspace == "production" ? "p" : "t"
+  app_name            = "ihrbenchmark"
+  resource_group_name = upper("${local.app_name}-${local.envchar}-WEU-RG01")
+  scope               = "${var.ORGANIZATION}${terraform.workspace}"
 
   registry_name     = "${local.app_name}${local.scope}" # ihrbenchmarkwhoproduction
   registry_domain   = "${local.registry_name}.azurecr.io"
   registry_url      = "https://${local.registry_domain}"
   docker_image_name = "${local.registry_domain}/benchmarks:latest"
   # per WHO Azure project policy, ResourceGroup names are UPPERCASE-WITH-HYPHENS
-  rg_for_workspace = upper("${local.app_name}-${local.env}-WEU-RG01")
 }
+
+data "azurerm_resource_group" "rg" {
+  name = local.resource_group_name
+}
+
+// to expose to other tf code: id, tenant_id, subscription_id, display_name..
+data "azurerm_subscription" "current" {}
 
 module "devops" {
   source                                    = "./devops"
