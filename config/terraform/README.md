@@ -29,31 +29,75 @@ Set your Azure subscription ID, which is defined in the .env file.
     az account set --subscription $ARM_SUBSCRIPTION_ID
     az account show
 
+## First time on a new subscription
+
+**ONLY DO THIS IN A NEW SUBSCRIPTION**
+If you're syncing with the existing infrastructure, skip this section.
+
+Change to the bootstrap directory `config/terraform/bootstrap`
+
+    cd bootstrap
+
+Initialize terraform, then apply to create tfstate
+
+    terraform init
+    terraform apply
+
+Update `config/terraform/main.tf` with the output from apply.
+
+    # copy this output into the backend block.
+    resource_group_name  = resource_group_name
+    storage_account_name = storage_account_name
+    container_name       = container_name
+
+## Provisioning
+
+Change to the terraform directory (the location of this README file)
+
+    cd config/terraform
+
 Initialize terraform.
-If there is existing remote state it will be loaded if you have access.
+If there is existing remote state it will be loaded if you have access and are logged in.
 
     terraform init
 
-### Switching Accounts
-
-In order to switch between Azure accounts, perform the following actions.
-In this case, we switch from the WHO Azure to the Cloud City Azure for testing:
-The .env.cloudcity file is in the Benchmark 1Password Vault.
-
-    cd config/terraform
-    source .env.cloudcity
-    az account set --subscription $ARM_SUBSCRIPTION_ID
-    terraform workspace select sandbox
-
-## Provision
-
 Ensure you are logged in to the right azure account (see above).
-Select the workspace you want to use, then apply (you will be prompted before changes are made)
+Select the workspace you want to use. We don't use `default`.
 
     source .env.who
     az account set --subscription $ARM_SUBSCRIPTION_ID
     terraform workspace select sandbox
+
+Then apply changes (you will be asked to confirm, read carefully)
+
     terraform apply
+
+## Switch accounts
+
+Switch azure accounts is tricky. There is a stored .terraform folder that remembers
+the last place the state was stored. Switching will mess up this state file.
+Also, the backend must be updated manually in main.tf.
+
+First, either delete or move the local state.
+
+    cd config/terraform
+    mv .terraform .terraform.otheraccount
+
+In this example, we switch from WHO Azure to Cloud City Azure for testing:
+The .env.cloudcity file is in the Cloud City Benchmark 1Password Vault.
+
+    source .env.cloudcity
+    az account set --subscription $ARM_SUBSCRIPTION_ID
+
+Edit the main.tf file in config/terraform/main.tf to manually switch the backend.
+
+    terraform init
+    terraform workspace select sandbox
+    terraform plan
+
+If it looks like it's going to destroy everything and recreate or if it thinks
+all the old account resources are missing, you may not have gotten the state file
+correctly switched or the backend configured correctly. Switching is tricky, see.
 
 ### After Provisioning Azure DevOps, Action is Required
 
