@@ -1,7 +1,7 @@
 resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "${local.scope}-${local.app_name}-app-service-plan"
-  resource_group_name = local.rg_for_workspace
-  location            = local.azure_location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   // must be kind="Linux" and reserved=true in order to run Linux containers
   kind     = "Linux"
   reserved = true
@@ -13,8 +13,8 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 }
 resource "azurerm_app_service" "app_service" {
   name                = "${local.scope}-${local.app_name}-app-service"
-  resource_group_name = local.rg_for_workspace
-  location            = local.azure_location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   identity {
     type = "SystemAssigned"
@@ -51,8 +51,8 @@ resource "azurerm_app_service" "app_service" {
 
 resource "azurerm_app_service_slot" "benchmarks_staging_slot" {
   name                = "staging"
-  resource_group_name = local.rg_for_workspace
-  location            = local.azure_location
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
   app_settings = {
