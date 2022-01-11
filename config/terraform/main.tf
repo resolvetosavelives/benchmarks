@@ -50,8 +50,6 @@ locals {
   docker_image_name = "${local.registry_domain}/benchmarks:latest"
   # per WHO Azure project policy, ResourceGroup names are UPPERCASE-WITH-HYPHENS
   rg_for_workspace = upper("${local.app_name}-${local.env}-WEU-RG01")
-  # Must match exactly the backend above
-  rg_for_terraform = "IHRBENCHMARK-MAIN-WEU-RG01"
 }
 
 module "devops" {
