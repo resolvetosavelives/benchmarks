@@ -38,25 +38,3 @@ resource "azuredevops_variable_group" "vars" {
     secret_value = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME
   }
 }
-
-// build_definition this is what devops.azure.com calls a pipeline
-resource "azuredevops_build_definition" "build_definition" {
-  project_id = data.azuredevops_project.project.id
-  name       = "Build Pipeline for WHO IHR Benchmarks"
-
-  ci_trigger {
-    use_yaml = true
-  }
-
-  repository {
-    repo_id               = var.GITHUB_REPO
-    repo_type             = "GitHub"
-    branch_name           = var.GITHUB_BRANCH
-    yml_path              = "azure-pipelines.yml"
-    service_connection_id = var.GITHUB_SERVICE_CONNECTION_ID
-  }
-
-  variable_groups = [
-    azuredevops_variable_group.vars.id
-  ]
-}
