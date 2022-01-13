@@ -23,18 +23,24 @@ trigger:
 # TODO: Parameterize these in the variable group
 variables:
   - group: pipeline-variable-group
-  DOCKER_BUILDKIT: 1
-  tag: $(build.buildId)
-  appName: benchmarks
-  containerRegistryDomain: ihrbenchmarkwhoproduction.azurecr.io
-  imageName: $(containerRegistroyDomain)/$(appName):$(tag)
-  azureSubscription: ${{parameters.azureSubscription}}
-  containerRegistery: ${{parameters.containerRegistry}}
-  webAppName: whoproduction-ihrbenchmark-app-service
-  resourceGroupName: IHRBENCHMARK-P-WEU-RG01
-    # - name: DATABASE_URL
-    #   displayName: Pipeline Test DATABASE_URL
-    #   type: string
+  - name: DOCKER_BUILDKIT
+    value: 1
+  - name: tag
+    value: $(build.buildId)
+  - name: appName
+    value: benchmarks
+  - name: containerRegisterySC
+    value: ${{parameters.containerRegistry}}
+  - name: containerRegistryDomain
+    value: ihrbenchmarkwhoproduction.azurecr.io
+  - name: imageName
+    value: $(containerRegistroyDomain)/$(appName):$(tag)
+  - name: azureSubscription
+    value: ${{parameters.azureSubscription}}
+  - name: webAppName
+    value: whoproduction-ihrbenchmark-app-service
+  - name: resourceGroupName
+    value: IHRBENCHMARK-P-WEU-RG01
 
 ##
 # the MS-provided ubuntu-20.04 image includes postgres
