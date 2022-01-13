@@ -30,7 +30,7 @@ variables:
   - name: appName
     value: benchmarks
   - name: containerRegistry
-    value: $(parameters.containerRegistryServiceConnection)
+    value: ${{parameters.containerRegistryServiceConnection}}
   - name: containerRegistryDomain
     value: ihrbenchmarkwhoproduction.azurecr.io
   - name: imageName
