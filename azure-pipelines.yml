@@ -119,7 +119,7 @@ stages:
               containerRegistry: $(containerRegistry)
               repository: $(appName)
               tags: latest
-  - stage: Stage
+  - stage: Staging
     jobs:
       - job: Deploy
         displayName: Deploy to Staging
