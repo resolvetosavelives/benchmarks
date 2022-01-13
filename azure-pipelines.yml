@@ -5,7 +5,7 @@
 ##
 
 parameters:
-  - name: containerRegistry
+  - name: containerRegistryServiceConnection
     displayName: Container Registry Service Connection
     type: string
     default: SC-IHRBENCHMARK-P-ACR
@@ -29,12 +29,12 @@ variables:
     value: $(build.buildId)
   - name: appName
     value: benchmarks
-  - name: containerRegisterySC
-    value: $(parameters.containerRegistry)
+  - name: containerRegistry
+    value: $(parameters.containerRegistryServiceConnection)
   - name: containerRegistryDomain
     value: ihrbenchmarkwhoproduction.azurecr.io
   - name: imageName
-    value: $(containerRegistroyDomain)/$(appName):$(tag)
+    value: $(containerRegistryDomain)/$(appName):$(tag)
   - name: azureSubscription
     value: $(parameters.azureSubscription)
   - name: webAppName
