@@ -61,7 +61,7 @@ stages:
               testRunTitle: Benchmarks ruby rspec test suite with in-browser
               testResultsFiles: "**/TEST-*.xml"
 
-  - stage: Build and Release
+  - stage: Release
     jobs:
       - job: Build
         steps:
