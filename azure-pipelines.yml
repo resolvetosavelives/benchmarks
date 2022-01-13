@@ -36,7 +36,7 @@ variables:
   - name: imageName
     value: $(containerRegistryDomain)/$(appName):$(tag)
   - name: azureSubscription
-    value: $(parameters.azureSubscription)
+    value: ${{parameters.azureSubscription}}
   - name: webAppName
     value: whoproduction-ihrbenchmark-app-service
   - name: resourceGroupName
