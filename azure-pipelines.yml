@@ -27,8 +27,8 @@ variables:
 pool:
   vmImage: ubuntu-20.04
 
-jobs:
-  - job: Test
+stages:
+  - stage: Test
     steps:
       - task: UseRubyVersion@0
         inputs:
@@ -59,8 +59,7 @@ jobs:
           testRunTitle: Benchmarks ruby rspec test suite with in-browser
           testResultsFiles: "**/TEST-*.xml"
 
-  - job: Build
-    dependsOn: Test
+  - stage: Build
     steps:
       - task: Docker@2
         displayName: Docker Login to ACR
