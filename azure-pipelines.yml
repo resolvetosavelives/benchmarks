@@ -9,16 +9,32 @@ parameters:
     displayName: Container Registry Service Connection
     type: string
     default: SC-IHRBENCHMARK-P-ACR
+  - name: azureSubscription
+    displayName: Azure Resource Manager Service Connection Name
+    type: string
+    default: SC-IHRBENCHMARK-P-WEU-RG01
+    values:
+      - SC-IHRBENCHMARK-P-WEU-RG01
+      - SC-IHRBENCHMARK-T-WEU-RG01
 
 trigger:
   - main
 
+# TODO: Parameterize these in the variable group
 variables:
-  - name: DOCKER_BUILDKIT
-    value: 1
-  # - name: DATABASE_URL
-  #   displayName: Pipeline Test DATABASE_URL
-  #   type: string
+  - group: pipeline-variable-group
+  DOCKER_BUILDKIT: 1
+  tag: $(build.buildId)
+  appName: benchmarks
+  containerRegistryDomain: ihrbenchmarkwhoproduction.azurecr.io
+  imageName: $(containerRegistroyDomain)/$(appName):$(tag)
+  azureSubscription: ${{parameters.azureSubscription}}
+  containerRegistery: ${{parameters.containerRegistry}}
+  webAppName: whoproduction-ihrbenchmark-app-service
+  resourceGroupName: IHRBENCHMARK-P-WEU-RG01
+    # - name: DATABASE_URL
+    #   displayName: Pipeline Test DATABASE_URL
+    #   type: string
 
 ##
 # the MS-provided ubuntu-20.04 image includes postgres
@@ -31,6 +47,7 @@ stages:
   - stage: Test
     jobs:
       - job: Test
+        displayName: Run CI Tests
         steps:
           - task: UseRubyVersion@0
             inputs:
@@ -49,11 +66,11 @@ stages:
           - task: CmdLine@2
             displayName: prepare test db
             inputs:
-              script: DATABASE_URL=$(DATABASE_URL) RAILS_ENV=test bin/bundle exec rake db:environment:set db:schema:load db:seed
+              script: DATABASE_URL=$(DATABASE_URL) RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
           - task: CmdLine@2
-            displayName: run test suite
+            displayName: rake test:ci
             inputs:
-              script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test
+              script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:ci
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             inputs:
@@ -61,23 +78,25 @@ stages:
               testRunTitle: Benchmarks ruby rspec test suite with in-browser
               testResultsFiles: "**/TEST-*.xml"
 
-  - stage: Release
+  - stage: Build
+    displayName: Build and Push
     jobs:
       - job: Build
+        displayName: Build Docker Image
         steps:
           - task: Docker@2
             displayName: Docker Login to ACR
             inputs:
               command: login
-              containerRegistry: ${{parameters.containerRegistry}}
+              containerRegistry: $(containerRegistry)
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
             displayName: Docker build image for benchmarks app
             inputs:
               command: build
-              containerRegistry: ${{parameters.containerRegistry}}
-              repository: benchmarks
+              containerRegistry: $(containerRegistry)
+              repository: $(appName)
               Dockerfile: config/docker/Dockerfile
               tags: latest
               arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
@@ -85,11 +104,35 @@ stages:
             displayName: Delete RAILS_MASTER_KEY file config/master.key
       - job: Push
         dependsOn: Build
+        displayName: Push to Azure Container Registry
         steps:
           - task: Docker@2
             displayName: Docker push image for benchmarks app to ACR
             inputs:
               command: push
-              containerRegistry: ${{parameters.containerRegistry}}
-              repository: benchmarks
+              containerRegistry: $(containerRegistry)
+              repository: $(appName)
               tags: latest
+  - stage: Stage
+    jobs:
+      - job: Deploy
+        displayName: Deploy to Staging
+        steps:
+          - task: AzureWebAppContainer@1
+            inputs:
+              azureSubscription: $(azureSubscription)
+              appName: $(webAppName)
+              imageName: $(imageName)
+              deployToSlotOrASE: true
+              ResourceGroupName: $(resourceGroupName)
+              slotName: staging
+  - stage: Production
+    jobs:
+      - job: Promote
+          - task: AzureAppServiceManage@0
+            inputs:
+              azureSubscription: $(azureSubscription)
+              WebAppName: $(webAppName)
+              ResourceGroupName: $(resourceGroupName)
+              SourceSlot: staging
+              SwapWithProduction: true

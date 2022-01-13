@@ -18,8 +18,8 @@ data "azuredevops_project" "project" {
 
 resource "azuredevops_variable_group" "vars" {
   project_id   = data.azuredevops_project.project.id
-  name         = "Infrastructure Pipeline Variables"
-  description  = "Managed by Terraform"
+  name         = "pipeline-variable-group"
+  description  = "Managed by Terraform - Variables needed for the pipeline to work"
   allow_access = true
 
   variable {
