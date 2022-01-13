@@ -94,14 +94,14 @@ stages:
             displayName: Docker Login to ACR
             inputs:
               command: login
-              containerRegistry: $(containerRegistry)
+              containerRegistry: ${{variables.containerRegistry}}
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
             displayName: Docker build image for benchmarks app
             inputs:
               command: build
-              containerRegistry: $(containerRegistry)
+              containerRegistry: ${{variables.containerRegistry}}
               repository: $(appName)
               Dockerfile: config/docker/Dockerfile
               tags: latest
@@ -116,7 +116,7 @@ stages:
             displayName: Docker push image for benchmarks app to ACR
             inputs:
               command: push
-              containerRegistry: $(containerRegistry)
+              containerRegistry: ${{variables.containerRegistry}}
               repository: $(appName)
               tags: latest
   - stage: Stage
