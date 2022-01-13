@@ -135,6 +135,7 @@ stages:
   - stage: Production
     jobs:
       - job: Promote
+        steps:
           - task: AzureAppServiceManage@0
             inputs:
               azureSubscription: $(azureSubscription)
