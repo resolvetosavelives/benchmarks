@@ -46,7 +46,11 @@ variables:
   - name: resourceGroupName
     value: IHRBENCHMARK-P-WEU-RG01
   - name: isMain
+    type: boolean
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  - name: buildBaseImage
+    type: boolean
+    value: ${{ parameters.buildBaseImage }}
 
 ##
 # the MS-provided ubuntu-20.04 image includes postgres
@@ -96,7 +100,7 @@ stages:
     jobs:
       - job: BuildBase
         displayName: Build Base Image
-        condition: and(succeeded(), eq(parameters.buildBaseImage, 'true'))
+        condition: and(succeeded(), eq(variables.buildBaseImage, 'true'))
         steps:
           - task: Docker@2
             displayName: Docker login to ACR
