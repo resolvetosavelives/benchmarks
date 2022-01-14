@@ -155,6 +155,7 @@ stages:
               repository: $(appName)
               tags: latest
   - stage: Staging
+    dependsOn: Build
     jobs:
       - job: Deploy
         displayName: Deploy to Staging
@@ -168,6 +169,7 @@ stages:
               ResourceGroupName: $(resourceGroupName)
               slotName: staging
   - stage: Production
+    dependsOn: Staging
     jobs:
       - job: Promote
         displayName: Promote to production
