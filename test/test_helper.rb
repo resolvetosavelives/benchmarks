@@ -5,6 +5,7 @@ require "minitest/rails"
 require "minitest/reporters"
 require "mocha/minitest"
 
+Minitest::Reporters.use! #Minitest::Reporters::JUnitReporter.new
 # Minitest::Reporters.use! [Minitest::Reporters::SpecReporter.new]
 
 class ActiveSupport::TestCase

@@ -48,4 +48,5 @@ group :test do
   gem "minitest-reporters", "~> 1.4"
   gem "mocha", "~> 1.13"
   gem "rails-controller-testing", "~> 1.0"
+  gem 'minitest-junit'
 end
