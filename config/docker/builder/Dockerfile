@@ -55,9 +55,10 @@ ONBUILD RUN bundle config set --local path $BUNDLE_PATH && \
 #   2. Executing "assets:precompile" runs "webpacker:compile", too
 #   3. Rails raises a `MissingKeyError` if the master key is missing.
 # NB: this use of "--mount=type=secret" depends on Docker BuildKit being enabled
+# FIXME: The example we built from used a dummy key here: https://github.com/ledermann/docker-rails-base/blob/main/Builder/Dockerfile#L50-L60
 ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
     RAILS_ENV=production bundle exec rails assets:precompile
 
 ##
 # Remove folders not needed in resulting image
-#ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
+ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs

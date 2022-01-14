@@ -170,6 +170,7 @@ stages:
   - stage: Production
     jobs:
       - job: Promote
+        displayName: Promote to production
         steps:
           - task: AzureAppServiceManage@0
             inputs:
