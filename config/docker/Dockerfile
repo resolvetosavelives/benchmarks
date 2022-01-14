@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
-FROM ruby:3.0.3-alpine
 
-FROM ihrbenchmarkwhoproduction.azurecr.io/benchmarks_builder:latest AS Builder
+# FROM ihrbenchmarkwhoproduction.azurecr.io/benchmarks_builder:latest AS Builder
 # for working locally, use this FROM line instead of the one above:
-#FROM benchmarks_builder:latest AS Builder
+FROM benchmarks_builder:latest AS Builder
 
+FROM ruby:3.0.3-alpine
 
 # Add basic packages
 RUN apk add --no-cache \
@@ -12,11 +12,6 @@ RUN apk add --no-cache \
     tzdata \
     file
 
-##
-# NB: because ENV vars are embedded into the container image they
-#   can be used in child Dockerfiles as well as ONBUILD instructions.
-ENV USER_HOME=/root
-ENV REPO_HOME=$USER_HOME/benchmarks
 # this section of vars for bundler and gems is the hard part of this
 ENV RAILS_ENV production
 
@@ -26,23 +21,25 @@ COPY --from=Builder /etc/alpine-release /tmp/dummy
 
 ##
 # Add user
-RUN addgroup -g 1000 -S app && \
-    adduser -u 1000 -S app -G app
 
 # Copy app with gems from former build stage
-COPY --from=Builder $USER_HOME/ $USER_HOME/
+COPY --from=Builder /app/ /app/
 
-WORKDIR $REPO_HOME
+RUN addgroup -g 1000 -S app && \
+    adduser -u 1000 -S app -G app
+RUN chown app:app /app
+USER app:app
+WORKDIR /app
+
 # take care to NOT bundle foreman as directed by its author
 #ONBUILD RUN bin/bundle exec gem install foreman
 EXPOSE 80
 
-#ONBUILD USER app:app
 # need to be user app for mkdir else root owns it which is a problem at runtime
 RUN mkdir -p tmp/pids
 
-RUN rm public/packs/css/*.gz
-RUN rm public/packs/css/*.br
+RUN rm -f public/packs/css/*.gz
+RUN rm -f public/packs/css/*.br
 # set USER last cuz most other commanded needed to run as root, but we want to run server as non-root
 #USER app:app
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals

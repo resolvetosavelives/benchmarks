@@ -21,46 +21,32 @@ RUN apk add --no-cache \
     tzdata \
     file
 
-##
-# NB: because ENV vars are embedded into the container image they
-#   can be used in child Dockerfiles as well as ONBUILD instructions.
-ENV USER_HOME=/root
-ENV REPO_HOME=$USER_HOME/benchmarks
-# this section of vars for bundler and gems is the hard part of this
-ENV BUNDLE_PATH=$REPO_HOME/vendor/bundle
+WORKDIR /app
 
-# WORKDIR $USER_HOME
-# # pull down the code from the repo and switch to the specified branch
-# RUN git clone $GIT_REPO benchmarks && \
-#     cd benchmarks && \
-#     git checkout $GIT_BRANCH
+COPY Gemfile* .ruby-version yarn.lock package.json /app/
 
-RUN mkdir -p $USER_HOME
-COPY Gemfile* .ruby_version yarn.lock package.json $REPO_HOME
-WORKDIR $REPO_HOME
-# Install Node modules
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
-RUN cd $REPO_HOME && \
-    bin/bundle config set --local path $BUNDLE_PATH && \
-    bin/bundle config set --local disable_shared_gems true && \
-    bin/bundle config set --local path.system false && \
-    bin/bundle config set --local clean false && \
-    bin/bundle config set --local deployment true && \
-    bin/bundle config set --local bin true && \
-    bin/bundle install
+
+ENV BUNDLE_PATH=/app/vendor/bundle
+RUN bundle config set --local path $BUNDLE_PATH && \
+    bundle config set --local disable_shared_gems true && \
+    bundle config set --local path.system false && \
+    bundle config set --local clean false && \
+    bundle config set --local deployment true && \
+    bundle config set --local bin true && \
+    bundle install -j4 --retry 3
+
 # Subsequent builds check for any gems changes and prunes any unused
-ONBUILD WORKDIR $REPO_HOME
-ONBUILD RUN cd $REPO_HOME && \
-    git pull && \
-    git checkout $GIT_BRANCH
-ONBUILD RUN cd $REPO_HOME && \
-    bin/bundle config set --local path $BUNDLE_PATH && \
-    bin/bundle config set --local disable_shared_gems true && \
-    bin/bundle config set --local path.system false && \
-    bin/bundle config set --local clean false && \
-    bin/bundle config set --local deployment true && \
-    bin/bundle config set --local bin true && \
-    bin/bundle install
+ONBUILD WORKDIR /app
+ONBUILD COPY Gemfile* /app/
+ONBUILD RUN bundle config set --local path $BUNDLE_PATH && \
+    bundle config set --local disable_shared_gems true && \
+    bundle config set --local path.system false && \
+    bundle config set --local clean false && \
+    bundle config set --local deployment true && \
+    bundle config set --local bin true && \
+    bundle install -j4 --retry 3 && \
+    bundle clean --force
 
 ##
 # Compile assets with Webpacker taking care to respect the secret RAILS_MASTER_KEY
