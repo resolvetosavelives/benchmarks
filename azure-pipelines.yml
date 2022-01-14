@@ -111,6 +111,7 @@ stages:
               command: build
               containerRegistry: $(containerRegistry)
               repository: benchmarks_builder
+              buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/builder/Dockerfile
               tags: latest
               arguments: "--no-cache"
@@ -138,6 +139,7 @@ stages:
               command: build
               containerRegistry: $(containerRegistry)
               repository: $(appName)
+              buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/Dockerfile
               tags: latest
               arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
