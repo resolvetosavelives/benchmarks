@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
+FROM ruby:3.0.3-alpine
 
 FROM ihrbenchmarkwhoproduction.azurecr.io/benchmarks_builder:latest AS Builder
 # for working locally, use this FROM line instead of the one above:
 #FROM benchmarks_builder:latest AS Builder
 
-FROM ruby:3.0.3-alpine
 
 # Add basic packages
 RUN apk add --no-cache \
@@ -18,25 +18,11 @@ RUN apk add --no-cache \
 ENV USER_HOME=/root
 ENV REPO_HOME=$USER_HOME/benchmarks
 # this section of vars for bundler and gems is the hard part of this
-ENV BUNDLE_PATH=$REPO_HOME/vendor/bundle
-ENV BUNDLE_APP_CONFIG=$REPO_HOME/.bundle
-ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
-ENV GEM_HOME=$BUNDLE_PATH
-ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
-ENV GIT_BRANCH=main
 ENV RAILS_ENV production
 
-
-
 # Workaround to trigger Builder's ONBUILDs to finish:
+# TODO: is this necessary?
 COPY --from=Builder /etc/alpine-release /tmp/dummy
-## Someday..
-#ONBUILD ARG COMMIT_SHA
-#ONBUILD ARG COMMIT_TIME
-#ONBUILD ARG TAG_OR_BRANCH
-#ONBUILD ENV COMMIT_SHA ${COMMIT_SHA}
-#ONBUILD ENV COMMIT_TIME ${COMMIT_TIME}
-#ONBUILD ENV TAG_OR_BRANCH ${TAG_OR_BRANCH}
 
 ##
 # Add user
@@ -44,10 +30,6 @@ RUN addgroup -g 1000 -S app && \
     adduser -u 1000 -S app -G app
 
 # Copy app with gems from former build stage
-# TODO: update this comment: this is intended to copy /home/app/benchmarks and /home/app/bundle
-#ONBUILD COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
-#ONBUILD COPY --from=Builder /root/.bundle/config /root/.bundle/config
-#ONBUILD COPY --from=Builder --chown=app:app $BUNDLE_CONFIG $BUNDLE_CONFIG
 COPY --from=Builder $USER_HOME/ $USER_HOME/
 
 WORKDIR $REPO_HOME

@@ -12,14 +12,14 @@
 FROM ruby:3.0.3-alpine
 # the nodejs package means the current LTS version which now is 16.13.1 and requires python3
 RUN apk add --no-cache \
-      build-base \
-      postgresql-dev \
-      git \
-      python3 \
-      nodejs \
-      yarn \
-      tzdata \
-      file
+    build-base \
+    postgresql-dev \
+    git \
+    python3 \
+    nodejs \
+    yarn \
+    tzdata \
+    file
 
 ##
 # NB: because ENV vars are embedded into the container image they
@@ -28,42 +28,39 @@ ENV USER_HOME=/root
 ENV REPO_HOME=$USER_HOME/benchmarks
 # this section of vars for bundler and gems is the hard part of this
 ENV BUNDLE_PATH=$REPO_HOME/vendor/bundle
-ENV BUNDLE_APP_CONFIG=$REPO_HOME/.bundle
-ENV BUNDLE_CONFIG=$BUNDLE_APP_CONFIG/config
-ENV GEM_HOME=$BUNDLE_PATH
-ENV GIT_REPO=https://github.com/resolvetosavelives/benchmarks.git
-ENV GIT_BRANCH=main-azure
 
-WORKDIR $USER_HOME
-# pull down the code from the repo and switch to the specified branch
-RUN git clone $GIT_REPO benchmarks && \
-    cd benchmarks && \
-    git checkout $GIT_BRANCH
+# WORKDIR $USER_HOME
+# # pull down the code from the repo and switch to the specified branch
+# RUN git clone $GIT_REPO benchmarks && \
+#     cd benchmarks && \
+#     git checkout $GIT_BRANCH
+
+RUN mkdir -p $USER_HOME
+COPY Gemfile* .ruby_version yarn.lock package.json $REPO_HOME
 WORKDIR $REPO_HOME
 # Install Node modules
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
-# install Ruby gems to the default GEM_HOME of /usr/local/bundle from which they must be copied later
 RUN cd $REPO_HOME && \
-        bin/bundle config set --local path $BUNDLE_PATH && \
-        bin/bundle config set --local disable_shared_gems true && \
-        bin/bundle config set --local path.system false && \
-        bin/bundle config set --local clean false && \
-        bin/bundle config set --local deployment true && \
-        bin/bundle config set --local bin true && \
-        bin/bundle install
+    bin/bundle config set --local path $BUNDLE_PATH && \
+    bin/bundle config set --local disable_shared_gems true && \
+    bin/bundle config set --local path.system false && \
+    bin/bundle config set --local clean false && \
+    bin/bundle config set --local deployment true && \
+    bin/bundle config set --local bin true && \
+    bin/bundle install
 # Subsequent builds check for any gems changes and prunes any unused
 ONBUILD WORKDIR $REPO_HOME
 ONBUILD RUN cd $REPO_HOME && \
-            git pull && \
-            git checkout $GIT_BRANCH
+    git pull && \
+    git checkout $GIT_BRANCH
 ONBUILD RUN cd $REPO_HOME && \
-        bin/bundle config set --local path $BUNDLE_PATH && \
-        bin/bundle config set --local disable_shared_gems true && \
-        bin/bundle config set --local path.system false && \
-        bin/bundle config set --local clean false && \
-        bin/bundle config set --local deployment true && \
-        bin/bundle config set --local bin true && \
-        bin/bundle install
+    bin/bundle config set --local path $BUNDLE_PATH && \
+    bin/bundle config set --local disable_shared_gems true && \
+    bin/bundle config set --local path.system false && \
+    bin/bundle config set --local clean false && \
+    bin/bundle config set --local deployment true && \
+    bin/bundle config set --local bin true && \
+    bin/bundle install
 
 ##
 # Compile assets with Webpacker taking care to respect the secret RAILS_MASTER_KEY
