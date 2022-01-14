@@ -70,7 +70,7 @@ stages:
     jobs:
       - job: Test
         displayName: Run CI Tests
-        condition: ne(Build.reason, 'Schedule')
+        condition: ne(variables['Build.Reason'], 'Schedule')
         steps:
           - task: UseRubyVersion@0
             inputs:
@@ -108,7 +108,7 @@ stages:
       - job: BuildBase
         displayName: Build Base Image
         # Build the base image when the trigger reason was a scheduled build
-        condition: and(succeeded(), or(eq(Build.reason, 'Schedule'), eq(variables.buildBaseImage, 'true')))
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables.buildBaseImage, 'true')))
         steps:
           - task: Docker@2
             displayName: Docker login to ACR
@@ -135,7 +135,7 @@ stages:
       - job: Build
         displayName: Build Docker Image
         dependsOn: BuildBase
-        condition: and(succeeded(), ne(Build.reason, 'Schedule'))
+        condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
         steps:
           - task: Docker@2
             displayName: Docker login to ACR
