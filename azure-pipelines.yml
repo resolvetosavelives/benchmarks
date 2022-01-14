@@ -4,9 +4,6 @@
 # https://aka.ms/yaml
 ##
 
-trigger:
-  - main
-
 parameters:
   - name: buildBaseImage
     displayName: Build Docker Base Image
