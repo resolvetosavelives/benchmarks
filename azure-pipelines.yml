@@ -108,37 +108,21 @@ stages:
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables.buildBaseImage, 'true')))
         steps:
           - task: Docker@2
-            displayName: Docker login to ACR
-            inputs:
-              command: login
-              containerRegistry: $(containerRegistry)
-          - task: Docker@2
             displayName: Docker build base image
+            displayName: Build and Push base image
             inputs:
-              command: build
+              command: buildAndPush
               containerRegistry: $(containerRegistry)
               repository: benchmarks_builder
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/builder/Dockerfile
               tags: latest
               arguments: "--no-cache"
-          - task: Docker@2
-            displayName: Docker push image to ACR
-            inputs:
-              command: push
-              containerRegistry: $(containerRegistry)
-              repository: benchmarks_builder
-              tags: latest
       - job: Build
         displayName: Build Docker Image
         dependsOn: BuildBase
         condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
         steps:
-          - task: Docker@2
-            displayName: Docker login to ACR
-            inputs:
-              command: login
-              containerRegistry: $(containerRegistry)
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
