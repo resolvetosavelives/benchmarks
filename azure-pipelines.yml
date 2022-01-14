@@ -123,6 +123,7 @@ stages:
               tags: latest
       - job: Build
         displayName: Build Docker Image
+        dependsOn: BuildBase
         steps:
           - task: Docker@2
             displayName: Docker login to ACR
