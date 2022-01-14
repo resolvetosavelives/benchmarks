@@ -4,6 +4,9 @@
 # https://aka.ms/yaml
 ##
 
+trigger:
+  - main
+
 parameters:
   - name: buildBaseImage
     displayName: Build Docker Base Image
@@ -20,9 +23,6 @@ parameters:
     values:
       - SC-IHRBENCHMARK-P-WEU-RG01
       - SC-IHRBENCHMARK-T-WEU-RG01
-
-trigger:
-  - main
 
 # TODO: Parameterize these in the variable group
 variables:
@@ -50,6 +50,14 @@ variables:
   - name: buildBaseImage
     value: ${{ parameters.buildBaseImage }}
 
+# Schedule builds trigger the base image build step.
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Daily midnight build for base image
+    branches:
+      include:
+        - main
+
 ##
 # the MS-provided ubuntu-20.04 image includes postgres
 # full list of includes software:
@@ -62,6 +70,7 @@ stages:
     jobs:
       - job: Test
         displayName: Run CI Tests
+        condition: ne(Build.reason, 'Schedule')
         steps:
           - task: UseRubyVersion@0
             inputs:
@@ -98,7 +107,8 @@ stages:
     jobs:
       - job: BuildBase
         displayName: Build Base Image
-        condition: and(succeeded(), eq(variables.buildBaseImage, 'true'))
+        # Build the base image when the trigger reason was a scheduled build
+        condition: and(succeeded(), or(eq(Build.reason, 'Schedule'), eq(variables.buildBaseImage, 'true')))
         steps:
           - task: Docker@2
             displayName: Docker login to ACR
@@ -125,6 +135,7 @@ stages:
       - job: Build
         displayName: Build Docker Image
         dependsOn: BuildBase
+        condition: and(succeeded(), ne(Build.reason, 'Schedule'))
         steps:
           - task: Docker@2
             displayName: Docker login to ACR
