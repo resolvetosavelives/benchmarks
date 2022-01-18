@@ -45,7 +45,7 @@ group :test do
   gem "capybara", "~> 3.36"
   gem "cuprite", "~> 0.11"
   gem "factory_bot_rails", "~> 6.2"
-  gem "minitest-reporters", "~> 1.4"
+  gem "minitest-reporters", "~> 1.5"
   gem "mocha", "~> 1.13"
   gem "rails-controller-testing", "~> 1.0"
   gem 'minitest-junit'
