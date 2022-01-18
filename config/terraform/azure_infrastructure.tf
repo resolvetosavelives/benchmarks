@@ -11,26 +11,6 @@ resource "azurerm_container_registry" "acr" {
   public_network_access_enabled = true
   admin_enabled                 = true
 }
-resource "azurerm_container_registry_webhook" "acr_webhook_for_app_service" {
-  name                = "AcrWebhookForAppService"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  location            = data.azurerm_resource_group.rg.location
-  registry_name       = azurerm_container_registry.acr.name
-  # the service_uri is obtained via command:
-  #   az webapp deployment container show-cd-url --resource-group <rg name> --name <app name> --slot <slot name>
-  # example for sandbox staging slot:
-  #   az webapp deployment container show-cd-url --resource-group IHRBENCHMARK-P-WEU-RG01 --name whoproduction-ihrbenchmark-app-service --slot staging
-  # docs on it:
-  # - https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container#automate-with-cli
-  # - https://docs.microsoft.com/en-us/cli/azure/webapp/deployment/container#az_webapp_deployment_container_show_cd_url
-  service_uri = "https://$whoproduction-ihrbenchmark-app-service__staging:H2pfrvFqYqEpkuKpFYSM3bRve0rbiL1LJ5LcspW6a0dGClnstgiPc4J7ddql@whoproduction-ihrbenchmark-app-service-staging.scm.azurewebsites.net/docker/hook"
-  status      = "enabled"
-  scope       = "benchmarks:latest"
-  actions     = ["push"]
-  custom_headers = {
-    "Content-Type" = "application/json"
-  }
-}
 
 resource "azurerm_postgresql_server" "who_ihr_benchmarks_db_server" {
   name                          = "psqldb-${local.scope}-${local.app_name}"
