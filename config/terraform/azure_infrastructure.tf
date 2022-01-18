@@ -69,13 +69,6 @@ resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 }
-resource "azurerm_postgresql_database" "benchmarks_test" {
-  name                = "benchmarks_test" // for build pipeline
-  resource_group_name = data.azurerm_resource_group.rg.name
-  server_name         = azurerm_postgresql_server.who_ihr_benchmarks_db_server.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
-}
 resource "azurerm_postgresql_database" "benchmarks_staging" {
   name                = "benchmarks_staging" // for staging instance
   resource_group_name = data.azurerm_resource_group.rg.name

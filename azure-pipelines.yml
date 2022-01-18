@@ -1,8 +1,10 @@
-##
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-##
+# Schedule builds trigger the base image build step.
+schedules:
+  - cron: "0 0 * * *"
+    displayName: Daily midnight build for base image
+    branches:
+      include:
+        - main
 
 parameters:
   - name: buildBaseImage
@@ -46,21 +48,19 @@ variables:
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   - name: buildBaseImage
     value: ${{ parameters.buildBaseImage }}
+  - name: DATABASE_URL
+    value: postgres://postgres:postgresPassword@localhost:5432/benchmarks_test
 
-# Schedule builds trigger the base image build step.
-schedules:
-  - cron: "0 0 * * *"
-    displayName: Daily midnight build for base image
-    branches:
-      include:
-        - main
-
-##
-# the MS-provided ubuntu-20.04 image includes postgres
-# full list of includes software:
-# https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
-pool:
-  vmImage: ubuntu-20.04
+resources:
+  containers:
+    - container: postgres
+      image: postgres:14-alpine
+      env:
+        POSTGRES_DB: benchmarks_test
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgresPassword
+      ports:
+        - "5432:5432"
 
 stages:
   - stage: Test
@@ -68,7 +68,15 @@ stages:
       - job: Test
         displayName: Run CI Tests
         condition: ne(variables['Build.Reason'], 'Schedule')
+        pool:
+          # ubuntu-20.04 image includes most of what we need, cutting down on installs
+          # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+          vmImage: "ubuntu-20.04"
+        services:
+          postgres: postgres
         steps:
+          - script: printenv
+            displayName: printenv
           - task: UseRubyVersion@0
             inputs:
               versionSpec: ">= 3.0"
@@ -86,11 +94,11 @@ stages:
           - task: CmdLine@2
             displayName: prepare test db
             inputs:
-              script: DATABASE_URL=$(DATABASE_URL) RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
+              script: RAILS_ENV=test bin/bundle exec rake db:schema:load db:seed
           - task: CmdLine@2
             displayName: rake test:ci
             inputs:
-              script: DATABASE_URL=$(DATABASE_URL) MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:ci
+              script: MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:ci
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             inputs:

@@ -1,7 +1,3 @@
-variable "DATABASE_URL" {
-  type      = string
-  sensitive = true
-}
 variable "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME" {
   type = string
 }

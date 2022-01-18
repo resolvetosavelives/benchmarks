@@ -23,11 +23,6 @@ resource "azuredevops_variable_group" "vars" {
   allow_access = true
 
   variable {
-    name         = "DATABASE_URL"
-    is_secret    = true
-    secret_value = var.DATABASE_URL
-  }
-  variable {
     name         = "RAILS_MASTER_KEY"
     is_secret    = true
     secret_value = var.RAILS_MASTER_KEY

@@ -52,7 +52,6 @@ data "azurerm_subscription" "current" {}
 
 module "devops" {
   source                                    = "./devops"
-  DATABASE_URL                              = var.DATABASE_URL_FOR_PIPELINE
   GITHUB_SERVICE_CONNECTION_ID              = var.DEVOPS_GITHUB_SERVICE_CONNECTION_ID
   DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME
   GITHUB_REPO                               = var.GITHUB_REPO
