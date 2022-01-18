@@ -157,6 +157,7 @@ stages:
               tags: latest
   - stage: Staging
     dependsOn: Build
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
     jobs:
       - job: Deploy
         displayName: Deploy to Staging
@@ -171,6 +172,7 @@ stages:
               slotName: staging
   - stage: Production
     dependsOn: Staging
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
     jobs:
       - job: Promote
         displayName: Promote to production
