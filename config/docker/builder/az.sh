@@ -38,9 +38,9 @@ az acr task create \
   --base-image-trigger-enabled false \
   -t benchmarks_base:latest
 
-#az acr task delete \
-#  -r ihrbenchmarkwhoproduction \
-#  -n taskToRebuildTheBaseImage
+az acr task delete \
+ -r ihrbenchmarkwhoproduction \
+ -n taskToRebuildTheBaseImage
 
 az acr task run \
   -r ihrbenchmarkwhoproduction \
