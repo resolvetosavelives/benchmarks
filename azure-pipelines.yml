@@ -97,8 +97,10 @@ stages:
               script: bin/bundle exec rake db:schema:load db:seed
           - task: CmdLine@2
             displayName: rake test:ci
+            env:
+              MINITEST_REPORTER: JUnitReporter
             inputs:
-              script: MINITEST_REPORTER=JUnitReporter bin/bundle exec rake test:ci
+              script: bin/bundle exec rake test:ci
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             inputs:
