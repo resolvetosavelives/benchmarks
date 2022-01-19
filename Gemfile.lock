@@ -162,7 +162,7 @@ GEM
       ruby_parser (~> 3.5)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    inline_svg (1.7.2)
+    inline_svg (1.8.0)
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
     listen (3.7.1)
@@ -343,7 +343,7 @@ DEPENDENCIES
   hamlit (~> 2.15)
   hamlit-rails (~> 0.2)
   html2haml (~> 2.2)
-  inline_svg (~> 1.7)
+  inline_svg (~> 1.8)
   listen (~> 3.7)
   m (~> 1.6)
   minitest-junit
