@@ -36,8 +36,6 @@ variables:
     value: ${{parameters.containerRegistryServiceConnection}}
   - name: containerRegistryDomain
     value: ihrbenchmarkwhoproduction.azurecr.io
-  - name: imageName
-    value: $(containerRegistryDomain)/$(appName):$(tag)
   - name: azureSubscription
     value: ${{parameters.azureSubscription}}
   - name: webAppName
@@ -140,7 +138,9 @@ stages:
               repository: $(appName)
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/Dockerfile
-              tags: latest
+              tags: |
+                $(tag)
+                latest
               arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache"
           - script: rm config/master.key
             displayName: Delete RAILS_MASTER_KEY file config/master.key
@@ -154,7 +154,9 @@ stages:
               command: push
               containerRegistry: $(containerRegistry)
               repository: $(appName)
-              tags: latest
+              tags: |
+                $(tag)
+                latest
   - stage: Staging
     dependsOn: Build
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
@@ -166,7 +168,7 @@ stages:
             inputs:
               azureSubscription: $(azureSubscription)
               appName: $(webAppName)
-              imageName: $(imageName)
+              imageName: $(containerRegistryDomain)/$(appName):$(tag)
               deployToSlotOrASE: true
               ResourceGroupName: $(resourceGroupName)
               slotName: staging
