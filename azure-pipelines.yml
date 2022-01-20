@@ -167,14 +167,23 @@ stages:
       - job: Deploy
         displayName: Deploy to Staging
         steps:
-          - task: AzureWebAppContainer@1
+          - task: AzureRMWebAppDeployment@4
+            displayName: Azure App Service Deploy
             inputs:
-              azureSubscription: $(azureSubscription)
-              appName: $(AZURE_APP_SERVICE_NAME)
-              imageName: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):$(tag)
-              deployToSlotOrASE: true
-              ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
-              slotName: staging
+              appType: webAppContainer
+              ConnectedServiceName: $(azureSubscription)
+              WebAppName: $(AZURE_APP_SERVICE_NAME)
+              DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
+              DockerRepository: $(CONTAINER_REPOSITORY)
+              DockerImageTag: $(tag)
+          # - task: AzureWebAppContainer@1
+          #   inputs:
+          #     azureSubscription: $(azureSubscription)
+          #     appName: $(AZURE_APP_SERVICE_NAME)
+          #     imageName: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):$(tag)
+          #     deployToSlotOrASE: true
+          #     ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
+          #     slotName: staging
   - stage: Production
     dependsOn: Staging
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
