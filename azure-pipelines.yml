@@ -146,6 +146,7 @@ stages:
               containerRegistry: ${{parameters.containerRegistryServiceConnection}}
       - job: Build
         displayName: Build and Push Image
+        dependsOn: BuildBase
         condition: ne(variables['Build.Reason'], 'Schedule')
         steps:
           - task: Docker@2
