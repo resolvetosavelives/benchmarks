@@ -120,12 +120,12 @@ stages:
             displayName: Login to ACR
             inputs:
               command: login
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
           - task: Docker@2
             displayName: Build base image
             inputs:
               command: build
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
               repository: $(CONTAINER_REPOSITORY)_builder
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/builder/Dockerfile
@@ -134,7 +134,7 @@ stages:
             displayName: Push base image to ACR
             inputs:
               command: push
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
               repository: $(CONTAINER_REPOSITORY)_builder
               tags: |
                 $(tag)
@@ -143,7 +143,7 @@ stages:
             displayName: Logout of ACR
             inputs:
               command: logout
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
       - job: Build
         displayName: Build and Push Image
         dependsOn: BuildBase
@@ -153,14 +153,14 @@ stages:
             displayName: Login to ACR
             inputs:
               command: login
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
             displayName: Docker build image
             inputs:
               command: build
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
               repository: $(CONTAINER_REPOSITORY)
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/Dockerfile
@@ -174,7 +174,7 @@ stages:
             displayName: Docker push image to ACR
             inputs:
               command: push
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
               repository: $(CONTAINER_REPOSITORY)
               tags: |
                 $(tag)
@@ -183,7 +183,7 @@ stages:
             displayName: Logout of ACR
             inputs:
               command: logout
-              containerRegistry: $(containerRegistry)
+              containerRegistry: SC-IHRBENCHMARK-P-ACR
   - stage: Staging
     dependsOn: Build
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
