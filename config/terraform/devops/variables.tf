@@ -1,13 +1,16 @@
-variable "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME" {
+variable "resource_group_name" {
   type = string
 }
-variable "GITHUB_SERVICE_CONNECTION_ID" {
+variable "app_service_name" {
   type = string
 }
-variable "GITHUB_REPO" {
+variable "azure_subscription_service_connection" {
   type = string
 }
-variable "GITHUB_BRANCH" {
+variable "container_registry_domain" {
+  type = string
+}
+variable "container_repository" {
   type = string
 }
 variable "RAILS_MASTER_KEY" {

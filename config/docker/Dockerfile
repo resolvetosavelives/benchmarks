@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1
 
-# FROM ihrbenchmarkwhoproduction.azurecr.io/benchmarks_builder:latest AS Builder
-# for working locally, use this FROM line instead of the one above:
-FROM benchmarks_builder:latest AS Builder
+ARG BUILDER_IMAGE=benchmarks_builder:latest
+FROM $BUILDER_IMAGE AS Builder
 
 FROM ruby:3.0.3-alpine
 

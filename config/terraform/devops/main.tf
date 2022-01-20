@@ -19,7 +19,7 @@ data "azuredevops_project" "project" {
 resource "azuredevops_variable_group" "vars" {
   project_id   = data.azuredevops_project.project.id
   name         = "pipeline-variable-group"
-  description  = "Managed by Terraform - Variables needed for the pipeline to work"
+  description  = "Managed by Terraform - Variables sourced from terraform configuration that are needed for the pipeline to work"
   allow_access = true
 
   variable {
@@ -28,8 +28,23 @@ resource "azuredevops_variable_group" "vars" {
     secret_value = var.RAILS_MASTER_KEY
   }
   variable {
-    name         = "DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME"
-    is_secret    = false
-    secret_value = var.DEVOPS_DOCKER_ACR_SERVICE_CONNECTION_NAME
+    name  = "AZURE_RESOURCE_GROUP_NAME"
+    value = var.resource_group_name
+  }
+  variable {
+    name  = "AZURE_APP_SERVICE_NAME"
+    value = var.app_service_name
+  }
+  variable {
+    name  = "AZURE_SUBSCRIPTION_SERVICE_CONNECTION"
+    value = var.azure_subscription_service_connection
+  }
+  variable {
+    name  = "CONTAINER_REGISTRY_DOMAIN"
+    value = var.container_registry_domain
+  }
+  variable {
+    name  = "CONTAINER_REPOSITORY"
+    value = var.container_repository
   }
 }
