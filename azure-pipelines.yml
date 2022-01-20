@@ -112,9 +112,14 @@ stages:
     displayName: Build and Push
     jobs:
       - job: BuildBase
-        displayName: Build Base Image
+        displayName: Build and Push Base Image
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables.buildBaseImage, 'true')))
         steps:
+          - task: Docker@2
+            displayName: Login to ACR
+            inputs:
+              command: login
+              containerRegistry: $(containerRegistry)
           - task: Docker@2
             displayName: Build and Push base image
             inputs:
@@ -125,11 +130,21 @@ stages:
               Dockerfile: config/docker/builder/Dockerfile
               tags: latest
               arguments: "--no-cache"
+          - task: Docker@2
+            displayName: Logout of ACR
+            inputs:
+              command: logout
+              containerRegistry: $(containerRegistry)
       - job: Build
-        displayName: Build Docker Image
+        displayName: Build and Push Docker Image
         dependsOn: BuildBase
         condition: ne(variables['Build.Reason'], 'Schedule')
         steps:
+          - task: Docker@2
+            displayName: Login to ACR
+            inputs:
+              command: login
+              containerRegistry: $(containerRegistry)
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
@@ -146,10 +161,6 @@ stages:
               arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
           - script: rm config/master.key
             displayName: Delete RAILS_MASTER_KEY file config/master.key
-      - job: Push
-        dependsOn: Build
-        displayName: Push to Container Registry
-        steps:
           - task: Docker@2
             displayName: Docker push image to ACR
             inputs:
@@ -159,6 +170,11 @@ stages:
               tags: |
                 $(tag)
                 latest
+          - task: Docker@2
+            displayName: Logout of ACR
+            inputs:
+              command: logout
+              containerRegistry: $(containerRegistry)
   - stage: Staging
     dependsOn: Build
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
