@@ -126,7 +126,7 @@ stages:
             inputs:
               command: build
               containerRegistry: SC-IHRBENCHMARK-P-ACR
-              repository: $(CONTAINER_REPOSITORY)_builder
+              repository: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/builder/Dockerfile
               arguments: "--no-cache"
@@ -135,7 +135,7 @@ stages:
             inputs:
               command: push
               containerRegistry: SC-IHRBENCHMARK-P-ACR
-              repository: $(CONTAINER_REPOSITORY)_builder
+              repository: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder
               tags: |
                 $(tag)
                 latest
@@ -161,7 +161,7 @@ stages:
             inputs:
               command: build
               containerRegistry: SC-IHRBENCHMARK-P-ACR
-              repository: $(CONTAINER_REPOSITORY)
+              repository: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/Dockerfile
               tags: |
@@ -175,7 +175,7 @@ stages:
             inputs:
               command: push
               containerRegistry: SC-IHRBENCHMARK-P-ACR
-              repository: $(CONTAINER_REPOSITORY)
+              repository: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)
               tags: |
                 $(tag)
                 latest
