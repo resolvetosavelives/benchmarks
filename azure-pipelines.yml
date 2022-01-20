@@ -128,7 +128,7 @@ stages:
       - job: Build
         displayName: Build Docker Image
         dependsOn: BuildBase
-        condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
+        condition: ne(variables['Build.Reason'], 'Schedule')
         steps:
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
