@@ -130,6 +130,9 @@ stages:
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/builder/Dockerfile
               arguments: "--no-cache"
+              tags: |
+                $(tag)
+                latest
           - task: Docker@2
             displayName: Push base image to ACR
             inputs:
