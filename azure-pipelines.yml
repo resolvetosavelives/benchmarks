@@ -167,7 +167,7 @@ stages:
               tags: |
                 $(tag)
                 latest
-              arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
+              arguments: "--secret id=RAILS_MASTER_KEY,src=config/master.key --no-cache" # --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
           - script: rm config/master.key
             displayName: Delete RAILS_MASTER_KEY file config/master.key
           - task: Docker@2
