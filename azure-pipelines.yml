@@ -14,7 +14,8 @@ parameters:
   - name: containerRegistryServiceConnection
     displayName: Container Registry Service Connection Name
     type: string
-    default: SC-IHRBENCHMARK-P-ACR
+    default: acr
+    #default: SC-IHRBENCHMARK-P-ACR
   - name: azureSubscription
     displayName: Azure Resource Manager Service Connection Name
     type: string
