@@ -194,12 +194,12 @@ stages:
       - deployment: Stage
         displayName: Deploy to Staging
         strategy:
-          runOnce: #rolling, canary are the other strategies that are supported
-            preDeploy:
-              steps:
-                - script: rake db:create
-                  displayName: rake db:create
-                  container: "$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):latest"
+          runOnce:
+            # Need to figure out how to run migrations
+            # preDeploy:
+            #   steps:
+            #     - script: docker exec -it "$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):latest" bundle exec rake db:create
+            #       displayName: rake db:create
             deploy:
               steps:
                 - task: AzureRMWebAppDeployment@4
