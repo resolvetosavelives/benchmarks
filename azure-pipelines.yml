@@ -194,23 +194,23 @@ stages:
       - deployment: Stage
         displayName: Deploy to Staging
         strategy:
-        runOnce: #rolling, canary are the other strategies that are supported
-          preDeploy:
-            steps:
-              - script: rake db:create
-                displayName: rake db:create
-                container: "$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):latest"
-          deploy:
-            steps:
-              - task: AzureRMWebAppDeployment@4
-                displayName: Azure App Service Deploy
-                inputs:
-                  appType: webAppContainer
-                  ConnectedServiceName: $(azureSubscription)
-                  WebAppName: $(AZURE_APP_SERVICE_NAME)
-                  DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
-                  DockerRepository: $(CONTAINER_REPOSITORY)
-                  DockerImageTag: $(tag)
+          runOnce: #rolling, canary are the other strategies that are supported
+            preDeploy:
+              steps:
+                - script: rake db:create
+                  displayName: rake db:create
+                  container: "$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):latest"
+            deploy:
+              steps:
+                - task: AzureRMWebAppDeployment@4
+                  displayName: Azure App Service Deploy
+                  inputs:
+                    appType: webAppContainer
+                    ConnectedServiceName: $(azureSubscription)
+                    WebAppName: $(AZURE_APP_SERVICE_NAME)
+                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
+                    DockerRepository: $(CONTAINER_REPOSITORY)
+                    DockerImageTag: $(tag)
           # - task: AzureWebAppContainer@1
           #   inputs:
           #     azureSubscription: $(azureSubscription)
@@ -223,13 +223,16 @@ stages:
     dependsOn: Staging
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
     jobs:
-      - job: Promote
+      - deployment: Promote
         displayName: Promote to production
-        steps:
-          - task: AzureAppServiceManage@0
-            inputs:
-              azureSubscription: $(azureSubscription)
-              WebAppName: $(AZURE_APP_SERVICE_NAME)
-              ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
-              SourceSlot: staging
-              SwapWithProduction: true
+        strategy:
+          runOnce: #rolling, canary are the other strategies that are supported
+            deploy:
+              steps:
+                - task: AzureAppServiceManage@0
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    WebAppName: $(AZURE_APP_SERVICE_NAME)
+                    ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
+                    SourceSlot: staging
+                    SwapWithProduction: true
