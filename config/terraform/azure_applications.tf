@@ -83,6 +83,14 @@ resource "azurerm_app_service" "app_service" {
       file_system_level = "Verbose"
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes because deploys change which tag is deployed
+      site_config["linux_fx_version"],
+      app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
+    ]
+  }
 }
 
 resource "azurerm_app_service_slot" "staging_slot" {
@@ -104,5 +112,11 @@ resource "azurerm_app_service_slot" "staging_slot" {
     ])
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+  }
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes because deploys change which tag is deployed
+      app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
+    ]
   }
 }

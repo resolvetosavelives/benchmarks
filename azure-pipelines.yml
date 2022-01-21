@@ -14,8 +14,7 @@ parameters:
   - name: containerRegistryServiceConnection
     displayName: Container Registry Service Connection Name
     type: string
-    default: acr
-    #default: SC-IHRBENCHMARK-P-ACR
+    default: SC-IHRBENCHMARK-P-ACR
   - name: azureSubscription
     displayName: Azure Resource Manager Service Connection Name
     type: string
@@ -36,7 +35,7 @@ variables:
   - name: tag
     value: $(build.buildId)
   - name: containerRegistry
-    value: ${{parameters.containerRegistryServiceConnection}}
+    value: $(ACR_SERVICE_ENDPOINT_NAME)
   - name: azureSubscription
     value: ${{parameters.azureSubscription}}
   - name: isMain

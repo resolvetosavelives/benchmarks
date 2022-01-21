@@ -36,10 +36,6 @@ resource "azuredevops_variable_group" "vars" {
     value = var.app_service_name
   }
   variable {
-    name  = "AZURE_SUBSCRIPTION_SERVICE_CONNECTION"
-    value = var.azure_subscription_service_connection
-  }
-  variable {
     name  = "CONTAINER_REGISTRY_DOMAIN"
     value = var.container_registry_domain
   }
@@ -47,4 +43,28 @@ resource "azuredevops_variable_group" "vars" {
     name  = "CONTAINER_REPOSITORY"
     value = var.container_repository
   }
+  variable {
+    name  = "ACR_SERVICE_ENDPOINT_NAME"
+    value = var.acr_service_endpoint_name
+  }
 }
+
+resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
+  project_id            = data.azuredevops_project.project.id
+  service_endpoint_name = var.acr_service_endpoint_name
+  docker_registry       = "https://${var.container_registry_domain}"
+  docker_username       = var.container_registry_username
+  docker_password       = var.container_registry_password
+  registry_type         = "Others"
+}
+
+# Insufficient privileges to create new app in active directory
+# resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
+#   project_id                = data.azuredevops_project.project.id
+#   service_endpoint_name     = "SC-IHRBENCHMARK-P-AZURECR"
+#   resource_group            = var.resource_group_name
+#   azurecr_spn_tenantid      = "f610c0b7-bd24-4b39-810b-3dc280afb590"
+#   azurecr_name              = "whoihrbenchmark"
+#   azurecr_subscription_id   = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
+#   azurecr_subscription_name = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+# }

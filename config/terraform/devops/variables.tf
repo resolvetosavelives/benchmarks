@@ -4,11 +4,18 @@ variable "resource_group_name" {
 variable "app_service_name" {
   type = string
 }
-variable "azure_subscription_service_connection" {
+variable "acr_service_endpoint_name" {
   type = string
 }
 variable "container_registry_domain" {
   type = string
+}
+variable "container_registry_username" {
+  type = string
+}
+variable "container_registry_password" {
+  type      = string
+  sensitive = true
 }
 variable "container_repository" {
   type = string
