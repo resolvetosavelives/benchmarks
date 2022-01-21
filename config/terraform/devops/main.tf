@@ -58,7 +58,9 @@ resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
   registry_type         = "Others"
 }
 
-# Insufficient privileges to create new app in active directory
+# This would be the correct way to make the ACR service connection.
+# However, we currently have insufficient privileges.
+# If this is fixed, this way is preferred over the above resource.
 # resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
 #   project_id                = data.azuredevops_project.project.id
 #   service_endpoint_name     = "SC-IHRBENCHMARK-P-AZURECR"
