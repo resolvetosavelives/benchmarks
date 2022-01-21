@@ -191,18 +191,26 @@ stages:
     dependsOn: Build
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
     jobs:
-      - job: Deploy
+      - deployment: Stage
         displayName: Deploy to Staging
-        steps:
-          - task: AzureRMWebAppDeployment@4
-            displayName: Azure App Service Deploy
-            inputs:
-              appType: webAppContainer
-              ConnectedServiceName: $(azureSubscription)
-              WebAppName: $(AZURE_APP_SERVICE_NAME)
-              DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
-              DockerRepository: $(CONTAINER_REPOSITORY)
-              DockerImageTag: $(tag)
+        strategy:
+        runOnce: #rolling, canary are the other strategies that are supported
+          preDeploy:
+            steps:
+              - script: rake db:create
+                displayName: rake db:create
+                container: "$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):latest"
+          deploy:
+            steps:
+              - task: AzureRMWebAppDeployment@4
+                displayName: Azure App Service Deploy
+                inputs:
+                  appType: webAppContainer
+                  ConnectedServiceName: $(azureSubscription)
+                  WebAppName: $(AZURE_APP_SERVICE_NAME)
+                  DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
+                  DockerRepository: $(CONTAINER_REPOSITORY)
+                  DockerImageTag: $(tag)
           # - task: AzureWebAppContainer@1
           #   inputs:
           #     azureSubscription: $(azureSubscription)
