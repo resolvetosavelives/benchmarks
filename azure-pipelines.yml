@@ -198,16 +198,6 @@ stages:
             #       displayName: rake db:create
             deploy:
               steps:
-                - task: AzureRMWebAppDeployment@4
-                  displayName: Azure App Service Deploy
-                  inputs:
-                    appType: webAppContainer
-                    ConnectedServiceName: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
-                    DockerRepository: $(CONTAINER_REPOSITORY)
-                    DockerImageTag: $(tag)
-                    SlotName: staging
                 - task: AzureAppServiceSettings@1
                   displayName: Azure App Service Settings
                   inputs:
@@ -220,8 +210,18 @@ stages:
                           "name": "DATABASE_URL"
                           "value": "$(STAGING_DATABASE_URL)",
                           "slotSetting": true
-                        },
+                        }
                       ]
+                - task: AzureRMWebAppDeployment@4
+                  displayName: Azure App Service Deploy
+                  inputs:
+                    appType: webAppContainer
+                    ConnectedServiceName: $(azureSubscription)
+                    WebAppName: $(AZURE_APP_SERVICE_NAME)
+                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
+                    DockerRepository: $(CONTAINER_REPOSITORY)
+                    DockerImageTag: $(tag)
+                    SlotName: staging
           # - task: AzureWebAppContainer@1
           #   inputs:
           #     azureSubscription: $(azureSubscription)
@@ -243,15 +243,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: AzureRMWebAppDeployment@4
-                  displayName: Azure App Service Deploy
-                  inputs:
-                    appType: webAppContainer
-                    ConnectedServiceName: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
-                    DockerRepository: $(CONTAINER_REPOSITORY)
-                    DockerImageTag: $(tag)
                 - task: AzureAppServiceSettings@1
                   displayName: Azure App Service Settings
                   inputs:
@@ -264,8 +255,17 @@ stages:
                           "name": "DATABASE_URL"
                           "value": "$(PRODUCTION_DATABASE_URL)",
                           "slotSetting": true
-                        },
+                        }
                       ]
+                - task: AzureRMWebAppDeployment@4
+                  displayName: Azure App Service Deploy
+                  inputs:
+                    appType: webAppContainer
+                    ConnectedServiceName: $(azureSubscription)
+                    WebAppName: $(AZURE_APP_SERVICE_NAME)
+                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
+                    DockerRepository: $(CONTAINER_REPOSITORY)
+                    DockerImageTag: $(tag)
                 # - task: AzureAppServiceManage@0
                 #   inputs:
                 #     azureSubscription: $(azureSubscription)
