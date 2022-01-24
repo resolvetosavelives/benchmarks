@@ -1,9 +1,12 @@
-# syntax=docker/dockerfile:1.2
+# syntax=docker/dockerfile:1
 
 ##
 # with a Dockerfile that specifies use of a BuildKit frontend docker/dockerfile:1.2, the secret can be accessed when performing a RUN
 # https://docs.docker.com/develop/develop-images/build_enhancements/
 ##
+
+# This multi stage dockerfile is borrowed heavily from:
+# https://github.com/ledermann/docker-rails-base
 
 ##
 # Prep phase.
@@ -13,8 +16,8 @@ FROM ruby:3.0.3-alpine
 # the nodejs package means the current LTS version which now is 16.13.1 and requires python3
 RUN apk add --no-cache \
     build-base \
+    gcompat \
     postgresql-dev \
-    git \
     python3 \
     nodejs \
     yarn \
@@ -22,44 +25,52 @@ RUN apk add --no-cache \
     file
 
 WORKDIR /app
-
 COPY package.json yarn.lock /app/
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 
 # Install standard gems
 COPY Gemfile* /app/
-ENV BUNDLE_PATH=/app/vendor/bundle
-RUN bundle config set --local path $BUNDLE_PATH && \
-    bundle config set --local disable_shared_gems true && \
-    bundle config set --local path.system false && \
-    bundle config set --local clean false && \
-    bundle config set --local deployment true && \
-    bundle config set --local bin true && \
+RUN bundle config --local frozen 1 && \
     bundle install -j4 --retry 3
 
-# Subsequent builds check for any gems changes and prunes any unused
-ONBUILD WORKDIR /app
+#### ONBUILD: Add triggers to the image, executed later while building a child image
+
+# Install Ruby gems (for production only)
 ONBUILD COPY Gemfile* /app/
-ONBUILD RUN bundle config set --local path $BUNDLE_PATH && \
-    bundle config set --local disable_shared_gems true && \
-    bundle config set --local path.system false && \
-    bundle config set --local clean false && \
-    bundle config set --local deployment true && \
-    bundle config set --local bin true && \
+ONBUILD RUN bundle config --local without 'development test' && \
     bundle install -j4 --retry 3 && \
-    bundle clean --force
+    # Remove unneeded gems
+    bundle clean --force && \
+    # Remove unneeded files from installed gems (cache, *.o, *.c)
+    rm -rf /usr/local/bundle/cache && \
+    find /usr/local/bundle/gems/ -name "*.c" -delete && \
+    find /usr/local/bundle/gems/ -name "*.o" -delete
 
-##
-# Compile assets with Webpacker taking care to respect the secret RAILS_MASTER_KEY
-# Note that:
-#   1. Executing "assets:precompile" runs "yarn install" prior
-#   2. Executing "assets:precompile" runs "webpacker:compile", too
-#   3. Rails raises a `MissingKeyError` if the master key is missing.
-# NB: this use of "--mount=type=secret" depends on Docker BuildKit being enabled
-# FIXME: The example we built from used a dummy key here: https://github.com/ledermann/docker-rails-base/blob/main/Builder/Dockerfile#L50-L60
+# Copy the whole application folder into the image
+ONBUILD COPY . /app
+
+# Compile assets with Webpacker or Sprockets
+#
+# Notes:
+#   1. Executing "assets:precompile" runs "webpacker:compile", too
+#   2. For an app using encrypted credentials, Rails raises a `MissingKeyError`
+#      if the master key is missing. Because on CI there is no master key,
+#      we hide the credentials while compiling assets (by renaming them before and after)
+#
+# ONBUILD RUN mv config/credentials.yml.enc config/credentials.yml.enc.bak 2>/dev/null || true
+# ONBUILD RUN mv config/credentials config/credentials.bak 2>/dev/null || true
+ONBUILD RUN yarn install
 ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
-    RAILS_ENV=production bundle exec rails assets:precompile
+    RAILS_ENV=production \
+    bundle exec rails assets:precompile
+# ONBUILD RUN --mount=type=secret,id=npmrc,dst=/root/.npmrc \
+#     --mount=type=secret,id=yarnrc,dst=/root/.yarnrc.yml \
+#     RAILS_ENV=production \
+#     SECRET_KEY_BASE=dummy \
+#     RAILS_MASTER_KEY=dummy \
+#     bundle exec rails assets:precompile
+# ONBUILD RUN mv config/credentials.yml.enc.bak config/credentials.yml.enc 2>/dev/null || true
+# ONBUILD RUN mv config/credentials.bak config/credentials 2>/dev/null || true
 
-##
 # Remove folders not needed in resulting image
-#ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
+ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
