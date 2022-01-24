@@ -107,8 +107,7 @@ stages:
     jobs:
       - job: BuildBase
         displayName: Build and Push Base
-        # temporarily build base image every time so we can ensure everything is working
-        # condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables.buildBaseImage, 'true')))
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables.buildBaseImage, 'true')))
         steps:
           - task: Docker@2
             displayName: Login to ACR
