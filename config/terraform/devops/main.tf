@@ -55,8 +55,9 @@ resource "azuredevops_variable_group" "staging-vars" {
   description  = "Managed by Terraform - Variables sourced from terraform configuration that are needed for the pipeline to work"
   allow_access = true
   variable {
-    name  = "STAGING_DATABASE_URL"
-    value = var.staging_database_url
+    name      = "STAGING_DATABASE_URL"
+    value     = var.staging_database_url
+    is_secret = true
   }
 }
 
@@ -67,8 +68,9 @@ resource "azuredevops_variable_group" "production-vars" {
   allow_access = true
 
   variable {
-    name  = "PRODUCTION_DATABASE_URL"
-    value = var.production_database_url
+    name      = "PRODUCTION_DATABASE_URL"
+    value     = var.production_database_url
+    is_secret = true
   }
 }
 

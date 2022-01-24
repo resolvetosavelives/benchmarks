@@ -52,7 +52,7 @@ resource "azurerm_app_service" "app_service" {
     DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
     DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
-    DATABASE_URL                        = local.staging_database_url
+    DATABASE_URL                        = local.production_database_url
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
@@ -91,7 +91,7 @@ resource "azurerm_app_service_slot" "staging_slot" {
     DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
     DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
-    DATABASE_URL                        = local.production_database_url
+    DATABASE_URL                        = local.staging_database_url
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }

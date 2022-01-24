@@ -207,6 +207,11 @@ stages:
                     appSettings: |
                       [
                         {
+                          "name": "RAILS_MASTER_KEY",
+                          "value": "$(RAILS_MASTER_KEY)",
+                          "slotSetting": true
+                        },
+                        {
                           "name": "DATABASE_URL",
                           "value": "$(STAGING_DATABASE_URL)",
                           "slotSetting": true
@@ -251,6 +256,11 @@ stages:
                     slotName: staging
                     appSettings: |
                       [
+                        {
+                          "name": "RAILS_MASTER_KEY",
+                          "value": "$(RAILS_MASTER_KEY)",
+                          "slotSetting": true
+                        },
                         {
                           "name": "DATABASE_URL",
                           "value": "$(PRODUCTION_DATABASE_URL)",

@@ -37,15 +37,15 @@ RUN rm -f public/packs/css/*.br
 CMD echo "WHOAMI: `whoami`" && \
     env | sort && \
     echo "output of gem env: " && \
-    bin/bundle exec /usr/local/bin/gem env && \
+    bundle exec /usr/local/bin/gem env && \
     echo "output of bundle config: " && \
-    bin/bundle config && \
+    bundle config && \
     echo "output of bundle env: " && \
-    bin/bundle env && \
+    bundle env && \
     echo "ls -la PWD (`pwd`): " && \
     ls -la && \
     echo "ls -la /root/benchmarks/vendor/bundle/ruby/3.0.0/bin: " && \
     ls -la /root/benchmarks/vendor/bundle/ruby/3.0.0/bin && \
-    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bin/bundle exec rake db:schema:load && \
-    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bin/bundle exec rake db:seed && \
-    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bin/bundle exec /root/benchmarks/vendor/bundle/ruby/3.0.0/bin/puma -p 80 -w 0 -t 0:5
+    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec rake db:schema:load && \
+    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec rake db:seed && \
+    RAILS_ENV=$RAILS_ENV DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY WEBSITE_HOSTNAME=$WEBSITE_HOSTNAME bundle exec /root/benchmarks/vendor/bundle/ruby/3.0.0/bin/puma -p 80 -w 0 -t 0:5
