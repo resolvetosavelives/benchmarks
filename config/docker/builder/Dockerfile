@@ -23,10 +23,11 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-COPY Gemfile* .ruby-version yarn.lock package.json /app/
-
+COPY package.json yarn.lock /app/
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 
+# Install standard gems
+COPY Gemfile* /app/
 ENV BUNDLE_PATH=/app/vendor/bundle
 RUN bundle config set --local path $BUNDLE_PATH && \
     bundle config set --local disable_shared_gems true && \
@@ -61,4 +62,4 @@ ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
 
 ##
 # Remove folders not needed in resulting image
-ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
+#ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
