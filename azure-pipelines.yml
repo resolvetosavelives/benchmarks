@@ -207,7 +207,7 @@ stages:
                     appSettings: |
                       [
                         {
-                          "name": "DATABASE_URL"
+                          "name": "DATABASE_URL",
                           "value": "$(STAGING_DATABASE_URL)",
                           "slotSetting": true
                         }
@@ -252,7 +252,7 @@ stages:
                     appSettings: |
                       [
                         {
-                          "name": "DATABASE_URL"
+                          "name": "DATABASE_URL",
                           "value": "$(PRODUCTION_DATABASE_URL)",
                           "slotSetting": true
                         }
