@@ -193,6 +193,7 @@ stages:
     jobs:
       - deployment: Stage
         displayName: Deploy to Staging
+        environment: Staging
         strategy:
           runOnce:
             # Need to figure out how to run migrations
@@ -225,6 +226,7 @@ stages:
     jobs:
       - deployment: Promote
         displayName: Promote to production
+        environment: Production
         strategy:
           runOnce: #rolling, canary are the other strategies that are supported
             deploy:
