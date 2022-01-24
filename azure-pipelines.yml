@@ -11,10 +11,6 @@ schedules:
 # My goal is to expose them here to avoid burying them deep in terraform or ENV.
 # These are not expected to be changeable (it likely won't work)
 parameters:
-  - name: containerRegistryServiceConnection
-    displayName: Container Registry Service Connection Name
-    type: string
-    default: SC-IHRBENCHMARK-P-ACR
   - name: azureSubscription
     displayName: Azure Resource Manager Service Connection Name
     type: string
@@ -34,8 +30,6 @@ variables:
     value: 1
   - name: tag
     value: $(build.buildId)
-  - name: containerRegistry
-    value: $(ACR_SERVICE_ENDPOINT_NAME)
   - name: azureSubscription
     value: ${{parameters.azureSubscription}}
   - name: isMain
@@ -120,12 +114,12 @@ stages:
             displayName: Login to ACR
             inputs:
               command: login
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
           - task: Docker@2
             displayName: Build base image
             inputs:
               command: build
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
               repository: $(CONTAINER_REPOSITORY)_builder
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/builder/Dockerfile
@@ -137,7 +131,7 @@ stages:
             displayName: Push base image to ACR
             inputs:
               command: push
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
               repository: $(CONTAINER_REPOSITORY)_builder
               tags: |
                 $(tag)
@@ -146,7 +140,7 @@ stages:
             displayName: Logout of ACR
             inputs:
               command: logout
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
       - job: Build
         displayName: Build and Push Image
         dependsOn: BuildBase
@@ -156,14 +150,14 @@ stages:
             displayName: Login to ACR
             inputs:
               command: login
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
           - script: echo $(RAILS_MASTER_KEY) > config/master.key
             displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
             displayName: Docker build image
             inputs:
               command: build
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
               repository: $(CONTAINER_REPOSITORY)
               buildContext: $(Build.Repository.LocalPath)
               Dockerfile: config/docker/Dockerfile
@@ -177,7 +171,7 @@ stages:
             displayName: Docker push image to ACR
             inputs:
               command: push
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
               repository: $(CONTAINER_REPOSITORY)
               tags: |
                 $(tag)
@@ -186,10 +180,12 @@ stages:
             displayName: Logout of ACR
             inputs:
               command: logout
-              containerRegistry: $(containerRegistry)
+              containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
   - stage: Staging
     dependsOn: Build
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
+    variables:
+      - group: staging-variable-group
     jobs:
       - deployment: Stage
         displayName: Deploy to Staging
@@ -212,6 +208,21 @@ stages:
                     DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
                     DockerRepository: $(CONTAINER_REPOSITORY)
                     DockerImageTag: $(tag)
+                    SlotName: staging
+                - task: AzureAppServiceSettings@1
+                  displayName: Azure App Service Settings
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    appName: $(AZURE_APP_SERVICE_NAME)
+                    slotName: staging
+                    appSettings: |
+                      [
+                        {
+                          "name": "DATABASE_URL"
+                          "value": "$(STAGING_DATABASE_URL)",
+                          "slotSetting": true
+                        },
+                      ]
           # - task: AzureWebAppContainer@1
           #   inputs:
           #     azureSubscription: $(azureSubscription)
@@ -223,18 +234,43 @@ stages:
   - stage: Production
     dependsOn: Staging
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
+    variables:
+      - group: production-variable-group
     jobs:
       - deployment: Promote
         displayName: Promote to production
         environment: Production
         strategy:
-          runOnce: #rolling, canary are the other strategies that are supported
+          runOnce:
             deploy:
               steps:
-                - task: AzureAppServiceManage@0
+                - task: AzureRMWebAppDeployment@4
+                  displayName: Azure App Service Deploy
+                  inputs:
+                    appType: webAppContainer
+                    ConnectedServiceName: $(azureSubscription)
+                    WebAppName: $(AZURE_APP_SERVICE_NAME)
+                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
+                    DockerRepository: $(CONTAINER_REPOSITORY)
+                    DockerImageTag: $(tag)
+                - task: AzureAppServiceSettings@1
+                  displayName: Azure App Service Settings
                   inputs:
                     azureSubscription: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
-                    SourceSlot: staging
-                    SwapWithProduction: true
+                    appName: $(AZURE_APP_SERVICE_NAME)
+                    slotName: staging
+                    appSettings: |
+                      [
+                        {
+                          "name": "DATABASE_URL"
+                          "value": "$(PRODUCTION_DATABASE_URL)",
+                          "slotSetting": true
+                        },
+                      ]
+                # - task: AzureAppServiceManage@0
+                #   inputs:
+                #     azureSubscription: $(azureSubscription)
+                #     WebAppName: $(AZURE_APP_SERVICE_NAME)
+                #     ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
+                #     SourceSlot: staging
+                #     SwapWithProduction: true

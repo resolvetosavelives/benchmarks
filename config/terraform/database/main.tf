@@ -1,6 +1,45 @@
-locals {
-  database_server_name = "${local.scope}-${local.app_name}-postgresql"
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.93"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.1.0"
+    }
+  }
 }
+
+locals {
+  database_server_name = "${var.namespace}-postgresql"
+  database_url_without_db_name = join("", [
+    "postgres://",
+    azurerm_postgresql_server.db.administrator_login,
+    urlencode("@"),
+    azurerm_postgresql_server.db.name,
+    ":",
+    azurerm_postgresql_server.db.administrator_login_password,
+    "@",
+    azurerm_postgresql_server.db.fqdn,
+    ":5432/",
+  ])
+  staging_database_url = join("", [
+    local.database_url_without_db_name,
+    azurerm_postgresql_database.benchmarks_staging.name,
+    "?sslmode=require",
+  ])
+  production_database_url = join("", [
+    local.database_url_without_db_name,
+    azurerm_postgresql_database.benchmarks_production.name,
+    "?sslmode=require",
+  ])
+}
+
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group_name
+}
+
 resource "random_string" "db_administrator_login" {
   length  = 10
   special = false

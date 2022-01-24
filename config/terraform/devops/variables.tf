@@ -20,6 +20,14 @@ variable "container_registry_password" {
 variable "container_repository" {
   type = string
 }
+variable "staging_database_url" {
+  type      = string
+  sensitive = true
+}
+variable "production_database_url" {
+  type      = string
+  sensitive = true
+}
 variable "RAILS_MASTER_KEY" {
   type      = string
   sensitive = true

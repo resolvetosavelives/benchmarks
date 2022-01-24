@@ -4,10 +4,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 2.93"
     }
-    random = {
-      source  = "hashicorp/random"
-      version = ">= 3.1.0"
-    }
   }
   backend "azurerm" {
     // Variables not allowed in this block
@@ -50,6 +46,11 @@ data "azurerm_resource_group" "rg" {
 // to expose to other tf code: id, tenant_id, subscription_id, display_name..
 data "azurerm_subscription" "current" {}
 
+module "database" {
+  source              = "./database"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  namespace           = "${local.scope}-${local.app_name}"
+}
 module "devops" {
   source                      = "./devops"
   RAILS_MASTER_KEY            = var.RAILS_MASTER_KEY
@@ -60,4 +61,6 @@ module "devops" {
   container_registry_username = azurerm_container_registry.acr.admin_username
   container_registry_password = azurerm_container_registry.acr.admin_password
   container_repository        = local.container_repository
+  staging_database_url        = module.database.staging_database_url
+  production_database_url     = module.database.production_database_url
 }

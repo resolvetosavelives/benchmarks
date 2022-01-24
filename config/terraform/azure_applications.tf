@@ -1,16 +1,7 @@
 locals {
-  docker_image_name = "${azurerm_container_registry.acr.login_server}/${local.container_repository}:latest"
-  database_url_without_db_name = join("", [
-    "postgres://",
-    azurerm_postgresql_server.db.administrator_login,
-    urlencode("@"),
-    azurerm_postgresql_server.db.name,
-    ":",
-    azurerm_postgresql_server.db.administrator_login_password,
-    "@",
-    azurerm_postgresql_server.db.fqdn,
-    ":5432/",
-  ])
+  docker_image_name       = "${azurerm_container_registry.acr.login_server}/${local.container_repository}:latest"
+  staging_database_url    = module.database.staging_database_url
+  production_database_url = module.database.production_database_url
 }
 
 # with the Basic sku we get less bandwidth, modest performance and storage, and no privacy (could be accessed by public internet if the URL is discovered)
@@ -57,16 +48,11 @@ resource "azurerm_app_service" "app_service" {
   }
 
   app_settings = {
-    DOCKER_REGISTRY_SERVER_URL      = "https://${azurerm_container_registry.acr.login_server}"
-    DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
-    DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
-    DOCKER_CUSTOM_IMAGE_NAME        = local.docker_image_name
-    DATABASE_URL = join("", [
-      local.database_url_without_db_name,
-      azurerm_postgresql_database.benchmarks_production.name,
-      "?sslmode=require",
-    ])
-
+    DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
+    DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
+    DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
+    DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
+    DATABASE_URL                        = local.staging_database_url
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
@@ -100,16 +86,12 @@ resource "azurerm_app_service_slot" "staging_slot" {
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
   app_settings = {
-    DOCKER_ENABLE_CI                = true // special //
-    DOCKER_REGISTRY_SERVER_URL      = "https://${azurerm_container_registry.acr.login_server}"
-    DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
-    DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
-    DOCKER_CUSTOM_IMAGE_NAME        = local.docker_image_name
-    DATABASE_URL = join("", [
-      local.database_url_without_db_name,
-      azurerm_postgresql_database.benchmarks_staging.name,
-      "?sslmode=require",
-    ])
+    DOCKER_ENABLE_CI                    = true // special //
+    DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
+    DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
+    DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
+    DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
+    DATABASE_URL                        = local.production_database_url
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
