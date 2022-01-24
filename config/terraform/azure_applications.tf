@@ -45,6 +45,7 @@ resource "azurerm_app_service" "app_service" {
     vnet_route_all_enabled = true
     linux_fx_version       = "DOCKER|${local.docker_image_name}"
     ftps_state             = "Disabled"
+    health_check_path      = "/healthcheck"
   }
 
   app_settings = {

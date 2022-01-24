@@ -58,5 +58,7 @@ Rails.application.routes.draw do
   get "/document/acknowledgement",
       to: "pages#acknowledgement", as: "acknowledgement"
 
+  get "/healthcheck", to: "healthchecks#index", as: "healthcheck"
+
   root to: "pages#home"
 end
