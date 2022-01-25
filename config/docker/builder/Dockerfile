@@ -30,21 +30,22 @@ RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 
 # Install standard gems
 COPY Gemfile* /app/
-RUN bundle config --local frozen 1 && \
-    bundle install -j4 --retry 3
+ENV BUNDLE_BIN true
+ENV BUNDLE_FROZEN true
+ENV BUNDLE_WITHOUT "test development"
+RUN bundle install -j4 --retry 3
 
 #### ONBUILD: Add triggers to the image, executed later while building a child image
 
 # Install Ruby gems (for production only)
 ONBUILD COPY Gemfile* /app/
-ONBUILD RUN bundle config --local without 'development test' && \
-    bundle install -j4 --retry 3 && \
+ONBUILD RUN bundle install -j4 --retry 3 && \
     # Remove unneeded gems
     bundle clean --force && \
     # Remove unneeded files from installed gems (cache, *.o, *.c)
     rm -rf /usr/local/bundle/cache && \
-    find /usr/local/bundle/gems/ -name "*.c" -delete && \
-    find /usr/local/bundle/gems/ -name "*.o" -delete
+    find /usr/local/bundle/gems/ -name "*.c" -delete
+# find /usr/local/bundle/gems/ -name "*.o" -delete
 
 # Copy the whole application folder into the image
 ONBUILD COPY . /app
