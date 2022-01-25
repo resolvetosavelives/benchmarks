@@ -62,7 +62,7 @@ ONBUILD COPY . /app
 ONBUILD RUN yarn install
 ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
     RAILS_ENV=production \
-    bundle exec rails assets:precompile
+    bundle exec rake assets:precompile
 # ONBUILD RUN --mount=type=secret,id=npmrc,dst=/root/.npmrc \
 #     --mount=type=secret,id=yarnrc,dst=/root/.yarnrc.yml \
 #     RAILS_ENV=production \
