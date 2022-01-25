@@ -14,6 +14,7 @@ RUN apk add --no-cache \
 ENV RAILS_ENV production
 ENV RAILS_LOG_TO_STDOUT true
 ENV RAILS_SERVE_STATIC_FILES true
+ENV WEBSITE_HOSTNAME $WEBSITE_HOSTNAME
 
 WORKDIR /app
 
@@ -32,11 +33,10 @@ ONBUILD COPY --from=Builder --chown=app:app /usr/local/bundle/ /usr/local/bundle
 COPY --from=Builder --chown=app:app /app /app
 
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
-# Ok, forget that, I think we should try it.
+# ... but why do we need unix signals?
 # RUN chmod +x entrypoint.sh
 # ENTRYPOINT ["entrypoint.sh"]
 
-ENV WEBSITE_HOSTNAME $WEBSITE_HOSTNAME
 RUN bundle config
 
 CMD DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY bundle exec rake db:schema:load db:migrate db:seed && \
