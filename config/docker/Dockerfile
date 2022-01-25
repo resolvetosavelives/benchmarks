@@ -6,6 +6,8 @@ FROM $BUILDER_IMAGE AS Builder
 FROM ruby:3.0.3-alpine
 
 RUN apk add --no-cache \
+    build-base \
+    gcompat \
     postgresql-client \
     tzdata \
     file
@@ -39,6 +41,6 @@ COPY --from=Builder --chown=app:app /app /app
 
 RUN bundle config
 
-CMD DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY bundle exec rake db:schema:load db:migrate db:seed && \
-    bundle exec rails server -b 0.0.0.0
+CMD DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY bin/rails db:schema:load db:migrate db:seed && \
+    bin/rails server -b 0.0.0.0
 # CMD ["rails", "server", "-b", "0.0.0.0"]

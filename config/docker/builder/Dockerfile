@@ -46,8 +46,8 @@ ONBUILD RUN bundle install -j4 --retry 3 && \
     bundle clean --force && \
     # Remove unneeded files from installed gems (cache, *.o, *.c)
     rm -rf /usr/local/bundle/cache && \
-    find /usr/local/bundle/gems/ -name "*.c" -delete
-# find /usr/local/bundle/gems/ -name "*.o" -delete
+    find /usr/local/bundle/gems/ -name "*.c" -delete && \
+    find /usr/local/bundle/gems/ -name "*.o" -delete
 
 # Copy the whole application folder into the image
 ONBUILD COPY . /app
