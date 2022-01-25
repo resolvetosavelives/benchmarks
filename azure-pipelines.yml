@@ -51,55 +51,55 @@ resources:
         - "5432:5432"
 
 stages:
-  - stage: Test
-    jobs:
-      - job: Test
-        displayName: Run CI Tests
-        condition: ne(variables['Build.Reason'], 'Schedule')
-        pool:
-          # ubuntu-20.04 image includes most of what we need, cutting down on installs
-          # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
-          vmImage: "ubuntu-20.04"
-        services:
-          postgres: postgres
-        steps:
-          - script: printenv
-            displayName: printenv
-          # - task: UseRubyVersion@0
-          #   inputs:
-          #     versionSpec: ">= 3.0"
-          #     addToPath: true
-          # - task: NodeTool@0
-          #   inputs:
-          #     versionSpec: "16.x"
-          # - script: |
-          #     bin/bundle config set --local path vendor/bundle && \
-          #     bin/bundle config set --local deployment true && \
-          #     bin/bundle install
-          #   displayName: bundle install
-          # - script: yarn install --frozen-lockfile --check-files
-          #   displayName: yarn install
-          # - task: CmdLine@2
-          #   displayName: prepare test db
-          #   env:
-          #     DATABASE_URL: $(DATABASE_URL)
-          #     RAILS_ENV: test
-          #   inputs:
-          #     script: bin/bundle exec rake db:schema:load db:seed
-          # - task: CmdLine@2
-          #   displayName: rake test:ci
-          #   env:
-          #     DATABASE_URL: $(DATABASE_URL)
-          #     MINITEST_REPORTER: JUnitReporter
-          #     RAILS_ENV: test
-          #   inputs:
-          #     script: bin/bundle exec rake test:ci
-          # - task: PublishTestResults@2
-          #   condition: succeededOrFailed()
-          #   inputs:
-          #     codeCoverageTool: JUnit
-          #     testRunTitle: Benchmarks ruby rspec test suite with in-browser
-          #     testResultsFiles: "**/TEST-*.xml"
+  # - stage: Test
+  #   jobs:
+  #     - job: Test
+  #       displayName: Run CI Tests
+  #       condition: ne(variables['Build.Reason'], 'Schedule')
+  #       pool:
+  #         # ubuntu-20.04 image includes most of what we need, cutting down on installs
+  #         # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+  #         vmImage: "ubuntu-20.04"
+  #       services:
+  #         postgres: postgres
+  #       steps:
+  #         - script: printenv
+  #           displayName: printenv
+  #         - task: UseRubyVersion@0
+  #           inputs:
+  #             versionSpec: ">= 3.0"
+  #             addToPath: true
+  #         - task: NodeTool@0
+  #           inputs:
+  #             versionSpec: "16.x"
+  #         - script: |
+  #             bin/bundle config set --local path vendor/bundle && \
+  #             bin/bundle config set --local deployment true && \
+  #             bin/bundle install
+  #           displayName: bundle install
+  #         - script: yarn install --frozen-lockfile --check-files
+  #           displayName: yarn install
+  #         - task: CmdLine@2
+  #           displayName: prepare test db
+  #           env:
+  #             DATABASE_URL: $(DATABASE_URL)
+  #             RAILS_ENV: test
+  #           inputs:
+  #             script: bin/bundle exec rake db:schema:load db:seed
+  #         - task: CmdLine@2
+  #           displayName: rake test:ci
+  #           env:
+  #             DATABASE_URL: $(DATABASE_URL)
+  #             MINITEST_REPORTER: JUnitReporter
+  #             RAILS_ENV: test
+  #           inputs:
+  #             script: bin/bundle exec rake test:ci
+  #         - task: PublishTestResults@2
+  #           condition: succeededOrFailed()
+  #           inputs:
+  #             codeCoverageTool: JUnit
+  #             testRunTitle: Benchmarks ruby rspec test suite with in-browser
+  #             testResultsFiles: "**/TEST-*.xml"
 
   - stage: Build
     displayName: Build and Push
