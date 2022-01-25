@@ -38,5 +38,11 @@ module RtslBenchmarks
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # This setting is true during asset compilation to avoid forcing secrets to be loaded
+    config.asset_compilation = ENV["ASSET_COMPILATION"]
+
+    # Set by Azure when deployed to app-service.
+    config.website_hostname = ENV["WEBSITE_HOSTNAME"]
   end
 end

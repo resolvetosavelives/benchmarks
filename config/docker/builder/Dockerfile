@@ -24,6 +24,8 @@ RUN apk add --no-cache \
     tzdata \
     file
 
+ENV RAILS_ENV production
+
 WORKDIR /app
 COPY package.json yarn.lock /app/
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
@@ -58,20 +60,15 @@ ONBUILD COPY . /app
 #      if the master key is missing. Because on CI there is no master key,
 #      we hide the credentials while compiling assets (by renaming them before and after)
 #
-# ONBUILD RUN mv config/credentials.yml.enc config/credentials.yml.enc.bak 2>/dev/null || true
-# ONBUILD RUN mv config/credentials config/credentials.bak 2>/dev/null || true
+ONBUILD RUN mv config/credentials.yml.enc config/credentials.yml.enc.bak 2>/dev/null || true
+ONBUILD RUN mv config/credentials config/credentials.bak 2>/dev/null || true
 ONBUILD RUN yarn install
-ONBUILD RUN --mount=type=secret,id=RAILS_MASTER_KEY,dst=config/master.key \
-    RAILS_ENV=production \
-    bundle exec rake assets:precompile
-# ONBUILD RUN --mount=type=secret,id=npmrc,dst=/root/.npmrc \
-#     --mount=type=secret,id=yarnrc,dst=/root/.yarnrc.yml \
-#     RAILS_ENV=production \
-#     SECRET_KEY_BASE=dummy \
-#     RAILS_MASTER_KEY=dummy \
-#     bundle exec rails assets:precompile
-# ONBUILD RUN mv config/credentials.yml.enc.bak config/credentials.yml.enc 2>/dev/null || true
-# ONBUILD RUN mv config/credentials.bak config/credentials 2>/dev/null || true
+ONBUILD RUN ASSET_COMPILATION=true
+SECRET_KEY_BASE=dummy \
+    RAILS_MASTER_KEY=dummy \
+    bin/rails assets:precompile
+ONBUILD RUN mv config/credentials.yml.enc.bak config/credentials.yml.enc 2>/dev/null || true
+ONBUILD RUN mv config/credentials.bak config/credentials 2>/dev/null || true
 
 # Remove folders not needed in resulting image
 ONBUILD RUN rm -rf node_modules tmp/cache vendor/bundle test spec app/javascript app/packs
