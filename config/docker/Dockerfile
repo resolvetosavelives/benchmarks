@@ -33,8 +33,8 @@ COPY --from=Builder --chown=app:app /app /app
 
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
 # Ok, forget that, I think we should try it.
-RUN chmod +x entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+# RUN chmod +x entrypoint.sh
+# ENTRYPOINT ["entrypoint.sh"]
 
 ENV WEBSITE_HOSTNAME $WEBSITE_HOSTNAME
 RUN bundle config
