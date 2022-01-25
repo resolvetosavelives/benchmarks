@@ -29,7 +29,7 @@ RUN addgroup -g 1000 -S app && \
 USER app
 
 # Copy app with gems from former build stage
-ONBUILD COPY --from=Builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
+COPY --from=Builder --chown=app:app /usr/local/bundle/ /usr/local/bundle/
 COPY --from=Builder --chown=app:app /app /app
 
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
