@@ -1,12 +1,7 @@
 # syntax=docker/dockerfile:1
-
-##
-# with a Dockerfile that specifies use of a BuildKit frontend docker/dockerfile:1.2, the secret can be accessed when performing a RUN
-# https://docs.docker.com/develop/develop-images/build_enhancements/
-##
-
 # This multi stage dockerfile is borrowed heavily from:
 # https://github.com/ledermann/docker-rails-base
+# I didn't choose to rely on it directly to avoid a dependency we don't control.
 
 ##
 # Prep phase.
@@ -49,7 +44,6 @@ ONBUILD RUN bundle install -j4 --retry 3 && \
     find /usr/local/bundle/gems/ -name "*.c" -delete && \
     find /usr/local/bundle/gems/ -name "*.o" -delete
 
-# Copy the whole application folder into the image
 ONBUILD COPY . /app
 
 # Compile assets with Webpacker or Sprockets
@@ -59,6 +53,7 @@ ONBUILD COPY . /app
 #   2. For an app using encrypted credentials, Rails raises a `MissingKeyError`
 #      if the master key is missing. Because on CI there is no master key,
 #      we hide the credentials while compiling assets (by renaming them before and after)
+#   3. ASSET_COMPILATION=true manually skips loading credentials so precompile works.
 #
 ONBUILD RUN mv config/credentials.yml.enc config/credentials.yml.enc.bak 2>/dev/null || true
 ONBUILD RUN mv config/credentials config/credentials.bak 2>/dev/null || true

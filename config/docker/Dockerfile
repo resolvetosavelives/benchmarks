@@ -36,8 +36,8 @@ COPY --from=Builder --chown=app:app /app /app
 
 # NB: we are not using ENTRYPOINT because it does not pass Unix signals
 # ... but why do we need unix signals?
-RUN chmod +x bin/docker-entrypoint.sh
-ENTRYPOINT ["bin/docker-entrypoint.sh"]
+RUN chmod +x docker-entrypoint.sh
+ENTRYPOINT ["./docker-entrypoint.sh"]
 
 RUN bundle config
 
