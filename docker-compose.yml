@@ -4,15 +4,17 @@ services:
     build:
       context: .
       dockerfile: config/docker/Dockerfile
+    depends_on:
+      - db
+    links:
+      - db
     environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_PASSWORD=password
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/
+      - FORCE_SSL=false
     ports:
       - "3000:3000"
     working_dir: /app
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    depends_on:
-      - db
     volumes:
       - .:/app
   # dev:
@@ -31,7 +33,7 @@ services:
     image: postgres:14-alpine
     environment:
       POSTGRES_HOST_AUTH_METHOD: "trust"
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
     ports:
       - "5432:5432"
