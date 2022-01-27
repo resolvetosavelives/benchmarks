@@ -4,7 +4,11 @@ config/master.key
 **/tmp/*
 # must have this for puma or else cannot start
 !tmp/pids/.keep
-public/packs*
 **/*tfstate*
 **/.terraform/*
 **/.git/*
+
+# Ignore precompiled javascript packs
+/public/packs
+/public/packs-test
+/public/assets

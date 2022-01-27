@@ -22,9 +22,6 @@ WORKDIR /app
 
 EXPOSE 3000
 
-# Workaround to trigger Builder's ONBUILDs to finish:
-# COPY --from=Builder /etc/alpine-release /tmp/dummy
-
 # Add user
 RUN addgroup -g 1000 -S app && \
     adduser -u 1000 -S app -G app
@@ -40,7 +37,6 @@ RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
 RUN bundle config
+RUN printenv
 
-CMD DATABASE_URL=$DATABASE_URL RAILS_MASTER_KEY=$RAILS_MASTER_KEY bin/rails db:schema:load db:migrate db:seed && \
-    bin/rails server -b 0.0.0.0
-# CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
