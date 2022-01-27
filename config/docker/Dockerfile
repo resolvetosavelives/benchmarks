@@ -36,7 +36,4 @@ COPY --from=Builder --chown=app:app /app /app
 RUN chmod +x docker-entrypoint.sh
 ENTRYPOINT ["./docker-entrypoint.sh"]
 
-RUN bundle config
-RUN printenv
-
 CMD ["rails", "server", "-b", "0.0.0.0"]
