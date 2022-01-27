@@ -108,6 +108,20 @@ resource "azurerm_app_service_slot" "staging_slot" {
     WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
     WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
   }
+  logs {
+    // http_logs seems to be the Azure App Service-level logs, external to our app
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 100
+      }
+    }
+    // application_logs seems to mean logs from our actual app code in its container
+    application_logs {
+      file_system_level = "Verbose"
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       # Ignore changes because deploys change which tag is deployed
