@@ -57,6 +57,8 @@ resource "azurerm_app_service" "app_service" {
     DATABASE_URL                        = local.production_database_url
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
+    WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
@@ -87,6 +89,13 @@ resource "azurerm_app_service_slot" "staging_slot" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
+  site_config {
+    vnet_route_all_enabled = true
+    linux_fx_version       = "DOCKER|${local.docker_image_name}"
+    ftps_state             = "Disabled"
+    always_on              = true
+    health_check_path      = "/healthcheck"
+  }
   app_settings = {
     DOCKER_ENABLE_CI                    = true // special //
     DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
@@ -96,10 +105,13 @@ resource "azurerm_app_service_slot" "staging_slot" {
     DATABASE_URL                        = local.staging_database_url
     RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
+    WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
   }
   lifecycle {
     ignore_changes = [
       # Ignore changes because deploys change which tag is deployed
+      site_config["linux_fx_version"],
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
     ]
   }
