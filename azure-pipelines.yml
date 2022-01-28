@@ -150,8 +150,6 @@ stages:
             inputs:
               command: login
               containerRegistry: $(ACR_SERVICE_ENDPOINT_NAME)
-          - script: echo $(RAILS_MASTER_KEY) > config/master.key
-            displayName: Write RAILS_MASTER_KEY to file config/master.key
           - task: Docker@2
             displayName: Docker build image
             inputs:
@@ -164,8 +162,6 @@ stages:
                 $(tag)
                 latest
               arguments: "--no-cache --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
-          - script: rm config/master.key
-            displayName: Delete RAILS_MASTER_KEY file config/master.key
           - task: Docker@2
             displayName: Docker push image to ACR
             inputs:
