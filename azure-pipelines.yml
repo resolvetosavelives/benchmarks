@@ -253,7 +253,7 @@ stages:
                   inputs:
                     azureSubscription: $(azureSubscription)
                     appName: $(AZURE_APP_SERVICE_NAME)
-                    slotName: staging
+                    slotName: preview
                     appSettings: |
                       [
                         {
@@ -277,3 +277,12 @@ stages:
                     DockerRepository: $(CONTAINER_REPOSITORY)
                     DockerImageTag: $(tag)
                     SlotName: preview
+            routeTraffic:
+              steps:
+                - task: AzureAppServiceManage@0
+                  inputs:
+                    azureSubscription: $(azureSubscription)
+                    WebAppName: $(AZURE_APP_SERVICE_NAME)
+                    ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
+                    SourceSlot: preview
+                    SwapWithProduction: true
