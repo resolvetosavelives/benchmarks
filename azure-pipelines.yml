@@ -276,6 +276,16 @@ stages:
                     DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
                     DockerRepository: $(CONTAINER_REPOSITORY)
                     DockerImageTag: $(tag)
+            on:
+              success:
+                - task: GithubRelease@1
+                  displayName: "Create GitHub Release"
+                  inputs:
+                    # Parameterize these:
+                    gitHubConnection: WorldHealthOrganization
+                    repositoryName: WorldHealthOrganization/ihrbenchmark
+                    tagSource: manual
+                    tag: $(Build.BuildNumber)
                 # - task: AzureAppServiceManage@0
                 #   inputs:
                 #     azureSubscription: $(azureSubscription)
