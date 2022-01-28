@@ -278,18 +278,12 @@ stages:
                     DockerImageTag: $(tag)
             on:
               success:
-                - task: GithubRelease@1
-                  displayName: "Create GitHub Release"
-                  inputs:
-                    # Parameterize these:
-                    gitHubConnection: WorldHealthOrganization
-                    repositoryName: WorldHealthOrganization/ihrbenchmark
-                    tagSource: manual
-                    tag: $(Build.BuildNumber)
-                # - task: AzureAppServiceManage@0
-                #   inputs:
-                #     azureSubscription: $(azureSubscription)
-                #     WebAppName: $(AZURE_APP_SERVICE_NAME)
-                #     ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
-                #     SourceSlot: staging
-                #     SwapWithProduction: true
+                steps:
+                  - task: GithubRelease@1
+                    displayName: "Create GitHub Release"
+                    inputs:
+                      # Parameterize these:
+                      gitHubConnection: WorldHealthOrganization
+                      repositoryName: WorldHealthOrganization/ihrbenchmark
+                      tagSource: manual
+                      tag: $(Build.BuildNumber)
