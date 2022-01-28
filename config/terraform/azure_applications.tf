@@ -82,6 +82,51 @@ resource "azurerm_app_service" "app_service" {
     ]
   }
 }
+resource "azurerm_app_service_slot" "preview_slot" {
+  name                = "preview"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
+  app_service_name    = azurerm_app_service.app_service.name
+  site_config {
+    vnet_route_all_enabled = true
+    linux_fx_version       = "DOCKER|${local.docker_image_name}"
+    ftps_state             = "Disabled"
+    health_check_path      = "/healthcheck"
+  }
+  app_settings = {
+    DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
+    DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
+    DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
+    DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
+    DATABASE_URL                        = local.production_database_url
+    RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
+    WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
+  }
+  logs {
+    // http_logs seems to be the Azure App Service-level logs, external to our app
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 100
+      }
+    }
+    // application_logs seems to mean logs from our actual app code in its container
+    application_logs {
+      file_system_level = "Verbose"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      # Ignore changes because deploys change which tag is deployed
+      site_config["linux_fx_version"],
+      app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
+    ]
+  }
+}
 
 resource "azurerm_app_service_slot" "staging_slot" {
   name                = "staging"
@@ -97,7 +142,6 @@ resource "azurerm_app_service_slot" "staging_slot" {
     health_check_path      = "/healthcheck"
   }
   app_settings = {
-    DOCKER_ENABLE_CI                    = true // special //
     DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
     DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
     DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password

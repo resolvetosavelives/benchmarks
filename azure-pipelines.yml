@@ -183,40 +183,14 @@ stages:
   - stage: Staging
     dependsOn: Build
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
-    variables:
-      - group: staging-variable-group
     jobs:
       - deployment: Stage
         displayName: Deploy to Staging
         environment: Staging
         strategy:
           runOnce:
-            # Need to figure out how to run migrations
-            # preDeploy:
-            #   steps:
-            #     - script: docker exec -it "$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):latest" bundle exec rake db:create
-            #       displayName: rake db:create
             deploy:
               steps:
-                - task: AzureAppServiceSettings@1
-                  displayName: Azure App Service Settings
-                  inputs:
-                    azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
-                    slotName: staging
-                    appSettings: |
-                      [
-                        {
-                          "name": "RAILS_MASTER_KEY",
-                          "value": "$(RAILS_MASTER_KEY)",
-                          "slotSetting": true
-                        },
-                        {
-                          "name": "DATABASE_URL",
-                          "value": "$(STAGING_DATABASE_URL)",
-                          "slotSetting": true
-                        }
-                      ]
                 - task: AzureRMWebAppDeployment@4
                   displayName: Azure App Service Deploy
                   inputs:
@@ -227,19 +201,9 @@ stages:
                     DockerRepository: $(CONTAINER_REPOSITORY)
                     DockerImageTag: $(tag)
                     SlotName: staging
-          # - task: AzureWebAppContainer@1
-          #   inputs:
-          #     azureSubscription: $(azureSubscription)
-          #     appName: $(AZURE_APP_SERVICE_NAME)
-          #     imageName: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):$(tag)
-          #     deployToSlotOrASE: true
-          #     ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
-          #     slotName: staging
   - stage: Production
     dependsOn: Staging
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
-    variables:
-      - group: production-variable-group
     jobs:
       - deployment: Promote
         displayName: Promote to production
@@ -248,25 +212,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: AzureAppServiceSettings@1
-                  displayName: Azure App Service Settings
-                  inputs:
-                    azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
-                    slotName: preview
-                    appSettings: |
-                      [
-                        {
-                          "name": "RAILS_MASTER_KEY",
-                          "value": "$(RAILS_MASTER_KEY)",
-                          "slotSetting": true
-                        },
-                        {
-                          "name": "DATABASE_URL",
-                          "value": "$(PRODUCTION_DATABASE_URL)",
-                          "slotSetting": true
-                        }
-                      ]
                 - task: AzureRMWebAppDeployment@4
                   displayName: Azure App Service Deploy
                   inputs:
