@@ -42,10 +42,10 @@ resource "azurerm_app_service" "app_service" {
     type = "SystemAssigned"
   }
   site_config {
+    always_on              = true
     vnet_route_all_enabled = true
     linux_fx_version       = "DOCKER|${local.docker_image_name}"
     ftps_state             = "Disabled"
-    always_on              = true
     health_check_path      = "/healthcheck"
   }
 
@@ -73,7 +73,6 @@ resource "azurerm_app_service" "app_service" {
       file_system_level = "Verbose"
     }
   }
-
   lifecycle {
     ignore_changes = [
       # Ignore changes because deploys change which tag is deployed
@@ -88,6 +87,9 @@ resource "azurerm_app_service_slot" "preview_slot" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
+  identity {
+    type = "SystemAssigned"
+  }
   site_config {
     vnet_route_all_enabled = true
     linux_fx_version       = "DOCKER|${local.docker_image_name}"
@@ -118,7 +120,6 @@ resource "azurerm_app_service_slot" "preview_slot" {
       file_system_level = "Verbose"
     }
   }
-
   lifecycle {
     ignore_changes = [
       # Ignore changes because deploys change which tag is deployed
@@ -134,11 +135,14 @@ resource "azurerm_app_service_slot" "staging_slot" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
+  identity {
+    type = "SystemAssigned"
+  }
   site_config {
+    always_on              = true
     vnet_route_all_enabled = true
     linux_fx_version       = "DOCKER|${local.docker_image_name}"
     ftps_state             = "Disabled"
-    always_on              = true
     health_check_path      = "/healthcheck"
   }
   app_settings = {
@@ -165,7 +169,6 @@ resource "azurerm_app_service_slot" "staging_slot" {
       file_system_level = "Verbose"
     }
   }
-
   lifecycle {
     ignore_changes = [
       # Ignore changes because deploys change which tag is deployed
