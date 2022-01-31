@@ -1,23 +1,31 @@
-## SCOPE OF THESE CHANGES
+# Azure Readme
 
-This pull request comprises the entirety of changes made thus far in support of the big migration of this app to Azure. There are many topic branches worth of work that have culminated in this branch. It had not been merged to a mainline branch because Heroku must remain as the current Production and Staging versions until we integrate with WHO's Active Directory, and because at various points the work was preliminary and/or experimental. This is now working with Azure and well understood (see known problems section.) We are closing in on a major milestone in this project, but there are a couple more stories/tasks yet to do beyond this PR that will be part of the same milestone.
+## Azure and Docker
 
-## BACKGROUND
+Azure cloud resources are managed via Terraform.
 
-This branch began based on master branch, but will this PR is targeting branch `main-azure` which will be the long-lived (epic) branch that will accumulate other Azure-related changes, and will eventually be merged to the mainline branch (today that is `master` but tomorrow that will be `main`.)
+The terraform configuration is in `config/terraform`. Secret values are put into a .env file in the terraform folder and sourced into the current shell session.
 
-As the branch name suggests, this git branch and its story are about the last bits of work to get a CI pipeline functional from the GitHub repo triggered from a merge into a certain branch (currently this topic branch), to run the full test suite including capybara/webkit (in-browser w/ JS) tests against an Azure Postgresql Database Service instance, to build the docker images and push them to an Azure Container Registry, and finally to trigger a release to Azure App Service of the latest release and restart the app.
+We run in Azure App Service for Containers.
 
-## AZURE AND DOCKER
+The directory `config/docker` container the Dockerfiles. There are 2 Dockerfiles for multi-stage build:
 
-We manage Azure cloud resources via Terraform. New folder `config/terraform` contains the terraform code that is split out in to several conceptual files. Secret values are retrieved from Azure and put into a dot file in the terraform folder and then sourced into the current shell session.
+1. a builder stage (install gems and packages, compile web assets)
+2. a main Dockerfile that sources the builder stage and then configures the application
 
-We run in Azure App Service in a docker container. New folder `config/docker` container the docker-related code. There are 3 Dockerfiles to comprise our multi-stage docker build: a builder stage (compile web assets, has more deps and large file size) and a base stage (smaller file size due ti runtime/deployment deps only), and a Dockerfile that implements the 2 stages. The docker build pulls from the repo every time.
+The builder stage is built on azure devops on a schedule. To compile the builder locally:
 
-1. `config/builder/Dockerfile`: `yarn build:builder`
-2. `config/base/Dockerfile`: `yarn build:base`
-3. `config/Dockerfile`: `yarn build`
-4. Or to build all three: `yarn build:all`
+    docker build -t benchmarks_builder -f config/docker/builder/Dockerfile .
+
+The main Dockerfile works with docker compose, which includes a postgres image as well.
+
+To compile the main image locally:
+
+    docker compose build
+
+And to run it locally:
+
+    docker compose up
 
 To tinker with what docker has built:
 
@@ -34,14 +42,12 @@ To tinker with what docker has built:
 - Azure PostgreSQL Databases
 - Azure PostgreSQL Firewall Rules
 - Azure Container Registry
-- Azure Container Registry Webhook
 - Azure Storage Container (terraform state)
 - Azure Resource Groups (production, sandbox, terraform)
 
 # Azure Devops resources used:
 
 - Azure Devops Project
-- Azure Devops Git Repository
 - Azure Devops Build Definition (aka "pipeline")
 - Azure Devops Service Endpoint for GitHub
 - Azure Devops Service Endpoint for Azure Container Registry
