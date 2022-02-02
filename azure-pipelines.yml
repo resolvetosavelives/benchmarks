@@ -99,6 +99,7 @@ stages:
           - publish: $(System.DefaultWorkingDirectory)/tmp/screenshots
             artifact: screenshots
             condition: failed()
+            continueOnError: true
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             inputs:
