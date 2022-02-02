@@ -282,8 +282,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
     retry_on_pending_connection do
       expect(page).to have_selector(
         "h3",
-        text: "National Legislation, Policy and Financing",
-        wait: 5
+        text: "National Legislation, Policy and Financing"
       )
     end
 

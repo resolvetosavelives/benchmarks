@@ -1,7 +1,6 @@
-# Usually, especially when using Selenium, developers tend to increase the max wait time.
-# With Cuprite, there is no need for that.
-# We use a Capybara default value here explicitly.
-Capybara.default_max_wait_time = 2
+# Capybara default is 2, but CI is slow and the failing selector is sometimes unpredictable.
+# Rather than pepper the specs with waits, just change the default.
+Capybara.default_max_wait_time = 5
 
 # Normalize whitespaces when using `has_text?` and similar matchers,
 # i.e., ignore newlines, trailing spaces, etc.
