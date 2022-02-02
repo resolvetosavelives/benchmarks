@@ -9,7 +9,6 @@ require "rails"
   action_view/railtie
   action_mailer/railtie
   active_job/railtie
-  rails/test_unit/railtie
   sprockets/railtie
 ].each do |railtie|
   begin

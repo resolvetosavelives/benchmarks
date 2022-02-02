@@ -20,13 +20,11 @@ Capybara.default_max_wait_time = 2
 Capybara.default_normalize_ws = true
 Capybara.default_driver = Capybara.javascript_driver = :cuprite
 
-require "minitest"
-require_relative "../test/capybara_helper"
+require_relative "../spec/system/support/capybara_helpers"
 
 class CapybaraConsole
   include Capybara::DSL
-  include Minitest::Assertions
-  include CapybaraHelper
+  include CapybaraHelpers
 
   attr_accessor :assertions
 

@@ -29,5 +29,6 @@ yarn-debug.log*
 # ignore .env files recursively
 **/.env*
 !**/.env.sample
-# ignore test result JUnitReporter output used with Azure build pipeline
-**/TEST-*.xml
+
+# Example status persistence file
+spec/examples.txt

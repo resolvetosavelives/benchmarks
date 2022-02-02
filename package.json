@@ -73,10 +73,10 @@
   },
   "jest": {
     "setupFiles": [
-      "./test/javascript/setup.js"
+      "./spec/javascript/setup.js"
     ],
     "roots": [
-      "test/javascript/"
+      "spec/javascript/"
     ],
     "moduleDirectories": [
       "node_modules",
@@ -84,7 +84,7 @@
       "app/javascript/src"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$": "<rootDir>/test/javascript/__mocks__/fileMock.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)$": "<rootDir>/spec/javascript/__mocks__/fileMock.js"
     }
   },
   "lint-staged": {

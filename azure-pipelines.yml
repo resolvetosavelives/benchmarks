@@ -62,6 +62,8 @@ stages:
           vmImage: "ubuntu-20.04"
         services:
           postgres: postgres
+        variables:
+          CI: true
         steps:
           - script: printenv
             displayName: printenv
@@ -87,19 +89,22 @@ stages:
             inputs:
               script: bin/bundle exec rake db:schema:load db:seed
           - task: CmdLine@2
-            displayName: rake test:ci
+            displayName: rake spec:ci
             env:
               DATABASE_URL: $(DATABASE_URL)
-              MINITEST_REPORTER: JUnitReporter
               RAILS_ENV: test
+              SPEC_OPTS: "--format progress --format RspecJunitFormatter --out tmp/rspec.xml"
             inputs:
-              script: bin/bundle exec rake test:ci
+              script: bin/rake spec:ci
+          - publish: $(System.DefaultWorkingDirectory)/tmp/screenshots
+            artifact: screenshots
+            condition: failed()
           - task: PublishTestResults@2
             condition: succeededOrFailed()
             inputs:
               codeCoverageTool: JUnit
               testRunTitle: Benchmarks ruby rspec test suite with in-browser
-              testResultsFiles: "**/TEST-*.xml"
+              testResultsFiles: "tmp/rspec.xml"
 
   - stage: Build
     displayName: Build and Push
