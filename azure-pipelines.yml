@@ -95,7 +95,7 @@ stages:
               RAILS_ENV: test
               SPEC_OPTS: "--format progress --format RspecJunitFormatter --out tmp/rspec.xml"
             inputs:
-              script: bin/rake spec:ci
+              script: bin/bundle exec rake spec:ci
           - publish: $(System.DefaultWorkingDirectory)/tmp/screenshots
             artifact: screenshots
             condition: failed()
