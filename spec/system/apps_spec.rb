@@ -283,7 +283,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
       expect(page).to have_selector(
         "h3",
         text: "National Legislation, Policy and Financing",
-        wait: 3
+        wait: 5
       )
     end
 
