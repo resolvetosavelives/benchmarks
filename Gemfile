@@ -2,7 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.3"
-gem "rails", "~> 6.1"
+gem "rails", "~> 7.0"
 
 gem "activerecord-import", "~> 1.3"
 gem "airrecord", "~> 1.0"
@@ -21,6 +21,7 @@ gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
 gem "sentry-rails", "~> 4.9"
 gem "sentry-ruby", "~> 4.9"
+gem "sprockets-rails"
 gem "tzinfo-data"
 gem "webpacker", "~> 5.4"
 
@@ -37,8 +38,7 @@ group :development do
   gem "listen", "~> 3.7"
   gem "pry-rails", "~> 0.3.9"
   gem "rails-erd", "~> 1.6"
-  gem "spring", "~> 2.1"
-  gem "spring-watcher-listen", "~> 2.0"
+  gem "spring", "~> 3.0"
   gem "web-console", "~> 4.2"
 end
 
