@@ -21,5 +21,3 @@ test:
 production:
   <<: *default
   database: benchmarks_production
-  username: src
-  password: <%= ENV['SRC_DATABASE_PASSWORD'] %>

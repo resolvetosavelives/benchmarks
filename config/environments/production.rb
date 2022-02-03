@@ -66,7 +66,7 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {
     protocol: "https",
-    host: ENV["WEBSITE_HOSTNAME"]
+    host: Rails.application.config.website_hostname
   }
 
   unless Rails.application.config.asset_compilation

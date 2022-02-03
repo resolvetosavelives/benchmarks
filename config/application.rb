@@ -36,7 +36,7 @@ module RtslBenchmarks
     # This setting is true during asset compilation to avoid forcing secrets to be loaded
     config.asset_compilation = ENV["ASSET_COMPILATION"]
 
-    # Set by Azure when deployed to app-service.
+    # Set by Azure when deployed to app-service. Set manually otherwise.
     config.website_hostname = ENV["WEBSITE_HOSTNAME"]
   end
 end
