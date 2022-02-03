@@ -4,9 +4,6 @@ variable "resource_group_name" {
 variable "app_service_name" {
   type = string
 }
-variable "acr_service_endpoint_name" {
-  type = string
-}
 variable "container_registry_domain" {
   type = string
 }

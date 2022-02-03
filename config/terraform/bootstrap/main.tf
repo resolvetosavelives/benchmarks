@@ -9,7 +9,7 @@
 #
 # * ARM_SUBSCRIPTION_ID - The subscription id also available from `az account show`
 # * TF_VAR_TFSTATE_RESOURCE_GROUP - The existing resource group ("IHRBENCHMARK-MAIN-WEU-RG01")
-# * TFSTATE_STORAGE_ACCOUNT_NAME - The name of the storage account (generated here)
+# * TFSTATE_STORAGE_ACCOUNT_NAME - The name of the storage account (generated here). Grab from config/terraform/main.tf if you don't have it.
 #
 #     terraform import azurerm_storage_account.tfstate_account "/subscriptions/${ARM_SUBSCRIPTION_ID}/resourceGroups/${TF_VAR_TFSTATE_RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${TFSTATE_STORAGE_ACCOUNT_NAME}"
 #     terraform import azurerm_storage_container.tfstate_container "https://${TFSTATE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/tfstate"

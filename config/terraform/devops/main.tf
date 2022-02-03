@@ -10,6 +10,8 @@ terraform {
 locals {
   # Created manually by WHO.
   project_name = "IHRBENCHMARK"
+  # Although this name is similar to a manual WHO admin created service endpoint, we do create this here.
+  acr_service_endpoint_name = "SC-IHRBENCHMARK-P-ACR-CREDENTIAL"
 }
 
 data "azuredevops_project" "project" {
@@ -40,13 +42,13 @@ resource "azuredevops_variable_group" "vars" {
   }
   variable {
     name  = "ACR_SERVICE_ENDPOINT_NAME"
-    value = var.acr_service_endpoint_name
+    value = local.acr_service_endpoint_name
   }
 }
 
 resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
   project_id            = data.azuredevops_project.project.id
-  service_endpoint_name = var.acr_service_endpoint_name
+  service_endpoint_name = local.acr_service_endpoint_name
   docker_registry       = "https://${var.container_registry_domain}"
   docker_username       = var.container_registry_username
   docker_password       = var.container_registry_password

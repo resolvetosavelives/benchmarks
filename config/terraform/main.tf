@@ -26,9 +26,8 @@ provider "azurerm" {
 }
 
 locals {
-  app_name                  = "ihrbenchmark"
-  container_repository      = "benchmarks"
-  acr_service_endpoint_name = "SC-IHRBENCHMARK-P-ACR-CREDENTIAL"
+  app_name             = "ihrbenchmark"
+  container_repository = "benchmarks"
   # These resource groups are created manually by WHO.
   # If deployed to a non-WHO Azure environment, these must be created manually.
   resource_group_name = terraform.workspace == "production" ? "IHRBENCHMARK-P-WEU-RG01" : "IHRBENCHMARK-T-WEU-RG01"
@@ -56,7 +55,6 @@ module "devops" {
   RAILS_MASTER_KEY            = var.RAILS_MASTER_KEY
   resource_group_name         = data.azurerm_resource_group.rg.name
   app_service_name            = azurerm_app_service.app_service.name
-  acr_service_endpoint_name   = local.acr_service_endpoint_name
   container_registry_domain   = azurerm_container_registry.acr.login_server
   container_registry_username = azurerm_container_registry.acr.admin_username
   container_registry_password = azurerm_container_registry.acr.admin_password
