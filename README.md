@@ -1,36 +1,111 @@
 # README
 
+## Setup
+
+Install posgresql. Try [Postgres.app](https://postgresapp.com/) to make this easy on Mac.
+
+Install posgres so the `pg` ruby gem can compile
+
+    brew install postgresql
+
+Install ruby (use the version in `.ruby-version` in the root of the application. Using chruby on mac:
+
+    brew install chruby ruby-install
+    ruby-install "$(cat .ruby-version)"
+    chruby "$(cat .ruby-version)"
+
+Bundle install
+
+    gem install bundler
+    bundle install
+
+Install node.js and yarn, then install node packages.
+
+    brew install node yarn
+    yarn install
+
+Create and seed the database
+
+    bundle exec rake db:create db:schema:load db:seed db:test:prepare
+
+If you encounter an error seeding, trying the following to reset:
+
+    rails db:drop db:create db:schema:load db:seed
+
+Run all the tests (you can checkout the rake tasks with rake -T to run a subset of tests)
+
+    bundle exec rake spec:ci
+
+## Development
+
+Develop locally on feature branches. Merging to main triggers deploy to staging (and currently also production).
+
+Optionally, you may run the webpacker asset compilation process in a separate tab/process which is nice
+because it compiles much faster than the ruby app server process does, and also because it watches the files
+and triggers re-compile upon save.
+
+    ./bin/webpack-dev-server
+
+The application should now be available [on localhost](https://localhost:3000/)
+
+To test a more production-like version of the app, build the base docker image:
+
+    docker build -t benchmarks_builder -f config/docker/builder/Dockerfile .
+
+Then you can use docker compose to run the app with a fresh database using postgres alpine.
+
+    docker compose build
+    docker compose up
+
+Docker always runs in production mode because it's currently hardcoded in the Dockerfile.
+The docker entrypoint runs a database setup and migration if the database is empty (similar to a fresh Azure deploy)
+
 ## Deployment
 
-The application is currently developed to heroku in both staging and master releases:
+The application is deployed to the World Health Organization's Azure.
 
-- [Staging](https://rtsl-benchmarks-staging.herokuapps.com/)
-- [Production](https://rtsl-benchmarks-production.herokuapps.com/)
+- [Production](https://who-ihrbenchmark.azurewebsites.net/)
+- [Staging](https://who-ihrbenchmark-staging.azurewebsites.net/)
 
-Continuous builds and deployment to staging are handled in [SemaphoreCI](https://semaphoreci.com/resolvetosavelives/benchmarks). The main branch is automaticallly pushed to Staging on a successful deployment. Promote to Production by clicking on the "Promote to Production" button on [the app dashboard](https://dashboard.heroku.com/pipelines/a8edf761-58ea-4ff2-96fc-f2abc8c08097).
+There is also a Preview slot used during the production deployment which is swapped with production every deploy.
+[Preview](https://who-ihrbenchmark-preview.azurewebsites.net/) becomes production and production becomes preview during each production deploy.
+This prevents downtime during the deploy that would otherwise happen during the 7-10 minutes the app would take to warm up after each deploy.
+Swap slots waits for the warmup to finish before swapping.
 
-Any deployment or promotion to production may require a database migration:
+Ideally we would do the same deployment for staging bit 4 slots just seemed like a lot.
 
-- `heroku run -a rtsl-benchmarks-staging.herokuapps.com rails db:migrate`
-- `heroku run -a rtsl-benchmarks-production.herokuapps.com rails db:migrate`
+## CI/CD
 
-See also [how to update the assessments](#seed-data)
+Continuous builds and deployment are handled by [Azure DevOps](https://dev.azure.com/WHOHQ/IHRBENCHMARK).
 
-### A Note on Configuration Variables
+The build is defined by the azure-pipelines.yml file with help from the variable set by terraform.
+As of this writing, the test run rely on postgres14 alpine in order to support concurrent builds.
+This is the same container you get when running `docker compose up`.
 
-There are basically two ways that Rails apps' configuration can be managed:
+The main branch is automatically tested, docker image(s) built, deployed to Staging and deployed to Production.
 
-- [12 Factor](12factor.net) -- initially developed by and for Heroku, its widely accepted as a best practice: put your config variables as environment variables
-- Rails own take on configuration variables: put them in a YML file, encrypt the file, commit to source, deploy along with code, decrypt at runtime to access the variables (https://guides.rubyonrails.org/v5.2/security.html#custom-credentials)
-  - Basically the opposite of 12 Factor, DHH apparently prefers this.
+## Database migrations during deploy
 
-This app uses the 12-Factor approach which works great considering that we currently run on Heroku.
+Database migrations are handled by the Docker entrypoint, a compromise that we arrived at after finding that Azure has no way to run one off commands within the context of an app's environment or container.
 
-At the time of this writing, this repo does contain a file `config/credentials.yml.enc` which contains the default contents generated by Rails. We could probably remove it and it would have no effect. There is a `master.key` that accompanies this encrypted file, which the previous developers can provide, since it should NOT be committed to the repo.
+## Seed Data
 
-### Configuration Variables
+See [how to update the assessments](#seed-data)
 
-The configuration variables this app depends on, NOT inclusive of RAILS_ENV/RACK_ENV and other configuration variables that Heroku adds:
+## Infrastructure
+
+We manage whatever infrastructure we can with Terraform. We are somewhat limited by World Health Organization permissions, which prevent our creation of certain pieces of the infrastructure. These manually created pieces are mentioned in the terraform config where necessary.
+
+See [config/terraform/README.md](config/terraform/README.md) for more details.
+
+## Configuration Variables
+
+Rails credentials are used to manage secrets.
+
+The file `config/credentials.yml.enc` contains the production and staging configuration (it's all the same right now).
+The file `config/master.key` that accompanies this encrypted file. You will need to get it from a previous developer or from the Cloud City Vital Strategies 1Password vault. Never commit it to the repository.
+
+### Variables
 
 - `WEBSITE_HOSTNAME`
 - `PAPERTRAIL_API_TOKEN`
@@ -41,41 +116,7 @@ The configuration variables this app depends on, NOT inclusive of RAILS_ENV/RACK
 - `SKYLIGHT_AUTHENTICATION`
 - `SECRET_KEY_BASE`
 
-## Development
-
-For development, we only used the main branch and feature branches.
-
-The main branch is constantly deployed to staging. All work done on a feature branch is merged directly into the main branch after a pull request and code review.
-
-Locally, development requires only a working Postgres database and Ruby.
-We provide a docker-compose file that will launch the database in a docker container, which requires the docker service to be running locally.
-Set up to develop with the following commands:
-
-```
-docker-compose up -d db
-bundle
-yarn
-rails db:create db:schema:load db:seed
-rails s
-```
-
-If you encounter an error seeding, run the following to reset (add `RAILS_ENV=test` to the end to run in the test env):
-
-```
-rails db:drop db:create db:schema:load db:seed
-```
-
-Optionally, you may run the webpacker asset compilation process in a separate tab/process which is nice
-because it compiles much faster than the ruby app server process does, and also because it watches the files
-and triggers re-compile upon save.
-
-```
-./bin/webpack-dev-server
-```
-
-The application should now be available [on localhost](https://localhost:3000/)
-
-## A Note on 3rd party libraries used
+## A note on 3rd party libraries used
 
 Tooltips: We are using bootstrap .tooltip() and not jQuery .tooltip(). It is used the same way `$('.selector').tooltip()`, and has different options.
 
