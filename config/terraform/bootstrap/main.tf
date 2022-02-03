@@ -5,7 +5,6 @@
 #
 # There's no state recorded for this particular storage container.
 # You can import if you need to tear down and recreate the state container.
-
 # These commands reference the following, some of which is in .env.who
 #
 # * ARM_SUBSCRIPTION_ID - The subscription id also available from `az account show`
@@ -37,7 +36,7 @@ provider "azurerm" {
   features {}
 }
 
-# Using random_password because it's easy to import (unlike random_id)
+# Using random_string because it's easy to import (unlike random_id)
 resource "random_string" "account_name" {
   lower   = true
   special = false
@@ -45,7 +44,8 @@ resource "random_string" "account_name" {
   length  = 8
   keepers = {
     # Keepers are used to regenerate the random string when this value changes.
-    # If we move resource groups, we want the id to change so we don't conflict.
+    # The account name we pick here must be globally unique, so if we move
+    # resource groups, we want the id to change so we don't conflict.
     resource_group_name = var.TFSTATE_RESOURCE_GROUP
   }
 }
