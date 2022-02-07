@@ -96,7 +96,7 @@ stages:
               SPEC_OPTS: "--format progress --format RspecJunitFormatter --out tmp/rspec.xml"
             inputs:
               script: bin/bundle exec rake spec:ci
-          - publish: $(System.DefaultWorkingDirectory)/tmp/screenshots
+          - publish: $(System.DefaultWorkingDirectory)/tmp/capybara
             artifact: screenshots
             condition: failed()
             continueOnError: true
