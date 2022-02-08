@@ -36,8 +36,6 @@ variables:
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   - name: buildBaseImage
     value: ${{ parameters.buildBaseImage }}
-  - name: DATABASE_URL
-    value: postgres://postgres:postgresPassword@localhost:5432/benchmarks_test
 
 resources:
   containers:
@@ -52,6 +50,10 @@ resources:
 
 stages:
   - stage: Test
+    variables:
+      CI: true
+      DATABASE_URL: postgres://postgres:postgresPassword@localhost:5432/benchmarks_test
+      RAILS_ENV: test
     jobs:
       - job: Test
         displayName: Run CI Tests
@@ -62,9 +64,6 @@ stages:
           vmImage: "ubuntu-20.04"
         services:
           postgres: postgres
-        variables:
-          CI: true
-          RAILS_ENV: test
         steps:
           - script: printenv
             displayName: printenv
