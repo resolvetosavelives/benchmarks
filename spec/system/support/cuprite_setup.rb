@@ -12,7 +12,7 @@ Capybara.register_driver(:cuprite) do |app|
     process_timeout: 30,
     # Tell Ferrum to wait longer for browsers to respond, helps on slow machines like CI
     # Azure seems to be much slower.
-    timeout: 30,
+    timeout: 15,
     # Enable debugging only outside CI by default
     inspector: ENV["CI"].nil? || ENV["INSPECTOR"],
     # Allow running Chrome in a headful mode by setting HEADLESS env
