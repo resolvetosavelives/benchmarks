@@ -97,10 +97,12 @@ stages:
             inputs:
               script: bin/bundle exec rake spec:ci
           - publish: $(System.DefaultWorkingDirectory)/tmp/capybara
+            displayName: Publish Failure Screenshot
             artifact: screenshots
             condition: failed()
             continueOnError: true
           - task: PublishTestResults@2
+            displayName: Publish Test Results
             condition: succeededOrFailed()
             inputs:
               codeCoverageTool: JUnit
