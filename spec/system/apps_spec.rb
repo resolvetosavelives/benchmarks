@@ -2,6 +2,7 @@ require "system_helper"
 
 RSpec.describe "Happy Path", type: :system, js: true do
   scenario "happy path for Nigeria JEE 1.0" do
+    puts "Running happy path for Nigeria JEE 1.0"
     retry_on_pending_connection { visit(root_path) }
 
     click_on("Get Started", match: :first) until current_path == "/get-started"
@@ -86,6 +87,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
   end
 
   scenario "happy path for Nigeria JEE 1.0 with influenza, cholera, and ebola" do
+    puts "Running happy path for Nigeria JEE 1.0 with influenza, cholera, and ebola"
     retry_on_pending_connection { visit(root_path) }
     click_on("Get Started", match: :first) until current_path == "/get-started"
     expect(page).to have_content("LET'S GET STARTED")
@@ -297,6 +299,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
   end
 
   scenario "happy path for Armenia SPAR 2018 5-year plan" do
+    puts "Armenia SPAR 2018 5-year plan"
     retry_on_pending_connection { visit root_path }
     click_on("Get Started", match: :first) until current_path == "/get-started"
     expect(page).to have_content("LET'S GET STARTED")
@@ -355,6 +358,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
   end
 
   scenario "happy path for Nigeria JEE 1.0 plan by technical areas 5-year" do
+    puts "Nigeria JEE 1.0 plan by technical areas 5-year"
     retry_on_pending_connection { visit root_path }
     click_on("Get Started", match: :first) until current_path == "/get-started"
     expect(page).to have_content("LET'S GET STARTED")

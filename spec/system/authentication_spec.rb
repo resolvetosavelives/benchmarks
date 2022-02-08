@@ -3,6 +3,7 @@ require "system_helper"
 RSpec.describe "Authentication", type: :system, js: true do
   context "devise database" do
     scenario "devise database sign up" do
+      puts "devise database sign up"
       retry_on_pending_connection { visit(root_path) }
 
       click_on "LOG IN"
@@ -36,6 +37,7 @@ RSpec.describe "Authentication", type: :system, js: true do
     let(:email) { "email@example.com" }
 
     scenario "signup during plan creation" do
+      puts "signup during plan creation"
       retry_on_pending_connection { visit(root_path) }
 
       until current_path == "/get-started"
@@ -80,6 +82,7 @@ RSpec.describe "Authentication", type: :system, js: true do
     end
 
     scenario "sign in & sign out" do
+      puts "sign in & sign out"
       retry_on_pending_connection { visit(root_path) }
 
       click_on "LOG IN"
