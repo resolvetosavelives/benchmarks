@@ -152,12 +152,43 @@ RSpec.describe "Plans", type: :request do
     end
   end
 
+  describe "#index" do
+    it "redirects when not logged in" do
+      get(plans_url)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    context "logged in" do
+      it "renders no plans" do
+        sign_in create(:user)
+        get(plans_url)
+        expect(response).to have_http_status(:success)
+      end
+
+      it "lists plans" do
+        plan = create(:plan_nigeria_jee1, :with_user)
+        sign_in plan.user
+        get(plans_url)
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include(plan.name)
+      end
+    end
+  end
+
   describe "#show" do
     let(:plan) { create(:plan) }
 
     it "redirects for an invalid plan ID" do
       get(plan_url(123))
       expect(response).to redirect_to(root_path)
+    end
+
+    describe "viewing someone else's plan" do
+      it "redirects away" do
+        plan = create(:plan_nigeria_jee1)
+        get plan_url(plan)
+        expect(response).to redirect_to(root_path)
+      end
     end
 
     describe "with logged in user" do
@@ -167,9 +198,7 @@ RSpec.describe "Plans", type: :request do
         get plan_url(plan)
         expect(response).to have_http_status(:success)
       end
-    end
 
-    describe "with logged out user" do
       describe "viewing someone else's plan" do
         it "redirects away" do
           plan = create(:plan_nigeria_jee1)

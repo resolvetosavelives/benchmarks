@@ -1,0 +1,16 @@
+.row.align-items-center
+  .col
+    %h1 Fake Azure Auth
+.row
+  .col
+    %p Pretend to authenticate
+  .col.d-flex.justify-content-end
+    = link_to "Logout", azure_logout_path
+= form_with do |form|
+  = form.hidden_field :post_login_redirect_uri, value: @post_login_redirect_uri
+  .row.pt-4
+    .col.form-group
+      = form.email_field :email, class: "form-control", placeholder: "Email"
+  .row.form-row.pt-4
+    .col
+      = form.submit "Log in", class: "w-100 btn btn-orange"

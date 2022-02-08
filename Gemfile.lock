@@ -173,6 +173,7 @@ GEM
       activesupport (>= 3.0)
       nokogiri (>= 1.6)
     io-wait (0.2.1)
+    jwt (2.3.0)
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -371,6 +372,7 @@ DEPENDENCIES
   hamlit-rails (~> 0.2)
   html2haml (~> 2.2)
   inline_svg (~> 1.8)
+  jwt
   listen (~> 3.7)
   m (~> 1.6)
   pg (~> 1.2)

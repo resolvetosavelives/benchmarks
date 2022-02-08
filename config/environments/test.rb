@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require Rails.root.join("lib", "middleware", "mock_azure_auth_middleware")
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -7,6 +8,11 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+
+  # Allow mocked azure auth, which creates the headers for warden if the cookie is present
+  # This does nothing without the cookies set by Azure::MockSessionsController
+  config.azure_auth_mocked = config.azure_auth_enabled
+  config.middleware.insert_before Warden::Manager, MockAzureAuthMiddleware
 
   config.cache_classes = false
   config.action_view.cache_template_loading = true

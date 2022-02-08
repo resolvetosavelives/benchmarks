@@ -38,5 +38,9 @@ module RtslBenchmarks
 
     # Set by Azure when deployed to app-service. Set manually otherwise.
     config.website_hostname = ENV["WEBSITE_HOSTNAME"]
+
+    # Set by Azure when integrated auth is enabled.
+    # https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization
+    config.azure_auth_enabled = ENV["WEBSITE_AUTH_ENABLED"] == "true"
   end
 end

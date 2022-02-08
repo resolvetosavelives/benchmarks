@@ -12,6 +12,7 @@ gem "devise", "~> 4.8"
 gem "hamlit", "~> 2.15"
 gem "hamlit-rails", "~> 0.2"
 gem "inline_svg", "~> 1.8"
+gem "jwt"
 gem "pg", "~> 1.2"
 gem "puma", "~> 5.5"
 gem "racc", "1.5.2" # latest version fails on alpine

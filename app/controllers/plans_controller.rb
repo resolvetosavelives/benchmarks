@@ -101,6 +101,13 @@ class PlansController < ApplicationController # workaround for XHR being unable 
   end
 
   def index
+    if session[:plan_id]
+      # As a compromise, when azure login completes we arrive here without
+      # hitting the registrations controller which would save the plan.
+      # This is a no-op without a session stored plan.
+      current_user.plans << Plan.find(session[:plan_id])
+      session[:plan_id] = nil
+    end
     @plans = current_user.plans.order(updated_at: :desc)
   end
 

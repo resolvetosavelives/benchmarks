@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  # Mock Azure Active Directory Authentication
+  #
+  # These routes serve two purposes.
+  # 1. The named routes provide easy usage for real production views where we
+  #    need to login with Azure. These are the Azure auth routes.
+  # 2. When the mock is enabled, we resolve the routes to a mock controller.
+  #    When the middleware MockAzureAuthMiddleware is inserted to intercept the
+  #    cookie, the Azure::MockSessions controller behaves like real Azure Auth.
+  #
+  # These routes will never make it to the controller in production.
+  # Azure will intercept the routes before they ever get to the app.
+  # The constraints help prevent access when running elsewhere, e.g. Heroku.
+  constraints(-> { Rails.application.config.azure_auth_mocked }) do
+    scope path: ".auth", as: "azure", module: "azure" do
+      get "login/aad", to: "mock_sessions#new", as: :login
+      post "login/aad", to: "mock_sessions#create"
+      get "logout", to: "mock_sessions#destroy", as: :logout
+    end
+  end
+
   devise_for :users, controllers: {
     sessions: "users/sessions", registrations: "users/registrations"
   }
