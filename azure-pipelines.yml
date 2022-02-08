@@ -64,6 +64,7 @@ stages:
           postgres: postgres
         variables:
           CI: true
+          RAILS_ENV: test
         steps:
           - script: printenv
             displayName: printenv
@@ -83,24 +84,16 @@ stages:
             displayName: yarn install
           - task: CmdLine@2
             displayName: prepare test db
-            env:
-              DATABASE_URL: $(DATABASE_URL)
-              RAILS_ENV: test
             inputs:
               script: bin/bundle exec rake db:schema:load db:seed
           - task: CmdLine@2
             # precompile assets to avoid timeouts during capybara tests
             displayName: precompile assets
-            env:
-              DATABASE_URL: $(DATABASE_URL)
-              RAILS_ENV: test
             inputs:
               script: bin/bundle exec rails assets:precompile
           - task: CmdLine@2
             displayName: rake spec:ci
             env:
-              DATABASE_URL: $(DATABASE_URL)
-              RAILS_ENV: test
               SPEC_OPTS: "--format progress --format RspecJunitFormatter --out tmp/rspec.xml"
             inputs:
               script: bin/bundle exec rake spec:ci
