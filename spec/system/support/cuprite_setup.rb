@@ -1,4 +1,5 @@
 require "capybara/cuprite"
+Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
 #Capybara.default_driver = :cuprite
 
