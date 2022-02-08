@@ -9,6 +9,9 @@ require Rails.root.join("lib", "middleware", "mock_azure_auth_middleware")
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Disable asset debugging during tests
+  config.assets.debug = false
+
   # Allow mocked azure auth, which creates the headers for warden if the cookie is present
   # This does nothing without the cookies set by Azure::MockSessionsController
   config.azure_auth_mocked = config.azure_auth_enabled
