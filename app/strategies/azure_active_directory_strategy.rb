@@ -13,15 +13,18 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   end
 
   def authenticate!
-    # Some of Azure's docs suggest not verifying the token if it's passed directly to the app like this.
-    # For now we're not verifying
-    claims, _header = JWT.decode(token, nil, false)
+    # Azure's docs suggest not verifying the token if it's passed directly to the app like this.
+    # https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens#validating-tokens
+    # For now we're not verifying because azure sends this to the app directly and it's not from a user.
+    claims, _ = JWT.decode(token, nil, false)
 
-    fail!("Authentication failed") if claims["sub"].blank?
-
-    user = User.by_azure_identity!(claims["sub"], claims["email"])
-
-    success!(user)
+    if claims["sub"].present?
+      # the email may not be present.
+      user = User.by_azure_sub_claim!(claims["sub"], claims["email"])
+      success!(user)
+    else
+      fail!("Authentication failed")
+    end
   rescue JWT::DecodeError, ActiveRecord::ActiveRecordError => e
     fail!("Authentication failed")
   end

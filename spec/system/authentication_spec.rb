@@ -110,5 +110,37 @@ RSpec.describe "Authentication", type: :system, js: true do
       visit(plans_path)
       expect(page).to have_current_path("/users/sign_in")
     end
+
+    scenario "external logout from outside of the app" do
+      # Verify that we aren't holding on to login information in session
+      # so as not to perpetuate a session once azure has logged a user out.
+      puts "external logout from outside of the app"
+      retry_on_pending_connection { visit(root_path) }
+
+      click_on "LOG IN"
+      expect(page).to have_current_path("/users/sign_in")
+      click_on "WORLD HEALTH ORGANIZATION LOG IN"
+
+      ##
+      # takes us to the azure auth page (which is mocked locally)
+      expect(page).to have_current_path(
+        "/.auth/login/aad?post_login_redirect_uri=%2Fplans"
+      )
+      find("#email").fill_in(with: email)
+      find("form input[type=submit]").trigger(:click)
+
+      # arrive at plans page
+      expect(page).to have_current_path("/plans")
+
+      # Explicitly remove the cookie to immitate azure logging the user out
+      # without an explicit visit to the app's logout page.
+      # This manipulates our mocked azure middleware to behave like real Azure
+      # which stops sending the header when the cookie is no longer present.
+      page.driver.remove_cookie(Azure::MockSessionsController::COOKIE)
+
+      # Now that the cookie is not being sent, we should be logged out.
+      visit(plans_path)
+      expect(page).to have_current_path("/users/sign_in")
+    end
   end
 end
