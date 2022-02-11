@@ -41,6 +41,6 @@ module RtslBenchmarks
 
     # Set by Azure when integrated auth is enabled.
     # https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization
-    config.azure_auth_enabled = ENV["WEBSITE_AUTH_ENABLED"] == "true"
+    config.azure_auth_enabled = ENV["WEBSITE_AUTH_ENABLED"].present?
   end
 end
