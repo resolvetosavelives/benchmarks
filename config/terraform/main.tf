@@ -36,29 +36,25 @@ locals {
     var.ORGANIZATION,
     terraform.workspace == "production" ? "" : terraform.workspace,
   ])
+  scoped_app_name = "${local.scope}-${local.app_name}"
 }
 
 data "azurerm_resource_group" "rg" {
   name = local.resource_group_name
 }
 
-// to expose to other tf code: id, tenant_id, subscription_id, display_name..
-data "azurerm_subscription" "current" {}
-
 module "database" {
   source              = "./database"
   resource_group_name = data.azurerm_resource_group.rg.name
-  namespace           = "${local.scope}-${local.app_name}"
+  namespace           = local.scoped_app_name
 }
+
 module "devops" {
   source                      = "./devops"
-  RAILS_MASTER_KEY            = var.RAILS_MASTER_KEY
   resource_group_name         = data.azurerm_resource_group.rg.name
-  app_service_name            = azurerm_app_service.app_service.name
+  app_service_name            = local.scoped_app_name
   container_registry_domain   = azurerm_container_registry.acr.login_server
   container_registry_username = azurerm_container_registry.acr.admin_username
   container_registry_password = azurerm_container_registry.acr.admin_password
   container_repository        = local.container_repository
-  staging_database_url        = module.database.staging_database_url
-  production_database_url     = module.database.production_database_url
 }
