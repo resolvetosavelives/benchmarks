@@ -6,7 +6,8 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   #
   # TODO: Both of these verify the same way and contain the same sub claim.
   #       Is one better than the other?
-  TOKEN_HEADER = "HTTP_X_MS_TOKEN_AAD_ACCESS_TOKEN"
+  ID_TOKEN_HEADER = "HTTP_X_MS_TOKEN_AAD_ID_TOKEN"
+  ACCESS_TOKEN_HEADER = "HTTP_X_MS_TOKEN_AAD_ACCESS_TOKEN"
 
   def valid?
     Rails.logger.info("AzureActiveDirectoryStrategy: valid? #{token}")
@@ -51,6 +52,6 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   private
 
   def token
-    env[TOKEN_HEADER]
+    env[ID_TOKEN_HEADER] || env[ACCESS_TOKEN_HEADER]
   end
 end

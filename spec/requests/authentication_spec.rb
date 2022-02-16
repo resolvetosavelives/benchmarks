@@ -32,7 +32,7 @@ RSpec.describe "Authentication", type: :request do
     context "with new user" do
       it "creates a new user and renders" do
         count = User.count
-        headers = { "X-MS-TOKEN-AAD-ACCESS-TOKEN" => jwt }
+        headers = { "X-MS-TOKEN-AAD-ID-TOKEN" => jwt }
 
         get plans_path, headers: headers
 
@@ -49,7 +49,7 @@ RSpec.describe "Authentication", type: :request do
 
       it "renders" do
         count = User.count
-        headers = { "X-MS-TOKEN-AAD-ACCESS-TOKEN" => jwt }
+        headers = { "X-MS-TOKEN-AAD-ID-TOKEN" => jwt }
 
         get plans_path, headers: headers
 

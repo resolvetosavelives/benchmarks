@@ -12,7 +12,7 @@ class MockAzureAuthMiddleware
     if Rails.application.config.azure_auth_mocked
       request = Rack::Request.new(env)
       token = request.cookies[Azure::MockSessionsController::COOKIE]
-      env[AzureActiveDirectoryStrategy::TOKEN_HEADER] = token if token
+      env[AzureActiveDirectoryStrategy::ID_TOKEN_HEADER] = token if token
     end
 
     @app.call(env)
