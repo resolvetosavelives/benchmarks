@@ -9,6 +9,7 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   TOKEN_HEADER = "HTTP_X_MS_TOKEN_AAD_ACCESS_TOKEN"
 
   def valid?
+    Rails.logger.info("AzureActiveDirectoryStrategy: valid? #{token}")
     Rails.application.config.azure_auth_enabled && token.present?
   end
 
@@ -16,16 +17,25 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
     # Azure's docs suggest not verifying the token if it's passed directly to the app like this.
     # https://docs.microsoft.com/en-us/azure/active-directory/develop/access-tokens#validating-tokens
     # For now we're not verifying because azure sends this to the app directly and it's not from a user.
+    Rails.logger.info("AzureActiveDirectoryStrategy: authenticate!")
     claims, _ = JWT.decode(token, nil, false)
+    Rails.logger.info(
+      "AzureActiveDirectoryStrategy: authenticate! claims: #{claims.inspect}"
+    )
 
     if claims["sub"].present?
       # the email may not be present.
       user = User.by_azure_sub_claim!(claims["sub"], claims["email"])
+      Rails.logger.info(
+        "AzureActiveDirectoryStrategy: authenticate! user: #{user.inspect}"
+      )
       success!(user)
     else
+      Rails.logger.info("AzureActiveDirectoryStrategy: failed sub")
       fail!("Authentication failed")
     end
   rescue JWT::DecodeError, ActiveRecord::ActiveRecordError => e
+    Rails.logger.info("AzureActiveDirectoryStrategy: failed error #{e.inspect}")
     fail!("Authentication failed")
   end
 
