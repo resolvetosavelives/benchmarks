@@ -10,7 +10,7 @@ import "chosen-js"
 import "chosen-js/chosen.css"
 
 const application = Application.start()
-const context = require.context("../src/controllers", true, /\.js$/)
+const context = require.context("./controllers", true, /\.js$/)
 application.load(definitionsFromContext(context))
 
 // fix for IE Benchmarks doc page Monitoring icon too small/out of alignment #171365469
@@ -19,7 +19,7 @@ $(".benchmark-document .callout-with-icon svg.bar-chart path").attr(
   "scale(2)"
 )
 
-const componentRequireContext = require.context("src/components", true)
+const componentRequireContext = require.context("./src/components", true)
 const ReactRailsUJS = require("react_ujs")
 ReactRailsUJS.useContext(componentRequireContext) //eslint-disable-line react-hooks/rules-of-hooks
 

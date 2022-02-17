@@ -33,3 +33,6 @@ yarn-debug.log*
 # Example status persistence file
 spec/examples.txt
 
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
