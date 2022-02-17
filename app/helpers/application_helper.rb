@@ -9,11 +9,7 @@ module ApplicationHelper
   #
   # NB: please refer to the section in README.md ## A note on js packs and stylesheets
   def which_js
-    if is_homepage?
-      javascript_pack_tag "basic", "data-turbolinks-track": "reload"
-    else
-      javascript_pack_tag "application", "data-turbolinks-track": "reload"
-    end
+    is_homepage? ? "basic" : "application"
   end
 
   def is_homepage?
