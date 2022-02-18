@@ -12,8 +12,8 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   def valid?
     puts "env.inspect: "
     puts env.inspect
-    Rails.logger.info env.inspect
-    Rails.logger.info "AzureActiveDirectoryStrategy: valid? #{token}"
+    Rails.logger.info "env: #{env.inspect}"
+    Rails.logger.info "AzureActiveDirectoryStrategy: valid? #{token.inspect}"
     Rails.application.config.azure_auth_enabled && token.present?
   end
 
