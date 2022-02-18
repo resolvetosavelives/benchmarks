@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 
 ARG BUILDER_IMAGE=benchmarks_builder:latest
+ARG COMMIT_SHA
+
 FROM $BUILDER_IMAGE AS Builder
 
 FROM ruby:3.0.3-alpine
@@ -13,6 +15,7 @@ RUN apk add --no-cache \
     file
 
 # Configure Rails
+ENV COMMIT_SHA $COMMIT_SHA
 ENV RAILS_ENV production
 ENV RAILS_LOG_TO_STDOUT true
 ENV RAILS_SERVE_STATIC_FILES true
