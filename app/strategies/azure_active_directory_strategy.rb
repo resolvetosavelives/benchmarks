@@ -10,7 +10,10 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   ACCESS_TOKEN_HEADER = "HTTP_X_MS_TOKEN_AAD_ACCESS_TOKEN"
 
   def valid?
-    Rails.logger.info("AzureActiveDirectoryStrategy: valid? #{token}")
+    puts "env.inspect: "
+    puts env.inspect
+    Rails.logger.info env.inspect
+    Rails.logger.info "AzureActiveDirectoryStrategy: valid? #{token}"
     Rails.application.config.azure_auth_enabled && token.present?
   end
 
