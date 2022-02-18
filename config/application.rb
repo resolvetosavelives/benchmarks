@@ -44,5 +44,6 @@ module RtslBenchmarks
     config.azure_auth_enabled = ENV["WEBSITE_AUTH_ENABLED"].present?
 
     config.commit_sha = ENV["COMMIT_SHA"]
+    comfig.docker_image_tag = ENV["DOCKER_IMAGE_TAG"]
   end
 end

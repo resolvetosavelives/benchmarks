@@ -169,7 +169,7 @@ stages:
               tags: |
                 $(tag)
                 latest
-              arguments: "--no-cache --build-arg COMMIT_SHA=$(Build.SourceVersion) --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
+              arguments: "--no-cache --build-arg COMMIT_SHA=$(Build.SourceVersion) --build-arg DOCKER_IMAGE_TAG=$(tag) --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
           - task: Docker@2
             displayName: Docker push image to ACR
             inputs:
