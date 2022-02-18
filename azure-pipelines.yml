@@ -36,6 +36,10 @@ variables:
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   - name: buildBaseImage
     value: ${{ parameters.buildBaseImage }}
+  - name: builderImageName
+    value: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest
+  - name: imageName
+    value: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):$(tag)
 
 resources:
   containers:
@@ -169,7 +173,7 @@ stages:
               tags: |
                 $(tag)
                 latest
-              arguments: "--no-cache --build-arg COMMIT_SHA=$(Build.SourceVersion) --build-arg DOCKER_IMAGE_TAG=$(tag) --build-arg BUILDER_IMAGE=$(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY)_builder:latest"
+              arguments: "--no-cache --build-arg COMMIT_SHA=$(Build.SourceVersion) --build-arg DOCKER_IMAGE_TAG=$(tag) --build-arg BUILDER_IMAGE=$(builderImageName)"
           - task: Docker@2
             displayName: Docker push image to ACR
             inputs:
@@ -195,16 +199,14 @@ stages:
           runOnce:
             deploy:
               steps:
-                - task: AzureRMWebAppDeployment@4
+                - task: AzureWebAppContainer@1
                   displayName: Azure App Service Deploy
                   inputs:
-                    appType: webAppContainer
-                    ConnectedServiceName: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
-                    DockerRepository: $(CONTAINER_REPOSITORY)
-                    DockerImageTag: $(tag)
-                    SlotName: staging
+                    azureSubscription: $(azureSubscription)
+                    appName: $(AZURE_APP_SERVICE_NAME)
+                    deployToSlotOrASE: true
+                    slotName: staging
+                    imageName: $(imageName)
   - stage: Production
     dependsOn: Staging
     condition: and(succeeded(), ne(variables['Build.Reason'], 'Schedule'))
@@ -219,16 +221,14 @@ stages:
             # hopefully preventing downtime.
             deploy:
               steps:
-                - task: AzureRMWebAppDeployment@4
+                - task: AzureWebAppContainer@1
                   displayName: Azure App Service Deploy
                   inputs:
-                    appType: webAppContainer
-                    ConnectedServiceName: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    DockerNamespace: $(CONTAINER_REGISTRY_DOMAIN)
-                    DockerRepository: $(CONTAINER_REPOSITORY)
-                    DockerImageTag: $(tag)
-                    SlotName: preview
+                    azureSubscription: $(azureSubscription)
+                    appName: $(AZURE_APP_SERVICE_NAME)
+                    deployToSlotOrASE: true
+                    slotName: preview
+                    imageName: $(imageName)
             routeTraffic:
               steps:
                 - task: AzureAppServiceManage@0
