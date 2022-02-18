@@ -18,7 +18,8 @@
 class PlansController < ApplicationController # workaround for XHR being unable to detect a redirect. JS handles this on the client.
   GET_STARTED_REDIRECT_KEY = "Get-Started-Redirect-To:"
 
-  before_action do
+  before_action :log_headers
+  def log_headers
     logger.info "Before plans"
     logger.info "headers: #{request.headers.inspect}"
   end
