@@ -10,78 +10,113 @@ Install terraform. On MacOS:
 
     brew install terraform
 
-Change to the terraform directory (the location of this README file)
-
-    cd config/terraform
-
-Get the `.env.who` file from Cloud City 1Password.
-If not available, create a `.env.who` from the `.env.sample` template (see below).
-
-    source .env.who
-
 Login to the `az` CLI - You may be prompted to choose which login account and prompted to 2FA if enabled
 
     az login
-
-Set your Azure subscription ID, which is defined in the .env file.
-
     az account list
-    az account set --subscription $ARM_SUBSCRIPTION_ID
+    az account set --subscription $ARM_SUBSCRIPTION_ID # this will be set by source .env later
     az account show
 
-## First time on a new subscription
+## Directory layout
+
+You will find different folders in `config/terraform/env` for the different
+places that this app can be deployed. This uses the "main module pattern" to
+avoid duplication and manual terraform state file copying.
+
+Without this directory structure, it is difficult to move between terraform
+configurations for each azure account without copying and backing up the local
+`.terraform` directory, changing environment variables, and switching the
+backend manually in the main.tf. Since each env directory contains its own
+state, while sharing the actual configuration, we can leave the state exactly
+as is and only source a different .env file for each environment.
+
+There are two terraform configurations in each env:
+
+1. the `env/who/bootstrap`, which creates the tfstate storage.
+2. the `env/who/main.tf`, which sets the remote backend, then runs the main module.
+
+## Bootstrap Provisioning
 
 **ONLY DO THIS IN A NEW SUBSCRIPTION**
-If you're syncing with the existing infrastructure, skip this section.
 
-Change to the bootstrap directory `config/terraform/bootstrap`
+If the backend storage is already created, you don't need to touch bootstrap.j
 
+### Bootstrapping a New Account
+
+If you are deploying an environment from scratch, first bootstrap the tfstate
+storage account with the following.
+
+    cd config/terraform/env/who
+    source .env
     cd bootstrap
-
-Initialize terraform, then apply to create tfstate
-
     terraform init
+    terraform workspace select production
     terraform apply
 
-Update `config/terraform/main.tf` with the output from apply.
+These must be run with local tfstate because they create the remote account.
+
+Update `config/terraform/env/who/main.tf` with the output from apply.
 
     # copy this output into the backend block.
     resource_group_name  = resource_group_name
     storage_account_name = storage_account_name
     container_name       = container_name
 
-## Provisioning
+### Import Bootstrap State
 
-Change to the terraform directory (the location of this README file)
+You can import existing state into your local terraform state if needed.
 
-    cd config/terraform
+The following commands reference these variables, some of which are in:
 
-Initialize terraform.
-If there is existing remote state it will be loaded if you have access and are logged in.
+    config/terraform/env/name/.env
+
+- `ARM_SUBSCRIPTION_ID` - The subscription id also available from `az account show`
+- `TF_VAR_tfstate_resource_group_name` - The existing resource group (`"IHRBENCHMARK-MAIN-WEU-RG01"`)
+- `TFSTATE_STORAGE_ACCOUNT_NAME` - The name of the storage account (e.g. `"tfstateabc123abc"`).
+  get this from `env/name/main.tf` in the backend section.
+
+Once you have the correct ENV set, run the following commands to import
+
+    cd config/terraform/env/who
+    source .env
+    cd bootstrap
+    # this is not set in .env
+    export TFSTATE_STORAGE_ACCOUNT_NAME=
+    terraform init
+    terraform workspace select production
+    terraform import module.bootstrap.azurerm_storage_account.tfstate "/subscriptions/${ARM_SUBSCRIPTION_ID}/resourceGroups/${TF_VAR_tfstate_resource_group_name}/providers/Microsoft.Storage/storageAccounts/${TFSTATE_STORAGE_ACCOUNT_NAME}"
+    terraform import module.bootstrap.azurerm_storage_container.tfstate "https://${TFSTATE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/tfstate"
+
+**IMPORTANT**: Don't destroy tfstate unless _everything_ in other terraform
+run is already destroyed. Otherwise you'll have to manually cleanup the
+resources that were created by terraform without destroying the manually
+created resources.
+
+## Main Provisioning
+
+Run the main configuration like so:
+
+    cd config/terraform/env/who
+    source .env
+
+Did the above command show the correct account? If so, proceed
 
     terraform init
-
-Ensure you are logged in to the right azure account (see above).
-Select the workspace you want to use. We don't use `default`.
-
-    source .env.who
-    az account set --subscription $ARM_SUBSCRIPTION_ID
-    terraform workspace select sandbox
-
-Then apply changes (you will be asked to confirm, read carefully)
-
+    terraform workspace select production
     terraform apply
 
-## Switch accounts
+Check over the changes and ensure you actually want to perform them.
 
-Switch azure accounts is tricky. There is a stored .terraform folder that remembers
-the last place the state was stored. Switching will mess up this state file.
-Also, the backend must be updated manually in main.tf.
+## Switching accounts
 
-First, either delete or move the local state.
+To switch to a different azure account, switch to the respective directory:
 
-    cd config/terraform
-    mv .terraform .terraform.otheraccount
+    cd config/terraform/env/cloudcity
+
+Then source the .env file contained therein. Get the file from CloudCity's
+1Password "Vital Strategies" vault if you don't have the .env file.
+
+    source .env
 
 In this example, we switch from WHO Azure to Cloud City Azure for testing:
 The .env.cloudcity file is in the Cloud City Benchmark 1Password Vault.
@@ -89,26 +124,24 @@ The .env.cloudcity file is in the Cloud City Benchmark 1Password Vault.
     source .env.cloudcity
     az account set --subscription $ARM_SUBSCRIPTION_ID
 
-Edit the main.tf file in config/terraform/main.tf to manually switch the backend.
+Run the terraform plan. Make sure it doesn't try to destroy everything.
 
     terraform init
-    terraform workspace select sandbox
+    terraform workspace select production
     terraform plan
-
-If it looks like it's going to destroy everything and recreate or if it thinks
-all the old account resources are missing, you may not have gotten the state file
-correctly switched or the backend configured correctly. Switching is tricky, see.
 
 ### After Provisioning Azure DevOps, Action is Required
 
-After Azure DevOps is provisioned via Terraform, approval must be granted for the Service Connection
-for Azure Devops to access the Azure Container Registry.
+The link between GitHub and Azure Pipelines must be created.
+Use the Azure Pipelines GitHub Integration to create the connection.
+
+After Azure DevOps is provisioned via Terraform, approval must be granted for
+the Service Connection for Azure Devops to access the Azure Container Registry.
 
 Go to the Azure Devops project portal https://dev.azure.com and view the pipeline.
-You should see a message on the page that says that the pipeline cannot run until you click this button to approve the
-Service Connection.
-
-There may be a non-interactive way to do this but I have not found one so far.
+After a build has been started, you should see a message on the page that says
+that the pipeline cannot run until you click this button to approve the Service
+Connection.
 
 ## Destroy
 
@@ -120,87 +153,42 @@ If you need to teardown the infrastructure, you can do so by running the followi
 
 ## .env Setup Instructions for a new Azure subscription
 
-Copy the sample .env from config/terraform/.env.sample to config/terraform/.env.name
+First, recursively copy `config/terraform/env/cloudcity` to a new directory
+in the env folder. Then copy `config/terraform/env/.env.sample` to
+`config/terraform/env/newname/.env`
 
-Follow instructions in the .env.sample.
+Make the necessary changes to the .env file to support your new env.
 
-### Dealing with Terraform-Generated Secret Values
-
-Some of the .env values are fetched from the infrastructure after provisioning.
-This is the (official / first-party) way to get the secret values generated by Terraform.
-
-- Taken from: https://www.terraform.io/upgrade-guides/0-14.html#sensitive-values-in-plan-output
-
-```
-terraform plan -out=tfplan
-terraform show -json tfplan > tfplan.json
-```
-
-Open and view the generates JSON file `tfplan.json` and the secret value(s) there in plain text.
+Change the backend after running the bootstrap step.
 
 ## Useful Commands
 
-    az webapp log tail --resource-group IHRBENCHMARK-P-WEU-RG01 --name whoproduction-ihrbenchmark-app-service --slot staging --subscription "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+Tail application logs:
+
+    az webapp log tail --resource-group IHRBENCHMARK-P-WEU-RG01 --name who-ihrbenchmark --slot staging --subscription "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
 
 # WHO-specific Background Things to know
 
-There are certain resources that are "pets" (long-lived things that should never be destroyed).
+There are certain resources that are long-lived and should never be destroyed.
+These are created by a WHO admin and can be slow to replace because of a lack of
+permissions to create these resources.
 
 AzureRM:
 
 - Resource Group: IHRBENCHMARK-MAIN-WEU-RG01
 - Resource Group: IHRBENCHMARK-P-WEU-RG01
 - Resource Group: IHRBENCHMARK-T-WEU-RG01
-  Azure DevOps:
+
+Azure DevOps:
+
 - Azure DevOps Project: IHRBENCHMARK
+- Almost all of the Service Connections
 
-# Things to Know About Terraform on this Project
+# Terraform resources for best practices and naming conventions
 
-## Lets try to follow the conventions defined here:
+We have tried to observe best practices described in the following:
 
 - https://www.terraform-best-practices.com/naming
 - https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
-
-### Naming Convention for Azure Resources
-
-![Image showing Azure's suggested naming convention for cloud resources](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/_images/ready/resource-naming.png)
-This image is from https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
-
-We'll attempt to stick to Azure's suggestions, with a simplifications to omit
-
-| Naming component            | Description                                                                                                                                                                                                                                             |
-| :-------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Resource type               | An abbreviation that represents the type of Azure resource or asset. This component is often used as a prefix or suffix in the name. For more information, see Recommended abbreviations for Azure resource types. Examples: rg, vm                     |
-| ~~Business unit~~           | Top-level division of your company that owns the subscription or workload the resource belongs to. In smaller organizations, this component might represent a single corporate top-level organizational element. Examples: fin, mktg, product, it, corp |
-| Application or service name | Name of the application, workload, or service that the resource is a part of. Examples: navigator, emissions, sharepoint, hadoop                                                                                                                        |
-| ~~Subscription type~~       | Summary description of the purpose of the subscription that contains the resource. Often broken down by deployment environment type or specific workloads. Examples: prod, shared, client                                                               |
-| ~~Deployment environment~~  | The stage of the development lifecycle for the workload that the resource supports. Examples: prod, dev, qa, stage, test                                                                                                                                |
-| ~~Region~~                  | The Azure region where the resource is deployed. Examples: westus, eastus2, westeu, usva, ustx                                                                                                                                                          |
-
-That leaves "Resource type" and "Application or service name". So we'll go with this for now. We are still figuring this out.
-
-### Code Style for Terraform
-
-- Use \_ (underscore) instead of - (dash/hyphen) in all: resource names, data source names, variable names, outputs.
-  - Beware that actual cloud resources have many hidden restrictions in their naming conventions. Some cannot contain dashes, some must be camel cased. These conventions refer to Terraform names themselves.
-- Only use lowercase letters and numbers.
--
-
-#### Resource and data source arguments
-
-- Do not repeat resource type in resource name (not partially, nor completely):
-  - Good: resource "aws_route_table" "public" {}
-  - Bad: resource "aws_route_table" "public_route_table" {}
-  - Bad: resource "aws_route_table" "public_aws_route_table" {}
-- Resource name should be named this if there is no more descriptive and general name available, or if resource module creates single resource of this type (eg, there is single resource of type aws_nat_gateway and multiple resources of typeaws_route_table, so aws_nat_gateway should be named this and aws_route_table should have more descriptive names - like private, public, database).
-- Always use singular nouns for names.
-- Use - inside arguments values and in places where value will be exposed to a human (eg, inside DNS name of RDS instance).
-- Include count argument inside resource blocks as the first argument at the top and separate by newline after it. See example.
-- Include tags argument, if supported by resource as the last real argument, following by depends_on and lifecycle, if necessary. All of these should be separated by single empty line. See example.
-- When using condition in count argument use boolean value, if it makes sense, otherwise use length or other interpolation. See example.
-- To make inverted conditions don't introduce another variable unless really necessary, use 1 - boolean value instead. For example, count = "${1 - var.create_public_subnets}"
-
-## Someday
-
 - https://www.terraform-best-practices.com/code-styling
 - https://github.com/antonbabenko/pre-commit-terraform

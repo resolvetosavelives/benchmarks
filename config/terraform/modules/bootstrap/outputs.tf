@@ -7,17 +7,17 @@
 # }
 
 output "resource_group_name" {
-  value       = data.azurerm_resource_group.resource_group.name
+  value       = data.azurerm_resource_group.rg.name
   description = "tfstate resource group name"
 }
 
 output "storage_account_name" {
-  value       = azurerm_storage_account.tfstate_account.name
+  value       = azurerm_storage_account.tfstate.name
   description = "tfstate storage account name"
 }
 
 output "container_name" {
-  value       = azurerm_storage_container.tfstate_container.name
+  value       = azurerm_storage_container.tfstate.name
   description = "tfstate blob storage container name"
 }
 

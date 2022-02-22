@@ -28,10 +28,6 @@ terraform {
   }
 }
 
-locals {
-  key = "tfstate"
-}
-
 provider "azurerm" {
   features {}
 }
@@ -46,24 +42,25 @@ resource "random_string" "account_name" {
     # Keepers are used to regenerate the random string when this value changes.
     # The account name we pick here must be globally unique, so if we move
     # resource groups, we want the id to change so we don't conflict.
-    resource_group_name = var.TFSTATE_RESOURCE_GROUP
+    resource_group_name = var.resource_group_name
   }
 }
-data "azurerm_resource_group" "resource_group" {
+
+data "azurerm_resource_group" "rg" {
   # Accessing "through" the random_string ensures we use the same value.
   name = random_string.account_name.keepers.resource_group_name
 }
 
-resource "azurerm_storage_account" "tfstate_account" {
-  name                     = "${local.key}${random_string.account_name.result}"
-  resource_group_name      = data.azurerm_resource_group.resource_group.name
-  location                 = data.azurerm_resource_group.resource_group.location
+resource "azurerm_storage_account" "tfstate" {
+  name                     = "${var.tfstate_key}${random_string.account_name.result}"
+  resource_group_name      = data.azurerm_resource_group.rg.name
+  location                 = data.azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "tfstate_container" {
-  name                  = local.key
-  storage_account_name  = azurerm_storage_account.tfstate_account.name
+resource "azurerm_storage_container" "tfstate" {
+  name                  = var.tfstate_key
+  storage_account_name  = azurerm_storage_account.tfstate.name
   container_access_type = "private"
 }

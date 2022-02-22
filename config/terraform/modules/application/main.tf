@@ -1,9 +1,9 @@
 locals {
-  docker_image_name        = "${azurerm_container_registry.acr.login_server}/${local.container_repository}:latest"
-  staging_database_url     = module.database.staging_database_url
-  production_database_url  = module.database.production_database_url
-  staging_aad_client_id    = "aafb34fd-98d9-4dee-b4da-1a245d93eacd"
-  production_aad_client_id = "aafb34fd-98d9-4dee-b4da-1a245d93eacd"
+  docker_image_name     = "${azurerm_container_registry.acr.login_server}/${var.container_repository}:latest"
+  tenant_id             = "4efe96cc-3e99-409d-8d0e-432bd2ad9fce"
+  staging_aad_app_id    = "c34545e9-5dbe-49ec-a87b-57e3dcd7cc7d"
+  production_aad_app_id = "1e49ba73-ea03-4cfa-a967-de8a1d63fb22"
+
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
     DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
@@ -16,12 +16,16 @@ locals {
   }
 }
 
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group_name
+}
+
 # with the Basic sku we get less bandwidth, modest performance and storage, and no privacy (could be accessed by public internet if the URL is discovered)
 # more info on sku Service tier features and limits: https://docs.microsoft.com/en-us/azure/container-registry/container-registry-skus
 resource "azurerm_container_registry" "acr" {
   # This becomes a <name>.azurecr.io, so it must following the rules:
   # lower case alpha numeric characters. Globally unique.
-  name                          = lower("${local.scope}${local.app_name}") # e.g. whoihrbenchmark
+  name                          = replace(lower(var.app_service_name), "/[^a-z0-9]/", "") # e.g. whoihrbenchmark
   resource_group_name           = data.azurerm_resource_group.rg.name
   location                      = data.azurerm_resource_group.rg.location
   sku                           = "Premium"
@@ -30,7 +34,7 @@ resource "azurerm_container_registry" "acr" {
 }
 
 resource "azurerm_app_service_plan" "app_service_plan" {
-  name                = "${local.scoped_app_name}-app-service-plan"
+  name                = "${var.app_service_name}-app-service-plan"
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   // must be kind="Linux" and reserved=true in order to run Linux containers
@@ -45,11 +49,11 @@ resource "azurerm_app_service_plan" "app_service_plan" {
 
 resource "azurerm_app_service" "app_service" {
   # This name becomes a subdomain in a globally accessible URL, so must be globally unique
-  name                = local.scoped_app_name
+  name                = var.app_service_name
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
-  app_settings        = merge(local.app_settings, { DATABASE_URL = local.production_database_url })
+  app_settings        = merge(local.app_settings, { DATABASE_URL = var.production_database_url })
   identity {
     type = "SystemAssigned"
   }
@@ -62,13 +66,17 @@ resource "azurerm_app_service" "app_service" {
   }
   auth_settings {
     enabled                       = true
-    runtime_version               = "~1"
+    token_store_enabled           = true
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
-      client_id = local.production_aad_client_id
+      client_id = local.production_aad_app_id
+      allowed_audiences = [
+        "api://${local.production_aad_app_id}",
+      ]
       #client_secret = ""
     }
+    issuer = "https://sts.windows.net/${local.tenant_id}/v2.0"
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
@@ -96,7 +104,7 @@ resource "azurerm_app_service_slot" "preview" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
-  app_settings        = merge(local.app_settings, { DATABASE_URL = local.production_database_url })
+  app_settings        = merge(local.app_settings, { DATABASE_URL = var.production_database_url })
 
   identity {
     type = "SystemAssigned"
@@ -114,7 +122,7 @@ resource "azurerm_app_service_slot" "preview" {
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
-      client_id = local.production_aad_client_id
+      client_id = local.production_aad_app_id
     }
   }
   logs {
@@ -140,7 +148,7 @@ resource "azurerm_app_service_slot" "staging" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
-  app_settings        = merge(local.app_settings, { DATABASE_URL = local.staging_database_url })
+  app_settings        = merge(local.app_settings, { DATABASE_URL = var.staging_database_url })
 
   identity {
     type = "SystemAssigned"
@@ -158,7 +166,7 @@ resource "azurerm_app_service_slot" "staging" {
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
-      client_id = local.staging_aad_client_id
+      client_id = local.staging_aad_app_id
     }
   }
   logs {
