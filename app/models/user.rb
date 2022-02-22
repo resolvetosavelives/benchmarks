@@ -33,7 +33,7 @@ class User < ApplicationRecord
   end
 
   def confirmation_required?
-    return false if !Rails.application.config.azure_auth_enabled
+    return false if Rails.application.config.azure_auth_enabled
     Rails.env.production?
   end
 end
