@@ -1,9 +1,4 @@
 class ApplicationController < ActionController::Base
-  before_action :log_headers
-  def log_headers
-    logger.info "Headers: #{request.headers.inspect}"
-  end
-
   before_action :configure_permitted_parameters, if: :devise_controller?
   protect_from_forgery unless: -> { Rails.env.dev? && request.format.json? }
 
