@@ -81,6 +81,7 @@ body {
 
 footer {
   margin-top: auto;
+  background-color: color("navy");
   color: white;
   font-family: Karla, sans-serif;
   font-size: 14px;
@@ -121,7 +122,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #212529;
+  color: color("navy");
 }
 
 h1,
