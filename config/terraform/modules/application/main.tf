@@ -66,17 +66,17 @@ resource "azurerm_app_service" "app_service" {
   }
   auth_settings {
     enabled                       = true
-    token_store_enabled           = true
+    token_store_enabled           = true # must be enabled to receive access token in the headers
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
       client_id = local.production_aad_app_id
+      # Allowed audiences must be set or auth doesn't work. It's not automatic.
       allowed_audiences = [
         "api://${local.production_aad_app_id}",
       ]
       #client_secret = ""
     }
-    issuer = "https://sts.windows.net/${local.tenant_id}/v2.0"
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
@@ -118,6 +118,7 @@ resource "azurerm_app_service_slot" "preview" {
   }
   auth_settings {
     enabled                       = true
+    token_store_enabled           = true # must be enabled to receive access token in the headers
     runtime_version               = "~1"
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
@@ -162,11 +163,15 @@ resource "azurerm_app_service_slot" "staging" {
   }
   auth_settings {
     enabled                       = true
+    token_store_enabled           = true # must be enabled to receive access token in the headers
     runtime_version               = "~1"
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
       client_id = local.staging_aad_app_id
+      allowed_audiences = [
+        "api://${local.staging_aad_app_id}",
+      ]
     }
   }
   logs {
