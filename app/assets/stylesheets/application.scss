@@ -339,11 +339,34 @@ a:hover {
 }
 
 svg.step-up-image {
+  .cls-1 {
+    fill: #1f1f2a;
+  }
+  .cls-4 {
+    fill: #f28d1f;
+  }
+  .cls-5 {
+    fill: #fbb918;
+  }
+  .cls-6 {
+    fill: #4caf4f;
+  }
+  .cls-7 {
+    fill: #83bb39;
+  }
+  .cls-9 {
+    fill: #1d1d1b;
+  }
+  .cls-10 {
+    fill: #e2e6ea;
+  }
+
   path {
     fill-rule: nonzero;
     transition: all 0.2s ease-in-out;
   }
 
+  /* Change segment colours here */
   .segment {
     fill: #e2e6ea;
   }
@@ -352,7 +375,7 @@ svg.step-up-image {
     fill: #fec938;
   }
 
-  .image-link {
+  a {
     transition: all 0.2s ease-in-out;
     transform-origin: 240px 240px;
     position: relative;
