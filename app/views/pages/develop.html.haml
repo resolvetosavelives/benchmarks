@@ -1,0 +1,45 @@
+= content_for :homepage do
+  %nav.navbar.navbar-expand-lg
+    .container.mx-auto.my-3.px-0
+      %ul.navbar-nav
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.text-blue{href: assess_path}
+            ASSESS
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.active{href: develop_path}
+            DEVELOP
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.text-blue{href: implement_path}
+            IMPLEMENT
+  .section--navy.position-relative.py-4
+    .position-absolute.h-100.w-100#particles-js
+    .container
+      .row.d-flex
+        .col-sm.align-middle.my-auto
+          %h1 Develop
+          %p.large
+            Use relevant guidance, tools, frameworks, learnings and other
+            materials to inform and support the implementation of prioritized
+            actions. As you move into implementation of the NAPHS plan,
+            continuously monitor and evaluate performance.
+        .col-5.m-auto= render "step_up_image"
+  .section
+    .container.mx-auto.my-5
+      %p
+        Whether the goal is to develop a strategic or operational plan, strategic stakeholder management and coordination are essential for the NAPHS development process. The following steps summarize the detailed guidance and tools found in the Strengthening IHR Capacities Toolkit for how to efficiently develop a strong and implementable NAPHS.
+      %h3 1. Establish and convene the NAPHS secretariat
+      %p
+        The NAPHS secretariat is a small (4-6 member) group of individuals with the appropriate expertise, authority and time to lead a Member State's NAPHS process. Throughout the NAPHS processes, the secretariat executes a significant amount of work behind the scenes to allow key decision-making steps requiring stakeholders to run smoothly.
+      %h3 2. Prepare to develop a strategic or operational plan
+      %p
+        The secretariat, along with relevant stakeholders, should determine whether the goal is to develop a strategic or operational plan, noting that starting with a strategic plan and transitioning to an operational plan can be beneficial. The secretariat can use the WHO Benchmarks Platform to generate a draft strategic or operational plan.
+      %p.large
+        = link_to "Create a Draft Plan", get_started_path, class: "btn btn-orange", type: "button"
+      %h3 3. Engage stakeholders to develop the strategic or operational plan
+      %p
+        The secretariat should outline a clear plan for appropriate stakeholder engagement and convene technical leads to define country context as it relates to national health security as well as technical area priorities for the draft NAPHS. Functional grouping can also be conducted to identify interdependencies and opportunities for coordination between technical areas to ensure plans are comprehensive and streamlined. Costing, resource mapping and advocacy planning may be completed under the auspices of various responsible ministries, departments or agencies.
+      %h3 4. Launch the plan
+      %p
+        Once a whole-of-government NAPHS plan is devised and fully costed with key funding sources identified and advocacy plans to support near-term implementation and improved health security, it is time to move on to implementing and monitoring the progress and quality of the plan.
+      %p.large
+        = link_to "Next: Implement", implement_path, class: "btn btn-orange", type: "button"

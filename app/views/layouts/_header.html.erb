@@ -13,23 +13,23 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
       <ul class="navbar-nav">
         <li class="nav-item mx-lg-2">
-          <a class="nav-link py-1" href="<%= root_path %>">
+          <a class="nav-link text-white py-1" href="<%= root_path %>">
             HOME
           </a>
         </li>
         <li class="nav-item mx-lg-2">
-          <a class="nav-link py-1" href="<%= introduction_url %>">
+          <a class="nav-link text-white py-1" href="<%= introduction_url %>">
             WHO BENCHMARKS
           </a>
         </li>
         <li class="nav-item mx-lg-2">
-          <a class="nav-link py-1" href="<%= reference_library_url %>">
+          <a class="nav-link text-white py-1" href="<%= reference_library_url %>">
             REFERENCE LIBRARY
           </a>
         </li>
         <% if current_user %>
           <li class="nav-item dropdown ml-lg-2">
-            <a class="nav-link py-1 dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link text-white py-1 dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
               <%= current_user.email %>
               <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
             </a>
@@ -41,7 +41,7 @@
           </li>
         <% else %>
           <li class="nav-item ml-lg-2">
-            <a class="nav-link py-1" href="<%= new_user_session_path %>">
+            <a class="nav-link text-white py-1" href="<%= new_user_session_path %>">
               LOG IN
             </a>
           </li>

@@ -1,0 +1,41 @@
+= content_for :homepage do
+  %nav.navbar.navbar-expand-lg
+    .container.mx-auto.my-3.px-0
+      %ul.navbar-nav
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.text-blue{href: assess_path}
+            ASSESS
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.text-blue{href: develop_path}
+            DEVELOP
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.active{href: implement_path}
+            IMPLEMENT
+  .section--navy.position-relative.py-4
+    .position-absolute.h-100.w-100#particles-js
+    .container
+      .row.d-flex
+        .col-sm.align-middle.my-auto
+          %h1 Implement
+          %p.large
+            Countries must assess their ability to prevent, detect and respond
+            to epidemics using different approaches that provide unique
+            insights into the country's risk, vulnerability and capacity profile
+            for infectious disease threats.
+        .col-5.m-auto= render "step_up_image"
+  .section
+    .container.mx-auto.my-5
+      %p
+        Learning from global resources in the Reference Library and establishing strong monitoring and evaluation systems can support the effective implementation of national plans.
+      %h3 1. Implement planned activities and use the Reference Library
+      %p
+        Countries can easily access, adapt and use guidelines, best practices, tools, and training packages from the WHO Benchmarks Reference Library to support implementation. In addition, new learning networks and other capacity development initiatives are being developed by WHO to enable the sharing of lessons and resources among countries to strengthen IHR implementation.
+      %h3 2. Monitor implementation progress and ensure accountability
+      %p
+        Routine monitoring of activity implementation ensures timely and quality completion of planned activities by those responsible. Countries can collect and analyze implementation progress in dashboards or reports, which can enable decision-making to address challenges and strengthen implementation.
+      %h3
+        3. Reassess progress to inform future plan development and implementation
+      %p
+        Review implementation results to identify progress and challenges. Use these insights to inform the State Parties Annual Reporting (SPAR) and consider alongside other assessments to guide the prioritization of activities for the next cycle.
+      %p.large
+        = link_to "Get Started", get_started_path, class: "btn btn-orange btn-cta", type: "button"
