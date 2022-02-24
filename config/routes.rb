@@ -33,6 +33,9 @@ Rails.application.routes.draw do
 
   ##
   # static pages
+  get "/assess", to: "pages#assess"
+  get "/develop", to: "pages#develop"
+  get "/implement", to: "pages#implement"
   get "/privacy_policy", to: "pages#privacy_policy"
   get "/reference-library",
       to: "pages#reference_library", as: "reference_library" # Benchmark Document section

@@ -220,7 +220,6 @@ nav.navbar {
     }
   }
   a.nav-link {
-    color: white !important;
     text-decoration: none;
   }
 }
@@ -394,6 +393,18 @@ svg.step-up-image {
   }
 
   a:hover path.text {
+    fill: white;
+  }
+
+  a.active {
+    transform: scale(1.05);
+  }
+
+  a.active path.segment {
+    fill: #2b8cc9;
+  }
+
+  a.active path.text {
     fill: white;
   }
 }

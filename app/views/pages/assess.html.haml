@@ -1,0 +1,56 @@
+= content_for :homepage do
+  %nav.navbar.navbar-expand-lg
+    .container.mx-auto.my-3.px-0
+      %ul.navbar-nav
+        %li.nav-item.mx-lg-2
+          %a.nav-link.py-1.active{href: assess_path}
+            ASSESS
+        %li.nav-item.mx-lg-2
+          %a.nav-link.text-blue.py-1{href: develop_path}
+            DEVELOP
+        %li.nav-item.mx-lg-2
+          %a.nav-link.text-blue.py-1{href: develop_path}
+            IMPLEMENT
+  .section--navy.position-relative.py-4
+    .position-absolute.h-100.w-100#particles-js
+    .container
+      .row.d-flex
+        .col-sm.align-middle.my-auto
+          %h1 Assess capacity
+          %p.large
+            Countries must assess their ability to prevent, detect and respond
+            to epidemics using different approaches that provide unique
+            insights into the country's risk, vulnerability and capacity
+            profile for infectious disease threats.
+        .col-5.m-auto= render "step_up_image"
+  .section
+    .container.mx-auto.my-5
+      %h3 1. Assess overall preparedness capacity
+      %ul
+        %li
+          The States Parties Annual Reporting (SPAR) is a mandatory, annual, self-reporting tool to monitor progress towards full implementation of IHR.
+        %li
+          The Joint External Evaluation (JEE) is a voluntary and comprehensive process conducted every 3-5 years to evaluate country capacity across 19 technical areas.
+      %h3 2. Characterize risks and vulnerability
+      %ul
+        %li
+          The Strategic Tool for Assessing Risks (STAR) assesses the likelihood and potential impact of public health risks to inform planning and prioritization of health emergency preparedness and disaster risk management activities.
+        %li
+          Vulnerability and Risk Assessment Mapping (VRAM) assesses health risks within a country to inform disaster risk reduction, emergency preparedness and response plans.
+      %h3 3. Evaluate real-world performance
+      %ul
+        %li
+          After-Action Reviews (AARs) are qualitative evaluations of a response to a real event. For protracted events such as COVID-19, countries may use an Intra-Action Review (IAR) to inform response and preparedness planning going forward.
+        %li
+          Simulation Exercises (SimExs) are qualitative evaluations of simulated events to test the performance of the preparedness system in anticipation of a real event.
+      %h3
+        4. Identify coordination barriers between animal and human health sectors
+      %ul
+        %li
+          The One Health and IHR-PVS bridging workshops identify corrective measures to improve the collaboration between the two sectors in the prevention, detection and response to zoonotic disease outbreaks and other health issues.
+      %p
+        Each type of assessment provides a unique insight into the country’s risk, vulnerability and capacity profile for infectious diseases threats.
+      %p
+        The WHO Benchmarks uses the SPAR and JEE as baseline data to propose benchmark actions for a high-quality National Action Plan for Health Security (NAPHS). The facilitation toolkit offers recommendations integrating the above assessments into national planning.
+      %p.large
+        = link_to "Next: Develop", develop_path, class: "btn btn-orange", type: "button"
