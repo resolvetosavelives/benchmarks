@@ -15,7 +15,7 @@ gem "inline_svg", "~> 1.8"
 gem "jsbundling-rails"
 gem "jwt"
 gem "pg", "~> 1.2"
-gem "puma", "~> 5.5"
+gem "puma", "~> 5.6"
 gem "racc", "1.5.2" # latest version fails on alpine
 gem "rack-attack", "~> 6.5"
 gem "rake", "~> 13.0"
