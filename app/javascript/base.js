@@ -8,9 +8,6 @@ import "regenerator-runtime/runtime"
 import $ from "jquery" //eslint-disable-line
 import "bootstrap"
 
-// NB: please refer to the section in README.md ## A note on js packs and stylesheets
-// import "stylesheets/application.scss"
-
 import Turbolinks from "turbolinks"
 Turbolinks.start()
 
