@@ -1,9 +1,6 @@
-locals {
-  docker_image_name     = "${azurerm_container_registry.acr.login_server}/${var.container_repository}:latest"
-  tenant_id             = "4efe96cc-3e99-409d-8d0e-432bd2ad9fce"
-  staging_aad_app_id    = "c34545e9-5dbe-49ec-a87b-57e3dcd7cc7d"
-  production_aad_app_id = "1e49ba73-ea03-4cfa-a967-de8a1d63fb22"
 
+locals {
+  docker_image_name = "${azurerm_container_registry.acr.login_server}/${var.container_repository}:latest"
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL          = "https://${azurerm_container_registry.acr.login_server}"
     DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
@@ -14,6 +11,9 @@ locals {
     WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
     WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
   }
+}
+
+data "azurerm_subscription" "current" {
 }
 
 data "azurerm_resource_group" "rg" {
@@ -33,6 +33,9 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled                 = true
 }
 
+# An interesting thing about Azure is that all app services (and slots) run on
+# all the instances allocated in the app service plan. Adding more slots does
+# not cost more money, it just shares the resources across all the slots.
 resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "${var.app_service_name}-app-service-plan"
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -42,6 +45,8 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   reserved = true
   sku {
     // must be Premium-tier in order to work with Azure Private Link (for DB)
+    # however, we're not using private link right now, so we could downgroade
+    # or implement private link.
     tier = "PremiumV2"
     size = "P1v2" // or P2v2 or P3v2
   }
@@ -54,9 +59,6 @@ resource "azurerm_app_service" "app_service" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_settings        = merge(local.app_settings, { DATABASE_URL = var.production_database_url })
-  identity {
-    type = "SystemAssigned"
-  }
   site_config {
     always_on              = true
     vnet_route_all_enabled = true
@@ -70,10 +72,10 @@ resource "azurerm_app_service" "app_service" {
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
-      client_id = local.production_aad_app_id
+      client_id = var.production_aad_application_id
       # Allowed audiences must be set or auth doesn't work. It's not automatic.
       allowed_audiences = [
-        "api://${local.production_aad_app_id}",
+        "api://${var.production_aad_application_id}",
       ]
       #client_secret = ""
     }
@@ -106,11 +108,8 @@ resource "azurerm_app_service_slot" "preview" {
   app_service_name    = azurerm_app_service.app_service.name
   app_settings        = merge(local.app_settings, { DATABASE_URL = var.production_database_url })
 
-  identity {
-    type = "SystemAssigned"
-  }
   site_config {
-    always_on              = true
+    always_on              = false
     vnet_route_all_enabled = true
     linux_fx_version       = "DOCKER|${local.docker_image_name}"
     ftps_state             = "Disabled"
@@ -123,7 +122,11 @@ resource "azurerm_app_service_slot" "preview" {
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
-      client_id = local.production_aad_app_id
+      client_id = var.preview_aad_application_id
+      # Allowed audiences must be set or auth doesn't work. It's not automatic.
+      allowed_audiences = [
+        "api://${var.preview_aad_application_id}",
+      ]
     }
   }
   logs {
@@ -151,9 +154,6 @@ resource "azurerm_app_service_slot" "staging" {
   app_service_name    = azurerm_app_service.app_service.name
   app_settings        = merge(local.app_settings, { DATABASE_URL = var.staging_database_url })
 
-  identity {
-    type = "SystemAssigned"
-  }
   site_config {
     always_on              = true
     vnet_route_all_enabled = true
@@ -168,9 +168,9 @@ resource "azurerm_app_service_slot" "staging" {
     additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
     active_directory {
-      client_id = local.staging_aad_app_id
+      client_id = var.staging_aad_application_id
       allowed_audiences = [
-        "api://${local.staging_aad_app_id}",
+        "api://${var.staging_aad_application_id}",
       ]
     }
   }

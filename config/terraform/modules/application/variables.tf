@@ -10,6 +10,18 @@ variable "container_repository" {
   description = "Docker image name, also appended with _builder for the builder image."
   type        = string
 }
+variable "staging_aad_application_id" {
+  description = "The Azure AD Application ID for the staging app"
+  type        = string
+}
+variable "preview_aad_application_id" {
+  description = "The Azure AD Application ID for the preview app"
+  type        = string
+}
+variable "production_aad_application_id" {
+  description = "The Azure AD Application ID for the production app"
+  type        = string
+}
 variable "production_database_url" {
   description = "DATABASE_URL for production app"
   type        = string

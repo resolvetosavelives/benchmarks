@@ -21,6 +21,32 @@ locals {
   scoped_app_name = "${local.scope}-${local.app_name}"
 }
 
+data "azurerm_subscription" "current" {}
+
+module "aad_staging_application" {
+  source    = "../modules/aad_application"
+  tenant_id = data.azurerm_subscription.current.tenant_id
+  name      = "${upper(local.app_name)} (staging)"
+  domain    = "${local.scoped_app_name}-staging.azurewebsites.net"
+  # The domain is a chicken-and-egg problem.
+  # The app service will assign the domain. Luckily it's deterministic.
+  # A custom domain would be more declarative.
+}
+
+module "aad_preview_application" {
+  source    = "../modules/aad_application"
+  tenant_id = data.azurerm_subscription.current.tenant_id
+  name      = "${upper(local.app_name)} (preview)"
+  domain    = "${local.scoped_app_name}-preview.azurewebsites.net"
+}
+
+module "aad_production_application" {
+  source    = "../modules/aad_application"
+  tenant_id = data.azurerm_subscription.current.tenant_id
+  name      = upper(local.app_name)
+  domain    = "${local.scoped_app_name}.azurewebsites.net"
+}
+
 module "database" {
   source              = "../modules/database"
   resource_group_name = local.resource_group_name
@@ -28,13 +54,16 @@ module "database" {
 }
 
 module "application" {
-  source                  = "../modules/application"
-  resource_group_name     = local.resource_group_name
-  app_service_name        = local.scoped_app_name
-  staging_database_url    = module.database.staging_database_url
-  production_database_url = module.database.production_database_url
-  container_repository    = local.container_repository
-  RAILS_MASTER_KEY        = var.RAILS_MASTER_KEY
+  source                        = "../modules/application"
+  resource_group_name           = local.resource_group_name
+  app_service_name              = local.scoped_app_name
+  staging_aad_application_id    = module.aad_staging_application.application_id
+  preview_aad_application_id    = module.aad_preview_application.application_id
+  production_aad_application_id = module.aad_production_application.application_id
+  staging_database_url          = module.database.staging_database_url
+  production_database_url       = module.database.production_database_url
+  container_repository          = local.container_repository
+  RAILS_MASTER_KEY              = var.RAILS_MASTER_KEY
 }
 
 module "devops" {

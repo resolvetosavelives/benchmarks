@@ -106,33 +106,3 @@ module "main" {
   prod_resource_group_name = azurerm_resource_group.p.name
   test_resource_group_name = azurerm_resource_group.t.name
 }
-
-moved {
-  from = module.database
-  to   = module.main.module.database
-}
-moved {
-  from = module.devops
-  to   = module.main.module.devops
-}
-moved {
-  from = azurerm_app_service_plan.app_service_plan
-  to   = module.main.module.application.azurerm_app_service_plan.app_service_plan
-}
-moved {
-  from = azurerm_app_service.app_service
-  to   = module.main.module.application.azurerm_app_service.app_service
-}
-moved {
-  from = azurerm_app_service_slot.preview
-  to   = module.main.module.application.azurerm_app_service_slot.preview
-}
-moved {
-  from = azurerm_app_service_slot.staging
-  to   = module.main.module.application.azurerm_app_service_slot.staging
-}
-
-moved {
-  from = azurerm_container_registry.acr
-  to   = module.main.module.application.azurerm_container_registry.acr
-}
