@@ -7,14 +7,14 @@ gem "rails", "~> 7.0"
 gem "activerecord-import", "~> 1.3"
 gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
-gem "bootsnap", "~> 1.10", require: false
+gem "bootsnap", "~> 1.11", require: false
 gem "devise", "~> 4.8"
-gem "hamlit", "~> 2.15"
+gem "hamlit", "~> 2.16"
 gem "hamlit-rails", "~> 0.2"
 gem "inline_svg", "~> 1.8"
 gem "jwt"
 gem "pg", "~> 1.2"
-gem "puma", "~> 5.5"
+gem "puma", "~> 5.6"
 gem "racc", "1.5.2" # latest version fails on alpine
 gem "rack-attack", "~> 6.5"
 gem "rake", "~> 13.0"
