@@ -18,6 +18,8 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
     claims, _ = JWT.decode(token, nil, false)
 
     if claims["sub"].present?
+      Rails.logger.info("Claims: #{claims.inspect}")
+
       # the email may not be present.
       user = User.by_azure_sub_claim!(claims["sub"], claims["email"])
       success!(user)
