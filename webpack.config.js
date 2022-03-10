@@ -38,7 +38,7 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
-    sourceMapFilename: "[name]-[fullhash][ext].map",
+    sourceMapFilename: "[name][ext].map",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
   plugins: [
