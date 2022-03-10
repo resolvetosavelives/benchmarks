@@ -16,7 +16,7 @@
     "@sentry/browser": "^6.16.1",
     "@stimulus/polyfills": "^2.0.0",
     "@stimulus/webpack-helpers": "^2.0.0",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.3",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "4.6.1",
     "chartist": "^0.11.4",
