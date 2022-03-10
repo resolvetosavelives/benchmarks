@@ -7,7 +7,7 @@ gem "rails", "~> 7.0"
 gem "activerecord-import", "~> 1.3"
 gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
-gem "bootsnap", "~> 1.10", require: false
+gem "bootsnap", "~> 1.11", require: false
 gem "devise", "~> 4.8"
 gem "hamlit", "~> 2.15"
 gem "hamlit-rails", "~> 0.2"
