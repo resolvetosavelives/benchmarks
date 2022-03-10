@@ -14,7 +14,7 @@ gem "hamlit-rails", "~> 0.2"
 gem "inline_svg", "~> 1.8"
 gem "jsbundling-rails"
 gem "jwt"
-gem "pg", "~> 1.2"
+gem "pg", "~> 1.3"
 gem "puma", "~> 5.6"
 gem "racc", "1.5.2" # latest version fails on alpine
 gem "rack-attack", "~> 6.5"
