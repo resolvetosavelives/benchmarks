@@ -9,7 +9,7 @@ gem "airrecord", "~> 1.0"
 gem "bcrypt", "~> 3.1"
 gem "bootsnap", "~> 1.11", require: false
 gem "devise", "~> 4.8"
-gem "hamlit", "~> 2.15"
+gem "hamlit", "~> 2.16"
 gem "hamlit-rails", "~> 0.2"
 gem "inline_svg", "~> 1.8"
 gem "jwt"
