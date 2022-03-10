@@ -9,17 +9,6 @@ class User < ApplicationRecord
          :confirmable
   has_many :plans
 
-  # Azure docs state that email must not be used as an unique identifier.
-  # Since the code still allows email login, I'm not sure if there will be
-  # a conflict that will eventually be caused by Azure's given email.
-  # Email may also not be sent in the token.
-  def self.by_azure_sub_claim!(azure_identity, email)
-    user = User.where(azure_identity: azure_identity).first_or_initialize
-    user.email = email
-    user.save!
-    user
-  end
-
   protected
 
   def password_required?

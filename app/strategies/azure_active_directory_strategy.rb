@@ -18,10 +18,8 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
     claims, _ = JWT.decode(token, nil, false)
 
     if claims["sub"].present?
-      Rails.logger.info("Claims: #{claims.inspect}")
-
-      # the email may not be present.
-      user = User.by_azure_sub_claim!(claims["sub"], claims["email"])
+      Rails.logger.debug("Claims: #{claims.inspect}")
+      user = user_from_claims(claims)
       success!(user)
     else
       fail!("Authentication failed")
@@ -40,6 +38,18 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   end
 
   private
+
+  # Azure docs state that email must not be used as an unique identifier.
+  # Since the code still allows email login, I'm not sure if there will be
+  # a conflict that will eventually be caused by Azure's given email.
+  # For now the app boots as either Azure auth or email auth.
+  def user_from_claims(claims)
+    user = User.where(azure_identity: claims["sub"]).first_or_initialize
+    user.name = claims["name"]
+    user.email = claims["email"]
+    user.save!
+    user
+  end
 
   def token
     env[ID_TOKEN_HEADER]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_04_015339) do
+ActiveRecord::Schema.define(version: 2022_03_10_013520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 2022_02_04_015339) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "azure_identity"
+    t.string "name"
     t.index ["azure_identity"], name: "index_users_on_azure_identity", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true

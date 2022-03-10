@@ -30,7 +30,7 @@
         <% if current_user %>
           <li class="nav-item dropdown ml-lg-2">
             <a class="nav-link text-white py-1 dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <%= current_user.email %>
+              <%= current_user.name || current_user.email %>
               <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdownMenuLink">
