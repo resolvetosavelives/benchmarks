@@ -43,10 +43,13 @@ class AzureActiveDirectoryStrategy < Devise::Strategies::Base
   # Since the code still allows email login, I'm not sure if there will be
   # a conflict that will eventually be caused by Azure's given email.
   # For now the app boots as either Azure auth or email auth.
+  #
+  # Also note that we're receiving the v1 token despite requesting v2.
+  # I don't know why, but I tried to make it flexible in case it changes.
   def user_from_claims(claims)
     user = User.where(azure_identity: claims["sub"]).first_or_initialize
-    user.name = claims["name"]
-    user.email = claims["email"]
+    user.name = claims["name"] || claims["preferred_username"] # preferred_username might be an email too.
+    user.email = claims["email"] || claims["upn"] # upn appears to be email, though that's not explicitly stated in the docs
     user.save!
     user
   end
