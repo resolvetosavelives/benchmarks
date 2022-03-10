@@ -233,7 +233,6 @@ stages:
               steps:
                 - task: AzureAppServiceManage@0
                   inputs:
-                    action: Start Swap With Preview
                     azureSubscription: $(azureSubscription)
                     WebAppName: $(AZURE_APP_SERVICE_NAME)
                     ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
