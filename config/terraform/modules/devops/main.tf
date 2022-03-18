@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azuredevops = {
       source  = "microsoft/azuredevops"
-      version = "~> 0.1.8"
+      version = "~> 0.2.0"
     }
   }
 }
@@ -13,12 +13,12 @@ locals {
 }
 
 # The project is created manually by WHO.
-data "azuredevops_project" "project" {
+data "azuredevops_project" "p" {
   name = var.project_name
 }
 
 resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
-  project_id            = data.azuredevops_project.project.id
+  project_id            = data.azuredevops_project.p.id
   service_endpoint_name = local.acr_service_endpoint_name
   docker_registry       = "https://${var.container_registry_domain}"
   docker_username       = var.container_registry_username
@@ -26,8 +26,18 @@ resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
   registry_type         = "Others"
 }
 
+resource "azuredevops_environment" "staging" {
+  project_id = data.azuredevops_project.p.id
+  name       = "Staging"
+}
+
+resource "azuredevops_environment" "production" {
+  project_id = data.azuredevops_project.p.id
+  name       = "Production"
+}
+
 resource "azuredevops_variable_group" "vars" {
-  project_id   = data.azuredevops_project.project.id
+  project_id   = data.azuredevops_project.p.id
   name         = "pipeline-variable-group"
   description  = "Managed by Terraform - Variables sourced from terraform configuration that are needed for the pipeline to work"
   allow_access = true
@@ -52,6 +62,27 @@ resource "azuredevops_variable_group" "vars" {
     name  = "ACR_SERVICE_ENDPOINT_NAME"
     value = azuredevops_serviceendpoint_dockerregistry.acr.service_endpoint_name
   }
+}
+
+resource "azuredevops_build_definition" "build" {
+  project_id = data.azuredevops_project.p.id
+  name       = "IHR Benchmark Pipeline"
+
+  ci_trigger {
+    use_yaml = true
+  }
+
+  repository {
+    repo_type             = "GitHub"
+    repo_id               = "WorldHealthOrganization/IHRBenchmark"
+    branch_name           = "terraform"
+    service_connection_id = "b44e1ce6-53fb-43ad-abc4-c7407815bdc0"
+    yml_path              = "azure-pipelines.yml"
+  }
+
+  variable_groups = [
+    azuredevops_variable_group.vars.id
+  ]
 }
 
 # This would be the correct way to make the ACR service connection.
