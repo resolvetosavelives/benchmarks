@@ -74,7 +74,7 @@ resource "azuredevops_build_definition" "build" {
 
   repository {
     repo_type             = "GitHub"
-    repo_id               = "WorldHealthOrganization/IHRBenchmark"
+    repo_id               = "resolvetosavelives/benchmarks"
     branch_name           = "terraform"
     service_connection_id = "b44e1ce6-53fb-43ad-abc4-c7407815bdc0"
     yml_path              = "azure-pipelines.yml"
