@@ -66,7 +66,7 @@ resource "azuredevops_variable_group" "vars" {
 
 resource "azuredevops_build_definition" "build" {
   project_id = data.azuredevops_project.p.id
-  name       = "IHR Benchmark Pipeline"
+  name       = "IHR Benchmark"
 
   ci_trigger {
     use_yaml = true
@@ -75,9 +75,9 @@ resource "azuredevops_build_definition" "build" {
   repository {
     repo_type             = "GitHub"
     repo_id               = "resolvetosavelives/benchmarks"
-    branch_name           = "terraform"
+    branch_name           = "refs/heads/terraform"
     service_connection_id = "b44e1ce6-53fb-43ad-abc4-c7407815bdc0"
-    yml_path              = "azure-pipelines.yml"
+    yml_path              = "azure-pipelines-copy.yml"
   }
 
   variable_groups = [
