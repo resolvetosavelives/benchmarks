@@ -127,7 +127,7 @@ stages:
           command: init
           backendType: azurerm
           # Service connection to authorize backend access. Supports Subscription & Management Group Scope
-          backendServiceArm: IHRBENCHMARK-P-WEU-RG01
+          backendServiceArm: IHRBENCHMARK-MAIN-WEU-RG01
           # Subscription id of the target backend. This can be used to specify the subscription when using Management Group scoped
           # Service connection or to override the subscription id defined in a Subscription scoped service connection
           # backendAzureRmSubscriptionId: 'my-backend-subscription-id'
@@ -149,7 +149,7 @@ stages:
         inputs:
           command: validate
           # provider: azurerm
-          environmentServiceName: IHRBENCHMARK-P-WEU-RG01
+          environmentServiceName: $(azureSubscription)
           workingDirectory: $(terraformDirectory)
     - job: apply
       continueOnError: false
@@ -159,14 +159,14 @@ stages:
         inputs:
           # provider: azurerm
           command: plan
-          environmentServiceName: IHRBENCHMARK-P-WEU-RG01
+          environmentServiceName: $(azureSubscription)
           publishPlanResults: plan
           workingDirectory: $(terraformDirectory)
       - task: TerraformCLI@0
         displayName: 'terraform plan'
         inputs:
           command: plan
-          environmentServiceName: IHRBENCHMARK-P-WEU-RG01
+          environmentServiceName: $(azureSubscription)
           commandOptions: '-out=$(System.DefaultWorkingDirectory)/terraform.tfplan -detailed-exitcode'
           workingDirectory: $(terraformDirectory)
       # - task: TerraformCLI@0
