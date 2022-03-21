@@ -121,7 +121,7 @@ stages:
       steps:
       - task: TerraformInstaller@0
         displayName: install
-      - task: TerraformCLI
+      - task: TerraformCLI@0
         displayName: init
         inputs:
           command: init
@@ -144,7 +144,7 @@ stages:
           # azure blob file name
           backendAzureRmKey: terraform.tfstate
           workingDirectory: $(terraformDirectory)
-      - task: TerraformCLI
+      - task: TerraformCLI@0
         displayName: validate
         inputs:
           command: validate
@@ -154,7 +154,7 @@ stages:
     - job: apply
       continueOnError: false
       steps:
-      - task: TerraformCLI
+      - task: TerraformCLI@0
         displayName: plan
         inputs:
           # provider: azurerm
