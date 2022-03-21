@@ -151,9 +151,6 @@ stages:
           # provider: azurerm
           environmentServiceName: $(azureSubscription)
           workingDirectory: $(terraformDirectory)
-    - job: apply
-      continueOnError: false
-      steps:
       - task: TerraformCLI@0
         displayName: plan
         inputs:
