@@ -135,7 +135,7 @@ stages:
           ensureBackend: true
           backendAzureRmResourceGroupName: IHRBENCHMARK-MAIN-WEU-RG01
           # azure location shortname of the backend resource group and storage account
-          # backendAzureRmResourceGroupLocation: 'eastus'
+          backendAzureRmResourceGroupLocation: 'westeurope'
           backendAzureRmStorageAccountName: tfstatej7z3lg4l
           # azure storage account sku, used when creating the storage account
           backendAzureRmStorageAccountSku: 'Standard_RAGRS'
