@@ -8,11 +8,6 @@ variable "organization_prefix" {
   type        = string
   default     = "ccd" # temporary default
 }
-variable "main_resource_group_name" {
-  description = "Main resource group name (which holds the tfstate storage)"
-  type        = string
-  default     = "IHRBENCHMARK-MAIN-WEU-RG01"
-}
 variable "prod_resource_group_name" {
   description = "Primary resource group name (holds all production/staging/dev resources)"
   type        = string
@@ -27,9 +22,4 @@ variable "devops_project_name" {
   description = "DevOps project name (for the Azure DevOps project)"
   type        = string
   default     = "IHRBENCHMARK"
-}
-variable "repository_id" {
-  description = "GitHub org/repo"
-  type        = string
-  default     = "WorldHealthOrganization/ihrbenchmark"
 }
