@@ -21,30 +21,26 @@ locals {
   scoped_app_name = "${local.scope}-${local.app_name}"
 }
 
-data "azurerm_subscription" "current" {}
 
 module "aad_staging_application" {
-  source    = "../modules/aad_application"
-  tenant_id = data.azurerm_subscription.current.tenant_id
-  name      = "${upper(local.app_name)} (staging)"
-  domain    = "${local.scoped_app_name}-staging.azurewebsites.net"
+  source = "../modules/aad_application"
+  name   = "${upper(local.app_name)} (staging)"
+  domain = "${local.scoped_app_name}-staging.azurewebsites.net"
   # The domain is a chicken-and-egg problem.
   # The app service will assign the domain. Luckily it's deterministic.
   # A custom domain would be more declarative.
 }
 
 module "aad_preview_application" {
-  source    = "../modules/aad_application"
-  tenant_id = data.azurerm_subscription.current.tenant_id
-  name      = "${upper(local.app_name)} (preview)"
-  domain    = "${local.scoped_app_name}-preview.azurewebsites.net"
+  source = "../modules/aad_application"
+  name   = "${upper(local.app_name)} (preview)"
+  domain = "${local.scoped_app_name}-preview.azurewebsites.net"
 }
 
 module "aad_production_application" {
-  source    = "../modules/aad_application"
-  tenant_id = data.azurerm_subscription.current.tenant_id
-  name      = upper(local.app_name)
-  domain    = "${local.scoped_app_name}.azurewebsites.net"
+  source = "../modules/aad_application"
+  name   = upper(local.app_name)
+  domain = "${local.scoped_app_name}.azurewebsites.net"
 }
 
 module "database" {

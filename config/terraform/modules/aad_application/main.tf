@@ -7,8 +7,10 @@ terraform {
   }
 }
 
+data "azurerm_subscription" "current" {}
+
 provider "azuread" {
-  tenant_id = var.tenant_id #"4efe96cc-3e99-409d-8d0e-432bd2ad9fce"
+  tenant_id = data.azurerm_subscription.current.tenant_id
 }
 
 data "azuread_client_config" "current" {}
