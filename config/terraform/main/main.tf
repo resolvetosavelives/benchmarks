@@ -64,7 +64,7 @@ module "application" {
 
 module "devops" {
   source                      = "../modules/devops"
-  project_name                = var.devops_project_name
+  devops_project_name         = var.devops_project_name
   resource_group_name         = local.resource_group_name
   app_service_name            = module.application.app_service_name
   container_registry_domain   = module.application.acr_login_server
