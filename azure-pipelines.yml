@@ -125,59 +125,59 @@ stages:
           #     codeCoverageTool: JUnit
           #     testRunTitle: Benchmarks ruby rspec test suite with in-browser
           #     testResultsFiles: "tmp/rspec.xml"
-  # - stage: Terraform
-  #   condition: eq(variables.runTerraform, 'true')
-  #   variables:
-  #     terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/pipeline
-  #   jobs:
-  #   - job: Terraform
-  #     continueOnError: false
-  #     steps:
-  #     - task: TerraformInstaller@0
-  #       displayName: install
-  #     - task: TerraformCLI@0
-  #       displayName: init
-  #       inputs:
-  #         command: init
-  #         backendType: azurerm
-  #         # Service connection to authorize backend access. Supports Subscription & Management Group Scope
-  #         backendServiceArm: $(terraformServiceConnection)
-  #         # Subscription id of the target backend. This can be used to specify the subscription when using Management Group scoped
-  #         # Service connection or to override the subscription id defined in a Subscription scoped service connection
-  #         # backendAzureRmSubscriptionId: 'my-backend-subscription-id'
-  #         # create backend storage account if doesn't exist
-  #         ensureBackend: true
-  #         backendAzureRmResourceGroupName: $(TERRAFORM_RESOURCE_GROUP_NAME)
-  #         # azure location shortname of the backend resource group and storage account
-  #         backendAzureRmResourceGroupLocation: $(azureLocation)
-  #         backendAzureRmStorageAccountName: $(TERRAFORM_STORAGE_ACCOUNT_NAME)
-  #         # azure storage account sku, used when creating the storage account
-  #         backendAzureRmStorageAccountSku: 'Standard_RAGRS'
-  #         # azure blob container to store the state file
-  #         backendAzureRmContainerName: $(TERRAFORM_CONTAINER_NAME)
-  #         # azure blob file name
-  #         backendAzureRmKey: terraform.tfstate
-  #         workingDirectory: $(terraformDirectory)
-  #     - task: TerraformCLI@0
-  #       displayName: validate
-  #       inputs:
-  #         command: validate
-  #         environmentServiceName: $(azureSubscription)
-  #         workingDirectory: $(terraformDirectory)
-  #     - task: TerraformCLI@0
-  #       displayName: plan
-  #       inputs:
-  #         command: plan
-  #         environmentServiceName: $(azureSubscription)
-  #         publishPlanResults: plan
-  #         workingDirectory: $(terraformDirectory)
-  #     - task: TerraformCLI@0
-  #       displayName: 'terraform plan'
-  #       inputs:
-  #         command: plan
-  #         environmentServiceName: $(azureSubscription)
-  #         commandOptions: '-out=$(System.DefaultWorkingDirectory)/terraform.tfplan -detailed-exitcode'
-  #         workingDirectory: $(terraformDirectory)
+  - stage: Terraform
+    condition: eq(variables.runTerraform, 'true')
+    variables:
+      terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/pipeline
+    jobs:
+    - job: Terraform
+      continueOnError: false
+      steps:
+      - task: TerraformInstaller@0
+        displayName: install
+      - task: TerraformCLI@0
+        displayName: init
+        inputs:
+          command: init
+          backendType: azurerm
+          # Service connection to authorize backend access. Supports Subscription & Management Group Scope
+          backendServiceArm: $(terraformServiceConnection)
+          # Subscription id of the target backend. This can be used to specify the subscription when using Management Group scoped
+          # Service connection or to override the subscription id defined in a Subscription scoped service connection
+          # backendAzureRmSubscriptionId: 'my-backend-subscription-id'
+          # create backend storage account if doesn't exist
+          ensureBackend: true
+          backendAzureRmResourceGroupName: $(TERRAFORM_RESOURCE_GROUP_NAME)
+          # azure location shortname of the backend resource group and storage account
+          backendAzureRmResourceGroupLocation: $(azureLocation)
+          backendAzureRmStorageAccountName: $(TERRAFORM_STORAGE_ACCOUNT_NAME)
+          # azure storage account sku, used when creating the storage account
+          backendAzureRmStorageAccountSku: 'Standard_RAGRS'
+          # azure blob container to store the state file
+          backendAzureRmContainerName: $(TERRAFORM_CONTAINER_NAME)
+          # azure blob file name
+          backendAzureRmKey: terraform.tfstate
+          workingDirectory: $(terraformDirectory)
+      - task: TerraformCLI@0
+        displayName: validate
+        inputs:
+          command: validate
+          environmentServiceName: $(azureSubscription)
+          workingDirectory: $(terraformDirectory)
+      - task: TerraformCLI@0
+        displayName: plan
+        inputs:
+          command: plan
+          environmentServiceName: $(azureSubscription)
+          publishPlanResults: plan
+          workingDirectory: $(terraformDirectory)
+      - task: TerraformCLI@0
+        displayName: 'terraform plan'
+        inputs:
+          command: plan
+          environmentServiceName: $(azureSubscription)
+          commandOptions: '-out=$(System.DefaultWorkingDirectory)/terraform.tfplan -detailed-exitcode'
+          workingDirectory: $(terraformDirectory)
       # - task: TerraformCLI@0
       #   displayName: 'terraform apply'
       #   condition: and(succeeded(), eq(variables['TERRAFORM_PLAN_HAS_CHANGES'], 'true'))
