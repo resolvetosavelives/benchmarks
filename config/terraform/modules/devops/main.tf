@@ -14,7 +14,7 @@ locals {
 
 # The project is created manually by WHO.
 data "azuredevops_project" "p" {
-  name = var.project_name
+  name = var.devops_project_name
 }
 
 resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
@@ -64,36 +64,16 @@ resource "azuredevops_variable_group" "vars" {
   }
 }
 
-resource "azuredevops_build_definition" "build" {
-  project_id = data.azuredevops_project.p.id
-  name       = "IHR Benchmark"
-
-  ci_trigger {
-    use_yaml = true
-  }
-
-  repository {
-    repo_type             = "GitHub"
-    repo_id               = "resolvetosavelives/benchmarks"
-    branch_name           = "refs/heads/terraform"
-    service_connection_id = "b44e1ce6-53fb-43ad-abc4-c7407815bdc0"
-    yml_path              = "azure-pipelines-copy.yml"
-  }
-
-  variable_groups = [
-    azuredevops_variable_group.vars.id
-  ]
-}
-
 # This would be the correct way to make the ACR service connection.
 # However, we currently have insufficient privileges.
 # If this is fixed, this way is preferred over the above resource.
+# data "azurerm_subscription" "current" {}
 # resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
 #   project_id                = data.azuredevops_project.project.id
 #   service_endpoint_name     = "SC-IHRBENCHMARK-P-AZURECR"
 #   resource_group            = var.resource_group_name
-#   azurecr_spn_tenantid      = "f610c0b7-bd24-4b39-810b-3dc280afb590"
 #   azurecr_name              = "whoihrbenchmark"
-#   azurecr_subscription_id   = "974ebced-5bea-4fa8-af6f-7064aa3eccff"
-#   azurecr_subscription_name = "IHRBENCHMARK IHR Benchmarks Capacity application hosting"
+#   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
+#   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
+#   azurerm_subscription_name = data.azurerm_subscription.current.display_name
 # }

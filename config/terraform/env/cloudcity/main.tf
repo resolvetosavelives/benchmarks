@@ -69,8 +69,7 @@ resource "azuredevops_build_definition" "bd" {
   }
 }
 
-data "azurerm_subscription" "current" {
-}
+data "azurerm_subscription" "current" {}
 
 resource "azuredevops_serviceendpoint_azurerm" "p" {
   project_id            = data.azuredevops_project.project.id
