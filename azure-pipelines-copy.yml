@@ -46,6 +46,8 @@ variables:
     value: $(CONTAINER_REGISTRY_DOMAIN)/$(CONTAINER_REPOSITORY):$(tag)
   - name: azureLocation
     value: westeurope
+  - name: terraformServiceConnection
+    value: ${{parameters.terraformServiceConnection}}
 
 resources:
   containers:
