@@ -7,11 +7,6 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 2.93"
     }
-
-    azuredevops = {
-      source  = "microsoft/azuredevops"
-      version = "~> 0.2.0"
-    }
   }
 
   backend "azurerm" {
@@ -26,67 +21,6 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
-resource "azurerm_resource_group" "p" {
-  name     = var.prod_resource_group_name
-  location = var.location
-}
-
-resource "azurerm_resource_group" "t" {
-  name     = var.test_resource_group_name
-  location = var.location
-}
-
-# I had trouble creating this automatically.
-# resource "azuredevops_project" "project" {
-#   name        = local.devops_project_name
-#   description = "DevOps Project for IHR Benchmarks"
-# }
-data "azuredevops_project" "project" {
-  name = var.devops_project_name
-}
-
-data "azurerm_subscription" "current" {
-}
-
-resource "azuredevops_serviceendpoint_azurerm" "p" {
-  project_id            = data.azuredevops_project.project.id
-  service_endpoint_name = "SC-IHRBENCHMARK-P-WEU-RG01"
-  description           = "Managed by Terraform bootstrap-manual"
-  credentials {
-    serviceprincipalid  = "59f5508d-eac2-40a3-946c-db6d21d4670d"  # application ID
-    serviceprincipalkey = "nwO7Q~R5X4GX~qsYnpl04_z_NKNRaqVx6mjoM" # client id "value"
-  }
-  azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
-  azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
-  azurerm_subscription_name = data.azurerm_subscription.current.display_name
-}
-
-# resource "azuredevops_serviceendpoint_azurerm" "main" {
-#   project_id            = data.azuredevops_project.project.id
-#   service_endpoint_name = "SC-IHRBENCHMARK-MAIN-WEU-RG01"
-#   description           = "Managed by Terraform bootstrap-manual"
-#   credentials {
-#     serviceprincipalid  = "59f5508d-eac2-40a3-946c-db6d21d4670d"  # application ID
-#     serviceprincipalkey = "nwO7Q~R5X4GX~qsYnpl04_z_NKNRaqVx6mjoM" # client id "value"
-#   }
-#   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
-#   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
-#   azurerm_subscription_name = data.azurerm_subscription.current.display_name
-# }
-
-# resource "azuredevops_serviceendpoint_azurerm" "t" {
-#   project_id                = data.azuredevops_project.project.id
-#   service_endpoint_name     = "SC-IHRBENCHMARK-T-WEU-RG01"
-#   description               = "Managed by Terraform bootstrap-manual"
-#   credentials {
-#     serviceprincipalid  = "59f5508d-eac2-40a3-946c-db6d21d4670d"  # application ID
-#     serviceprincipalkey = "nwO7Q~R5X4GX~qsYnpl04_z_NKNRaqVx6mjoM" # client id "value"
-#   }
-#   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
-#   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
-#   azurerm_subscription_name = data.azurerm_subscription.current.display_name
-# }
 
 module "main" {
   source                   = "../../main"
