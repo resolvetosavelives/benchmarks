@@ -21,7 +21,7 @@ provider "azurerm" {
 
 module "main" {
   source                   = "../../main.tf"
-  organization             = "who"
+  organization_prefix      = "who"
   RAILS_MASTER_KEY         = var.RAILS_MASTER_KEY
   prod_resource_group_name = "IHRBENCHMARK-P-WEU-RG01"
   test_resource_group_name = "IHRBENCHMARK-T-WEU-RG01"

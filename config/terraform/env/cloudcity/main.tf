@@ -100,7 +100,7 @@ resource "azuredevops_serviceendpoint_azurerm" "p" {
 
 module "main" {
   source                   = "../../main"
-  organization             = "ccd"
+  organization_prefix      = "ccd"
   RAILS_MASTER_KEY         = var.RAILS_MASTER_KEY
   devops_project_name      = data.azuredevops_project.project.name
   prod_resource_group_name = azurerm_resource_group.p.name

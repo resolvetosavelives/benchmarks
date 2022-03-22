@@ -15,7 +15,7 @@ locals {
   resource_group_name = terraform.workspace == "production" ? var.prod_resource_group_name : var.test_resource_group_name
   # Avoiding the word "production" in scope helps alleviate the confusion of "whoproduction-ihrbenchmark-staging"
   scope = join("", [
-    var.organization,
+    var.organization_prefix,
     terraform.workspace == "production" ? "" : terraform.workspace,
   ])
   scoped_app_name = "${local.scope}-${local.app_name}"
