@@ -129,6 +129,7 @@ stages:
     # condition: eq(variables.runTerraform, 'true')
     variables:
       terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/cloudcity-pipeline
+      TF_VAR_organization_prefix: $(ORGANIZATION_PREFIX)
     jobs:
     - job: Terraform
       continueOnError: false
