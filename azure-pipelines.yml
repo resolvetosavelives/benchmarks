@@ -128,7 +128,7 @@ stages:
   - stage: Terraform
     # condition: eq(variables.runTerraform, 'true')
     variables:
-      terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/pipeline
+      terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/cloudcity-pipeline
     jobs:
     - job: Terraform
       continueOnError: false
