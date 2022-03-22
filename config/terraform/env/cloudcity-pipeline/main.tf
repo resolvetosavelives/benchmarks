@@ -24,8 +24,8 @@ provider "azurerm" {
 
 module "main" {
   source                   = "../../main"
-  organization_prefix      = "ccd"
-  devops_project_name      = data.azuredevops_project.project.name
+  organization_prefix      = var.organization_prefx
+  devops_project_name      = var.devops_project_name
   prod_resource_group_name = azurerm_resource_group.p.name
   test_resource_group_name = azurerm_resource_group.t.name
 }

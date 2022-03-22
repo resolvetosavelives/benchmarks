@@ -61,13 +61,13 @@ module "application" {
   container_repository          = local.container_repository
 }
 
-# module "devops" {
-#   source                      = "../modules/devops"
-#   devops_project_name         = var.devops_project_name
-#   resource_group_name         = local.resource_group_name
-#   app_service_name            = module.application.app_service_name
-#   container_registry_domain   = module.application.acr_login_server
-#   container_registry_username = module.application.acr_admin_username
-#   container_registry_password = module.application.acr_admin_password
-#   container_repository        = local.container_repository
-# }
+module "devops" {
+  source                      = "../modules/devops"
+  devops_project_name         = var.devops_project_name
+  resource_group_name         = local.resource_group_name
+  app_service_name            = module.application.app_service_name
+  container_registry_domain   = module.application.acr_login_server
+  container_registry_username = module.application.acr_admin_username
+  container_registry_password = module.application.acr_admin_password
+  container_repository        = local.container_repository
+}

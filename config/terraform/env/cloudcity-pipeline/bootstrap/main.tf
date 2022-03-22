@@ -21,10 +21,7 @@ terraform {
 provider "azurerm" {
   features {}
 }
-moved {
-  from = azurerm_resource_group.tfstate
-  to   = azurerm_resource_group.main
-}
+
 # In the WHO account, this is manually created for us
 # Here we must create it ourselves.
 resource "azurerm_resource_group" "main" {
