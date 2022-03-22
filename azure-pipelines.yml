@@ -126,6 +126,7 @@ stages:
           #     testRunTitle: Benchmarks ruby rspec test suite with in-browser
           #     testResultsFiles: "tmp/rspec.xml"
   - stage: Terraform
+    condition: eq(variables.runTerraform, 'true')
     variables:
       terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/pipeline
     jobs:
