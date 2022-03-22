@@ -6,7 +6,6 @@ locals {
     DOCKER_REGISTRY_SERVER_USERNAME     = azurerm_container_registry.acr.admin_username
     DOCKER_REGISTRY_SERVER_PASSWORD     = azurerm_container_registry.acr.admin_password
     DOCKER_CUSTOM_IMAGE_NAME            = local.docker_image_name
-    RAILS_MASTER_KEY                    = var.RAILS_MASTER_KEY
     WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
     WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
     WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10

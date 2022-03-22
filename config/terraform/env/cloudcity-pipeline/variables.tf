@@ -3,11 +3,6 @@ variable "location" {
   type        = string
   default     = "westeurope"
 }
-variable "RAILS_MASTER_KEY" {
-  description = "Rails master key from config/master.key"
-  type        = string
-  sensitive   = true
-}
 variable "organization_prefix" {
   description = "Organization prefix for globally unique names (e.g. 'who')"
   type        = string

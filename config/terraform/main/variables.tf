@@ -2,11 +2,6 @@ variable "organization_prefix" {
   description = "Organization prefix for globally unique names (e.g. 'who')"
   type        = string
 }
-variable "RAILS_MASTER_KEY" {
-  description = "Rails master key from config/master.key"
-  type        = string
-  sensitive   = true
-}
 variable "devops_project_name" {
   description = "Azure DevOps project name"
   type        = string

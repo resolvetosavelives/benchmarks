@@ -59,7 +59,6 @@ module "application" {
   staging_database_url          = module.database.staging_database_url
   production_database_url       = module.database.production_database_url
   container_repository          = local.container_repository
-  RAILS_MASTER_KEY              = var.RAILS_MASTER_KEY
 }
 
 module "devops" {

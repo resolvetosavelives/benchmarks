@@ -32,8 +32,3 @@ variable "staging_database_url" {
   type        = string
   sensitive   = true
 }
-variable "RAILS_MASTER_KEY" {
-  description = "RAILS_MASTER_KEY from config/master.key"
-  type        = string
-  sensitive   = true
-}
