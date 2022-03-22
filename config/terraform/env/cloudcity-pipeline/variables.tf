@@ -6,6 +6,7 @@ variable "location" {
 variable "organization_prefix" {
   description = "Organization prefix for globally unique names (e.g. 'who')"
   type        = string
+  default     = "ccd" # temporary default
 }
 variable "main_resource_group_name" {
   description = "Main resource group name (which holds the tfstate storage)"
