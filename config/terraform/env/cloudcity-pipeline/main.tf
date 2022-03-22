@@ -24,7 +24,7 @@ provider "azurerm" {
 
 module "main" {
   source                   = "../../main"
-  organization_prefix      = var.organization_prefx
+  organization_prefix      = var.organization_prefix
   devops_project_name      = var.devops_project_name
   prod_resource_group_name = var.prod_resource_group_name
   test_resource_group_name = var.test_resource_group_name
