@@ -53,6 +53,8 @@ variables:
     value: westeurope
   - name: terraformServiceConnection
     value: ${{parameters.terraformServiceConnection}}
+  - name: ACR_SERVICE_ENDPOINT_NAME # temporarily hard coded
+    value: SC-IHRBENCHMARK-P-ACR-CREDENTIAL
 
 resources:
   containers:
