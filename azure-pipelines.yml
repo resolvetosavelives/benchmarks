@@ -171,22 +171,16 @@ stages:
         inputs:
           command: plan
           environmentServiceName: $(azureSubscription)
+          commandOptions: '-out=$(terraformDirectory)/terraform.tfplan -detailed-exitcode'
           publishPlanResults: plan
-          workingDirectory: $(terraformDirectory)
-      - task: TerraformCLI@0
-        displayName: 'terraform plan'
-        inputs:
-          command: plan
-          environmentServiceName: $(azureSubscription)
-          commandOptions: '-out=$(System.DefaultWorkingDirectory)/terraform.tfplan -detailed-exitcode'
           workingDirectory: $(terraformDirectory)
       # - task: TerraformCLI@0
       #   displayName: 'terraform apply'
       #   condition: and(succeeded(), eq(variables['TERRAFORM_PLAN_HAS_CHANGES'], 'true'))
       #   inputs:
       #     command: apply
-      #     environmentServiceName: 'My Azure Service Connection'
-      #     commandOptions: '$(System.DefaultWorkingDirectory)/terraform.tfplan'
+      #     environmentServiceName: $(azureSubscription)
+      #     commandOptions: '$(terraformDirectory)/terraform.tfplan'
       #     workingDirectory: $(terraformDirectory)
       - task: TerraformCLI@0
         displayName: 'terraform output'
