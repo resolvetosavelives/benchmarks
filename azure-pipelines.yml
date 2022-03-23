@@ -176,6 +176,14 @@ stages:
           commandOptions: '-out=$(terraformDirectory)/terraform.tfplan -detailed-exitcode'
           publishPlanResults: plan
           workingDirectory: $(terraformDirectory)
+          backendType: azurerm
+          backendServiceArm: $(terraformServiceConnection)
+          backendAzureRmResourceGroupName: $(TERRAFORM_RESOURCE_GROUP_NAME)
+          backendAzureRmResourceGroupLocation: $(azureLocation)
+          backendAzureRmStorageAccountName: $(TERRAFORM_STORAGE_ACCOUNT_NAME)
+          backendAzureRmStorageAccountSku: 'Standard_RAGRS'
+          backendAzureRmContainerName: $(TERRAFORM_CONTAINER_NAME)
+          backendAzureRmKey: terraform.tfstate
       # - task: TerraformCLI@0
       #   displayName: 'terraform apply'
       #   condition: and(succeeded(), eq(variables['TERRAFORM_PLAN_HAS_CHANGES'], 'true'))
