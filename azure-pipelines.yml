@@ -130,6 +130,7 @@ stages:
     variables:
       terraformDirectory: $(System.DefaultWorkingDirectory)/config/terraform/env/cloudcity-pipeline
       TF_VAR_organization_prefix: $(ORGANIZATION_PREFIX)
+      AZDO_ORG_SERVICE_URL: $(System.CollectionUri)
     jobs:
     - job: Terraform
       continueOnError: false
@@ -137,7 +138,7 @@ stages:
       - task: TerraformInstaller@0
         displayName: install
       - task: TerraformCLI@0
-        displayName: init
+        displayName: terraform init
         inputs:
           command: init
           backendType: azurerm
@@ -160,13 +161,13 @@ stages:
           backendAzureRmKey: terraform.tfstate
           workingDirectory: $(terraformDirectory)
       - task: TerraformCLI@0
-        displayName: validate
+        displayName: terraform validate
         inputs:
           command: validate
           environmentServiceName: $(azureSubscription)
           workingDirectory: $(terraformDirectory)
       - task: TerraformCLI@0
-        displayName: plan
+        displayName: terraform plan
         inputs:
           command: plan
           environmentServiceName: $(azureSubscription)
@@ -187,6 +188,12 @@ stages:
       #     environmentServiceName: 'My Azure Service Connection'
       #     commandOptions: '$(System.DefaultWorkingDirectory)/terraform.tfplan'
       #     workingDirectory: $(terraformDirectory)
+      - task: TerraformCLI@0
+        displayName: 'terraform output'
+        inputs:
+          command: output
+          environmentServiceName: $(azureSubscription)
+          workingDirectory: $(terraformDirectory)
   - stage: Build
     displayName: Build and Push
     condition: and(succeeded(), eq(variables.isMain, 'true'))
@@ -277,7 +284,7 @@ stages:
                   displayName: Azure App Service Settings
                   inputs:
                     azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
+                    appName: $(APP_SERVICE_NAME)
                     slotName: staging
                     appSettings: |
                       [
@@ -296,7 +303,7 @@ stages:
                   displayName: Azure App Service Deploy
                   inputs:
                     azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
+                    appName: $(APP_SERVICE_NAME)
                     deployToSlotOrASE: true
                     slotName: staging
                     imageName: $(imageName)
@@ -318,7 +325,7 @@ stages:
                   displayName: Azure App Service Settings
                   inputs:
                     azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
+                    appName: $(APP_SERVICE_NAME)
                     slotName: staging
                     appSettings: |
                       [
@@ -337,7 +344,7 @@ stages:
                   displayName: Azure App Service Deploy
                   inputs:
                     azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
+                    appName: $(APP_SERVICE_NAME)
                     deployToSlotOrASE: true
                     slotName: preview
                     imageName: $(imageName)
@@ -346,7 +353,7 @@ stages:
                 - task: AzureAppServiceManage@0
                   inputs:
                     azureSubscription: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
+                    WebAppName: $(APP_SERVICE_NAME)
+                    ResourceGroupName: $(RESOURCE_GROUP_NAME)
                     SourceSlot: preview
                     SwapWithProduction: true

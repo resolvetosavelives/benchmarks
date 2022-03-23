@@ -17,15 +17,6 @@ data "azuredevops_project" "p" {
   name = var.devops_project_name
 }
 
-resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
-  project_id            = data.azuredevops_project.p.id
-  service_endpoint_name = local.acr_service_endpoint_name
-  docker_registry       = "https://${var.container_registry_domain}"
-  docker_username       = var.container_registry_username
-  docker_password       = var.container_registry_password
-  registry_type         = "Others"
-}
-
 resource "azuredevops_environment" "staging" {
   project_id = data.azuredevops_project.p.id
   name       = "Staging"
@@ -36,32 +27,13 @@ resource "azuredevops_environment" "production" {
   name       = "Production"
 }
 
-resource "azuredevops_variable_group" "vars" {
-  project_id   = data.azuredevops_project.p.id
-  name         = "pipeline-variable-group"
-  description  = "Managed by Terraform - Variables sourced from terraform configuration that are needed for the pipeline to work"
-  allow_access = true
-
-  variable {
-    name  = "AZURE_RESOURCE_GROUP_NAME"
-    value = var.resource_group_name
-  }
-  variable {
-    name  = "AZURE_APP_SERVICE_NAME"
-    value = var.app_service_name
-  }
-  variable {
-    name  = "CONTAINER_REGISTRY_DOMAIN"
-    value = var.container_registry_domain
-  }
-  variable {
-    name  = "CONTAINER_REPOSITORY"
-    value = var.container_repository
-  }
-  variable {
-    name  = "ACR_SERVICE_ENDPOINT_NAME"
-    value = azuredevops_serviceendpoint_dockerregistry.acr.service_endpoint_name
-  }
+resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
+  project_id            = data.azuredevops_project.p.id
+  service_endpoint_name = local.acr_service_endpoint_name
+  docker_registry       = "https://${var.container_registry_domain}"
+  docker_username       = var.container_registry_username
+  docker_password       = var.container_registry_password
+  registry_type         = "Others"
 }
 
 # This would be the correct way to make the ACR service connection.
