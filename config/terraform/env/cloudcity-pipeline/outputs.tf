@@ -15,7 +15,7 @@ output "CONTAINER_REPOSITORY" {
   description = "Container registry repository name"
   value       = module.main.container_repository
 }
-output "ACR_SERVICE_ENDPOINT_NAME" {
-  description = "Azure DevOps Container Registry service connection name"
-  value       = module.main.acr_service_endpoint_name
-}
+# output "ACR_SERVICE_ENDPOINT_NAME" {
+#   description = "Azure DevOps Container Registry service connection name"
+#   value       = module.main.acr_service_endpoint_name
+# }
