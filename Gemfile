@@ -23,7 +23,6 @@ gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
 gem "sentry-rails", "~> 4.9"
 gem "sentry-ruby", "~> 4.9"
-gem "stimulus-rails"
 gem "sprockets-rails"
 gem "tzinfo-data"
 
