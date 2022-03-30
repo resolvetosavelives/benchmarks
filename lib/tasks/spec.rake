@@ -18,7 +18,7 @@ begin
     # building webpack before running specs that don't use it.
     desc "Run system specs"
     RSpec::Core::RakeTask.new(system: %w[javascript:build spec:prepare]) do |t|
-      t.include_pattern = 'spec/system/**/*_spec.rb'
+      t.pattern = 'spec/system/**/*_spec.rb'
     end
 
     desc "Runs javascript tests"

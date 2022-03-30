@@ -118,6 +118,7 @@ const PlanEditForm = (props) => {
                   name="commit"
                   value="Save Plan"
                   data-disable-with="Save Plan"
+                  data-turbo="false"
                   className="plan-save btn btn-orange w-100"
                   ref={submitButtonRef}
                 />

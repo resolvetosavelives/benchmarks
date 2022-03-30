@@ -101,8 +101,6 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
-    cssbundling-rails (1.1.0)
-      railties (>= 6.0.0)
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
@@ -369,7 +367,6 @@ DEPENDENCIES
   binding_of_caller (~> 1.0)
   bootsnap (~> 1.11)
   capybara (~> 3.36)
-  cssbundling-rails
   cuprite (~> 0.11)
   devise (~> 4.8)
   factory_bot_rails (~> 6.2)

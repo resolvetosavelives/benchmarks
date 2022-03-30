@@ -1,4 +1,4 @@
-import { Application } from "stimulus"
+import { Application } from "@hotwired/stimulus"
 import ScoreController from "score_controller"
 
 describe("ScoreController", () => {
