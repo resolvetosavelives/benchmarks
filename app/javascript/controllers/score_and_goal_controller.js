@@ -1,4 +1,4 @@
-import { Controller } from "stimulus"
+import { Controller } from "@hotwired/stimulus"
 import $ from "jquery"
 
 const SCORES = [1, 2, 3, 4, 5]

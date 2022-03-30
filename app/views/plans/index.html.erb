@@ -33,7 +33,7 @@
               </div>
             </div>
 
-            <div class="col-7 col-md-4"><b><%= link_to plan.name, plan %></b></div>
+            <div class="col-7 col-md-4"><b><%= link_to plan.name, plan, data: { turbo: false } %></b></div>
             <div class="col-5 col-md-auto text-right"><%= plan.updated_at.strftime("%B %d, %Y") %></div>
             <div class="col-12 col-md-5 ml-md-auto mt-1 mt-md-0 d-flex justify-content-between">
               <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>

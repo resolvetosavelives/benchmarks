@@ -5,8 +5,9 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><%#= this meta tag is per Bootstrap: https://getbootstrap.com/docs/4.4/getting-started/introduction/  %>
-  <%= stylesheet_link_tag 'application', media: 'all' %>
-  <%= javascript_include_tag 'application', async: true %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <%= javascript_include_tag("sentry", "data-turbo-track": "reload", defer: true) if Rails.env.production? %>
 </head>
 
 <body class="<%= controller_name == "registrations" ? "bg-dark-blue" : "bg-blue" %>">

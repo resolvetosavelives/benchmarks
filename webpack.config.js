@@ -55,7 +55,7 @@ module.exports = {
   output: {
     filename: "[name].js",
     sourceMapFilename: "[name][ext].map",
-    assetModuleFilename: "[hash][ext][query]",
+    assetModuleFilename: "[name][ext][query]",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
   plugins: [
