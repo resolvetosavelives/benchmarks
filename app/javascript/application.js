@@ -3,15 +3,15 @@ import "./base"
 
 // stimulus polyfill must be loaded first, also needed for IE 10 to work properly
 import "@stimulus/polyfills"
-import { Application } from "stimulus"
-import { definitionsFromContext } from "stimulus/webpack-helpers"
+import { Application } from "@hotwired/stimulus"
+import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
 
 import "chosen-js"
 import "chosen-js/chosen.css"
 
-const application = Application.start()
+window.Stimulus = Application.start()
 const context = require.context("./controllers", true, /\.js$/)
-application.load(definitionsFromContext(context))
+window.Stimulus.load(definitionsFromContext(context))
 
 // fix for IE Benchmarks doc page Monitoring icon too small/out of alignment #171365469
 $(".benchmark-document .callout-with-icon svg.bar-chart path").attr(

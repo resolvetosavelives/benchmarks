@@ -21,10 +21,27 @@ gem "rack-attack", "~> 6.5"
 gem "rake", "~> 13.0"
 gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
+gem 'sassc' # required for some reason, sometimes
 gem "sentry-rails", "~> 4.9"
 gem "sentry-ruby", "~> 4.9"
+
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+
+# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
+gem "jsbundling-rails"
+
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem "turbo-rails"
+
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem "stimulus-rails"
+
+# Bundle and process CSS [https://github.com/rails/cssbundling-rails]
+gem "cssbundling-rails"
+
 gem "tzinfo-data"
+
 
 group :development, :test do
   gem "m", "~> 1.6"

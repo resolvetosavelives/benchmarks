@@ -6,7 +6,7 @@
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><%#= this meta tag is per Bootstrap: https://getbootstrap.com/docs/4.4/getting-started/introduction/  %>
     <%# NB: please refer to the section in README.md ## A note on js packs and stylesheets %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: 'all' %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag which_js, "data-turbo-track": "reload", defer: true %>
     <%= javascript_include_tag("sentry", "data-turbo-track": "reload", defer: true) if Rails.env.production? %>
   </head>

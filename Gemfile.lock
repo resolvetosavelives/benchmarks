@@ -101,6 +101,8 @@ GEM
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
     crass (1.0.6)
+    cssbundling-rails (1.1.0)
+      railties (>= 6.0.0)
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
@@ -306,6 +308,8 @@ GEM
     ruby_parser (3.18.1)
       sexp_processor (~> 4.16)
     rubyzip (2.3.2)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     sentry-rails (4.9.2)
       railties (>= 5.0)
       sentry-ruby-core (~> 4.9.2)
@@ -325,11 +329,16 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    stimulus-rails (1.0.4)
+      railties (>= 6.0.0)
     strscan (3.0.1)
     temple (0.8.2)
     thor (1.2.1)
     tilt (2.0.10)
     timeout (0.2.0)
+    turbo-rails (1.0.1)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2022.1)
@@ -360,6 +369,7 @@ DEPENDENCIES
   binding_of_caller (~> 1.0)
   bootsnap (~> 1.11)
   capybara (~> 3.36)
+  cssbundling-rails
   cuprite (~> 0.11)
   devise (~> 4.8)
   factory_bot_rails (~> 6.2)
@@ -384,10 +394,13 @@ DEPENDENCIES
   rspec-rails (~> 5.1)
   rspec_junit_formatter
   rubyXL (~> 3.4)
+  sassc
   sentry-rails (~> 4.9)
   sentry-ruby (~> 4.9)
   spring (~> 4.0)
   sprockets-rails
+  stimulus-rails
+  turbo-rails
   tzinfo-data
   web-console (~> 4.2)
 

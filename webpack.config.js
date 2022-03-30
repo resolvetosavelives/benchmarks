@@ -2,9 +2,10 @@ const path = require("path")
 const webpack = require("webpack")
 // Extracts CSS into .css file
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const devMode = process.env.NODE_ENV !== "production"
 
 module.exports = {
-  mode: "production",
+  mode: devMode ? "development" : "production",
   devtool: "source-map",
   entry: {
     application: [
@@ -13,7 +14,6 @@ module.exports = {
     ],
     basic: "./app/javascript/basic.js",
     sentry: "./app/javascript/sentry.js",
-    // cable: "./app/assets/javascript/cable.js",
   },
   module: {
     rules: [
@@ -24,27 +24,41 @@ module.exports = {
         use: ["babel-loader"],
       },
       {
-        test: /\.s?[ac]ss$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        test: /\.(sa|sc|c)ss$/i,
+        use: [
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: [
+                  [
+                    "postcss-preset-env",
+                    {
+                      // Options
+                    },
+                  ],
+                ],
+              },
+            },
+          },
+          "sass-loader",
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|eot|woff2|woff|ttf|svg)$/i,
-        loader: "file-loader",
-        options: {
-          name: "[name].[ext]",
-        },
+        type: "asset/resource",
       },
     ],
   },
   output: {
     filename: "[name].js",
     sourceMapFilename: "[name][ext].map",
+    assetModuleFilename: "[hash][ext][query]",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-    }),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
@@ -56,5 +70,5 @@ module.exports = {
       Popper: ["popper.js", "default"],
       Chartist: ["chartist"],
     }),
-  ],
+  ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
 }
