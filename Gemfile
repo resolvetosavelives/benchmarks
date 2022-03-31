@@ -39,7 +39,6 @@ group :development do
   gem "listen", "~> 3.7"
   gem "pry-rails", "~> 0.3.9"
   gem "rails-erd", "~> 1.6"
-  gem "spring", "~> 4.0"
   gem "web-console", "~> 4.2"
 end
 
