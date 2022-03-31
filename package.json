@@ -97,6 +97,7 @@
     "azstart": "docker run -d --rm -p 80:80 --name who-ihr-benchmarks-app-service_1_bc17708b -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e DOCKER_CUSTOM_IMAGE_NAME=whoihrbenchmarksregistry.azurecr.io/benchmarks:latest -e WEBSITES_ENABLE_APP_SERVICE_STORAGE=false -e WEBSITE_SITE_NAME=who-ihr-benchmarks-app-service -e WEBSITE_AUTH_ENABLED=False -e PORT=80 -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=who-ihr-benchmarks-app-service.azurewebsites.net -e WEBSITE_INSTANCE_ID=31d1571b98413b496b1c198a707d6ffc6a83a2d2559c10492f7bfe83d4fa59c3 -e HTTP_LOGGING_ENABLED=1 whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "setupFiles": [
       "./spec/javascript/setup.js"
     ],
