@@ -56,6 +56,9 @@ module.exports = {
     sourceMapFilename: "[name]-[fullhash].digested[ext].map",
     assetModuleFilename: "[name][ext][query]",
     path: path.resolve(__dirname, "app/assets/builds"),
+    clean: {
+      keep: /.keep/,
+    },
   },
   plugins: [
     new MiniCssExtractPlugin(),
