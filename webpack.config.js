@@ -2,10 +2,9 @@ const path = require("path")
 const webpack = require("webpack")
 // Extracts CSS into .css file
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const devMode = process.env.NODE_ENV !== "production"
 
 module.exports = {
-  mode: devMode ? "development" : "production",
+  mode: "production",
   devtool: "source-map",
   entry: {
     application: [
@@ -26,7 +25,7 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/i,
         use: [
-          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           { loader: "css-loader", options: { importLoaders: 1 } },
           {
             loader: "postcss-loader",
@@ -54,11 +53,12 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
-    sourceMapFilename: "[name].map",
+    sourceMapFilename: "[name]-[fullhash][ext].map",
     assetModuleFilename: "[name][ext][query]",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,
     }),
@@ -70,5 +70,5 @@ module.exports = {
       Popper: ["popper.js", "default"],
       Chartist: ["chartist"],
     }),
-  ].concat(devMode ? [] : [new MiniCssExtractPlugin()]),
+  ],
 }

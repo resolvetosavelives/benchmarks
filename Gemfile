@@ -26,6 +26,7 @@ gem "sentry-ruby", "~> 4.9"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
+gem "sprockets", "~>4.0.3" # fixes for hashes included in files
 
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem "jsbundling-rails"
