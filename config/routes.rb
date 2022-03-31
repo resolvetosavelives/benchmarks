@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: "users/sessions", registrations: "users/registrations"
   }
+  get '/users/password', to: redirect('/users/password/new')
 
   get "/get-started", to: "start#index"
   resources :start, path: "get-started", only: %i[index create show update]

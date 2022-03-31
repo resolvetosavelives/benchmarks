@@ -40,7 +40,7 @@ class Azure::MockSessionsController < ActionController::Base
     claims = {
       exp: expires.to_i,
       sub: Base64.urlsafe_encode64(email).strip,
-      email: email
+      name: email
     }
 
     token = JWT.encode(claims, nil, "none")

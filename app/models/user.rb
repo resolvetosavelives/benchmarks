@@ -9,20 +9,22 @@ class User < ApplicationRecord
          :confirmable
   has_many :plans
 
+  def azure_authenticated?
+    Rails.application.config.azure_auth_enabled && azure_identity.present?
+  end
+
   protected
 
+  # TODO: Solve requiring password when email login is used.
   def password_required?
-    return false if Rails.application.config.azure_auth_enabled
-    super
+    !azure_authenticated? && super
   end
 
   def email_required?
-    return false if Rails.application.config.azure_auth_enabled
-    super
+    !azure_authenticated? && super
   end
 
   def confirmation_required?
-    return false if Rails.application.config.azure_auth_enabled
-    Rails.env.production?
+    !azure_authenticated? && Rails.env.production?
   end
 end

@@ -31,28 +31,6 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col">
-            <div class="m-4 text-white">
-              <%- if Rails.application.config.azure_auth_enabled -%>
-                <p>World Health Organization account required.</p>
-              <%- else -%>
-                <% if controller_name == "sessions" %>
-                  <p>Don't have an account?</p>
-                  <p>
-                    <%= link_to "Create an account", new_registration_path(resource_name), class: "text-white" %>
-                  </p>
-                <% elsif controller_name == "registrations" %>
-                  <p>Already have an account?</p>
-                  <p>
-                    <%= link_to "Log in", new_user_session_path, class: "text-white" %>
-                  </p>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>

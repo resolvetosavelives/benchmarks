@@ -1,5 +1,5 @@
 require "active_support/core_ext/integer/time"
-require Rails.root.join("lib", "middleware", "mock_azure_auth_middleware")
+require Rails.root.join("app", "lib", "azure", "mock_auth_middleware")
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -8,7 +8,7 @@ Rails.application.configure do
   # This should never be enabled in production.
   # This does nothing without the cookies set by Azure::MockSessionsController
   config.azure_auth_mocked = config.azure_auth_enabled
-  config.middleware.insert_before Warden::Manager, MockAzureAuthMiddleware
+  config.middleware.insert_before Warden::Manager, Azure::MockAuthMiddleware
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development

@@ -3,7 +3,6 @@ require "system_helper"
 RSpec.describe "Authentication", type: :system, js: true do
   context "devise database" do
     scenario "devise database sign up" do
-      puts "devise database sign up"
       retry_on_pending_connection { visit(root_path) }
 
       click_on "LOG IN"
@@ -37,7 +36,6 @@ RSpec.describe "Authentication", type: :system, js: true do
     let(:email) { "email@example.com" }
 
     scenario "signup during plan creation" do
-      puts "signup during plan creation"
       retry_on_pending_connection { visit(root_path) }
 
       until current_path == "/get-started"
@@ -65,7 +63,7 @@ RSpec.describe "Authentication", type: :system, js: true do
       ##
       # On sign in page we will only have the option to log in with WHO account
       expect(page).to have_current_path("/users/sign_in")
-      click_on "WORLD HEALTH ORGANIZATION LOG IN"
+      find("#sign-in-with-microsoft").click
 
       ##
       # takes us to the azure auth page (which is mocked locally)
@@ -82,12 +80,11 @@ RSpec.describe "Authentication", type: :system, js: true do
     end
 
     scenario "sign in & sign out" do
-      puts "sign in & sign out"
       retry_on_pending_connection { visit(root_path) }
 
       click_on "LOG IN"
       expect(page).to have_current_path("/users/sign_in")
-      click_on "WORLD HEALTH ORGANIZATION LOG IN"
+      find("#sign-in-with-microsoft").click
 
       ##
       # takes us to the azure auth page (which is mocked locally)
@@ -114,12 +111,11 @@ RSpec.describe "Authentication", type: :system, js: true do
     scenario "external logout from outside of the app" do
       # Verify that we aren't holding on to login information in session
       # so as not to perpetuate a session once azure has logged a user out.
-      puts "external logout from outside of the app"
       retry_on_pending_connection { visit(root_path) }
 
       click_on "LOG IN"
       expect(page).to have_current_path("/users/sign_in")
-      click_on "WORLD HEALTH ORGANIZATION LOG IN"
+      find("#sign-in-with-microsoft").click
 
       ##
       # takes us to the azure auth page (which is mocked locally)
@@ -139,6 +135,34 @@ RSpec.describe "Authentication", type: :system, js: true do
       page.driver.remove_cookie(Azure::MockSessionsController::COOKIE)
 
       # Now that the cookie is not being sent, we should be logged out.
+      visit(plans_path)
+      expect(page).to have_current_path("/users/sign_in")
+    end
+
+    scenario "devise database (email & password) sign up while Azure enabled" do
+      retry_on_pending_connection { visit(root_path) }
+
+      click_on "LOG IN"
+      expect(page).to have_current_path("/users/sign_in")
+      expect(page).to have_content("LOG IN")
+
+      click_link "Create an account"
+      expect(page).to have_current_path("/users/sign_up")
+      sleep 0.1
+      find("#user_email").fill_in(with: "email@example.com")
+      find("#user_password").fill_in(with: "123123")
+      find("#user_password_confirmation").fill_in(with: "123123")
+      find("#new_user input[type=submit]").trigger(:click)
+
+      expect(page).to have_current_path("/plans")
+      expect(page).to have_content("Welcome! You have signed up successfully.")
+
+      click_on email
+      click_on "Log Out"
+      expect(page).to have_current_path("/")
+      expect(page).to have_content("LOG IN")
+
+      # Try to visit an authenticated page and see that we are still logged out
       visit(plans_path)
       expect(page).to have_current_path("/users/sign_in")
     end

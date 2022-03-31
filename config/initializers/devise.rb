@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require Rails.root.join("app/strategies/azure_active_directory_strategy")
-
 # Adapt devise to work with turbo-rails
 # https://gorails.com/episodes/devise-hotwire-turbo
 class TurboFailureApp < Devise::FailureApp
@@ -286,7 +284,7 @@ Devise.setup do |config|
   # change the failure app, you can configure them inside the config.warden block.
   config.warden do |manager|
     # manager.intercept_401 = false
-    manager.strategies.add(:azure, AzureActiveDirectoryStrategy)
+    manager.strategies.add(:azure, Azure::AuthStrategy)
     manager.default_strategies(scope: :user).unshift :azure
     failure_app = TurboFailureApp
   end
