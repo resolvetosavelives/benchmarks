@@ -1,3 +1,12 @@
+- if Rails.application.config.azure_auth_enabled
+  .row.align-items-center
+    .col
+      %h1 WHO account
+  = form_with(url: azure_login_path, method: :get) do |f|
+    = f.hidden_field :post_login_redirect_uri, value: plans_path
+    .row.pt-4
+      .col
+        = f.button "WORLD HEALTH ORGANIZATION LOG IN", class: "w-100 btn btn-orange", type: "submit", name: nil
 .row.align-items-center
   .col
     %h1 Log in

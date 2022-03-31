@@ -1,4 +1,4 @@
-import { Application } from "stimulus"
+import { Application } from "@hotwired/stimulus"
 import CheckboxListController from "checkbox_list_controller"
 import $ from "jquery"
 jest.mock("jquery")

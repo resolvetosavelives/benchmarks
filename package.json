@@ -6,27 +6,43 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.7",
+    "@babel/plugin-proposal-private-methods": "^7.16.11",
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
     "@babel/plugin-transform-regenerator": "^7.12.13",
     "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-react": "^7.16.7",
+    "@hotwired/stimulus": "^3.0.1",
+    "@hotwired/stimulus-webpack-helpers": "^1.0.1",
+    "@hotwired/turbo-rails": "^7.1.1",
+    "@popperjs/core": "^2.11.4",
     "@rails/ujs": "^7.0.1",
-    "@rails/webpacker": "5.4.3",
     "@reduxjs/toolkit": "^1.7.1",
     "@sentry/browser": "^6.16.1",
     "@stimulus/polyfills": "^2.0.0",
     "@stimulus/webpack-helpers": "^2.0.0",
     "babel-loader": "^8.2.2",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
+    "babel-plugin-macros": "^3.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "bootstrap": "4.6.1",
+    "bootstrap": "^4.6.1",
     "chartist": "^0.11.4",
     "chosen-js": "^1.8.7",
     "core-js": "^3.16.0",
+    "css-loader": "^6.6.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "file-loader": "^6.2.0",
     "hogan.js": "^3.0.2",
     "jquery": "^3.6.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "particles.js": "^2.0.0",
     "popper.js": "^1.16.1",
+    "postcss": "^8.4.12",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.1.0",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.4.3",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
@@ -35,10 +51,12 @@
     "react-redux": "^7.2.6",
     "react-select": "^4.3.0",
     "react_ujs": "^2.6.1",
-    "stimulus": "^2.0.0",
-    "turbolinks": "^5.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^1.3.0",
+    "webpack": "^5.70.0",
+    "webpack-assets-manifest": "^5.1.0",
+    "webpack-cli": "^4.9.2"
   },
   "devDependencies": {
     "@prettier/plugin-ruby": "^2.0.0",
@@ -53,22 +71,27 @@
     "mutationobserver-shim": "^0.3.7",
     "prettier": "^2.5.1",
     "react-test-renderer": "^17.0.2",
-    "redux-mock-store": "^1.5.4",
-    "webpack-dev-server": "^3"
+    "redux-mock-store": "^1.5.4"
   },
   "resolutions": {
     "is-svg": ">=4.2.2",
-    "node-sass": "^6.0.1",
+    "sass": "^1.49.9",
     "sass-loader": "^10.1.1",
     "serialize-javascript": ">=3.1.0",
     "y18n": ">=4.0.1 <5.0.0"
   },
+  "babel": {
+    "presets": [
+      "@babel/env",
+      "@babel/react"
+    ]
+  },
   "scripts": {
     "test": "jest",
     "prepare": "husky install",
-    "build:builder": "docker build -f config/docker/builder/Dockerfile -t benchmarks_builder:latest .",
-    "build": "docker build -f config/docker/Dockerfile -t benchmarks:latest .",
-    "build:all": "set -e; yarn build:builder; yarn build",
+    "docker:builder": "docker build -f config/docker/builder/Dockerfile -t benchmarks_builder:latest .",
+    "docker:image": "docker build -f config/docker/Dockerfile -t benchmarks:latest .",
+    "build": "webpack --config webpack.config.js",
     "start": "docker run --rm -p 80:80 -e RAILS_ENV=production -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e WEBSITE_HOSTNAME=local.dev benchmarks:latest",
     "up": "docker run -i --rm -p 80:80 -e RAILS_ENV=production -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e WEBSITE_HOSTNAME=local.dev benchmarks:latest sh",
     "azstart": "docker run -d --rm -p 80:80 --name who-ihr-benchmarks-app-service_1_bc17708b -e RAILS_MASTER_KEY=$RAILS_MASTER_KEY -e DATABASE_URL=postgresql://postgres@host.docker.internal/benchmarks_development -e DOCKER_CUSTOM_IMAGE_NAME=whoihrbenchmarksregistry.azurecr.io/benchmarks:latest -e WEBSITES_ENABLE_APP_SERVICE_STORAGE=false -e WEBSITE_SITE_NAME=who-ihr-benchmarks-app-service -e WEBSITE_AUTH_ENABLED=False -e PORT=80 -e WEBSITE_ROLE_INSTANCE_ID=0 -e WEBSITE_HOSTNAME=who-ihr-benchmarks-app-service.azurewebsites.net -e WEBSITE_INSTANCE_ID=31d1571b98413b496b1c198a707d6ffc6a83a2d2559c10492f7bfe83d4fa59c3 -e HTTP_LOGGING_ENABLED=1 whoihrbenchmarksregistry.azurecr.io/benchmarks:latest"
@@ -82,7 +105,7 @@
     ],
     "moduleDirectories": [
       "node_modules",
-      "app/javascript/src/controllers",
+      "app/javascript/controllers",
       "app/javascript/src"
     ],
     "moduleNameMapper": {

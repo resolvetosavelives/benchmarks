@@ -13,15 +13,23 @@ begin
   end
 
   namespace :spec do
-    desc "Run all specs"
-    RSpec::Core::RakeTask.new(all: "spec:prepare")
+    # jsbundling-rails adds javascript:build to test:prepare. Without testUnit,
+    # we must add it ourselves. I'm adding it only to system specs to avoid
+    # building webpack before running specs that don't use it.
+    desc "Run system specs"
+    RSpec::Core::RakeTask.new(system: %w[javascript:build spec:prepare]) do |t|
+      t.pattern = 'spec/system/**/*_spec.rb'
+    end
 
     desc "Runs javascript tests"
     task :js do
       sh "yarn test"
     end
 
-    desc "Runs CI specs (spec:all, spec:js)"
+    desc "Run all specs"
+    task all: %w[spec spec:system]
+
+    desc "Runs CI specs (spec:all spec:js)"
     task ci: %w[spec:all spec:js]
   end
 rescue LoadError

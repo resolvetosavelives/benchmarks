@@ -33,14 +33,14 @@
               </div>
             </div>
 
-            <div class="col-7 col-md-4"><b><%= link_to plan.name, plan %></b></div>
+            <div class="col-7 col-md-4"><b><%= link_to plan.name, plan, data: { turbo: false } %></b></div>
             <div class="col-5 col-md-auto text-right"><%= plan.updated_at.strftime("%B %d, %Y") %></div>
             <div class="col-12 col-md-5 ml-md-auto mt-1 mt-md-0 d-flex justify-content-between">
-              <%= link_to costsheet_path(plan.id), data: { turbolinks: false } do %>
+              <%= link_to costsheet_path(plan.id), data: { turbo: false } do %>
                 <%= inline_svg_tag "ico-download.svg" %>
                 Download <span class="d-none d-lg-inline">XLS</span>
               <% end %>
-              <%= link_to worksheet_path(plan.id), data: { turbolinks: false } do %>
+              <%= link_to worksheet_path(plan.id), data: { turbo: false } do %>
                 <%= inline_svg_tag "ico-print.svg" %>
                 Print <span class="d-none d-lg-inline">Worksheets</span>
               <% end %>
