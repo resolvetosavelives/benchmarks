@@ -53,7 +53,7 @@ module.exports = {
   },
   output: {
     filename: "[name].js",
-    sourceMapFilename: "[name]-[fullhash][ext].map",
+    sourceMapFilename: "[name]-[fullhash].digested[ext].map",
     assetModuleFilename: "[name][ext][query]",
     path: path.resolve(__dirname, "app/assets/builds"),
   },
