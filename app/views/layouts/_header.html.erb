@@ -36,7 +36,7 @@
             <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdownMenuLink">
               <%= link_to "My Plans", plans_path, class: "dropdown-item" %>
               <div class="dropdown-divider"></div>
-              <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item", "data-turbo": "false" %>
+              <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item", form: { "data-turbo": "false" } %>
             </div>
           </li>
         <% else %>
