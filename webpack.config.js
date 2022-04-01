@@ -47,14 +47,15 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|eot|woff2|woff|ttf|svg)$/i,
-        type: "asset/resource",
+        type: "asset",
       },
     ],
   },
   output: {
     filename: "[name].js",
     sourceMapFilename: "[name]-[fullhash].digested[ext].map",
-    assetModuleFilename: "[name][ext][query]",
+    // must pre-digest images otherwise rails does it, obscuring the image's path
+    assetModuleFilename: "[name]-[hash].digested[ext][query]",
     path: path.resolve(__dirname, "app/assets/builds"),
     clean: {
       keep: /.keep/,
