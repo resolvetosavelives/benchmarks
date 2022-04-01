@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azuredevops = {
       source  = "microsoft/azuredevops"
-      version = "~> 0.1.8"
+      version = "~> 0.2.0"
     }
   }
 }
@@ -14,7 +14,28 @@ locals {
 
 # The project is created manually by WHO.
 data "azuredevops_project" "project" {
-  name = var.project_name
+  name = var.devops_project_name
+}
+
+resource "azuredevops_build_definition" "bd" {
+  project_id = data.azuredevops_project.project.id
+  name       = "resolvetosavelives.ihrbenchmark"
+
+  ci_trigger {
+    use_yaml = true
+  }
+
+  repository {
+    repo_id               = var.github_repo_id
+    repo_type             = "GitHub"
+    branch_name           = var.github_branch
+    yml_path              = var.azure_pipelines_yml_path
+    service_connection_id = var.github_service_connection_id
+  }
+
+  variable_groups = [
+    azuredevops_variable_group.vars.id
+  ]
 }
 
 resource "azuredevops_serviceendpoint_dockerregistry" "acr" {

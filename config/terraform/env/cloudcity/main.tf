@@ -5,12 +5,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.93"
+      version = "~> 2.99"
     }
 
     azuredevops = {
       source  = "microsoft/azuredevops"
-      version = "~> 0.1.8"
+      version = "~> 0.2.0"
     }
   }
 
@@ -27,12 +27,6 @@ provider "azurerm" {
   features {}
 }
 
-locals {
-  prod_resource_group_name = "IHRBENCHMARK-P-WEU-RG01"
-  test_resource_group_name = "IHRBENCHMARK-T-WEU-RG01"
-  devops_project_name      = "IHRBENCHMARK"
-}
-
 resource "azurerm_resource_group" "p" {
   name     = var.prod_resource_group_name
   location = var.location
@@ -45,64 +39,55 @@ resource "azurerm_resource_group" "t" {
 
 # I had trouble creating this automatically.
 # resource "azuredevops_project" "project" {
-#   name        = local.devops_project_name
+#   name        = var.devops_project_name
 #   description = "DevOps Project for IHR Benchmarks"
 # }
 data "azuredevops_project" "project" {
   name = var.devops_project_name
 }
 
-resource "azuredevops_build_definition" "bd" {
-  project_id = data.azuredevops_project.project.id
-  name       = "resolvetosavelives.ihrbenchmark"
-
-  ci_trigger {
-    use_yaml = true
-  }
-
-  repository {
-    repo_id               = "resolvetosavelives/benchmarks"
-    repo_type             = "GitHub"
-    branch_name           = "refs/heads/main"
-    yml_path              = "azure-pipelines.yml"
-    service_connection_id = "46e6ff5c-d51f-4718-bd4d-e3fc74f94a7e"
-  }
-}
-
 data "azurerm_subscription" "current" {
 }
 
-resource "azuredevops_serviceendpoint_azurerm" "p" {
-  project_id            = data.azuredevops_project.project.id
-  service_endpoint_name = "SC-IHRBENCHMARK-P-WEU-RG01"
-  description           = "Managed by Terraform bootstrap-manual"
-  credentials {
-    serviceprincipalid  = "59f5508d-eac2-40a3-946c-db6d21d4670d"  # application ID
-    serviceprincipalkey = "nwO7Q~R5X4GX~qsYnpl04_z_NKNRaqVx6mjoM" # client id "value"
-  }
+resource "azuredevops_serviceendpoint_azurerm" "main" {
+  project_id                = data.azuredevops_project.project.id
+  service_endpoint_name     = "SC-${var.main_resource_group_name}"
+  resource_group            = var.main_resource_group_name
+  description               = "Managed by Terraform"
   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
   azurerm_subscription_name = data.azurerm_subscription.current.display_name
 }
 
-# resource "azuredevops_serviceendpoint_azurerm" "t" {
-#   project_id                = data.azuredevops_project.project.id
-#   service_endpoint_name     = "SC-IHRBENCHMARK-T-WEU-RG01"
-#   description               = "Managed by Terraform bootstrap-manual"
-#   credentials {
-#     serviceprincipalid  = "59f5508d-eac2-40a3-946c-db6d21d4670d"  # application ID
-#     serviceprincipalkey = "nwO7Q~R5X4GX~qsYnpl04_z_NKNRaqVx6mjoM" # client id "value"
-#   }
-#   azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
-#   azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
-#   azurerm_subscription_name = data.azurerm_subscription.current.display_name
-# }
+resource "azuredevops_serviceendpoint_azurerm" "p" {
+  project_id                = data.azuredevops_project.project.id
+  service_endpoint_name     = "SC-${var.prod_resource_group_name}"
+  resource_group            = var.prod_resource_group_name
+  description               = "Managed by Terraform"
+  azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
+  azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
+  azurerm_subscription_name = data.azurerm_subscription.current.display_name
+}
+
+resource "azuredevops_serviceendpoint_azurerm" "t" {
+  project_id                = data.azuredevops_project.project.id
+  service_endpoint_name     = "SC-${var.test_resource_group_name}"
+  resource_group            = var.test_resource_group_name
+  description               = "Managed by Terraform"
+  azurerm_spn_tenantid      = data.azurerm_subscription.current.tenant_id
+  azurerm_subscription_id   = data.azurerm_subscription.current.subscription_id
+  azurerm_subscription_name = data.azurerm_subscription.current.display_name
+}
 
 module "main" {
-  source                   = "../../main"
-  organization             = "ccd"
-  RAILS_MASTER_KEY         = var.RAILS_MASTER_KEY
-  devops_project_name      = data.azuredevops_project.project.name
-  prod_resource_group_name = azurerm_resource_group.p.name
-  test_resource_group_name = azurerm_resource_group.t.name
+  source                       = "../../main"
+  organization                 = var.organization
+  RAILS_MASTER_KEY             = var.RAILS_MASTER_KEY
+  devops_project_name          = data.azuredevops_project.project.name
+  prod_resource_group_name     = azurerm_resource_group.p.name
+  test_resource_group_name     = azurerm_resource_group.t.name
+  github_repo_id               = var.github_repo_id
+  github_branch                = var.github_branch
+  github_service_connection_id = var.github_service_connection_id
+  azure_pipelines_yml_path     = var.azure_pipelines_yml_path
 }

@@ -69,16 +69,7 @@ resource "azurerm_app_service" "app_service" {
   auth_settings {
     enabled                       = true
     token_store_enabled           = true # must be enabled to receive access token in the headers
-    additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
-    active_directory {
-      client_id = var.production_aad_application_id
-      # Allowed audiences must be set or auth doesn't work. It's not automatic.
-      allowed_audiences = [
-        "api://${var.production_aad_application_id}",
-      ]
-      #client_secret = ""
-    }
   }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
@@ -96,6 +87,10 @@ resource "azurerm_app_service" "app_service" {
       # Ignore changes because deploys change which tag is deployed
       site_config["linux_fx_version"],
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
+      # Ignore because auth settings are managed manually and terraform tries to nullify them.
+      app_settings["MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"],
+      auth_settings[0].issuer,
+      auth_settings[0].active_directory[0],
     ]
   }
 }
@@ -118,16 +113,7 @@ resource "azurerm_app_service_slot" "preview" {
   auth_settings {
     enabled                       = true
     token_store_enabled           = true # must be enabled to receive access token in the headers
-    runtime_version               = "~1"
-    additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
-    active_directory {
-      client_id = var.preview_aad_application_id
-      # Allowed audiences must be set or auth doesn't work. It's not automatic.
-      allowed_audiences = [
-        "api://${var.preview_aad_application_id}",
-      ]
-    }
   }
   logs {
     http_logs {
@@ -142,6 +128,9 @@ resource "azurerm_app_service_slot" "preview" {
     ignore_changes = [
       site_config["linux_fx_version"],
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
+      app_settings["MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"],
+      auth_settings[0].issuer,
+      auth_settings[0].active_directory[0],
     ]
   }
 }
@@ -164,14 +153,13 @@ resource "azurerm_app_service_slot" "staging" {
   auth_settings {
     enabled                       = true
     token_store_enabled           = true # must be enabled to receive access token in the headers
-    runtime_version               = "~1"
-    additional_login_params       = { scope = "openid email" }
     unauthenticated_client_action = "AllowAnonymous"
+    runtime_version               = "~1"
     active_directory {
-      client_id = var.staging_aad_application_id
       allowed_audiences = [
-        "api://${var.staging_aad_application_id}",
+        "api://7547341f-4f8a-425f-9128-b6d4f640698e",
       ]
+      client_id = "e4b09ae9-262a-4fd8-815d-2282c2b2ad3a"
     }
   }
   logs {
@@ -187,6 +175,9 @@ resource "azurerm_app_service_slot" "staging" {
     ignore_changes = [
       site_config["linux_fx_version"],
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
+      app_settings["MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"],
+      auth_settings[0].issuer,
+      auth_settings[0].active_directory[0],
     ]
   }
 }
