@@ -6,6 +6,10 @@ schedules:
       include:
         - main
 
+# Triggering on pull request causes duplicate builds.
+# Building each branch is much more typical behavior than building each PR.
+pr: none
+
 # These parameters with hardcoded values are here to show the manual link
 # between the pipeline and the resource created manually by the WHO azure admin.
 # My goal is to expose them here to avoid burying them deep in terraform or ENV.
