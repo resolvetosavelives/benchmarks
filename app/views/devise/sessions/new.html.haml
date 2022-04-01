@@ -24,7 +24,8 @@
       %a{
         href: azure_login_path(post_login_redirect_uri: plans_path),
         class: "w-100 btn",
-        id: "sign-in-with-microsoft"
+        id: "sign-in-with-microsoft",
+        "data-turbo": "false"
       }
         = image_tag("ms-symbollockup_mssymbol_19.svg", alt: "", class: "mr-1")
         %span.align-middle Log in with Microsoft
