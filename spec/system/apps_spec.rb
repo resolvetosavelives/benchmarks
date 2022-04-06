@@ -305,7 +305,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
     expect(page).to have_content("LET'S GET STARTED")
     select_from_chosen("Armenia", from: "get_started_form_country_id")
     click_on "Next"
-    choose "State Party Annual Report (SPAR)"
+    choose "State Party Self-Assessment Annual Report (SPAR)"
     choose "5 year plan"
     click_on "Next"
 

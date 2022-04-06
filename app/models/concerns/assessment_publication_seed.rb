@@ -13,7 +13,8 @@ module AssessmentPublicationSeed
       AssessmentPublication.create! named_id: "spar_2018",
                                     abbrev: "SPAR",
                                     revision: "2018",
-                                    title: "State Party Annual Report"
+                                    title:
+                                      "State Party Self-Assessment Annual Report"
       AssessmentPublication.create! named_id: "jee2",
                                     abbrev: "JEE",
                                     revision: "2.0",
@@ -22,7 +23,7 @@ module AssessmentPublicationSeed
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name} CASCADE",
+        "DELETE FROM #{table_name} CASCADE"
       )
     end
   end
