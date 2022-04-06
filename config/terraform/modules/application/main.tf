@@ -66,11 +66,11 @@ resource "azurerm_app_service" "app_service" {
     ftps_state             = "Disabled"
     health_check_path      = "/healthcheck"
   }
-  auth_settings {
-    enabled                       = true
-    token_store_enabled           = true # must be enabled to receive access token in the headers
-    unauthenticated_client_action = "AllowAnonymous"
-  }
+  # auth_settings {
+  #   enabled                       = true
+  #   token_store_enabled           = true # must be enabled to receive access token in the headers
+  #   unauthenticated_client_action = "AllowAnonymous"
+  # }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
     http_logs {
@@ -110,11 +110,11 @@ resource "azurerm_app_service_slot" "preview" {
     ftps_state             = "Disabled"
     health_check_path      = "/healthcheck"
   }
-  auth_settings {
-    enabled                       = true
-    token_store_enabled           = true # must be enabled to receive access token in the headers
-    unauthenticated_client_action = "AllowAnonymous"
-  }
+  # auth_settings {
+  #   enabled                       = true
+  #   token_store_enabled           = true # must be enabled to receive access token in the headers
+  #   unauthenticated_client_action = "AllowAnonymous"
+  # }
   logs {
     http_logs {
       file_system {
@@ -150,18 +150,18 @@ resource "azurerm_app_service_slot" "staging" {
     ftps_state             = "Disabled"
     health_check_path      = "/healthcheck"
   }
-  auth_settings {
-    enabled                       = true
-    token_store_enabled           = true # must be enabled to receive access token in the headers
-    unauthenticated_client_action = "AllowAnonymous"
-    runtime_version               = "~1"
-    active_directory {
-      allowed_audiences = [
-        "api://7547341f-4f8a-425f-9128-b6d4f640698e",
-      ]
-      client_id = "e4b09ae9-262a-4fd8-815d-2282c2b2ad3a"
-    }
-  }
+  # auth_settings {
+  #   enabled                       = true
+  #   token_store_enabled           = true # must be enabled to receive access token in the headers
+  #   unauthenticated_client_action = "AllowAnonymous"
+  #   runtime_version               = "~1"
+  #   active_directory {
+  #     allowed_audiences = [
+  #       "api://7547341f-4f8a-425f-9128-b6d4f640698e",
+  #     ]
+  #     client_id = "e4b09ae9-262a-4fd8-815d-2282c2b2ad3a"
+  #   }
+  # }
   logs {
     http_logs {
       file_system {

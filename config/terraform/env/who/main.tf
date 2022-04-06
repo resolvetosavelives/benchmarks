@@ -20,40 +20,14 @@ provider "azurerm" {
 }
 
 module "main" {
-  source                   = "../../main.tf"
-  organization             = "who"
-  RAILS_MASTER_KEY         = var.RAILS_MASTER_KEY
-  prod_resource_group_name = "IHRBENCHMARK-P-WEU-RG01"
-  test_resource_group_name = "IHRBENCHMARK-T-WEU-RG01"
-  devops_project_name      = "IHRBENCHMARK"
-}
-
-moved {
-  from = module.database
-  to   = module.main.module.database
-}
-moved {
-  from = module.devops
-  to   = module.main.module.devops
-}
-moved {
-  from = azurerm_app_service_plan.app_service_plan
-  to   = module.main.module.application.azurerm_app_service_plan.app_service_plan
-}
-moved {
-  from = azurerm_app_service.app_service
-  to   = module.main.module.application.azurerm_app_service.app_service
-}
-moved {
-  from = azurerm_app_service_slot.preview
-  to   = module.main.module.application.azurerm_app_service_slot.preview
-}
-moved {
-  from = azurerm_app_service_slot.staging
-  to   = module.main.module.application.azurerm_app_service_slot.staging
-}
-
-moved {
-  from = azurerm_container_registry.acr
-  to   = module.main.module.application.azurerm_container_registry.acr
+  source                       = "../../main"
+  organization                 = var.organization
+  RAILS_MASTER_KEY             = var.RAILS_MASTER_KEY
+  devops_project_name          = var.devops_project_name
+  prod_resource_group_name     = var.prod_resource_group_name
+  test_resource_group_name     = var.test_resource_group_name
+  github_repo_id               = var.github_repo_id
+  github_branch                = var.github_branch
+  github_service_connection_id = var.github_service_connection_id
+  azure_pipelines_yml_path     = var.azure_pipelines_yml_path
 }
