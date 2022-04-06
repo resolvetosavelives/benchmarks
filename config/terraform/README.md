@@ -11,40 +11,42 @@ Install terraform. On MacOS:
     brew install terraform
 
 Login to the `az` CLI - You may be prompted to choose which login account and prompted to 2FA if enabled
+The env var `$ARM_SUBSCRIPTION_ID` is set by `source .env` or you can replace with an id from account list.
 
     az login
     az account list
-    az account set --subscription $ARM_SUBSCRIPTION_ID # this will be set by source .env later
+    az account set --subscription $ARM_SUBSCRIPTION_ID
     az account show
 
 ## Directory layout
 
 You will find different folders in `config/terraform/env` for the different
 places that this app can be deployed. This uses the "main module pattern" to
-avoid duplication and manual terraform state file copying.
+avoid duplication and avoid state file conflicts.
 
-Without this directory structure, it is difficult to move between terraform
-configurations for each azure account without copying and backing up the local
-`.terraform` directory, changing environment variables, and switching the
-backend manually in the main.tf. Since each env directory contains its own
-state, while sharing the actual configuration, we can leave the state exactly
-as is and only source a different .env file for each environment.
+Since each env directory contains its own state we can leave the state exactly
+as is in each env directory and only source a different .env file for each
+environment before running terraform.
 
 There are two terraform configurations in each env:
 
-1. the `env/who/bootstrap`, which creates the tfstate storage.
-2. the `env/who/main.tf`, which sets the remote backend, then runs the main module.
+1. the `env/who/bootstrap/main.tf`, which creates the tfstate storage.
+2. the `env/who/main.tf`, which uses the remote backend and runs the main module.
+
+The cloudcity env has some extra resources to bring cloud city azure closer to
+the manually created state in WHO azure.
 
 ## Bootstrap Provisioning
 
-**ONLY DO THIS IN A NEW SUBSCRIPTION**
-
-If the backend storage is already created, you don't need to touch bootstrap.j
+If the backend storage is already created, you don't need to touch bootstrap.
+Applying the bootstrap again should be a no-op.
 
 ### Bootstrapping a New Account
 
 If you are deploying an environment from scratch, first bootstrap the tfstate
 storage account with the following.
+
+The .env file is in the Cloud City 1Password for Vital Strategies.
 
     cd config/terraform/env/who
     source .env
@@ -53,7 +55,7 @@ storage account with the following.
     terraform workspace select production
     terraform apply
 
-These must be run with local tfstate because they create the remote account.
+These must be run with local tfstate because they create the remote backend.
 
 Update `config/terraform/env/who/main.tf` with the output from apply.
 
@@ -64,7 +66,8 @@ Update `config/terraform/env/who/main.tf` with the output from apply.
 
 ### Import Bootstrap State
 
-You can import existing state into your local terraform state if needed.
+If the backend storage already exists, you can import existing state into your
+local terraform state if needed.
 
 The following commands reference these variables, some of which are in:
 
@@ -89,12 +92,12 @@ Once you have the correct ENV set, run the following commands to import
 
 **IMPORTANT**: Don't destroy tfstate unless _everything_ in other terraform
 run is already destroyed. Otherwise you'll have to manually cleanup the
-resources that were created by terraform without destroying the manually
+resources that were created by terraform _without_ destroying the manually
 created resources.
 
 ## Main Provisioning
 
-Run the main configuration like so:
+Run the main terraform configuration like so:
 
     cd config/terraform/env/who
     source .env
@@ -105,7 +108,7 @@ Did the above command show the correct account? If so, proceed
     terraform workspace select production
     terraform apply
 
-Check over the changes and ensure you actually want to perform them.
+Check the changes and ensure you actually want to perform them.
 
 ## Switching accounts
 
@@ -117,12 +120,6 @@ Then source the .env file contained therein. Get the file from CloudCity's
 1Password "Vital Strategies" vault if you don't have the .env file.
 
     source .env
-
-In this example, we switch from WHO Azure to Cloud City Azure for testing:
-The .env.cloudcity file is in the Cloud City Benchmark 1Password Vault.
-
-    source .env.cloudcity
-    az account set --subscription $ARM_SUBSCRIPTION_ID
 
 Run the terraform plan. Make sure it doesn't try to destroy everything.
 
@@ -143,15 +140,18 @@ After a build has been started, you should see a message on the page that says
 that the pipeline cannot run until you click this button to approve the Service
 Connection.
 
-## Destroy
+## Destroy Everything
 
-If you need to teardown the infrastructure, you can do so by running the following commands:
+If you need to teardown the infrastructure, you can do so by running the
+following commands. You probably don't want to do this on the WHO account.
 
     az account set --subscription $ARM_SUBSCRIPTION_ID
-    terraform workspace select sandbox
+    terraform workspace select production
     terraform destroy
 
 ## .env Setup Instructions for a new Azure subscription
+
+So you want to deploy to a new Azure account.
 
 First, recursively copy `config/terraform/env/cloudcity` to a new directory
 in the env folder. Then copy `config/terraform/env/.env.sample` to
