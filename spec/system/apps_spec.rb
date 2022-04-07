@@ -11,7 +11,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
     click_on "Next"
 
     choose "Joint External Evaluation (JEE)"
-    choose "1 year plan"
+    choose "1-year plan"
     click_on "Next"
 
     ##
@@ -94,7 +94,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
     click_on "Next"
     choose "Joint External Evaluation (JEE)"
-    choose "1 year plan"
+    choose "1-year plan"
     check "Influenza planning"
     check "Cholera planning"
     check "Ebola planning"
@@ -306,7 +306,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
     select_from_chosen("Armenia", from: "get_started_form_country_id")
     click_on "Next"
     choose "State Party Self-Assessment Annual Report (SPAR)"
-    choose "5 year plan"
+    choose "5-year plan"
     click_on "Next"
 
     ##
@@ -370,7 +370,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
     check "IHR coordination, communication and advocacy"
     check "Surveillance"
     sleep 0.2
-    choose "5 year plan"
+    choose "5-year plan"
     click_on "Next"
 
     ##
@@ -406,7 +406,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
 
     # verify nudge content for 5-year plan
     expect(find(".nudge-container")).to have_content(
-      "5 year plans are useful for long-term planning and budgeting but should still be prioritized and realistic"
+      "5-year plans are useful for long-term planning and budgeting but should still be prioritized and realistic"
     )
 
     # verify bar chart by technical area filter functionality

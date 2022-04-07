@@ -46,7 +46,7 @@ RSpec.describe "Authentication", type: :system, js: true do
       click_on "Next"
 
       choose "Joint External Evaluation (JEE)"
-      choose "1 year plan"
+      choose "1-year plan"
       click_on "Next"
 
       ##

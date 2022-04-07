@@ -4,7 +4,7 @@ const NudgeByTechnicalAreaFiveYear = () => {
   return (
     <ul>
       <li>
-        5 year plans are useful for long-term planning and budgeting but should
+        5-year plans are useful for long-term planning and budgeting but should
         still be prioritized and realistic.
       </li>
       <li>
@@ -14,7 +14,7 @@ const NudgeByTechnicalAreaFiveYear = () => {
       </li>
       <li>
         Remember &mdash; you will still need to create a smaller more focused
-        implementation plan as part of the 5 year plan to ensure implementation.
+        implementation plan as part of the 5-year plan to ensure implementation.
       </li>
     </ul>
   )
