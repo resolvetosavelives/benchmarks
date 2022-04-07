@@ -22,8 +22,8 @@ gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
 gem "sassc"
 gem 'sendgrid-actionmailer'
-gem "sentry-rails", "~> 4.9"
-gem "sentry-ruby", "~> 4.9"
+gem "sentry-rails", "~> 5.2"
+gem "sentry-ruby", "~> 5.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
