@@ -19,7 +19,7 @@ data "azuredevops_project" "project" {
 
 resource "azuredevops_build_definition" "bd" {
   project_id = data.azuredevops_project.project.id
-  name       = "resolvetosavelives.ihrbenchmark"
+  name       = "ihrbenchmark"
 
   ci_trigger {
     use_yaml = true
