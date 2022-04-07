@@ -40,11 +40,13 @@ Run all the tests (you can checkout the rake tasks with rake -T to run a subset 
 
 Develop locally on feature branches. Merging to main triggers deploy to staging (and currently also production).
 
-Optionally, you may run the webpacker asset compilation process in a separate tab/process which is nice
-because it compiles much faster than the ruby app server process does, and also because it watches the files
-and triggers re-compile upon save.
+The app uses jsbundling-rails to separate webpack from sprockets.
+Webpack compiles assets into the app/assets/builds/ directory, then sprockets picks them up as rails assets.
+Learn more here: https://github.com/rails/jsbundling-rails/blob/main/docs/switch_from_webpacker.md
 
-    ./bin/webpack-dev-server
+Webpack and rails server are started with Foreman using this helper:
+
+    ./bin/dev
 
 The application should now be available [on localhost](https://localhost:3000/)
 
@@ -52,7 +54,7 @@ To test a more production-like version of the app, build the base docker image:
 
     docker build -t benchmarks_builder -f config/docker/builder/Dockerfile .
 
-Then you can use docker compose to run the app with a fresh database using postgres alpine.
+Then you can use docker compose to run the app with a fresh database using a postgres alpine image.
 
     docker compose build
     docker compose up
@@ -72,7 +74,7 @@ There is also a Preview slot used during the production deployment which is swap
 This prevents downtime during the deploy that would otherwise happen during the 7-10 minutes the app would take to warm up after each deploy.
 Swap slots waits for the warmup to finish before swapping.
 
-Ideally we would do the same deployment for staging bit 4 slots just seemed like a lot.
+We may want to do the same with staging to mirror production. The slots share the same resources so it would not increase costs, only complexity.
 
 ## CI/CD
 
@@ -84,9 +86,25 @@ This is the same container you get when running `docker compose up`.
 
 The main branch is automatically tested, docker image(s) built, deployed to Staging and deployed to Production.
 
+## Alternative deployment
+
+We've sometimes had long delays getting changes in WHO Azure.
+To speed up the process we have the ability to deploy to a Cloud City owned Azure.
+
+The corresponding urls are:
+
+- [CCD Production](https://ccd-ihrbenchmark.azurewebsites.net/)
+- [CCD Staging](https://ccd-ihrbenchmark-staging.azurewebsites.net/)
+- [CCD Azure DevOps](https://dev.azure.com/cloudcitydev/IHRBENCHMARK/).
+
+There is a separate terraform env at `config/terraform/env/cloudcity` for provisioning this account.
+
+The primary reason for this lately is the Azure Active Directory Authentication, which can't be provisioned by WHO guest azure accounts.
+
 ## Database migrations during deploy
 
-Database migrations are handled by the Docker entrypoint, a compromise that we arrived at after finding that Azure has no way to run one off commands within the context of an app's environment or container.
+Database migrations are handled by the Docker entrypoint, a compromise that I arrived at after finding that Azure has no way to run one off commands within the context of an app's environment or container.
+In practice, this works well, but migrations must be backwards compatible or it will cause downtime.
 
 ## Seed Data
 
@@ -94,7 +112,9 @@ See [how to update the assessments](#seed-data)
 
 ## Infrastructure
 
-We manage whatever infrastructure we can with Terraform. We are somewhat limited by World Health Organization permissions, which prevent our creation of certain pieces of the infrastructure. These manually created pieces are mentioned in the terraform config where necessary.
+We manage whatever infrastructure we can with Terraform.
+We are somewhat limited by World Health Organization permissions, which prevent our creation of certain pieces of the infrastructure.
+These manually created pieces are mentioned in the terraform config where necessary.
 
 See [config/terraform/README.md](config/terraform/README.md) for more details.
 
@@ -106,6 +126,8 @@ The file `config/credentials.yml.enc` contains the production and staging config
 The file `config/master.key` that accompanies this encrypted file. You will need to get it from a previous developer or from the Cloud City Vital Strategies 1Password vault. Never commit it to the repository.
 
 ### Variables
+
+These apply mostly to the heroku app.
 
 - `WEBSITE_HOSTNAME`
 - `PAPERTRAIL_API_TOKEN`
@@ -177,24 +199,31 @@ for the SPAR scores, there must a single spreadsheet with these columns:
 - update docs/object_diagram.png with the current object relationships
 - update this README with the latest, and remove cruft
 
-## A note on js packs and stylesheets
+## A note on javascript and stylesheets
+
+Note: Some of this may be different now that we're using jsbundling-rails.
+In particular, I think the application.css stylesheet is now handled exclusively by webpack so it combines all of the css from all included modules.
+Someone with more javascript experience might be able to fix this issue now that webpack is being used directly.
+I wonder if the problem actually still exists.
+
+I leave the original comments below in case they help someone clean it up:
 
 You may notice a couple things that seem wasteful across the following files which reference this note:
 
-- `packs/base.js`
-- `packs/application.js`
+- `javascript/base.js`
+- `javascript/application.js`
 - `layouts/application.html.erb`
 - `helpers/application_helper.rb`
 
-First, there is both an `import "stylesheets/application.scss"` in `packs.base.js`
+First, there is both an `import "stylesheets/application.scss"` in `base.js`
 and a `<%= stylesheet_pack_tag 'application', media: 'all' %>` in `layouts/application.html.erb`.
 
 If you remove `<%= stylesheet_pack_tag 'application', media: 'all' %>` you will get no styling.
 
 If you remove `import "stylesheets/application.scss"` you will get no tootips due to a JS error `tooltip is not a function`.
 
-Second, you might think you could load `packs/base.js` on every page and remove the `import "./base"` at
-the top of `packs/application.js`, so that you are not effectively loading `base.js` twice.
+Second, you might think you could load `base.js` on every page and remove the `import "./base"` at
+the top of `application.js`, so that you are not effectively loading `base.js` twice.
 
 If you remove this import you will again get the JS error `tooltip is not a function`.
 
