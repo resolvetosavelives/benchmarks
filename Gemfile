@@ -21,6 +21,7 @@ gem "rake", "~> 13.0"
 gem "rexml", ">= 3.2.5"
 gem "rubyXL", "~> 3.4"
 gem "sassc"
+gem 'sendgrid-actionmailer'
 gem "sentry-rails", "~> 4.9"
 gem "sentry-ruby", "~> 4.9"
 

@@ -50,15 +50,10 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
-  ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    address: "smtp.sendgrid.net",
-    port: 587,
-    domain: "herokuapp.com",
-    user_name: Rails.application.credentials.sendgrid_username,
-    password: Rails.application.credentials.sendgrid_password,
-    authentication: :plain,
-    enable_starttls_auto: true
+  config.action_mailer.delivery_method = :sendgrid_actionmailer
+  config.action_mailer.sendgrid_actionmailer_settings = {
+    api_key: Rails.application.credentials.sendgrid_password!,
+    raise_delivery_errors: true
   }
 
   # Print deprecation notices to the Rails logger.

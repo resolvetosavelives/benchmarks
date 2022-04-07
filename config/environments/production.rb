@@ -70,17 +70,10 @@ Rails.application.configure do
   }
 
   unless Rails.application.config.asset_compilation
-    website_domain =
-      Rails.application.config.website_hostname.split(".").last(2).join(".")
-    ActionMailer::Base.delivery_method = :smtp
-    ActionMailer::Base.smtp_settings = {
-      address: "smtp.sendgrid.net",
-      port: 587,
-      domain: website_domain,
-      user_name: Rails.application.credentials.sendgrid_username!,
-      password: Rails.application.credentials.sendgrid_password!,
-      authentication: :plain,
-      enable_starttls_auto: true
+    config.action_mailer.delivery_method = :sendgrid_actionmailer
+    config.action_mailer.sendgrid_actionmailer_settings = {
+      api_key: Rails.application.credentials.sendgrid_password!,
+      raise_delivery_errors: true
     }
   end
 
