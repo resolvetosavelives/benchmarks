@@ -28,7 +28,7 @@ resource "azurerm_container_registry" "acr" {
   name                          = replace(lower(var.app_service_name), "/[^a-z0-9]/", "") # e.g. whoihrbenchmark
   resource_group_name           = data.azurerm_resource_group.rg.name
   location                      = data.azurerm_resource_group.rg.location
-  sku                           = "Premium"
+  sku                           = "Standard"
   public_network_access_enabled = true
   admin_enabled                 = true
 }
@@ -36,6 +36,9 @@ resource "azurerm_container_registry" "acr" {
 # An interesting thing about Azure is that all app services (and slots) run on
 # all the instances allocated in the app service plan. Adding more slots does
 # not cost more money, it just shares the resources across all the slots.
+#
+# See documentation here for price and capabilities of each tier:
+# https://azure.microsoft.com/en-us/pricing/details/app-service/linux/
 resource "azurerm_app_service_plan" "app_service_plan" {
   name                = "${var.app_service_name}-app-service-plan"
   resource_group_name = data.azurerm_resource_group.rg.name
@@ -44,11 +47,8 @@ resource "azurerm_app_service_plan" "app_service_plan" {
   kind     = "Linux"
   reserved = true
   sku {
-    // must be Premium-tier in order to work with Azure Private Link (for DB)
-    # however, we're not using private link right now, so we could downgroade
-    # or implement private link.
-    tier = "PremiumV2"
-    size = "P1v2" // or P2v2 or P3v2
+    tier = "Standard"
+    size = "S1" # S2 would get more memory. Upgrade if we have issues.
   }
 }
 
