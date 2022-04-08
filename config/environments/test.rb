@@ -12,6 +12,9 @@ Rails.application.configure do
   # Disable asset debugging during tests
   config.assets.debug = false
 
+  # Disable confirmation because it interferes with capybara tests.
+  config.confirmation_required = false
+
   # Allow mocked azure auth, which creates the headers for warden if the cookie is present
   # This does nothing without the cookies set by Azure::MockSessionsController
   config.azure_auth_mocked = config.azure_auth_enabled

@@ -10,6 +10,9 @@ Rails.application.configure do
   config.azure_auth_mocked = config.azure_auth_enabled
   config.middleware.insert_before Warden::Manager, Azure::MockAuthMiddleware
 
+  # Require email confirmation after signup before allowing login
+  config.confirmation_required = !ENV["DISABLE_CONFIRMATION"]
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

@@ -25,6 +25,6 @@ class User < ApplicationRecord
   end
 
   def confirmation_required?
-    !azure_authenticated? && Rails.env.production?
+    !azure_authenticated? && Rails.application.config.confirmation_required
   end
 end
