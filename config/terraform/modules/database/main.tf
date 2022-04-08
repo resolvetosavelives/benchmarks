@@ -81,13 +81,13 @@ resource "azurerm_postgresql_server" "db" {
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }
 
-# resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
-#   name                = "db-firewall-rule-for-greg-home"
-#   resource_group_name = data.azurerm_resource_group.rg.name
-#   server_name         = azurerm_postgresql_server.db.name
-#   start_ip_address    = "96.236.208.225"
-#   end_ip_address      = "96.236.208.225"
-# }
+resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
+  name                = "db-firewall-rule-for-greg-home"
+  resource_group_name = data.azurerm_resource_group.rg.name
+  server_name         = azurerm_postgresql_server.db.name
+  start_ip_address    = "96.236.208.225"
+  end_ip_address      = "96.236.208.225"
+}
 
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_martin_home" {
   name                = "db-firewall-rule-for-martin-home"
