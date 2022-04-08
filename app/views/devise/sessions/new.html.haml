@@ -4,7 +4,7 @@
   .col-auto.justify-content-end
     %p Don't have an account?
     %p= link_to "Create an account", new_registration_path(resource_name)
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+= form_for(resource, as: resource_name, url: session_path(resource_name), html: { "data-turbo": "false" }) do |f|
   .row.pt-3
     .form-group.col
       = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email"
