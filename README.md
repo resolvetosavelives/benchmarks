@@ -228,3 +228,13 @@ the top of `application.js`, so that you are not effectively loading `base.js` t
 If you remove this import you will again get the JS error `tooltip is not a function`.
 
 This is as optimized as we have been able to get the packs download sizes at this time and still maintain functionality on all pages.
+
+## Heroku
+
+There is still a heroku app running. It sources from the `heroku` branch or the resolvetosavelives/benchmarks github repository.
+
+It is _not_ up to date with `main` on either repository.
+
+The only reason it is still around is because benchmarks.org points to heroku, and when the app is demo'd, they use that website.
+
+I have been backporting only the design changes into the heroku branch with cherry-picks to keep it looking updated, but I have not fixed heroku to deploy using `main` because we don't expect to need heroku in the future.
