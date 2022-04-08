@@ -17,6 +17,16 @@ data "azuredevops_project" "project" {
   name = var.devops_project_name
 }
 
+resource "azuredevops_environment" "staging" {
+  project_id = data.azuredevops_project.project.id
+  name       = "Staging"
+}
+
+resource "azuredevops_environment" "production" {
+  project_id = data.azuredevops_project.project.id
+  name       = "Production"
+}
+
 resource "azuredevops_build_definition" "bd" {
   project_id = data.azuredevops_project.project.id
   name       = "ihrbenchmark"
