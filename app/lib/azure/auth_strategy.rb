@@ -44,9 +44,11 @@ module Azure
       Rails.logger.debug("Claims: #{claims.inspect}")
       user = User.where(azure_identity: claims["sub"]).first_or_initialize
 
-      # Azure also explicitly documents that email should not be trusted to be unique.
-      # Avoiding using it also avoids confusing with email/password logins.
-      user.name = claims["name"] || claims["preferred_username"] # preferred_username might be an email too.
+      # Rather than store in `email`, we use `name` so that we don't interfere
+      # with email. Azure says the email is not unique and yet we expect
+      # our email field to be unique. Email remains only for email/pwd login.
+      user.name =
+        claims["preferred_username"] || claims["email"] || claims["name"] # preferred_username might be an email too.
       user.save!
       user
     end
