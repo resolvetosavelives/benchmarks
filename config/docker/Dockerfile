@@ -6,7 +6,7 @@ ARG DOCKER_IMAGE_TAG
 
 FROM $BUILDER_IMAGE AS Builder
 
-FROM ruby:3.0.3-alpine
+FROM ruby:3.1.2-alpine
 
 RUN apk add --no-cache \
     build-base \

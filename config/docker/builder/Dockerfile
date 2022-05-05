@@ -7,7 +7,7 @@
 # Prep phase.
 # Add basic packages. Needs to run as root, before any USER directive.
 # nodejs-current version expected is 16.x, if this version changes app may encounter errs
-FROM ruby:3.0.3-alpine
+FROM ruby:3.1.2-alpine
 # the nodejs package means the current LTS version which now is 16.13.1 and requires python3
 RUN apk add --no-cache \
     build-base \

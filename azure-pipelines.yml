@@ -77,7 +77,7 @@ stages:
             displayName: printenv
           - task: UseRubyVersion@0
             inputs:
-              versionSpec: ">= 3.0"
+              versionSpec: "3.1.2"
               addToPath: true
           - task: NodeTool@0
             inputs:
