@@ -53,7 +53,12 @@ module Azure
       Rails.logger.debug(
         "valid: #{user.valid?} user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
       )
-      saved = user.save
+      saved = nil
+      begin
+        saved = user.save
+      rescue => e
+        Rails.logger.error("Error saving user: #{e.inspect}")
+      end
       Rails.logger.debug(
         "saved: #{saved} user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
       )
