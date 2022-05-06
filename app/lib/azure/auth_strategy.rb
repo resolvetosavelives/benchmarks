@@ -51,11 +51,11 @@ module Azure
         claims["preferred_username"] || claims["email"] || claims["name"] # preferred_username might be an email too.
       user.valid?
       Rails.logger.debug(
-        "Invalid user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
+        "valid: #{user.valid?} user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
       )
-      user.save
+      saved = user.save
       Rails.logger.debug(
-        "Invalid user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
+        "saved: #{saved} user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
       )
       user.save!
       user
