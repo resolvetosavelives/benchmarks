@@ -15,7 +15,6 @@ class User < ApplicationRecord
 
   protected
 
-  # TODO: Solve requiring password when email login is used.
   def password_required?
     !azure_authenticated? && super
   end

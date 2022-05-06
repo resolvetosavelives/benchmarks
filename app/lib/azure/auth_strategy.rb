@@ -49,11 +49,14 @@ module Azure
       # our email field to be unique. Email remains only for email/pwd login.
       user.name =
         claims["preferred_username"] || claims["email"] || claims["name"] # preferred_username might be an email too.
-      unless user.valid?
-        Rails.logger.debug(
-          "Invalid user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
-        )
-      end
+      user.valid?
+      Rails.logger.debug(
+        "Invalid user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
+      )
+      user.save
+      Rails.logger.debug(
+        "Invalid user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
+      )
       user.save!
       user
     end
