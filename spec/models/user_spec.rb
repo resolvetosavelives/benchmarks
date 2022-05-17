@@ -24,6 +24,14 @@ RSpec.describe User, type: :model do
       expect(user.azure_identity).to eq(sub_claim)
       expect(user.name).to be_nil
     end
+
+    it "enforces unique azure_identity, but not unique (blank) email" do
+      User.create!(azure_identity: sub_claim)
+      User.create!(azure_identity: sub_claim + "2")
+      expect { User.create!(azure_identity: sub_claim) }.to raise_error(
+        ActiveRecord::RecordInvalid
+      )
+    end
   end
 
   describe "#azure_authenticated?" do

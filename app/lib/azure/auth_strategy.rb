@@ -38,32 +38,28 @@ module Azure
 
     private
 
-    # Note: we're receiving the v1 token despite requesting v2.
+    # Note: sometimes we receive the v1 token despite requesting v2.
     # I don't know why, but I tried to make it flexible in case it changes.
     def user_from_claims(claims)
       Rails.logger.debug("Claims: #{claims.inspect}")
       user = User.where(azure_identity: claims["sub"]).first_or_initialize
 
-      # Rather than store in `email`, we use `name` so that we don't interfere
-      # with email. Azure says the email is not unique and yet we expect
-      # our email field to be unique. Email remains only for email/pwd login.
-      user.name =
-        claims["preferred_username"] || claims["email"] || claims["name"] # preferred_username might be an email too.
-      user.valid?
-      Rails.logger.debug(
-        "valid: #{user.valid?} user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
-      )
-      saved = nil
-      begin
-        saved = user.save
-      rescue => e
-        Rails.logger.error("Error saving user: #{e.inspect}")
-      end
-      Rails.logger.debug(
-        "saved: #{saved} user: #{user.inspect} #{user.errors.full_messages.inspect} #{user.send(:password_required?)} #{user.send(:email_required?)} #{user.send(:confirmation_required?)}"
-      )
+      user.email = nil
+
+      # preferred_username is likely to be an email.
+      # Rather than store the username in the `email` column,
+      # we use `name` so that we don't conflict with the devise login.
+      # Azure says neither prefered_username nor email is unique.
+      user.name = claims["preferred_username"]
+      user.name ||= claims["email"]
+
+      # sometimes name is populated when nothing else is
+      user.name ||= claims["name"]
       user.save!
-      user
+      return user
+    rescue => e
+      Rails.logger.error("Error saving user: #{e.inspect}")
+      raise e
     end
 
     def token

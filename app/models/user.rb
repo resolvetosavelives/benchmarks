@@ -9,6 +9,9 @@ class User < ApplicationRecord
          :confirmable
   has_many :plans
 
+  validates :email, uniqueness: { allow_nil: true }
+  validates :azure_identity, uniqueness: { allow_nil: true }
+
   def azure_authenticated?
     Rails.application.config.azure_auth_enabled && azure_identity.present?
   end

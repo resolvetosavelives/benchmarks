@@ -10,16 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_10_013520) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "action_documents", force: :cascade do |t|
     t.bigint "benchmark_indicator_action_id", null: false
     t.bigint "reference_library_document_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["benchmark_indicator_action_id"], name: "index_action_documents_on_benchmark_indicator_action_id"
     t.index ["reference_library_document_id"], name: "index_action_documents_on_reference_library_document_id"
   end
@@ -172,8 +171,8 @@ ActiveRecord::Schema.define(version: 2022_03_10_013520) do
     t.string "download_url"
     t.string "thumbnail_url"
     t.string "reference_type"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "last_modified"
     t.string "url"
     t.string "technical_areas", default: [], array: true
@@ -181,7 +180,7 @@ ActiveRecord::Schema.define(version: 2022_03_10_013520) do
 
   create_table "users", force: :cascade do |t|
     t.string "role"
-    t.string "email", default: ""
+    t.string "email"
     t.string "encrypted_password", default: ""
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
