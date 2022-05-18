@@ -25,3 +25,30 @@ variable "RAILS_MASTER_KEY" {
   type        = string
   sensitive   = true
 }
+variable "azure_auth_application_id_staging" {
+  description = "Azure Auth Application ID (staging)"
+  type        = string
+}
+variable "azure_auth_application_id_preview" {
+  description = "Azure Auth Application ID (preview)"
+  type        = string
+}
+variable "azure_auth_application_id_production" {
+  description = "Azure Auth Application ID (production)"
+  type        = string
+}
+variable "azure_auth_client_secret_staging" {
+  description = "Azure Auth Client Secret (staging)"
+  type        = string
+  sensitive   = true
+}
+variable "azure_auth_client_secret_preview" {
+  description = "Azure Auth Client Secret (preview)"
+  type        = string
+  sensitive   = true
+}
+variable "azure_auth_client_secret_production" {
+  description = "Azure Auth Client Secret (production)"
+  type        = string
+  sensitive   = true
+}

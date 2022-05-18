@@ -11,6 +11,7 @@ locals {
     WEBSITE_ENABLE_SYNC_UPDATE_SITE     = true
     WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
   }
+  auth_issuer = "https://sts.windows.net/${data.azurerm_subscription.current.tenant_id}/v2.0"
 }
 
 data "azurerm_subscription" "current" {
@@ -66,11 +67,18 @@ resource "azurerm_app_service" "app_service" {
     ftps_state             = "Disabled"
     health_check_path      = "/healthcheck"
   }
-  # auth_settings {
-  #   enabled                       = true
-  #   token_store_enabled           = true # must be enabled to receive access token in the headers
-  #   unauthenticated_client_action = "AllowAnonymous"
-  # }
+  auth_settings {
+    enabled                       = true
+    token_store_enabled           = true # must be enabled to receive access token in the headers
+    unauthenticated_client_action = "AllowAnonymous"
+    runtime_version               = "~1"
+    issuer                        = local.auth_issuer
+    active_directory {
+      allowed_audiences = ["api://${var.azure_auth_application_id_production}"]
+      client_id         = var.azure_auth_application_id_production
+      client_secret     = var.azure_auth_client_secret_production
+    }
+  }
   logs {
     // http_logs seems to be the Azure App Service-level logs, external to our app
     http_logs {
@@ -89,8 +97,6 @@ resource "azurerm_app_service" "app_service" {
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
       # Ignore because auth settings are managed manually and terraform tries to nullify them.
       app_settings["MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"],
-      auth_settings[0].issuer,
-      auth_settings[0].active_directory[0],
     ]
   }
 }
@@ -110,11 +116,19 @@ resource "azurerm_app_service_slot" "preview" {
     ftps_state             = "Disabled"
     health_check_path      = "/healthcheck"
   }
-  # auth_settings {
-  #   enabled                       = true
-  #   token_store_enabled           = true # must be enabled to receive access token in the headers
-  #   unauthenticated_client_action = "AllowAnonymous"
-  # }
+  auth_settings {
+    enabled                       = true
+    token_store_enabled           = true # must be enabled to receive access token in the headers
+    unauthenticated_client_action = "AllowAnonymous"
+    runtime_version               = "~1"
+    issuer                        = local.auth_issuer
+    active_directory {
+      # Allowed audiences must be set or auth doesn't work. It's not automatic.
+      allowed_audiences = ["api://${var.azure_auth_application_id_preview}"]
+      client_id         = var.azure_auth_application_id_preview
+      client_secret     = var.azure_auth_client_secret_preview
+    }
+  }
   logs {
     http_logs {
       file_system {
@@ -129,8 +143,6 @@ resource "azurerm_app_service_slot" "preview" {
       site_config["linux_fx_version"],
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
       app_settings["MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"],
-      auth_settings[0].issuer,
-      auth_settings[0].active_directory[0],
     ]
   }
 }
@@ -150,18 +162,18 @@ resource "azurerm_app_service_slot" "staging" {
     ftps_state             = "Disabled"
     health_check_path      = "/healthcheck"
   }
-  # auth_settings {
-  #   enabled                       = true
-  #   token_store_enabled           = true # must be enabled to receive access token in the headers
-  #   unauthenticated_client_action = "AllowAnonymous"
-  #   runtime_version               = "~1"
-  #   active_directory {
-  #     allowed_audiences = [
-  #       "api://7547341f-4f8a-425f-9128-b6d4f640698e",
-  #     ]
-  #     client_id = "e4b09ae9-262a-4fd8-815d-2282c2b2ad3a"
-  #   }
-  # }
+  auth_settings {
+    enabled                       = true
+    token_store_enabled           = true # must be enabled to receive access token in the headers
+    unauthenticated_client_action = "AllowAnonymous"
+    runtime_version               = "~1"
+    issuer                        = local.auth_issuer
+    active_directory {
+      allowed_audiences = ["api://${var.azure_auth_application_id_staging}"]
+      client_id         = var.azure_auth_application_id_staging
+      client_secret     = var.azure_auth_client_secret_staging
+    }
+  }
   logs {
     http_logs {
       file_system {
@@ -176,8 +188,6 @@ resource "azurerm_app_service_slot" "staging" {
       site_config["linux_fx_version"],
       app_settings["DOCKER_CUSTOM_IMAGE_NAME"],
       app_settings["MICROSOFT_PROVIDER_AUTHENTICATION_SECRET"],
-      auth_settings[0].issuer,
-      auth_settings[0].active_directory[0],
     ]
   }
 }

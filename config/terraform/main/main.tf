@@ -30,13 +30,19 @@ module "database" {
 }
 
 module "application" {
-  source                  = "../modules/application"
-  resource_group_name     = local.resource_group_name
-  app_service_name        = local.scoped_app_name
-  staging_database_url    = module.database.staging_database_url
-  production_database_url = module.database.production_database_url
-  container_repository    = local.container_repository
-  RAILS_MASTER_KEY        = var.RAILS_MASTER_KEY
+  source                               = "../modules/application"
+  resource_group_name                  = local.resource_group_name
+  app_service_name                     = local.scoped_app_name
+  staging_database_url                 = module.database.staging_database_url
+  production_database_url              = module.database.production_database_url
+  container_repository                 = local.container_repository
+  RAILS_MASTER_KEY                     = var.RAILS_MASTER_KEY
+  azure_auth_application_id_staging    = var.azure_auth_application_id_staging
+  azure_auth_application_id_preview    = var.azure_auth_application_id_preview
+  azure_auth_application_id_production = var.azure_auth_application_id_production
+  azure_auth_client_secret_staging     = var.azure_auth_client_secret_staging
+  azure_auth_client_secret_preview     = var.azure_auth_client_secret_preview
+  azure_auth_client_secret_production  = var.azure_auth_client_secret_production
 }
 
 module "devops" {
