@@ -79,15 +79,42 @@ resource "azuredevops_serviceendpoint_azurerm" "t" {
   azurerm_subscription_name = data.azurerm_subscription.current.display_name
 }
 
+module "auth_app_staging" {
+  source    = "../../modules/auth_app"
+  tenant_id = data.azurerm_subscription.current.tenant_id
+  name      = "IHR Benchmark (staging)"
+  domain    = "${var.organization}-ihrbenchmark-staging.azurewebsites.net"
+}
+
+module "auth_app_preview" {
+  source    = "../../modules/auth_app"
+  tenant_id = data.azurerm_subscription.current.tenant_id
+  name      = "IHR Benchmark (preview)"
+  domain    = "${var.organization}-ihrbenchmark-preview.azurewebsites.net"
+}
+
+module "auth_app_production" {
+  source    = "../../modules/auth_app"
+  tenant_id = data.azurerm_subscription.current.tenant_id
+  name      = "IHR Benchmark"
+  domain    = "${var.organization}-ihrbenchmark.azurewebsites.net"
+}
+
 module "main" {
-  source                       = "../../main"
-  organization                 = var.organization
-  RAILS_MASTER_KEY             = var.RAILS_MASTER_KEY
-  devops_project_name          = data.azuredevops_project.project.name
-  prod_resource_group_name     = azurerm_resource_group.p.name
-  test_resource_group_name     = azurerm_resource_group.t.name
-  github_repo_id               = var.github_repo_id
-  github_branch                = var.github_branch
-  github_service_connection_id = var.github_service_connection_id
-  azure_pipelines_yml_path     = var.azure_pipelines_yml_path
+  source                               = "../../main"
+  organization                         = var.organization
+  RAILS_MASTER_KEY                     = var.RAILS_MASTER_KEY
+  devops_project_name                  = data.azuredevops_project.project.name
+  prod_resource_group_name             = azurerm_resource_group.p.name
+  test_resource_group_name             = azurerm_resource_group.t.name
+  github_repo_id                       = var.github_repo_id
+  github_branch                        = var.github_branch
+  github_service_connection_id         = var.github_service_connection_id
+  azure_pipelines_yml_path             = var.azure_pipelines_yml_path
+  azure_auth_application_id_staging    = module.auth_app_staging.application_id
+  azure_auth_application_id_preview    = module.auth_app_preview.application_id
+  azure_auth_application_id_production = module.auth_app_production.application_id
+  azure_auth_client_secret_staging     = module.auth_app_staging.client_secret
+  azure_auth_client_secret_preview     = module.auth_app_preview.client_secret
+  azure_auth_client_secret_production  = module.auth_app_production.client_secret
 }
