@@ -76,6 +76,14 @@ Swap slots waits for the warmup to finish before swapping.
 
 We may want to do the same with staging to mirror production. The slots share the same resources so it would not increase costs, only complexity.
 
+## Infrastructure
+
+We manage whatever infrastructure we can with Terraform.
+We are somewhat limited by World Health Organization permissions, which prevent our creation of certain pieces of the infrastructure.
+These manually created pieces are mentioned in the terraform config where necessary.
+
+See [config/terraform/README.md](config/terraform/README.md) for more details.
+
 ## CI/CD
 
 Continuous builds and deployment are handled by [Azure DevOps](https://dev.azure.com/WHOHQ/IHRBENCHMARK).
@@ -109,14 +117,6 @@ In practice, this works well, but migrations must be backwards compatible or it 
 ## Seed Data
 
 See [how to update the assessments](#seed-data)
-
-## Infrastructure
-
-We manage whatever infrastructure we can with Terraform.
-We are somewhat limited by World Health Organization permissions, which prevent our creation of certain pieces of the infrastructure.
-These manually created pieces are mentioned in the terraform config where necessary.
-
-See [config/terraform/README.md](config/terraform/README.md) for more details.
 
 ## Configuration Variables
 
