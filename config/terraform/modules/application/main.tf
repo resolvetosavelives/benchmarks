@@ -12,6 +12,12 @@ locals {
     WEBSITE_HEALTHCHECK_MAXPINGFAILURES = 10
   }
   auth_issuer = "https://sts.windows.net/${data.azurerm_subscription.current.tenant_id}/v2.0"
+  # This is the microsoft provider issuer.
+  # At one point it seemed like this was required, along with a `microsoft {`
+  # block instead of `active_directory {` in order to login with any microsoft
+  # account, but now it seems not wo work anymore. Not clear why or if it
+  # will be necessary again. You might also need to remove the `allowed_audiencies`.
+  # auth_issuer = "https://login.microsoftonline.com/common/v2.0"
 }
 
 data "azurerm_subscription" "current" {
@@ -123,7 +129,6 @@ resource "azurerm_app_service_slot" "preview" {
     runtime_version               = "~1"
     issuer                        = local.auth_issuer
     active_directory {
-      # Allowed audiences must be set or auth doesn't work. It's not automatic.
       allowed_audiences = ["api://${var.azure_auth_application_id_preview}"]
       client_id         = var.azure_auth_application_id_preview
       client_secret     = var.azure_auth_client_secret_preview
