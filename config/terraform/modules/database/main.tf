@@ -24,14 +24,9 @@ locals {
     azurerm_postgresql_server.db.fqdn,
     ":5432/",
   ])
-  staging_database_url = join("", [
+  database_url = join("", [
     local.database_url_without_db_name,
-    azurerm_postgresql_database.benchmarks_staging.name,
-    "?sslmode=require",
-  ])
-  production_database_url = join("", [
-    local.database_url_without_db_name,
-    azurerm_postgresql_database.benchmarks_production.name,
+    azurerm_postgresql_database.db.name,
     "?sslmode=require",
   ])
 }
@@ -45,6 +40,7 @@ resource "random_string" "db_administrator_login" {
   special = false
   lower   = true
   upper   = false
+  numeric = false
   keepers = {
     database_server_name = local.database_server_name
   }
@@ -104,15 +100,8 @@ resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 }
-resource "azurerm_postgresql_database" "benchmarks_staging" {
-  name                = "benchmarks_staging"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  server_name         = azurerm_postgresql_server.db.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
-}
-resource "azurerm_postgresql_database" "benchmarks_production" {
-  name                = "benchmarks_production"
+resource "azurerm_postgresql_database" "db" {
+  name                = var.database_name
   resource_group_name = data.azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.db.name
   charset             = "UTF8"

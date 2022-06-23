@@ -4,3 +4,6 @@ variable "resource_group_name" {
 variable "namespace" {
   type = string
 }
+variable "database_name" {
+  type = string
+}

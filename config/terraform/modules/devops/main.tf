@@ -64,12 +64,20 @@ resource "azuredevops_variable_group" "vars" {
   allow_access = true
 
   variable {
-    name  = "AZURE_RESOURCE_GROUP_NAME"
-    value = var.resource_group_name
+    name  = "AZURE_TEST_RESOURCE_GROUP_NAME"
+    value = var.test_resource_group_name
   }
   variable {
-    name  = "AZURE_APP_SERVICE_NAME"
-    value = var.app_service_name
+    name  = "AZURE_PROD_RESOURCE_GROUP_NAME"
+    value = var.prod_resource_group_name
+  }
+  variable {
+    name  = "AZURE_UAT_APP_SERVICE_NAME"
+    value = var.uat_app_service_name
+  }
+  variable {
+    name  = "AZURE_PROD_APP_SERVICE_NAME"
+    value = var.prod_app_service_name
   }
   variable {
     name  = "CONTAINER_REGISTRY_DOMAIN"
@@ -91,7 +99,7 @@ resource "azuredevops_variable_group" "vars" {
 # resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
 #   project_id                = data.azuredevops_project.project.id
 #   service_endpoint_name     = "SC-IHRBENCHMARK-P-AZURECR"
-#   resource_group            = var.resource_group_name
+#   resource_group            = var.prod_resource_group_name
 #   azurecr_spn_tenantid      = "f610c0b7-bd24-4b39-810b-3dc280afb590"
 #   azurecr_name              = "whoihrbenchmark"
 #   azurecr_subscription_id   = "974ebced-5bea-4fa8-af6f-7064aa3eccff"

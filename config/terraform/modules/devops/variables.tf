@@ -1,13 +1,21 @@
-variable "resource_group_name" {
-  description = "Resource group name for target of deployment"
+variable "test_resource_group_name" {
+  description = "Resource group name for test"
+  type        = string
+}
+variable "prod_resource_group_name" {
+  description = "Resource group name for prod"
   type        = string
 }
 variable "devops_project_name" {
   description = "Azure DevOps project name"
   type        = string
 }
-variable "app_service_name" {
-  description = "App service name for running app service pipeline tasks"
+variable "uat_app_service_name" {
+  description = "App service name for UAT"
+  type        = string
+}
+variable "prod_app_service_name" {
+  description = "App service name for prod"
   type        = string
 }
 variable "container_registry_domain" {

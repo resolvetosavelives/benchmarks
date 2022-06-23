@@ -15,7 +15,11 @@ pr: none
 # My goal is to expose them here to avoid burying them deep in terraform or ENV.
 # These are not expected to be changeable (it likely won't work)
 parameters:
-  - name: azureSubscription
+  - name: azureRMConnectionNameTest
+    displayName: Azure Resource Manager Service Connection Name
+    type: string
+    default: SC-IHRBENCHMARK-T-WEU-RG01
+  - name: azureRMConnectionNameProd
     displayName: Azure Resource Manager Service Connection Name
     type: string
     default: SC-IHRBENCHMARK-P-WEU-RG01
@@ -34,8 +38,10 @@ variables:
     value: 1
   - name: tag
     value: $(build.buildId)
-  - name: azureSubscription
-    value: ${{parameters.azureSubscription}}
+  - name: azureRMConnectionNameTest
+    value: ${{parameters.azureRMConnectionNameTest}}
+  - name: azureRMConnectionNameProd
+    value: ${{parameters.azureRMConnectionNameProd}}
   - name: isMain
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   - name: buildBaseImage
@@ -206,10 +212,9 @@ stages:
                 - task: AzureWebAppContainer@1
                   displayName: Azure App Service Deploy
                   inputs:
-                    azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
+                    azureSubscription: $(azureRMConnectionNameTest)
+                    appName: $(AZURE_UAT_APP_SERVICE_NAME)
                     deployToSlotOrASE: true
-                    slotName: staging
                     imageName: $(imageName)
   - stage: Production
     dependsOn: Staging
@@ -228,8 +233,8 @@ stages:
                 - task: AzureWebAppContainer@1
                   displayName: Azure App Service Deploy
                   inputs:
-                    azureSubscription: $(azureSubscription)
-                    appName: $(AZURE_APP_SERVICE_NAME)
+                    azureSubscription: $(azureRMConnectionNameProd)
+                    appName: $(AZURE_PROD_APP_SERVICE_NAME)
                     deployToSlotOrASE: true
                     slotName: preview
                     imageName: $(imageName)
@@ -237,8 +242,8 @@ stages:
               steps:
                 - task: AzureAppServiceManage@0
                   inputs:
-                    azureSubscription: $(azureSubscription)
-                    WebAppName: $(AZURE_APP_SERVICE_NAME)
-                    ResourceGroupName: $(AZURE_RESOURCE_GROUP_NAME)
+                    azureSubscription: $(azureRMConnectionNameProd)
+                    WebAppName: $(AZURE_PROD_APP_SERVICE_NAME)
+                    ResourceGroupName: $(AZURE_PROD_RESOURCE_GROUP_NAME)
                     SourceSlot: preview
                     SwapWithProduction: true
