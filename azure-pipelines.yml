@@ -15,14 +15,6 @@ pr: none
 # My goal is to expose them here to avoid burying them deep in terraform or ENV.
 # These are not expected to be changeable (it likely won't work)
 parameters:
-  - name: azureRMConnectionNameTest
-    displayName: Azure Resource Manager Service Connection Name
-    type: string
-    default: SC-IHRBENCHMARK-T-WEU-RG01
-  - name: azureRMConnectionNameProd
-    displayName: Azure Resource Manager Service Connection Name
-    type: string
-    default: SC-IHRBENCHMARK-P-WEU-RG01
   # Allow access to building the base image outside of the scheduled build.
   # This is useful when you change the base image and want to iterate on it.
   - name: buildBaseImage
@@ -38,10 +30,6 @@ variables:
     value: 1
   - name: tag
     value: $(build.buildId)
-  - name: azureRMConnectionNameTest
-    value: ${{parameters.azureRMConnectionNameTest}}
-  - name: azureRMConnectionNameProd
-    value: ${{parameters.azureRMConnectionNameProd}}
   - name: isMain
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   - name: buildBaseImage
@@ -212,7 +200,7 @@ stages:
                 - task: AzureWebAppContainer@1
                   displayName: Azure App Service Deploy
                   inputs:
-                    azureSubscription: $(azureRMConnectionNameTest)
+                    azureSubscription: SC-IHRBENCHMARK-T-WEU-RG01
                     appName: $(AZURE_UAT_APP_SERVICE_NAME)
                     deployToSlotOrASE: true
                     imageName: $(imageName)
@@ -233,7 +221,7 @@ stages:
                 - task: AzureWebAppContainer@1
                   displayName: Azure App Service Deploy
                   inputs:
-                    azureSubscription: $(azureRMConnectionNameProd)
+                    azureSubscription: SC-IHRBENCHMARK-P-WEU-RG01
                     appName: $(AZURE_PROD_APP_SERVICE_NAME)
                     deployToSlotOrASE: true
                     slotName: preview
@@ -242,7 +230,7 @@ stages:
               steps:
                 - task: AzureAppServiceManage@0
                   inputs:
-                    azureSubscription: $(azureRMConnectionNameProd)
+                    azureSubscription: SC-IHRBENCHMARK-P-WEU-RG01
                     WebAppName: $(AZURE_PROD_APP_SERVICE_NAME)
                     ResourceGroupName: $(AZURE_PROD_RESOURCE_GROUP_NAME)
                     SourceSlot: preview
