@@ -25,11 +25,11 @@ WORKDIR /app
 COPY package.json yarn.lock /app/
 RUN yarn install --non-interactive --production --check-files --frozen-lockfile
 
-# Install standard gems
+# Install gems
 COPY Gemfile* /app/
-ENV BUNDLE_BIN true
-ENV BUNDLE_FROZEN true
-ENV BUNDLE_WITHOUT "test development"
+RUN bundle config set bin true && \
+    bundle config set frozen true && \
+    bundle config set without "test development"
 RUN bundle install -j4 --retry 3
 
 #### ONBUILD: Add triggers to the image, executed later while building a child image

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+docker build -t benchmarks_builder -f config/docker/builder/Dockerfile .
+docker compose build
