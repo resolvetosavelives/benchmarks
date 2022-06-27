@@ -57,6 +57,7 @@ module "application_uat" {
   source                            = "../modules/application"
   resource_group_name               = var.test_resource_group_name
   app_service_name                  = "${local.scoped_app_name}-uat"
+  preview_database_url              = module.database_uat.preview_database_url
   database_url                      = module.database_uat.database_url
   container_registry_domain         = azurerm_container_registry.acr.login_server
   container_registry_username       = azurerm_container_registry.acr.admin_username
@@ -73,6 +74,7 @@ module "application" {
   source                            = "../modules/application"
   resource_group_name               = var.prod_resource_group_name
   app_service_name                  = local.scoped_app_name
+  preview_database_url              = module.database.preview_database_url
   database_url                      = module.database.database_url
   container_registry_domain         = azurerm_container_registry.acr.login_server
   container_registry_username       = azurerm_container_registry.acr.admin_username

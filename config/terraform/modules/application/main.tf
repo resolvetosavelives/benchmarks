@@ -100,7 +100,7 @@ resource "azurerm_app_service_slot" "preview" {
   location            = data.azurerm_resource_group.rg.location
   app_service_plan_id = azurerm_app_service_plan.app_service_plan.id
   app_service_name    = azurerm_app_service.app_service.name
-  app_settings        = merge(local.app_settings, { DATABASE_URL = var.database_url })
+  app_settings        = merge(local.app_settings, { DATABASE_URL = var.preview_database_url })
 
   site_config {
     always_on              = false

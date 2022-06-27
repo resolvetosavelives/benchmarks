@@ -28,6 +28,11 @@ variable "database_url" {
   type        = string
   sensitive   = true
 }
+variable "preview_database_url" {
+  description = "DATABASE_URL for preview slot app"
+  type        = string
+  sensitive   = true
+}
 variable "RAILS_MASTER_KEY" {
   description = "RAILS_MASTER_KEY from config/master.key"
   type        = string

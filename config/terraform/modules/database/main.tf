@@ -29,6 +29,11 @@ locals {
     azurerm_postgresql_database.db.name,
     "?sslmode=require",
   ])
+  preview_database_url = join("", [
+    local.database_url_without_db_name,
+    azurerm_postgresql_database.preview.name,
+    "?sslmode=require",
+  ])
 }
 
 data "azurerm_resource_group" "rg" {
@@ -102,6 +107,14 @@ resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services
 }
 resource "azurerm_postgresql_database" "db" {
   name                = var.database_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  server_name         = azurerm_postgresql_server.db.name
+  charset             = "UTF8"
+  collation           = "English_United States.1252"
+}
+
+resource "azurerm_postgresql_database" "preview" {
+  name                = "${var.database_name}_preview"
   resource_group_name = data.azurerm_resource_group.rg.name
   server_name         = azurerm_postgresql_server.db.name
   charset             = "UTF8"
