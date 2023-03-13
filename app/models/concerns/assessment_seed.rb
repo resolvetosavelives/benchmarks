@@ -14,6 +14,12 @@ module AssessmentSeed
       AssessmentScore.bulk_import data["scores"].map { |d|
                                     AssessmentScore.new(d)
                                   }
+
+      # Update generated IDs sequence to match imported data
+      ActiveRecord::Base.connection.reset_pk_sequence!(Assessment.table_name)
+      ActiveRecord::Base.connection.reset_pk_sequence!(
+        AssessmentScore.table_name
+      )
     end
 
     def write_seed!
@@ -43,9 +49,11 @@ module AssessmentSeed
           range = pubs[version] || next
           iso = row.cells[3].value
           values = row.cells[range].map(&:value)
-          legend[range].zip(values).filter_map do |l, v|
-            v && !v.blank? && [l.gsub("v2_", ""), v]
-          end.to_h.merge("iso" => iso, "version" => version)
+          legend[range]
+            .zip(values)
+            .filter_map { |l, v| v && !v.blank? && [l.gsub("v2_", ""), v] }
+            .to_h
+            .merge("iso" => iso, "version" => version)
         end
 
       jee1 = AssessmentPublication.find_by_named_id!("jee1")
@@ -74,10 +82,13 @@ module AssessmentSeed
 
         values = row.cells.map(&:value)
         attrs =
-          legend.zip(values).filter_map do |l, v|
-            next if v.nil? || v == "" || /^C\.\d+\./ !~ l
-            [l.downcase.tr(".", ""), v / 20]
-          end.to_h
+          legend
+            .zip(values)
+            .filter_map do |l, v|
+              next if v.nil? || v == "" || /^C\.\d+\./ !~ l
+              [l.downcase.tr(".", ""), v / 20]
+            end
+            .to_h
 
         name = row.cells[2].value.strip
         corrections = {

@@ -1,6 +1,6 @@
 # Capybara default is 2, but CI is slow and the failing selector is sometimes unpredictable.
 # Rather than pepper the specs with waits, just change the default.
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 15
 
 # Normalize whitespaces when using `has_text?` and similar matchers,
 # i.e., ignore newlines, trailing spaces, etc.

@@ -1,10 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
-
   <div class="container">
-
-    <a class="navbar-brand" href="https://extranet.who.int/sph/" target="_blank">
+    <%= link_to root_url do %>
       <%= image_tag("who-logo.svg", alt: "WHO Logo") %>
-    </a>
+    <% end %>
 
     <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -13,7 +11,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
       <ul class="navbar-nav">
         <li class="nav-item mx-lg-2">
-          <a class="nav-link text-white py-1" href="<%= root_path %>">
+          <a class="nav-link text-white py-1" href="<%= root_url %>">
             HOME
           </a>
         </li>
@@ -30,18 +28,18 @@
         <% if current_user %>
           <li class="nav-item dropdown ml-lg-2">
             <a class="nav-link text-white py-1 dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-              <%= current_user.name || current_user.email %>
+              <%= current_user.email %>
               <span><%= image_tag("down-caret.svg", alt: "Down Caret") %></span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdownMenuLink">
-              <%= link_to "My Plans", plans_path, class: "dropdown-item" %>
+              <%= link_to "My Plans", plans_url, class: "dropdown-item" %>
               <div class="dropdown-divider"></div>
-              <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item", form: { "data-turbo": "false" } %>
+              <%= button_to "Log Out", destroy_user_session_url, method: :delete, class: "dropdown-item", form: { "data-turbo": "false" } %>
             </div>
           </li>
         <% else %>
           <li class="nav-item ml-lg-2">
-            <a class="nav-link text-white py-1" href="<%= new_user_session_path %>">
+            <a class="nav-link text-white py-1" href="<%= new_user_session_url %>">
               LOG IN
             </a>
           </li>
@@ -52,3 +50,16 @@
   </div>
 
 </nav>
+
+<% if current_user&.admin? && current_page?(controller: :plans, action: :index) %>
+  <nav class="navbar navbar-expand-lg admin-navbar">
+    <div class="container">
+      <h2 class="navbar-brand mb-0 font-weight-bold">Benchmarks Admin</h2>
+      <ul class="navbar-nav">
+        <li class="nav-item mx-lg-2">
+          <%= link_to "Users", avo.resources_users_url, class: "nav-link" %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+<% end %>

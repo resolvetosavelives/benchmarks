@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_03_191101) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,8 +28,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
     t.string "named_id", limit: 20
     t.integer "sequence"
     t.string "text", limit: 500
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["assessment_technical_area_id"], name: "index_assessment_indicators_on_assessment_technical_area_id"
   end
 
@@ -44,8 +44,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
   create_table "assessment_publications", force: :cascade do |t|
     t.string "title", limit: 200
     t.string "named_id", limit: 10
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "abbrev", limit: 10
     t.string "revision", limit: 10
     t.index ["named_id"], name: "index_assessment_publications_on_named_id"
@@ -62,14 +62,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
     t.string "named_id", limit: 20
     t.integer "sequence"
     t.string "text", limit: 200
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["assessment_publication_id"], name: "index_assessment_technical_areas_on_assessment_publication_id"
   end
 
   create_table "assessments", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "country_alpha3", limit: 3
     t.integer "assessment_publication_id"
     t.boolean "clean_slate", default: false, null: false
@@ -81,8 +81,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
     t.integer "level"
     t.integer "sequence"
     t.integer "action_types", default: [], array: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "disease_id"
     t.index ["benchmark_indicator_id"], name: "index_benchmark_indicator_actions_on_benchmark_indicator_id"
   end
@@ -93,16 +93,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
     t.string "display_abbreviation", limit: 10
     t.string "text", limit: 500
     t.string "objective", limit: 500
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["benchmark_technical_area_id"], name: "index_benchmark_indicators_on_benchmark_technical_area_id"
   end
 
   create_table "benchmark_technical_areas", force: :cascade do |t|
     t.string "text", limit: 200
     t.integer "sequence"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "countries", force: :cascade do |t|
@@ -124,15 +124,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
   create_table "diseases", force: :cascade do |t|
     t.string "display"
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "plan_actions", force: :cascade do |t|
     t.integer "plan_id"
     t.integer "benchmark_indicator_action_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "benchmark_indicator_id"
     t.integer "benchmark_technical_area_id"
     t.index ["plan_id"], name: "index_plan_actions_on_plan_id"
@@ -154,8 +154,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
 
   create_table "plans", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "user_id"
     t.integer "assessment_id"
     t.integer "term"
@@ -168,14 +168,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
     t.string "author"
     t.string "date"
     t.string "relevant_pages"
-    t.string "download_url"
     t.string "thumbnail_url"
     t.string "reference_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "last_modified"
+    t.datetime "last_modified", precision: nil
     t.string "url"
     t.string "technical_areas", default: [], array: true
+    t.string "airtable_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -183,18 +183,25 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
     t.string "email"
     t.string "encrypted_password", default: ""
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.string "azure_identity"
-    t.string "name"
+    t.string "access_reason"
+    t.string "affiliation"
+    t.string "country_alpha3", limit: 3
+    t.string "institution"
+    t.string "status"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["azure_identity"], name: "index_users_on_azure_identity", unique: true
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["country_alpha3"], name: "index_users_on_country_alpha3"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -223,4 +230,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_17_014218) do
   add_foreign_key "plan_goals", "plans"
   add_foreign_key "plans", "assessments"
   add_foreign_key "plans", "users"
+  add_foreign_key "users", "countries", column: "country_alpha3", primary_key: "alpha3"
 end

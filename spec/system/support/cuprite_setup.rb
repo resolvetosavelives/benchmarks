@@ -9,10 +9,10 @@ Capybara.register_driver(:cuprite) do |app|
     window_size: [1200, 1200],
     browser_options: {},
     # Increase Chrome startup wait time (required for stable CI builds)
-    process_timeout: 30,
+    process_timeout: 60,
     # Tell Ferrum to wait longer for browsers to respond, helps on slow machines like CI
     # Azure seems to be much slower.
-    timeout: 15,
+    timeout: 30,
     # Enable debugging only outside CI by default
     inspector: ENV["CI"].nil? || ENV["INSPECTOR"],
     # Allow running Chrome in a headful mode by setting HEADLESS env
@@ -39,6 +39,12 @@ RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
 
   config.before(:each, type: :system, js: true) do
-    driven_by :cuprite, using: :chrome, screen_size: [1400, 1400]
+    driven_by :cuprite,
+              using: :chrome,
+              screen_size: [1400, 1400],
+              options: {
+                inspector: ENV["INSPECTOR"].present?,
+                headless: ENV["INSPECTOR"].blank?
+              }
   end
 end

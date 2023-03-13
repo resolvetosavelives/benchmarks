@@ -59,8 +59,8 @@ ONBUILD RUN mv config/credentials.yml.enc config/credentials.yml.enc.bak 2>/dev/
 ONBUILD RUN mv config/credentials config/credentials.bak 2>/dev/null || true
 ONBUILD RUN yarn install
 ONBUILD RUN ASSET_COMPILATION=true \
-    SECRET_KEY_BASE=dummy \
-    RAILS_MASTER_KEY=dummy \
+    SECRET_KEY_BASE=fake-secret-for-assets \
+    RAILS_MASTER_KEY=fake-key-for-assets \
     bin/rails assets:precompile
 ONBUILD RUN mv config/credentials.yml.enc.bak config/credentials.yml.enc 2>/dev/null || true
 ONBUILD RUN mv config/credentials.bak config/credentials 2>/dev/null || true

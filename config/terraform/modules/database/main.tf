@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.99"
+      version = "~> 3.24.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -12,6 +12,7 @@ terraform {
 }
 
 locals {
+  database_fqdn        = var.fqdn
   database_server_name = "${var.namespace}-postgresql"
   database_url_without_db_name = join("", [
     "postgres://",
@@ -21,7 +22,7 @@ locals {
     ":",
     azurerm_postgresql_server.db.administrator_login_password,
     "@",
-    azurerm_postgresql_server.db.fqdn,
+    local.database_fqdn,
     ":5432/",
   ])
   database_url = join("", [
@@ -29,15 +30,6 @@ locals {
     azurerm_postgresql_database.db.name,
     "?sslmode=require",
   ])
-  preview_database_url = join("", [
-    local.database_url_without_db_name,
-    azurerm_postgresql_database.preview.name,
-    "?sslmode=require",
-  ])
-}
-
-data "azurerm_resource_group" "rg" {
-  name = var.resource_group_name
 }
 
 resource "random_string" "db_administrator_login" {
@@ -61,9 +53,9 @@ resource "random_password" "db_administrator_password" {
 }
 resource "azurerm_postgresql_server" "db" {
   name                          = local.database_server_name
-  resource_group_name           = data.azurerm_resource_group.rg.name
-  location                      = data.azurerm_resource_group.rg.location
-  public_network_access_enabled = true
+  resource_group_name           = var.resource_group_name
+  location                      = var.location
+  public_network_access_enabled = false
   // SKUs
   // - GP_Gen5_2 means "General Purpose (more than Basic), Generation 5 (current), 2 cores.
   // - B_Gen5_2 means "Basic (lowest tier), Generation 5 (current), 2 cores.
@@ -82,40 +74,26 @@ resource "azurerm_postgresql_server" "db" {
   ssl_minimal_tls_version_enforced = "TLS1_2"
 }
 
-resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_greg_home" {
-  name                = "db-firewall-rule-for-greg-home"
-  resource_group_name = data.azurerm_resource_group.rg.name
+resource "azurerm_postgresql_firewall_rule" "db_firewall_rules" {
+  for_each            = var.developer_ips
+  name                = "db-firewall-rule-${each.key}"
+  resource_group_name = var.resource_group_name
   server_name         = azurerm_postgresql_server.db.name
-  start_ip_address    = "96.236.208.225"
-  end_ip_address      = "96.236.208.225"
+  start_ip_address    = each.value
+  end_ip_address      = each.value
 }
 
-resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_martin_home" {
-  name                = "db-firewall-rule-for-martin-home"
-  resource_group_name = data.azurerm_resource_group.rg.name
-  server_name         = azurerm_postgresql_server.db.name
-  start_ip_address    = "73.12.247.86"
-  end_ip_address      = "73.12.247.86"
-}
-// Allow from Azure. it is more open than i would like, but it works for both App Service and Devops Pipeline.
 resource "azurerm_postgresql_firewall_rule" "db_firewall_rule_for_azure_services" {
   name                = "db-firewall-rule-for-azure-services"
-  resource_group_name = data.azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group_name
   server_name         = azurerm_postgresql_server.db.name
   start_ip_address    = "0.0.0.0"
   end_ip_address      = "0.0.0.0"
 }
+
 resource "azurerm_postgresql_database" "db" {
   name                = var.database_name
-  resource_group_name = data.azurerm_resource_group.rg.name
-  server_name         = azurerm_postgresql_server.db.name
-  charset             = "UTF8"
-  collation           = "English_United States.1252"
-}
-
-resource "azurerm_postgresql_database" "preview" {
-  name                = "${var.database_name}_preview"
-  resource_group_name = data.azurerm_resource_group.rg.name
+  resource_group_name = var.resource_group_name
   server_name         = azurerm_postgresql_server.db.name
   charset             = "UTF8"
   collation           = "English_United States.1252"

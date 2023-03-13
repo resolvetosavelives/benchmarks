@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  authenticate :user do
+    mount Avo::Engine, at: Avo.configuration.root_path
+  end
+
   # Mock Azure Active Directory Authentication
   #
   # These routes serve two purposes.
@@ -10,27 +14,31 @@ Rails.application.routes.draw do
   #
   # These routes will never make it to the controller in production.
   # Azure will intercept the routes before they ever get to the app.
+
   # The constraints help prevent access when running elsewhere, e.g. Heroku.
   constraints(-> { Rails.application.config.azure_auth_mocked }) do
-    scope path: ".auth", as: "azure", module: "azure" do
-      get "login/aad", to: "mock_sessions#new", as: :login
-      post "login/aad", to: "mock_sessions#create"
+    scope path: "users/auth/azure", as: "azure", module: "azure" do
+      post "login", to: "mock_sessions#create"
       get "logout", to: "mock_sessions#destroy", as: :logout
     end
   end
 
   devise_for :users, controllers: {
-    sessions: "users/sessions", registrations: "users/registrations"
+    sessions: "users/sessions",
+    registrations: "users/registrations",
   }
-  get '/users/password', to: redirect('/users/password/new')
+  get "/users/password", to: redirect("/users/password/new")
 
   get "/get-started", to: "start#index"
   resources :start, path: "get-started", only: %i[index create show update]
   resources :plans, only: %i[show index create update destroy]
   resources :worksheets, only: %i[show]
   resources :costsheets, only: %i[show]
+  resources :reference_library_documents, only: %i[] do
+    get :download
+  end
   get "plan/goals/:country_name/:assessment_type(/:plan_term)",
-      to: "plans#goals", as: "plan_goals"
+    to: "plans#goals", as: "plan_goals"
 
   ##
   # static pages

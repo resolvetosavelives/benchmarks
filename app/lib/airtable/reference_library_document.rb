@@ -9,10 +9,10 @@ module Airtable
 
     def to_attrs
       {
+        airtable_id: self.id,
         author: self["Author"],
         date: self["Publication Date"],
         description: self["Description"],
-        download_url: self["Attachments"]&.first&.dig("url"),
         last_modified: self["Last Modified"],
         reference_type: self["Document Type"],
         relevant_pages: self["Relevant Pages"],

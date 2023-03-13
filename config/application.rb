@@ -19,6 +19,9 @@ Bundler.require(*Rails.groups)
 # RTSL is an abbreviation for Resolve To Save Lives, which is the org.
 module RtslBenchmarks
   class Application < Rails::Application
+    # used where we display the app name, such as the admin panel pages
+    config.app_name = "IHR Benchmarks"
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
     config.assets.enabled = false
@@ -36,8 +39,7 @@ module RtslBenchmarks
     # This setting is true during asset compilation to avoid forcing secrets to be loaded
     config.asset_compilation = ENV["ASSET_COMPILATION"]
 
-    # Set by Azure when deployed to app-service. Set manually otherwise.
-    config.website_hostname = ENV["WEBSITE_HOSTNAME"]
+    config.application_host = ENV["APPLICATION_HOST"]
 
     # Set by Azure when integrated auth is enabled.
     # https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization

@@ -59,4 +59,62 @@ RSpec.describe CostSheet, type: :model do
       )
     )
   end
+
+  context "with 1 year plan" do
+    let(:plan) { create(:plan_nigeria_jee1, term: Plan::TERM_TYPES.first) }
+    let(:cost_sheet) { CostSheet.new(plan) }
+    let(:sheet) do
+      cost_sheet.workbook[
+        "IHR Coordination, Communication and Advocacy and Reporting"
+      ]
+    end
+
+    it "creates title cell" do
+      expect(sheet[0][0].value).to eq(
+        "PLANNING AND COSTING TOOL FOR THE DEVELOPMENT OF NATIONAL ACTION PLAN FOR HEALTH SECURITY - 1 YEAR"
+      )
+    end
+
+    it "creates 1 cell for the year" do
+      expect(sheet[5][13].value).to eq("Year 1")
+    end
+
+    it "creates 1 cost estimate cell for the year" do
+      expect(sheet[5][14].value).to eq("Cost estimate year 1")
+      expect(sheet[5][15].value).to eq("TotalOver1Year")
+    end
+  end
+
+  context "with 5 year plan" do
+    let(:plan) { create(:plan_nigeria_jee1, term: Plan::TERM_TYPES.second) }
+    let(:cost_sheet) { CostSheet.new(plan) }
+    let(:sheet) do
+      cost_sheet.workbook[
+        "IHR Coordination, Communication and Advocacy and Reporting"
+      ]
+    end
+
+    it "creates title cell" do
+      expect(sheet[0][0].value).to eq(
+        "PLANNING AND COSTING TOOL FOR THE DEVELOPMENT OF NATIONAL ACTION PLAN FOR HEALTH SECURITY - 5 YEARS"
+      )
+    end
+
+    it "creates 5 cells for each year" do
+      expect(sheet[5][13].value).to eq("Year 1")
+      expect(sheet[5][14].value).to eq("Year 2")
+      expect(sheet[5][15].value).to eq("Year 3")
+      expect(sheet[5][16].value).to eq("Year 4")
+      expect(sheet[5][17].value).to eq("Year 5")
+    end
+
+    it "creates 5 cost estimate cells for each year" do
+      expect(sheet[5][18].value).to eq("Cost estimate year 1")
+      expect(sheet[5][19].value).to eq("Cost estimate year 2")
+      expect(sheet[5][20].value).to eq("Cost estimate year 3")
+      expect(sheet[5][21].value).to eq("Cost estimate year 4")
+      expect(sheet[5][22].value).to eq("Cost estimate year 5")
+      expect(sheet[5][23].value).to eq("TotalOver5Years")
+    end
+  end
 end

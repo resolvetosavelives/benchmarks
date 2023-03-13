@@ -47,6 +47,7 @@ $colors: (
   "disease-ebola-hover": #77b7e6,
   "disease-ebola-deselected": rgba(159, 216, 251, 0.3),
   "disease-pill": #57575d,
+  "admin-navbar": #d76322,
 ) !default;
 
 $theme-colors: $colors;
@@ -579,4 +580,17 @@ fieldset[disabled] .btn-cancel.active {
   visibility: hidden;
   clip-path: inset(0 0 0 100%);
   transition: all 750ms;
+}
+
+.admin-navbar {
+  background-color: color("admin-navbar");
+  color: color("light");
+
+  h2,
+  a.nav-link {
+    color: inherit;
+    font-size: 1rem;
+    font-family: inherit;
+    text-transform: uppercase;
+  }
 }

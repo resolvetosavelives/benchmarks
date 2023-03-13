@@ -6,12 +6,13 @@
     margin-bottom: 0.2em;
   }
 
-  a {
+  a:not(.btn) {
     color: color("dark");
     text-decoration: underline;
   }
 
-  input {
+  input:not(input[type="checkbox"]),
+  .form-group select.form-control {
     height: 60px;
   }
 

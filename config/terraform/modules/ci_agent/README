@@ -1,0 +1,3 @@
+The CI Agent module provisions a ci agent, running in a subnet of a private network on Azure ARM. This allows the jobs running on the agent to talk to resources in ARM, which are in the private network, and not made reachable to the public internet.
+
+The reason we need this is that Azure DevOps is an external service, which cannot have direct access to these services (such as the DB, or container registry).

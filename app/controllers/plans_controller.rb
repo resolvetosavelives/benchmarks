@@ -90,7 +90,6 @@ class PlansController < ApplicationController # workaround for XHR being unable 
     @plan = Plan.deep_load(params.fetch(:id))
   end
 
-  # TODO: test coverage for this
   def update
     plan = Plan.find_by_id!(params.fetch(:id))
     benchmark_action_ids =

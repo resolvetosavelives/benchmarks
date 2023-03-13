@@ -1,14 +1,11 @@
 require "active_support/core_ext/integer/time"
-require Rails.root.join("app", "lib", "azure", "mock_auth_middleware")
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Allow mocked azure auth, which creates the headers for warden if the cookie is present
-  # This should never be enabled in production.
-  # This does nothing without the cookies set by Azure::MockSessionsController
-  config.azure_auth_mocked = config.azure_auth_enabled
-  config.middleware.insert_before Warden::Manager, Azure::MockAuthMiddleware
+  # Allow mocked azure auth
+  config.azure_auth_mocked =
+    config.azure_auth_enabled && ENV["AZURE_AUTH_MOCKED"] != "false"
 
   # Require email confirmation after signup before allowing login
   config.confirmation_required = !ENV["DISABLE_CONFIRMATION"]
@@ -55,7 +52,7 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :sendgrid_actionmailer
   config.action_mailer.sendgrid_actionmailer_settings = {
-    api_key: Rails.application.credentials.sendgrid_password!,
+    api_key: ENV.fetch("SENDGRID_API_KEY", nil),
     raise_delivery_errors: true
   }
 

@@ -7,10 +7,10 @@
 = form_for(resource, as: resource_name, url: session_path(resource_name), html: { "data-turbo": "false" }) do |f|
   .row.pt-3
     .form-group.col
-      = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email"
+      = f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", required: true, placeholder: "Email", id: "email"
   .row
     .form-group.col
-      = f.password_field :password, autocomplete: "current-password", class: "form-control", required: true, placeholder: "Password"
+      = f.password_field :password, autocomplete: "current-password", class: "form-control", required: true, placeholder: "Password", id: "password"
   .row
     .form-group.col
       = link_to "Forgot password?", new_password_path(resource_name)

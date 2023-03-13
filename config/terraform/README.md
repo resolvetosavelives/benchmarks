@@ -10,13 +10,13 @@ Install terraform. On MacOS:
 
     brew install terraform
 
-Login to the `az` CLI - You may be prompted to choose which login account and prompted to 2FA if enabled
-The env var `$ARM_SUBSCRIPTION_ID` is set by `source .env` or you can replace with an id from account list.
+## Authorizing the `az` CLI
 
-    az login
-    az account list
-    az account set --subscription $ARM_SUBSCRIPTION_ID
-    az account show
+To allow terraform to connect to the Cloud City owned Azure environment, you will need to `az login` and then log in to your Cloud City Microsoft account. It will probably have a username like `first.last@cloudcity.io`.
+
+To terraform the WHO owned Azure environment, you will need to `az login`, choose the "Sign-in options" choice at the bottom of the login form, choose "Sign in to an organization", and then enter the domain name "worldhealthorg.onmicrosoft.com". After that, you can log in using your WHO account, which will probably be your Cloud City email address.
+
+It should (theoretically) be possible to sign in to both accounts at the same time, and have terraform interact with the correct Azure subscription.
 
 ## Directory layout
 
@@ -26,19 +26,56 @@ avoid duplication and avoid state file conflicts.
 
 Since each env directory contains its own state we can leave the state exactly
 as is in each env directory and only source a different .env file for each
-environment before running terraform.
+environment before running terraform. See [Switching Accounts](#switching-accounts) below, as in some cases you may also need to `az logout` and `az login`.
 
 There are two terraform configurations in each env:
 
 1. the `env/who/bootstrap/main.tf`, which creates the tfstate storage.
 2. the `env/who/main.tf`, which uses the remote backend and runs the main module.
 
-The cloudcity env has some extra resources to bring cloud city azure closer to
-the manually created state in WHO azure.
+The cloudcity env has some extra resources that were manually created by the WHO in the WHO environment.
+
+## Getting Env Files with Credentials
+
+The env files live in the Cloud City's `C: VitalStrategies` 1Password vault.
+
+The cloudcity environment file is `config/terraform/env/cloudcity/.env`. The WHO environment file is `config/terraform/env/who/.env`.
+
+You should copy the contents of each file and put it in the same path as its name. The files will be gitignored and should never be checked in, because they contain secret credentials.
+
+You will need your own Azure DevOps Personal Access Token (for each env) to substitute for Martin's expired one. If you don't already have one, you can make one at https://dev.azure.com.
+
+## Main Provisioning - Terraform apply
+
+Run the main terraform configuration like so:
+
+    cd config/terraform/env/who
+    az login
+    source .env # the .env file you made above
+
+Did the above command show the correct account? If so, proceed
+
+    terraform init
+    terraform apply
+
+Check the changes and ensure you actually want to perform them.
+
+### Fixing Expired GitHub PAT (Personal Access Token)
+
+The Github PAT expires every year. 1 year is the max :(
+
+It can be regenerated as the account benchmarks-service-acct, the login for which is in the Cloud City 1Password vault for Vital Strategies.
+
+If you don't already have the newest .env, find the who/.env file in Cloud City 1Password.
+
+- Add the new PAT to `TF_VAR_github_pat` in the .env file.
+- Update the new expiry date in the `TF_VAR_github_pat_expiry` so that the pipeline can complete.
+- Run `terraform apply`.
+- Make sure you update 1Password with the new .env file that has the new token and expiry!
 
 ## Bootstrap Provisioning
 
-If the backend storage is already created, you don't need to touch bootstrap.
+**If the backend storage is already created, you don't need to touch bootstrap.**
 Applying the bootstrap again should be a no-op.
 
 ### Bootstrapping a New Account
@@ -52,7 +89,6 @@ The .env file is in the Cloud City 1Password for Vital Strategies.
     source .env
     cd bootstrap
     terraform init
-    terraform workspace select production
     terraform apply
 
 These must be run with local tfstate because they create the remote backend.
@@ -64,10 +100,14 @@ Update `config/terraform/env/who/main.tf` with the output from apply.
     storage_account_name = storage_account_name
     container_name       = container_name
 
-### Import Bootstrap State
+**IMPORTANT**: This updated `main.tf` must be checked into the repo in order for others to use the tfstate.
+
+#### Import Bootstrap State (to change it)
 
 If the backend storage already exists, you can import existing state into your
-local terraform state if needed.
+local terraform state, if needed.
+
+You would need to do this in the circumstance that you are changing the tfstate that gets bootstraped in the `bootstrap` subfolder (not the cloudcity or who folders). Because we bootstrap with local tfstate (since there is no storage to store the tfstate in yet), that file lives on someone's computer. These commands would recreate that file from the existing infrastructure.
 
 The following commands reference these variables, some of which are in:
 
@@ -86,7 +126,6 @@ Once you have the correct ENV set, run the following commands to import
     # this is not set in .env
     export TFSTATE_STORAGE_ACCOUNT_NAME=
     terraform init
-    terraform workspace select production
     terraform import module.bootstrap.azurerm_storage_account.tfstate "/subscriptions/${ARM_SUBSCRIPTION_ID}/resourceGroups/${TF_VAR_tfstate_resource_group_name}/providers/Microsoft.Storage/storageAccounts/${TFSTATE_STORAGE_ACCOUNT_NAME}"
     terraform import module.bootstrap.azurerm_storage_container.tfstate "https://${TFSTATE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/tfstate"
 
@@ -95,26 +134,18 @@ run is already destroyed. Otherwise you'll have to manually cleanup the
 resources that were created by terraform _without_ destroying the manually
 created resources.
 
-## Main Provisioning
-
-Run the main terraform configuration like so:
-
-    cd config/terraform/env/who
-    source .env
-
-Did the above command show the correct account? If so, proceed
-
-    terraform init
-    terraform workspace select production
-    terraform apply
-
-Check the changes and ensure you actually want to perform them.
-
 ## Switching accounts
 
 To switch to a different azure account, switch to the respective directory:
 
     cd config/terraform/env/cloudcity
+
+Before you source the .env file, log out of the Azure cli and log back in with the correct account, if you have different accounts. (Such as a cloudcitydev.onmicrosoft.com account and a cloudcity.io account).
+
+```
+az logout
+az login
+```
 
 Then source the .env file contained therein. Get the file from CloudCity's
 1Password "Vital Strategies" vault if you don't have the .env file.
@@ -124,10 +155,11 @@ Then source the .env file contained therein. Get the file from CloudCity's
 Run the terraform plan. Make sure it doesn't try to destroy everything.
 
     terraform init
-    terraform workspace select production
     terraform plan
 
-### After Provisioning Azure DevOps, Action is Required
+### After Provisioning Azure DevOps Initially, Action is Required
+
+#### To Link Github
 
 The link between GitHub and Azure Pipelines must be created.
 Use the Azure Pipelines GitHub Integration to create the connection.
@@ -140,13 +172,22 @@ After a build has been started, you should see a message on the page that says
 that the pipeline cannot run until you click this button to approve the Service
 Connection.
 
+#### To Create the CI Agent Pools
+
+In the project, go to `Settings>Agent Pools`.
+Create a new agent pool based off the relevant resource group/service connection (uat for `uat-agents-no-docker` and prod for `prod-agents-no-docker`).
+There should only be one scaleset in each resource group, use that to set up the pool.
+
+NOTE: To delete an agent pool, you need to delete it from the `Organization Settings`. If you delete it from the `Project Settings`, you only remove that project from it, but the agent pool continues to exist.
+
 ## Destroy Everything
 
 If you need to teardown the infrastructure, you can do so by running the
 following commands. You probably don't want to do this on the WHO account.
 
+You should first manually delete the DevOps agent pool in the ui. (You may need Martin's WIMS account to do this in the WHO account)
+
     az account set --subscription $ARM_SUBSCRIPTION_ID
-    terraform workspace select production
     terraform destroy
 
 ## .env Setup Instructions for a new Azure subscription

@@ -12,23 +12,19 @@ locals {
   acr_service_endpoint_name = "SC-IHRBENCHMARK-P-ACR-CREDENTIAL"
 }
 
-# The project is created manually by WHO.
-data "azuredevops_project" "project" {
-  name = var.devops_project_name
-}
 
 resource "azuredevops_environment" "staging" {
-  project_id = data.azuredevops_project.project.id
+  project_id = var.devops_project_id
   name       = "Staging"
 }
 
 resource "azuredevops_environment" "production" {
-  project_id = data.azuredevops_project.project.id
+  project_id = var.devops_project_id
   name       = "Production"
 }
 
 resource "azuredevops_build_definition" "bd" {
-  project_id = data.azuredevops_project.project.id
+  project_id = var.devops_project_id
   name       = "ihrbenchmark"
 
   ci_trigger {
@@ -49,7 +45,7 @@ resource "azuredevops_build_definition" "bd" {
 }
 
 resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
-  project_id            = data.azuredevops_project.project.id
+  project_id            = var.devops_project_id
   service_endpoint_name = local.acr_service_endpoint_name
   docker_registry       = "https://${var.container_registry_domain}"
   docker_username       = var.container_registry_username
@@ -58,7 +54,7 @@ resource "azuredevops_serviceendpoint_dockerregistry" "acr" {
 }
 
 resource "azuredevops_variable_group" "vars" {
-  project_id   = data.azuredevops_project.project.id
+  project_id   = var.devops_project_id
   name         = "pipeline-variable-group"
   description  = "Managed by Terraform - Variables sourced from terraform configuration that are needed for the pipeline to work"
   allow_access = true
@@ -80,6 +76,10 @@ resource "azuredevops_variable_group" "vars" {
     value = var.prod_app_service_name
   }
   variable {
+    name  = "CONTAINER_REGISTRY_NAME"
+    value = var.container_registry_name
+  }
+  variable {
     name  = "CONTAINER_REGISTRY_DOMAIN"
     value = var.container_registry_domain
   }
@@ -91,13 +91,16 @@ resource "azuredevops_variable_group" "vars" {
     name  = "ACR_SERVICE_ENDPOINT_NAME"
     value = azuredevops_serviceendpoint_dockerregistry.acr.service_endpoint_name
   }
+  variable {
+    name  = "GITHUB_PAT_EXPIRY"
+    value = var.github_pat_expiry
+  }
 }
-
 # This would be the correct way to make the ACR service connection.
 # However, we currently have insufficient privileges.
 # If this is fixed, this way is preferred over the above resource.
 # resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
-#   project_id                = data.azuredevops_project.project.id
+#   project_id                = var.devops_project_id
 #   service_endpoint_name     = "SC-IHRBENCHMARK-P-AZURECR"
 #   resource_group            = var.prod_resource_group_name
 #   azurecr_spn_tenantid      = "f610c0b7-bd24-4b39-810b-3dc280afb590"

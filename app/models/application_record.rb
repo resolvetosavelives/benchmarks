@@ -20,5 +20,6 @@ class ApplicationRecord < ActiveRecord::Base
     BenchmarkIndicator
     BenchmarkIndicatorAction
     ReferenceLibraryDocument
+    User
   ]
 end

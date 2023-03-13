@@ -5,23 +5,22 @@ module ReferenceLibraryDocumentSeed
     SEED_PATH = "data/reference_library_documents_from_airtable.json"
 
     def seed!
+      unless ReferenceLibraryDocument.count.zero?
+        puts "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
+        unseed!
+      end
+
       warn "Seeding data for ReferenceLibraryDocuments..."
       doc_attrs = JSON.parse Rails.root.join(SEED_PATH).read
       docs = doc_attrs.map { |a| ReferenceLibraryDocument.new(a) }
       ReferenceLibraryDocument.bulk_import docs, recursive: true
 
-      id = ReferenceLibraryDocument.last.id
-      ReferenceLibraryDocument.connection.exec_query(
-        "SELECT setval('public.reference_library_documents_id_seq', #{id});",
-        "Update generated IDs sequence to match imported data"
-      )
+      # Update generated IDs sequence to match imported data
+      ActiveRecord::Base.connection.reset_pk_sequence!(table_name)
     end
 
     def unseed!
       ReferenceLibraryDocument.destroy_all
-      ReferenceLibraryDocument.connection.exec_query(
-        "SELECT setval('public.reference_library_documents_id_seq', 1, false);"
-      )
     end
 
     def write_seed!

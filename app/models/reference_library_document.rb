@@ -4,8 +4,6 @@ class ReferenceLibraryDocument < ApplicationRecord
   has_many :action_documents, dependent: :destroy
   has_many :benchmark_indicator_actions, through: :action_documents
 
-  validates :download_url, uniqueness: true
-
   # returns an array of reference_type strings sorted alphabetically
   def self.distinct_types
     self.select(:reference_type).distinct.pluck(:reference_type).sort
@@ -20,5 +18,10 @@ class ReferenceLibraryDocument < ApplicationRecord
 
   def reference_type_ordinal
     ReferenceLibraryDocument.reference_type_ordinal(reference_type)
+  end
+
+  def download_url
+    latest_document = Airtable::ReferenceLibraryDocument.find(airtable_id)
+    latest_document["Attachments"]&.first&.dig("url")
   end
 end

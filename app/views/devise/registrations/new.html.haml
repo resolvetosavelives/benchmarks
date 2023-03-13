@@ -17,9 +17,6 @@
   .row.pt-2
     .form-group.col
       = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", required: true, placeholder: "Password confirmation"
-  .row.pt-2
-    .form-group.col
-      = f.select :role, ["Country Planner", "Technical Advisor", "Donor", "Other"].map {|r| [r, r] }, {include_blank: "Select your role"}, {class: "form-control custom-select"}
   .row
     .col
       = f.submit "SIGN UP", class: "w-100 btn btn-orange"

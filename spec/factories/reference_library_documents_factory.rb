@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory(:reference_library_document) do
-    sequence(:download_url) { |n| "https://example.com/document#{n}.pdf" }
+    title { Faker::Lorem.sentence }
+    description { Faker::Lorem.sentences.join(" ") }
+    airtable_id { Faker::Alphanumeric.alphanumeric(number: 17) }
   end
 end

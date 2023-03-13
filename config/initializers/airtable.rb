@@ -1,5 +1,6 @@
-if Rails.env.production? && !Rails.application.config.asset_compilation
-  Airrecord.api_key = Rails.application.credentials.airtable_api_key!
-else
-  Airrecord.api_key = Rails.application.credentials.airtable_api_key
-end
+Airrecord.api_key =
+  if Rails.env.production? && !Rails.application.config.asset_compilation
+    ENV.fetch("AIRTABLE_PAT", Rails.application.credentials.airtable_api_key!)
+  else
+    ENV.fetch("AIRTABLE_PAT", Rails.application.credentials.airtable_api_key)
+  end

@@ -7,12 +7,11 @@
     .document.col.card.flex-row
       - if document.thumbnail_url.present?
         .cover-image
-          %a{href: document.download_url, target: "_blank"}
+          = link_to reference_library_document_download_url(document), target: :_blank do
             %img{src: image_path(document.thumbnail_url), width: 160}/
       .document-about.col
-        - if document.download_url.present? && document.title.present?
-          %a{href: document.download_url, target: "_blank"}
-            = document.title
+        - if document.title.present?
+          = link_to document.title, reference_library_document_download_url(document), target: :_blank
         - elsif document.title.present?
           .document-title
             = document.title

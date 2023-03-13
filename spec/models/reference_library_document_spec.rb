@@ -53,4 +53,21 @@ RSpec.describe ReferenceLibraryDocument, type: :model do
       end
     end
   end
+
+  describe "#download_url" do
+    let(:document) { create(:reference_library_document) }
+    let(:attachment_url) { "https://example.com/path/to/file.pdf" }
+
+    before do
+      allow(Airtable::ReferenceLibraryDocument).to receive(:find).and_return(
+        Airtable::ReferenceLibraryDocument.new(
+          "Attachments" => [{ "url" => attachment_url }]
+        )
+      )
+    end
+
+    it "loads attachment url from airtable" do
+      expect(document.download_url).to eq(attachment_url)
+    end
+  end
 end

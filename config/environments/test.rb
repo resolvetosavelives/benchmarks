@@ -1,5 +1,4 @@
 require "active_support/core_ext/integer/time"
-require Rails.root.join("app", "lib", "azure", "mock_auth_middleware")
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -15,10 +14,8 @@ Rails.application.configure do
   # Disable confirmation because it interferes with capybara tests.
   config.confirmation_required = false
 
-  # Allow mocked azure auth, which creates the headers for warden if the cookie is present
-  # This does nothing without the cookies set by Azure::MockSessionsController
+  # Allow mocked azure auth
   config.azure_auth_mocked = config.azure_auth_enabled
-  config.middleware.insert_before Warden::Manager, Azure::MockAuthMiddleware
 
   config.cache_classes = false
   config.action_view.cache_template_loading = true
@@ -49,6 +46,8 @@ Rails.application.configure do
   config.active_storage.service = :test
 
   config.action_mailer.perform_caching = false
+
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the

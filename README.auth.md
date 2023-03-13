@@ -1,97 +1,69 @@
-# README Authentication
+# Azure Authentication
 
 ## Options
 
 There are 2 main options for authentication with Azure Active Directory
 
-1. Use Azure's built in auth, which will sit in front of the application and pass authenticated users back to the app.
-   Details here: https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-provider-aad
-2. Use OAuth2 through devise with Active Directory as the provider. Various websites detail this solution and there is a ruby gem that could help.
+1. Using Azure's built in auth, referred to as "EasyAuth", which sits in front
+   of the application and passes authenticated users back to the app. Details
+   [here](https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-provider-aad).
+2. Using OAuth2 through Devise & OmniAuth with Active Directory as the provider.
+   Various websites detail this solution and there is a ruby gem that could
+   help.
 
-For the time being, I am only considering option 1, built in auth.
+We first tried using the first option, but we started getting a redirect
+mismatch error after we added the custom domains (ihrbenchmark.who.int +
+ihrbenchmark-uat.who.int). The solution to this would have been to verify the
+custom domains, but the WHO preferred we switch to the second option instead.
 
-## Built is Azure AD auth
+## Flow
 
-This seems most promising but requires permissions to edit the pieces (app registrations, identity providers, etc) in the Azure Portal.
+1. User navigate to the login page `/users/signin`
+   ![](docs/images/auth-flow-signin.png)
+2. User clicks the login button, which submits a `POST` to the OmniAuth
+   endpoint: `/users/auth/azure_activedirectory_v2`
+   - Configured by `config.omniauth` in `config/initializers/devise.rb` and
+     `:omniauthable` in `app/models/user.rb`
+   - See the documentation for [OmniAuth + Devise](https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview) and the
+     [omniauth-azure-activedirectory-v2](https://github.com/RIPAGlobal/omniauth-azure-activedirectory-v2#usage) gem for details
+3. User is redirected to Microsoft AAD
+   ![](docs/images/auth-flow-aad.png)
+   URL looks like:
+   `https://login.microsoftonline.com/<tenant>/oauth2/v2.0/authorize?client_id=...&prompt&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fusers%2Fauth%2Fazure_activedirectory_v2%2Fcallback&response_type=code&scope=openid+profile+email&state=...`
+4. User enters appropriate credentials and is redirected to the application at
+   `/users/auth/azure_activedirectory_v2/callback`
+5. User's JWT is retrieved and used to locate their account in the system
+   - Implemented in `OmniauthCallbacksController#azure_activedirectory_v2` and `Azure::UserFetcher#call`
+   - If the user has no account yet, one is created. We trust that if they made
+     it here, they are suppose to be here otherwise Azure would have denied
+     access for non-WHO members.
+   - If the user had an unredeemed access request (because they were just
+     approved access), we redeem the request and transfer the fields from the
+     request to the user record
+6. User's session is created through Devise and is redirected to the plans page
 
-Similar permissions are needed for OAuth2, but maybe more of the design would be within our control.
+## Azure Mock
 
-My impression is that we want a solution that requires less maintenance and is more quickly developed.
-It also offloads more of the implementation to a central provider instead of writing it ourselves
+In the development and test environments we've created a mock authentication
+flow that skips the AAD sign in.
 
-This document describes how the app works with Azure AD auth: https://docs.microsoft.com/en-us/azure/app-service/overview-authentication-authorization#identity-providers
+With the exception of production, the `config.azure_auth_mocked` application
+config is set to true which changes the sign in page to look like this:
 
-It seems to be as simple as redirecting to example.com/.auth/login/aad whenever we want someone to login.
+![](docs/images/auth-flow-mock.png)
 
-When we receive a request, it will either include a cookie or not.
+From here the `Azure::MockSessionsController#create` action is used to sign in,
+bypassing any actually authentication.
 
-https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-customize-sign-in-out
+If you wish to disable this mock in development you set the following
+environment variables and then reboot your server:
 
-> To redirect the user post-sign-in to a custom URL, use the post_login_redirect_uri query string parameter (not to be confused with the Redirect URI in your identity provider configuration).
-> For example, to navigate the user to /Home/Index after sign-in, use the following HTML code:
-> <a href="/.auth/login/<provider>?post_login_redirect_uri=/Home/Index">Log in</a>
+```sh
+AZURE_AUTH_MOCKED=false
+AZURE_APPLICATION_CLIENT_ID="replace me"
+AZURE_APPLICATION_CLIENT_SECRET="replace me"
+AZURE_TENANT_ID="replace me"
+```
 
-Signout link:
-
-    <a href="/.auth/logout">Sign out</a>
-
-or
-
-    GET /.auth/logout?post_logout_redirect_uri=/index.html
-
-To constrain what domain is used to login with AD, read this https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-customize-sign-in-out#limit-the-domain-of-sign-in-accounts
-
-### Tokens
-
-When Azure has authenticated a user, it will send some or all of these headers with every request.
-
-    X-MS-TOKEN-AAD-ID-TOKEN
-    X-MS-TOKEN-AAD-ACCESS-TOKEN
-    X-MS-TOKEN-AAD-EXPIRES-ON
-    X-MS-TOKEN-AAD-REFRESH-TOKEN
-
-https://docs.microsoft.com/en-us/azure/app-service/configure-authentication-oauth-tokens
-
-These headers can't be set from the outside, so they can be trusted as long as the ENV also asserts that the AUTH is enabled.
-Theoretically the benchmarks app could be used in another server where these headers are not filtered, so we should verify that azure auth is enabled before trusting them.
-
-## TODO
-
-### Tests
-
-- `sign_in` helper needs to be able to fake sign in with Azure when azure auth is enabled
-- Testing for not-logged-in-redirect needs to be able to succeed for azure redirect when azure auth is enabled
-
-### Paths
-
-The following are the devise paths. Whichever are actually used need to be rewritten to work with Azure
-
-            new_user_session GET    /users/sign_in(.:format)            users/sessions#new
-                user_session POST   /users/sign_in(.:format)            users/sessions#create
-        destroy_user_session DELETE /users/sign_out(.:format)           users/sessions#destroy
-           new_user_password GET    /users/password/new(.:format)       devise/passwords#new
-          edit_user_password GET    /users/password/edit(.:format)      devise/passwords#edit
-               user_password PATCH  /users/password(.:format)           devise/passwords#update
-                             PUT    /users/password(.:format)           devise/passwords#update
-                             POST   /users/password(.:format)           devise/passwords#create
-    cancel_user_registration GET    /users/cancel(.:format)             users/registrations#cancel
-       new_user_registration GET    /users/sign_up(.:format)            users/registrations#new
-      edit_user_registration GET    /users/edit(.:format)               users/registrations#edit
-           user_registration PATCH  /users(.:format)                    users/registrations#update
-                             PUT    /users(.:format)                    users/registrations#update
-                             DELETE /users(.:format)                    users/registrations#destroy
-                             POST   /users(.:format)                    users/registrations#create
-       new_user_confirmation GET    /users/confirmation/new(.:format)   devise/confirmations#new
-           user_confirmation GET    /users/confirmation(.:format)       devise/confirmations#show
-                             POST   /users/confirmation(.:format)       devise/confirmations#create
-
-### Azure Paths
-
-Azure places paths in front of the app that start with `/.auth/`
-
-In order to use the app locally in azure mode, we could use our own controller for these actions:
-
-    /.auth/login/aad?post_login_redirect_uri=/
-    /.auth/logout?post_logout_redirect_uri=/
-
-Depending on if we allow multiple login or only one or the other, we may still need the sign in page.
+You'll also need a valid Microsoft account that belongs to that tenant's Active
+Directory.

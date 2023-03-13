@@ -6,8 +6,8 @@ variable "prod_resource_group_name" {
   description = "Resource group name for prod"
   type        = string
 }
-variable "devops_project_name" {
-  description = "Azure DevOps project name"
+variable "devops_project_id" {
+  description = "Azure DevOps project ID"
   type        = string
 }
 variable "uat_app_service_name" {
@@ -16,6 +16,10 @@ variable "uat_app_service_name" {
 }
 variable "prod_app_service_name" {
   description = "App service name for prod"
+  type        = string
+}
+variable "container_registry_name" {
+  description = "The container registry name from ACR (without .azurecr.io, etc)"
   type        = string
 }
 variable "container_registry_domain" {
@@ -49,5 +53,9 @@ variable "github_service_connection_id" {
 }
 variable "azure_pipelines_yml_path" {
   description = "Path to the azure-pipelines.yml file"
+  type        = string
+}
+variable "github_pat_expiry" {
+  description = "GitHub PAT expiry date in ISO 8601 format (YYYY-MM-DD)"
   type        = string
 }

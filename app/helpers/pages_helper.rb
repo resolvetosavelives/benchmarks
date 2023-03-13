@@ -24,7 +24,6 @@ module PagesHelper
       document.author,
       document.description,
       document.relevant_pages,
-      document.download_url,
       document.thumbnail_url
     ].any?(&:present?)
   end

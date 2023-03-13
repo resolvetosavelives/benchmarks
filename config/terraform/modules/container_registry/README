@@ -1,0 +1,4 @@
+The Container Registry module provisions an Azure Container registry to store our app images.
+It also provisions two ACR tasks - one to build the base image and one to build the app image.
+
+These tasks can be run in the pipeline or manually with `az acr task run...`

@@ -1,6 +1,24 @@
 require "ferrum"
 
 module CapybaraHelpers
+  def login_as(email, role: "user")
+    click_link "LOG IN" unless current_path == "/users/sign_in"
+    expect(page).to have_current_path("/users/sign_in")
+
+    user =
+      User.find_by(email: email) ||
+        User.create!(email: email, password: "abc123")
+    user.update!(role: role)
+
+    find("#email").fill_in(with: email)
+    find("#password").fill_in(with: "abc123")
+    find("form input[type=submit]").trigger(:click)
+    expect(page).to have_current_path("/plans")
+
+    # Refresh page after changing role
+    visit current_path
+  end
+
   ##
   # usage: select_from_chosen('Option', from: 'id_of_field')
   #   example, Get Started form: select_from_chosen('Armenia', from: 'get_started_form_country_id')
@@ -66,5 +84,27 @@ module CapybaraHelpers
     File.open(state_from_server_json_file, "w") do |f|
       f.write(JSON.pretty_generate(file_data))
     end
+  end
+
+  def find_is_admin_cell(user_id)
+    find("tr[data-resource-id=\"#{user_id}\"]").find(
+      "td[data-field-id=\"is_admin\"]"
+    )
+  end
+
+  # We use a css color class to tell whether row is marked as admin or not since
+  # there's nothing else on the page to check against
+  def is_admin_css
+    ".text-green-600"
+  end
+
+  def is_not_admin_css
+    ".text-red-500"
+  end
+
+  def visit_manage_users
+    expect(page).to have_current_path("/plans")
+    click_link "Users"
+    expect(page).to have_current_path("/manage/resources/users")
   end
 end

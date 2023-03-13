@@ -1,12 +1,15 @@
 require "system_helper"
 
 RSpec.describe "Happy Path", type: :system, js: true do
-  scenario "happy path for Nigeria JEE 1.0" do
-    puts "Running happy path for Nigeria JEE 1.0"
+  before do
     retry_on_pending_connection { visit(root_path) }
 
-    click_on("Get Started", match: :first) until current_path == "/get-started"
+    click_on("Get Started")
+    expect(page).to have_current_path("/get-started")
     expect(page).to have_content("LET'S GET STARTED")
+  end
+
+  scenario "happy path for Nigeria JEE 1.0" do
     select_from_chosen "Nigeria", from: "get_started_form_country_id"
     click_on "Next"
 
@@ -65,32 +68,13 @@ RSpec.describe "Happy Path", type: :system, js: true do
     find("#plan_name").fill_in(with: "Saved Nigeria Plan 789")
     find("input[type=submit]").trigger(:click)
 
-    ##
-    # wind up on sign-in page and go to create an account
-    expect(page).to have_current_path("/users/sign_in")
-    click_link "Create an account"
+    # wind up on sign-in page and log in
+    login_as("email@example.com")
 
-    ##
-    # wind up on create account page
-    expect(page).to have_current_path("/users/sign_up")
-    sleep 0.1
-    find("#user_email").fill_in(with: "email@example.com")
-    find("#user_password").fill_in(with: "123123")
-    find("#user_password_confirmation").fill_in(with: "123123")
-    find("#new_user input[type=submit]").trigger(:click)
-
-    ##
-    # wind up on create account page
-    expect(page).to have_current_path("/plans")
-    expect(page).to have_content("Welcome! You have signed up successfully.")
     expect(page).to have_content("Saved Nigeria Plan 789")
   end
 
   scenario "happy path for Nigeria JEE 1.0 with influenza, cholera, and ebola" do
-    puts "Running happy path for Nigeria JEE 1.0 with influenza, cholera, and ebola"
-    retry_on_pending_connection { visit(root_path) }
-    click_on("Get Started", match: :first) until current_path == "/get-started"
-    expect(page).to have_content("LET'S GET STARTED")
     select_from_chosen("Nigeria", from: "get_started_form_country_id")
     click_on "Next"
     choose "Joint External Evaluation (JEE)"
@@ -248,23 +232,9 @@ RSpec.describe "Happy Path", type: :system, js: true do
     find("input[type=submit]").trigger(:click)
 
     ##
-    # wind up on sign-in page and go to create an account
-    expect(page).to have_current_path("/users/sign_in")
-    click_link "Create an account"
+    # wind up on sign-in page and log in
+    login_as("email@example.com")
 
-    ##
-    # wind up on create account page
-    expect(page).to have_current_path("/users/sign_up")
-    sleep 0.1
-    find("#user_email").fill_in(with: "email@example.com")
-    find("#user_password").fill_in(with: "123123")
-    find("#user_password_confirmation").fill_in(with: "123123")
-    find("#new_user input[type=submit]").trigger(:click)
-
-    ##
-    # make sure the plan was saved
-    expect(page).to have_current_path("/plans")
-    expect(page).to have_content("Welcome! You have signed up successfully.")
     expect(page).to have_content("Saved Nigeria Plan 789")
 
     ##
@@ -299,10 +269,6 @@ RSpec.describe "Happy Path", type: :system, js: true do
   end
 
   scenario "happy path for Armenia SPAR 2018 5-year plan" do
-    puts "Armenia SPAR 2018 5-year plan"
-    retry_on_pending_connection { visit root_path }
-    click_on("Get Started", match: :first) until current_path == "/get-started"
-    expect(page).to have_content("LET'S GET STARTED")
     select_from_chosen("Armenia", from: "get_started_form_country_id")
     click_on "Next"
     choose "State Party Self-Assessment Annual Report (SPAR)"
@@ -324,7 +290,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
 
     ##
     # wind up on the View Plan page, make an edit, and save the plan
-    expect(page).to have_current_path(%r{^\/plans\/\d+$})
+    expect(page).to have_current_path(%r{^/plans/\d+$})
     expect(find("#plan_name").value).to eq("Armenia draft plan")
     expect(find(".action-count-component .label").text).to eq("Actions")
 
@@ -337,31 +303,15 @@ RSpec.describe "Happy Path", type: :system, js: true do
     find("input[type=submit]").trigger(:click)
 
     ##
-    # wind up on the Sign In page, go to Create an Account
-    expect(page).to have_current_path("/users/sign_in")
-    click_link "Create an account"
-
-    ##
-    # at the Create an Account page, fill and submit the form
-    expect(page).to have_current_path("/users/sign_up")
-    sleep 0.1
-    find("#user_email").fill_in(with: "email@example.com")
-    find("#user_password").fill_in(with: "123123")
-    find("#user_password_confirmation").fill_in(with: "123123")
-    find("#new_user input[type=submit]").trigger(:click)
+    # wind up on sign-in page and log in
+    login_as("email@example.com")
 
     ##
     # wind up on the View Plan page, make an edit, and save the plan
-    expect(page).to have_current_path("/plans")
-    expect(page).to have_content("Welcome! You have signed up successfully.")
     expect(page).to have_content("Saved Armenia Plan")
   end
 
   scenario "happy path for Nigeria JEE 1.0 plan by technical areas 5-year" do
-    puts "Nigeria JEE 1.0 plan by technical areas 5-year"
-    retry_on_pending_connection { visit root_path }
-    click_on("Get Started", match: :first) until current_path == "/get-started"
-    expect(page).to have_content("LET'S GET STARTED")
     select_from_chosen "Nigeria", from: "get_started_form_country_id"
     click_on "Next"
     choose "Joint External Evaluation (JEE)" #   fails form validation. extra weird because that same flow works in the other test cases.
@@ -393,7 +343,7 @@ RSpec.describe "Happy Path", type: :system, js: true do
 
     ##
     # turn up on the View Plan, make an edit, save the plan
-    expect(page).to have_current_path(%r{^\/plans\/\d+$})
+    expect(page).to have_current_path(%r{^/plans/\d+$})
     expect(find("#plan_name").value).to eq("Nigeria draft plan")
     expect(find(".action-count-component .label").text).to eq("Actions")
     expect(find(".action-count-component .count").text).to eq("28")
@@ -431,22 +381,10 @@ RSpec.describe "Happy Path", type: :system, js: true do
     find("input[type=submit]").trigger(:click)
 
     ##
-    # wind up on sign-in page and go to create an account
-    expect(page).to have_current_path("/users/sign_in")
-    click_link "Create an account"
-
-    ##
-    # wind up on create account page
-    expect(page).to have_current_path("/users/sign_up")
-    sleep 0.1
+    # wind up on sign-in page and log in
     email = "email@example.com"
-    find("#user_email").fill_in(with: email)
-    find("#user_password").fill_in(with: "123123")
-    find("#user_password_confirmation").fill_in(with: "123123")
-    find("#new_user input[type=submit]").trigger(:click)
+    login_as(email)
 
-    expect(page).to have_current_path("/plans")
-    expect(page).to have_content("Welcome! You have signed up successfully.")
     expect(page).to have_content("Saved Nigeria Plan by Areas 789") # ugh without this form field(s) dont get filled
 
     ##

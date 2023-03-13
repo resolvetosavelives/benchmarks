@@ -38,18 +38,16 @@ resource "azuread_application" "app" {
     }
   }
 
+  # You can find specific permission ids here https://docs.microsoft.com/en-us/graph/permissions-reference#all-permissions-and-ids
   required_resource_access {
-    resource_app_id = "00000003-0000-0000-c000-000000000000"
+    resource_app_id = "00000003-0000-0000-c000-000000000000" # Microsoft Graph
 
-    # resource_access {
-    #   id   = "64a6cdd6-aab1-4aaf-94b8-3cc8405e90d0" # email
-    #   type = "Scope"
-    # }
     resource_access {
-      id   = "e1fe6dd8-ba31-4d61-89e7-88639da4683d" # User.Read (profile and sign in)
-      type = "Scope"
+      id   = "09850681-111b-4a89-9bed-3f2cae46d706" # application User.Invite.All (invite a guest user)
+      type = "Role"
     }
   }
+
   web {
     homepage_url  = "https://${var.domain}"
     logout_url    = "https://${var.domain}/logout"

@@ -2,9 +2,9 @@
 
 ## Setup
 
-Install posgresql. Try [Postgres.app](https://postgresapp.com/) to make this easy on Mac.
+Install postgresql. Try [Postgres.app](https://postgresapp.com/) to make this easy on Mac.
 
-Install posgres so the `pg` ruby gem can compile
+Install postgres so the `pg` ruby gem can compile
 
     brew install postgresql
 
@@ -81,6 +81,7 @@ We may want to do the same with staging to mirror production. The slots share th
 We manage whatever infrastructure we can with Terraform.
 We are somewhat limited by World Health Organization permissions, which prevent our creation of certain pieces of the infrastructure.
 These manually created pieces are mentioned in the terraform config where necessary.
+The infrastructure and deploy relies on a GitHub PAT that expires yearly.
 
 See [config/terraform/README.md](config/terraform/README.md) for more details.
 
@@ -129,13 +130,12 @@ The file `config/master.key` that accompanies this encrypted file. You will need
 
 These apply mostly to the heroku app.
 
-- `WEBSITE_HOSTNAME`
+- `APPLICATION_HOST`
 - `PAPERTRAIL_API_TOKEN`
 - `SENDGRID_API_KEY`
 - `SENDGRID_PASSWORD`
 - `SENDGRID_USERNAME`
 - `SENTRY_DSN` (used for server-side ruby and browser-side javascript to report errors)
-- `SKYLIGHT_AUTHENTICATION`
 - `SECRET_KEY_BASE`
 
 ## A note on 3rd party libraries used

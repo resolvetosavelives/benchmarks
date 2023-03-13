@@ -198,13 +198,39 @@ RSpec.describe "Plans", type: :request do
         get plan_url(plan)
         expect(response).to have_http_status(:success)
       end
+    end
+  end
 
-      describe "viewing someone else's plan" do
-        it "redirects away" do
-          plan = create(:plan_nigeria_jee1)
-          get plan_url(plan)
-          expect(response).to redirect_to(root_path)
-        end
+  describe "#update" do
+    let(:plan) { create(:plan, :with_user) }
+    let(:params) do
+      {
+        plan: {
+          name: "Updated plan name",
+          benchmark_action_ids: [1, 2, 3].to_json
+        }
+      }
+    end
+
+    it "redirects for an invalid plan ID" do
+      patch plan_url(123), params: params
+      expect(response).to redirect_to(root_path)
+    end
+
+    describe "updating someone else's plan" do
+      it "redirects away" do
+        user = create(:user)
+        sign_in(user)
+        patch plan_url(plan), params: params
+        expect(response).to redirect_to(root_path)
+      end
+    end
+
+    describe "with logged in user" do
+      it "redirects to plans" do
+        sign_in(plan.user)
+        patch plan_url(plan), params: params
+        expect(response).to redirect_to(plans_url)
       end
     end
   end

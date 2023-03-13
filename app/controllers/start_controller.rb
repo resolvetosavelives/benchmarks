@@ -8,9 +8,9 @@ class StartController < ApplicationController
 
   def create
     if @get_started_form.blank_assessment
-      redirect_to start_path(id: @get_started_form.country_id, blank: true)
+      redirect_to start_url(id: @get_started_form.country_id, blank: true)
     else
-      redirect_to start_path(id: @get_started_form.country_id)
+      redirect_to start_url(id: @get_started_form.country_id)
     end
   end
 

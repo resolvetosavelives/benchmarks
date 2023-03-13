@@ -1,0 +1,14 @@
+#cloud-config
+
+# Runcmd writes the script to be run later by the scripts-user cloud init module.
+# It does not actually run the script itself
+# More docs here https://cloudinit.readthedocs.io/en/latest/topics/modules.html#runcmd
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+packages:
+  - curl
+  - gnupg
+  - lsb-release
+  - software-properties-common

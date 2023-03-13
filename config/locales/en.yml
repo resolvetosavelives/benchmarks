@@ -31,3 +31,13 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      access_request:
+        tos_accepted_at: "Terms and conditions"
+    errors:
+      models:
+        access_request:
+          attributes:
+            tos_accepted_at:
+              blank: "must be accepted"

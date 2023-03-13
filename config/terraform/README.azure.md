@@ -72,7 +72,7 @@ Along with the Azure-related new code and modifications to the app, there are so
 ### Azure-specific points:
 
 - Add gem `tzinfo`.
-- Web host name constant `BENCHMARKS_HOST` => `WEBSITE_HOSTNAME`.
+- Web host name constant `BENCHMARKS_HOST` => `APPLICATION_HOST`.
 - Remove constant `SENTRY_AUTH_TOKEN` which enables uploading of source maps to Sentry at release time but was problematic with Azure (could be re-added later).
 - Azure App Service app setting constant `DOCKER_ENABLE_CI` is omitted from Azure/MS documentation.
 - Use full paths for starting the app via puma (errors occur otherwise.)

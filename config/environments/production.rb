@@ -3,6 +3,8 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.azure_auth_mocked = false
+
   # Require email confirmation after signup before allowing login
   config.confirmation_required = true
 
@@ -69,13 +71,13 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {
     protocol: "https",
-    host: Rails.application.config.website_hostname
+    host: Rails.application.config.application_host
   }
 
   unless Rails.application.config.asset_compilation
     config.action_mailer.delivery_method = :sendgrid_actionmailer
     config.action_mailer.sendgrid_actionmailer_settings = {
-      api_key: Rails.application.credentials.sendgrid_password!,
+      api_key: ENV.fetch("SENDGRID_API_KEY", nil),
       raise_delivery_errors: true
     }
   end
