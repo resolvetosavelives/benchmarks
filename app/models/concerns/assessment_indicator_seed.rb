@@ -21,14 +21,14 @@ module AssessmentIndicatorSeed
           assessment_technical_area: assessment_technical_area,
           text: attrs[:text],
           named_id: attrs[:named_id],
-          sequence: attrs[:sequence],
+          sequence: attrs[:sequence]
         )
       end
     end
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name} CASCADE",
+        "DELETE FROM #{table_name} CASCADE"
       )
     end
   end

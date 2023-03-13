@@ -17,8 +17,8 @@ class AddCountriesAndAlterPlans < ActiveRecord::Migration[5.2]
     add_index :countries, :alpha2, unique: true
     add_index :countries, :alpha3, unique: true
 
-    delete_all_pas   = "DELETE FROM plan_activities"
-    delete_all_pbis  = "DELETE FROM plan_benchmark_indicators"
+    delete_all_pas = "DELETE FROM plan_activities"
+    delete_all_pbis = "DELETE FROM plan_benchmark_indicators"
     delete_all_plans = "DELETE FROM plans"
     ActiveRecord::Base.connection.exec_query delete_all_pas
     ActiveRecord::Base.connection.exec_query delete_all_pbis
@@ -37,7 +37,13 @@ class AddCountriesAndAlterPlans < ActiveRecord::Migration[5.2]
 
     remove_column :assessments, :country
     add_column :assessments, :country_alpha3, :string, limit: 3
-    add_foreign_key :assessments, :countries, column: "country_alpha3", primary_key: "alpha3"
-    add_foreign_key :plans, :countries, column: "country_alpha3", primary_key: "alpha3"
+    add_foreign_key :assessments,
+                    :countries,
+                    column: "country_alpha3",
+                    primary_key: "alpha3"
+    add_foreign_key :plans,
+                    :countries,
+                    column: "country_alpha3",
+                    primary_key: "alpha3"
   end
 end

@@ -107,8 +107,8 @@ class BarChart extends React.Component {
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
     const countActionsByActionType = this.props.countActionsByActionType
-    const matrixOfActionCountsByActionTypeAndDisease = this.props
-      .matrixOfActionCountsByActionTypeAndDisease
+    const matrixOfActionCountsByActionTypeAndDisease =
+      this.props.matrixOfActionCountsByActionTypeAndDisease
     const chartistGraph = this.chartistGraphInstance
     const selectedActionTypeOrdinal = this.props.selectedActionTypeOrdinal
     const chartLabels = this.chartLabels

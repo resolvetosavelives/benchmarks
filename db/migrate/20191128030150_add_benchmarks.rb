@@ -49,16 +49,22 @@ class AddBenchmarks < ActiveRecord::Migration[5.2]
       t.integer :assessment_indicator_id
       t.integer :benchmark_indicator_id
     end
-    add_foreign_key :assessment_indicators_benchmark_indicators, :assessment_indicators
-    add_foreign_key :assessment_indicators_benchmark_indicators, :benchmark_indicators
+    add_foreign_key :assessment_indicators_benchmark_indicators,
+                    :assessment_indicators
+    add_foreign_key :assessment_indicators_benchmark_indicators,
+                    :benchmark_indicators
     add_index(
       :assessment_indicators_benchmark_indicators,
-      [:assessment_indicator_id, :benchmark_indicator_id],
+      %i[assessment_indicator_id benchmark_indicator_id],
       unique: true,
       name: "BI_to_EI_each_pair_must_be_unique" # auto-generated name was exceeding the limit
     )
-    add_index :assessment_indicators_benchmark_indicators, :assessment_indicator_id, name: "BI_to_EI_assessment_indicator_id"
-    add_index :assessment_indicators_benchmark_indicators, :benchmark_indicator_id, name: "BI_to_EI_benchmark_indicator_id"
+    add_index :assessment_indicators_benchmark_indicators,
+              :assessment_indicator_id,
+              name: "BI_to_EI_assessment_indicator_id"
+    add_index :assessment_indicators_benchmark_indicators,
+              :benchmark_indicator_id,
+              name: "BI_to_EI_benchmark_indicator_id"
 
     create_table :benchmark_indicator_activities do |t|
       t.integer :benchmark_indicator_id
@@ -83,8 +89,12 @@ class AddBenchmarks < ActiveRecord::Migration[5.2]
     add_foreign_key :plan_benchmark_indicators, :assessment_indicators
     add_foreign_key :plan_benchmark_indicators, :benchmark_indicators
     add_index :plan_benchmark_indicators, :plan_id
-    add_index :plan_benchmark_indicators, [:plan_id, :assessment_indicator_id], name: "plan_BIs_plan_id_and_assessment_indicator_id"
-    add_index :plan_benchmark_indicators, [:plan_id, :benchmark_indicator_id], name: "plan_BIs_plan_id_and_benchmark_indicator_id"
+    add_index :plan_benchmark_indicators,
+              %i[plan_id assessment_indicator_id],
+              name: "plan_BIs_plan_id_and_assessment_indicator_id"
+    add_index :plan_benchmark_indicators,
+              %i[plan_id benchmark_indicator_id],
+              name: "plan_BIs_plan_id_and_benchmark_indicator_id"
 
     create_table :plan_activities do |t|
       t.integer :plan_id
@@ -97,6 +107,6 @@ class AddBenchmarks < ActiveRecord::Migration[5.2]
     add_foreign_key :plan_activities, :benchmark_indicator_activities
     add_foreign_key :plan_activities, :benchmark_indicators
     add_index :plan_activities, :plan_id
-    add_index :plan_activities, [:plan_id, :benchmark_indicator_id]
+    add_index :plan_activities, %i[plan_id benchmark_indicator_id]
   end
 end

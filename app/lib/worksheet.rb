@@ -24,10 +24,13 @@ class Worksheet
     current_worksheet = nil
     @benchmark_technical_areas.each do |benchmark_technical_area|
       indicator_actions =
-        benchmark_technical_area.benchmark_indicators
+        benchmark_technical_area
+          .benchmark_indicators
           .map do |benchmark_indicator|
-          [benchmark_indicator, @plan.actions_for(benchmark_indicator)]
-        end.reject { |i, a| a.empty? }.to_h
+            [benchmark_indicator, @plan.actions_for(benchmark_indicator)]
+          end
+          .reject { |i, a| a.empty? }
+          .to_h
       next if indicator_actions.empty?
 
       current_worksheet =

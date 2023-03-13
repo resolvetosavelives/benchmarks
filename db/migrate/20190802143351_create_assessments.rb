@@ -7,6 +7,6 @@ class CreateAssessments < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :assessments, [:country, :assessment_type], unique: true
+    add_index :assessments, %i[country assessment_type], unique: true
   end
 end

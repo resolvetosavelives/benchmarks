@@ -11,9 +11,9 @@ module CountrySeed
           File.read(
             File.join(
               Rails.root,
-              "/db/seed-data/ISO-3166-Countries-with-Regional-Codes-all.json",
-            ),
-          ),
+              "/db/seed-data/ISO-3166-Countries-with-Regional-Codes-all.json"
+            )
+          )
         )
       eval_indicators_attrs.each do |attrs|
         Country.create(
@@ -26,7 +26,7 @@ module CountrySeed
           intermediate_region: attrs["intermediate-region"],
           region_code: attrs["region-code"],
           sub_region_code: attrs["sub-region-code"],
-          intermediate_region_code: attrs["intermediate-region-code"],
+          intermediate_region_code: attrs["intermediate-region-code"]
         )
       end
     end

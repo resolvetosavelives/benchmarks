@@ -17,14 +17,14 @@ module AssessmentTechnicalAreaSeed
           assessment_publication: ep,
           named_id: attrs[:named_id],
           text: attrs[:text],
-          sequence: attrs[:sequence],
+          sequence: attrs[:sequence]
         )
       end
     end
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name} CASCADE",
+        "DELETE FROM #{table_name} CASCADE"
       )
     end
   end

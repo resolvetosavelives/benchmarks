@@ -130,8 +130,8 @@ class BarChartByTechnicalArea extends React.Component {
 
   initInteractivityForChart() {
     const dispatch = this.props.dispatch
-    const matrixOfActionCountsByTechnicalAreaAndDisease = this.props
-      .matrixOfActionCountsByTechnicalAreaAndDisease
+    const matrixOfActionCountsByTechnicalAreaAndDisease =
+      this.props.matrixOfActionCountsByTechnicalAreaAndDisease
     const technicalAreas = this.props.technicalAreas
     const chartistGraph = this.chartistGraphInstance
     const selectedTechnicalAreaId = this.props.selectedTechnicalAreaId
@@ -307,9 +307,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
     technicalAreas: getAllTechnicalAreas(state),
     chartLabels: getPlanChartLabels(state),
     allActions: getAllActions(state),
-    matrixOfActionCountsByTechnicalAreaAndDisease: getMatrixOfActionCountsByTechnicalAreaAndDisease(
-      state
-    ),
+    matrixOfActionCountsByTechnicalAreaAndDisease:
+      getMatrixOfActionCountsByTechnicalAreaAndDisease(state),
     countActionsByTechnicalArea: countActionsByTechnicalArea(state),
     selectedTechnicalAreaId: getSelectedTechnicalAreaId(state),
     ui: getUi(state),

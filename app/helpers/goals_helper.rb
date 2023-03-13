@@ -4,9 +4,9 @@ module GoalsHelper
       File.read(
         File.join(
           Rails.root,
-          "/app/fixtures/assessment_display_abbreviations.json",
-        ),
-      ),
+          "/app/fixtures/assessment_display_abbreviations.json"
+        )
+      )
     )
 
   ##

@@ -53,9 +53,8 @@ const mapStateToProps = (state /*, ownProps*/) => {
     planActionIds: getPlanActionIds(state),
     allActions: getAllActions(state),
     countActionsByActionType: countActionsByActionType(state),
-    matrixOfActionCountsByActionTypeAndDisease: getMatrixOfActionCountsByActionTypeAndDisease(
-      state
-    ),
+    matrixOfActionCountsByActionTypeAndDisease:
+      getMatrixOfActionCountsByActionTypeAndDisease(state),
     selectedActionTypeOrdinal: getSelectedActionTypeOrdinal(state),
     selectedChartTabIndex: getSelectedChartTabIndex(state),
     ui: getUi(state),

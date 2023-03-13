@@ -12,14 +12,15 @@ module BenchmarkTechnicalAreaSeed
       benchmark_ta_attrs.each do |hash_attrs|
         attrs = hash_attrs.with_indifferent_access
         BenchmarkTechnicalArea.create!(
-          text: attrs[:text], sequence: attrs[:sequence],
+          text: attrs[:text],
+          sequence: attrs[:sequence]
         )
       end
     end
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name} CASCADE",
+        "DELETE FROM #{table_name} CASCADE"
       )
     end
   end

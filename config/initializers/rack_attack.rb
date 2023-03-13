@@ -25,7 +25,7 @@ class Rack::Attack
   # Throttle all requests by IP (60rpm)
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
-  throttle('req/ip', limit: 300, period: 5.minutes, &:ip)
+  throttle("req/ip", limit: 300, period: 5.minutes, &:ip)
 
   ### Prevent Brute-Force Login Attacks ###
 
@@ -39,8 +39,8 @@ class Rack::Attack
   # Throttle POST requests to /users/sign_in by IP address
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:logins/ip:#{req.ip}"
-  throttle('logins/ip', limit: 5, period: 20.seconds) do |req|
-    req.ip if req.path == '/users/sign_in' && req.post?
+  throttle("logins/ip", limit: 5, period: 20.seconds) do |req|
+    req.ip if req.path == "/users/sign_in" && req.post?
   end
 
   # Throttle POST requests to /users/sign_in by user[email] param
@@ -51,10 +51,10 @@ class Rack::Attack
   # throttle logins for another user and force their login requests to be
   # denied, but that's not very common and shouldn't happen to you. (Knock
   # on wood!)
-  throttle('logins/email', limit: 5, period: 20.seconds) do |req|
-    if req.path == '/users/sign_in' && req.post?
+  throttle("logins/email", limit: 5, period: 20.seconds) do |req|
+    if req.path == "/users/sign_in" && req.post?
       # return the email if present, nil otherwise
-      req.params['user[email]'].presence
+      req.params["user[email]"].presence
     end
   end
 

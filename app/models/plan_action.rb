@@ -7,7 +7,7 @@ class PlanAction < ApplicationRecord
   default_scope do
     includes(:benchmark_indicator_action).order(
       "benchmark_indicator_actions.level",
-      "benchmark_indicator_actions.sequence",
+      "benchmark_indicator_actions.sequence"
     )
   end
 
@@ -16,10 +16,9 @@ class PlanAction < ApplicationRecord
   def self.new_for_benchmark_action(benchmark_indicator_action)
     new(
       benchmark_indicator_action: benchmark_indicator_action,
-      benchmark_indicator_id:
-        benchmark_indicator_action.benchmark_indicator_id,
+      benchmark_indicator_id: benchmark_indicator_action.benchmark_indicator_id,
       benchmark_technical_area_id:
-        benchmark_indicator_action.benchmark_technical_area_id,
+        benchmark_indicator_action.benchmark_technical_area_id
     )
   end
 end

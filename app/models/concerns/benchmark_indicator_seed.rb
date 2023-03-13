@@ -26,7 +26,7 @@ module BenchmarkIndicatorSeed
             "#{attrs[:technical_area_sequence]}.#{attrs[:sequence]}",
           sequence: attrs[:sequence],
           text: attrs[:text],
-          objective: attrs[:objective],
+          objective: attrs[:objective]
         )
       end
     end
@@ -34,7 +34,7 @@ module BenchmarkIndicatorSeed
     def seed_many_to_many!
       result =
         ActiveRecord::Base.connection.exec_query(
-          "SELECT COUNT(*) FROM assessment_indicators_benchmark_indicators",
+          "SELECT COUNT(*) FROM assessment_indicators_benchmark_indicators"
         )
       existing_many_to_many_count = result.first["count"]
       return unless existing_many_to_many_count.zero?
@@ -50,7 +50,7 @@ module BenchmarkIndicatorSeed
           AssessmentIndicator.find_by_named_id!(attrs[:named_id])
         benchmark_indicator =
           BenchmarkIndicator.find_by_display_abbreviation!(
-            attrs[:benchmark_indicator_display_abbreviation],
+            attrs[:benchmark_indicator_display_abbreviation]
           )
         benchmark_indicator.assessment_indicators << assessment_indicator
       end
@@ -58,10 +58,10 @@ module BenchmarkIndicatorSeed
 
     def unseed!
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM assessment_indicators_benchmark_indicators CASCADE",
+        "DELETE FROM assessment_indicators_benchmark_indicators CASCADE"
       )
       ActiveRecord::Base.connection.exec_query(
-        "DELETE FROM #{table_name} CASCADE",
+        "DELETE FROM #{table_name} CASCADE"
       )
     end
   end
