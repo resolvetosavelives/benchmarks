@@ -21,6 +21,13 @@ module RtslBenchmarks
   class Application < Rails::Application
     # used where we display the app name, such as the admin panel pages
     config.app_name = "IHR Benchmarks"
+    config.site_title = "IHR Benchmark"
+    config.logo = { src: "who-logo.svg", alt: "WHO Logo" }
+    config.copyright = -> do
+      "© #{Date.today.year} World Health Organization. All rights reserved."
+    end
+    config.contact_email =
+      ENV.fetch("CONTACT_EMAIL", "asantos@resolvetosavelives.org")
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0

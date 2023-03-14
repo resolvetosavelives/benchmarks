@@ -17,7 +17,9 @@
 <p>---</p>
 
 <p>
-  © <%= Date.today.year %> World Health Organization. All rights reserved.
-  <br>
+  <% if Rails.application.config.copyright %>
+    <%= Rails.application.config.copyright.call %>
+    <br>
+  <% end %>
   <%= link_to "Privacy Policy", privacy_policy_url %>
 </p>

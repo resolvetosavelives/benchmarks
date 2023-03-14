@@ -1,4 +1,6 @@
-<%= link_to main_app.root_url, class: 'logo-placeholder h-full w-full flex justify-start' do %>
-  <%= image_tag 'who-logo.svg', class: 'hidden sm:block object-contain', title: 'WHO Logo' %>
-  <%= image_tag 'who-logo.svg', class: 'sm:hidden object-contain', title: 'WHO Logo' %>
+<% if Rails.application.config.logo %>
+  <%= link_to main_app.root_url, class: 'logo-placeholder h-full w-full flex justify-start' do %>
+    <%= image_tag Rails.application.config.logo[:src], class: 'hidden sm:block object-contain', title: Rails.application.config.logo[:alt] %>
+    <%= image_tag Rails.application.config.logo[:src], class: 'sm:hidden object-contain', title: Rails.application.config.logo[:alt] %>
+  <% end %>
 <% end %>
