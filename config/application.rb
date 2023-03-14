@@ -22,10 +22,8 @@ module RtslBenchmarks
     # used where we display the app name, such as the admin panel pages
     config.app_name = "IHR Benchmarks"
     config.site_title = "IHR Benchmark"
-    config.logo = { src: "who-logo.svg", alt: "WHO Logo" }
-    config.copyright = -> do
-      "© #{Date.today.year} World Health Organization. All rights reserved."
-    end
+    config.logo = nil # { src: "who-logo.svg", alt: "WHO Logo" }
+    config.copyright = nil # -> { "© #{Date.today.year} World Health Organization. All rights reserved." }
     config.contact_email =
       ENV.fetch("CONTACT_EMAIL", "asantos@resolvetosavelives.org")
 
