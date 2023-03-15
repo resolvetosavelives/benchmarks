@@ -12,7 +12,7 @@
 
 <p>Or copy and paste this link into your browser <%= confirmation_url(@resource, confirmation_token: @token) %></p>
 
-<p><%= mail_to "sla@resolvetosavelives.org", "Need help?" %></p>
+<p><%= mail_to Rails.application.config.contact_email, "Need help?" %></p>
 
 <p>---</p>
 
