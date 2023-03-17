@@ -21,6 +21,7 @@ module ReferenceLibraryDocumentSeed
 
     def unseed!
       ReferenceLibraryDocument.destroy_all
+      ActiveRecord::Base.connection.reset_pk_sequence!(table_name)
     end
 
     def write_seed!
