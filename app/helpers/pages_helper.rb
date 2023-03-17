@@ -41,4 +41,20 @@ module PagesHelper
   def zero_to_one_index(idx)
     idx + 1
   end
+
+  def reference_library_params
+    params
+      .permit(:page, :technical_area, reference_types: [])
+      .with_defaults(page: 1)
+  end
+
+  def remove_technical_area_param
+    reference_library_params.to_h.except(:technical_area)
+  end
+
+  def remove_reference_type_param(type)
+    new_params = reference_library_params.to_h
+    new_params[:reference_types] -= [type]
+    new_params
+  end
 end

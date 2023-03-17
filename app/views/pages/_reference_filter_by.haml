@@ -3,29 +3,27 @@
     .tab
       Filter by
   .card-body
-    %form{"data-reference-library-target": "filterForm"}
+    %form{method: "get"}
       .form-row.flex-column
         .col
           %strong
             Technical Area
         .col
-          = select_tag :technical_area_id, options_from_collection_for_select(@technical_areas, :id, :text), {include_blank: true, prompt: "Type or select an option", class: "custom-select", "data-reference-library-target": "technicalAreaSelect"}
+          = select_tag :technical_area, options_from_collection_for_select(@technical_areas, :text, :text, params[:technical_area]), {prompt: "Type or select an option", class: "custom-select", onchange: 'this.form.submit()', "data-reference-library-target": "technicalAreaSelect"}
       .form-row.flex-column
         .col
           %strong
             Reference Type
         .col
-          - @ref_doc_types.each_with_index do |document_type, idx|
-            - document_type_underscored = phrase_to_underscore(document_type)
-            - one_based_index = zero_to_one_index(idx)
+          - @ref_doc_types.each do |document_type|
             %input{
               type: "checkbox",
-              value: one_based_index,
-              name: document_type_underscored,
-              id: document_type_underscored,
-              "data-action": "reference-library#handleCheckboxToggle",
-              "data-reference-library-target": "checkboxForReferenceType"
+              value: document_type,
+              name: "reference_types[]",
+              id: document_type,
+              onchange: "this.form.submit()",
+              checked: params[:reference_types]&.include?(document_type)
             }/
-            %label{for: document_type_underscored}
+            %label{for: document_type}
               = document_type
             .w-100

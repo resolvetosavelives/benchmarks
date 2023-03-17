@@ -1,8 +1,4 @@
-.reference-library{
-  "data-controller": "reference-library",
-  "data-reference-library-technical-areas": @technical_areas.to_json,
-  "data-reference-library-template-selector": "#templateForFilterCriterionBadgePill"
-}
+.reference-library{"data-controller": "reference-library"}
   = link_to "Add Resource", "https://airtable.com/shrGiWYwJV7TSJNMu", class: "btn btn-primary", role: "button", style: "float: right; margin-top: 6px;"
   %h1 Reference Library
   .row.flex-wrap-reverse
@@ -11,36 +7,43 @@
     .col-lg-8.col-md-12
       .result-metadata
         %p
-          %a{
-            href: "#",
-            "data-action": "reference-library#resetForm",
-            "data-turb": "false"
-          }
-            Reset
+          = link_to "Reset", reference_library_url
           %span.pipe-with-space
             |
           %strong
             Selections:
-          %span#filterCriteriaDisplay{
-            "data-reference-library-target": "filterCriteriaDisplay"
-          }
+          %span#filterCriteriaDisplay
+            - if params[:technical_area]
+              %span.badge.badge-pill
+                = params[:technical_area]
+                = link_to reference_library_path(remove_technical_area_param) do
+                  %svg.x-close{xmlns: "http://www.w3.org/2000/svg"}
+                    %path{
+                      d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"
+                    }
+                    %path{
+                      d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"
+                    }
+            - params[:reference_types]&.each do |type|
+              %span.badge.badge-pill
+                = type
+                = link_to reference_library_path(remove_reference_type_param(type)) do
+                  %svg.x-close{xmlns: "http://www.w3.org/2000/svg"}
+                    %path{
+                      d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"
+                    }
+                    %path{
+                      d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"
+                    }
         %p
           Showing
-          %span{"data-reference-library-target": "documentCount"}
+          %span
+            %b
+              = @documents.count
+            references
       .document-container
         - @documents.each do |document|
           = render partial: "reference_document", locals: {document: document}
-%script#templateForFilterCriterionBadgePill{type: "text/html"}
-  %span.badge.badge-pill
-    {{text}}
-    %svg.x-close{
-      xmlns: "http://www.w3.org/2000/svg",
-      "data-action": "click->reference-library\#{{methodName}}",
-      "data-ordinal": "{{ordinal}}"
-    }
-      %path{
-        d: "M5.646 5.646a.5.5 0 000 .708l8 8a.5.5 0 00.708-.708l-8-8a.5.5 0 00-.708 0z"
-      }
-      %path{
-        d: "M14.354 5.646a.5.5 0 010 .708l-8 8a.5.5 0 01-.708-.708l8-8a.5.5 0 01.708 0z"
-      }
+  .row
+    .col.p-5.h5.d-flex.justify-content-center
+      = paginate @documents
