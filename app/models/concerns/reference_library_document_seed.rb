@@ -39,34 +39,36 @@ module ReferenceLibraryDocumentSeed
     end
 
     def update_from_airtable!
-      puts "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
-      unseed!
+      ReferenceLibraryDocument.transaction do
+        puts "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
+        unseed!
 
-      puts "Fetching all documents..."
-      new_docs = Airtable::ReferenceLibraryDocument.fetch_approved
-      puts "Found #{new_docs.size} new documents."
-      return if new_docs.empty?
+        puts "Fetching all documents..."
+        new_docs = Airtable::ReferenceLibraryDocument.fetch_approved
+        puts "Found #{new_docs.size} new documents."
+        return if new_docs.empty?
 
-      puts "Looking up actions for new documents..."
+        puts "Looking up actions for new documents..."
 
-      action_map = BenchmarkIndicatorAction.all.map { |a| [a.text, a] }.to_h
+        action_map = BenchmarkIndicatorAction.all.map { |a| [a.text, a] }.to_h
 
-      import_docs =
-        new_docs.map do |d|
-          attrs = d.to_attrs
-          actions =
-            attrs
-              .delete(:benchmark_indicator_actions)
-              .map { |a| action_map.fetch(a) }
-          attrs[:benchmark_indicator_actions] = actions
-          print "."
-          ReferenceLibraryDocument.new(attrs)
-        end
-      print "\n"
+        import_docs =
+          new_docs.map do |d|
+            attrs = d.to_attrs
+            actions =
+              attrs
+                .delete(:benchmark_indicator_actions)
+                .map { |a| action_map.fetch(a) }
+            attrs[:benchmark_indicator_actions] = actions
+            print "."
+            ReferenceLibraryDocument.new(attrs)
+          end
+        print "\n"
 
-      puts "Adding documents to database..."
-      ReferenceLibraryDocument.bulk_import import_docs, recursive: true
-      write_seed!
+        puts "Adding documents to database..."
+        ReferenceLibraryDocument.bulk_import import_docs, recursive: true
+        write_seed!
+      end
     end
   end
 end
