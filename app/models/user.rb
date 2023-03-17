@@ -69,4 +69,12 @@ class User < ApplicationRecord
   def confirmation_required?
     !azure_authenticated? && Rails.application.config.confirmation_required
   end
+
+  private
+
+  def pending_any_confirmation
+    # Redirects to sign in if trying to reconfirm instead of giving
+    # already_confirmed error
+    yield if !confirmed? || pending_reconfirmation?
+  end
 end
