@@ -15,6 +15,8 @@ namespace :update do
 
   desc "Update Reference Library Documents from Airtable"
   task reference_documents: :environment do
+    Rails.logger = ActiveRecord::Base.logger = Logger.new(STDOUT)
+    Rails.logger.level = :info
     ReferenceLibraryDocument.update_from_airtable!
   end
 end

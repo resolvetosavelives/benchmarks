@@ -40,15 +40,16 @@ module ReferenceLibraryDocumentSeed
 
     def update_from_airtable!
       ReferenceLibraryDocument.transaction do
-        puts "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
+        Rails
+          .logger.info "Destroying the existing ReferenceLibraryDocuments and cascading to ActionDocuments..."
         unseed!
 
-        puts "Fetching all documents..."
+        Rails.logger.info "Fetching all documents..."
         new_docs = Airtable::ReferenceLibraryDocument.fetch_approved
-        puts "Found #{new_docs.size} new documents."
+        Rails.logger.info "Found #{new_docs.size} new documents."
         return if new_docs.empty?
 
-        puts "Looking up actions for new documents..."
+        Rails.logger.info "Looking up actions for new documents..."
 
         action_map = BenchmarkIndicatorAction.all.map { |a| [a.text, a] }.to_h
 
@@ -60,12 +61,12 @@ module ReferenceLibraryDocumentSeed
                 .delete(:benchmark_indicator_actions)
                 .map { |a| action_map.fetch(a) }
             attrs[:benchmark_indicator_actions] = actions
-            print "."
+            Rails.logger << "." if Rails.logger.info?
             ReferenceLibraryDocument.new(attrs)
           end
-        print "\n"
+        Rails.logger << "\n" if Rails.logger.info?
 
-        puts "Adding documents to database..."
+        Rails.logger.info "Adding documents to database..."
         ReferenceLibraryDocument.bulk_import import_docs, recursive: true
         write_seed!
       end
