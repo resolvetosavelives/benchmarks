@@ -14,45 +14,44 @@ blocks:
         - name: RAILS_ENV
           value: test
       jobs:
-      - name: eslint
-        commands:
-          - checkout
-          - sem-version node 16.13.1
-          - cache restore
-          - yarn install --frozen-lockfile --check-files
-          - npx eslint app
-      - name: Ruby tests
-        commands:
-          - checkout
-          - sem-service start postgres 11
-          - sem-version ruby 3.0.3
-          - sem-version node 16.13.1
-          - cache restore
-          - bundle install --deployment --path vendor/bundle
-          - yarn install --frozen-lockfile --check-files
-          - cache store
-          - bin/rake db:test:prepare test
-      - name: JS tests
-        commands:
-          - checkout
-          - sem-version node 16.13.1
-          - cache restore
-          - yarn install --frozen-lockfile --check-files
-          - yarn test
-      - name: System tests
-        commands:
-          - checkout
-          - sem-service start postgres 11
-          - sem-version ruby 3.0.3
-          - sem-version node 16.13.1
-          - cache restore
-          - bundle install --deployment --path vendor/bundle
-          - yarn install --frozen-lockfile --check-files
-          - cache restore webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA,webpack-$SEMAPHORE_GIT_BRANCH,webpack
-          - bin/webpack -e test
-          - cache store webpack-$SEMAPHORE_GIT_BRANCH-$SEMAPHORE_GIT_SHA public/packs-test
-          - bin/rake db:test:prepare test:system
+        - name: eslint
+          commands:
+            - checkout
+            - sem-version node 16.13.1
+            - cache restore
+            - yarn install --frozen-lockfile --check-files
+            - npx eslint app
+        - name: Ruby tests
+          commands:
+            - checkout
+            - sem-service start postgres 11
+            - sem-version ruby 3.0.3
+            - sem-version node 16.13.1
+            - cache restore
+            - bundle install --deployment --path vendor/bundle
+            - yarn install --frozen-lockfile --check-files
+            - cache store
+            - bin/rake db:test:prepare
+            - bin/rspec --exclude-pattern="spec/system/**/*_spec.rb"
+        - name: JS tests
+          commands:
+            - checkout
+            - sem-version node 16.13.1
+            - cache restore
+            - yarn install --frozen-lockfile --check-files
+            - yarn test
+        - name: System tests
+          commands:
+            - checkout
+            - sem-service start postgres 11
+            - sem-version ruby 3.0.3
+            - sem-version node 16.13.1
+            - cache restore
+            - bundle install --deployment --path vendor/bundle
+            - yarn install --frozen-lockfile --check-files
+            - bin/rake db:test:prepare spec:system
       epilogue:
         on_fail:
           commands:
-            - ls tmp/screenshots/*.png | xargs -L1 artifact push job
+            - ls
+            # - ls tmp/screenshots/*.png | xargs -L1 artifact push job
