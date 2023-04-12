@@ -53,5 +53,4 @@ blocks:
       epilogue:
         on_fail:
           commands:
-            - ls
-            # - ls tmp/screenshots/*.png | xargs -L1 artifact push job
+            - ls tmp/capybara/*.png | xargs -L1 artifact push job
