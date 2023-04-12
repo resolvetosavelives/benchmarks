@@ -231,10 +231,9 @@ This is as optimized as we have been able to get the packs download sizes at thi
 
 ## Heroku
 
-There is still a heroku app running. It sources from the `heroku` branch or the resolvetosavelives/benchmarks github repository.
+The production application is deployed to Heroku at https://benchmarks.org.
 
-It is _not_ up to date with `main` on either repository.
+We also have a staging version of the site available at https://staging.benchmarks.org.
 
-The only reason it is still around is because benchmarks.org points to heroku, and when the app is demo'd, they use that website.
-
-I have been backporting only the design changes into the heroku branch with cherry-picks to keep it looking updated, but I have not fixed heroku to deploy using `main` because we don't expect to need heroku in the future.
+Although a Heroku pipeline containing staging and production, changes currently
+must be manually deployed in the Heroku dashboard or CLI to be released.
